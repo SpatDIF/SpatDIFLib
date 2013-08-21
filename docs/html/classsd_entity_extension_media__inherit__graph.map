@@ -1,0 +1,4 @@
+<map id="sdEntityExtensionMedia" name="sdEntityExtensionMedia">
+<area shape="rect" id="node2" href="$classsd_entity_extension.html" title="{sdEntityExtension\n|# descriptors\l# extenstionName\l|+ getValue()\l+ getDescriptors()\l}" alt="" coords="22,277,151,384"/>
+<area shape="rect" id="node3" href="$classsd_entity.html" title="{sdEntity\n|# eventSet\l|+ sdEntity()\l+ ~sdEntity()\l+ getValue()\l+ getEvent()\l+ getEventSet()\l+ getNumberOfEvents()\l+ addEvent()\l+ removeEvent()\l+ removeEvent()\l+ removeEvent()\l+ removeAllEvents()\l}" alt="" coords="5,5,168,229"/>
+</map>

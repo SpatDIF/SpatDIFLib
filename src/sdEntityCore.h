@@ -1,0 +1,57 @@
+//
+//  sdEntityCore.h
+//  
+
+#ifndef ____sdEntityCore__
+#define ____sdEntityCore__
+
+
+#include <set>
+#include <string>
+#include "sdConst.h"
+#include "sdEntity.h"
+#include "sdEntityExtension.h"
+
+class sdScene;
+
+class sdEntityCore: public sdEntity{
+    friend class sdScene; // only sdScene can instantiate this class
+    
+private:
+    /*! the name of the entity. This name is invariable (const)*/
+    const std::string name;
+    
+    /*! contains instances of sdEntityExtenstions */
+    std::vector <sdEntityExtension>extensionVector;
+    
+    /*! define the kind of the entity. This property is declared as const and invariable (const). */
+    const EKind kind;
+    
+    /*! constructor. intentionally declared as a private function. 
+     the sdEntityCore class must be instantiated through the addEntity function of sdScene. this guarantees that all instances of sdEntityCore are be aware of their parent scene and activated extensions.
+     @param name the name of new Entity
+     @param kind the kind of new Entity. default = SD_SOURCE
+     */
+    sdEntityCore(std::string name, EKind kind = SD_SOURCE) :name(name), kind(kind){} ;// constructor with an initializer
+    
+public:
+    /*!  returns the name of the entity */
+    std::string getName(void);
+    
+    /*! returns the kind of the entity */
+    EKind getKind(void);
+    
+    /*! a query function 
+     @param descriptor
+     @param time
+     @param value buffer for copying value. this function copys data to this buffer.     
+     */
+    void* getValue(EDescriptor descriptor, float time, void* value);
+    
+};
+
+inline EKind sdEntityCore::getKind(void){
+    return kind;
+}
+
+#endif /* defined(____sdEntityCore__) */

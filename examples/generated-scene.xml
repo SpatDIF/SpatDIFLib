@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<meta>
+    <info>
+        <author>chikashi miyama</author>
+        <host>sdSaverTest</host>
+        <date>2013-8-4</date>
+        <location>1.2</location>
+        <session>Cologne</session>
+        <annotation>this is a test</annotation>
+    </info>
+</meta>
+
+<time>2.12</time>
+
+<source>
+    <name>myEntity</name>
+    <position>0 1 2</position>
+</source>
+
+<time>4.2</time>
+
+<source>
+    <name>yourEntity</name>
+    <position>5 4 3.3</position>
+</source>
+
+<time>9.15</time>
+
+<source>
+    <name>myEntity</name>
+    <position>1 2 3</position>
+</source>
+
