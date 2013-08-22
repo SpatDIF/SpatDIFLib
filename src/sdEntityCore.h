@@ -41,17 +41,23 @@ public:
     /*! returns the kind of the entity */
     EKind getKind(void);
     
-    /*! a query function 
-     @param descriptor
+    /*! a overrieded query function. it simply returns a pointer to the buffer, where the designated data are stored. returns null if not found. 
      @param time
-     @param value buffer for copying value. this function copys data to this buffer.     
+     @param descriptor
      */
-    void* getValue(EDescriptor descriptor, float time, void* value);
+    void* getValue(float time, EDescriptor descriptor);
     
 };
 
+
+/*** inline implementation ***/
+
 inline EKind sdEntityCore::getKind(void){
     return kind;
+}
+
+inline std::string sdEntityCore::getName(void){
+    return name;
 }
 
 #endif /* defined(____sdEntityCore__) */

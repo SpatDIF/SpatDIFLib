@@ -11,10 +11,6 @@
 
 using namespace std;
 
-void* sdScene::getValue(std::string name, float time, EDescriptor descriptor,  void* value){
-    sdEntityCore *entity = getEntity(name);
-//    return entity->getValue(time, descriptor, );
-}
 
 sdEntityCore* sdScene::getEntity(std::string name){
     vector <sdEntityCore*>::iterator it = entityVector.begin();
@@ -57,7 +53,23 @@ void sdScene::removeEntity(sdEntityCore *entity){
 
 }
 
-void addExtension(sdEntityExtension *extension){
+void sdScene::setValue(std::string name, float time, EDescriptor descriptor,  void* value){
+    
+}
+
+void* sdScene::getValue(std::string name, float time, EDescriptor descriptor){
+    sdEntityCore* entity = getEntity(name);
+    if (!entity) {
+        return NULL;
+    }
+    return entity->getValue(time, descriptor);
+}
+
+vector <EExtension*> getActivatedExntesionVector(void){
+    
+}
+
+void sdScene::addExtension(EExtension extension){
     // tobe coded
 }
 

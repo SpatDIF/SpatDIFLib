@@ -22,7 +22,7 @@ public:
     static std::vector<EDescriptor> getDescriptors(void);
     
     /*! value query. Sub class of this class must override this function */
-    virtual void* getValue(EDescriptor descriptor, float time, void* value);
+    virtual void* getValue(float time, EDescriptor descriptor);
     
 
 };

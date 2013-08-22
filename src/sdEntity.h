@@ -80,12 +80,11 @@ public:
     ~sdEntity(); /*!< desctrictor */
     
     /*!
-     query method. it is client's responsibility to provided properly allocated void pointer as an argument value
+     query method. it simply returns a pointer to the buffer, where the designated data are stored. returns null if not found. This is a pure abstract function. The subclass must override.
+     @param time specify time
      @param descriptor specify descriptor defined in sdConst.h
-     @param time specify time 
-     @param value allocated buffer
      */
-    virtual void* getValue(EDescriptor descriptor, float time, void* value) = 0;
+    virtual void* getValue(float time, EDescriptor descriptor) = 0;
     
     /*!
      return all events related to the given descriptor

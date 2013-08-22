@@ -108,11 +108,12 @@ public:
     /*! set timed data by specifying name of the target entity, descriptor, and time.
      sdScene forwards the request to a proper sdEntityCore. 
      a properly allocated void pointer should be provided as the fourth argument
-     @param name  name of target eneity
+     @param name name of target eneity
+     @param time time of the newly added event
      @param descriptor enum of target descriptor
      @param value allocated void pointer containing value(s)
      */
-    void* setValue(std::string name, float time, EDescriptor descriptor,  void* value);
+    void setValue(std::string name, float time, EDescriptor descriptor,  void* value);
     
     /*! query timed data by specifying name of the target entity, descriptor, and time.
      sdScene forwards the query to a proper sdEntityCore and return the answer.
@@ -121,7 +122,8 @@ public:
      @param descriptor enum of target descriptor
      @param value allocated void pointer containing value(s)
      */
-    void* getValue(std::string name, float time, EDescriptor descriptor,  void* value);
+    void* getValue(std::string name, float time, EDescriptor descriptor);
+    
     
     /*!
      @}
