@@ -99,7 +99,7 @@ Inheritance diagram for sdEntity:</div>
 <div class="dyncontent">
 <div class="center"><img src="classsd_entity__inherit__graph.png" border="0" usemap="#sd_entity_inherit__map" alt="Inheritance graph"/></div>
 <map name="sd_entity_inherit__map" id="sd_entity_inherit__map">
-<area shape="rect" id="node2" href="classsd_entity_core.html" title="{sdEntityCore\n||+ getName()\l+ getKind()\l+ getValue()\l}" alt="" coords="5,277,104,384"/><area shape="rect" id="node3" href="classsd_entity_extension.html" title="{sdEntityExtension\n|# descriptors\l# name\l|+ getValue()\l+ getDescriptors()\l}" alt="" coords="128,277,256,384"/></map>
+<area shape="rect" id="node2" href="classsd_entity_core.html" title="{sdEntityCore\n||+ getName()\l+ getKind()\l+ getValue()\l+ getValue()\l}" alt="" coords="5,278,104,399"/><area shape="rect" id="node3" href="classsd_entity_extension.html" title="{sdEntityExtension\n|# descriptors\l# name\l|+ getValue()\l+ getDescriptors()\l}" alt="" coords="128,285,256,392"/></map>
 </div>
 <div class="dynheader">
 Collaboration diagram for sdEntity:</div>
@@ -113,8 +113,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1f5b664b74435796d27ef559171e370a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afede788f58f1ab9f1ace8c0b8bb8c59d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_entity.html#afede788f58f1ab9f1ace8c0b8bb8c59d">~sdEntity</a> ()</td></tr>
 <tr class="separator:afede788f58f1ab9f1ace8c0b8bb8c59d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70cf1c715f4aa7c23f8cdbdcd9d4ad01"><td class="memItemLeft" align="right" valign="top">virtual void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_entity.html#a70cf1c715f4aa7c23f8cdbdcd9d4ad01">getValue</a> (<a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> descriptor, float time, void *value)=0</td></tr>
-<tr class="separator:a70cf1c715f4aa7c23f8cdbdcd9d4ad01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40217b8094f67bad876ba1ebf7e48c48"><td class="memItemLeft" align="right" valign="top">virtual void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_entity.html#a40217b8094f67bad876ba1ebf7e48c48">getValue</a> (float time, <a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> descriptor)=0</td></tr>
+<tr class="separator:a40217b8094f67bad876ba1ebf7e48c48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6bbcdabbc4142c225e82714e131087ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classsd_event.html">sdEvent</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_entity.html#a6bbcdabbc4142c225e82714e131087ad">getEvent</a> (float time, <a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> descriptor)</td></tr>
 <tr class="separator:a6bbcdabbc4142c225e82714e131087ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf341035fa10a387cf24e715dff6a3f7"><td class="memItemLeft" align="right" valign="top">std::set&lt; <a class="el" href="classsd_event.html">sdEvent</a> <br class="typebreak"/>
@@ -293,7 +293,7 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a class="anchor" id="a70cf1c715f4aa7c23f8cdbdcd9d4ad01"></a>
+<a class="anchor" id="a40217b8094f67bad876ba1ebf7e48c48"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -303,20 +303,14 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="memname">virtual void* sdEntity::getValue </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a>&#160;</td>
-          <td class="paramname"><em>descriptor</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">float&#160;</td>
           <td class="paramname"><em>time</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -330,17 +324,16 @@ Here is the caller graph for this function:</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>query method. it is client's responsibility to provided properly allocated void pointer as an argument value </p>
+<p>query method. it simply returns a pointer to the buffer, where the designated data are stored. returns null if not found. This is a pure abstract function. The subclass must override. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">descriptor</td><td>specify descriptor defined in <a class="el" href="sd_const_8h.html">sdConst.h</a> </td></tr>
     <tr><td class="paramname">time</td><td>specify time </td></tr>
-    <tr><td class="paramname">value</td><td>allocated buffer </td></tr>
+    <tr><td class="paramname">descriptor</td><td>specify descriptor defined in <a class="el" href="sd_const_8h.html">sdConst.h</a> </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classsd_entity_core.html#a15ee3dbfba3af3ae337a76d8878ad101">sdEntityCore</a>, and <a class="el" href="classsd_entity_extension.html#a6ee149aba9d8dc7a0a47651277cee071">sdEntityExtension</a>.</p>
+<p>Implemented in <a class="el" href="classsd_entity_core.html#ad30e752d61061bf6c7b204d6df733074">sdEntityCore</a>, and <a class="el" href="classsd_entity_extension.html#a55e359c39db92341f947e944650068e3">sdEntityExtension</a>.</p>
 
 </div>
 </div>
@@ -474,13 +467,13 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/<a class="el" href="sd_entity_8h_source.html">sdEntity.h</a></li>
-<li>src/<a class="el" href="sd_entity_8cpp.html">sdEntity.cpp</a></li>
+<li><a class="el" href="sd_entity_8h_source.html">sdEntity.h</a></li>
+<li><a class="el" href="sd_entity_8cpp.html">sdEntity.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 21 2013 11:57:09 for spatdiflib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Aug 22 2013 16:56:28 for spatdiflib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

@@ -1,4 +1,4 @@
-<map id="src/sdScene.cpp" name="src/sdScene.cpp">
+<map id="sdScene.cpp" name="sdScene.cpp">
 <area shape="rect" id="node5" href="$sd_const_8h.html" title="sdConst.h" alt="" coords="247,379,329,405"/>
 <area shape="rect" id="node7" href="$sd_scene_8h.html" title="sdScene.h" alt="" coords="428,80,513,107"/>
 <area shape="rect" id="node16" href="$sd_converter_8h.html" title="sdConverter.h" alt="" coords="94,229,199,256"/>

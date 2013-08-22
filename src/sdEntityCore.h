@@ -47,6 +47,13 @@ public:
      */
     void* getValue(float time, EDescriptor descriptor);
     
+    /*! a overrieded query function. it returns a std::set of sdEvents with specified descriptor whose time parameter is between start and end time
+     @param start start time
+     @param end end time
+     @param descriptor
+     */
+    std::set <sdEvent*, sdEventCompare>getValue(float start, float end, EDescriptor descriptor);
+
 };
 
 

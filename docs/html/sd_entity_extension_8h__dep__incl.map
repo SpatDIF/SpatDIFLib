@@ -1,10 +1,10 @@
-<map id="src/sdEntityExtension.h" name="src/sdEntityExtension.h">
-<area shape="rect" id="node2" href="$sd_entity_core_8h.html" title="src/sdEntityCore.h" alt="" coords="60,80,191,107"/>
-<area shape="rect" id="node4" href="$sd_scene_8h.html" title="src/sdScene.h" alt="" coords="175,155,281,181"/>
-<area shape="rect" id="node3" href="$sd_entity_core_8cpp.html" title="src/sdEntityCore.cpp" alt="" coords="5,155,149,181"/>
-<area shape="rect" id="node5" href="$sd_loader_8h.html" title="src/sdLoader.h" alt="" coords="34,229,144,256"/>
-<area shape="rect" id="node7" href="$sd_saver_8cpp.html" title="src/sdSaver.cpp" alt="" coords="195,304,312,331"/>
-<area shape="rect" id="node8" href="$sd_saver_8h.html" title="src/sdSaver.h" alt="" coords="220,229,324,256"/>
-<area shape="rect" id="node9" href="$sd_scene_8cpp.html" title="src/sdScene.cpp" alt="" coords="348,229,468,256"/>
-<area shape="rect" id="node6" href="$sd_loader_8cpp.html" title="src/sdLoader.cpp" alt="" coords="27,304,151,331"/>
+<map id="sdEntityExtension.h" name="sdEntityExtension.h">
+<area shape="rect" id="node2" href="$sd_entity_core_8h.html" title="sdEntityCore.h" alt="" coords="49,80,159,107"/>
+<area shape="rect" id="node4" href="$sd_scene_8h.html" title="sdScene.h" alt="" coords="153,155,239,181"/>
+<area shape="rect" id="node3" href="$sd_entity_core_8cpp.html" title="sdEntityCore.cpp" alt="" coords="5,155,128,181"/>
+<area shape="rect" id="node5" href="$sd_loader_8h.html" title="sdLoader.h" alt="" coords="29,229,117,256"/>
+<area shape="rect" id="node7" href="$sd_saver_8cpp.html" title="sdSaver.cpp" alt="" coords="168,304,264,331"/>
+<area shape="rect" id="node8" href="$sd_saver_8h.html" title="sdSaver.h" alt="" coords="193,229,276,256"/>
+<area shape="rect" id="node9" href="$sd_scene_8cpp.html" title="sdScene.cpp" alt="" coords="300,229,399,256"/>
+<area shape="rect" id="node6" href="$sd_loader_8cpp.html" title="sdLoader.cpp" alt="" coords="22,304,124,331"/>
 </map>

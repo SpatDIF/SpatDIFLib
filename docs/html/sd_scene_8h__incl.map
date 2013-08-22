@@ -1,4 +1,4 @@
-<map id="src/sdScene.h" name="src/sdScene.h">
+<map id="sdScene.h" name="sdScene.h">
 <area shape="rect" id="node4" href="$sd_const_8h.html" title="sdConst.h" alt="" coords="531,304,613,331"/>
 <area shape="rect" id="node5" href="$sd_info_8h.html" title="sdInfo.h" alt="" coords="249,155,319,181"/>
 <area shape="rect" id="node10" href="$sd_entity_core_8h.html" title="sdEntityCore.h" alt="" coords="577,80,687,107"/>

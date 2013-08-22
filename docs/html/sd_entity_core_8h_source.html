@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.4"/>
-<title>spatdiflib: src/sdEntityCore.h Source File</title>
+<title>spatdiflib: sdEntityCore.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -66,6 +66,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="globals.html"><span>File&#160;Members</span></a></li>
     </ul>
   </div>
+</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -80,11 +81,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="headertitle">
 <div class="title">sdEntityCore.h</div>  </div>
@@ -123,19 +119,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    </div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="sd_const_8h.html#a90240a380b9e4422246ca2141cfc3674">EKind</a> <a class="code" href="classsd_entity_core.html#a66b6d0ebd81278a21854f8b074883342">getKind</a>(<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">void</span>* <a class="code" href="classsd_entity_core.html#a15ee3dbfba3af3ae337a76d8878ad101">getValue</a>(<a class="code" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> descriptor, <span class="keywordtype">float</span> time, <span class="keywordtype">void</span>* value);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;};</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="code" href="classsd_entity_core.html#a66b6d0ebd81278a21854f8b074883342">   53</a></span>&#160;<span class="keyword">inline</span> <a class="code" href="sd_const_8h.html#a90240a380b9e4422246ca2141cfc3674">EKind</a> <a class="code" href="classsd_entity_core.html#a66b6d0ebd81278a21854f8b074883342">sdEntityCore::getKind</a>(<span class="keywordtype">void</span>){</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordflow">return</span> kind;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">void</span>* <a class="code" href="classsd_entity_core.html#ad30e752d61061bf6c7b204d6df733074">getValue</a>(<span class="keywordtype">float</span> time, <a class="code" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> descriptor);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    std::set &lt;sdEvent*, sdEventCompare&gt;<a class="code" href="classsd_entity_core.html#ad30e752d61061bf6c7b204d6df733074">getValue</a>(<span class="keywordtype">float</span> start, <span class="keywordtype">float</span> end, <a class="code" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> descriptor);</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* defined(____sdEntityCore__) */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;};</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="comment">/*** inline implementation ***/</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="code" href="classsd_entity_core.html#a66b6d0ebd81278a21854f8b074883342">   62</a></span>&#160;<span class="keyword">inline</span> <a class="code" href="sd_const_8h.html#a90240a380b9e4422246ca2141cfc3674">EKind</a> <a class="code" href="classsd_entity_core.html#a66b6d0ebd81278a21854f8b074883342">sdEntityCore::getKind</a>(<span class="keywordtype">void</span>){</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordflow">return</span> kind;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="code" href="classsd_entity_core.html#a4df26a7f23c991f18c3dd4a5828dfc29">   66</a></span>&#160;<span class="keyword">inline</span> std::string <a class="code" href="classsd_entity_core.html#a4df26a7f23c991f18c3dd4a5828dfc29">sdEntityCore::getName</a>(<span class="keywordtype">void</span>){</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordflow">return</span> name;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;}</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* defined(____sdEntityCore__) */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 21 2013 11:57:08 for spatdiflib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Aug 22 2013 16:56:27 for spatdiflib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

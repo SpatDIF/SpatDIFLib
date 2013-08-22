@@ -53,6 +53,6 @@ var searchData=
   ['setlocation',['setLocation',['../classsd_info.html#a7c1dd7da9d8e19f76cc372636326b078',1,'sdInfo']]],
   ['setmonth',['setMonth',['../classsd_date.html#a98be3256362ecb3379d04a7746373017',1,'sdDate']]],
   ['setsession',['setSession',['../classsd_info.html#ac5a8019293a84ffcd56f48fcfaf70cb7',1,'sdInfo']]],
-  ['setvalue',['setValue',['../classsd_scene.html#ae24d61b67ac03c95bb0e2bb8eb644d55',1,'sdScene']]],
+  ['setvalue',['setValue',['../classsd_scene.html#a7c437de39566709d26171d153fbd701e',1,'sdScene']]],
   ['setyear',['setYear',['../classsd_date.html#a774e1d347ece62e812d315633899d878',1,'sdDate']]]
 ];

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['getactivatedexntesionvector',['getActivatedExntesionVector',['../classsd_scene.html#a0694c1f3cdfe62045c25463b875f3c34',1,'sdScene']]],
+  ['getactivatedexntesionvector',['getActivatedExntesionVector',['../classsd_scene.html#a0694c1f3cdfe62045c25463b875f3c34',1,'sdScene::getActivatedExntesionVector()'],['../sd_scene_8cpp.html#ad6cf1b576d24cdc5404b6c8a18529173',1,'getActivatedExntesionVector():&#160;sdScene.cpp']]],
   ['getannotation',['getAnnotation',['../classsd_info.html#a33f2c9cfb11f76e19fd0afa391e09b4a',1,'sdInfo']]],
   ['getauthor',['getAuthor',['../classsd_info.html#ab881d19b222fca09d4af8d32e8bb4843',1,'sdInfo']]],
   ['getdate',['getDate',['../classsd_date.html#a0eb0ade19e719629926bf72d8e001427',1,'sdDate::getDate()'],['../classsd_info.html#a9936ce3f34ef868329c615d254090466',1,'sdInfo::getDate()']]],
@@ -20,6 +20,6 @@ var searchData=
   ['getnumberofentities',['getNumberOfEntities',['../classsd_scene.html#a2c39b04de7d6d8f2ce72c2a91886a64e',1,'sdScene']]],
   ['getnumberofevents',['getNumberOfEvents',['../classsd_entity.html#a406a56fc547e5db10b3a455c83f26005',1,'sdEntity']]],
   ['getsession',['getSession',['../classsd_info.html#ab85a3c95bbf2b89937ad9ad3126d978f',1,'sdInfo']]],
-  ['getvalue',['getValue',['../classsd_entity.html#a70cf1c715f4aa7c23f8cdbdcd9d4ad01',1,'sdEntity::getValue()'],['../classsd_entity_core.html#a15ee3dbfba3af3ae337a76d8878ad101',1,'sdEntityCore::getValue()'],['../classsd_entity_extension.html#a6ee149aba9d8dc7a0a47651277cee071',1,'sdEntityExtension::getValue()'],['../classsd_scene.html#a1cca30c730a5ca72533c3a2bdf6bf951',1,'sdScene::getValue()']]],
+  ['getvalue',['getValue',['../classsd_entity.html#a40217b8094f67bad876ba1ebf7e48c48',1,'sdEntity::getValue()'],['../classsd_entity_core.html#ad30e752d61061bf6c7b204d6df733074',1,'sdEntityCore::getValue(float time, EDescriptor descriptor)'],['../classsd_entity_core.html#a09c8bb0ed6153376d6121a075913b63d',1,'sdEntityCore::getValue(float start, float end, EDescriptor descriptor)'],['../classsd_entity_extension.html#a55e359c39db92341f947e944650068e3',1,'sdEntityExtension::getValue()'],['../classsd_scene.html#aa2f7e53cbb558773bdcaadfd3e2e2045',1,'sdScene::getValue()']]],
   ['getyear',['getYear',['../classsd_date.html#a48189c9f1b8c7c8805d45f8b6f59b541',1,'sdDate']]]
 ];
