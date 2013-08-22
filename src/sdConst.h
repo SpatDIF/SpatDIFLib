@@ -12,10 +12,10 @@ using namespace std;
     enum for descriptor. internally all descriptors are indicated by this enum
  */
 typedef enum {
-    SD_TYPE,
-    SD_PRESENT,
-    SD_POSITION,
-    SD_ORIENTATION
+    SD_TYPE = 1,
+    SD_PRESENT = 2,
+    SD_POSITION = 4,
+    SD_ORIENTATION = 8
 } EDescriptor;
 
 /*!

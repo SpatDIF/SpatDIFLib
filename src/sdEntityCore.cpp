@@ -19,8 +19,7 @@ void* sdEntityCore::getValue(float time, EDescriptor descriptor){
     return NULL;
 }
 
-
-std::set <sdEvent*, sdEventCompare>sdEntityCore::getValue(float start, float end, EDescriptor descriptor){
+std::set <sdEvent*, sdEventCompare>sdEntityCore::getFilteredEventSet(float start, float end, EDescriptor descriptor){
     
     std::set <sdEvent*, sdEventCompare>rangedSet;
     std::set <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();

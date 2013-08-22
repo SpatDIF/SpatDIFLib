@@ -50,7 +50,7 @@ int main(void){
     // you can also ask events in a certain time frame.
     set <sdEvent*, sdEventCompare> myEventSet;
 
-    myEventSet = voice1->getValue(0.00, 5.00, SD_POSITION);
+    myEventSet = voice1->getFilteredEventSet(0.00, 5.00, SD_POSITION);
     cout << "there are " << myEventSet.size() << " position events within 0.00 and 5.00" << endl;
     
     set <sdEvent*, sdEventCompare> ::iterator it = myEventSet.begin();
