@@ -89,55 +89,21 @@ string sdSaver::XMLFromScene(sdScene *scene){
         sdGlobalEvent event = *eit;
         
         XMLElement* time = xml.NewElement("time");
-        ostringstream timeStringStream;
-        timeStringStream << event.getTime();
-        XMLText* timeText = xml.NewText(timeStringStream.str().c_str());
+        XMLText* timeText = xml.NewText(event.getTimeAsString().c_str());
         time->InsertEndChild(timeText);
         xml.InsertEndChild(time);
 
         XMLElement* kind;
-
-        switch (event.getKind()) {
-            case SD_SOURCE:
-                kind = xml.NewElement("source");
-                break;
-            case SD_SINK:
-                kind = xml.NewElement("sink");
-                break;
-        }
-        
+        kind = xml.NewElement(event.getKindAsString().c_str());
         XMLElement* name = xml.NewElement("name");
         XMLText* nameText = xml.NewText(event.getEntityName().c_str());
         name->InsertEndChild(nameText);
         kind->InsertEndChild(name);
         
-        switch(event.getDescriptor()){
-            case SD_POSITION:{
-                XMLElement* position;
-                XMLText* positionText;
-
-                ostringstream positionString;
-                float* pos = static_cast<float*>(event.getValue());
-                positionString << pos[0] << ' ' << pos[1] << ' ' << pos[2];
-                position = xml.NewElement("position");
-                positionText = xml.NewText(positionString.str().c_str());
-                position->InsertEndChild(positionText);
-                kind->InsertEndChild(position);
-                break;
-            }
-            case SD_PRESENT:{
-                XMLElement* present = xml.NewElement("present");
-                XMLText* presentText;
-                bool* prst = (bool*)event.getValue();
-                if(*prst == true){
-                    presentText = xml.NewText("true");
-                }else{
-                    presentText = xml.NewText("false");
-                }
-                kind->InsertEndChild(presentText);
-                break;
-            }
-        }
+        XMLElement* element = xml.NewElement(event.getDescriptorAsString().c_str());
+        XMLText* text = xml.NewText(event.getValueAsString().c_str());
+        element->InsertEndChild(text);
+        kind->InsertEndChild(element);
         
         xml.InsertEndChild(kind);
         ++eit;

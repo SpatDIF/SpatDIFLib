@@ -32,3 +32,18 @@ std::set <sdEvent*, sdEventCompare>sdEntityCore::getFilteredEventSet(float start
     }
     return rangedSet;
 }
+
+std::string sdEntityCore::getKindAsString(void){
+    std::string str;
+    switch(kind) {
+        case SD_SOURCE:
+            str = string("source");
+            break;
+        case SD_SINK:
+            str = string("sink");
+            break;
+        default:
+            break;
+    }
+    return str;
+}

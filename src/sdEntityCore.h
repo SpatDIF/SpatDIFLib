@@ -41,8 +41,8 @@ public:
     /*! returns the kind of the entity */
     EKind getKind(void);
     string getKindAsString(void);
-    
-    /*! a overrieded query function. it simply returns a pointer to the buffer, where the designated data are stored. returns null if not found. 
+
+    /*! a overrieded query function. it simply returns a pointer to the buffer, where the designated data are stored. returns null if not found.
      @param time
      @param descriptor
      */
@@ -63,22 +63,6 @@ public:
 inline EKind sdEntityCore::getKind(void){
     return kind;
 }
-
-inline std::string sdEntityCore::getKindAsString(void){
-    std::string str;
-    switch (kind) {
-        case SD_SOURCE:
-            str = string("source");
-            break;
-        case SD_SINK:
-            str = string("sink");
-            break;
-        default:
-            break;
-    }
-    return str;
-}
-
 
 inline std::string sdEntityCore::getName(void){
     return name;
