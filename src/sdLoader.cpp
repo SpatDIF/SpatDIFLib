@@ -6,7 +6,6 @@
 #include <string>
 #include <sstream>
 #include "sdLoader.h"
-#include "sdConverter.h"
 #include "tinyxml2.h"
 
 using namespace std;
@@ -47,22 +46,17 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
     if(annotation){
         info.setAnnotation(string(annotation->GetText()));
     }
-
     scene.setInfo(info);
     
-    
     //first time tag
-    float time;
+    string timeString;
     XMLElement* element = meta->NextSiblingElement();
 
     while(element){
         
         string tagType = element->Name();
         if(tagType == "time"){
-            string timeString = element->GetText();
-            istringstream is;
-            is.str(timeString);
-            is >> time;
+            timeString = string(element->GetText());
         }
         else if(tagType == "source"){
             XMLElement *name = element->FirstChildElement("name");
@@ -74,39 +68,9 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
                 targetEntity = scene.addEntity(entityName);
             }
 
-            XMLElement *descriptor = element->FirstChildElement();
+            XMLElement *descriptor = name->NextSiblingElement();
             while(descriptor) {
-                //let the entity spawn an event
-                EDescriptor desc = (EDescriptor)sdConverter::convert(descriptor->Name());
-                switch(desc){
-                    case SD_TYPE:
-                    {
-                        string type = string(descriptor->GetText());
-                        break;
-                    }
-                    case SD_PRESENT:
-                    {
-                        bool present = string(descriptor->GetText())  == "true" ? true : false;
-                        targetEntity->addEvent(time, SD_PRESENT, static_cast<void*>(&present));
-                        break;
-                    }
-                    case SD_POSITION:
-                    {
-                        istringstream is(descriptor->GetText());
-                        float *position = new float[3];
-                        is >> position[0] >> position[1] >> position[2];
-                        targetEntity->addEvent(time, SD_POSITION, static_cast<void*>(position));
-                        break;
-                    }
-                    case SD_ORIENTATION:
-                    {
-                        istringstream is(descriptor->GetText());
-                        float *orientation = new float[3];
-                        is >> orientation[0] >> orientation[1] >> orientation[2];
-                        targetEntity->addEvent(time, SD_ORIENTATION, static_cast<void*>(orientation));
-                        break;
-                    }
-                }
+                targetEntity->addEvent(timeString, string(descriptor->Name()), string(descriptor->GetText()));
                 descriptor = descriptor->NextSiblingElement();
             }
         }

@@ -72,13 +72,11 @@ string sdSaver::XMLFromScene(sdScene *scene){
             sdEvent* event = *iit;
             sdGlobalEvent globalEvent;
             
-            globalEvent.time =event->time;
-            globalEvent.descriptor = event->descriptor;
-            globalEvent.value = event->value;
-            globalEvent.entityName = entity->getName();
-            globalEvent.kind = entity->getKind();
+            globalEvent.set(event->getTime(), event->getDescriptor(), event->getValue());
+            globalEvent.setEntityName(entity->getName());
+            globalEvent.setKind(entity->getKind());
             
-            float* val = static_cast<float*>(event->value);
+            float* val = static_cast<float*>(event->getValue());
             
             allEventSet.insert(globalEvent); // gather pointer to all existing instances of sdEvent
             ++iit;
@@ -92,14 +90,14 @@ string sdSaver::XMLFromScene(sdScene *scene){
         
         XMLElement* time = xml.NewElement("time");
         ostringstream timeStringStream;
-        timeStringStream << event.time;
+        timeStringStream << event.getTime();
         XMLText* timeText = xml.NewText(timeStringStream.str().c_str());
         time->InsertEndChild(timeText);
         xml.InsertEndChild(time);
 
         XMLElement* kind;
 
-        switch (event.kind) {
+        switch (event.getKind()) {
             case SD_SOURCE:
                 kind = xml.NewElement("source");
                 break;
@@ -109,17 +107,17 @@ string sdSaver::XMLFromScene(sdScene *scene){
         }
         
         XMLElement* name = xml.NewElement("name");
-        XMLText* nameText = xml.NewText(event.entityName.c_str());
+        XMLText* nameText = xml.NewText(event.getEntityName().c_str());
         name->InsertEndChild(nameText);
         kind->InsertEndChild(name);
         
-        switch(event.descriptor){
+        switch(event.getDescriptor()){
             case SD_POSITION:{
                 XMLElement* position;
                 XMLText* positionText;
 
                 ostringstream positionString;
-                float* pos = static_cast<float*>(event.value);
+                float* pos = static_cast<float*>(event.getValue());
                 positionString << pos[0] << ' ' << pos[1] << ' ' << pos[2];
                 position = xml.NewElement("position");
                 positionText = xml.NewText(positionString.str().c_str());
@@ -130,7 +128,7 @@ string sdSaver::XMLFromScene(sdScene *scene){
             case SD_PRESENT:{
                 XMLElement* present = xml.NewElement("present");
                 XMLText* presentText;
-                bool* prst = (bool*)event.value;
+                bool* prst = (bool*)event.getValue();
                 if(*prst == true){
                     presentText = xml.NewText("true");
                 }else{

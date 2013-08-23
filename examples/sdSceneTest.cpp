@@ -2,7 +2,6 @@
 #include "sdLoader.h"
 #include "sdSaver.h"
 #include "sdEntityCore.h"
-#include "sdConverter.h"
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -48,7 +47,7 @@ int main(void){
     //if there is a position data at 0.2
     if(positionEvent){
         //convert recognaizes desciriptor and convert it to a string
-        cout << "position value:" << sdConverter::convert(positionEvent) << endl;
+        cout << "position value:" << positionEvent->getValueAsString() << endl;
         
     }
     

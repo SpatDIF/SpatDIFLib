@@ -18,29 +18,17 @@ unsigned int sdEntity::getNumberOfEvents(){
 }
 
 sdEvent* sdEntity::addEvent(float time, EDescriptor descriptor, void* value){
-    sdEvent *event = new sdEvent;
-    event->time = time;
-    event->descriptor = descriptor;
-    switch (descriptor) {
-        case SD_POSITION:{
-            float *positionValueTo = new float[3];
-            float *positionValueFrom = static_cast<float*>(value);
-            //copy
-            positionValueTo[0] = positionValueFrom[0];
-            positionValueTo[1] = positionValueFrom[1];
-            positionValueTo[2] = positionValueFrom[2];
-            event->value = static_cast<void*>(positionValueTo);
-            break;
-        }
-        case SD_PRESENT:{
-            bool *presentValueTo = new bool;
-            bool *presentValueFrom = static_cast<bool*>(value);
-            //copy
-            *presentValueTo = *presentValueFrom;
-            event->value = static_cast<void*>(presentValueTo);
-            break;
-        }
-    }
+    //create a new instance of sdEvent
+    sdEvent *event = new sdEvent(time, descriptor, value);
+    //and insert it in the set
+    eventSet.insert(event);
+    //returns a point to the newly created sdEvent
+    return event;
+}
+
+sdEvent* sdEntity::addEvent(string time, string descriptor, string value){
+
+    sdEvent *event = new sdEvent(time, descriptor, value);
     eventSet.insert(event);
     return event;
 }

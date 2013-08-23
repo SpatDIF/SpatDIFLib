@@ -5,66 +5,10 @@
 #include <set>
 #include <string>
 #include <iostream>
+#include "sdEvent.h"
 #include "sdConst.h"
 
 using namespace std;
-
-class sdEntity;
-
-/*!
- maintains a set of event data. The constructor is intentionally declared as a protected function. It must be invoked through its subclasses of the friend class sdEntity. This process ensures that all existing instances of sdEvents belong to a sdEntity. the sdEntity is also responsible for the allocation of void* value.
-*/
-class sdEvent{
-    /*! only sdEntity can instantitate this class */
-    friend class sdEntity;
-public:
-    float time;/*!< time of the event */
-    EDescriptor descriptor;/*!<descriptor of the event*/
-    void *value;/*!<value of the event. sdEntity allocates the void pointer automatically*/
-protected:
-    /*construcor is intentionally declared as protected. this class must be instantiated through sdEntity::addEvent*/
-    sdEvent(){};
-};
-
-/*!
- a helper class for sorting events
-*/
-class sdEventCompare{
-public:
-    bool operator()(sdEvent* e1, sdEvent* e2){
-        if(e1->time < e2->time) // sort by time
-            return true;
-        else
-            return false;
-    }
-};
-
-/*!
- a helper class for sdSaver. It should not be instantiated directly.
- */
-class sdGlobalEvent : public sdEvent{
-public:
-    string entityName; /*!< name of attached entity */
-    EKind kind; /*< kind of attached entity */
-};
-
-class sdGlobalEventCompare{
-public:
-    bool operator()(sdGlobalEvent e1, sdGlobalEvent e2){
-        if(e1.time < e2.time){
-            return true;
-        }else if(e1.time == e2.time){
-            if(e1.kind == SD_SOURCE){ // source first then sink
-                return true;
-            }else{
-                return false;
-            }
-        }
-        else{
-            return false;
-        }
-    }
-};
 
 /*! sdEntity
  sdEntity is a pure abstract class.  This class maintains and handles all events associated to relavant descriptors. This class is responsible for answering query about it's relavant descriptors.
@@ -107,8 +51,9 @@ public:
      this function is the only way to instantiate sdEvent and this function is responsible for allocating the void pointer properly based on the provoded descriptor
      */
     sdEvent* addEvent(float time, EDescriptor descriptor, void* value);
-    
-    /*< 
+    sdEvent* addEvent(string time, string descriptor, string value);
+
+    /*<
      remove an event from the set
      @param event the event to be removed
      */
@@ -142,6 +87,7 @@ public:
 inline std::set<sdEvent*, sdEventCompare> sdEntity::getEventSet(void){
     return eventSet;
 }
+
 
 #endif /* defined(____sdEntity__) */
 

@@ -11,8 +11,8 @@ void* sdEntityCore::getValue(float time, EDescriptor descriptor){
 
     while(it != eventSet.end()){
         sdEvent* event = *it;
-        if((event->time == time) && (event->descriptor == descriptor)){
-            return event->value;
+        if((event->getTime() == time) && (event->getDescriptor() == descriptor)){
+            return event->getValue();
         }
         ++it;
     }
@@ -25,7 +25,7 @@ std::set <sdEvent*, sdEventCompare>sdEntityCore::getFilteredEventSet(float start
     std::set <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
     while(it != eventSet.end()){
         sdEvent* event = *it;
-        if ( (event->time >= start) && (event->time <= end) && (event->descriptor == descriptor)) {
+        if ( (event->getTime() >= start) && (event->getTime() <= end) && (event->getDescriptor() == descriptor)) {
             rangedSet.insert(*it);
         }
         ++it;

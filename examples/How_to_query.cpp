@@ -57,7 +57,7 @@ int main(void){
     
     int count = 0;
     while (it!=myEventSet.end()) {
-        pos = static_cast<float*>((*it)->value);
+        pos = static_cast<float*>((*it)->getValue());
         cout << "position of event #" << count << ": " << pos[0] << ' ' << pos[1] << ' ' << pos[2] << endl;
         it++;
         count++;

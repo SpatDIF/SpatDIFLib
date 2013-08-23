@@ -7,7 +7,6 @@
 #include <iomanip>
 #include "sdConst.h"
 #include "sdScene.h"
-#include "sdConverter.h"
 
 using namespace std;
 
@@ -90,7 +89,7 @@ void sdScene::dump(void){
     while( it != entityVector.end() )
 	{
 		string entityName = (*it)->getName();
-        string kind = sdConverter::convert((*it)->getKind());
+        string kind = (*it)->getKindAsString();
         cout << ">>entity name:" << entityName <<endl;
         cout << "kind:" << kind <<endl;
         cout << "number of events:" << (*it)->getNumberOfEvents()<< endl;
@@ -100,22 +99,16 @@ void sdScene::dump(void){
         while(itt != evnts.end()){
             sdEvent *evt = *itt;
             string desc, valueStr;
-            desc = sdConverter::convert(evt->descriptor);
-            switch(evt->descriptor){
-                case SD_TYPE:
-                {
-                    EType *type = static_cast<EType*>(evt->value);
-                    valueStr = sdConverter::convert(*type);
-                    break;
-                }
+            desc = evt->getDescriptorAsString();
+            switch(evt->getDescriptor()){
                 case SD_PRESENT:
                 {
-                    valueStr = *((bool*)evt->value) ? string("true") : string("false");
+                    valueStr = *((bool*)evt->getValue()) ? string("true") : string("false");
                     break;
                 }
                 case SD_POSITION:
                 {
-                    float* pos = static_cast<float*>(evt->value);
+                    float* pos = static_cast<float*>(evt->getValue());
                     ostringstream stream;
                     stream << pos[0] << " " << pos[1] << " " << pos[2];
                     valueStr = stream.str();
@@ -123,14 +116,14 @@ void sdScene::dump(void){
                 }
                 case SD_ORIENTATION:
                 {
-                    float* ori = static_cast<float*>(evt->value);
+                    float* ori = static_cast<float*>(evt->getValue());
                     ostringstream stream;
                     stream << ori[0] << " " << ori[1] << " " << ori[2];
                     valueStr = stream.str();
                     break;
                 }
             }
-            cout << "[time:" << setw(6) << left << evt->time <<
+            cout << "[time:" << setw(6) << left << evt->getTime() <<
             " descriptor:" << setw(10) << left << desc <<
             " value:" << setw(16)  << left << valueStr << "]" << endl;
             itt++;
