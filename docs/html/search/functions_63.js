@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['convert',['convert',['../classsd_converter.html#a3c8949d795b2058ab9b745fa04b3b762',1,'sdConverter::convert(EDescriptor descriptor)'],['../classsd_converter.html#ae27e8f03816af8edfe3e794414cdcdbb',1,'sdConverter::convert(EKind kind)'],['../classsd_converter.html#aca6a6ec37b507856d82fb1585c6e4cfe',1,'sdConverter::convert(EType type)'],['../classsd_converter.html#ac17e3339e0d03602e29f072b2b428175',1,'sdConverter::convert(EExtension extension)'],['../classsd_converter.html#a04b2d592fb0760b940155a710acd8218',1,'sdConverter::convert(sdEvent *event)'],['../classsd_converter.html#adc81b50fcb563479cde83771a0282b25',1,'sdConverter::convert(std::string str)']]]
+  ['convert',['convert',['../classsd_event.html#ac43b2658e6cb0e8aea27231e1f28ccac',1,'sdEvent::convert(EDescriptor descriptor)'],['../classsd_event.html#a5cb83f5b20b65eb05b49389064db6c43',1,'sdEvent::convert(EKind kind)'],['../classsd_event.html#a506c23d711bd6ef7c0798e0abe2fc969',1,'sdEvent::convert(EType type)'],['../classsd_event.html#a41c17b68b8c83ee191a7bd95f3448b04',1,'sdEvent::convert(string str)']]]
 ];

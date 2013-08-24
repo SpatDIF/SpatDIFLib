@@ -1,9 +1,10 @@
-<map id="sdLoader.h" name="sdLoader.h">
-<area shape="rect" id="node3" href="$sd_scene_8h.html" title="sdScene.h" alt="" coords="171,80,256,107"/>
-<area shape="rect" id="node5" href="$sd_const_8h.html" title="sdConst.h" alt="" coords="712,379,795,405"/>
-<area shape="rect" id="node6" href="$sd_info_8h.html" title="sdInfo.h" alt="" coords="179,229,248,256"/>
-<area shape="rect" id="node11" href="$sd_entity_core_8h.html" title="sdEntityCore.h" alt="" coords="432,155,541,181"/>
-<area shape="rect" id="node14" href="$sd_entity_extension_8h.html" title="sdEntityExtension.h" alt="" coords="276,229,415,256"/>
-<area shape="rect" id="node7" href="$sd_date_8h.html" title="sdDate.h" alt="" coords="299,304,375,331"/>
-<area shape="rect" id="node13" href="$sd_entity_8h.html" title="sdEntity.h" alt="" coords="499,304,579,331"/>
+<map id="src/sdLoader.h" name="src/sdLoader.h">
+<area shape="rect" id="node3" href="$sd_scene_8h.html" title="sdScene.h" alt="" coords="275,80,360,107"/>
+<area shape="rect" id="node5" href="$sd_const_8h.html" title="sdConst.h" alt="" coords="752,453,835,480"/>
+<area shape="rect" id="node6" href="$sd_info_8h.html" title="sdInfo.h" alt="" coords="283,304,352,331"/>
+<area shape="rect" id="node11" href="$sd_entity_core_8h.html" title="sdEntityCore.h" alt="" coords="657,155,767,181"/>
+<area shape="rect" id="node15" href="$sd_entity_extension_8h.html" title="sdEntityExtension.h" alt="" coords="400,229,539,256"/>
+<area shape="rect" id="node7" href="$sd_date_8h.html" title="sdDate.h" alt="" coords="246,379,321,405"/>
+<area shape="rect" id="node13" href="$sd_entity_8h.html" title="sdEntity.h" alt="" coords="500,304,580,331"/>
+<area shape="rect" id="node14" href="$sd_event_8h.html" title="sdEvent.h" alt="" coords="499,379,580,405"/>
 </map>

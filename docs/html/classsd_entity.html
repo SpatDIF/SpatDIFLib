@@ -21,7 +21,6 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="SpatDIF_logo.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">spatdiflib
    &#160;<span id="projectnumber">specification 0.3</span>
@@ -99,12 +98,14 @@ Inheritance diagram for sdEntity:</div>
 <div class="dyncontent">
 <div class="center"><img src="classsd_entity__inherit__graph.png" border="0" usemap="#sd_entity_inherit__map" alt="Inheritance graph"/></div>
 <map name="sd_entity_inherit__map" id="sd_entity_inherit__map">
-<area shape="rect" id="node2" href="classsd_entity_core.html" title="{sdEntityCore\n||+ getName()\l+ getKind()\l+ getValue()\l+ getValue()\l}" alt="" coords="5,278,104,399"/><area shape="rect" id="node3" href="classsd_entity_extension.html" title="{sdEntityExtension\n|# descriptors\l# name\l|+ getValue()\l+ getDescriptors()\l}" alt="" coords="128,285,256,392"/></map>
+<area shape="rect" id="node2" href="classsd_entity_core.html" title="{sdEntityCore\n||+ getName()\l+ getKind()\l+ getKindAsString()\l+ getValue()\l+ getFilteredEventSet()\l}" alt="" coords="5,293,165,429"/><area shape="rect" id="node3" href="classsd_entity_extension.html" title="{sdEntityExtension\n|# descriptors\l# name\l|+ getValue()\l+ getDescriptors()\l}" alt="" coords="189,308,317,415"/></map>
 </div>
 <div class="dynheader">
 Collaboration diagram for sdEntity:</div>
 <div class="dyncontent">
 <div class="center"><img src="classsd_entity__coll__graph.png" border="0" usemap="#sd_entity_coll__map" alt="Collaboration graph"/></div>
+<map name="sd_entity_coll__map" id="sd_entity_coll__map">
+</map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -124,6 +125,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a406a56fc547e5db10b3a455c83f26005"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a515a154ac31247aa69f930fbc33eaa61"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classsd_event.html">sdEvent</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_entity.html#a515a154ac31247aa69f930fbc33eaa61">addEvent</a> (float time, <a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> descriptor, void *value)</td></tr>
 <tr class="separator:a515a154ac31247aa69f930fbc33eaa61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab90931d3fd4369b0ec485f4f036cfd11"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classsd_event.html">sdEvent</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_entity.html#ab90931d3fd4369b0ec485f4f036cfd11">addEvent</a> (string time, string descriptor, string value)</td></tr>
+<tr class="separator:ab90931d3fd4369b0ec485f4f036cfd11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2f4241b73bd8d4322b01b7df060f9b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_entity.html#af2f4241b73bd8d4322b01b7df060f9b4">removeEvent</a> (<a class="el" href="classsd_event.html">sdEvent</a> *event)</td></tr>
 <tr class="separator:af2f4241b73bd8d4322b01b7df060f9b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8878cfd4721a11d8a1e74b7e91c1835"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_entity.html#ad8878cfd4721a11d8a1e74b7e91c1835">removeEvent</a> (<a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> descriptor, float time)</td></tr>
@@ -205,6 +208,47 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>this function is the only way to instantiate <a class="el" href="classsd_event.html">sdEvent</a> and this function is responsible for allocating the void pointer properly based on the provoded descriptor </p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classsd_entity_a515a154ac31247aa69f930fbc33eaa61_icgraph.png" border="0" usemap="#classsd_entity_a515a154ac31247aa69f930fbc33eaa61_icgraph" alt=""/></div>
+<map name="classsd_entity_a515a154ac31247aa69f930fbc33eaa61_icgraph" id="classsd_entity_a515a154ac31247aa69f930fbc33eaa61_icgraph">
+<area shape="rect" id="node2" href="classsd_loader.html#adc640420a901d7bdfb5afff5f6aa6449" title="sdLoader::sceneFromXML" alt="" coords="187,5,365,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ab90931d3fd4369b0ec485f4f036cfd11"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classsd_event.html">sdEvent</a> * sdEntity::addEvent </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -467,13 +511,13 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li><a class="el" href="sd_entity_8h_source.html">sdEntity.h</a></li>
-<li><a class="el" href="sd_entity_8cpp.html">sdEntity.cpp</a></li>
+<li>src/<a class="el" href="sd_entity_8h_source.html">sdEntity.h</a></li>
+<li>src/<a class="el" href="sd_entity_8cpp.html">sdEntity.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Aug 22 2013 16:56:28 for spatdiflib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Aug 24 2013 10:34:35 for spatdiflib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

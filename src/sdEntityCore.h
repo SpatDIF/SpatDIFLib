@@ -14,6 +14,15 @@
 
 class sdScene;
 
+/*!
+ sdEntityCore is responsible for 
+ - identifing its kind (source or sink)
+ - maintaining its events
+ - managing extensions
+ - giveing pointer to a certain, ranged, or the entire list of event(s)
+ - forwarding a query to a proper extension and answer to the client
+ */
+
 class sdEntityCore: public sdEntity{
     friend class sdScene; // only sdScene can instantiate this class
     

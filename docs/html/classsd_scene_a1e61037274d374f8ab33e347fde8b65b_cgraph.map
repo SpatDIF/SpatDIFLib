@@ -1,3 +1,6 @@
 <map id="sdScene::dump" name="sdScene::dump">
-<area shape="rect" id="node2" href="$classsd_converter.html#a3c8949d795b2058ab9b745fa04b3b762" title="sdConverter::convert" alt="" coords="169,5,314,32"/>
+<area shape="rect" id="node2" href="$classsd_event.html#a809ea1f03a1bd97e6ad5b1e4089730f9" title="sdEvent::getDescriptorAs\lString" alt="" coords="169,5,341,46"/>
+<area shape="rect" id="node3" href="$classsd_event.html#a553bef7960cf0391f7e01990878aa416" title="sdEvent::getDescriptor" alt="" coords="176,71,333,97"/>
+<area shape="rect" id="node4" href="$classsd_event.html#adba2ca29642bd8d730dfdc3acadeeb00" title="sdEvent::getValue" alt="" coords="189,121,320,148"/>
+<area shape="rect" id="node5" href="$classsd_event.html#af53aac6620476deff34a2b87a2939144" title="sdEvent::getTime" alt="" coords="192,172,317,199"/>
 </map>

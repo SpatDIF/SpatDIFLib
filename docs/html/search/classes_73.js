@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['sdconverter',['sdConverter',['../classsd_converter.html',1,'']]],
   ['sddate',['sdDate',['../classsd_date.html',1,'']]],
   ['sdentity',['sdEntity',['../classsd_entity.html',1,'']]],
   ['sdentitycore',['sdEntityCore',['../classsd_entity_core.html',1,'']]],
