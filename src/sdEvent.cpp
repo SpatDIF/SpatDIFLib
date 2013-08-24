@@ -56,7 +56,7 @@ string sdEvent::getDescriptorAsString(void){
     return str;
 }
 
-inline string sdEvent::getValueAsString(void){
+string sdEvent::getValueAsString(void){
     std::string str;
     switch (descriptor) {
         case SD_PRESENT:{
@@ -188,7 +188,7 @@ int sdEvent::convert(string str){
     
 }
 
-inline string sdGlobalEvent::getKindAsString(void){
+string sdGlobalEvent::getKindAsString(void){
     string str;
     switch (kind) {
         case SD_SOURCE:
