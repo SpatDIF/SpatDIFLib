@@ -11,7 +11,7 @@
 using namespace std;
 
 /*! sdEntity
- sdEntity is a pure abstract class.  This class maintains and handles all events associated to relavant descriptors. This class is responsible for answering query about it's relavant descriptors.
+ sdEntity is a pure abstract class. This class maintains and handles all events associated to relavant descriptors. This class is also responsible for answering query about it's relavant descriptors.
 */
 
 class sdEntity{

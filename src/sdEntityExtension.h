@@ -5,6 +5,7 @@
 #ifndef _sdEntityExtension_h
 #define _sdEntityExtension_h
 
+#include <string>
 #include <vector>
 #include "sdEntity.h"
 
@@ -12,11 +13,10 @@
   the subclasses of this class must override getValue function
  */
 class sdEntityExtension: public sdEntity{
-
+    
 protected:
     /*! sub classes must define their descriptors*/
     const static std::vector <EDescriptor>descriptors;
-    const static string name;
 public:
     /*! returns vector of EDescriptor that a subclass of this class is responsible for */
     static std::vector<EDescriptor> getDescriptors(void);
@@ -27,24 +27,37 @@ public:
 
 };
 
+/*!
+ a media extension. This extension contains information about an audio media 
+ */
+
+class sdEntityExtensionMedia: public sdEntityExtension{
+    friend class sdScene;
+
+protected:
+    
+    /*!
+     this constructor should be involed from an instance of sdScene
+     */
+    sdEntityExtensionMedia(){};
+    
+    string id; /*< unique identifier */
+    string type; /*< where the content comes from */
+    string location; /*< location of the file or stream*/
+    int channel; /*< If type has more channels, define the channel that is taken as input*/
+    double time_offset;/*< Starting position within media file */
+    double gain;/*< gain value of the media*/
+};
+
+
+
+class sdEntityExtensionLoop public sdEntityExtension{
+    string type;
+    double points[2];
+    double wait_time;
+};
 
 /*
- 
-class sdEntityExtensionMedia: public sdEntityExtension{
-    
-    
-    
-    
-    
-};
-
-sdEntityExtension::extensionName = SD_MEDIA;
-
-class sdEntityExtensionInterpolation: public sdEntityExtension{
-    
-    
-};
-
 class sdEntityExtensionInterpolation: public sdEntityExtension{
     
     

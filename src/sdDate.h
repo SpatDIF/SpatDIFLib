@@ -10,7 +10,6 @@
 #include <ctime>
 #include <string>
 #include <sstream>
-#include <iostream>
 
 using namespace std;
 
@@ -33,14 +32,14 @@ public:
      */
     
     /*! a constructor. if the autoInit frag is set to true, the constructor initializes the date using the sytem calls.
-     @param autoInit if true, the date will be initialized using the system call. if false, uninitialized.
+     @param autoInit if true, the date will be initialized using the system call. if false, uninitialized. the default value is true.
      */
     sdDate(bool autoInit = true);
     
     /*! construct with parameters
      @param year year of the date
      @param month month of the date
-     @param day day od the date
+     @param day day of the date
      */
     sdDate(unsigned short year, unsigned short month, unsigned short day);
     
