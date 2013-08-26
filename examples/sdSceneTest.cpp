@@ -25,6 +25,13 @@ int main(void){
     sdScene scene(info);
     sdInfo providedInfo = scene.getInfo();
     
+    //activate media extension
+    scene.addExtension(SD_MEDIA);
+   
+    //query how many extension(s) are active
+    int numExtensions = scene.getNumberOfActivatedExtensions();
+    cout << "number of active extensions: " << numExtensions << endl;
+    
     //attach two entities
     sdEntityCore *myEntity = scene.addEntity("myEntity"); // spawn an entity
     float pos[3] = {0.0, 0.1, 0.2};

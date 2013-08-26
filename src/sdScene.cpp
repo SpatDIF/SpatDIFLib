@@ -10,7 +10,6 @@
 
 using namespace std;
 
-
 sdEntityCore* sdScene::getEntity(std::string name){
     vector <sdEntityCore*>::iterator it = entityVector.begin();
     while( it != entityVector.end() ){
@@ -34,6 +33,7 @@ sdEntityCore* sdScene::addEntity(string name, EKind kind){
     // attach extensions here
     
     
+    
     // insert the entity in the vector
     entityVector.push_back(entityCore);
     
@@ -49,11 +49,19 @@ void sdScene::removeEntity(std::string name){
 }
 
 void sdScene::removeEntity(sdEntityCore *entity){
-
+    vector <sdEntityCore*>::iterator it = entityVector.begin();
+    while (it != entityVector.end()) {
+        if(*it == entity){
+            it = entityVector.erase(it);
+            return;
+        }
+        it++;
+    }
 }
 
 void sdScene::setValue(std::string name, float time, EDescriptor descriptor,  void* value){
-    
+    sdEntityCore* entity = getEntity(name);
+    entity->addEvent(time, descriptor, value);
 }
 
 void* sdScene::getValue(std::string name, float time, EDescriptor descriptor){
@@ -64,17 +72,28 @@ void* sdScene::getValue(std::string name, float time, EDescriptor descriptor){
     return entity->getValue(time, descriptor);
 }
 
-vector <EExtension*> getActivatedExntesionVector(void){
-    
+int sdScene::getNumberOfActivatedExtensions(void){
+    return activatedExtensionVector.size();
+}
+
+vector <EExtension> sdScene::getActivatedExtensionVector(void){
+    return activatedExtensionVector;
 }
 
 void sdScene::addExtension(EExtension extension){
-    // tobe coded
+    activatedExtensionVector.push_back(extension);
 }
 
 void sdScene::removeExtension(EExtension extension){
-    // tobe coded
 
+    vector <EExtension>::iterator it = activatedExtensionVector.begin();
+    while (it != activatedExtensionVector.end()) {
+        if(*it == extension){
+            it = activatedExtensionVector.erase(it);
+            return;
+        }
+        it++;
+    }
 }
 
 void sdScene::dump(void){

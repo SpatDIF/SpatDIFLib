@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include "sdConst.h"
 #include "sdEntity.h"
 
 /*! a pure abstract class for entity extensions.
@@ -23,66 +24,7 @@ public:
     
     /*! value query. Sub class of this class must override this function */
     virtual void* getValue(float time, EDescriptor descriptor);
-    
 
 };
-
-/*!
- a media extension. This extension contains information about an audio media 
- */
-
-class sdEntityExtensionMedia: public sdEntityExtension{
-    friend class sdScene;
-
-protected:
-    
-    /*!
-     this constructor should be involed from an instance of sdScene
-     */
-    sdEntityExtensionMedia(){};
-    
-    string id; /*< unique identifier */
-    string type; /*< where the content comes from */
-    string location; /*< location of the file or stream*/
-    int channel; /*< If type has more channels, define the channel that is taken as input*/
-    double time_offset;/*< Starting position within media file */
-    double gain;/*< gain value of the media*/
-};
-
-
-
-class sdEntityExtensionLoop public sdEntityExtension{
-    string type;
-    double points[2];
-    double wait_time;
-};
-
-/*
-class sdEntityExtensionInterpolation: public sdEntityExtension{
-    
-    
-};
-
-class sdEntityExtensionLoop: public sdEntityExtension{
-    
-    
-};
-
-class sdEntityExtensionDistanceCue: public sdEntityExtension{
-    
-    
-};
-
-class sdEntityExtensionDirectToOne: public sdEntityExtension{
-    
-    
-};
-
-class sdEntityExtensionHaredWareOut: public sdEntityExtension{
-    
-    
-};
-
- */
 
 #endif

@@ -25,7 +25,7 @@ private:
     vector <sdEntityCore*> entityVector;
     
     /*! a vector of activated extensions */
-    vector <EExtension*> activatedExntesionVector;
+    vector <EExtension> activatedExtensionVector;
     
     /*! contains "info" part of the meta section*/
     sdInfo info;
@@ -124,7 +124,6 @@ public:
      */
     void* getValue(std::string name, float time, EDescriptor descriptor);
     
-    
     /*!
      @}
      */
@@ -134,7 +133,10 @@ public:
      */
     
     /*! returns a vector of activated extensions. The vector contains EExtensions declared in sdConst.h */
-    vector <EExtension*> getActivatedExntesionVector(void);
+    vector <EExtension> getActivatedExtensionVector(void);
+    
+    /*! returns number of activated Extensions*/
+    int getNumberOfActivatedExtensions(void);
      
     /*! activate an extension specified by enum EExtension. This function instantiates instances of the designated extension (i.e. a subclass of sdEntityExtension ) and attached them to all existing sdEntityCores in the scene. The added extensions will be also attached to all newly instantiated sdEntityCores.
      @param extension enum EExtension of extension to be added
@@ -146,6 +148,12 @@ public:
      @param extension enum EExtension of extension to be removed
      */
     void removeExtension(EExtension extension);
+
+    /*! 
+     remove all exntesions from the extensionVector and sdEntityCores in the scene.
+     The data stored in the instances of sdEntityExtension will be lost.
+     */
+    void removeAllExtensions(void);
 
     /*!
      @}
