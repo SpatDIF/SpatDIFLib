@@ -20,9 +20,13 @@ string sdSaver::XMLFromScene(sdScene *scene){
 	decl->SetValue("xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"");
 	xml.InsertEndChild(decl);
     
+    XMLElement* spatdif = xml.NewElement("spatdif");
+	xml.InsertEndChild(spatdif);
     // meta section
+    
     XMLElement* meta = xml.NewElement("meta");
-    xml.InsertEndChild(meta);
+    spatdif->SetAttribute("version", "0.3");
+    spatdif->InsertEndChild(meta);
     
     XMLElement* info = xml.NewElement("info");
     meta->InsertEndChild(info);
@@ -91,7 +95,7 @@ string sdSaver::XMLFromScene(sdScene *scene){
         XMLElement* time = xml.NewElement("time");
         XMLText* timeText = xml.NewText(event.getTimeAsString().c_str());
         time->InsertEndChild(timeText);
-        xml.InsertEndChild(time);
+        spatdif->InsertEndChild(time);
 
         XMLElement* kind;
         kind = xml.NewElement(event.getKindAsString().c_str());
@@ -105,7 +109,7 @@ string sdSaver::XMLFromScene(sdScene *scene){
         element->InsertEndChild(text);
         kind->InsertEndChild(element);
         
-        xml.InsertEndChild(kind);
+        spatdif->InsertEndChild(kind);
         ++eit;
     }
 
