@@ -15,8 +15,6 @@ class sdScene;
 class sdEntityExtensionMedia: public sdEntityExtension{
     friend class sdScene;
     
-protected:
-    
     /*!
      this constructor should be involed from an instance of sdScene
      */
@@ -29,8 +27,28 @@ protected:
     double timeOffset;/*< Starting position within media file */
     double gain;/*< gain value of the media*/
     
-public:
     static const EExtension extensionName; /*< identification of the class */
+    
+public:
+    EExtension getExtensionName(void);
+    string getExtensionNameAsString(void);
+    
+    /*!
+     query method. it simply returns a pointer to the buffer, where the designated data are stored. returns null if not found. This is a pure abstract function.
+     @param time specify time
+     @param descriptor specify descriptor defined in sdConst.h
+     */
+    void* getValue(float time, EDescriptor descriptor);
+
 };
+
+/*** inline implementation ***/
+inline EExtension sdEntityExtensionMedia::getExtensionName(void){
+    return extensionName;
+}
+
+inline string sdEntityExtensionMedia::getExtensionNameAsString(void){
+    return string("media");
+}
 
 #endif

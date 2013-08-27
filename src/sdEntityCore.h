@@ -31,7 +31,7 @@ private:
     const std::string name;
     
     /*! contains instances of sdEntityExtenstions */
-    std::vector <sdEntityExtension>extensionVector;
+    std::vector <sdEntityExtension*>extensionVector;
     
     /*! define the kind of the entity. This property is declared as const and invariable (const). */
     const EKind kind;
@@ -63,6 +63,8 @@ public:
      @param descriptor
      */
     std::set <sdEvent*, sdEventCompare>getFilteredEventSet(float start, float end, EDescriptor descriptor);
+    
+    void addExtension(sdEntityExtension *extension);
 
 };
 
@@ -76,5 +78,10 @@ inline EKind sdEntityCore::getKind(void){
 inline std::string sdEntityCore::getName(void){
     return name;
 }
+
+inline void sdEntityCore::addExtension(sdEntityExtension *extension){
+    extensionVector.push_back(extension);
+}
+
 
 #endif /* defined(____sdEntityCore__) */

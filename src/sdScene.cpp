@@ -7,6 +7,7 @@
 #include <iomanip>
 #include "sdConst.h"
 #include "sdScene.h"
+#include "sdEntityExtensionMedia.h"
 
 using namespace std;
 
@@ -30,9 +31,24 @@ unsigned int sdScene::getNumberOfEntities(void){
 sdEntityCore* sdScene::addEntity(string name, EKind kind){
     sdEntityCore* entityCore = new sdEntityCore(name, kind); // private constructor
 
-    // attach extensions here
-    
-    
+    // attach extensions to the newly created sdEntityCore.
+    vector <EExtension> ::iterator it = activatedExtensionVector.begin();
+
+    while(it != activatedExtensionVector.end()){
+        EExtension ext = *it;
+        switch (ext) {
+            case SD_MEDIA:{
+                sdEntityExtensionMedia* mediaExtension = new sdEntityExtensionMedia();
+                entityCore->addExtension(mediaExtension);
+                break;
+            }
+            default:
+                break;
+        }
+        
+        it++;
+    }
+
     
     // insert the entity in the vector
     entityVector.push_back(entityCore);

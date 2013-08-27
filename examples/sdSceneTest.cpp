@@ -32,6 +32,8 @@ int main(void){
     int numExtensions = scene.getNumberOfActivatedExtensions();
     cout << "number of active extensions: " << numExtensions << endl;
     
+    //
+    
     //attach two entities
     sdEntityCore *myEntity = scene.addEntity("myEntity"); // spawn an entity
     float pos[3] = {0.0, 0.1, 0.2};
@@ -58,6 +60,5 @@ int main(void){
         
     }
     
-
     return 0;
 }

@@ -24,7 +24,7 @@ private:
     /*! a vector of sdEntityCores */
     vector <sdEntityCore*> entityVector;
     
-    /*! a vector of activated extensions */
+    /*! a vector of activated extensions. A sdScene automatically creates sdEntityExtensions stored in this vector and attached to a sdEntityCore, when instantiated. */
     vector <EExtension> activatedExtensionVector;
     
     /*! contains "info" part of the meta section*/
