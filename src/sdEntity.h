@@ -77,16 +77,15 @@ public:
     /*!
      remove all events in the eventSet
      */
-    void removeAllEvents(); 
-    
+    void removeAllEvents();
 };
-
 
 /*** inline implementation ***/
 
 inline set<sdEvent*, sdEventCompare> sdEntity::getEventSet(void){
     return eventSet;
 }
+    
 
 
 #endif /* defined(____sdEntity__) */

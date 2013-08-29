@@ -12,7 +12,7 @@
 
 using namespace std;
 
-string sdSaver::XMLFromScene(sdScene *scene){
+string sdSaver::XMLFromScene(sdScene *scene, EOrdering ordering){
     using namespace tinyxml2;
     
     XMLDocument xml;
@@ -63,56 +63,105 @@ string sdSaver::XMLFromScene(sdScene *scene){
     annotation->InsertEndChild(annotationText);
     info->InsertEndChild(annotation);
     
+    XMLElement* order = xml.NewElement("ordering");
+    XMLText* orderingText = ordering == SD_TIME ? xml.NewText("time") : xml.NewText("track");
+    order->InsertEndChild(orderingText);
+    meta->InsertEndChild(order);
+    
     // time section
+    
     vector<sdEntityCore*> entityVector = scene->getEntityVector();
-    vector<sdEntityCore*>::iterator it = entityVector.begin();
-    set<sdGlobalEvent, sdGlobalEventCompare> allEventSet;
-    
-    while(it != entityVector.end()){
-        sdEntityCore *entity = *it;
-        set<sdEvent*, sdEventCompare> eventSet = entity->getEventSet();
-        set<sdEvent*, sdEventCompare>::iterator iit =eventSet.begin();
-        while(iit != eventSet.end()){
-            sdEvent* event = *iit;
-            sdGlobalEvent globalEvent;
-            
-            globalEvent.set(event->getTime(), event->getDescriptor(), event->getValue());
-            globalEvent.setEntityName(entity->getName());
-            globalEvent.setKind(entity->getKind());
-            
-            float* val = static_cast<float*>(event->getValue());
-            
-            allEventSet.insert(globalEvent); // gather pointer to all existing instances of sdEvent
-            ++iit;
+
+    /* ordered by time */
+    if(ordering == SD_TIME){
+        
+        // 1. pool all events in globalEvent Set
+        vector<sdEntityCore*>::iterator it = entityVector.begin();
+        set<sdGlobalEvent, sdGlobalEventCompare> allEventSet;
+        
+        while(it != entityVector.end()){
+            sdEntityCore *entity = *it;
+            set<sdEvent*, sdEventCompare> eventSet = entity->getEventSet();
+            set<sdEvent*, sdEventCompare>::iterator iit =eventSet.begin();
+            while(iit != eventSet.end()){
+                sdEvent* event = *iit;
+                sdGlobalEvent globalEvent;
+                
+                globalEvent.set(event->getTime(), event->getDescriptor(), event->getValue());
+                globalEvent.setEntityName(entity->getName());
+                globalEvent.setKind(entity->getKind());
+                
+                float* val = static_cast<float*>(event->getValue());
+                
+                allEventSet.insert(globalEvent); // gather pointer to all existing instances of sdEvent
+                ++iit;
+            }
+            ++it;
         }
-        ++it;
+
+        // 2. create string
+        set<sdGlobalEvent, sdGlobalEventCompare>::iterator eit = allEventSet.begin();
+        while(eit != allEventSet.end()){
+            sdGlobalEvent event = *eit;
+            
+            XMLElement* time = xml.NewElement("time");
+            XMLText* timeText = xml.NewText(event.getTimeAsString().c_str());
+            time->InsertEndChild(timeText);
+            spatdif->InsertEndChild(time);
+
+            XMLElement* kind;
+            kind = xml.NewElement(event.getKindAsString().c_str());
+            XMLElement* name = xml.NewElement("name");
+            XMLText* nameText = xml.NewText(event.getEntityName().c_str());
+            name->InsertEndChild(nameText);
+            kind->InsertEndChild(name);
+            
+            XMLElement* element = xml.NewElement(event.getDescriptorAsString().c_str());
+            XMLText* text = xml.NewText(event.getValueAsString().c_str());
+            element->InsertEndChild(text);
+            kind->InsertEndChild(element);
+            
+            spatdif->InsertEndChild(kind);
+            ++eit;
+        }
+
+    }else if(ordering == SD_TRACK){
+        // 1. Sort vector by name alphabetically
+        
+        sort(entityVector.begin(), entityVector.end(), sdEntityCore::sortAlphabetically);
+        vector<sdEntityCore*>::iterator it = entityVector.begin();
+
+        while(it != entityVector.end()){
+            sdEntityCore *entity = *it;
+            set<sdEvent*, sdEventCompare> eventSet = entity->getEventSet();
+            set<sdEvent*, sdEventCompare>::iterator iit = eventSet.begin();
+
+            while(iit != eventSet.end()){
+                sdEvent* event = *iit;
+                XMLElement* time = xml.NewElement("time");
+                XMLText* timeText = xml.NewText(event->getTimeAsString().c_str());
+                time->InsertEndChild(timeText);
+                spatdif->InsertEndChild(time);
+                
+                XMLElement* kind;
+                kind = xml.NewElement(entity->getKindAsString().c_str());
+                XMLElement* name = xml.NewElement("name");
+                XMLText* nameText = xml.NewText(entity->getName().c_str());
+                name->InsertEndChild(nameText);
+                kind->InsertEndChild(name);
+                
+                XMLElement* element = xml.NewElement(event->getDescriptorAsString().c_str());
+                XMLText* text = xml.NewText(event->getValueAsString().c_str());
+                element->InsertEndChild(text);
+                kind->InsertEndChild(element);
+                
+                spatdif->InsertEndChild(kind);
+                ++iit;
+            }
+            ++it;
+        }
     }
     
-    set<sdGlobalEvent, sdGlobalEventCompare>::iterator eit = allEventSet.begin();
-    while(eit != allEventSet.end()){
-        sdGlobalEvent event = *eit;
-        
-        XMLElement* time = xml.NewElement("time");
-        XMLText* timeText = xml.NewText(event.getTimeAsString().c_str());
-        time->InsertEndChild(timeText);
-        spatdif->InsertEndChild(time);
-
-        XMLElement* kind;
-        kind = xml.NewElement(event.getKindAsString().c_str());
-        XMLElement* name = xml.NewElement("name");
-        XMLText* nameText = xml.NewText(event.getEntityName().c_str());
-        name->InsertEndChild(nameText);
-        kind->InsertEndChild(name);
-        
-        XMLElement* element = xml.NewElement(event.getDescriptorAsString().c_str());
-        XMLText* text = xml.NewText(event.getValueAsString().c_str());
-        element->InsertEndChild(text);
-        kind->InsertEndChild(element);
-        
-        spatdif->InsertEndChild(kind);
-        ++eit;
-    }
-
     XMLPrinter printer;
     xml.Print(&printer);
     return string(printer.CStr());

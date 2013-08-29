@@ -8,6 +8,8 @@
 
 using namespace std;
 
+
+
 void* sdEntityCore::getValue(float time, EDescriptor descriptor){
     set<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
 
@@ -49,3 +51,4 @@ string sdEntityCore::getKindAsString(void){
     }
     return str;
 }
+

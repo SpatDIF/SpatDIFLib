@@ -68,6 +68,11 @@ public:
     
     void addExtension(sdEntityExtension *extension);
 
+    /*!
+     static function for sorting. employed by sdSaver
+     */
+    static bool sortAlphabetically( sdEntityCore *leftEntity,  sdEntityCore *rightEntity);
+
 };
 
 
@@ -85,5 +90,8 @@ inline void sdEntityCore::addExtension(sdEntityExtension *extension){
     extensionVector.push_back(extension);
 }
 
+inline bool sdEntityCore::sortAlphabetically( sdEntityCore *leftEntity,  sdEntityCore *rightEntity){
+    return leftEntity->getName().compare(rightEntity->getName()) ? false:true;
+}
 
 #endif /* defined(____sdEntityCore__) */
