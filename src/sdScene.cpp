@@ -11,7 +11,7 @@
 
 using namespace std;
 
-sdEntityCore* sdScene::getEntity(std::string name){
+sdEntityCore* sdScene::getEntity(string name){
     vector <sdEntityCore*>::iterator it = entityVector.begin();
     while( it != entityVector.end() ){
 		string entityName = (*it)->getName();
@@ -57,7 +57,7 @@ sdEntityCore* sdScene::addEntity(string name, EKind kind){
     return entityCore;
 }
 
-void sdScene::removeEntity(std::string name){
+void sdScene::removeEntity(string name){
     sdEntityCore* entity = getEntity(name);
     if(entity){
         removeEntity(entity);
@@ -75,12 +75,12 @@ void sdScene::removeEntity(sdEntityCore *entity){
     }
 }
 
-void sdScene::setValue(std::string name, float time, EDescriptor descriptor,  void* value){
+void sdScene::setValue(string name, float time, EDescriptor descriptor,  void* value){
     sdEntityCore* entity = getEntity(name);
     entity->addEvent(time, descriptor, value);
 }
 
-void* sdScene::getValue(std::string name, float time, EDescriptor descriptor){
+void* sdScene::getValue(string name, float time, EDescriptor descriptor){
     sdEntityCore* entity = getEntity(name);
     if (!entity) {
         return NULL;

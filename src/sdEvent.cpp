@@ -1,5 +1,7 @@
 #include "sdEvent.h"
 
+using namespace std;
+
 sdEvent::sdEvent(string time, string descriptor, string value){
     
     //set time from string
@@ -39,7 +41,7 @@ sdEvent::sdEvent(string time, string descriptor, string value){
 }
 
 string sdEvent::getDescriptorAsString(void){
-    std::string str;
+    string str;
     switch (descriptor) {
         case SD_PRESENT:
             str = string("present");
@@ -57,7 +59,7 @@ string sdEvent::getDescriptorAsString(void){
 }
 
 string sdEvent::getValueAsString(void){
-    std::string str;
+    string str;
     switch (descriptor) {
         case SD_PRESENT:{
             bool *present;

@@ -10,7 +10,7 @@
 
 using namespace std;
 
-sdScene sdLoader::sceneFromXML(std::string xmlString){
+sdScene sdLoader::sceneFromXML(string xmlString){
     using namespace tinyxml2;
     XMLDocument xml;
     xml.Parse(xmlString.c_str());
@@ -80,12 +80,12 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
     return scene;
 }
 
-sdScene sdLoader::sceneFromJSON(std::string jsonString){
+sdScene sdLoader::sceneFromJSON(string jsonString){
     sdScene scene;
     return scene;
 }
 
-sdScene sdLoader::sceneFromYAML(std::string yamlString){
+sdScene sdLoader::sceneFromYAML(string yamlString){
     sdScene scene;
     return scene;
 }

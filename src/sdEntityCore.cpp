@@ -6,8 +6,10 @@
 #include <iostream>
 #include "sdEntityCore.h"
 
+using namespace std;
+
 void* sdEntityCore::getValue(float time, EDescriptor descriptor){
-    std::set<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
+    set<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
 
     while(it != eventSet.end()){
         sdEvent* event = *it;
@@ -19,10 +21,10 @@ void* sdEntityCore::getValue(float time, EDescriptor descriptor){
     return NULL;
 }
 
-std::set <sdEvent*, sdEventCompare>sdEntityCore::getFilteredEventSet(float start, float end, EDescriptor descriptor){
+set <sdEvent*, sdEventCompare>sdEntityCore::getFilteredEventSet(float start, float end, EDescriptor descriptor){
     
-    std::set <sdEvent*, sdEventCompare>rangedSet;
-    std::set <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
+    set <sdEvent*, sdEventCompare>rangedSet;
+    set <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
     while(it != eventSet.end()){
         sdEvent* event = *it;
         if ( (event->getTime() >= start) && (event->getTime() <= end) && (event->getDescriptor() == descriptor)) {
@@ -33,8 +35,8 @@ std::set <sdEvent*, sdEventCompare>sdEntityCore::getFilteredEventSet(float start
     return rangedSet;
 }
 
-std::string sdEntityCore::getKindAsString(void){
-    std::string str;
+string sdEntityCore::getKindAsString(void){
+    string str;
     switch(kind) {
         case SD_SOURCE:
             str = string("source");

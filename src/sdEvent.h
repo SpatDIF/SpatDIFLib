@@ -71,7 +71,7 @@ public:
      */
     float getTime(void);
     /*!
-     returns time as std::string
+     returns time as string
      */
     string getTimeAsString(void);
     
@@ -81,7 +81,7 @@ public:
     EDescriptor getDescriptor(void);
     
     /*!
-     returns descriptor as std::string
+     returns descriptor as string
      */
     string getDescriptorAsString(void);
 
@@ -91,7 +91,7 @@ public:
     void* getValue(void);
 
     /*!
-     returns value as std::string
+     returns value as string
      */
     string getValueAsString(void);
 
@@ -167,13 +167,13 @@ public:
 class sdGlobalEvent : public sdEvent{
     
 protected:
-    std::string entityName; /*!< name of attached entity */
+    string entityName; /*!< name of attached entity */
     EKind kind; /*< kind of attached entity */
 public:
 
-    std::string getEntityName(void);
+    string getEntityName(void);
     EKind getKind(void);
-    std::string getKindAsString(void);
+    string getKindAsString(void);
 
     void setEntityName(string entityName);
     void setKind(EKind kind);

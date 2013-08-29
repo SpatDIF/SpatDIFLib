@@ -71,7 +71,7 @@ public:
     /*! search an entity in the entity vector by its name and return the pointer. returns null if the entity can not be found.
      @param name the name of a designated entity
      */
-    sdEntityCore* getEntity(std::string name);
+    sdEntityCore* getEntity(string name);
     
     /*! returns a pointer to the entityVector */
     vector <sdEntityCore*> getEntityVector(void);
@@ -82,12 +82,12 @@ public:
     /*! add a sdEntityCore to this scene. this function is the only way to generate an instance of sdEntityCore because the constructor of sdEntityCore is intentionally declared as a private function. Thus, the constcutor can be called only by its friend i.e. this class. This prevent users to create entities not attached to any sdScene. Thus, all sdSceneCore are always aware of the list of activated extensions.this function returns a pointer to the new instance of sdEntityCore.
         @param name the name of new sdEntityCore
      */
-    sdEntityCore* addEntity(std::string name, EKind kind = SD_SOURCE);
+    sdEntityCore* addEntity(string name, EKind kind = SD_SOURCE);
     
     /*! remove the sdEntityCore specified by name from the entityVector]
      @param name the name of a sdEntityCore to be removed from the entityVector
      */
-    void removeEntity(std::string name);
+    void removeEntity(string name);
     
     /*! remove the entity refered by the pointer from the entityVector
      @param entityCore a pointer to a sdEntityCore to be removed from the entityVector
@@ -113,7 +113,7 @@ public:
      @param descriptor enum of target descriptor
      @param value allocated void pointer containing value(s)
      */
-    void setValue(std::string name, float time, EDescriptor descriptor,  void* value);
+    void setValue(string name, float time, EDescriptor descriptor,  void* value);
     
     /*! query timed data by specifying name of the target entity, descriptor, and time.
      sdScene forwards the query to a proper sdEntityCore and return the answer.
@@ -122,7 +122,7 @@ public:
      @param descriptor enum of target descriptor
      @param value allocated void pointer containing value(s)
      */
-    void* getValue(std::string name, float time, EDescriptor descriptor);
+    void* getValue(string name, float time, EDescriptor descriptor);
     
     /*!
      @}

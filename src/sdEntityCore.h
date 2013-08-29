@@ -12,6 +12,8 @@
 #include "sdEntity.h"
 #include "sdEntityExtension.h"
 
+using namespace std;
+
 class sdScene;
 
 /*!
@@ -28,10 +30,10 @@ class sdEntityCore: public sdEntity{
     
 private:
     /*! the name of the entity. This name is invariable (const)*/
-    const std::string name;
+    const string name;
     
     /*! contains instances of sdEntityExtenstions */
-    std::vector <sdEntityExtension*>extensionVector;
+    vector <sdEntityExtension*>extensionVector;
     
     /*! define the kind of the entity. This property is declared as const and invariable (const). */
     const EKind kind;
@@ -41,11 +43,11 @@ private:
      @param name the name of new Entity
      @param kind the kind of new Entity. default = SD_SOURCE
      */
-    sdEntityCore(std::string name, EKind kind = SD_SOURCE) :name(name), kind(kind){} ;// constructor with an initializer
+    sdEntityCore(string name, EKind kind = SD_SOURCE) :name(name), kind(kind){} ;// constructor with an initializer
     
 public:
     /*!  returns the name of the entity */
-    std::string getName(void);
+    string getName(void);
     
     /*! returns the kind of the entity */
     EKind getKind(void);
@@ -57,12 +59,12 @@ public:
      */
     void* getValue(float time, EDescriptor descriptor);
     
-    /*! this returns a std::set of sdEvents with specified descriptor whose time parameter is between start and end time
+    /*! this returns a set of sdEvents with specified descriptor whose time parameter is between start and end time
      @param start start time
      @param end end time
      @param descriptor
      */
-    std::set <sdEvent*, sdEventCompare>getFilteredEventSet(float start, float end, EDescriptor descriptor);
+    set <sdEvent*, sdEventCompare>getFilteredEventSet(float start, float end, EDescriptor descriptor);
     
     void addExtension(sdEntityExtension *extension);
 
@@ -75,7 +77,7 @@ inline EKind sdEntityCore::getKind(void){
     return kind;
 }
 
-inline std::string sdEntityCore::getName(void){
+inline string sdEntityCore::getName(void){
     return name;
 }
 

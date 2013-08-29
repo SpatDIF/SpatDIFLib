@@ -8,6 +8,8 @@
 #include <string>
 #include "sdScene.h"
 
+using namespace std;
+
 /*!
  convert a sdScene to XML, JSON, or YAML strings
  */
@@ -17,17 +19,17 @@ public:
     /*! converts a scene to XML string
      @param sdScene a sdScene
      */
-    static std::string XMLFromScene(sdScene *scene);
+    static string XMLFromScene(sdScene *scene);
 
     /*! converts a scene to JSON string
      @param sdScene a sdScene
      */
-    static std::string JSONFromScene(sdScene *scene);
+    static string JSONFromScene(sdScene *scene);
     
     /*! converts a scene to JSON string
      @param sdScene a sdScene
      */
-    static std::string YAMLFromScene(sdScene *scene);
+    static string YAMLFromScene(sdScene *scene);
 };
 
 #endif /* defined(____sdSaver__) */

@@ -17,7 +17,7 @@ using namespace std;
 class sdEntity{
 
 protected:
-    std::set<sdEvent*, sdEventCompare> eventSet; /*!< maintains all relevant events */
+    set<sdEvent*, sdEventCompare> eventSet; /*!< maintains all relevant events */
 
 public:
     sdEntity(); /*!< constructor */
@@ -38,9 +38,9 @@ public:
     sdEvent* getEvent(float time, EDescriptor descriptor);
 
     /*!
-     return a std::set of sdEvent pointers. sorted by time.
+     return a set of sdEvent pointers. sorted by time.
      */
-    std::set<sdEvent*, sdEventCompare> getEventSet(void);
+    set<sdEvent*, sdEventCompare> getEventSet(void);
     
     /*!
      return number of registerd events in the eventSet
@@ -84,7 +84,7 @@ public:
 
 /*** inline implementation ***/
 
-inline std::set<sdEvent*, sdEventCompare> sdEntity::getEventSet(void){
+inline set<sdEvent*, sdEventCompare> sdEntity::getEventSet(void){
     return eventSet;
 }
 

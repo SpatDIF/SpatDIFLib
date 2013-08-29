@@ -5,12 +5,12 @@
 #ifndef ____sdOSCResponder__
 #define ____sdOSCResponder__
 
-
+using namespace std;
 
 class sdOSCResponder{
     
 private:
-    std::string destIP;
+    string destIP;
     unsigned int destPort;
     unsigned int port;
 

@@ -10,6 +10,8 @@
 #include "sdConst.h"
 #include "sdEntity.h"
 
+using namespace std;
+
 /*! a pure abstract class for entity extensions.
   the subclasses of this class must override getValue function
  */
@@ -17,10 +19,10 @@ class sdEntityExtension: public sdEntity{
     
 protected:
     /*! sub classes must define their descriptors*/
-    const static std::vector <EDescriptor>descriptors;
+    const static vector <EDescriptor>descriptors;
 public:
     /*! returns vector of EDescriptor that a subclass of this class is responsible for */
-    static std::vector<EDescriptor> getDescriptors(void);
+    static vector<EDescriptor> getDescriptors(void);
     
     /*! value query. Sub class of this class must override this function */
     virtual void* getValue(float time, EDescriptor descriptor) = 0;
