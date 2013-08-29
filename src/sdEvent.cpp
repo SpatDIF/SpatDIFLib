@@ -37,6 +37,7 @@ sdEvent::sdEvent(string time, string descriptor, string value){
             setValue(sdEvent::descriptor, static_cast<void*>(&orientation));
             break;
         }
+
     }
 }
 
