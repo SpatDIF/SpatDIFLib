@@ -85,12 +85,7 @@ string sdSaver::XMLFromScene(sdScene *scene, EOrdering ordering){
             set<sdEvent*, sdEventCompare>::iterator iit =eventSet.begin();
             while(iit != eventSet.end()){
                 sdEvent* event = *iit;
-                sdGlobalEvent globalEvent;
-                
-                globalEvent.set(event->getTime(), event->getDescriptor(), event->getValue());
-                globalEvent.setEntityName(entity->getName());
-                globalEvent.setKind(entity->getKind());
-                
+                sdGlobalEvent globalEvent(event, entity->getName(), entity->getKind());
                 float* val = static_cast<float*>(event->getValue());
                 
                 allEventSet.insert(globalEvent); // gather pointer to all existing instances of sdEvent

@@ -38,13 +38,13 @@ protected:
     /*! 
      this constructor facilitates to load string based data to the entity. it converts all strings to proper data types and invoke the function above.
      */
-    virtual sdEvent(string time, string descriptor, string value) = 0;
+    sdEvent(string time, string descriptor, string value);
     
     /*!
      internal functions for conversion from Enum to string
      @param descriptor descriptor declared in sdConst.h
      */
-    virtual string convert(EDescriptor descriptor) = 0;
+     virtual string convert(EDescriptor descriptor) = 0;
     
     /*!
      internal functions for conversion from Enum to string
@@ -157,63 +157,6 @@ public:
             return true;
         else
             return false;
-    }
-};
-
-/*!
- a helper class for sdSaver. It should not be instantiated directly.
- */
-class sdGlobalEvent : public sdEvent{
-    
-protected:
-    string entityName; /*!< name of attached entity */
-    EKind kind; /*< kind of attached entity */
-public:
-
-    string getEntityName(void);
-    EKind getKind(void);
-    string getKindAsString(void);
-
-    void setEntityName(string entityName);
-    void setKind(EKind kind);
-};
-
-/*** inline imlmentation ***/
-
-inline string sdGlobalEvent::getEntityName(void){
-    return entityName;
-}
-
-inline EKind sdGlobalEvent::getKind(void){
-    return kind;
-}
-
-inline void sdGlobalEvent::setEntityName(string entityName){
-    sdGlobalEvent::entityName = entityName;
-}
-
-inline void sdGlobalEvent::setKind(EKind kind){
-    sdGlobalEvent::kind = kind;
-}
-
-/*!
- a helper class for sorting a vector of sdGlobalEvent 
- */
-class sdGlobalEventCompare{
-public:
-    bool operator()(sdGlobalEvent e1, sdGlobalEvent e2){
-        if(e1.getTime() < e2.getTime()){
-            return true;
-        }else if(e1.getTime() == e2.getTime()){
-            if(e1.getKind() == SD_SOURCE){ // source first then sink
-                return true;
-            }else{
-                return false;
-            }
-        }
-        else{
-            return false;
-        }
     }
 };
 

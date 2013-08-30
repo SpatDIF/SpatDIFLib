@@ -72,6 +72,10 @@ public:
      */
     void* getValue(float time, EDescriptor descriptor);
     
+    
+    sdEventCore* addEvent(float time, EDescriptor descriptor, void* value) = 0;
+    sdEventCore* addEvent(string time, string descriptor, string value) = 0;
+    
     /*! this returns a set of sdEvents with specified descriptor whose time parameter is between start and end time
      @param start start time
      @param end end time

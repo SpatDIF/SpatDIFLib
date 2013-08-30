@@ -50,8 +50,8 @@ public:
     /*!
      this function is the only way to instantiate sdEvent and this function is responsible for allocating the void pointer properly based on the provoded descriptor
      */
-    sdEvent* addEvent(float time, EDescriptor descriptor, void* value);
-    sdEvent* addEvent(string time, string descriptor, string value);
+    virtual sdEvent* addEvent(float time, EDescriptor descriptor, void* value) = 0;
+    virtual sdEvent* addEvent(string time, string descriptor, string value) = 0;
 
     /*<
      remove an event from the set
