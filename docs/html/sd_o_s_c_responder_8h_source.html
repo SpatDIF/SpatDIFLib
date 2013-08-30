@@ -96,26 +96,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef ____sdOSCResponder__</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ____sdOSCResponder__</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="sd_scene_8h.html">sdScene.h</a>&quot;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="code" href="classsd_o_s_c_responder.html">   10</a></span>&#160;<span class="keyword">class </span><a class="code" href="classsd_o_s_c_responder.html">sdOSCResponder</a>{</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    std::string destIP;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> destPort;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> port;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classsd_o_s_c_responder.html#a5f1b65847cb677ccb8d05ed419bf0d84">begin</a>();</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classsd_o_s_c_responder.html#a05961ad66e55caa5c9429091f2a6fabf">end</a>();</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;};</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* defined(____sdOSCResponder__) */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">using namespace </span>std;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="code" href="classsd_o_s_c_responder.html">   12</a></span>&#160;<span class="keyword">class </span><a class="code" href="classsd_o_s_c_responder.html">sdOSCResponder</a>{</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <a class="code" href="classsd_scene.html">sdScene</a> *scene;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keywordtype">float</span> time;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="code" href="classsd_o_s_c_responder.html">sdOSCResponder</a>(<a class="code" href="classsd_scene.html">sdScene</a> *scene);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordtype">void</span> forwardOSCMessage(<span class="keywordtype">string</span> oscMessage);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;};</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* defined(____sdOSCResponder__) */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Aug 24 2013 10:34:35 for spatdiflib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Aug 30 2013 16:34:10 for spatdiflib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

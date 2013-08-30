@@ -1,12 +1,15 @@
 var searchData=
 [
-  ['scenefromjson',['sceneFromJSON',['../classsd_loader.html#aa393a809b93dd82167989591918b6808',1,'sdLoader']]],
-  ['scenefromxml',['sceneFromXML',['../classsd_loader.html#adc640420a901d7bdfb5afff5f6aa6449',1,'sdLoader']]],
-  ['scenefromyaml',['sceneFromYAML',['../classsd_loader.html#a26c088d624345e4a89d380bb42730661',1,'sdLoader']]],
+  ['scenefromjson',['sceneFromJSON',['../classsd_loader.html#a90eb4d4a140652fc18f7bc0551870020',1,'sdLoader']]],
+  ['scenefromxml',['sceneFromXML',['../classsd_loader.html#ab3d7cf4919f50673ec7f9649a9be09b1',1,'sdLoader']]],
+  ['scenefromyaml',['sceneFromYAML',['../classsd_loader.html#a24284eaae62db9e18ae7866c5f2704f4',1,'sdLoader']]],
   ['sddate',['sdDate',['../classsd_date.html#a2a3837141d6bbc2f229b8d65fbe5f711',1,'sdDate::sdDate(bool autoInit=true)'],['../classsd_date.html#ae35223603f3187bd1528c5d9bebc5657',1,'sdDate::sdDate(unsigned short year, unsigned short month, unsigned short day)'],['../classsd_date.html#ae47e330a34bd908d1b0860f72351665c',1,'sdDate::sdDate(string dateString)']]],
   ['sdentity',['sdEntity',['../classsd_entity.html#a1f5b664b74435796d27ef559171e370a',1,'sdEntity']]],
-  ['sdevent',['sdEvent',['../classsd_event.html#ac608ecec6aea59de835cabdfbb81876f',1,'sdEvent::sdEvent(void)'],['../classsd_event.html#a4a0e67f4b111f3c73c3061c18594af4f',1,'sdEvent::sdEvent(float time, EDescriptor descriptor, void *value)'],['../classsd_event.html#acd13940bbe94428ca7334f443b20bce0',1,'sdEvent::sdEvent(string time, string descriptor, string value)']]],
+  ['sdevent',['sdEvent',['../classsd_event.html#ac608ecec6aea59de835cabdfbb81876f',1,'sdEvent']]],
+  ['sdeventcore',['sdEventCore',['../classsd_event_core.html#aed2b9c6115df76f3d8b16d486ecf6391',1,'sdEventCore::sdEventCore(float time, EDescriptor descriptor, void *value)'],['../classsd_event_core.html#af7abb109e0c02cbcf8d92ecb187d9a6f',1,'sdEventCore::sdEventCore(string time, string descriptor, string value)']]],
+  ['sdglobalevent',['sdGlobalEvent',['../classsd_global_event.html#a51d485074d373b0fbcf5b5660ca7c5f6',1,'sdGlobalEvent']]],
   ['sdinfo',['sdInfo',['../classsd_info.html#ae67c685d8bd350b5b4bdaa9aef32b0d2',1,'sdInfo::sdInfo()'],['../classsd_info.html#ace53df78389174e3c937be3d3bd53d2e',1,'sdInfo::sdInfo(string author, string host, sdDate date, string session, string location, string annotation)'],['../classsd_info.html#a8f8f36a491ca84101b4d833001390c7a',1,'sdInfo::sdInfo(string author, string host, string date, string session, string location, string annotation)']]],
+  ['sdoscresponder',['sdOSCResponder',['../classsd_o_s_c_responder.html#a6d6997b15cbad76b699cb62c0013a716',1,'sdOSCResponder']]],
   ['sdscene',['sdScene',['../classsd_scene.html#a962f5309edf7e3866522b1bdc60c68b4',1,'sdScene::sdScene(void)'],['../classsd_scene.html#ae94bf3b24b2719f0721a5aeac016645f',1,'sdScene::sdScene(sdInfo info)']]],
   ['set',['set',['../classsd_event.html#aa29c78726ad7279dc14ffb18a211a9bc',1,'sdEvent::set()'],['../classsd_info.html#a1ef4e47b9b6e57b3cf651070fa843bc8',1,'sdInfo::set()']]],
   ['setannotation',['setAnnotation',['../classsd_info.html#adb14ece5126bc347f00e4d6a2b3c19d5',1,'sdInfo']]],
@@ -14,14 +17,13 @@ var searchData=
   ['setcurrentdate',['setCurrentDate',['../classsd_date.html#a29e61e0cafc997d8487f346e44eee9db',1,'sdDate']]],
   ['setdate',['setDate',['../classsd_date.html#ad2e035bfedf0adc4cef4899b10fb309a',1,'sdDate::setDate(unsigned short year, unsigned short month, unsigned short day)'],['../classsd_date.html#ac13276efe0c9967147f334c74e321eff',1,'sdDate::setDate(string dateString)'],['../classsd_info.html#a804743b40da45751cda131149c8c616f',1,'sdInfo::setDate(sdDate date)'],['../classsd_info.html#a5ba13dfa2c696b8e46927ef2fc87ab5f',1,'sdInfo::setDate(string date)']]],
   ['setday',['setDay',['../classsd_date.html#ac190021f804a2cdc30b6845169883ba1',1,'sdDate']]],
-  ['setentityname',['setEntityName',['../classsd_global_event.html#ace1b31153a840fc16b1c5ac6518f9609',1,'sdGlobalEvent']]],
   ['sethost',['setHost',['../classsd_info.html#a297e4c88aec05ec55b43889f763095ac',1,'sdInfo']]],
   ['setinfo',['setInfo',['../classsd_scene.html#ac7abc33a62fa0934f00b30bda8a69541',1,'sdScene']]],
-  ['setkind',['setKind',['../classsd_global_event.html#add4bc0d4d9fe6f1bcfb839707fa25d76',1,'sdGlobalEvent']]],
   ['setlocation',['setLocation',['../classsd_info.html#a7c1dd7da9d8e19f76cc372636326b078',1,'sdInfo']]],
   ['setmonth',['setMonth',['../classsd_date.html#a98be3256362ecb3379d04a7746373017',1,'sdDate']]],
   ['setsession',['setSession',['../classsd_info.html#ac5a8019293a84ffcd56f48fcfaf70cb7',1,'sdInfo']]],
   ['settime',['setTime',['../classsd_event.html#af33c65a8dd2d1c63eca3b120a0c79d67',1,'sdEvent']]],
-  ['setvalue',['setValue',['../classsd_event.html#a8f92a93e8ff22d988c464b28b07c6f4b',1,'sdEvent::setValue()'],['../classsd_scene.html#a7c437de39566709d26171d153fbd701e',1,'sdScene::setValue()']]],
-  ['setyear',['setYear',['../classsd_date.html#a774e1d347ece62e812d315633899d878',1,'sdDate']]]
+  ['setvalue',['setValue',['../classsd_event.html#a7ce9d1fc546b3fa4962a196d014e1b08',1,'sdEvent::setValue()'],['../classsd_event_core.html#a408255b78cd6139007a4740da442d9c5',1,'sdEventCore::setValue()'],['../classsd_scene.html#a3d794886e19997e5de6ea6e99109383b',1,'sdScene::setValue()']]],
+  ['setyear',['setYear',['../classsd_date.html#a774e1d347ece62e812d315633899d878',1,'sdDate']]],
+  ['sortalphabetically',['sortAlphabetically',['../classsd_entity_core.html#a4cdcaf53be00654310d23d2fc69facef',1,'sdEntityCore']]]
 ];

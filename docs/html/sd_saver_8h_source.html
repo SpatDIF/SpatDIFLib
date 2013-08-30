@@ -99,21 +99,85 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="sd_scene_8h.html">sdScene.h</a>&quot;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="code" href="classsd_saver.html">   14</a></span>&#160;<span class="keyword">class </span><a class="code" href="classsd_saver.html">sdSaver</a></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="classsd_saver.html#a2095f1dd3d75b3f5d5f9ae323fa0f971">XMLFromScene</a>(<a class="code" href="classsd_scene.html">sdScene</a> *scene);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="classsd_saver.html#ab96d1c2eb9f435fb800b02d0f8f26ad2">JSONFromScene</a>(<a class="code" href="classsd_scene.html">sdScene</a> *scene);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">static</span> std::string <a class="code" href="classsd_saver.html#ab753a5152b5b0d9690706ecf88bfa462">YAMLFromScene</a>(<a class="code" href="classsd_scene.html">sdScene</a> *scene);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;};</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* defined(____sdSaver__) */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">using namespace </span>std;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="code" href="classsd_saver.html">   16</a></span>&#160;<span class="keyword">class </span><a class="code" href="classsd_saver.html">sdSaver</a></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="code" href="classsd_saver.html#a552c8e986b3e7b5e7f38e7ff651fb056">   19</a></span>&#160;    <span class="keyword">typedef</span> <span class="keyword">enum</span> {</div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="code" href="classsd_saver.html#a552c8e986b3e7b5e7f38e7ff651fb056a1f91b0599d5cb607a215da4e825bc56f">   20</a></span>&#160;        <a class="code" href="classsd_saver.html#a552c8e986b3e7b5e7f38e7ff651fb056a1f91b0599d5cb607a215da4e825bc56f">SD_TIME</a>,</div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="code" href="classsd_saver.html#a552c8e986b3e7b5e7f38e7ff651fb056a0bb29ab1269efd658386033a07a03efa">   21</a></span>&#160;        SD_TRACK</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    } EOrdering;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">string</span> XMLFromScene(<a class="code" href="classsd_scene.html">sdScene</a> *scene, EOrdering ordering = SD_TIME);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">string</span> JSONFromScene(<a class="code" href="classsd_scene.html">sdScene</a> *scene);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">string</span> YAMLFromScene(<a class="code" href="classsd_scene.html">sdScene</a> *scene);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;};</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="code" href="classsd_global_event.html">   46</a></span>&#160;<span class="keyword">class </span><a class="code" href="classsd_global_event.html">sdGlobalEvent</a>{</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="classsd_event.html">sdEvent</a> *event; <span class="comment">/*&lt; a pointer to event */</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">string</span> entityName; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <a class="code" href="sd_const_8h.html#a90240a380b9e4422246ca2141cfc3674">EKind</a> kind; <span class="comment">/*&lt; kind of attached entity */</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <a class="code" href="classsd_global_event.html">sdGlobalEvent</a>(<a class="code" href="classsd_event.html">sdEvent</a> *event, <span class="keywordtype">string</span> entityName, <a class="code" href="sd_const_8h.html#a90240a380b9e4422246ca2141cfc3674">EKind</a> kind);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <a class="code" href="classsd_event.html">sdEvent</a>* getEvent(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">string</span> getEntityName(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="sd_const_8h.html#a90240a380b9e4422246ca2141cfc3674">EKind</a> getKind(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">string</span> getKindAsString(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;};</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment">/*** inline implementation ***/</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="code" href="classsd_global_event.html#a51d485074d373b0fbcf5b5660ca7c5f6">   64</a></span>&#160;<span class="keyword">inline</span> <a class="code" href="classsd_global_event.html#a51d485074d373b0fbcf5b5660ca7c5f6">sdGlobalEvent::sdGlobalEvent</a>(<a class="code" href="classsd_event.html">sdEvent</a> *event, <span class="keywordtype">string</span> entityName, <a class="code" href="sd_const_8h.html#a90240a380b9e4422246ca2141cfc3674">EKind</a> kind){</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    sdGlobalEvent::event = event;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    sdGlobalEvent::entityName = entityName;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    sdGlobalEvent::kind = kind;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;}</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="code" href="classsd_global_event.html#adaed6293abb3b24fc34705659114a2c6">   70</a></span>&#160;<span class="keyword">inline</span> <a class="code" href="classsd_event.html">sdEvent</a>* <a class="code" href="classsd_global_event.html#adaed6293abb3b24fc34705659114a2c6">sdGlobalEvent::getEvent</a>(<span class="keywordtype">void</span>){</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordflow">return</span> event;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="code" href="classsd_global_event.html#a6003837be549e8728c7207255f0455fb">   74</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">string</span> <a class="code" href="classsd_global_event.html#a6003837be549e8728c7207255f0455fb">sdGlobalEvent::getEntityName</a>(<span class="keywordtype">void</span>){</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordflow">return</span> entityName;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;}</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="code" href="classsd_global_event.html#a65187e0ce5bd3a36a43c15aa6b46c8ce">   78</a></span>&#160;<span class="keyword">inline</span> <a class="code" href="sd_const_8h.html#a90240a380b9e4422246ca2141cfc3674">EKind</a> <a class="code" href="classsd_global_event.html#a65187e0ce5bd3a36a43c15aa6b46c8ce">sdGlobalEvent::getKind</a>(<span class="keywordtype">void</span>){</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordflow">return</span> kind;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00087"></a><span class="lineno"><a class="code" href="classsd_global_event_compare.html">   87</a></span>&#160;<span class="keyword">class </span><a class="code" href="classsd_global_event_compare.html">sdGlobalEventCompare</a>{</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="code" href="classsd_global_event_compare.html#a023faa3ab3a35e60324ad43d79d922a5">   89</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classsd_global_event_compare.html#a023faa3ab3a35e60324ad43d79d922a5">operator()</a>(<a class="code" href="classsd_global_event.html">sdGlobalEvent</a> e1, <a class="code" href="classsd_global_event.html">sdGlobalEvent</a> e2){</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <span class="keywordflow">if</span>(e1.<a class="code" href="classsd_global_event.html#adaed6293abb3b24fc34705659114a2c6">getEvent</a>()-&gt;<a class="code" href="classsd_event.html#af53aac6620476deff34a2b87a2939144">getTime</a>() &lt; e2.<a class="code" href="classsd_global_event.html#adaed6293abb3b24fc34705659114a2c6">getEvent</a>()-&gt;<a class="code" href="classsd_event.html#af53aac6620476deff34a2b87a2939144">getTime</a>()){</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(e1.<a class="code" href="classsd_global_event.html#adaed6293abb3b24fc34705659114a2c6">getEvent</a>()-&gt;<a class="code" href="classsd_event.html#af53aac6620476deff34a2b87a2939144">getTime</a>() == e2.<a class="code" href="classsd_global_event.html#adaed6293abb3b24fc34705659114a2c6">getEvent</a>()-&gt;<a class="code" href="classsd_event.html#af53aac6620476deff34a2b87a2939144">getTime</a>()){</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            <span class="keywordflow">if</span>(e1.<a class="code" href="classsd_global_event.html#a65187e0ce5bd3a36a43c15aa6b46c8ce">getKind</a>() == <a class="code" href="sd_const_8h.html#a90240a380b9e4422246ca2141cfc3674ad40d246452bce8c81267f9151b3c71eb">SD_SOURCE</a>){ <span class="comment">// source first then sink</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            }</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        }</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        }</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    }</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;};</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* defined(____sdSaver__) */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Aug 24 2013 10:34:35 for spatdiflib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Aug 30 2013 16:34:10 for spatdiflib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

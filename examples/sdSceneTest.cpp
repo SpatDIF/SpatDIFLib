@@ -32,12 +32,12 @@ int main(void){
     int numExtensions = scene.getNumberOfActivatedExtensions();
     cout << "number of active extensions: " << numExtensions << endl;
     
-    //
     
     //attach two entities
     sdEntityCore *myEntity = scene.addEntity("myEntity"); // spawn an entity
     float pos[3] = {0.0, 0.1, 0.2};
     myEntity->addEvent(0.2, SD_POSITION, static_cast<void*>(pos));
+    
     
     sdEntityCore *yourEntity = scene.addEntity("yourEntity"); // spawn an entity
 

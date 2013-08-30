@@ -1,9 +1,11 @@
 <map id="src/sdEntityCore.h" name="src/sdEntityCore.h">
-<area shape="rect" id="node2" href="$sd_entity_core_8cpp.html" title="src/sdEntityCore.cpp" alt="" coords="5,80,149,107"/>
-<area shape="rect" id="node3" href="$sd_scene_8h.html" title="src/sdScene.h" alt="" coords="175,80,281,107"/>
-<area shape="rect" id="node4" href="$sd_loader_8h.html" title="src/sdLoader.h" alt="" coords="34,155,144,181"/>
-<area shape="rect" id="node6" href="$sd_saver_8cpp.html" title="src/sdSaver.cpp" alt="" coords="195,229,312,256"/>
-<area shape="rect" id="node7" href="$sd_saver_8h.html" title="src/sdSaver.h" alt="" coords="220,155,324,181"/>
-<area shape="rect" id="node8" href="$sd_scene_8cpp.html" title="src/sdScene.cpp" alt="" coords="348,155,468,181"/>
-<area shape="rect" id="node5" href="$sd_loader_8cpp.html" title="src/sdLoader.cpp" alt="" coords="27,229,151,256"/>
+<area shape="rect" id="node2" href="$sd_entity_core_8cpp.html" title="src/sdEntityCore.cpp" alt="" coords="133,80,277,107"/>
+<area shape="rect" id="node3" href="$sd_scene_8h.html" title="src/sdScene.h" alt="" coords="303,80,409,107"/>
+<area shape="rect" id="node4" href="$sd_loader_8h.html" title="src/sdLoader.h" alt="" coords="18,155,128,181"/>
+<area shape="rect" id="node6" href="$sd_o_s_c_responder_8h.html" title="src/sdOSCResponder.h" alt="" coords="156,155,319,181"/>
+<area shape="rect" id="node8" href="$sd_saver_8cpp.html" title="src/sdSaver.cpp" alt="" coords="365,229,483,256"/>
+<area shape="rect" id="node9" href="$sd_saver_8h.html" title="src/sdSaver.h" alt="" coords="393,155,497,181"/>
+<area shape="rect" id="node10" href="$sd_scene_8cpp.html" title="src/sdScene.cpp" alt="" coords="521,155,641,181"/>
+<area shape="rect" id="node5" href="$sd_loader_8cpp.html" title="src/sdLoader.cpp" alt="" coords="5,229,128,256"/>
+<area shape="rect" id="node7" href="$sd_o_s_c_responder_8cpp.html" title="src/sdOSCResponder.cpp" alt="" coords="153,229,329,256"/>
 </map>

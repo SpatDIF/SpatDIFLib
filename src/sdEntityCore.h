@@ -9,7 +9,6 @@
 #include <set>
 #include <string>
 #include "sdConst.h"
-#include "sdEvent.h"
 #include "sdEntity.h"
 #include "sdEntityExtension.h"
 
@@ -25,7 +24,20 @@ class sdEventCore: public sdEvent{
     friend class sdEntityCore;
 
 public:
-    sdEventCore(float time, EDescriptor descriptor, void* value) : sdEvent(time,descriptor,value){};
+    /*!
+     constructor with initialization.
+     @param time time of the event
+     @param descriptor descriptor of the event. declared in sdConst.h
+     @param value void pointer to value to be copied. Proper size of memory will be internally allocated.
+     */
+    sdEventCore(float time, EDescriptor descriptor, void* value);
+    
+    /*!
+     constructor with initialization.
+     @param time time of the event
+     @param descriptor descriptor of the event. declared in sdConst.h
+     @param value void pointer to value to be copied. Proper size of memory will be internally allocated.
+     */
     sdEventCore(string time, string descriptor, string value);
 
     string getDescriptorAsString(void);
@@ -39,11 +51,26 @@ public:
     int convert(std::string);
 };
 
+/*** inline implementation ***/
+inline sdEventCore::sdEventCore(float time, EDescriptor descriptor, void* value){
+    sdEventCore::time = time;
+    sdEventCore::descriptor = descriptor;
+    setValue(descriptor, value);
+}
+
+
+
+/*!
+ this constructor facilitates to load string based data to the entity. it converts all strings to proper data types and invoke the function above.
+ */
+
+
+
 
 class sdScene;
 
 /*!
- sdEntityCore is responsible for 
+ sdEntityCore is responsible for
  - identifing its kind (source or sink)
  - maintaining its events
  - managing extensions

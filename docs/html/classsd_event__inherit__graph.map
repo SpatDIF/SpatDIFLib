@@ -1,3 +1,3 @@
 <map id="sdEvent" name="sdEvent">
-<area shape="rect" id="node2" href="$classsd_global_event.html" title="{sdGlobalEvent\n|# entityName\l# kind\l|+ getEntityName()\l+ getKind()\l+ getKindAsString()\l+ setEntityName()\l+ setKind()\l}" alt="" coords="22,382,159,533"/>
+<area shape="rect" id="node2" href="$classsd_event_core.html" title="{sdEventCore\n||+ sdEventCore()\l+ sdEventCore()\l+ getDescriptorAsString()\l+ getValueAsString()\l+ setValue()\l+ convert()\l+ convert()\l+ convert()\l+ convert()\l}" alt="" coords="5,352,176,547"/>
 </map>

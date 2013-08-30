@@ -1,3 +1,2 @@
 <map id="sdGlobalEvent" name="sdGlobalEvent">
-<area shape="rect" id="node2" href="$classsd_event.html" title="{sdEvent\n|# time\l# descriptor\l# value\l|+ getTime()\l+ getTimeAsString()\l+ getDescriptor()\l+ getDescriptorAsString()\l+ getValue()\l+ getValueAsString()\l+ set()\l+ setTime()\l+ setValue()\l# sdEvent()\l# sdEvent()\l# sdEvent()\l# convert()\l# convert()\l# convert()\l# convert()\l}" alt="" coords="5,6,176,333"/>
 </map>

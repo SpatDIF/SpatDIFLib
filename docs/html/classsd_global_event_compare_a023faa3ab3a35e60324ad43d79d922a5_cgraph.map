@@ -1,4 +1,5 @@
 <map id="sdGlobalEventCompare::operator()" name="sdGlobalEventCompare::operator()">
-<area shape="rect" id="node2" href="$classsd_event.html#af53aac6620476deff34a2b87a2939144" title="sdEvent::getTime" alt="" coords="237,5,363,32"/>
-<area shape="rect" id="node3" href="$classsd_global_event.html#a65187e0ce5bd3a36a43c15aa6b46c8ce" title="sdGlobalEvent::getKind" alt="" coords="219,56,381,83"/>
+<area shape="rect" id="node2" href="$classsd_global_event.html#adaed6293abb3b24fc34705659114a2c6" title="sdGlobalEvent::getEvent" alt="" coords="219,5,389,32"/>
+<area shape="rect" id="node3" href="$classsd_event.html#af53aac6620476deff34a2b87a2939144" title="sdEvent::getTime" alt="" coords="241,56,367,83"/>
+<area shape="rect" id="node4" href="$classsd_global_event.html#a65187e0ce5bd3a36a43c15aa6b46c8ce" title="sdGlobalEvent::getKind" alt="" coords="223,107,385,133"/>
 </map>

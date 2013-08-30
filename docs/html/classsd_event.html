@@ -87,20 +87,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
-<a href="#friends">Friends</a> &#124;
 <a href="classsd_event-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">sdEvent Class Reference</div>  </div>
+<div class="title">sdEvent Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="sd_event_8h_source.html">sdEvent.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="sd_entity_8h_source.html">sdEntity.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for sdEvent:</div>
 <div class="dyncontent">
 <div class="center"><img src="classsd_event__inherit__graph.png" border="0" usemap="#sd_event_inherit__map" alt="Inheritance graph"/></div>
 <map name="sd_event_inherit__map" id="sd_event_inherit__map">
-<area shape="rect" id="node2" href="classsd_global_event.html" title="{sdGlobalEvent\n|# entityName\l# kind\l|+ getEntityName()\l+ getKind()\l+ getKindAsString()\l+ setEntityName()\l+ setKind()\l}" alt="" coords="22,382,159,533"/></map>
+<area shape="rect" id="node2" href="classsd_event_core.html" title="{sdEventCore\n||+ sdEventCore()\l+ sdEventCore()\l+ getDescriptorAsString()\l+ getValueAsString()\l+ setValue()\l+ convert()\l+ convert()\l+ convert()\l+ convert()\l}" alt="" coords="5,352,176,547"/></map>
 </div>
 <div class="dynheader">
 Collaboration diagram for sdEvent:</div>
@@ -118,35 +117,31 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a43dc0ffb37fdf843cc8bd3888dd7289f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a553bef7960cf0391f7e01990878aa416"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#a553bef7960cf0391f7e01990878aa416">getDescriptor</a> (void)</td></tr>
 <tr class="separator:a553bef7960cf0391f7e01990878aa416"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a809ea1f03a1bd97e6ad5b1e4089730f9"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#a809ea1f03a1bd97e6ad5b1e4089730f9">getDescriptorAsString</a> (void)</td></tr>
-<tr class="separator:a809ea1f03a1bd97e6ad5b1e4089730f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b6810faec49cbc26bbfd300e307c079"><td class="memItemLeft" align="right" valign="top">virtual string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#a0b6810faec49cbc26bbfd300e307c079">getDescriptorAsString</a> (void)=0</td></tr>
+<tr class="separator:a0b6810faec49cbc26bbfd300e307c079"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adba2ca29642bd8d730dfdc3acadeeb00"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#adba2ca29642bd8d730dfdc3acadeeb00">getValue</a> (void)</td></tr>
 <tr class="separator:adba2ca29642bd8d730dfdc3acadeeb00"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37f410cfebe61902749541d7aedef7c4"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#a37f410cfebe61902749541d7aedef7c4">getValueAsString</a> (void)</td></tr>
-<tr class="separator:a37f410cfebe61902749541d7aedef7c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2941bfbdbb11cb95d16bcbc50c19a161"><td class="memItemLeft" align="right" valign="top">virtual string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#a2941bfbdbb11cb95d16bcbc50c19a161">getValueAsString</a> (void)=0</td></tr>
+<tr class="separator:a2941bfbdbb11cb95d16bcbc50c19a161"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa29c78726ad7279dc14ffb18a211a9bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#aa29c78726ad7279dc14ffb18a211a9bc">set</a> (float <a class="el" href="classsd_event.html#acae2a2d194ffa5bcddb6887776cc20cc">time</a>, <a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> <a class="el" href="classsd_event.html#a6b5ee5d12ff097979081b55bd99d111e">descriptor</a>, void *<a class="el" href="classsd_event.html#a496d422060cf18b8d58327390cb720de">value</a>)</td></tr>
 <tr class="separator:aa29c78726ad7279dc14ffb18a211a9bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af33c65a8dd2d1c63eca3b120a0c79d67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#af33c65a8dd2d1c63eca3b120a0c79d67">setTime</a> (float <a class="el" href="classsd_event.html#acae2a2d194ffa5bcddb6887776cc20cc">time</a>)</td></tr>
 <tr class="separator:af33c65a8dd2d1c63eca3b120a0c79d67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f92a93e8ff22d988c464b28b07c6f4b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#a8f92a93e8ff22d988c464b28b07c6f4b">setValue</a> (<a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> <a class="el" href="classsd_event.html#a6b5ee5d12ff097979081b55bd99d111e">descriptor</a>, void *<a class="el" href="classsd_event.html#a496d422060cf18b8d58327390cb720de">value</a>)</td></tr>
-<tr class="separator:a8f92a93e8ff22d988c464b28b07c6f4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ce9d1fc546b3fa4962a196d014e1b08"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#a7ce9d1fc546b3fa4962a196d014e1b08">setValue</a> (<a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> <a class="el" href="classsd_event.html#a6b5ee5d12ff097979081b55bd99d111e">descriptor</a>, void *<a class="el" href="classsd_event.html#a496d422060cf18b8d58327390cb720de">value</a>)=0</td></tr>
+<tr class="separator:a7ce9d1fc546b3fa4962a196d014e1b08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:ac608ecec6aea59de835cabdfbb81876f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#ac608ecec6aea59de835cabdfbb81876f">sdEvent</a> (void)</td></tr>
 <tr class="separator:ac608ecec6aea59de835cabdfbb81876f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a0e67f4b111f3c73c3061c18594af4f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#a4a0e67f4b111f3c73c3061c18594af4f">sdEvent</a> (float <a class="el" href="classsd_event.html#acae2a2d194ffa5bcddb6887776cc20cc">time</a>, <a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> <a class="el" href="classsd_event.html#a6b5ee5d12ff097979081b55bd99d111e">descriptor</a>, void *<a class="el" href="classsd_event.html#a496d422060cf18b8d58327390cb720de">value</a>)</td></tr>
-<tr class="separator:a4a0e67f4b111f3c73c3061c18594af4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd13940bbe94428ca7334f443b20bce0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#acd13940bbe94428ca7334f443b20bce0">sdEvent</a> (string <a class="el" href="classsd_event.html#acae2a2d194ffa5bcddb6887776cc20cc">time</a>, string <a class="el" href="classsd_event.html#a6b5ee5d12ff097979081b55bd99d111e">descriptor</a>, string <a class="el" href="classsd_event.html#a496d422060cf18b8d58327390cb720de">value</a>)</td></tr>
-<tr class="separator:acd13940bbe94428ca7334f443b20bce0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac43b2658e6cb0e8aea27231e1f28ccac"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#ac43b2658e6cb0e8aea27231e1f28ccac">convert</a> (<a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> <a class="el" href="classsd_event.html#a6b5ee5d12ff097979081b55bd99d111e">descriptor</a>)</td></tr>
-<tr class="separator:ac43b2658e6cb0e8aea27231e1f28ccac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5cb83f5b20b65eb05b49389064db6c43"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#a5cb83f5b20b65eb05b49389064db6c43">convert</a> (<a class="el" href="sd_const_8h.html#a90240a380b9e4422246ca2141cfc3674">EKind</a> kind)</td></tr>
-<tr class="separator:a5cb83f5b20b65eb05b49389064db6c43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a506c23d711bd6ef7c0798e0abe2fc969"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#a506c23d711bd6ef7c0798e0abe2fc969">convert</a> (<a class="el" href="sd_const_8h.html#ad5d0e87f61ba99c47a539492df7917a1">EType</a> type)</td></tr>
-<tr class="separator:a506c23d711bd6ef7c0798e0abe2fc969"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41c17b68b8c83ee191a7bd95f3448b04"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#a41c17b68b8c83ee191a7bd95f3448b04">convert</a> (string str)</td></tr>
-<tr class="separator:a41c17b68b8c83ee191a7bd95f3448b04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a475716af35d855d8ac55db19bdad6de9"><td class="memItemLeft" align="right" valign="top">virtual string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#a475716af35d855d8ac55db19bdad6de9">convert</a> (<a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> <a class="el" href="classsd_event.html#a6b5ee5d12ff097979081b55bd99d111e">descriptor</a>)=0</td></tr>
+<tr class="separator:a475716af35d855d8ac55db19bdad6de9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9589787ed1ef30ed0dbdc16c097dc60"><td class="memItemLeft" align="right" valign="top">virtual string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#ab9589787ed1ef30ed0dbdc16c097dc60">convert</a> (<a class="el" href="sd_const_8h.html#a90240a380b9e4422246ca2141cfc3674">EKind</a> kind)=0</td></tr>
+<tr class="separator:ab9589787ed1ef30ed0dbdc16c097dc60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54d0d8e539327df15afd5eb29d1c9a75"><td class="memItemLeft" align="right" valign="top">virtual string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#a54d0d8e539327df15afd5eb29d1c9a75">convert</a> (<a class="el" href="sd_const_8h.html#ad5d0e87f61ba99c47a539492df7917a1">EType</a> type)=0</td></tr>
+<tr class="separator:a54d0d8e539327df15afd5eb29d1c9a75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8e7d979562187be03d31dbcb91eba0a"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#af8e7d979562187be03d31dbcb91eba0a">convert</a> (string str)=0</td></tr>
+<tr class="separator:af8e7d979562187be03d31dbcb91eba0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -156,11 +151,6 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a6b5ee5d12ff097979081b55bd99d111e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a496d422060cf18b8d58327390cb720de"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#a496d422060cf18b8d58327390cb720de">value</a></td></tr>
 <tr class="separator:a496d422060cf18b8d58327390cb720de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
-Friends</h2></td></tr>
-<tr class="memitem:aa1ecb17a7d1267adc578ba548e2085ff"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_event.html#aa1ecb17a7d1267adc578ba548e2085ff">sdEntity</a></td></tr>
-<tr class="separator:aa1ecb17a7d1267adc578ba548e2085ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>maintains a set of event data. The constructor is intentionally declared as a protected function. This must be invoked through <a class="el" href="classsd_entity.html">sdEntity</a> or its subclasses. This process ensures that all existing instances of sdEvents belong to a <a class="el" href="classsd_entity.html">sdEntity</a> and are aware of required extensions. The class is also responsible for the allocation of void* value by checking the descriptor. Thus, desciptor and value should be simultaneously set by set or setVlaue functions. </p>
@@ -186,111 +176,12 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>construcor is intentionally declared as protected. this class must be instantiated through <a class="el" href="classsd_entity.html#a515a154ac31247aa69f930fbc33eaa61">sdEntity::addEvent</a> </p>
-
-</div>
-</div>
-<a class="anchor" id="a4a0e67f4b111f3c73c3061c18594af4f"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">sdEvent::sdEvent </td>
-          <td>(</td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>time</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a>&#160;</td>
-          <td class="paramname"><em>descriptor</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>constructor with initialization. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">time</td><td>time of the event </td></tr>
-    <tr><td class="paramname">descriptor</td><td>descriptor of the event. declared in <a class="el" href="sd_const_8h.html">sdConst.h</a> </td></tr>
-    <tr><td class="paramname">value</td><td>void pointer to value to be copied. Proper size of memory will be internally allocated. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="acd13940bbe94428ca7334f443b20bce0"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">sdEvent::sdEvent </td>
-          <td>(</td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>time</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>descriptor</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>this constructor facilitates to load string based data to the entity. it converts all strings to proper data types and invoke the function above. </p>
-
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classsd_event_acd13940bbe94428ca7334f443b20bce0_cgraph.png" border="0" usemap="#classsd_event_acd13940bbe94428ca7334f443b20bce0_cgraph" alt=""/></div>
-<map name="classsd_event_acd13940bbe94428ca7334f443b20bce0_cgraph" id="classsd_event_acd13940bbe94428ca7334f443b20bce0_cgraph">
-<area shape="rect" id="node2" href="classsd_event.html#ac43b2658e6cb0e8aea27231e1f28ccac" title="sdEvent::convert" alt="" coords="183,5,305,32"/><area shape="rect" id="node3" href="classsd_event.html#a8f92a93e8ff22d988c464b28b07c6f4b" title="sdEvent::setValue" alt="" coords="179,56,309,83"/></map>
-</div>
-</p>
+<p>construcor is intentionally declared as protected. this class must be instantiated through <a class="el" href="classsd_entity.html#af5627d1994ea988b0f78014f333ffe86">sdEntity::addEvent</a> </p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ac43b2658e6cb0e8aea27231e1f28ccac"></a>
+<a class="anchor" id="a475716af35d855d8ac55db19bdad6de9"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -298,7 +189,7 @@ Here is the call graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">string sdEvent::convert </td>
+          <td class="memname">virtual string sdEvent::convert </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a>&#160;</td>
           <td class="paramname"><em>descriptor</em>)</td><td></td>
@@ -307,7 +198,7 @@ Here is the call graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -319,18 +210,11 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classsd_event_ac43b2658e6cb0e8aea27231e1f28ccac_icgraph.png" border="0" usemap="#classsd_event_ac43b2658e6cb0e8aea27231e1f28ccac_icgraph" alt=""/></div>
-<map name="classsd_event_ac43b2658e6cb0e8aea27231e1f28ccac_icgraph" id="classsd_event_ac43b2658e6cb0e8aea27231e1f28ccac_icgraph">
-<area shape="rect" id="node2" href="classsd_event.html#acd13940bbe94428ca7334f443b20bce0" title="sdEvent::sdEvent" alt="" coords="176,5,301,32"/></map>
-</div>
-</p>
+<p>Implemented in <a class="el" href="classsd_event_core.html#aec8e1553003bb855beb4be4a0de7829c">sdEventCore</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5cb83f5b20b65eb05b49389064db6c43"></a>
+<a class="anchor" id="ab9589787ed1ef30ed0dbdc16c097dc60"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -338,7 +222,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">string sdEvent::convert </td>
+          <td class="memname">virtual string sdEvent::convert </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="sd_const_8h.html#a90240a380b9e4422246ca2141cfc3674">EKind</a>&#160;</td>
           <td class="paramname"><em>kind</em>)</td><td></td>
@@ -347,7 +231,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -359,9 +243,11 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
+<p>Implemented in <a class="el" href="classsd_event_core.html#a422dea6631aedc3613b2da582320ff7d">sdEventCore</a>.</p>
+
 </div>
 </div>
-<a class="anchor" id="a506c23d711bd6ef7c0798e0abe2fc969"></a>
+<a class="anchor" id="a54d0d8e539327df15afd5eb29d1c9a75"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -369,7 +255,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">string sdEvent::convert </td>
+          <td class="memname">virtual string sdEvent::convert </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="sd_const_8h.html#ad5d0e87f61ba99c47a539492df7917a1">EType</a>&#160;</td>
           <td class="paramname"><em>type</em>)</td><td></td>
@@ -378,7 +264,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -390,9 +276,11 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
+<p>Implemented in <a class="el" href="classsd_event_core.html#a714fbc770c5b39c5d49ce835b9d90063">sdEventCore</a>.</p>
+
 </div>
 </div>
-<a class="anchor" id="a41c17b68b8c83ee191a7bd95f3448b04"></a>
+<a class="anchor" id="af8e7d979562187be03d31dbcb91eba0a"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -400,7 +288,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int sdEvent::convert </td>
+          <td class="memname">virtual int sdEvent::convert </td>
           <td>(</td>
           <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>str</em>)</td><td></td>
@@ -409,7 +297,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -457,26 +345,36 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a class="anchor" id="a809ea1f03a1bd97e6ad5b1e4089730f9"></a>
+<a class="anchor" id="a0b6810faec49cbc26bbfd300e307c079"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">string sdEvent::getDescriptorAsString </td>
+          <td class="memname">virtual string sdEvent::getDescriptorAsString </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>returns descriptor as std::string </p>
+<p>returns descriptor as string </p>
+
+<p>Implemented in <a class="el" href="classsd_event_core.html#a01cc217ba7619c011978356980fd2381">sdEventCore</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="classsd_event_a809ea1f03a1bd97e6ad5b1e4089730f9_icgraph.png" border="0" usemap="#classsd_event_a809ea1f03a1bd97e6ad5b1e4089730f9_icgraph" alt=""/></div>
-<map name="classsd_event_a809ea1f03a1bd97e6ad5b1e4089730f9_icgraph" id="classsd_event_a809ea1f03a1bd97e6ad5b1e4089730f9_icgraph">
+<div class="center"><img src="classsd_event_a0b6810faec49cbc26bbfd300e307c079_icgraph.png" border="0" usemap="#classsd_event_a0b6810faec49cbc26bbfd300e307c079_icgraph" alt=""/></div>
+<map name="classsd_event_a0b6810faec49cbc26bbfd300e307c079_icgraph" id="classsd_event_a0b6810faec49cbc26bbfd300e307c079_icgraph">
 <area shape="rect" id="node2" href="classsd_scene.html#a1e61037274d374f8ab33e347fde8b65b" title="sdScene::dump" alt="" coords="227,12,341,39"/></map>
 </div>
 </p>
@@ -511,7 +409,7 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classsd_event_af53aac6620476deff34a2b87a2939144_icgraph.png" border="0" usemap="#classsd_event_af53aac6620476deff34a2b87a2939144_icgraph" alt=""/></div>
 <map name="classsd_event_af53aac6620476deff34a2b87a2939144_icgraph" id="classsd_event_af53aac6620476deff34a2b87a2939144_icgraph">
-<area shape="rect" id="node2" href="classsd_event_compare.html#a1b3764c3b05ecc282cd5e9da32e6d7aa" title="sdEventCompare::operator()" alt="" coords="179,5,370,32"/><area shape="rect" id="node3" href="classsd_global_event_compare.html#a023faa3ab3a35e60324ad43d79d922a5" title="sdGlobalEventCompare\l::operator()" alt="" coords="193,57,357,98"/><area shape="rect" id="node4" href="classsd_scene.html#a1e61037274d374f8ab33e347fde8b65b" title="sdScene::dump" alt="" coords="217,123,332,149"/></map>
+<area shape="rect" id="node2" href="classsd_event_compare.html#a1b3764c3b05ecc282cd5e9da32e6d7aa" title="sdEventCompare::operator()" alt="" coords="179,5,370,32"/><area shape="rect" id="node3" href="classsd_entity_core.html#a2880c159251eedd056ab14247d52f206" title="sdEntityCore::getEvent" alt="" coords="195,56,354,83"/><area shape="rect" id="node4" href="classsd_global_event_compare.html#a023faa3ab3a35e60324ad43d79d922a5" title="sdGlobalEventCompare\l::operator()" alt="" coords="193,107,357,149"/><area shape="rect" id="node5" href="classsd_scene.html#a1e61037274d374f8ab33e347fde8b65b" title="sdScene::dump" alt="" coords="217,173,332,200"/></map>
 </div>
 </p>
 
@@ -538,7 +436,7 @@ Here is the caller graph for this function:</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>returns time as std::string </p>
+<p>returns time as string </p>
 
 </div>
 </div>
@@ -570,13 +468,13 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classsd_event_adba2ca29642bd8d730dfdc3acadeeb00_icgraph.png" border="0" usemap="#classsd_event_adba2ca29642bd8d730dfdc3acadeeb00_icgraph" alt=""/></div>
 <map name="classsd_event_adba2ca29642bd8d730dfdc3acadeeb00_icgraph" id="classsd_event_adba2ca29642bd8d730dfdc3acadeeb00_icgraph">
-<area shape="rect" id="node2" href="classsd_entity_core.html#ad30e752d61061bf6c7b204d6df733074" title="sdEntityCore::getValue" alt="" coords="185,5,343,32"/><area shape="rect" id="node4" href="classsd_scene.html#a1e61037274d374f8ab33e347fde8b65b" title="sdScene::dump" alt="" coords="207,56,321,83"/><area shape="rect" id="node3" href="classsd_scene.html#aa2f7e53cbb558773bdcaadfd3e2e2045" title="sdScene::getValue" alt="" coords="392,5,525,32"/></map>
+<area shape="rect" id="node2" href="classsd_entity_core.html#ad30e752d61061bf6c7b204d6df733074" title="sdEntityCore::getValue" alt="" coords="185,5,343,32"/><area shape="rect" id="node4" href="classsd_scene.html#a1e61037274d374f8ab33e347fde8b65b" title="sdScene::dump" alt="" coords="207,56,321,83"/><area shape="rect" id="node3" href="classsd_scene.html#a4c75942623e7bdd83ec1e53148df4064" title="sdScene::getValue" alt="" coords="392,5,525,32"/></map>
 </div>
 </p>
 
 </div>
 </div>
-<a class="anchor" id="a37f410cfebe61902749541d7aedef7c4"></a>
+<a class="anchor" id="a2941bfbdbb11cb95d16bcbc50c19a161"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -584,7 +482,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">string sdEvent::getValueAsString </td>
+          <td class="memname">virtual string sdEvent::getValueAsString </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -593,11 +491,13 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>returns value as std::string </p>
+<p>returns value as string </p>
+
+<p>Implemented in <a class="el" href="classsd_event_core.html#a90bb7c69858b3274ec6abc0c86ff818c">sdEventCore</a>.</p>
 
 </div>
 </div>
@@ -648,15 +548,6 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classsd_event_aa29c78726ad7279dc14ffb18a211a9bc_icgraph.png" border="0" usemap="#classsd_event_aa29c78726ad7279dc14ffb18a211a9bc_icgraph" alt=""/></div>
-<map name="classsd_event_aa29c78726ad7279dc14ffb18a211a9bc_icgraph" id="classsd_event_aa29c78726ad7279dc14ffb18a211a9bc_icgraph">
-<area shape="rect" id="node2" href="classsd_saver.html#a2095f1dd3d75b3f5d5f9ae323fa0f971" title="sdSaver::XMLFromScene" alt="" coords="150,5,325,32"/></map>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="af33c65a8dd2d1c63eca3b120a0c79d67"></a>
@@ -690,12 +581,15 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a class="anchor" id="a8f92a93e8ff22d988c464b28b07c6f4b"></a>
+<a class="anchor" id="a7ce9d1fc546b3fa4962a196d014e1b08"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void sdEvent::setValue </td>
+          <td class="memname">virtual void sdEvent::setValue </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a>&#160;</td>
           <td class="paramname"><em>descriptor</em>, </td>
@@ -712,39 +606,15 @@ Here is the caller graph for this function:</div>
           <td></td><td></td>
         </tr>
       </table>
-</div><div class="memdoc">
-<p>descriptor and value should be set at once. because this function allocates memory to void* value based on the descriptor </p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classsd_event_a8f92a93e8ff22d988c464b28b07c6f4b_icgraph.png" border="0" usemap="#classsd_event_a8f92a93e8ff22d988c464b28b07c6f4b_icgraph" alt=""/></div>
-<map name="classsd_event_a8f92a93e8ff22d988c464b28b07c6f4b_icgraph" id="classsd_event_a8f92a93e8ff22d988c464b28b07c6f4b_icgraph">
-<area shape="rect" id="node2" href="classsd_event.html#acd13940bbe94428ca7334f443b20bce0" title="sdEvent::sdEvent" alt="" coords="184,5,309,32"/></map>
-</div>
-</p>
-
-</div>
-</div>
-<h2 class="groupheader">Friends And Related Function Documentation</h2>
-<a class="anchor" id="aa1ecb17a7d1267adc578ba548e2085ff"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">friend class <a class="el" href="classsd_entity.html">sdEntity</a></td>
-        </tr>
-      </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>only <a class="el" href="classsd_entity.html">sdEntity</a> and its subclasses can instantitate this class </p>
+<p>descriptor and value should be set at once. because this function allocates memory to void* value based on the descriptor </p>
+
+<p>Implemented in <a class="el" href="classsd_event_core.html#a408255b78cd6139007a4740da442d9c5">sdEventCore</a>.</p>
 
 </div>
 </div>
@@ -812,14 +682,13 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/<a class="el" href="sd_event_8h_source.html">sdEvent.h</a></li>
-<li>src/<a class="el" href="sd_event_8cpp.html">sdEvent.cpp</a></li>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>src/<a class="el" href="sd_entity_8h_source.html">sdEntity.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Aug 24 2013 10:34:35 for spatdiflib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Aug 30 2013 16:34:10 for spatdiflib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

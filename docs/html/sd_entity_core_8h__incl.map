@@ -1,6 +1,5 @@
 <map id="src/sdEntityCore.h" name="src/sdEntityCore.h">
-<area shape="rect" id="node4" href="$sd_const_8h.html" title="sdConst.h" alt="" coords="417,304,500,331"/>
-<area shape="rect" id="node5" href="$sd_entity_8h.html" title="sdEntity.h" alt="" coords="143,155,223,181"/>
-<area shape="rect" id="node9" href="$sd_entity_extension_8h.html" title="sdEntityExtension.h" alt="" coords="163,80,301,107"/>
-<area shape="rect" id="node7" href="$sd_event_8h.html" title="sdEvent.h" alt="" coords="246,229,327,256"/>
+<area shape="rect" id="node4" href="$sd_const_8h.html" title="sdConst.h" alt="" coords="340,229,423,256"/>
+<area shape="rect" id="node5" href="$sd_entity_8h.html" title="sdEntity.h" alt="" coords="164,155,244,181"/>
+<area shape="rect" id="node8" href="$sd_entity_extension_8h.html" title="sdEntityExtension.h" alt="" coords="243,80,382,107"/>
 </map>

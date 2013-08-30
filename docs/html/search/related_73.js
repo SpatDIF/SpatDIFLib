@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['sdentity',['sdEntity',['../classsd_event.html#aa1ecb17a7d1267adc578ba548e2085ff',1,'sdEvent']]],
-  ['sdscene',['sdScene',['../classsd_entity_core.html#a66f424afa97efc595274b008a61dfbc6',1,'sdEntityCore']]]
+  ['sdentitycore',['sdEntityCore',['../classsd_event_core.html#ad2aba45b9742a6be4d615554e122e71d',1,'sdEventCore']]],
+  ['sdscene',['sdScene',['../classsd_entity_core.html#a66f424afa97efc595274b008a61dfbc6',1,'sdEntityCore::sdScene()'],['../classsd_entity_extension_media.html#a66f424afa97efc595274b008a61dfbc6',1,'sdEntityExtensionMedia::sdScene()']]]
 ];

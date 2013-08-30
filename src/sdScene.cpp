@@ -45,10 +45,8 @@ sdEntityCore* sdScene::addEntity(string name, EKind kind){
             default:
                 break;
         }
-        
         it++;
     }
-
     
     // insert the entity in the vector
     entityVector.push_back(entityCore);
