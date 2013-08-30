@@ -115,6 +115,8 @@ void sdScene::dump(void){
     cout << "---------- Meta ----------"<< endl;
     cout << "author:" << info.getAuthor() <<endl;
     cout << "annotaion:" <<  info.getAnnotation() <<endl;
+    cout << "ordering:" <<  getOrderingAsString()<<endl;
+
     cout << "number of entity used:" <<  getNumberOfEntities()<<endl;
 
     cout << "---------- Entities --------" << endl;

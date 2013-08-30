@@ -27,6 +27,14 @@ typedef enum{
 } EType;
 
 /*!
+ enum for ordering
+ */
+typedef enum {
+    SD_TIME,
+    SD_TRACK
+} EOrdering;
+
+/*!
  enum for kind. All sdEntityCore must define their kind when instantiated.
  */
 typedef enum {

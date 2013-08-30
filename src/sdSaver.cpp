@@ -5,6 +5,7 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
+#include "sdConst.h"
 #include "sdEntity.h"
 #include "sdScene.h"
 #include "sdSaver.h"
@@ -27,7 +28,7 @@ string sdGlobalEvent::getKindAsString(void){
     return str;
 }
 
-string sdSaver::XMLFromScene(sdScene *scene, EOrdering ordering){
+string sdSaver::XMLFromScene(sdScene *scene){
     using namespace tinyxml2;
     
     XMLDocument xml;
@@ -79,7 +80,7 @@ string sdSaver::XMLFromScene(sdScene *scene, EOrdering ordering){
     info->InsertEndChild(annotation);
     
     XMLElement* order = xml.NewElement("ordering");
-    XMLText* orderingText = ordering == SD_TIME ? xml.NewText("time") : xml.NewText("track");
+    XMLText* orderingText = xml.NewText(scene->getOrderingAsString().c_str());
     order->InsertEndChild(orderingText);
     meta->InsertEndChild(order);
     
@@ -88,7 +89,7 @@ string sdSaver::XMLFromScene(sdScene *scene, EOrdering ordering){
     vector<sdEntityCore*> entityVector = scene->getEntityVector();
 
     /* ordered by time */
-    if(ordering == SD_TIME){
+    if(scene->getOrdering() == SD_TIME){
         
         // 1. pool all events in globalEvent Set
         vector<sdEntityCore*>::iterator it = entityVector.begin();
@@ -135,7 +136,7 @@ string sdSaver::XMLFromScene(sdScene *scene, EOrdering ordering){
             ++eit;
         }
 
-    }else if(ordering == SD_TRACK){
+    }else if(scene->getOrdering() == SD_TRACK){
         // 1. Sort vector by name alphabetically
         
         sort(entityVector.begin(), entityVector.end(), sdEntityCore::sortAlphabetically);

@@ -27,6 +27,9 @@ private:
     /*! a vector of activated extensions. A sdScene automatically creates sdEntityExtensions stored in this vector and attached to a sdEntityCore, when instantiated. */
     vector <EExtension> activatedExtensionVector;
     
+    /*! ordering flag */
+    EOrdering ordering;
+    
     /*! contains "info" part of the meta section*/
     sdInfo info;
     
@@ -39,8 +42,11 @@ public:
     /*! constructor */
     sdScene(void);
     
-    /*! constructor with sdInfo */
+    /*! constructor with sdInfo  */
     sdScene(sdInfo info);
+    
+    /*! constructor with sdInfo and ordering*/
+    sdScene(sdInfo info, EOrdering ordering);
     
     /*!
      @}
@@ -60,6 +66,21 @@ public:
      */
     sdInfo getInfo(void);
 
+    /*! 
+     gets an enum  ordering
+     */
+    EOrdering getOrdering(void);
+
+    /*!
+     gets ordering as String
+     */
+    string getOrderingAsString(void);
+    
+    /*! sets an enum of ordering
+     @param ordering the ordering enum declared in sdConst.h
+     */
+    void setOrdering(EOrdering ordering);
+    
     /*!
      @}
      */
@@ -175,10 +196,17 @@ public:
 
 inline sdScene::sdScene(void){
     sdInfo info(string("unknown"), string("unknown"), sdDate(), string("unknown"), string("unknown"), string("unknown"));
+    ordering = SD_TIME;
 }
 
 inline sdScene::sdScene(sdInfo info){
     setInfo(info);
+    ordering = SD_TIME;
+}
+
+inline sdScene::sdScene(sdInfo info, EOrdering ordering){
+    setInfo(info);
+    sdScene::ordering = ordering;
 }
 
 inline void sdScene::setInfo(sdInfo info){
@@ -193,5 +221,15 @@ inline vector <sdEntityCore*> sdScene::getEntityVector(void){
     return entityVector;
 }
 
+inline EOrdering sdScene::getOrdering(void){
+    return ordering;
+}
 
+inline string sdScene::getOrderingAsString(void){
+    return ordering == SD_TIME ? string("time") : string("track");
+}
+
+inline void sdScene::setOrdering(EOrdering ordering ){
+    sdScene::ordering = ordering;
+}
 #endif /* defined(____sdScene__) */

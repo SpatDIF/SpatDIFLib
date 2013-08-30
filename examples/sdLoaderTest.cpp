@@ -25,7 +25,7 @@ int main(void){
     }
     // give sdLoader the string and get a sdScene
     sdScene myScene = sdLoader::sceneFromXML(xmlString);
-
+    
     // dump the content of the sdScene
     myScene.dump();
     

@@ -16,15 +16,11 @@ using namespace std;
 class sdSaver
 {
 public:
-    typedef enum {
-        SD_TIME,
-        SD_TRACK
-    } EOrdering;
     
     /*! converts a scene to XML string
      @param sdScene a sdScene
      */
-    static string XMLFromScene(sdScene *scene, EOrdering ordering = SD_TIME);
+    static string XMLFromScene(sdScene *scene);
 
     /*! converts a scene to JSON string
      @param sdScene a sdScene

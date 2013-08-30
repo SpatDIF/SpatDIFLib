@@ -39,14 +39,15 @@ int main(void){
   
     
     // convert current scene to a XMLstring
-    string generatedString = sdSaver::XMLFromScene(&scene, sdSaver::SD_TIME);
+    string generatedString = sdSaver::XMLFromScene(&scene);
 
     // save string as a file
     ofstream ofsTime("generated-scene-time.xml");
     ofsTime << generatedString << endl;
     ofsTime.close();
 
-    generatedString = sdSaver::XMLFromScene(&scene, sdSaver::SD_TRACK);
+    scene.setOrdering(SD_TRACK);
+    generatedString = sdSaver::XMLFromScene(&scene);
     ofstream ofsTrack("generated-scene-track.xml");
     ofsTrack << generatedString << endl;
     ofsTrack.close();
