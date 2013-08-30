@@ -1,0 +1,5 @@
+<map id="sdEntityCore::getName" name="sdEntityCore::getName">
+<area shape="rect" id="node2" href="$classsd_entity_core.html#a4cdcaf53be00654310d23d2fc69facef" title="sdEntityCore::sortAlphabetically" alt="" coords="213,5,424,32"/>
+<area shape="rect" id="node3" href="$classsd_saver.html#a5c400fd4c94da51ac1bf2aa82e6e2885" title="sdSaver::XMLFromScene" alt="" coords="473,31,647,57"/>
+<area shape="rect" id="node4" href="$classsd_scene.html#a00b8ea89cce0690109649a262eac0911" title="sdScene::getEntity" alt="" coords="252,107,385,133"/>
+</map>
