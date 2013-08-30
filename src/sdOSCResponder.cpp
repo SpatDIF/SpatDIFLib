@@ -24,7 +24,7 @@ void sdOSCResponder::forwardOSCMessage(string oscMessage){
     }
     
     iss >> argument;
-    while(argument){
+    while(argument != " "){
         argumentVector.push_back(argument);
         iss >> argument;
     }
@@ -51,7 +51,7 @@ void sdOSCResponder::forwardOSCMessage(string oscMessage){
         sdEntity* entity = scene-> getEntity(entityName);
         if(!entity){
             EKind kind = type == "source" ? SD_SOURCE : SD_SINK;
-            entity = scene.addEntity(entityName, kind);
+            entity = scene->addEntity(entityName, kind);
         }
         
         string descriptor = addressVector[3];
