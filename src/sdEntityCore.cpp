@@ -8,61 +8,55 @@
 
 using namespace std;
 
+/*** sdEventCore ***/
+
+
+sdEventCore::sdEventCore(float time, EDescriptor descriptor, void* value){
+    setTime(time); // declared in the super class
+    setValue(descriptor, value); // private function
+}
+
 sdEventCore::sdEventCore(string time, string descriptor, string value){
-    //set time from string
-    istringstream is;
-    is.str(time);
-    is >> sdEvent::time;
-    
-    //set descriptor from string
-    sdEvent::descriptor = static_cast<EDescriptor>(convert(descriptor));
-    
-    //set value
-    switch (sdEvent::descriptor) {
-            
-        case SD_PRESENT:
-        {
-            bool present = value=="true" ? true : false;
-            setValue(sdEvent::descriptor, static_cast<void*>(&present));
+    setTime(time); // declared in the super class
+    setValue(descriptor, value); // private function
+}
+
+sdEventCore::~sdEventCore(){
+    // we have to cast void pointer before deleting it. because void pointer deletion is undefined
+    switch (descriptor) {
+        case SD_PRESENT:{
+            bool* valuePointer = static_cast<bool*>(value);
+            delete valuePointer;
             break;
         }
-        case SD_POSITION:
-        {
-            float position[3];
-            istringstream is(value);
-            is >> position[0] >> position[1] >> position[2];
-            setValue(sdEvent::descriptor, static_cast<void*>(&position));
+        case SD_POSITION:{
+            float* valuePointer = static_cast<float*>(value);
+            delete valuePointer;
             break;
         }
-        case SD_ORIENTATION:
-        {
-            float orientation[3];
-            istringstream is(value);
-            is >> orientation[0] >> orientation[1] >> orientation[2];
-            setValue(sdEvent::descriptor, static_cast<void*>(&orientation));
+        case SD_ORIENTATION:{
+            float* valuePointer = static_cast<float*>(value);
+            delete valuePointer;
             break;
         }
-            
     }
 }
 
 string sdEventCore::getDescriptorAsString(void){
     string str;
-    switch (descriptor) {
+    switch(descriptor){
         case SD_PRESENT:
-            str = string("present");
-            break;
+            str = string("present");break;
         case SD_POSITION:
-            str = string("position");
-            break;
+            str = string("position");break;
         case SD_ORIENTATION:
-            str = string("orientation");
-            break;
+            str =string("orientation");break;
         default:
             break;
     }
     return str;
 }
+
 
 string sdEventCore::getValueAsString(void){
     string str;
@@ -88,15 +82,12 @@ string sdEventCore::getValueAsString(void){
             os << orientation[0] << ' ' << orientation[1] << ' ' << orientation[2];
             str = os.str();
         }
-        default:{
-            break;
-        }
-            
     }
     return str;
 }
 
 void sdEventCore::setValue(EDescriptor descriptor, void* value){
+    // this function is called by the constructor
     sdEvent::descriptor = descriptor;
     switch (sdEvent::descriptor) {
         case SD_PRESENT:{
@@ -125,25 +116,51 @@ void sdEventCore::setValue(EDescriptor descriptor, void* value){
             break;
         }
     }
+}
+
+void sdEventCore::setValue(string descriptor, string value){
+    // this function is called by the constructor
     
-}
-
-string sdEventCore::convert(EDescriptor descriptor){
+    // set descriptor
+    if(descriptor == "present") sdEventCore::descriptor = SD_PRESENT;
+    else if(descriptor == "position") sdEventCore::descriptor = SD_POSITION;
+    else if(descriptor == "orientation") sdEventCore::descriptor = SD_ORIENTATION;
+    else return;
+    
+    // set value
     string str;
-    switch(descriptor){
+    switch (sdEventCore::descriptor) {
         case SD_PRESENT:
-            str = string("present");break;
-        case SD_POSITION:
-            str = string("position");break;
-        case SD_ORIENTATION:
-            str =string("orientation");break;
-        default:
+        {
+            bool present = value=="true" ? true : false;
+            setValue(sdEventCore::descriptor, static_cast<void*>(&present));
             break;
+        }
+        case SD_POSITION:
+        {
+            float position[3];
+            istringstream is(value);
+            is >> position[0] >> position[1] >> position[2];
+            setValue(sdEventCore::descriptor, static_cast<void*>(&position));
+            break;
+        }
+        case SD_ORIENTATION:
+        {
+            float orientation[3];
+            istringstream is(value);
+            is >> orientation[0] >> orientation[1] >> orientation[2];
+            setValue(sdEventCore::descriptor, static_cast<void*>(&orientation));
+            break;
+        }
+            
     }
-    return str;
 }
 
-string sdEventCore::convert(EKind kind){
+
+
+/*** sdEntityCore ***/
+
+string sdEntityCore::getKindAsString(void){
     string str;
     switch(kind){
         case SD_SOURCE:
@@ -156,7 +173,8 @@ string sdEventCore::convert(EKind kind){
     return str;
 }
 
-string sdEventCore::convert(EType type){
+
+string sdEntityCore::getTypeAsString(void){
     string str;
     switch(type){
         case SD_POINT:
@@ -167,36 +185,6 @@ string sdEventCore::convert(EType type){
     return str;
 }
 
-int sdEventCore::convert(string str){
-    
-    int converted;
-    
-    //descriptor
-    if(str == "present")
-        converted = SD_PRESENT;
-    else if(str == "position")
-        converted = SD_POSITION;
-    else if(str == "orientation")
-        converted = SD_ORIENTATION;
-    
-    //type
-    else if(str == "point")
-        converted = SD_POINT;
-    
-    //kind
-    else if(str == "source")
-        converted = SD_SOURCE;
-    else if(str == "sink")
-        converted = SD_SINK;
-    
-    //extension
-    else if(str == "media")
-        converted = SD_MEDIA;
-    
-    return converted;
-    
-}
-
 
 sdEvent* sdEntityCore::getEvent(float time, EDescriptor descriptor){
     
@@ -204,9 +192,9 @@ sdEvent* sdEntityCore::getEvent(float time, EDescriptor descriptor){
     set <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
     while( it != eventSet.end()){
         float eventTime = (*it)->getTime();
-        if(eventTime == time){
+        if(eventTime == time){ // time matched?
             EDescriptor eventDescriptpr = (*it)->getDescriptor();
-            if(eventDescriptpr == descriptor){
+            if(eventDescriptpr == descriptor){ // descriptor matched?
                 return *it; // returns pointer to sdEvent
             }
         }
@@ -214,7 +202,51 @@ sdEvent* sdEntityCore::getEvent(float time, EDescriptor descriptor){
     }
 }
 
+set <sdEvent*, sdEventCompare>sdEntityCore::getRangedEventSet(float start, float end){
+    set <sdEvent*, sdEventCompare>rangedSet;
+    set <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
+    while(it != eventSet.end()){
+        sdEvent* event = *it;
+        if ( (event->getTime() >= start) && (event->getTime() <= end)) {
+                rangedSet.insert(*it);
+            }
+        ++it;
+    }
+    return rangedSet;
+}
+
+set <sdEvent*, sdEventCompare>sdEntityCore::getFilteredEventSet(float start, float end, EDescriptor descriptor){
+    
+    set <sdEvent*, sdEventCompare>rangedSet;
+    set <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
+    while(it != eventSet.end()){
+        sdEvent* event = *it;
+        if ( (event->getTime() >= start) && (event->getTime() <= end)) {
+            if(descriptor == NULL || event->getDescriptor() == descriptor){
+                rangedSet.insert(*it);
+            }
+        }
+        ++it;
+    }
+    return rangedSet;
+}
+
 sdEvent* sdEntityCore::addEvent(float time, EDescriptor descriptor, void* value){
+    
+    //duplication check. if exist just delete the old one and make a new one
+    set <sdEvent*>::iterator it = eventSet.begin();
+    while(it != eventSet.end()) {
+        sdEvent* event = *it;
+        if(event->getTime() == time){
+            if(event->getDescriptor() == descriptor)
+            {
+                eventSet.erase(it++);
+            }
+        }
+        it++;
+    }
+    
+    // if not in the set
     //create a new instance of sdEvent
     sdEvent *event = static_cast<sdEvent*>(new sdEventCore(time, descriptor, value));
     //and insert it in the set
@@ -224,7 +256,6 @@ sdEvent* sdEntityCore::addEvent(float time, EDescriptor descriptor, void* value)
 }
 
 sdEvent* sdEntityCore::addEvent(string time, string descriptor, string value){
-    
     sdEvent *event = static_cast<sdEvent*>(new sdEventCore(time, descriptor, value));
     eventSet.insert(event);
     return event;
@@ -244,32 +275,7 @@ void* sdEntityCore::getValue(float time, EDescriptor descriptor){
     return NULL;
 }
 
-set <sdEvent*, sdEventCompare>sdEntityCore::getFilteredEventSet(float start, float end, EDescriptor descriptor){
-    
-    set <sdEvent*, sdEventCompare>rangedSet;
-    set <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
-    while(it != eventSet.end()){
-        sdEvent* event = *it;
-        if ( (event->getTime() >= start) && (event->getTime() <= end) && (event->getDescriptor() == descriptor)) {
-            rangedSet.insert(*it);
-        }
-        ++it;
-    }
-    return rangedSet;
-}
 
-string sdEntityCore::getKindAsString(void){
-    string str;
-    switch(kind) {
-        case SD_SOURCE:
-            str = string("source");
-            break;
-        case SD_SINK:
-            str = string("sink");
-            break;
-        default:
-            break;
-    }
-    return str;
-}
+
+
 

@@ -35,9 +35,23 @@ int main(void){
     
     //attach two entities
     sdEntityCore *myEntity = scene.addEntity("myEntity"); // spawn an entity
-    float pos[3] = {0.0, 0.1, 0.2};
-    myEntity->addEvent(0.2, SD_POSITION, static_cast<void*>(pos));
+    float firstPos[3] = {0.0, 0.1, 0.2};
+    float secondPos[3] = {0.3, 0.4, 0.5};
+    float thirdPos[3] = {0.6, 0.7, 0.8};
+
+    //addEvent to myEntity
+    myEntity->addEvent(0.2, SD_POSITION, static_cast<void*>(firstPos));
+    myEntity->addEvent(0.5, SD_POSITION, static_cast<void*>(secondPos));
+
+    cout << "num events attached to myEntity after second addition:" << myEntity->getNumberOfEvents() << endl;
+    cout << "values:" << myEntity->getEvent(0.5, SD_POSITION)->getValueAsString() << endl;
+
+    //add event but with same time and desciptor .. this will replace the previous one
+    sdEvent* returnedEvent = myEntity->addEvent(0.5, SD_POSITION, static_cast<void*>(thirdPos));
     
+    cout << "num events attached to myEntity after third addition:" << myEntity->getNumberOfEvents() << endl;
+    cout << "descriptor:" << returnedEvent->getDescriptorAsString() << endl;
+    cout << "values:" << myEntity->getEvent(0.5, SD_POSITION)->getValueAsString() << endl;
     
     sdEntityCore *yourEntity = scene.addEntity("yourEntity"); // spawn an entity
 
@@ -47,7 +61,7 @@ int main(void){
     //get a pointer to an entity specified by name
     sdEntityCore *providedEntity = scene.getEntity("myEntity");
     
-    //get num entities
+    //get num events
     cout << "Number of Events attached to the entity:" << providedEntity->getNumberOfEvents() << endl;
     
     //get event at time
@@ -57,7 +71,13 @@ int main(void){
     if(positionEvent){
         //convert recognaizes desciriptor and convert it to a string
         cout << "position value:" << positionEvent->getValueAsString() << endl;
-        
+    }
+    
+    sdEntityCore* duplicated = scene.addEntity("myEntity"); //if the name of existing entity, returns pointer to existing one
+    //returns 2 not 3
+    cout << "Num Entities:" << scene.getNumberOfEntities() << endl;
+    if(duplicated == providedEntity){
+        cout << "same pointer" << endl;
     }
     
     return 0;

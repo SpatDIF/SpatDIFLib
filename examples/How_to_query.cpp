@@ -55,12 +55,23 @@ int main(void){
     
     set <sdEvent*, sdEventCompare> ::iterator it = myEventSet.begin();
     
+    // much easier way to post
     int count = 0;
     while (it!=myEventSet.end()) {
-        pos = static_cast<float*>((*it)->getValue());
-        cout << "position of event #" << count << ": " << pos[0] << ' ' << pos[1] << ' ' << pos[2] << endl;
+        cout << "position of event #" << count << ": " << (*it)->getValueAsString() << endl;
         it++;
         count++;
+    }
+    sdEntityCore *voice2 = myScene.getEntity(string("voice2"));
+
+    set <sdEvent*, sdEventCompare> yourEventSet;
+    yourEventSet = voice2->getRangedEventSet(0.0, 8.0);
+    
+    cout << "all event of " << voice2->getName() << endl;
+    it = yourEventSet.begin();
+    while (it!=yourEventSet.end()) {
+        cout << (*it)->getTimeAsString() << ' ' << (*it)->getDescriptorAsString() << ' ' << (*it)->getValueAsString() << endl;
+        it++;
     }
     
     /*** 2. let sdScene handle the query ***/

@@ -11,76 +11,28 @@
 using namespace std;
 
 /*!
- maintains a set of event data. The constructor is intentionally declared as a protected function. This must be invoked through  sdEntity or its subclasses. This process ensures that all existing instances of sdEvents belong to a sdEntity and are aware of required extensions. The class is also responsible for the allocation of void* value by checking the descriptor. Thus, desciptor and value should be simultaneously set by set or setVlaue functions.
+ a pure virtual class of event.
+ it declares functions that all subclasses of this class should override.
  */
 class sdEvent{
     
 protected:
     float time;/*!< time of the event */
     EDescriptor descriptor;/*!<descriptor of the event*/
-    void *value;/*!<value of the event. sdEntity allocates the void pointer automatically*/
+    void *value;/*!<value of the event. the subclasses must allocates this void pointer */
     
     /*!
-     construcor is intentionally declared as protected. this class must be instantiated through sdEntity::addEvent
+     this construcor is intentionally declared as protected. this class must be instantiated through sdEntity::addEvent
      */
     sdEvent(void){};
     
-    /*!
-     internal functions for conversion from Enum to string
-     @param descriptor descriptor declared in sdConst.h
-     */
-    virtual string convert(EDescriptor descriptor) = 0;
-    
-    /*!
-     internal functions for conversion from Enum to string
-     @param kind kind declared in sdConst.h
-     */
-    virtual string convert(EKind kind) = 0;
-    
-    /*!
-     internal functions for conversion from Enum to string
-     @param type type declared in sdConst.h
-     */
-    virtual string convert(EType type) = 0;
-    
-    /*!
-     converts string to enums. The return value should be casted to the proper enum.
-     @param enum
-     */
-    virtual int convert(string str) = 0;
-    
 public:
-    /*!
-     returns time as Float
+    /*! @name Setter/Getter
+     @{
      */
-    float getTime(void);
-    /*!
-     returns time as string
-     */
-    string getTimeAsString(void);
     
     /*!
-     returns descriptor as Enum
-     */
-    EDescriptor getDescriptor(void);
-    
-    /*!
-     returns descriptor as string
-     */
-    virtual string getDescriptorAsString(void) = 0;
-    
-    /*!
-     returns value through void pointer. It should be casted to propoer type manually.
-     */
-    void* getValue(void);
-    
-    /*!
-     returns value as string
-     */
-    virtual string getValueAsString(void) = 0;
-    
-    /*!
-     set al three parameters at once
+     set all three parameters at once
      @param time time of event
      @param desciptor desciprot of event declared in sdConst.h
      @param value value of event
@@ -92,11 +44,40 @@ public:
      @param time time of the event
      */
     void setTime(float time);
+    void setTime(string timeString);
+    
+    /*!returns time as Float*/
+    float getTime(void);
+    
+    /*!returns time as string*/
+    string getTimeAsString(void);
+    
+    /*!returns descriptor as Enum*/
+    EDescriptor getDescriptor(void);
+    
+    /*!returns value through void pointer. It should be casted to propoer type manually.*/
+    void* getValue(void);
+
+    /*!
+     @}
+     */
+    
+    /*! @name Virtual functions
+    @{
+    */
+    
+    /*!descriptor and value should be set at once. because this function allocates memory to void* value based on the descriptor*/
+    virtual void setValue(EDescriptor descriptor, void* value) = 0;
+    
+    /*!returns descriptor as string. a routine for conversion should be implemented in derived classes*/
+    virtual string getDescriptorAsString(void) = 0;
+    
+    /*!returns value as string. a routine for conversion should be implemented in derived classes */
+    virtual string getValueAsString(void) = 0;
     
     /*!
-     descriptor and value should be set at once. because this function allocates memory to void* value based on the descriptor
+     @}
      */
-    virtual void setValue(EDescriptor descriptor, void* value) = 0;
 };
 
 /*** inline implementation ***/
@@ -127,6 +108,12 @@ inline void sdEvent::setTime(float time){
     sdEvent::time = time;
 }
 
+inline void sdEvent::setTime(string timeString){
+    istringstream is;
+    is.str(timeString);
+    is >> sdEvent::time;
+};
+
 /*!
  a helper class for sorting events
  */
@@ -141,10 +128,13 @@ public:
 };
 
 
+
+
+
+
 /*! sdEntity
  sdEntity is a pure abstract class. This class maintains and handles all events associated to relavant descriptors. This class is also responsible for answering query about it's relavant descriptors.
 */
-
 class sdEntity{
 
 protected:
@@ -154,36 +144,24 @@ public:
     sdEntity(); /*!< constructor */
     ~sdEntity(); /*!< desctrictor */
     
-    /*!
-     query method. it simply returns a pointer to the buffer, where the designated data are stored. returns null if not found. This is a pure abstract function. The subclass must override.
-     @param time specify time
-     @param descriptor specify descriptor defined in sdConst.h
+    /*! @name Setter/Getter
+     @{
      */
-    virtual void* getValue(float time, EDescriptor descriptor) = 0;
     
-    /*!
-     return all events related to the given descriptor
-     @param descriptor the descriptor of the event declared in sdConst.h
-     @param time the time of the event in second
-     */
-    virtual sdEvent* getEvent(float time, EDescriptor descriptor) = 0;
-
-    /*!
-     return a set of sdEvent pointers. sorted by time.
-     */
+    /*! return a set of sdEvent pointers. sorted by time.*/
     set<sdEvent*, sdEventCompare> getEventSet(void);
     
-    /*!
-     return number of registerd events in the eventSet
-     */
+    /*! return number of registerd events in the eventSet*/
     unsigned int getNumberOfEvents(void);
-    
-    /*!
-     this function is the only way to instantiate sdEvent and this function is responsible for allocating the void pointer properly based on the provoded descriptor
-     */
-    virtual sdEvent* addEvent(float time, EDescriptor descriptor, void* value) = 0;
-    virtual sdEvent* addEvent(string time, string descriptor, string value) = 0;
 
+    /*!
+     @}
+     */
+    
+    /*! @name Event Handling
+     @{
+     */
+    
     /*<
      remove an event from the set
      @param event the event to be removed
@@ -209,6 +187,39 @@ public:
      remove all events in the eventSet
      */
     void removeAllEvents();
+    
+    /*!
+     @}
+     */
+    
+    /*! @name Virtual functions
+     @{
+     */
+    
+    /*!
+     query method. it simply returns a pointer to the buffer, where the designated data are stored. returns null if not found. This is a pure abstract function. The subclass must override.
+     @param time specify time
+     @param descriptor specify descriptor defined in sdConst.h
+     */
+    virtual void* getValue(float time, EDescriptor descriptor) = 0;
+    
+    /*!
+     return all events related to the given descriptor
+     @param descriptor the descriptor of the event declared in sdConst.h
+     @param time the time of the event in second
+     */
+    virtual sdEvent* getEvent(float time, EDescriptor descriptor) = 0;
+    
+    /*!
+     this function is the only way to instantiate sdEvent and this function is responsible for allocating the void pointer properly based on the provoded descriptor
+     */
+    virtual sdEvent* addEvent(float time, EDescriptor descriptor, void* value) = 0;
+    virtual sdEvent* addEvent(string time, string descriptor, string value) = 0;
+    
+    /*!
+     @}
+     */
+    
 };
 
 /*** inline implementation ***/
@@ -217,6 +228,8 @@ inline sdEntity::sdEntity(){
 }
 
 inline sdEntity::~sdEntity(){
+    // delete all allocated values of attached events
+    eventSet.clear();
 }
 
 inline set<sdEvent*, sdEventCompare> sdEntity::getEventSet(void){

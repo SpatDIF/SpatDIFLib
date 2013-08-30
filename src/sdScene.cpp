@@ -29,6 +29,11 @@ unsigned int sdScene::getNumberOfEntities(void){
 
 
 sdEntityCore* sdScene::addEntity(string name, EKind kind){
+    sdEntityCore* ent = getEntity(name);
+    if(ent){
+        return ent;
+    }
+    
     sdEntityCore* entityCore = new sdEntityCore(name, kind); // private constructor
 
     // attach extensions to the newly created sdEntityCore.
