@@ -9,10 +9,23 @@
 #include <set>
 #include <string>
 #include "sdConst.h"
+#include "sdEvent.h"
 #include "sdEntity.h"
 #include "sdEntityExtension.h"
 
 using namespace std;
+
+class sdEventCore: public sdEvent{
+    
+    /*! only sdEntityCore can make an instantitate of this class */
+    friend class sdEntityCore;
+
+    
+    
+}
+
+
+
 
 class sdScene;
 

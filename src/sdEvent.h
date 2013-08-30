@@ -16,8 +16,6 @@ class sdEntity;
 */
 class sdEvent{
     
-    /*! only sdEntity and its subclasses can instantitate this class */
-    friend class sdEntity;
 
 protected:
     float time;/*!< time of the event */
@@ -40,30 +38,31 @@ protected:
     /*! 
      this constructor facilitates to load string based data to the entity. it converts all strings to proper data types and invoke the function above.
      */
-    sdEvent(string time, string descriptor, string value);
+    virtual sdEvent(string time, string descriptor, string value) = 0;
     
     /*!
      internal functions for conversion from Enum to string
      @param descriptor descriptor declared in sdConst.h
      */
-    string convert(EDescriptor descriptor);
+    virtual string convert(EDescriptor descriptor) = 0;
     
     /*!
      internal functions for conversion from Enum to string
      @param kind kind declared in sdConst.h
      */
-    string convert(EKind kind);
+    virtual string convert(EKind kind) = 0;
     
     /*!
      internal functions for conversion from Enum to string
      @param type type declared in sdConst.h
-     */    string convert(EType type);
+     */
+    virtual string convert(EType type) = 0;
     
     /*!
      converts string to enums. The return value should be casted to the proper enum.
      @param enum
      */
-    int convert(string str);
+    virtual int convert(string str) = 0;
     
 public:
     /*!
