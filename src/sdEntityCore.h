@@ -15,16 +15,29 @@
 
 using namespace std;
 
+/*!
+ this class stores event info (i.e. time, descriptor and value)
+ */
+
 class sdEventCore: public sdEvent{
     
     /*! only sdEntityCore can make an instantitate of this class */
     friend class sdEntityCore;
 
-    
-    
-}
+public:
+    sdEventCore(float time, EDescriptor descriptor, void* value) : sdEvent(time,descriptor,value){};
+    sdEventCore(string time, string descriptor, string value);
 
+    string getDescriptorAsString(void);
+    string getValueAsString(void);
 
+    void setValue(EDescriptor, void*);
+
+    string convert(EDescriptor);
+    string convert(EKind);
+    string convert(EType);
+    int convert(std::string);
+};
 
 
 class sdScene;
@@ -72,10 +85,10 @@ public:
      */
     void* getValue(float time, EDescriptor descriptor);
     
-    
-    sdEventCore* addEvent(float time, EDescriptor descriptor, void* value) = 0;
-    sdEventCore* addEvent(string time, string descriptor, string value) = 0;
-    
+    sdEvent* addEvent(float time, EDescriptor descriptor, void* value);
+    sdEvent* addEvent(string time, string descriptor, string value);
+    sdEvent* getEvent(float time, EDescriptor descriptor);
+
     /*! this returns a set of sdEvents with specified descriptor whose time parameter is between start and end time
      @param start start time
      @param end end time

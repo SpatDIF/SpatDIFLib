@@ -38,8 +38,8 @@ sdEntityCore* sdScene::addEntity(string name, EKind kind){
         EExtension ext = *it;
         switch (ext) {
             case SD_MEDIA:{
-                sdEntityExtensionMedia* mediaExtension = new sdEntityExtensionMedia();
-                entityCore->addExtension(mediaExtension);
+                //sdEntityExtensionMedia* mediaExtension = new sdEntityExtensionMedia();
+                //entityCore->addExtension(mediaExtension);
                 break;
             }
             default:

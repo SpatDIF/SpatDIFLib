@@ -12,6 +12,21 @@
 
 using namespace std;
 
+string sdGlobalEvent::getKindAsString(void){
+    string str;
+    switch (kind) {
+        case SD_SOURCE:
+            str = string("source");
+            break;
+        case SD_SINK:
+            str = string("sink");
+            break;
+        default:
+            break;
+    }
+    return str;
+}
+
 string sdSaver::XMLFromScene(sdScene *scene, EOrdering ordering){
     using namespace tinyxml2;
     
@@ -100,7 +115,7 @@ string sdSaver::XMLFromScene(sdScene *scene, EOrdering ordering){
             sdGlobalEvent event = *eit;
             
             XMLElement* time = xml.NewElement("time");
-            XMLText* timeText = xml.NewText(event.getTimeAsString().c_str());
+            XMLText* timeText = xml.NewText(event.getEvent()->getTimeAsString().c_str());
             time->InsertEndChild(timeText);
             spatdif->InsertEndChild(time);
 
@@ -111,8 +126,8 @@ string sdSaver::XMLFromScene(sdScene *scene, EOrdering ordering){
             name->InsertEndChild(nameText);
             kind->InsertEndChild(name);
             
-            XMLElement* element = xml.NewElement(event.getDescriptorAsString().c_str());
-            XMLText* text = xml.NewText(event.getValueAsString().c_str());
+            XMLElement* element = xml.NewElement(event.getEvent()->getDescriptorAsString().c_str());
+            XMLText* text = xml.NewText(event.getEvent()->getValueAsString().c_str());
             element->InsertEndChild(text);
             kind->InsertEndChild(element);
             

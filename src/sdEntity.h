@@ -35,7 +35,7 @@ public:
      @param descriptor the descriptor of the event declared in sdConst.h
      @param time the time of the event in second
      */
-    sdEvent* getEvent(float time, EDescriptor descriptor);
+    virtual sdEvent* getEvent(float time, EDescriptor descriptor) = 0;
 
     /*!
      return a set of sdEvent pointers. sorted by time.

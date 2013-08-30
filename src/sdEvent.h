@@ -82,7 +82,7 @@ public:
     /*!
      returns descriptor as string
      */
-    string getDescriptorAsString(void);
+    virtual string getDescriptorAsString(void) = 0;
 
     /*!
      returns value through void pointer. It should be casted to propoer type manually.
@@ -92,7 +92,7 @@ public:
     /*!
      returns value as string
      */
-    string getValueAsString(void);
+    virtual string getValueAsString(void) = 0;
 
     /*!
      set al three parameters at once
@@ -111,7 +111,7 @@ public:
     /*! 
      descriptor and value should be set at once. because this function allocates memory to void* value based on the descriptor
     */
-    void setValue(EDescriptor descriptor, void* value);
+    virtual void setValue(EDescriptor descriptor, void* value) = 0;
 };
 
 /*** inline implementation ***/
