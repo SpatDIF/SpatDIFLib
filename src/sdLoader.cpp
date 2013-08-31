@@ -81,6 +81,8 @@ sdScene sdLoader::sceneFromXML(string xmlString){
 }
 
 sdScene sdLoader::sceneFromJSON(string jsonString){
+    using namespace linjson;
+
     sdScene scene;
     return scene;
 }
