@@ -10,7 +10,10 @@ TXML_PATH = ./libs/tinyxml2
 TXML_FILE = tinyxml2.cpp 
 
 JSON_PATH = ./libs/libjson
+JSON_SOURCE_PATH = $(JSON_PATH)/_internal/Source
 JSON_MAKE = makefile 
+
+INCLUDE_PATH = -I$(TXML_PATH) -I$(JSON_PATH) -I$(JSON_SOURCE_PATH)
 
 all: tinyxml2.o libjson.a libspatdif.dylib
 
@@ -23,7 +26,7 @@ libjson.a : $(JSON_PATH)/$(JSON_MAKE)
 	cp $(JSON_PATH)/$@ ./
 
 libspatdif.dylib: $(FILES)
-	$(CC) $(CFLAGS) -I$(TXML_PATH) $(LIBS) -o $@ $(FILES) $(OBJECTS)
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) $(LIBS) -o $@ $(FILES) $(OBJECTS)
 	cp $@ $(EXAMPLE_DIR)
 clean: 
 	rm *.dylib *.o *.a
