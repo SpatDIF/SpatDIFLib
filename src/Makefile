@@ -18,7 +18,7 @@ INCLUDE_PATH = -I$(TXML_PATH) -I$(JSON_PATH) -I$(JSON_SOURCE_PATH)
 all: 
 	-@make $(UNAME)
 
-MacOSX: tinyxml2.o libjson.a libspatdif.dylib
+Darwin: tinyxml2.o libjson.a libspatdif.dylib
 
 Linux: tinyxml2.o libjson.a libspatdif.so
 
@@ -31,6 +31,9 @@ libjson.a : $(JSON_PATH)/$(JSON_MAKE)
 
 libspatdif.so: $(FILES)
 	$(CC) -o $@ -shared $(LIBS) $(INCLUDE_PATH)  tinyxml2.o libjson.a $(FILES)
+
+libspatdif.dylib: $(FILES)
+	$(CC) -o $@ -dynamiclib $(LIBS) $(INCLUDE_PATH) tinyxml2.o libjson.a $(FILES)
 
 clean: 
 	rm *.dylib *.so *.o *.a
