@@ -1,6 +1,6 @@
-
+UNAME := $(shell uname -s)
 CC = g++
-CFLAGS = -g -O3 -Wall -w -dynamiclib
+CFLAGS = -O3 -Wall -w -shared
 LIBS = -lstdc++
 OBJECTS = *.o *.a
 FILES = *.cpp
@@ -15,19 +15,23 @@ JSON_MAKE = makefile
 
 INCLUDE_PATH = -I$(TXML_PATH) -I$(JSON_PATH) -I$(JSON_SOURCE_PATH)
 
-all: tinyxml2.o libjson.a libspatdif.dylib
+all: 
+	-@make $(UNAME)
+
+MacOSX: tinyxml2.o libjson.a libspatdif.dylib
+
+Linux: tinyxml2.o libjson.a libspatdif.so
 
 tinyxml2.o : $(TXML_PATH)/$(TXML_FILES)
-	$(CC) -c $(TXML_PATH)/$(TXML_FILE)
-	
+	$(CC) -c $(TXML_PATH)/$(TXML_FILE)	
 
 libjson.a : $(JSON_PATH)/$(JSON_MAKE)
 	make -C $(JSON_PATH)
 	cp $(JSON_PATH)/$@ ./
 
-libspatdif.dylib: $(FILES)
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) $(LIBS) -o $@ $(FILES) $(OBJECTS)
-	cp $@ $(EXAMPLE_DIR)
+libspatdif.so: $(FILES)
+	$(CC) -o $@ -shared $(LIBS) $(INCLUDE_PATH)  tinyxml2.o libjson.a $(FILES)
+
 clean: 
-	rm *.dylib *.o *.a
+	rm *.dylib *.so *.o *.a
 	make clean -C $(JSON_PATH) 

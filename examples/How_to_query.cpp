@@ -1,11 +1,11 @@
 /* this example examines all functionalities of sdDate class */
 
-#include "sdScene.h"
-#include "sdLoader.h"
-
 #include <string>
 #include <iostream>
 #include <fstream>
+
+#include "sdScene.h"
+#include "sdLoader.h"
 
 int main(void){
     using namespace std;
@@ -40,7 +40,7 @@ int main(void){
     // check the pointer
     if(!voice1){
         cout << "no such entity" << endl;
-        abort();
+        
     }
     
     // get value pointer from the sdEntityCore cast it and post

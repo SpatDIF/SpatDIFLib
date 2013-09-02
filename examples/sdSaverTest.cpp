@@ -13,8 +13,8 @@ int main(void){
     sdScene scene(info);
     
     //the scene has one entities
-    sdEntityCore *myEntity = scene.addEntity("myEntity");
-    sdEntityCore *yourEntity = scene.addEntity("yourEntity");
+    sdEntityCore *myEntity = scene.addEntity("myEntity", SD_SOURCE);
+    sdEntityCore *yourEntity = scene.addEntity("yourEntity", SD_SOURCE);
 
     //set first event and attach it to myEntity
     float position[3];

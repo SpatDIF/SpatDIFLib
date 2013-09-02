@@ -1,36 +1,28 @@
-CC = c++
-CFLAGS =  -O3 -Wall -w 
-LIBS = -lstdc++ -lspatdif
+CC = g++
+CFLAGS = 
+INCLUDE = ../src
 LIB_PATH = ../src
-PATH = ../src
-
-FILES = sdLoaderTest sdSaverTest.cpp sdDateTest.cpp sdInfoTest.cpp sdSceneTest.cpp How_to_query.cpp sdOSCTest.cpp
-TARGETS = sdLoaderTest sdSaverTest sdDateTest sdInfoTest sdSceneTest How_to_query sdOSCTest
+LIBS = -lspatdif -lstdc++
+LD_LIBRARY_PATH= $(LIB_PATH)
+TARGETS = sdDateTest sdInfoTest sdSaverTest sdLoaderTest How_to_query
 
 all: $(TARGETS)
 
-sdLoaderTest: sdLoaderTest.cpp
-	$(CC) $(CFLAGS) -I$(PATH) -L$(LIB_PATH) $(LIBS) -o $@ $?
-
-sdSaverTest: sdSaverTest.cpp
-	$(CC) $(CFLAGS) -I$(PATH) -L$(LIB_PATH) $(LIBS) -o $@ $?
-
-
 sdDateTest: sdDateTest.cpp
-	$(CC) $(CFLAGS) -I$(PATH) -L$(LIB_PATH) $(LIBS) -o $@ $?
+	export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH)
+	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) $(LIBS) -o $@ $?
 
 sdInfoTest: sdInfoTest.cpp
-	$(CC) $(CFLAGS) -I$(PATH) -L$(LIB_PATH) $(LIBS) -o $@ $?
+	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) $(LIBS) -o $@ $?
 
-sdSceneTest: sdSceneTest.cpp
-	$(CC) $(CFLAGS) -I$(PATH) -L$(LIB_PATH) $(LIBS) -o $@ $?
+sdSaverTest: sdSaverTest.cpp
+	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) $(LIBS) -o $@ $?
 
-sdOSCTest: sdOSCTest.cpp
-	$(CC) $(CFLAGS) -I$(PATH) -L$(LIB_PATH) $(LIBS) -o $@ $?
+sdLoaderTest: sdLoaderTest.cpp
+	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) $(LIBS) -o $@ $? 
 
-How_to_query: How_to_query.cpp
-	$(CC) $(CFLAGS) -I$(PATH) -L$(LIB_PATH) $(LIBS) -o $@ $?
+How_to_query:  How_to_query.cpp
+	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) $(LIBS) -o $@ $? 
 
-
-clean: 
+clean:
 	rm $(TARGETS)
