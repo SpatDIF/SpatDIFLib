@@ -14,6 +14,7 @@ JSON_SOURCE_PATH = $(JSON_PATH)/_internal/Source
 JSON_MAKE = makefile 
 
 INCLUDE_PATH = -I$(TXML_PATH) -I$(JSON_PATH) -I$(JSON_SOURCE_PATH)
+INSTALL_PATH = /usr/local/lib
 
 all: 
 	-@make $(UNAME)
@@ -30,11 +31,21 @@ libjson.a : $(JSON_PATH)/$(JSON_MAKE)
 	cp $(JSON_PATH)/$@ ./
 
 libspatdif.so: $(FILES)
-	$(CC) -o $@ -shared $(LIBS) $(INCLUDE_PATH)  tinyxml2.o libjson.a $(FILES)
+	$(CC) -o $@ -shared $(LIBS) $(INCLUDE_PATH) tinyxml2.o $(FILES) libjson.a
 
 libspatdif.dylib: $(FILES)
 	$(CC) -o $@ -dynamiclib $(LIBS) $(INCLUDE_PATH) tinyxml2.o libjson.a $(FILES)
 
-clean: 
+install:
+	-@make install_$(UNAME)
+
+install_Linux:
+	sudo cp libspatdif.so $(INSTALL_PATH)
+
+install_Darwin:
+	cp libspatdif.dylib $(INSTALL_PATH)
+
+clean:
 	rm *.dylib *.so *.o *.a
 	make clean -C $(JSON_PATH) 
+
