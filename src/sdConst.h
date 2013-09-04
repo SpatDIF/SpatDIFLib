@@ -15,7 +15,17 @@ typedef enum {
     SD_TYPE ,
     SD_PRESENT,
     SD_POSITION,
-    SD_ORIENTATION
+    SD_ORIENTATION,
+    SD_LOCATION,
+    
+    //descriptor for media extension
+    SD_MEDIA_ID,
+    SD_MEDIA_TYPE,
+    SD_MEDIA_LOCATION,
+    SD_MEDIA_CHANNEL,
+    SD_MEDIA_TIME_OFFSET,
+    SD_MEDIA_GAIN
+    
 } EDescriptor;
 
 /*!

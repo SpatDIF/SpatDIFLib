@@ -17,7 +17,7 @@ using namespace std;
 class sdEvent{
     
 protected:
-    float time;/*!< time of the event */
+    double time;/*!< time of the event */
     EDescriptor descriptor;/*!<descriptor of the event*/
     void *value;/*!<value of the event. the subclasses must allocates this void pointer */
     
@@ -37,17 +37,17 @@ public:
      @param desciptor desciprot of event declared in sdConst.h
      @param value value of event
      */
-    void set(float time, EDescriptor descriptor, void* value);
+    void set(double time, EDescriptor descriptor, void* value);
     
     /*!
      set time of the event
      @param time time of the event
      */
-    void setTime(float time);
+    void setTime(double time);
     void setTime(string timeString);
     
-    /*!returns time as Float*/
-    float getTime(void);
+    /*!returns time as double*/
+    double getTime(void);
     
     /*!returns time as string*/
     string getTimeAsString(void);
@@ -81,7 +81,7 @@ public:
 };
 
 /*** inline implementation ***/
-inline float sdEvent::getTime(void){
+inline double sdEvent::getTime(void){
     return time;
 }
 
@@ -99,12 +99,12 @@ inline void* sdEvent::getValue(void){
     return value;
 }
 
-inline void sdEvent::set(float time, EDescriptor descriptor, void* value){
+inline void sdEvent::set(double time, EDescriptor descriptor, void* value){
     setTime(time);
     setValue(descriptor, value);
 }
 
-inline void sdEvent::setTime(float time){
+inline void sdEvent::setTime(double time){
     sdEvent::time = time;
 }
 
@@ -173,7 +173,7 @@ public:
      @param descriptor the descriptor of sdEvent to be removed
      @param time the time of sdEvent to be removed. 
      */
-    void removeEvent(EDescriptor descriptor, float time);
+    void removeEvent(EDescriptor descriptor, double time);
     
     /*!
      remove events in the specified period
@@ -181,7 +181,7 @@ public:
      @param start specifies the start point of the removal
      @param end specifies the end point of the removal
      */
-    void removeEvent(EDescriptor descriptor, float start, float end);
+    void removeEvent(EDescriptor descriptor, double start, double end);
     
     /*!
      remove all events in the eventSet
@@ -201,19 +201,19 @@ public:
      @param time specify time
      @param descriptor specify descriptor defined in sdConst.h
      */
-    virtual void* getValue(float time, EDescriptor descriptor) = 0;
+    virtual void* getValue(double time, EDescriptor descriptor) = 0;
     
     /*!
      return all events related to the given descriptor
      @param descriptor the descriptor of the event declared in sdConst.h
      @param time the time of the event in second
      */
-    virtual sdEvent* getEvent(float time, EDescriptor descriptor) = 0;
+    virtual sdEvent* getEvent(double time, EDescriptor descriptor) = 0;
     
     /*!
      this function is the only way to instantiate sdEvent and this function is responsible for allocating the void pointer properly based on the provoded descriptor
      */
-    virtual sdEvent* addEvent(float time, EDescriptor descriptor, void* value) = 0;
+    virtual sdEvent* addEvent(double time, EDescriptor descriptor, void* value) = 0;
     virtual sdEvent* addEvent(string time, string descriptor, string value) = 0;
     
     /*!

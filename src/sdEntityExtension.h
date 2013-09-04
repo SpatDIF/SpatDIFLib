@@ -25,7 +25,7 @@ public:
     static vector<EDescriptor> getDescriptors(void);
     
     /*! value query. Sub class of this class must override this function */
-    virtual void* getValue(float time, EDescriptor descriptor) = 0;
+    virtual void* getValue(double time, EDescriptor descriptor) = 0;
     
     virtual EExtension getExtensionName(void) = 0;
     virtual string getExtensionNameAsString(void) = 0;

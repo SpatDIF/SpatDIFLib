@@ -40,16 +40,7 @@ sdEntityCore* sdScene::addEntity(string name, EKind kind){
     vector <EExtension> ::iterator it = activatedExtensionVector.begin();
 
     while(it != activatedExtensionVector.end()){
-        EExtension ext = *it;
-        switch (ext) {
-            case SD_MEDIA:{
-                //sdEntityExtensionMedia* mediaExtension = new sdEntityExtensionMedia();
-                //entityCore->addExtension(mediaExtension);
-                break;
-            }
-            default:
-                break;
-        }
+        entityCore->addExtension(*it);
         it++;
     }
     
@@ -101,6 +92,12 @@ vector <EExtension> sdScene::getActivatedExtensionVector(void){
 
 void sdScene::addExtension(EExtension extension){
     activatedExtensionVector.push_back(extension);
+    vector <sdEntityCore*>::iterator it = entityVector.begin();
+    while (it != entityVector.end()) {
+        sdEntityCore* entityCore = *it;
+        entityCore->addExtension(extension);
+        it++;
+    }
 }
 
 void sdScene::removeExtension(EExtension extension){

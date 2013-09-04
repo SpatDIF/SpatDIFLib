@@ -5,13 +5,14 @@
 #include <string>
 #include <iostream>
 #include "sdEntityCore.h"
+#include "sdEntityExtensionMedia.h"
 
 using namespace std;
 
 /*** sdEventCore ***/
 
 
-sdEventCore::sdEventCore(float time, EDescriptor descriptor, void* value){
+sdEventCore::sdEventCore(double time, EDescriptor descriptor, void* value){
     setTime(time); // declared in the super class
     setValue(descriptor, value); // private function
 }
@@ -30,12 +31,12 @@ sdEventCore::~sdEventCore(){
             break;
         }
         case SD_POSITION:{
-            float* valuePointer = static_cast<float*>(value);
+            double* valuePointer = static_cast<double*>(value);
             delete valuePointer;
             break;
         }
         case SD_ORIENTATION:{
-            float* valuePointer = static_cast<float*>(value);
+            double* valuePointer = static_cast<double*>(value);
             delete valuePointer;
             break;
         }
@@ -68,17 +69,17 @@ string sdEventCore::getValueAsString(void){
             break;
         }
         case SD_POSITION:{
-            float *position;
+            double *position;
             ostringstream os;
-            position = static_cast<float *>(value);
+            position = static_cast<double *>(value);
             os << position[0] << ' ' << position[1] << ' ' << position[2];
             str = os.str();
             break;
         }
         case SD_ORIENTATION:{
-            float *orientation;
+            double *orientation;
             ostringstream os;
-            orientation = static_cast<float *>(value);
+            orientation = static_cast<double *>(value);
             os << orientation[0] << ' ' << orientation[1] << ' ' << orientation[2];
             str = os.str();
         }
@@ -95,8 +96,8 @@ void sdEventCore::setValue(EDescriptor descriptor, void* value){
             break;
         }
         case SD_POSITION:{
-            float *positionValueTo = new float[3];
-            float *positionValueFrom = static_cast<float*>(value);
+            double *positionValueTo = new double[3];
+            double *positionValueFrom = static_cast<double*>(value);
             positionValueTo[0] = positionValueFrom[0];
             positionValueTo[1] = positionValueFrom[1];
             positionValueTo[2] = positionValueFrom[2];
@@ -104,8 +105,8 @@ void sdEventCore::setValue(EDescriptor descriptor, void* value){
             break;
         }
         case SD_ORIENTATION:{
-            float *orientationValueTo = new float[3];
-            float *orientationValueFrom = static_cast<float*>(value);
+            double *orientationValueTo = new double[3];
+            double *orientationValueFrom = static_cast<double*>(value);
             orientationValueTo[0] = orientationValueFrom[0];
             orientationValueTo[1] = orientationValueFrom[1];
             orientationValueTo[2] = orientationValueFrom[2];
@@ -138,7 +139,7 @@ void sdEventCore::setValue(string descriptor, string value){
         }
         case SD_POSITION:
         {
-            float position[3];
+            double position[3];
             istringstream is(value);
             is >> position[0] >> position[1] >> position[2];
             setValue(sdEventCore::descriptor, static_cast<void*>(&position));
@@ -146,7 +147,7 @@ void sdEventCore::setValue(string descriptor, string value){
         }
         case SD_ORIENTATION:
         {
-            float orientation[3];
+            double orientation[3];
             istringstream is(value);
             is >> orientation[0] >> orientation[1] >> orientation[2];
             setValue(sdEventCore::descriptor, static_cast<void*>(&orientation));
@@ -186,12 +187,12 @@ string sdEntityCore::getTypeAsString(void){
 }
 
 
-sdEvent* sdEntityCore::getEvent(float time, EDescriptor descriptor){
+sdEvent* sdEntityCore::getEvent(double time, EDescriptor descriptor){
     
     // descriptor check if not found in the core desciptor list, forward the query to attached extensions
     set <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
     while( it != eventSet.end()){
-        float eventTime = (*it)->getTime();
+        double eventTime = (*it)->getTime();
         if(eventTime == time){ // time matched?
             EDescriptor eventDescriptpr = (*it)->getDescriptor();
             if(eventDescriptpr == descriptor){ // descriptor matched?
@@ -202,7 +203,7 @@ sdEvent* sdEntityCore::getEvent(float time, EDescriptor descriptor){
     }
 }
 
-set <sdEvent*, sdEventCompare>sdEntityCore::getRangedEventSet(float start, float end){
+set <sdEvent*, sdEventCompare>sdEntityCore::getRangedEventSet(double start, double end){
     set <sdEvent*, sdEventCompare>rangedSet;
     set <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
     while(it != eventSet.end()){
@@ -215,14 +216,14 @@ set <sdEvent*, sdEventCompare>sdEntityCore::getRangedEventSet(float start, float
     return rangedSet;
 }
 
-set <sdEvent*, sdEventCompare>sdEntityCore::getFilteredEventSet(float start, float end, EDescriptor descriptor){
+set <sdEvent*, sdEventCompare>sdEntityCore::getFilteredEventSet(double start, double end, EDescriptor descriptor){
     
     set <sdEvent*, sdEventCompare>rangedSet;
     set <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
     while(it != eventSet.end()){
         sdEvent* event = *it;
         if ( (event->getTime() >= start) && (event->getTime() <= end)) {
-            if(descriptor == NULL || event->getDescriptor() == descriptor){
+            if(event->getDescriptor() == descriptor){
                 rangedSet.insert(*it);
             }
         }
@@ -231,7 +232,7 @@ set <sdEvent*, sdEventCompare>sdEntityCore::getFilteredEventSet(float start, flo
     return rangedSet;
 }
 
-sdEvent* sdEntityCore::addEvent(float time, EDescriptor descriptor, void* value){
+sdEvent* sdEntityCore::addEvent(double time, EDescriptor descriptor, void* value){
     
     //duplication check. if exist just delete the old one and make a new one
     set <sdEvent*>::iterator it = eventSet.begin();
@@ -262,7 +263,7 @@ sdEvent* sdEntityCore::addEvent(string time, string descriptor, string value){
 }
 
 
-void* sdEntityCore::getValue(float time, EDescriptor descriptor){
+void* sdEntityCore::getValue(double time, EDescriptor descriptor){
     set<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
 
     while(it != eventSet.end()){
@@ -275,6 +276,20 @@ void* sdEntityCore::getValue(float time, EDescriptor descriptor){
     return NULL;
 }
 
+
+sdEntityExtension* sdEntityCore::addExtension(EExtension extension){
+    
+    switch (extension) {
+        case SD_MEDIA:{
+            sdEntityExtensionMedia* mediaExtension = new sdEntityExtensionMedia();
+            extensionVector.push_back(mediaExtension);
+            break;
+        }
+        default:
+            break;
+    }
+    
+}
 
 
 

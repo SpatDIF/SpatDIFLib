@@ -20,7 +20,7 @@ using namespace std;
 
 class sdEventCore: public sdEvent{
     
-    /*! only sdEntityCore can make an instantitate of this class */
+    /*! only sdEntityCore can make an instance of this class */
     friend class sdEntityCore;
 
 public:
@@ -30,7 +30,7 @@ public:
      @param descriptor descriptor of the event. declared in sdConst.h
      @param value void pointer to value to be copied. Proper size of memory will be automatically allocated.
      */
-    sdEventCore(float time, EDescriptor descriptor, void* value);
+    sdEventCore(double time, EDescriptor descriptor, void* value);
     
     /*! same as above but you can give all arguments with string */
     sdEventCore(string time, string descriptor, string value);
@@ -125,22 +125,22 @@ public:
     string getTypeAsString(void);
 
     /*! returns event with the specified descriptor at the specified time  */
-    sdEvent* getEvent(float time, EDescriptor descriptor);
+    sdEvent* getEvent(double time, EDescriptor descriptor);
     
     /*! returns all events between start and end time  */
-    set <sdEvent*, sdEventCompare>getRangedEventSet(float start, float end);
+    set <sdEvent*, sdEventCompare>getRangedEventSet(double start, double end);
  
     /*! returns all events with the specified descriptor between start and end time  */
-    set <sdEvent*, sdEventCompare>getFilteredEventSet(float start, float end, EDescriptor descriptor);
+    set <sdEvent*, sdEventCompare>getFilteredEventSet(double start, double end, EDescriptor descriptor);
 
     /*! a overrieded query function. it simply returns a pointer to the buffer, where the designated data are stored. returns null if not found.
      @param time
      @param descriptor
      */
-    void* getValue(float time, EDescriptor descriptor);
+    void* getValue(double time, EDescriptor descriptor);
     
     /*! This is the only method for adding an new event to the entity*/
-    sdEvent* addEvent(float time, EDescriptor descriptor, void* value);
+    sdEvent* addEvent(double time, EDescriptor descriptor, void* value);
     
     /*! same as above but you can specify arguments with string */
     sdEvent* addEvent(string time, string descriptor, string value);
@@ -151,7 +151,7 @@ public:
      */
     
     /*! adding extension to the entity*/
-    void addExtension(EExtension extension);
+    sdEntityExtension* addExtension(EExtension extension);
     
     /*! removing extension from the entity*/
     void removeExtension(EExtension extension);
@@ -177,10 +177,6 @@ inline EKind sdEntityCore::getKind(void){
 
 inline EType sdEntityCore::getType(void){
     return type;
-}
-
-inline void sdEntityCore::addExtension(EExtension extension){
-
 }
 
 inline bool sdEntityCore::sortAlphabetically( sdEntityCore *leftEntity,  sdEntityCore *rightEntity){
