@@ -41,6 +41,8 @@ sdEventCore::~sdEventCore(){
             delete valuePointer;
             break;
         }
+        default:
+            break;
     }
 }
 
@@ -84,6 +86,8 @@ string sdEventCore::getValueAsString(void){
             os << orientation[0] << ' ' << orientation[1] << ' ' << orientation[2];
             str = os.str();
         }
+        default:
+            break;
     }
     return str;
 }
@@ -154,6 +158,8 @@ void sdEventCore::setValue(string descriptor, string value){
             setValue(sdEventCore::descriptor, static_cast<void*>(&orientation));
             break;
         }
+        default:
+            break;
             
     }
 }
@@ -162,6 +168,7 @@ void sdEventCore::setValue(string descriptor, string value){
 
 /*** sdEntityCore ***/
 
+const int sdEntityCore::numberOfrelevantDescriptors = 4;
 const EDescriptor sdEntityCore::relevantDescriptors[] = {SD_TYPE, SD_PRESENT, SD_POSITION, SD_ORIENTATION};
 
 string sdEntityCore::getKindAsString(void){
@@ -204,6 +211,7 @@ sdEvent* sdEntityCore::getEvent(double time, EDescriptor descriptor){
         }
 		it++;
     }
+    return NULL;
 }
 
 set <sdEvent*, sdEventCompare>sdEntityCore::getRangedEventSet(double start, double end){
@@ -236,58 +244,60 @@ set <sdEvent*, sdEventCompare>sdEntityCore::getFilteredEventSet(double start, do
 }
 
 sdEvent* sdEntityCore::addEvent(double time, EDescriptor descriptor, void* value){
+    
+    sdEvent *event = NULL;
+    
+    if(isDescriptorRelevant(descriptor)){
+        //remove old event with the same time at the same time if exists
+        removeEvent(time, descriptor);
 
-    if(isDescriptorRelevant(descriptor, relevantDescriptors)){
-        cout << "this descriptor is relevant" << endl;
+        //create a new instance of sdEventCore as sdEvent
+        event = static_cast<sdEvent*>(new sdEventCore(time, descriptor, value));
+  
+        //and insert it in the set
+        eventSet.insert(event);
     }else{
-        return NULL;
+        vector <sdEntityExtension*>::iterator it =   extensionVector.begin();
+        
+        while(it != extensionVector.end()){
+            sdEntityExtension* extension= (*it);
+            
+            if(extension->isDescriptorRelevant(descriptor)){
+                extension->addEvent(time, descriptor, value);
+            }
+            it++;
+        }
+        
     }
     
-    //duplication check. if exist just delete the old one and make a new one
+    //returns a point to the newly created sdEvent
+    return event;
+}
+
+sdEvent* sdEntityCore::addEvent(string time, string descriptor, string value){
+
+    //tobe improved
+//    //make a new event from string
+//    sdEventCore newEvent(time, descriptor, value);
+//    
+//    //then invoke the function above
+//    addEvent(newEvent.getTime(), newEvent.getDescriptor(), newEvent.getValue());
+    
+}
+
+void sdEntityCore::removeEvent(double time, EDescriptor descriptor){
     set <sdEvent*>::iterator it = eventSet.begin();
     while(it != eventSet.end()) {
         sdEvent* event = *it;
         if(event->getTime() == time){
             if(event->getDescriptor() == descriptor)
             {
-                eventSet.erase(it++);
+                eventSet.erase(it++); // very important incrementor
             }
         }
         it++;
     }
-    
-    // if not in the set
-    //create a new instance of sdEvent
-    sdEvent *event = static_cast<sdEvent*>(new sdEventCore(time, descriptor, value));
-    //and insert it in the set
-    eventSet.insert(event);
-    //returns a point to the newly created sdEvent
-    return event;
 }
-
-sdEvent* sdEntityCore::addEvent(string time, string descriptor, string value){
-    
-    
-    
-    sdEvent *newEvent = static_cast<sdEvent*>(new sdEventCore(time, descriptor, value));
-    
-    //duplication check. if exist just delete the old one and make a new one
-    set <sdEvent*>::iterator it = eventSet.begin();
-    while(it != eventSet.end()) {
-        sdEvent* event = *it;
-        if(event->getTime() == newEvent->getTime()){
-            if(event->getDescriptor() == newEvent->getDescriptor())
-            {
-                eventSet.erase(it++);
-            }
-        }
-        it++;
-    }
-    
-    eventSet.insert(newEvent);
-    return newEvent;
-}
-
 
 void* sdEntityCore::getValue(double time, EDescriptor descriptor){
     set<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
@@ -309,10 +319,23 @@ sdEntityExtension* sdEntityCore::addExtension(EExtension extension){
         case SD_MEDIA:{
             sdEntityExtensionMedia* mediaExtension = new sdEntityExtensionMedia();
             extensionVector.push_back(mediaExtension);
+            return mediaExtension;
             break;
         }
         default:
             break;
     }
     
+    return NULL;
 }
+
+bool sdEntityCore::isDescriptorRelevant(EDescriptor descriptor){
+    
+    for(int i = 0;i<numberOfRelevantDescriptors; i++){
+        if(relevantDescriptors[i] == descriptor)
+            return true;
+    }
+    return false;
+}
+
+

@@ -103,9 +103,7 @@ string sdSaver::XMLFromScene(sdScene *scene){
             set<sdEvent*, sdEventCompare>::iterator iit =eventSet.begin();
             while(iit != eventSet.end()){
                 sdEvent* event = *iit;
-                sdGlobalEvent globalEvent(event, entity->getName(), entity->getKind());
-                float* val = static_cast<float*>(event->getValue());
-                
+                sdGlobalEvent globalEvent(event, entity->getName(), entity->getKind());                
                 allEventSet.insert(globalEvent); // gather pointer to all existing instances of sdEvent
                 ++iit;
             }
@@ -183,8 +181,6 @@ string sdSaver::XMLFromScene(sdScene *scene){
 
 string sdSaver::JSONFromScene( sdScene *sdScene){
     return NULL;
-    
-    
     
     
 }

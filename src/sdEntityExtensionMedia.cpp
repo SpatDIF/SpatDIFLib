@@ -1,6 +1,8 @@
 #include "sdEntityExtensionMedia.h"
 
 const EExtension sdEntityExtensionMedia::extensionName = SD_MEDIA;
+const string sdEntityExtensionMedia::extensionNameAsString = string("media");
+const int sdEntityExtensionMedia::numberOfRelevantDescriptors = 6;
 const EDescriptor sdEntityExtensionMedia::relevantDescriptors[] = {
     SD_MEDIA_ID,
     SD_MEDIA_TYPE,
@@ -26,18 +28,30 @@ sdEvent* sdEntityExtensionMedia::getEvent(double, EDescriptor){
 
 sdEvent* sdEntityExtensionMedia::addEvent(double time, EDescriptor descriptor, void* value){
     
-    cout << "test addevent" << endl;
     return NULL;
 
     
 }
 
 sdEvent* sdEntityExtensionMedia::addEvent(string time, string descriptor, string value){
-    cout << "test addevent" << endl;
 
     return NULL;
 
 }
 
+
+void sdEntityExtensionMedia::removeEvent(double time, EDescriptor descriptor){
+    
+    
+}
+
+bool sdEntityExtensionMedia::isDescriptorRelevant(EDescriptor descriptor){
+
+    for(int i = 0;i<numberOfRelevantDescriptors; i++){
+        if(relevantDescriptors[i] == descriptor)
+            return true;
+    }
+    return false;
+}
 
 

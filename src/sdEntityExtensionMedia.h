@@ -25,7 +25,7 @@ public:
      @param value void pointer to value to be copied. Proper size of memory will be automatically allocated.
      */
 
-    sdEventExtensionMedia(float time, EDescriptor descriptor, void* value);
+    sdEventExtensionMedia(double time, EDescriptor descriptor, void* value);
     sdEventExtensionMedia(string time, string descriptor, string value);
 
     /*! destructor destroy all allocated memory to the value pointer*/
@@ -37,6 +37,7 @@ public:
     /*! overrided method. get value as string e.g. "0.3 0.5 0.2"*/
     string getValueAsString(void);
     
+    bool isDescriptorRelevant(EDescriptor descriptor);
 private:
     /*!
      @name private setter
@@ -63,15 +64,9 @@ private:
 class sdEntityExtensionMedia: public sdEntityExtension{
     friend class sdEntityCore;
         
-
-    string id; /*< unique identifier */
-    string type; /*< where the content comes from */
-    string location; /*< location of the file or stream*/
-    int channel; /*< If type has more channels, define the channel that is taken as input*/
-    double timeOffset;/*< Starting position within media file */
-    double gain;/*< gain value of the media*/
-    
     static const EExtension extensionName; /*< identification of the class */
+    static const string extensionNameAsString; /*< identification of the class */
+
     static const int numberOfRelevantDescriptors;
     static const EDescriptor relevantDescriptors[]; /*< this extension stores data with the descriptors stored in this array */
     
@@ -79,7 +74,7 @@ class sdEntityExtensionMedia: public sdEntityExtension{
      this constructor should be involed from an instance of sdScene
      */
     
-    sdEntityExtensionMedia(string id = "unknown", string type = "none", string location ="", int channel = 1, double timeOffset = 0.0, double gain = 1.0);
+    sdEntityExtensionMedia(){};
     
 public:
     
@@ -106,21 +101,14 @@ public:
     /*! same as above but you can specify arguments with strings */
     sdEvent* addEvent(string time, string descriptor, string value);
     
+    
+    void removeEvent(double time, EDescriptor descriptor);
+    
     /*! returns true if the provided descriptor in the relevantDescriptorArray */
     bool isDescriptorRelevant(EDescriptor descriptor);
 
 };
 
-
-inline sdEntityExtensionMedia::sdEntityExtensionMedia(string id, string type, string location, int channel, double timeOffset, double gain){
-
-    sdEntityExtensionMedia::id = id;
-    sdEntityExtensionMedia::type = type;
-    sdEntityExtensionMedia::location = location;
-    sdEntityExtensionMedia::channel = channel;
-    sdEntityExtensionMedia::timeOffset = timeOffset;
-    sdEntityExtensionMedia::gain = gain;
-}
 
 /*** inline implementation ***/
 inline EExtension sdEntityExtensionMedia::getExtensionName(void){
@@ -128,7 +116,7 @@ inline EExtension sdEntityExtensionMedia::getExtensionName(void){
 }
 
 inline string sdEntityExtensionMedia::getExtensionNameAsString(void){
-    return string("media");
+    return extensionNameAsString;
 }
 
 #endif

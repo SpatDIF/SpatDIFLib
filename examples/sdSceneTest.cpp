@@ -35,12 +35,12 @@ int main(void){
     
     //attach two entities
     sdEntityCore *myEntity = scene.addEntity("myEntity"); // spawn an entity
-    float firstPos[3] = {0.0, 0.1, 0.2};
-    float secondPos[3] = {0.3, 0.4, 0.5};
-    float thirdPos[3] = {0.6, 0.7, 0.8};
+    double firstPos[3] = {0.0, 0.1, 0.2};
+    double secondPos[3] = {0.3, 0.4, 0.5};
+    double thirdPos[3] = {0.6, 0.7, 0.8};
 
     //addEvent to myEntity
-    myEntity->addEvent(0.2, SD_POSITION, static_cast<void*>(firstPos));
+    myEntity->addEvent(string("0.2"), string("position"), string("0.0 0.1 0.2"));
     myEntity->addEvent(0.5, SD_POSITION, static_cast<void*>(secondPos));
 
     cout << "num events attached to myEntity after second addition:" << myEntity->getNumberOfEvents() << endl;

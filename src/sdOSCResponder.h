@@ -14,7 +14,7 @@ class sdOSCResponder{
 private:
     /*! The interpreted OSC messages will be sent do this sdScene*/
     sdScene *scene;
-    float time;
+    double time;
     
 public:
     /*! the scene must be created before the instantiation of this class

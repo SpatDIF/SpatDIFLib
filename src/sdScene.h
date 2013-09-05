@@ -134,7 +134,7 @@ public:
      @param descriptor enum of target descriptor
      @param value allocated void pointer containing value(s)
      */
-    void setValue(string name, float time, EDescriptor descriptor,  void* value);
+    void setValue(string name, double time, EDescriptor descriptor,  void* value);
     
     /*! query timed data by specifying name of the target entity, descriptor, and time.
      sdScene forwards the query to a proper sdEntityCore and return the answer.
@@ -143,7 +143,7 @@ public:
      @param descriptor enum of target descriptor
      @param value allocated void pointer containing value(s)
      */
-    void* getValue(string name, float time, EDescriptor descriptor);
+    void* getValue(string name, double time, EDescriptor descriptor);
     
     /*!
      @}

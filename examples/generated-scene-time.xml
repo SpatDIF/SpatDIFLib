@@ -14,12 +14,12 @@
     <time>2.12</time>
     <source>
         <name>myEntity</name>
-        <position>0 1 2</position>
+        <orientation>0 1 2</orientation>
     </source>
     <time>4.2</time>
     <source>
         <name>yourEntity</name>
-        <position>5 4 3.3</position>
+        <position>5 4 3</position>
     </source>
     <time>9.15</time>
     <source>

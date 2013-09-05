@@ -1,6 +1,6 @@
 UNAME := $(shell uname -s)
 CC = g++
-CFLAGS = -O3 -Wall -w -shared
+CFLAGS =  -shared
 LIBS = -lstdc++
 OBJECTS = *.o *.a
 FILES = *.cpp
@@ -20,6 +20,7 @@ all:
 	-@make $(UNAME)
 
 Darwin: tinyxml2.o libjson.a libspatdif.dylib
+	cp libspatdif.dylib ../examples
 
 Linux: tinyxml2.o libjson.a libspatdif.so
 
@@ -31,10 +32,10 @@ libjson.a : $(JSON_PATH)/$(JSON_MAKE)
 	cp $(JSON_PATH)/$@ ./
 
 libspatdif.so: $(FILES)
-	$(CC) -o $@ -shared $(LIBS) $(INCLUDE_PATH) tinyxml2.o $(FILES) libjson.a
+	$(CC) $(CFLAGS) -o $@ -shared $(LIBS) $(INCLUDE_PATH) tinyxml2.o $(FILES) libjson.a
 
 libspatdif.dylib: $(FILES)
-	$(CC) -o $@ -dynamiclib $(LIBS) $(INCLUDE_PATH) tinyxml2.o libjson.a $(FILES)
+	$(CC) $(CFLAGS) -o $@ -dynamiclib $(LIBS) $(INCLUDE_PATH) tinyxml2.o libjson.a $(FILES)
 
 install:
 	-@make install_$(UNAME)

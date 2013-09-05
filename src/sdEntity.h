@@ -152,7 +152,7 @@ public:
     set<sdEvent*, sdEventCompare> getEventSet(void);
     
     /*! return number of registerd events in the eventSet*/
-    unsigned int getNumberOfEvents(void);
+    int getNumberOfEvents(void);
 
     /*!
      @}
@@ -216,12 +216,12 @@ public:
     virtual sdEvent* addEvent(double time, EDescriptor descriptor, void* value) = 0;
     virtual sdEvent* addEvent(string time, string descriptor, string value) = 0;
     
+    virtual void removeEvent(double time, EDescriptor descriptor) = 0;
+
     /*!
      @}
      */
 
-    /*!returns true if the provided descriptor is relevant*/
-    static bool isDescriptorRelevant(EDescriptor descriptor, const EDescriptor *relevantDescriptors);
 
 
 };
@@ -240,25 +240,14 @@ inline set<sdEvent*, sdEventCompare> sdEntity::getEventSet(void){
     return eventSet;
 }
     
-inline unsigned int sdEntity::getNumberOfEvents(){
-    return eventSet.size();
+inline int sdEntity::getNumberOfEvents(){
+    return static_cast<int>(eventSet.size());
 }
 
 inline void sdEntity::removeAllEvents(){
     eventSet.clear();
 }
 
-inline bool sdEntity::isDescriptorRelevant(EDescriptor descriptor, const EDescriptor *relevantDescriptors){
-    
-    int numElement = sizeof(relevantDescriptors)/sizeof(relevantDescriptors[0]);
-    
-    for(int i = 0; i< numElement; i++){
-        if(relevantDescriptors[i] == descriptor){
-            return true;
-        }
-    }
-    return false;
-}
 
 
 #endif /* defined(____sdEntity__) */

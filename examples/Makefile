@@ -3,9 +3,12 @@ CFLAGS =
 INCLUDE = ../src
 LIB_PATH = ../src
 LIBS =  -lstdc++ -lspatdif
-TARGETS = sdDateTest sdInfoTest sdSaverTest sdLoaderTest sdSceneTest sdExtensionTest How_to_query
+TARGETS = sdEventTest sdDateTest sdInfoTest sdSaverTest sdLoaderTest sdSceneTest sdExtensionTest How_to_query
 
 all: $(TARGETS)
+
+sdEventTest: sdEventTest.cpp
+	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS)
 
 sdDateTest: sdDateTest.cpp
 	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS)

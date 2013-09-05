@@ -44,7 +44,7 @@ int main(void){
     }
     
     // get value pointer from the sdEntityCore cast it and post
-    float* pos = static_cast<float*>(voice1->getValue(2.52 , SD_POSITION));
+    double* pos = static_cast<double*>(voice1->getValue(2.52 , SD_POSITION));
     cout << "position of voice1 at 2.52:" << pos[0] << ' ' << pos[1] << ' ' << pos[2] << endl;
     
     // you can also ask events in a certain time frame.
@@ -77,7 +77,7 @@ int main(void){
     /*** 2. let sdScene handle the query ***/
     // simpler but less efficient
     
-    pos = static_cast<float*>(myScene.getValue(string("voice1"), 0.0, SD_POSITION));
+    pos = static_cast<double*>(myScene.getValue(string("voice1"), 0.0, SD_POSITION));
     cout << "position of voice1 at 0.0:" << pos[0] << ' ' << pos[1] << ' ' << pos[2] << endl;
 
     

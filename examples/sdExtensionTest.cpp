@@ -14,16 +14,20 @@ int main(void){
     
     // add an entity to the scene
     sdEntityCore* entityOne = scene.addEntity("voice1");
-
+    
     // the following messages add event to the core
-    float position[3] = {0.0,0.3,0.4};
-    sdEvent* pos = entityOne->addEvent(0.0, SD_POSITION, position);
-    cout << pos->getValueAsString() << endl;
-    
-    
+    double position[3] = {0.0,0.3,0.4};
+
+    entityOne->addEvent(1.0, SD_POSITION, position);
+    entityOne->addEvent(2.0, SD_POSITION, position);
+
+    scene.addExtension(SD_MEDIA);
     // the message below is the message for extension. so the core does not understand.
+    
     string loc = string("/User/john/sample.wav");
-    sdEvent* evt= entityOne->addEvent(0.0, SD_MEDIA_LOCATION, static_cast<void*>(&loc));
+    sdEvent* evt= entityOne->addEvent(3.0, SD_MEDIA_LOCATION, static_cast<void*>(&loc));
+
+    scene.dump();
 
     // Thus the pointer points NULL
     if(!evt){
@@ -31,7 +35,7 @@ int main(void){
     }
 
     // now add an extension to the scene
-    scene.addExtension(SD_MEDIA);
+    
     
     // ...now the sdScene automatically attach sdEntityExtensionMedia to all existing entityCores in the scene.
     

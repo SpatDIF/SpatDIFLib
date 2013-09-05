@@ -29,6 +29,7 @@ unsigned int sdScene::getNumberOfEntities(void){
 
 
 sdEntityCore* sdScene::addEntity(string name, EKind kind){
+    
     sdEntityCore* ent = getEntity(name);
     if(ent){
         return ent;
@@ -69,12 +70,12 @@ void sdScene::removeEntity(sdEntityCore *entity){
     }
 }
 
-void sdScene::setValue(string name, float time, EDescriptor descriptor,  void* value){
+void sdScene::setValue(string name, double time, EDescriptor descriptor,  void* value){
     sdEntityCore* entity = getEntity(name);
     entity->addEvent(time, descriptor, value);
 }
 
-void* sdScene::getValue(string name, float time, EDescriptor descriptor){
+void* sdScene::getValue(string name, double time, EDescriptor descriptor){
     sdEntityCore* entity = getEntity(name);
     if (!entity) {
         return NULL;
@@ -118,7 +119,8 @@ void sdScene::dump(void){
     cout << "author:" << info.getAuthor() <<endl;
     cout << "annotaion:" <<  info.getAnnotation() <<endl;
     cout << "ordering:" <<  getOrderingAsString()<<endl;
-
+    cout << "extensions:" << activatedExtensionVector.size() << endl;
+    
     cout << "number of entity used:" <<  getNumberOfEntities()<<endl;
 
     cout << "---------- Entities --------" << endl;
@@ -134,40 +136,26 @@ void sdScene::dump(void){
         set <sdEvent*, sdEventCompare>::iterator itt = evnts.begin();
 
         while(itt != evnts.end()){
-            sdEvent *evt = *itt;
-            string desc, valueStr;
-            desc = evt->getDescriptorAsString();
-            switch(evt->getDescriptor()){
-                case SD_PRESENT:
-                {
-                    valueStr = *((bool*)evt->getValue()) ? string("true") : string("false");
-                    break;
-                }
-                case SD_POSITION:
-                {
-                    float* pos = static_cast<float*>(evt->getValue());
-                    ostringstream stream;
-                    stream << pos[0] << " " << pos[1] << " " << pos[2];
-                    valueStr = stream.str();
-                    break;
-                }
-                case SD_ORIENTATION:
-                {
-                    float* ori = static_cast<float*>(evt->getValue());
-                    ostringstream stream;
-                    stream << ori[0] << " " << ori[1] << " " << ori[2];
-                    valueStr = stream.str();
-                    break;
-                }
-            }
-            cout << "[time:" << setw(6) << left << evt->getTime() <<
-            " descriptor:" << setw(10) << left << desc <<
-            " value:" << setw(16)  << left << valueStr << "]" << endl;
+            sdEventCore *eventCore = static_cast<sdEventCore*>(*itt);
+            cout << "["  << eventCore->getTimeAsString() << " " << eventCore->getDescriptorAsString() << " " << eventCore->getValueAsString() << "]" << endl;
             itt++;
+            
+        }
+        vector <sdEntityExtension*> extensionVector = (*it)->getExtensionVector();
+        vector <sdEntityExtension*>::iterator vit = extensionVector.begin();
+        
+        while(vit != extensionVector.end()){
+            sdEntityExtension *extension= (*vit);
+            cout << "-extension:" << extension->getExtensionNameAsString() << endl;
+        
+            vit++;
         }
 		it++;
-	}
- 
+        
 
+	}
+    
+
+    
     
 }

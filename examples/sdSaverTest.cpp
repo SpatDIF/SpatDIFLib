@@ -16,8 +16,9 @@ int main(void){
     sdEntityCore *myEntity = scene.addEntity("myEntity", SD_SOURCE);
     sdEntityCore *yourEntity = scene.addEntity("yourEntity", SD_SOURCE);
 
+    
     //set first event and attach it to myEntity
-    float position[3];
+    double position[3];
     
     position[0]= 1.0;
     position[1] = 2.0;
@@ -28,15 +29,16 @@ int main(void){
     position[0] = 0.0;
     position[1] = 1.0;
     position[2] = 2.0;
-    myEntity->addEvent(2.12 , SD_POSITION, (void*)&position);
+    myEntity->addEvent(2.12 , SD_ORIENTATION, (void*)&position);
     
     
     //set thrid event and attach it to yourEntity
     position[0] = 5.0;
     position[1] = 4.0;
-    position[2] = 3.3;
+    position[2] = 3.0;
     yourEntity->addEvent(4.2 , SD_POSITION, (void*)&position);
-  
+    
+    scene.dump();
     
     // convert current scene to a XMLstring
     string generatedString = sdSaver::XMLFromScene(&scene);

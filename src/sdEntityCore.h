@@ -101,6 +101,7 @@ private:
     };
    
     const static EDescriptor relevantDescriptors[];
+    const static int numberOfrelevantDescriptors;
 
 public:
     
@@ -108,6 +109,12 @@ public:
      @name Setter/Getter
      @{
      */
+    
+    /*! returns all events between start and end time  */
+    set <sdEvent*, sdEventCompare>getRangedEventSet(double start, double end);
+    
+    /*! returns all events with the specified descriptor between start and end time  */
+    set <sdEvent*, sdEventCompare>getFilteredEventSet(double start, double end, EDescriptor descriptor);
     
     /*! this returns a set of sdEvents with specified descriptor whose time parameter is between start and end time
      @param start start time
@@ -131,11 +138,8 @@ public:
     /*! returns event with the specified descriptor at the specified time  */
     sdEvent* getEvent(double time, EDescriptor descriptor);
     
-    /*! returns all events between start and end time  */
-    set <sdEvent*, sdEventCompare>getRangedEventSet(double start, double end);
- 
-    /*! returns all events with the specified descriptor between start and end time  */
-    set <sdEvent*, sdEventCompare>getFilteredEventSet(double start, double end, EDescriptor descriptor);
+    vector <sdEntityExtension*>getExtensionVector(void);
+
 
     /*! a overrieded query function. it simply returns a pointer to the buffer, where the designated data are stored. returns null if not found.
      @param time
@@ -149,6 +153,7 @@ public:
     /*! same as above but you can specify arguments with string */
     sdEvent* addEvent(string time, string descriptor, string value);
 
+    void removeEvent(double time, EDescriptor descriptor);
     
     /*! @name Extensions
         @{
@@ -167,7 +172,7 @@ public:
     /*!static function for sorting. employed by sdSaver*/
     static bool sortAlphabetically( sdEntityCore *leftEntity,  sdEntityCore *rightEntity);
     
-    
+    bool isDescriptorRelevant(EDescriptor descriptor);
 
 };
 
@@ -184,6 +189,11 @@ inline EKind sdEntityCore::getKind(void){
 inline EType sdEntityCore::getType(void){
     return type;
 }
+
+inline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){
+    return extensionVector;
+}
+
 
 inline bool sdEntityCore::sortAlphabetically( sdEntityCore *leftEntity,  sdEntityCore *rightEntity){
     return leftEntity->getName().compare(rightEntity->getName()) ? false:true;
