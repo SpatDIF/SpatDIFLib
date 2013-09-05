@@ -16,7 +16,6 @@ typedef enum {
     SD_PRESENT,
     SD_POSITION,
     SD_ORIENTATION,
-    SD_LOCATION,
     
     //descriptor for media extension
     SD_MEDIA_ID,
@@ -60,5 +59,7 @@ typedef enum {
     SD_INTERPOLATION,
     SD_DIRECT_TO_ONE
 } EExtension;
+
+
 
 #endif

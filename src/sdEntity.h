@@ -75,7 +75,7 @@ public:
     /*!returns value as string. a routine for conversion should be implemented in derived classes */
     virtual string getValueAsString(void) = 0;
     
-    /*!
+   /*!
      @}
      */
 };
@@ -133,7 +133,7 @@ public:
 
 
 /*! sdEntity
- sdEntity is a pure abstract class. This class maintains and handles all events associated to relavant descriptors. This class is also responsible for answering query about it's relavant descriptors.
+ sdEntity is a pure abstract class. This class maintains and handles all events associated to relevant descriptors. This class is also responsible for answering query about it's relevant descriptors.
 */
 class sdEntity{
 
@@ -219,7 +219,11 @@ public:
     /*!
      @}
      */
-    
+
+    /*!returns true if the provided descriptor is relevant*/
+    static bool isDescriptorRelevant(EDescriptor descriptor, const EDescriptor *relevantDescriptors);
+
+
 };
 
 /*** inline implementation ***/
@@ -242,6 +246,18 @@ inline unsigned int sdEntity::getNumberOfEvents(){
 
 inline void sdEntity::removeAllEvents(){
     eventSet.clear();
+}
+
+inline bool sdEntity::isDescriptorRelevant(EDescriptor descriptor, const EDescriptor *relevantDescriptors){
+    
+    int numElement = sizeof(relevantDescriptors)/sizeof(relevantDescriptors[0]);
+    
+    for(int i = 0; i< numElement; i++){
+        if(relevantDescriptors[i] == descriptor){
+            return true;
+        }
+    }
+    return false;
 }
 
 

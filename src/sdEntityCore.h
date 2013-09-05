@@ -62,6 +62,8 @@ private:
     /*!
      @}
      */
+    
+    
 };
 
 class sdScene;
@@ -97,7 +99,9 @@ private:
     sdEntityCore(string name, EKind kind = SD_SOURCE, EType type = SD_POINT) :name(name), kind(kind){
         sdEntityCore::type = type;
     };
-    
+   
+    const static EDescriptor relevantDescriptors[];
+
 public:
     
     /*!
@@ -162,6 +166,8 @@ public:
     
     /*!static function for sorting. employed by sdSaver*/
     static bool sortAlphabetically( sdEntityCore *leftEntity,  sdEntityCore *rightEntity);
+    
+    
 
 };
 

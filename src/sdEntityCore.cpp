@@ -12,6 +12,7 @@ using namespace std;
 /*** sdEventCore ***/
 
 
+
 sdEventCore::sdEventCore(double time, EDescriptor descriptor, void* value){
     setTime(time); // declared in the super class
     setValue(descriptor, value); // private function
@@ -161,6 +162,8 @@ void sdEventCore::setValue(string descriptor, string value){
 
 /*** sdEntityCore ***/
 
+const EDescriptor sdEntityCore::relevantDescriptors[] = {SD_TYPE, SD_PRESENT, SD_POSITION, SD_ORIENTATION};
+
 string sdEntityCore::getKindAsString(void){
     string str;
     switch(kind){
@@ -233,6 +236,12 @@ set <sdEvent*, sdEventCompare>sdEntityCore::getFilteredEventSet(double start, do
 }
 
 sdEvent* sdEntityCore::addEvent(double time, EDescriptor descriptor, void* value){
+
+    if(isDescriptorRelevant(descriptor, relevantDescriptors)){
+        cout << "this descriptor is relevant" << endl;
+    }else{
+        return NULL;
+    }
     
     //duplication check. if exist just delete the old one and make a new one
     set <sdEvent*>::iterator it = eventSet.begin();
@@ -257,9 +266,26 @@ sdEvent* sdEntityCore::addEvent(double time, EDescriptor descriptor, void* value
 }
 
 sdEvent* sdEntityCore::addEvent(string time, string descriptor, string value){
-    sdEvent *event = static_cast<sdEvent*>(new sdEventCore(time, descriptor, value));
-    eventSet.insert(event);
-    return event;
+    
+    
+    
+    sdEvent *newEvent = static_cast<sdEvent*>(new sdEventCore(time, descriptor, value));
+    
+    //duplication check. if exist just delete the old one and make a new one
+    set <sdEvent*>::iterator it = eventSet.begin();
+    while(it != eventSet.end()) {
+        sdEvent* event = *it;
+        if(event->getTime() == newEvent->getTime()){
+            if(event->getDescriptor() == newEvent->getDescriptor())
+            {
+                eventSet.erase(it++);
+            }
+        }
+        it++;
+    }
+    
+    eventSet.insert(newEvent);
+    return newEvent;
 }
 
 
@@ -290,7 +316,3 @@ sdEntityExtension* sdEntityCore::addExtension(EExtension extension){
     }
     
 }
-
-
-
-

@@ -30,6 +30,7 @@ public:
     virtual EExtension getExtensionName(void) = 0;
     virtual string getExtensionNameAsString(void) = 0;
 
+       
 };
 
 #endif

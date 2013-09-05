@@ -7,8 +7,6 @@
 
 using namespace std;
 
-class sdScene;
-
 
 /*!
  this class stores event info (i.e. time, descriptor and value) of sdEntityExtensionMedia.
@@ -53,6 +51,8 @@ private:
     /*! same as above but you can give all arguments with strings */
     void setValue(string descriptor, string value);
     
+
+    
 };
 
 
@@ -62,15 +62,8 @@ private:
  */
 class sdEntityExtensionMedia: public sdEntityExtension{
     friend class sdEntityCore;
-    
+        
 
-    
-    /*!
-     this constructor should be involed from an instance of sdScene
-     */
-
-    sdEntityExtensionMedia(string id = "unknown", string type = "none", string location ="", int channel = 1, double timeOffset = 0.0, double gain = 1.0);
-    
     string id; /*< unique identifier */
     string type; /*< where the content comes from */
     string location; /*< location of the file or stream*/
@@ -79,7 +72,15 @@ class sdEntityExtensionMedia: public sdEntityExtension{
     double gain;/*< gain value of the media*/
     
     static const EExtension extensionName; /*< identification of the class */
+    static const int numberOfRelevantDescriptors;
     static const EDescriptor relevantDescriptors[]; /*< this extension stores data with the descriptors stored in this array */
+    
+    /*!
+     this constructor should be involed from an instance of sdScene
+     */
+    
+    sdEntityExtensionMedia(string id = "unknown", string type = "none", string location ="", int channel = 1, double timeOffset = 0.0, double gain = 1.0);
+    
 public:
     
     EExtension getExtensionName(void);
@@ -104,6 +105,10 @@ public:
     
     /*! same as above but you can specify arguments with strings */
     sdEvent* addEvent(string time, string descriptor, string value);
+    
+    /*! returns true if the provided descriptor in the relevantDescriptorArray */
+    bool isDescriptorRelevant(EDescriptor descriptor);
+
 };
 
 

@@ -1,7 +1,6 @@
 #include "sdEntityExtensionMedia.h"
 
 const EExtension sdEntityExtensionMedia::extensionName = SD_MEDIA;
-
 const EDescriptor sdEntityExtensionMedia::relevantDescriptors[] = {
     SD_MEDIA_ID,
     SD_MEDIA_TYPE,
@@ -27,15 +26,18 @@ sdEvent* sdEntityExtensionMedia::getEvent(double, EDescriptor){
 
 sdEvent* sdEntityExtensionMedia::addEvent(double time, EDescriptor descriptor, void* value){
     
-    
+    cout << "test addevent" << endl;
     return NULL;
 
     
 }
 
 sdEvent* sdEntityExtensionMedia::addEvent(string time, string descriptor, string value){
+    cout << "test addevent" << endl;
+
     return NULL;
 
 }
+
 
 
