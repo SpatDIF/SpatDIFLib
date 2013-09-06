@@ -51,9 +51,7 @@ private:
     
     /*! same as above but you can give all arguments with strings */
     void setValue(string descriptor, string value);
-    
 
-    
 };
 
 
@@ -73,7 +71,6 @@ class sdEntityExtensionMedia: public sdEntityExtension{
     /*!
      this constructor should be involed from an instance of sdScene
      */
-    
     sdEntityExtensionMedia(){};
     
 public:
@@ -81,13 +78,6 @@ public:
     EExtension getExtensionName(void);
     string getExtensionNameAsString(void);
     
-    /*!
-     query method. it simply returns a pointer to the buffer, where the designated data are stored. returns null if not found. This is a pure abstract function.
-     @param time specify time
-     @param descriptor specify descriptor defined in sdConst.h
-     */
-    void* getValue(double time, EDescriptor descriptor);
-
     /*!
      return all events related to the given descriptor
      @param descriptor the descriptor of the event declared in sdConst.h

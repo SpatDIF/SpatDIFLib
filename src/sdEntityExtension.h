@@ -12,6 +12,8 @@
 
 using namespace std;
 
+
+
 /*! a pure abstract class for entity extensions.
   the subclasses of this class must override getValue function
  */
@@ -24,8 +26,6 @@ public:
     /*! returns vector of EDescriptor that a subclass of this class is responsible for */
     static vector<EDescriptor> getDescriptors(void);
     
-    /*! value query. Sub class of this class must override this function */
-    virtual void* getValue(double time, EDescriptor descriptor) = 0;
     
     virtual EExtension getExtensionName(void) = 0;
     virtual string getExtensionNameAsString(void) = 0;

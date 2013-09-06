@@ -101,7 +101,7 @@ private:
     };
    
     const static EDescriptor relevantDescriptors[];
-    const static int numberOfrelevantDescriptors;
+    const static int numberOfRelevantDescriptors;
 
 public:
     
@@ -141,11 +141,6 @@ public:
     vector <sdEntityExtension*>getExtensionVector(void);
 
 
-    /*! a overrieded query function. it simply returns a pointer to the buffer, where the designated data are stored. returns null if not found.
-     @param time
-     @param descriptor
-     */
-    void* getValue(double time, EDescriptor descriptor);
     
     /*! This is the only method for adding an new event to the entity*/
     sdEvent* addEvent(double time, EDescriptor descriptor, void* value);
@@ -169,10 +164,12 @@ public:
      @}
      */
     
+    bool isDescriptorRelevant(EDescriptor descriptor);
+
+    
     /*!static function for sorting. employed by sdSaver*/
     static bool sortAlphabetically( sdEntityCore *leftEntity,  sdEntityCore *rightEntity);
     
-    bool isDescriptorRelevant(EDescriptor descriptor);
 
 };
 

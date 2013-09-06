@@ -147,7 +147,13 @@ void sdScene::dump(void){
         while(vit != extensionVector.end()){
             sdEntityExtension *extension= (*vit);
             cout << "-extension:" << extension->getExtensionNameAsString() << endl;
-        
+            set <sdEvent*, sdEventCompare> eevnts = extension->getEventSet();
+            set <sdEvent*, sdEventCompare>::iterator eitt = eevnts.begin();
+            
+            while(eitt != eevnts.end()){
+                sdEvent* extensionEvent = *eitt;
+            cout << "["  << extensionEvent->getTimeAsString() << " " << extensionEvent->getDescriptorAsString() << " " << extensionEvent->getValueAsString() << "]" << endl;            }
+            
             vit++;
         }
 		it++;

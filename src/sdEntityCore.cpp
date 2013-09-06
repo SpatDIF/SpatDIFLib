@@ -95,9 +95,10 @@ string sdEventCore::getValueAsString(void){
 void sdEventCore::setValue(EDescriptor descriptor, void* value){
     // this function is called by the constructor
     sdEvent::descriptor = descriptor;
-    switch (sdEvent::descriptor) {
+    switch (sdEventCore::descriptor) {
         case SD_PRESENT:{
-            sdEvent::value = static_cast<void*>(new bool);
+            bool *presentValue = static_cast<bool*>(value);
+            sdEvent::value = static_cast<void*>(new bool(*presentValue));
             break;
         }
         case SD_POSITION:{
@@ -168,7 +169,7 @@ void sdEventCore::setValue(string descriptor, string value){
 
 /*** sdEntityCore ***/
 
-const int sdEntityCore::numberOfrelevantDescriptors = 4;
+const int sdEntityCore::numberOfRelevantDescriptors = 4;
 const EDescriptor sdEntityCore::relevantDescriptors[] = {SD_TYPE, SD_PRESENT, SD_POSITION, SD_ORIENTATION};
 
 string sdEntityCore::getKindAsString(void){
@@ -297,19 +298,6 @@ void sdEntityCore::removeEvent(double time, EDescriptor descriptor){
         }
         it++;
     }
-}
-
-void* sdEntityCore::getValue(double time, EDescriptor descriptor){
-    set<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
-
-    while(it != eventSet.end()){
-        sdEvent* event = *it;
-        if((event->getTime() == time) && (event->getDescriptor() == descriptor)){
-            return event->getValue();
-        }
-        ++it;
-    }
-    return NULL;
 }
 
 

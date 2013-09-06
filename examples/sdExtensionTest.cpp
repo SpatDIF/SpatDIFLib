@@ -28,30 +28,6 @@ int main(void){
     sdEvent* evt= entityOne->addEvent(3.0, SD_MEDIA_LOCATION, static_cast<void*>(&loc));
 
     scene.dump();
-
-    // Thus the pointer points NULL
-    if(!evt){
-        cout << "event not created" << endl;
-    }
-
-    // now add an extension to the scene
-    
-    
-    // ...now the sdScene automatically attach sdEntityExtensionMedia to all existing entityCores in the scene.
-    
-    
-    // once again
-    evt = entityOne->addEvent(0.0, SD_MEDIA_LOCATION, static_cast<void*>(&loc));
-    
-    // now the evt points at an instance of sdEventExtensionMedia
-    
-    if(evt){
-        cout << "event created properly" << endl;
-    }
-
-    // now query entity
-    
-    
     
     return 0;
 }

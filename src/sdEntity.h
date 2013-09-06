@@ -201,7 +201,7 @@ public:
      @param time specify time
      @param descriptor specify descriptor defined in sdConst.h
      */
-    virtual void* getValue(double time, EDescriptor descriptor) = 0;
+    void* getValue(double time, EDescriptor descriptor);
     
     /*!
      return all events related to the given descriptor
@@ -222,7 +222,7 @@ public:
      @}
      */
 
-
+    virtual bool isDescriptorRelevant(EDescriptor descriptor) = 0;
 
 };
 
@@ -248,6 +248,18 @@ inline void sdEntity::removeAllEvents(){
     eventSet.clear();
 }
 
+inline void* sdEntity::getValue(double time, EDescriptor descriptor){
+    set<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
+    
+    while(it != eventSet.end()){
+        sdEvent* event = *it;
+        if((event->getTime() == time) && (event->getDescriptor() == descriptor)){
+            return event->getValue();
+        }
+        ++it;
+    }
+    return NULL;
+}
 
 
 #endif /* defined(____sdEntity__) */
