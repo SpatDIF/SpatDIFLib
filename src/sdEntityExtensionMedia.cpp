@@ -12,6 +12,15 @@ const EDescriptor sdEntityExtensionMedia::relevantDescriptors[] = {
     SD_MEDIA_GAIN
 };
 
+const string sdEntityExtensionMedia::relevantDescriptorStrings[] = {
+    string("id"),
+    string("type"),
+    string("location"),
+    string("channel"),
+    string("time-offset"),
+    string("gain")
+};
+
 
 sdEventExtensionMedia::sdEventExtensionMedia(double time, EDescriptor descriptor, void* value){
     setTime(time);
@@ -118,7 +127,7 @@ string sdEventExtensionMedia::getValueAsString(void){
 }
 
 
-void sdEventExtensionMedia::setValue(EDescriptor descriptor, void* value){
+bool sdEventExtensionMedia::setValue(EDescriptor descriptor, void* value){
     
     sdEventExtensionMedia::descriptor = descriptor;
     switch (sdEventExtensionMedia::descriptor) {
@@ -141,14 +150,16 @@ void sdEventExtensionMedia::setValue(EDescriptor descriptor, void* value){
             break;
         }
         default:{
+            return false;
             break;
         }
     }
+    return true;
 }
 
-void sdEventExtensionMedia::setValue(string descriptor, string value){
+bool sdEventExtensionMedia::setValue(string descriptor, string value){
+    return true;
 
-    
 }
 
 

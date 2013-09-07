@@ -67,7 +67,7 @@ public:
     */
     
     /*!descriptor and value should be set at once. because this function allocates memory to void* value based on the descriptor*/
-    virtual void setValue(EDescriptor descriptor, void* value) = 0;
+    virtual bool setValue(EDescriptor descriptor, void* value) = 0;
     
     /*!returns descriptor as string. a routine for conversion should be implemented in derived classes*/
     virtual string getDescriptorAsString(void) = 0;
@@ -78,6 +78,7 @@ public:
    /*!
      @}
      */
+    
 };
 
 /*** inline implementation ***/
@@ -86,9 +87,7 @@ inline double sdEvent::getTime(void){
 }
 
 inline string sdEvent::getTimeAsString(void){
-    ostringstream timeStringStream;
-    timeStringStream << time;
-    return timeStringStream.str();
+    return doubleToString(time);
 }
 
 inline EDescriptor sdEvent::getDescriptor(void){
@@ -109,9 +108,7 @@ inline void sdEvent::setTime(double time){
 }
 
 inline void sdEvent::setTime(string timeString){
-    istringstream is;
-    is.str(timeString);
-    is >> sdEvent::time;
+    sdEvent::time = stringToDouble(timeString);
 };
 
 /*!
@@ -126,11 +123,6 @@ public:
             return false;
     }
 };
-
-
-
-
-
 
 /*! sdEntity
  sdEntity is a pure abstract class. This class maintains and handles all events associated to relevant descriptors. This class is also responsible for answering query about it's relevant descriptors.
@@ -297,6 +289,8 @@ inline set <sdEvent*, sdEventCompare>sdEntity::getFilteredEventSet(double start,
     }
     return rangedSet;
 }
+
+
 
 #endif /* defined(____sdEntity__) */
 

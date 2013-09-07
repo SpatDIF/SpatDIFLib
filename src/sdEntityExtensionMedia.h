@@ -46,10 +46,10 @@ private:
      */
     
     /*! set value. this function allocate memory to the void pointer member variable according to the given EDescriptor */
-    void setValue(EDescriptor descriptor, void* value);
+    bool setValue(EDescriptor descriptor, void* value);
     
     /*! same as above but you can give all arguments with strings */
-    void setValue(string descriptor, string value);
+    bool setValue(string descriptor, string value);
 
 };
 
@@ -65,8 +65,9 @@ class sdEntityExtensionMedia: public sdEntityExtension{
     static const string extensionNameAsString; /*< identification of the class */
 
     static const int numberOfRelevantDescriptors;
-    static const EDescriptor relevantDescriptors[]; /*< this extension stores data with the descriptors stored in this array */
-    
+    static const EDescriptor relevantDescriptors[]; 
+    static const string relevantDescriptorStrings[]; 
+
     /*!
      this constructor should be involed from an instance of sdScene
      */

@@ -41,6 +41,7 @@ public:
     /*! overrided method. get descriptor as string e.g. "position" */
     string getDescriptorAsString(void);
     
+    
     /*! overrided method. get value as string e.g. "0.3 0.5 0.2"*/
     string getValueAsString(void);
     
@@ -54,10 +55,10 @@ private:
      */
     
     /*! set value. this function allocate memory to the void pointer member variable according to the given EDescriptor */
-    void setValue(EDescriptor descriptor, void* value);
+    bool setValue(EDescriptor descriptor, void* value);
     
     /*! same as above but you can give all arguments with strings */
-    void setValue(string descriptor, string value);
+    bool setValue(string descriptor, string value);
     
     /*!
      @}
@@ -81,9 +82,15 @@ class sdEntityCore: public sdEntity{
     friend class sdScene; // only sdScene can instantiate this class
     
 private:
+    const static int numberOfCoreDescriptors;
+    const static EDescriptor coreDescriptors[];
+    const static string coreDescriptorStrings[];
+    static bool isCoreDescriptor(EDescriptor descriptor);
+    static bool isCoreDescriptor(string descriptor);
     
     typedef struct{
         EDescriptor descriptor;
+        string descriptorString;
         sdEntityExtension* responsibleExtension;
     } sdRedirector;
     
@@ -109,9 +116,7 @@ private:
         sdEntityCore::type = type;
     };
    
-    const static EDescriptor relevantDescriptors[];
-    const static int numberOfRelevantDescriptors;
-
+    
 public:
     
     /*!
@@ -146,7 +151,8 @@ public:
     sdEvent* addEvent(string time, string descriptor, string value);
 
     void removeEvent(double time, EDescriptor descriptor);
-    
+    void removeEvent(string time, string descriptor);
+
     /*! @name Extensions
         @{
      */
@@ -161,7 +167,9 @@ public:
      @}
      */
     
-    
+    /*!overrided function*/
+    void* getValue(double time, EDescriptor descriptor);
+
     /*!static function for sorting. employed by sdSaver*/
     static bool sortAlphabetically( sdEntityCore *leftEntity,  sdEntityCore *rightEntity);
     

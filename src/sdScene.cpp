@@ -152,7 +152,9 @@ void sdScene::dump(void){
             
             while(eitt != eevnts.end()){
                 sdEvent* extensionEvent = *eitt;
-            cout << "["  << extensionEvent->getTimeAsString() << " " << extensionEvent->getDescriptorAsString() << " " << extensionEvent->getValueAsString() << "]" << endl;            }
+                cout << "["  << extensionEvent->getTimeAsString() << " " << extensionEvent->getDescriptorAsString() << " " << extensionEvent->getValueAsString() << "]" << endl;
+                eitt++;
+            }
             
             vit++;
         }

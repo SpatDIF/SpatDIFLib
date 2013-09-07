@@ -11,8 +11,6 @@ using namespace std;
 
 /*** sdEventCore ***/
 
-
-
 sdEventCore::sdEventCore(double time, EDescriptor descriptor, void* value){
     setTime(time); // declared in the super class
     setValue(descriptor, value); // private function
@@ -61,7 +59,6 @@ string sdEventCore::getDescriptorAsString(void){
     return str;
 }
 
-
 string sdEventCore::getValueAsString(void){
     string str;
     switch (descriptor) {
@@ -92,7 +89,7 @@ string sdEventCore::getValueAsString(void){
     return str;
 }
 
-void sdEventCore::setValue(EDescriptor descriptor, void* value){
+bool sdEventCore::setValue(EDescriptor descriptor, void* value){
     // this function is called by the constructor
     sdEvent::descriptor = descriptor;
     switch (sdEventCore::descriptor) {
@@ -120,19 +117,21 @@ void sdEventCore::setValue(EDescriptor descriptor, void* value){
             break;
         }
         default:{
+            return false;
             break;
         }
     }
+    return true;
 }
 
-void sdEventCore::setValue(string descriptor, string value){
+bool sdEventCore::setValue(string descriptor, string value){
     // this function is called by the constructor
     
     // set descriptor
     if(descriptor == "present") sdEventCore::descriptor = SD_PRESENT;
     else if(descriptor == "position") sdEventCore::descriptor = SD_POSITION;
     else if(descriptor == "orientation") sdEventCore::descriptor = SD_ORIENTATION;
-    else return;
+    else return false;
     
     // set value
     string str;
@@ -159,18 +158,35 @@ void sdEventCore::setValue(string descriptor, string value){
             setValue(sdEventCore::descriptor, static_cast<void*>(&orientation));
             break;
         }
-        default:
+        default:{
+            return false;
             break;
-            
+        }
     }
+    return true;
 }
 
 
 
 /*** sdEntityCore ***/
 
-const int sdEntityCore::numberOfRelevantDescriptors = 4;
-const EDescriptor sdEntityCore::relevantDescriptors[] = {SD_TYPE, SD_PRESENT, SD_POSITION, SD_ORIENTATION};
+const int sdEntityCore::numberOfCoreDescriptors = 3;
+const EDescriptor sdEntityCore::coreDescriptors[] = {SD_PRESENT, SD_POSITION, SD_ORIENTATION};
+const string sdEntityCore::coreDescriptorStrings[] = {string("present"), string("position"), string("orientation")};
+
+bool sdEntityCore::isCoreDescriptor(EDescriptor descriptor){
+    for(int i = 0; i< numberOfCoreDescriptors; i++){
+        if(coreDescriptors[i] == descriptor) return true;
+    }
+    return false;
+}
+
+bool sdEntityCore::isCoreDescriptor(string descriptor){
+    for(int i = 0; i< numberOfCoreDescriptors; i++){
+        if(coreDescriptorStrings[i] == descriptor) return true;
+    }
+    return false;
+}
 
 string sdEntityCore::getKindAsString(void){
     string str;
@@ -184,7 +200,6 @@ string sdEntityCore::getKindAsString(void){
     }
     return str;
 }
-
 
 string sdEntityCore::getTypeAsString(void){
     string str;
@@ -201,22 +216,11 @@ string sdEntityCore::getTypeAsString(void){
 sdEvent* sdEntityCore::addEvent(double time, EDescriptor descriptor, void* value){
     
     sdEvent *event = NULL;
-    bool relevance;
-    
-    
-    switch (descriptor){
-        case SD_PRESENT:
-        case SD_POSITION:
-        case SD_ORIENTATION:{
-            //remove old event with the same time at the same time if exists
+    if(isCoreDescriptor(descriptor)){
             removeEvent(time, descriptor);
-            //create a new instance of sdEventCore as sdEvent
             event = static_cast<sdEvent*>(new sdEventCore(time, descriptor, value));
-            //and insert it in the set
             eventSet.insert(event);
-            break;
-        }
-        default:{
+    }else{
             vector <sdRedirector>::iterator it =   redirectorVector.begin();
             while(it != redirectorVector.end()){
                 sdRedirector rd = *it;
@@ -225,21 +229,28 @@ sdEvent* sdEntityCore::addEvent(double time, EDescriptor descriptor, void* value
                 }
                 it++;
             }
-        }
-        
     }
     return event;
 }
 
 sdEvent* sdEntityCore::addEvent(string time, string descriptor, string value){
 
-    //tobe improved
-//    //make a new event from string
-//    sdEventCore newEvent(time, descriptor, value);
-//    
-//    //then invoke the function above
-//    addEvent(newEvent.getTime(), newEvent.getDescriptor(), newEvent.getValue());
-    
+    sdEvent *event = NULL;
+    if(isCoreDescriptor(descriptor)){
+        removeEvent(time, descriptor);
+        event = static_cast<sdEvent*>(new sdEventCore(time, descriptor, value));
+        eventSet.insert(event);
+    }else{
+        vector <sdRedirector>::iterator it =   redirectorVector.begin();
+        while(it != redirectorVector.end()){
+            sdRedirector rd = *it;
+            if(rd.descriptorString == descriptor){
+                rd.responsibleExtension->addEvent(time, descriptor, value );
+            }
+            it++;
+        }
+    }
+    return event;
 }
 
 void sdEntityCore::removeEvent(double time, EDescriptor descriptor){
@@ -253,6 +264,32 @@ void sdEntityCore::removeEvent(double time, EDescriptor descriptor){
             }
         }
         it++;
+    }
+}
+
+void sdEntityCore::removeEvent(string time, string descriptor){
+    EDescriptor des;
+    if(descriptor == "present") des = SD_PRESENT;
+    else if(descriptor == "position") des = SD_POSITION;
+    else if(descriptor == "orientation") des = SD_ORIENTATION;
+    
+    removeEvent(stringToDouble(time), des);
+}
+
+void* sdEntityCore::getValue(double time, EDescriptor descriptor){
+
+    if(isCoreDescriptor(descriptor)){
+        return sdEntity::getValue(time, descriptor);
+    }else{
+        vector <sdRedirector>::iterator it = redirectorVector.begin();
+        while (it != redirectorVector.end()) {
+            sdRedirector rd = *it;
+            if(rd.descriptor == descriptor){
+                return rd.responsibleExtension->getValue(time, descriptor);
+            }
+            it++;
+        }
+        return NULL;
     }
 }
 

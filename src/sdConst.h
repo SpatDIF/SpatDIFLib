@@ -6,12 +6,14 @@
 #define ____sdConstant__
 
 #include <string>
-
+#include <sstream>
 using namespace std;
 /*!
     enum for descriptor. internally all descriptors are handled with this Enum
  */
 typedef enum {
+    SD_ERROR,
+    
     SD_TYPE ,
     SD_PRESENT,
     SD_POSITION,
@@ -60,6 +62,19 @@ typedef enum {
     SD_DIRECT_TO_ONE
 } EExtension;
 
+inline string doubleToString(double db){
+    ostringstream timeStringStream;
+    timeStringStream << time;
+    return timeStringStream.str();
+}
+
+inline double stringToDouble(string str){
+    double output;
+    istringstream is;
+    is.str(str);
+    is >> output;
+    return output;
+}
 
 
 #endif
