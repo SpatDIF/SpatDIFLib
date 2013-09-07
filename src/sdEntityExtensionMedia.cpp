@@ -152,14 +152,6 @@ void sdEventExtensionMedia::setValue(string descriptor, string value){
 }
 
 
-
-
-sdEvent* sdEntityExtensionMedia::getEvent(double time, EDescriptor){
-    
-    
-    return NULL;
-}
-
 sdEvent* sdEntityExtensionMedia::addEvent(double time, EDescriptor descriptor, void* value){
     
     sdEvent *event = NULL;

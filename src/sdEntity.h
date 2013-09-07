@@ -150,7 +150,9 @@ public:
     
     /*! return a set of sdEvent pointers. sorted by time.*/
     set<sdEvent*, sdEventCompare> getEventSet(void);
-    
+    set<sdEvent*, sdEventCompare> getRangedEventSet(double start, double end);
+    set<sdEvent*, sdEventCompare> getFilteredEventSet(double start, double end, EDescriptor descriptor);
+
     /*! return number of registerd events in the eventSet*/
     int getNumberOfEvents(void);
 
@@ -208,7 +210,8 @@ public:
      @param descriptor the descriptor of the event declared in sdConst.h
      @param time the time of the event in second
      */
-    virtual sdEvent* getEvent(double time, EDescriptor descriptor) = 0;
+    sdEvent* getEvent(double time, EDescriptor descriptor);
+    
     
     /*!
      this function is the only way to instantiate sdEvent and this function is responsible for allocating the void pointer properly based on the provoded descriptor
@@ -248,19 +251,55 @@ inline void sdEntity::removeAllEvents(){
     eventSet.clear();
 }
 
-inline void* sdEntity::getValue(double time, EDescriptor descriptor){
+inline sdEvent* sdEntity::getEvent(double time, EDescriptor descriptor){
     set<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
-    
     while(it != eventSet.end()){
         sdEvent* event = *it;
         if((event->getTime() == time) && (event->getDescriptor() == descriptor)){
-            return event->getValue();
+            return event;
         }
         ++it;
     }
     return NULL;
 }
 
+inline void* sdEntity::getValue(double time, EDescriptor descriptor){
+    
+    sdEvent *evt = getEvent(time, descriptor);
+    if(evt){
+        return evt->getValue();
+    }
+    return NULL;
+}
+
+inline set <sdEvent*, sdEventCompare>sdEntity::getRangedEventSet(double start, double end){
+    set <sdEvent*, sdEventCompare>rangedSet;
+    set <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
+    while(it != eventSet.end()){
+        sdEvent* event = *it;
+        if ( (event->getTime() >= start) && (event->getTime() <= end)) {
+            rangedSet.insert(*it);
+        }
+        ++it;
+    }
+    return rangedSet;
+}
+
+inline set <sdEvent*, sdEventCompare>sdEntity::getFilteredEventSet(double start, double end, EDescriptor descriptor){
+    
+    set <sdEvent*, sdEventCompare>rangedSet;
+    set <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
+    while(it != eventSet.end()){
+        sdEvent* event = *it;
+        if ( (event->getTime() >= start) && (event->getTime() <= end)) {
+            if(event->getDescriptor() == descriptor){
+                rangedSet.insert(*it);
+            }
+        }
+        ++it;
+    }
+    return rangedSet;
+}
 
 #endif /* defined(____sdEntity__) */
 

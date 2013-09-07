@@ -77,14 +77,7 @@ public:
     
     EExtension getExtensionName(void);
     string getExtensionNameAsString(void);
-    
-    /*!
-     return all events related to the given descriptor
-     @param descriptor the descriptor of the event declared in sdConst.h
-     @param time the time of the event in second
-     */
-    sdEvent* getEvent(double time, EDescriptor descriptor);
-    
+        
     /*! a method for adding a new event to the entity*/
     sdEvent* addEvent(double time, EDescriptor descriptor, void* value);
     

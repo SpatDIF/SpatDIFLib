@@ -110,12 +110,6 @@ public:
      @{
      */
     
-    /*! returns all events between start and end time  */
-    set <sdEvent*, sdEventCompare>getRangedEventSet(double start, double end);
-    
-    /*! returns all events with the specified descriptor between start and end time  */
-    set <sdEvent*, sdEventCompare>getFilteredEventSet(double start, double end, EDescriptor descriptor);
-    
     /*! this returns a set of sdEvents with specified descriptor whose time parameter is between start and end time
      @param start start time
      @param end end time
@@ -134,14 +128,8 @@ public:
     /*! returns the type of the entity */
     EType getType(void);
     string getTypeAsString(void);
-
-    /*! returns event with the specified descriptor at the specified time  */
-    sdEvent* getEvent(double time, EDescriptor descriptor);
     
     vector <sdEntityExtension*>getExtensionVector(void);
-
-
-    
     /*! This is the only method for adding an new event to the entity*/
     sdEvent* addEvent(double time, EDescriptor descriptor, void* value);
     

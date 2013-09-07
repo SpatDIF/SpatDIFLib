@@ -198,52 +198,6 @@ string sdEntityCore::getTypeAsString(void){
 }
 
 
-sdEvent* sdEntityCore::getEvent(double time, EDescriptor descriptor){
-    
-    // descriptor check if not found in the core desciptor list, forward the query to attached extensions
-    set <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
-    while( it != eventSet.end()){
-        double eventTime = (*it)->getTime();
-        if(eventTime == time){ // time matched?
-            EDescriptor eventDescriptpr = (*it)->getDescriptor();
-            if(eventDescriptpr == descriptor){ // descriptor matched?
-                return *it; // returns pointer to sdEvent
-            }
-        }
-		it++;
-    }
-    return NULL;
-}
-
-set <sdEvent*, sdEventCompare>sdEntityCore::getRangedEventSet(double start, double end){
-    set <sdEvent*, sdEventCompare>rangedSet;
-    set <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
-    while(it != eventSet.end()){
-        sdEvent* event = *it;
-        if ( (event->getTime() >= start) && (event->getTime() <= end)) {
-                rangedSet.insert(*it);
-            }
-        ++it;
-    }
-    return rangedSet;
-}
-
-set <sdEvent*, sdEventCompare>sdEntityCore::getFilteredEventSet(double start, double end, EDescriptor descriptor){
-    
-    set <sdEvent*, sdEventCompare>rangedSet;
-    set <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
-    while(it != eventSet.end()){
-        sdEvent* event = *it;
-        if ( (event->getTime() >= start) && (event->getTime() <= end)) {
-            if(event->getDescriptor() == descriptor){
-                rangedSet.insert(*it);
-            }
-        }
-        ++it;
-    }
-    return rangedSet;
-}
-
 sdEvent* sdEntityCore::addEvent(double time, EDescriptor descriptor, void* value){
     
     sdEvent *event = NULL;
