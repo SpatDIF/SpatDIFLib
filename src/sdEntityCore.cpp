@@ -201,31 +201,33 @@ string sdEntityCore::getTypeAsString(void){
 sdEvent* sdEntityCore::addEvent(double time, EDescriptor descriptor, void* value){
     
     sdEvent *event = NULL;
+    bool relevance;
     
-    if(isDescriptorRelevant(descriptor)){
-        //remove old event with the same time at the same time if exists
-        removeEvent(time, descriptor);
-
-        //create a new instance of sdEventCore as sdEvent
-        event = static_cast<sdEvent*>(new sdEventCore(time, descriptor, value));
-  
-        //and insert it in the set
-        eventSet.insert(event);
-    }else{
-        vector <sdEntityExtension*>::iterator it =   extensionVector.begin();
-        
-        while(it != extensionVector.end()){
-            sdEntityExtension* extension= (*it);
-            
-            if(extension->isDescriptorRelevant(descriptor)){
-                extension->addEvent(time, descriptor, value);
+    
+    switch (descriptor){
+        case SD_PRESENT:
+        case SD_POSITION:
+        case SD_ORIENTATION:{
+            //remove old event with the same time at the same time if exists
+            removeEvent(time, descriptor);
+            //create a new instance of sdEventCore as sdEvent
+            event = static_cast<sdEvent*>(new sdEventCore(time, descriptor, value));
+            //and insert it in the set
+            eventSet.insert(event);
+            break;
+        }
+        default:{
+            vector <sdRedirector>::iterator it =   redirectorVector.begin();
+            while(it != redirectorVector.end()){
+                sdRedirector rd = *it;
+                if(rd.descriptor == descriptor){
+                    rd.responsibleExtension->addEvent(time, descriptor, value );
+                }
+                it++;
             }
-            it++;
         }
         
     }
-    
-    //returns a point to the newly created sdEvent
     return event;
 }
 
@@ -261,9 +263,16 @@ sdEntityExtension* sdEntityCore::addExtension(EExtension extension){
         case SD_MEDIA:{
             sdEntityExtensionMedia* mediaExtension = new sdEntityExtensionMedia();
             extensionVector.push_back(mediaExtension);
+            for(int i = 0; i < sdEntityExtensionMedia::numberOfRelevantDescriptors; i++){
+                sdRedirector rd;
+                rd.descriptor = sdEntityExtensionMedia::relevantDescriptors[i];
+                rd.responsibleExtension = static_cast<sdEntityExtension*>(mediaExtension);
+                redirectorVector.push_back(rd);
+            }
             return mediaExtension;
             break;
         }
+    
         default:
             break;
     }
@@ -271,13 +280,5 @@ sdEntityExtension* sdEntityCore::addExtension(EExtension extension){
     return NULL;
 }
 
-bool sdEntityCore::isDescriptorRelevant(EDescriptor descriptor){
-    
-    for(int i = 0;i<numberOfRelevantDescriptors; i++){
-        if(relevantDescriptors[i] == descriptor)
-            return true;
-    }
-    return false;
-}
 
 

@@ -155,12 +155,9 @@ void sdEventExtensionMedia::setValue(string descriptor, string value){
 sdEvent* sdEntityExtensionMedia::addEvent(double time, EDescriptor descriptor, void* value){
     
     sdEvent *event = NULL;
-    
-    if(isDescriptorRelevant(descriptor)){
-        removeEvent(time, descriptor);
-        event = static_cast<sdEvent*>(new sdEventExtensionMedia(time, descriptor, value));
-        eventSet.insert(event);
-    }
+    removeEvent(time, descriptor);
+    event = static_cast<sdEvent*>(new sdEventExtensionMedia(time, descriptor, value));
+    eventSet.insert(event);
     return event;
     
 }
@@ -176,14 +173,3 @@ void sdEntityExtensionMedia::removeEvent(double time, EDescriptor descriptor){
     
     
 }
-
-bool sdEntityExtensionMedia::isDescriptorRelevant(EDescriptor descriptor){
-
-    for(int i = 0;i<numberOfRelevantDescriptors; i++){
-        if(relevantDescriptors[i] == descriptor)
-            return true;
-    }
-    return false;
-}
-
-

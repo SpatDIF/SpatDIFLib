@@ -224,9 +224,6 @@ public:
     /*!
      @}
      */
-
-    virtual bool isDescriptorRelevant(EDescriptor descriptor) = 0;
-
 };
 
 /*** inline implementation ***/

@@ -37,7 +37,6 @@ public:
     /*! overrided method. get value as string e.g. "0.3 0.5 0.2"*/
     string getValueAsString(void);
     
-    bool isDescriptorRelevant(EDescriptor descriptor);
 private:
     /*!
      @name private setter
@@ -88,7 +87,6 @@ public:
     void removeEvent(double time, EDescriptor descriptor);
     
     /*! returns true if the provided descriptor in the relevantDescriptorArray */
-    bool isDescriptorRelevant(EDescriptor descriptor);
 
 };
 

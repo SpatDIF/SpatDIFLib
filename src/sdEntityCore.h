@@ -81,12 +81,21 @@ class sdEntityCore: public sdEntity{
     friend class sdScene; // only sdScene can instantiate this class
     
 private:
+    
+    typedef struct{
+        EDescriptor descriptor;
+        sdEntityExtension* responsibleExtension;
+    } sdRedirector;
+    
     /*! the name of the entity. This name is invariable (const)*/
     const string name;
     
     /*! contains instances of sdEntityExtenstions */
     vector <sdEntityExtension*>extensionVector;
     
+    /*! contains pairs of EDescriptor descriptor and pointer to a responsible extension */
+    vector <sdRedirector>redirectorVector;
+
     /*! define the kind of the entity. This property is declared as const and invariable (const). */
     EKind kind;
     EType type;
@@ -152,8 +161,6 @@ public:
      @}
      */
     
-    bool isDescriptorRelevant(EDescriptor descriptor);
-
     
     /*!static function for sorting. employed by sdSaver*/
     static bool sortAlphabetically( sdEntityCore *leftEntity,  sdEntityCore *rightEntity);
