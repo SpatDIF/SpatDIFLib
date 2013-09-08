@@ -101,12 +101,7 @@ public:
     /*! same as above but you can specify arguments with strings */
     sdEvent* addEvent(string time, string descriptor, string value);
     
-    
-    
-    void removeEvent(double time, EDescriptor descriptor);
-    
-    /*! same as above but you can specify arguments with strings */
-    sdEvent* removeEvent(string time, string descriptor, string value);
+    void removeEvent(string time, string descriptor);
 
     /*!
      @}

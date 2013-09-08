@@ -166,18 +166,11 @@ public:
     
     /*!
      remove an event at the specified time and descriptor
+     @param time the time of sdEvent to be removed.
      @param descriptor the descriptor of sdEvent to be removed
-     @param time the time of sdEvent to be removed. 
      */
-    void removeEvent(EDescriptor descriptor, double time);
-    
-    /*!
-     remove events in the specified period
-     @param descriptor the descriptor of sdEvent to be removed
-     @param start specifies the start point of the removal
-     @param end specifies the end point of the removal
-     */
-    void removeEvent(EDescriptor descriptor, double start, double end);
+    void removeEvent(double time, EDescriptor descriptor);
+    virtual void removeEvent(string time, string descriptor) = 0;
     
     /*!
      remove all events in the eventSet
@@ -213,7 +206,6 @@ public:
     virtual sdEvent* addEvent(double time, EDescriptor descriptor, void* value) = 0;
     virtual sdEvent* addEvent(string time, string descriptor, string value) = 0;
     
-    virtual void removeEvent(double time, EDescriptor descriptor) = 0;
 
     /*!
      @}
@@ -236,6 +228,12 @@ inline set<sdEvent*, sdEventCompare> sdEntity::getEventSet(void){
     
 inline int sdEntity::getNumberOfEvents(){
     return static_cast<int>(eventSet.size());
+}
+
+inline void sdEntity::removeEvent(double time, EDescriptor descriptor){
+    sdEvent* event = getEvent(time, descriptor);
+    if(event)
+        eventSet.erase(event);
 }
 
 inline void sdEntity::removeAllEvents(){

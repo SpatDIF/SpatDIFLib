@@ -185,7 +185,7 @@ const string sdEntityExtensionMedia::descriptorToString(EDescriptor descriptor){
 sdEvent* sdEntityExtensionMedia::addEvent(double time, EDescriptor descriptor, void* value){
     
     sdEvent *event = NULL;
-    removeEvent(time, descriptor);
+    sdEntity::removeEvent(time, descriptor);
     event = static_cast<sdEvent*>(new sdEventExtensionMedia(time, descriptor, value));
     eventSet.insert(event);
     return event;
@@ -194,12 +194,13 @@ sdEvent* sdEntityExtensionMedia::addEvent(double time, EDescriptor descriptor, v
 
 sdEvent* sdEntityExtensionMedia::addEvent(string time, string descriptor, string value){
 
-    return NULL;
-
+    sdEvent *event = NULL;
+    removeEvent(time, descriptor);
+    event = static_cast<sdEvent*>(new sdEventExtensionMedia(time, descriptor, value));
+    eventSet.insert(event);
+    return event;
 }
 
-
-void sdEntityExtensionMedia::removeEvent(double time, EDescriptor descriptor){
-    
-    
+void sdEntityExtensionMedia::removeEvent(string time, string descriptor){
+     sdEntity::removeEvent(stringToDouble(time), stringToDescriptor(descriptor));
 }

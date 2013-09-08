@@ -303,5 +303,16 @@ sdEntityExtension* sdEntityCore::addExtension(EExtension extension){
     return NULL;
 }
 
+void sdEntityCore::removeExtension(EExtension extension){
+
+    
+    
+}
+
+
+
+
+
+
 
 

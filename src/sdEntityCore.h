@@ -91,6 +91,7 @@ private:
     typedef struct{
         EDescriptor descriptor;
         string descriptorString;
+        EExtension extensionName;
         sdEntityExtension* responsibleExtension;
     } sdRedirector;
     
