@@ -67,7 +67,6 @@ class sdEntityExtensionMedia: public sdEntityExtension{
     static const int numberOfRelevantDescriptors;
     static const EDescriptor relevantDescriptors[]; 
     static const string relevantDescriptorStrings[]; 
-
     /*!
      this constructor should be involed from an instance of sdScene
      */
@@ -84,10 +83,9 @@ public:
     /*! same as above but you can specify arguments with strings */
     sdEvent* addEvent(string time, string descriptor, string value);
     
-    
     void removeEvent(double time, EDescriptor descriptor);
     
-    /*! returns true if the provided descriptor in the relevantDescriptorArray */
+    static const EDescriptor stringToDescriptor(string str);
 
 };
 

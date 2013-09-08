@@ -5,7 +5,6 @@
 #ifndef ____sdDate__
 #define ____sdDate__
 
-#include <sstream>
 #include <vector>
 #include <ctime>
 #include <string>

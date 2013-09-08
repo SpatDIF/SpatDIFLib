@@ -78,7 +78,6 @@ public:
    /*!
      @}
      */
-    
 };
 
 /*** inline implementation ***/

@@ -1,38 +1,19 @@
 #include "sdEntityExtensionMedia.h"
 
-const EExtension sdEntityExtensionMedia::extensionName = SD_MEDIA;
-const string sdEntityExtensionMedia::extensionNameAsString = string("media");
-const int sdEntityExtensionMedia::numberOfRelevantDescriptors = 6;
-const EDescriptor sdEntityExtensionMedia::relevantDescriptors[] = {
-    SD_MEDIA_ID,
-    SD_MEDIA_TYPE,
-    SD_MEDIA_LOCATION,
-    SD_MEDIA_CHANNEL,
-    SD_MEDIA_TIME_OFFSET,
-    SD_MEDIA_GAIN
-};
+/*** sdEventExtensionMedia ***/
 
-const string sdEntityExtensionMedia::relevantDescriptorStrings[] = {
-    string("id"),
-    string("type"),
-    string("location"),
-    string("channel"),
-    string("time-offset"),
-    string("gain")
-};
-
-
+// constructors
 sdEventExtensionMedia::sdEventExtensionMedia(double time, EDescriptor descriptor, void* value){
     setTime(time);
     setValue(descriptor, value);
 }
 
 sdEventExtensionMedia::sdEventExtensionMedia(string time, string descriptor, string value){
-    setTime(time); // declared in the super class
-    setValue(descriptor, value); // private function
+    setTime(time); 
+    setValue(descriptor, value); 
 }
 
-
+// destructor
 sdEventExtensionMedia::~sdEventExtensionMedia(){
     
     switch (descriptor) {
@@ -69,11 +50,9 @@ sdEventExtensionMedia::~sdEventExtensionMedia(){
         default:
             break;
     }
-    
-    
-    
 }
 
+// returns descriptor of the event as a string
 string sdEventExtensionMedia::getDescriptorAsString(void){
     string str;
     switch(descriptor){
@@ -95,6 +74,7 @@ string sdEventExtensionMedia::getDescriptorAsString(void){
     return str;
 }
 
+// returns value of the event as a string
 string sdEventExtensionMedia::getValueAsString(void){
     string str;
     switch (descriptor) {
@@ -107,17 +87,11 @@ string sdEventExtensionMedia::getValueAsString(void){
             int *channel;
             ostringstream os;
             channel = static_cast<int *>(value);
-            os << *channel;
-            str = os.str();
             break;
         }
         case SD_MEDIA_TIME_OFFSET:
         case SD_MEDIA_GAIN:{
-            double *doubleValue;
-            ostringstream os;
-            doubleValue = static_cast<double *>(value);
-            os << *doubleValue;
-            str = os.str();
+            str = doubleToString(*static_cast<double *>(value));
             break;
         }
         default:
@@ -126,7 +100,7 @@ string sdEventExtensionMedia::getValueAsString(void){
     return str;
 }
 
-
+// set value with enum and pointer
 bool sdEventExtensionMedia::setValue(EDescriptor descriptor, void* value){
     
     sdEventExtensionMedia::descriptor = descriptor;
@@ -157,9 +131,41 @@ bool sdEventExtensionMedia::setValue(EDescriptor descriptor, void* value){
     return true;
 }
 
+// set value with strings
 bool sdEventExtensionMedia::setValue(string descriptor, string value){
-    return true;
+    
+    
+}
 
+/*** sdEntityExtensionMedia ***/
+
+const EExtension sdEntityExtensionMedia::extensionName = SD_MEDIA;
+const string sdEntityExtensionMedia::extensionNameAsString = string("media");
+const int sdEntityExtensionMedia::numberOfRelevantDescriptors = 6;
+const EDescriptor sdEntityExtensionMedia::relevantDescriptors[] = {
+    SD_MEDIA_ID,
+    SD_MEDIA_TYPE,
+    SD_MEDIA_LOCATION,
+    SD_MEDIA_CHANNEL,
+    SD_MEDIA_TIME_OFFSET,
+    SD_MEDIA_GAIN
+};
+
+const string sdEntityExtensionMedia::relevantDescriptorStrings[] = {
+    string("id"),
+    string("type"),
+    string("location"),
+    string("channel"),
+    string("time-offset"),
+    string("gain")
+};
+
+const EDescriptor sdEntityExtensionMedia::stringToDescriptor(string str){
+    for(int i = 0; i<numberOfRelevantDescriptors; i++ ){
+        if(relevantDescriptorStrings[i] == str)
+            return relevantDescriptors[i];
+    }
+    return SD_ERROR;
 }
 
 

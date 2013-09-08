@@ -2,8 +2,8 @@
 //  sdEntityCore.cpp
 //  
 
+#include <stdio.h>
 #include <string>
-#include <iostream>
 #include "sdEntityCore.h"
 #include "sdEntityExtensionMedia.h"
 
@@ -69,19 +69,13 @@ string sdEventCore::getValueAsString(void){
             break;
         }
         case SD_POSITION:{
-            double *position;
-            ostringstream os;
-            position = static_cast<double *>(value);
-            os << position[0] << ' ' << position[1] << ' ' << position[2];
-            str = os.str();
+            double *position = static_cast<double *>(value);
+            str = doublesToString(position, 3);
             break;
         }
         case SD_ORIENTATION:{
-            double *orientation;
-            ostringstream os;
-            orientation = static_cast<double *>(value);
-            os << orientation[0] << ' ' << orientation[1] << ' ' << orientation[2];
-            str = os.str();
+            double *orientation = static_cast<double *>(value);
+            str = doublesToString(orientation, 3);
         }
         default:
             break;
@@ -101,18 +95,14 @@ bool sdEventCore::setValue(EDescriptor descriptor, void* value){
         case SD_POSITION:{
             double *positionValueTo = new double[3];
             double *positionValueFrom = static_cast<double*>(value);
-            positionValueTo[0] = positionValueFrom[0];
-            positionValueTo[1] = positionValueFrom[1];
-            positionValueTo[2] = positionValueFrom[2];
+            memcpy(positionValueTo, positionValueFrom, sizeof(double) * 3);
             sdEvent::value = static_cast<void*>(positionValueTo);
             break;
         }
         case SD_ORIENTATION:{
             double *orientationValueTo = new double[3];
             double *orientationValueFrom = static_cast<double*>(value);
-            orientationValueTo[0] = orientationValueFrom[0];
-            orientationValueTo[1] = orientationValueFrom[1];
-            orientationValueTo[2] = orientationValueFrom[2];
+            memcpy(orientationValueTo, orientationValueFrom, sizeof(double) * 3);
             sdEvent::value = static_cast<void*>(orientationValueTo);
             break;
         }
@@ -145,16 +135,14 @@ bool sdEventCore::setValue(string descriptor, string value){
         case SD_POSITION:
         {
             double position[3];
-            istringstream is(value);
-            is >> position[0] >> position[1] >> position[2];
+            stringToDoubles(value, position, 3);
             setValue(sdEventCore::descriptor, static_cast<void*>(&position));
             break;
         }
         case SD_ORIENTATION:
         {
             double orientation[3];
-            istringstream is(value);
-            is >> orientation[0] >> orientation[1] >> orientation[2];
+            stringToDoubles(value, orientation, 3);
             setValue(sdEventCore::descriptor, static_cast<void*>(&orientation));
             break;
         }
@@ -293,7 +281,6 @@ void* sdEntityCore::getValue(double time, EDescriptor descriptor){
     }
 }
 
-
 sdEntityExtension* sdEntityCore::addExtension(EExtension extension){
     
     switch (extension) {
@@ -313,7 +300,6 @@ sdEntityExtension* sdEntityCore::addExtension(EExtension extension){
         default:
             break;
     }
-    
     return NULL;
 }
 

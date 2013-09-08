@@ -9,6 +9,7 @@ int main(void){
     sdScene scene;
     sdEntityCore * testEntity = scene.addEntity("testEntity");
     double pos[3] = {0.0, 1.0, 2.0};
+
     sdEvent* event = testEntity->addEvent(5.0, SD_POSITION, pos);
     scene.dump();
     return 0;
