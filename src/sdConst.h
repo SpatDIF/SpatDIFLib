@@ -9,6 +9,7 @@
 #include <iostream>
 #include <sstream>
 using namespace std;
+
 /*!
     enum for descriptor. internally all descriptors are handled with this Enum
  */
@@ -65,7 +66,9 @@ typedef enum {
 
 
 
-
+/*! 
+ utility function that convert doubles to a string
+ */
 inline string doublesToString(double *db, int num){
     ostringstream os;
     for(int i=0;i<num;i++){
@@ -76,10 +79,16 @@ inline string doublesToString(double *db, int num){
     return os.str();
 }
 
+/*!
+ utility function that convert a double to a string
+ */
 inline string doubleToString(double db){
     return doublesToString(&db, 1);
 }
 
+/*!
+ utility function that convert a string to doubles
+ */
 inline double *stringToDoubles(string str, double *db, int num){
     istringstream is(str);
     for(int i = 0; i < num; i++) {
@@ -88,12 +97,18 @@ inline double *stringToDoubles(string str, double *db, int num){
     return db;
 }
 
+/*!
+ utility function that convert a string to a double
+ */
 inline double stringToDouble(string str){
     double db;
     stringToDoubles(str, &db, 1);
     return db;
 }
 
+/*!
+ utility function that convert a string to a int
+ */
 inline int *stringToInts(string str, int *it, int num){
     istringstream is(str);
     for(int i = 0; i < num; i++) {
@@ -102,10 +117,28 @@ inline int *stringToInts(string str, int *it, int num){
     return it;
 }
 
+/*!
+ utility function that convert int to a string
+ */
 inline int stringToInt(string str){
     int it;
     stringToInts(str, &it, 1);
     return it;
+}
+
+inline const EDescriptor stringToDescriptor(string str, const string *ds, const EDescriptor *dc, const int num){
+    for(int i = 0; i<num; i++ ){
+        if(ds[i] == str)
+            return dc[i];
+    }
+    return SD_ERROR;
+}
+
+inline const string descriptorToString(EDescriptor descriptor, const string *ds, const EDescriptor *dc, const int num){
+    for(int i = 0; i<num; i++ ){
+        if(dc[i] == descriptor)
+            return ds[i];
+    }
 }
 
 #endif

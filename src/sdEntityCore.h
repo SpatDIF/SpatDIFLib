@@ -168,6 +168,15 @@ public:
      @}
      */
     
+    /*! @name Utilities
+     @{
+     */
+    /*! this class provides static functions for conversion */
+    static const EDescriptor stringToDescriptor(string str);
+    static const string descriptorToString(EDescriptor descriptor);
+    /*!
+     @}
+     
     /*!overrided function*/
     void* getValue(double time, EDescriptor descriptor);
 

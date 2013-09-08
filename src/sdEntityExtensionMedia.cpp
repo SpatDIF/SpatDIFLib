@@ -54,7 +54,11 @@ sdEventExtensionMedia::~sdEventExtensionMedia(){
 
 // returns descriptor of the event as a string
 string sdEventExtensionMedia::getDescriptorAsString(void){
-    return sdEntityExtensionMedia::descriptorToString(descriptor);
+    return descriptorToString(
+            descriptor,
+            sdEntityExtensionMedia::relevantDescriptorStrings,
+            sdEntityExtensionMedia::relevantDescriptors,
+            sdEntityExtensionMedia::numberOfRelevantDescriptors);
 }
 
 // returns value of the event as a string
@@ -117,7 +121,10 @@ bool sdEventExtensionMedia::setValue(EDescriptor descriptor, void* value){
 // set value with strings
 bool sdEventExtensionMedia::setValue(string descriptor, string value){
     
-    sdEventExtensionMedia::descriptor = sdEntityExtensionMedia::stringToDescriptor(descriptor);
+    sdEventExtensionMedia::descriptor = stringToDescriptor(descriptor,
+                                                           sdEntityExtensionMedia::relevantDescriptorStrings,
+                                                           sdEntityExtensionMedia::relevantDescriptors,
+                                                           sdEntityExtensionMedia::numberOfRelevantDescriptors );
     switch (sdEventExtensionMedia::descriptor) {
         case SD_MEDIA_ID:
         case SD_MEDIA_TYPE:
@@ -166,21 +173,6 @@ const string sdEntityExtensionMedia::relevantDescriptorStrings[] = {
     string("gain")
 };
 
-const EDescriptor sdEntityExtensionMedia::stringToDescriptor(string str){
-    for(int i = 0; i<numberOfRelevantDescriptors; i++ ){
-        if(relevantDescriptorStrings[i] == str)
-            return relevantDescriptors[i];
-    }
-    return SD_ERROR;
-}
-    
-const string sdEntityExtensionMedia::descriptorToString(EDescriptor descriptor){
-    for(int i = 0; i<numberOfRelevantDescriptors; i++ ){
-        if(relevantDescriptors[i] == descriptor)
-            return relevantDescriptorStrings[i];
-    }
-}
-
 
 sdEvent* sdEntityExtensionMedia::addEvent(double time, EDescriptor descriptor, void* value){
     
@@ -202,5 +194,6 @@ sdEvent* sdEntityExtensionMedia::addEvent(string time, string descriptor, string
 }
 
 void sdEntityExtensionMedia::removeEvent(string time, string descriptor){
-     sdEntity::removeEvent(stringToDouble(time), stringToDescriptor(descriptor));
+    EDescriptor dc = stringToDescriptor(descriptor, relevantDescriptorStrings, relevantDescriptors, numberOfRelevantDescriptors);
+    sdEntity::removeEvent(stringToDouble(time), dc);
 }

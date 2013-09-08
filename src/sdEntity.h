@@ -5,7 +5,6 @@
 #include <set>
 #include <string>
 #include <iostream>
-#include <sstream>
 #include "sdConst.h"
 
 using namespace std;
@@ -144,8 +143,8 @@ public:
     
     /*! return a set of sdEvent pointers. sorted by time.*/
     set<sdEvent*, sdEventCompare> getEventSet(void);
-    set<sdEvent*, sdEventCompare> getRangedEventSet(double start, double end);
-    set<sdEvent*, sdEventCompare> getFilteredEventSet(double start, double end, EDescriptor descriptor);
+    set<sdEvent*, sdEventCompare> getEventSet(double start, double end);
+    set<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);
 
     /*! return number of registerd events in the eventSet*/
     int getNumberOfEvents(void);
@@ -222,9 +221,7 @@ inline sdEntity::~sdEntity(){
     eventSet.clear();
 }
 
-inline set<sdEvent*, sdEventCompare> sdEntity::getEventSet(void){
-    return eventSet;
-}
+
     
 inline int sdEntity::getNumberOfEvents(){
     return static_cast<int>(eventSet.size());
@@ -261,7 +258,11 @@ inline void* sdEntity::getValue(double time, EDescriptor descriptor){
     return NULL;
 }
 
-inline set <sdEvent*, sdEventCompare>sdEntity::getRangedEventSet(double start, double end){
+inline set<sdEvent*, sdEventCompare> sdEntity::getEventSet(void){
+    return eventSet;
+}
+
+inline set <sdEvent*, sdEventCompare>sdEntity::getEventSet(double start, double end){
     set <sdEvent*, sdEventCompare>rangedSet;
     set <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
     while(it != eventSet.end()){
@@ -274,7 +275,7 @@ inline set <sdEvent*, sdEventCompare>sdEntity::getRangedEventSet(double start, d
     return rangedSet;
 }
 
-inline set <sdEvent*, sdEventCompare>sdEntity::getFilteredEventSet(double start, double end, EDescriptor descriptor){
+inline set <sdEvent*, sdEventCompare>sdEntity::getEventSet(double start, double end, EDescriptor descriptor){
     
     set <sdEvent*, sdEventCompare>rangedSet;
     set <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();

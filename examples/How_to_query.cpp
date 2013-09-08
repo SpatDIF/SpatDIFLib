@@ -50,7 +50,7 @@ int main(void){
     // you can also ask events in a certain time frame.
     set <sdEvent*, sdEventCompare> myEventSet;
 
-    myEventSet = voice1->getFilteredEventSet(0.00, 5.00, SD_POSITION);
+    myEventSet = voice1->getEventSet(0.00, 5.00, SD_POSITION);
     cout << "there are " << myEventSet.size() << " position events within 0.00 and 5.00" << endl;
     
     set <sdEvent*, sdEventCompare> ::iterator it = myEventSet.begin();
@@ -65,7 +65,7 @@ int main(void){
     sdEntityCore *voice2 = myScene.getEntity(string("voice2"));
 
     set <sdEvent*, sdEventCompare> yourEventSet;
-    yourEventSet = voice2->getRangedEventSet(0.0, 8.0);
+    yourEventSet = voice2->getEventSet(0.0, 8.0);
     
     cout << "all event of " << voice2->getName() << endl;
     it = yourEventSet.begin();

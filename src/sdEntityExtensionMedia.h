@@ -63,17 +63,7 @@ class sdEntityExtensionMedia: public sdEntityExtension{
     friend class sdEntityCore; /*< only entityCore can spawn instances of this class*/
 
 private:
-    /*! @name const static variables 
-     @{ 
-     */
-    static const EExtension extensionName; /*< identification of the class */
-    static const string extensionNameAsString; /*< identification of the class */
-    static const int numberOfRelevantDescriptors;
-    static const EDescriptor relevantDescriptors[]; 
-    static const string relevantDescriptorStrings[];
-    /*!
-     @}
-     */
+
     
     /*!
      this constructor should be invoked from an instance of sdEntityCore
@@ -81,16 +71,15 @@ private:
     sdEntityExtensionMedia(){};
     
 public:
-    
-    /*! @name getters
+    /*! @name const static variables
      @{
      */
-    EExtension getExtensionName(void);
-    string getExtensionNameAsString(void);
-    /*!
-     @}
-     */
-
+    static const EExtension extensionName; /*< identification of the class */
+    static const string extensionNameAsString; /*< identification of the class */
+    static const int numberOfRelevantDescriptors;
+    static const EDescriptor relevantDescriptors[];
+    static const string relevantDescriptorStrings[];
+  
     /*! @name Event handling
      @{
      */
@@ -107,25 +96,15 @@ public:
      @}
     */
     
-    /*! @name Utilities
-     @{
-     */
-    /*! this class provides static functions for conversion */
-    static const EDescriptor stringToDescriptor(string str);
-    static const string descriptorToString(EDescriptor descriptor);
-    /*!
-    @}
-    */
+    string getExtensionNameAsString(void);
+    
 };
 
-
-/*** inline implementation ***/
-inline EExtension sdEntityExtensionMedia::getExtensionName(void){
-    return extensionName;
-}
 
 inline string sdEntityExtensionMedia::getExtensionNameAsString(void){
     return extensionNameAsString;
 }
+
+
 
 #endif

@@ -157,10 +157,17 @@ bool sdEventCore::setValue(string descriptor, string value){
 
 
 /*** sdEntityCore ***/
-
 const int sdEntityCore::numberOfCoreDescriptors = 3;
-const EDescriptor sdEntityCore::coreDescriptors[] = {SD_PRESENT, SD_POSITION, SD_ORIENTATION};
-const string sdEntityCore::coreDescriptorStrings[] = {string("present"), string("position"), string("orientation")};
+const EDescriptor sdEntityCore::coreDescriptors[] = {
+    SD_PRESENT,
+    SD_POSITION,
+    SD_ORIENTATION
+};
+const string sdEntityCore::coreDescriptorStrings[] = {
+    string("present"),
+    string("position"),
+    string("orientation")
+};
 
 bool sdEntityCore::isCoreDescriptor(EDescriptor descriptor){
     for(int i = 0; i< numberOfCoreDescriptors; i++){
@@ -290,6 +297,7 @@ sdEntityExtension* sdEntityCore::addExtension(EExtension extension){
             for(int i = 0; i < sdEntityExtensionMedia::numberOfRelevantDescriptors; i++){
                 sdRedirector rd;
                 rd.descriptor = sdEntityExtensionMedia::relevantDescriptors[i];
+                rd.extensionName = SD_MEDIA;
                 rd.responsibleExtension = static_cast<sdEntityExtension*>(mediaExtension);
                 redirectorVector.push_back(rd);
             }
@@ -305,8 +313,15 @@ sdEntityExtension* sdEntityCore::addExtension(EExtension extension){
 
 void sdEntityCore::removeExtension(EExtension extension){
 
-    
-    
+    vector<sdRedirector>::iterator it= redirectorVector.begin();
+    while(it != redirectorVector.end()){
+        sdRedirector rd = *it;
+        if(rd.extensionName = extension){
+            delete rd.responsibleExtension;
+            it = redirectorVector.erase(it);
+        }
+        it++;
+    }
 }
 
 
