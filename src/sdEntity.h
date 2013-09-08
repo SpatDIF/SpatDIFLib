@@ -69,6 +69,9 @@ public:
     /*!descriptor and value should be set at once. because this function allocates memory to void* value based on the descriptor*/
     virtual bool setValue(EDescriptor descriptor, void* value) = 0;
     
+    /*!overloaded function*/
+    virtual bool setValue(string descriptor, string value) = 0;
+    
     /*!returns descriptor as string. a routine for conversion should be implemented in derived classes*/
     virtual string getDescriptorAsString(void) = 0;
     

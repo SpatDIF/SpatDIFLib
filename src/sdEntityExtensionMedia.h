@@ -59,34 +59,68 @@ private:
  a media extension. This extension contains information about an audio media
  */
 class sdEntityExtensionMedia: public sdEntityExtension{
-    friend class sdEntityCore;
-        
+    
+    friend class sdEntityCore; /*< only entityCore can spawn instances of this class*/
+
+private:
+    /*! @name const static variables 
+     @{ 
+     */
     static const EExtension extensionName; /*< identification of the class */
     static const string extensionNameAsString; /*< identification of the class */
-
     static const int numberOfRelevantDescriptors;
     static const EDescriptor relevantDescriptors[]; 
-    static const string relevantDescriptorStrings[]; 
+    static const string relevantDescriptorStrings[];
     /*!
-     this constructor should be involed from an instance of sdScene
+     @}
+     */
+    
+    /*!
+     this constructor should be invoked from an instance of sdEntityCore
      */
     sdEntityExtensionMedia(){};
     
 public:
     
+    /*! @name getters
+     @{
+     */
     EExtension getExtensionName(void);
     string getExtensionNameAsString(void);
-        
+    /*!
+     @}
+     */
+
+    /*! @name Event handling
+     @{
+     */
+    
     /*! a method for adding a new event to the entity*/
     sdEvent* addEvent(double time, EDescriptor descriptor, void* value);
     
     /*! same as above but you can specify arguments with strings */
     sdEvent* addEvent(string time, string descriptor, string value);
     
+    
+    
     void removeEvent(double time, EDescriptor descriptor);
     
-    static const EDescriptor stringToDescriptor(string str);
+    /*! same as above but you can specify arguments with strings */
+    sdEvent* removeEvent(string time, string descriptor, string value);
 
+    /*!
+     @}
+    */
+    
+    /*! @name Utilities
+     @{
+     */
+    /*! this class provides static functions for conversion */
+    static const EDescriptor stringToDescriptor(string str);
+    static const string descriptorToString(EDescriptor descriptor);
+    /*!
+    @}
+    */
 };
 
 

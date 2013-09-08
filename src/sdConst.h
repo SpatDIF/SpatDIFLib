@@ -94,5 +94,18 @@ inline double stringToDouble(string str){
     return db;
 }
 
+inline int *stringToInts(string str, int *it, int num){
+    istringstream is(str);
+    for(int i = 0; i < num; i++) {
+        is >> it[i];
+    }
+    return it;
+}
+
+inline int stringToInt(string str){
+    int it;
+    stringToInts(str, &it, 1);
+    return it;
+}
 
 #endif

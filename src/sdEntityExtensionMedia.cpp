@@ -4,8 +4,8 @@
 
 // constructors
 sdEventExtensionMedia::sdEventExtensionMedia(double time, EDescriptor descriptor, void* value){
-    setTime(time);
-    setValue(descriptor, value);
+    setTime(time); // declared in sdEntity.h
+    setValue(descriptor, value); 
 }
 
 sdEventExtensionMedia::sdEventExtensionMedia(string time, string descriptor, string value){
@@ -54,24 +54,7 @@ sdEventExtensionMedia::~sdEventExtensionMedia(){
 
 // returns descriptor of the event as a string
 string sdEventExtensionMedia::getDescriptorAsString(void){
-    string str;
-    switch(descriptor){
-        case SD_MEDIA_ID:
-            str = string("id");break;
-        case SD_MEDIA_TYPE:
-            str = string("type");break;
-        case SD_MEDIA_LOCATION:
-            str =string("location");break;
-        case SD_MEDIA_CHANNEL:
-            str = string("channel");break;
-        case SD_MEDIA_TIME_OFFSET:
-            str = string("offset");break;
-        case SD_MEDIA_GAIN:
-            str =string("gain");break;
-        default:
-            break;
-    }
-    return str;
+    return sdEntityExtensionMedia::descriptorToString(descriptor);
 }
 
 // returns value of the event as a string
@@ -134,6 +117,29 @@ bool sdEventExtensionMedia::setValue(EDescriptor descriptor, void* value){
 // set value with strings
 bool sdEventExtensionMedia::setValue(string descriptor, string value){
     
+    sdEventExtensionMedia::descriptor = sdEntityExtensionMedia::stringToDescriptor(descriptor);
+    switch (sdEventExtensionMedia::descriptor) {
+        case SD_MEDIA_ID:
+        case SD_MEDIA_TYPE:
+        case SD_MEDIA_LOCATION:{
+            sdEventExtensionMedia::value = static_cast<void*>(new string(value));
+            break;
+        }
+        case SD_MEDIA_CHANNEL:{
+            sdEvent::value = static_cast<int*>(new int(stringToInt(value)));
+            break;
+        }
+        case SD_MEDIA_TIME_OFFSET:
+        case SD_MEDIA_GAIN:{
+            sdEvent::value = static_cast<double*>(new double(stringToDouble(value)));
+            break;
+        }
+        default:{
+            return false;
+            break;
+        }
+    }
+
     
 }
 
@@ -166,6 +172,13 @@ const EDescriptor sdEntityExtensionMedia::stringToDescriptor(string str){
             return relevantDescriptors[i];
     }
     return SD_ERROR;
+}
+    
+const string sdEntityExtensionMedia::descriptorToString(EDescriptor descriptor){
+    for(int i = 0; i<numberOfRelevantDescriptors; i++ ){
+        if(relevantDescriptors[i] == descriptor)
+            return relevantDescriptorStrings[i];
+    }
 }
 
 
