@@ -8,7 +8,7 @@
 int main(void){
     
     using namespace std;
-
+    
     // a scene without extensions
     sdScene scene;
     
@@ -34,6 +34,16 @@ int main(void){
 
     // the message below is the message for extension. so the core does not understand.
     evt= entityOne->addEvent(4.0, SD_MEDIA_LOCATION, static_cast<void*>(&loc));
+    double gain = 0.51525;
+    double time_offset = 0.5;
+    entityOne->addEvent(5.0, SD_MEDIA_GAIN, static_cast<void*>(&gain));
+    entityOne->addEvent(5.2, SD_MEDIA_TIME_OFFSET, static_cast<void*>(&time_offset));
+    time_offset = 0.4;
+    entityOne->addEvent(5.2, SD_MEDIA_TIME_OFFSET, static_cast<void*>(&time_offset));
+    entityOne->addEvent(5.3, SD_MEDIA_ID, static_cast<void*>(&string("sound source1")));
+    entityOne->addEvent(5.0, SD_MEDIA_TYPE, static_cast<void*>(&string("stream")));
+    entityOne->addEvent(5.5, SD_MEDIA_LOCATION, static_cast<void*>(&string("mySoundFile.wav")));
+    
 
     // dump the scene
     scene.dump();

@@ -114,9 +114,7 @@ bool sdEventCore::setValue(EDescriptor descriptor, void* value){
     return true;
 }
 
-bool sdEventCore::setValue(string descriptor, string value){
-    // this function is called by the constructor
-    
+bool sdEventCore::setValue(string descriptor, string value){    
     // set descriptor
     if(descriptor == "present") sdEventCore::descriptor = SD_PRESENT;
     else if(descriptor == "position") sdEventCore::descriptor = SD_POSITION;
@@ -249,7 +247,7 @@ sdEvent* sdEntityCore::addEvent(string time, string descriptor, string value){
 }
 
 void sdEntityCore::removeEvent(double time, EDescriptor descriptor){
-    set <sdEvent*>::iterator it = eventSet.begin();
+    multiset <sdEvent*>::iterator it = eventSet.begin();
     while(it != eventSet.end()) {
         sdEvent* event = *it;
         if(event->getTime() == time){

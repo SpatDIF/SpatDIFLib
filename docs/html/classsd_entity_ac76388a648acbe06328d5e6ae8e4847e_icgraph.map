@@ -1,3 +1,4 @@
 <map id="sdEntity::getEventSet" name="sdEntity::getEventSet">
-<area shape="rect" id="node2" href="$classsd_saver.html#a5c400fd4c94da51ac1bf2aa82e6e2885" title="sdSaver::XMLFromScene" alt="" coords="203,5,378,32"/>
+<area shape="rect" id="node2" href="$classsd_saver.html#a2095f1dd3d75b3f5d5f9ae323fa0f971" title="sdSaver::XMLFromScene" alt="" coords="203,5,378,32"/>
+<area shape="rect" id="node3" href="$classsd_scene.html#a1e61037274d374f8ab33e347fde8b65b" title="sdScene::dump" alt="" coords="233,56,348,83"/>
 </map>

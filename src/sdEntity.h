@@ -10,9 +10,10 @@
 using namespace std;
 
 /*!
- a pure virtual class of event.
- it declares functions that all subclasses of this class should override.
+ A pure virtual class of event. This class maintains data of time, descriptor, and value.
+ 
  */
+
 class sdEvent{
     
 protected:
@@ -26,9 +27,8 @@ protected:
     sdEvent(void){};
     
 public:
-    /*! @name Setter/Getter
-     @{
-     */
+    /*! @name Setter
+     @{ */
     
     /*!
      set all three parameters at once
@@ -38,11 +38,17 @@ public:
      */
     void set(double time, EDescriptor descriptor, void* value);
     
-    /*!
-     set time of the event
-     @param time time of the event
-     */
+    /*! @} */
+
+    /*! @name Time handling
+     @{ */
+    
+    /*! set time of the event
+     @param time time of the event */
     void setTime(double time);
+    
+    /*! set time of the event
+     @param time time of the event as String */
     void setTime(string timeString);
     
     /*!returns time as double*/
@@ -51,38 +57,47 @@ public:
     /*!returns time as string*/
     string getTimeAsString(void);
     
-    /*!returns descriptor as Enum*/
-    EDescriptor getDescriptor(void);
-    
-    /*!returns value through void pointer. It should be casted to propoer type manually.*/
-    void* getValue(void);
+    /*! @} */
 
-    /*!
-     @}
-     */
+    /*! @name Value handling
+     @{ */
     
-    /*! @name Virtual functions
-    @{
-    */
-    
-    /*!descriptor and value should be set at once. because this function allocates memory to void* value based on the descriptor*/
+    /*! descriptor and value should be set at once. because this function allocates memory to void* value based on the descriptor*/
     virtual bool setValue(EDescriptor descriptor, void* value) = 0;
     
     /*!overloaded function*/
     virtual bool setValue(string descriptor, string value) = 0;
     
+    /*!returns descriptor as Enum*/
+    EDescriptor getDescriptor(void);
+    
     /*!returns descriptor as string. a routine for conversion should be implemented in derived classes*/
     virtual string getDescriptorAsString(void) = 0;
     
+    /*!returns value through void pointer. It should be casted to propoer type manually.*/
+    void* getValue(void);
+
     /*!returns value as string. a routine for conversion should be implemented in derived classes */
     virtual string getValueAsString(void) = 0;
-    
-   /*!
-     @}
-     */
+
+    /*! @} */
 };
 
 /*** inline implementation ***/
+
+inline void sdEvent::set(double time, EDescriptor descriptor, void* value){
+    setTime(time);
+    setValue(descriptor, value);
+}
+
+inline void sdEvent::setTime(double time){
+    sdEvent::time = time;
+}
+
+inline void sdEvent::setTime(string timeString){
+    sdEvent::time = stringToDouble(timeString);
+}
+
 inline double sdEvent::getTime(void){
     return time;
 }
@@ -98,19 +113,6 @@ inline EDescriptor sdEvent::getDescriptor(void){
 inline void* sdEvent::getValue(void){
     return value;
 }
-
-inline void sdEvent::set(double time, EDescriptor descriptor, void* value){
-    setTime(time);
-    setValue(descriptor, value);
-}
-
-inline void sdEvent::setTime(double time){
-    sdEvent::time = time;
-}
-
-inline void sdEvent::setTime(string timeString){
-    sdEvent::time = stringToDouble(timeString);
-};
 
 /*!
  a helper class for sorting events
@@ -131,27 +133,24 @@ public:
 class sdEntity{
 
 protected:
-    set<sdEvent*, sdEventCompare> eventSet; /*!< maintains all relevant events */
+    multiset<sdEvent*, sdEventCompare> eventSet; /*!< maintains all relevant events */
 
 public:
     sdEntity(); /*!< constructor */
     ~sdEntity(); /*!< desctrictor */
     
-    /*! @name Setter/Getter
-     @{
-     */
+    /*! @name EventSet Handling
+     @{ */
     
     /*! return a set of sdEvent pointers. sorted by time.*/
-    set<sdEvent*, sdEventCompare> getEventSet(void);
-    set<sdEvent*, sdEventCompare> getEventSet(double start, double end);
-    set<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);
+    multiset<sdEvent*, sdEventCompare> getEventSet(void);
+    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end);
+    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);
 
     /*! return number of registerd events in the eventSet*/
     int getNumberOfEvents(void);
 
-    /*!
-     @}
-     */
+    /*! @} */
     
     /*! @name Event Handling
      @{
@@ -220,8 +219,6 @@ inline sdEntity::~sdEntity(){
     // delete all allocated values of attached events
     eventSet.clear();
 }
-
-
     
 inline int sdEntity::getNumberOfEvents(){
     return static_cast<int>(eventSet.size());
@@ -229,8 +226,9 @@ inline int sdEntity::getNumberOfEvents(){
 
 inline void sdEntity::removeEvent(double time, EDescriptor descriptor){
     sdEvent* event = getEvent(time, descriptor);
-    if(event)
+    if(event){
         eventSet.erase(event);
+    }
 }
 
 inline void sdEntity::removeAllEvents(){
@@ -238,7 +236,7 @@ inline void sdEntity::removeAllEvents(){
 }
 
 inline sdEvent* sdEntity::getEvent(double time, EDescriptor descriptor){
-    set<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
+    multiset<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
     while(it != eventSet.end()){
         sdEvent* event = *it;
         if((event->getTime() == time) && (event->getDescriptor() == descriptor)){
@@ -258,13 +256,13 @@ inline void* sdEntity::getValue(double time, EDescriptor descriptor){
     return NULL;
 }
 
-inline set<sdEvent*, sdEventCompare> sdEntity::getEventSet(void){
+inline multiset<sdEvent*, sdEventCompare> sdEntity::getEventSet(void){
     return eventSet;
 }
 
-inline set <sdEvent*, sdEventCompare>sdEntity::getEventSet(double start, double end){
-    set <sdEvent*, sdEventCompare>rangedSet;
-    set <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
+inline multiset <sdEvent*, sdEventCompare>sdEntity::getEventSet(double start, double end){
+    multiset <sdEvent*, sdEventCompare>rangedSet;
+    multiset <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
     while(it != eventSet.end()){
         sdEvent* event = *it;
         if ( (event->getTime() >= start) && (event->getTime() <= end)) {
@@ -275,10 +273,10 @@ inline set <sdEvent*, sdEventCompare>sdEntity::getEventSet(double start, double 
     return rangedSet;
 }
 
-inline set <sdEvent*, sdEventCompare>sdEntity::getEventSet(double start, double end, EDescriptor descriptor){
+inline multiset <sdEvent*, sdEventCompare>sdEntity::getEventSet(double start, double end, EDescriptor descriptor){
     
-    set <sdEvent*, sdEventCompare>rangedSet;
-    set <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
+    multiset <sdEvent*, sdEventCompare>rangedSet;
+    multiset <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
     while(it != eventSet.end()){
         sdEvent* event = *it;
         if ( (event->getTime() >= start) && (event->getTime() <= end)) {

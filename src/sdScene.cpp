@@ -132,8 +132,8 @@ void sdScene::dump(void){
         cout << ">>entity name:" << entityName <<endl;
         cout << "kind:" << kind <<endl;
         cout << "number of events:" << (*it)->getNumberOfEvents()<< endl;
-        set <sdEvent*, sdEventCompare> evnts = (*it)->getEventSet();
-        set <sdEvent*, sdEventCompare>::iterator itt = evnts.begin();
+        multiset <sdEvent*, sdEventCompare> evnts = (*it)->getEventSet();
+        multiset <sdEvent*, sdEventCompare>::iterator itt = evnts.begin();
 
         while(itt != evnts.end()){
             sdEventCore *eventCore = static_cast<sdEventCore*>(*itt);
@@ -147,8 +147,8 @@ void sdScene::dump(void){
         while(vit != extensionVector.end()){
             sdEntityExtension *extension= (*vit);
             cout << "-extension:" << extension->getExtensionNameAsString() << endl;
-            set <sdEvent*, sdEventCompare> eevnts = extension->getEventSet();
-            set <sdEvent*, sdEventCompare>::iterator eitt = eevnts.begin();
+            multiset <sdEvent*, sdEventCompare> eevnts = extension->getEventSet();
+            multiset <sdEvent*, sdEventCompare>::iterator eitt = eevnts.begin();
             
             while(eitt != eevnts.end()){
                 sdEvent* extensionEvent = *eitt;

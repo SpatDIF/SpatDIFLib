@@ -1,6 +1,6 @@
 UNAME := $(shell uname -s)
 CC = g++
-CFLAGS =  -shared
+CFLAGS =  -g -O0
 LIBS = -lstdc++
 OBJECTS = *.o *.a
 FILES = *.cpp
@@ -36,6 +36,7 @@ libspatdif.so: $(FILES)
 
 libspatdif.dylib: $(FILES)
 	$(CC) $(CFLAGS) -o $@ -dynamiclib $(LIBS) $(INCLUDE_PATH) tinyxml2.o libjson.a $(FILES)
+	
 
 install:
 	-@make install_$(UNAME)

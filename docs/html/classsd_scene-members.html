@@ -99,7 +99,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <tr class="even"><td class="entry"><a class="el" href="classsd_scene.html#a04e558bcf268832b77cfbb576a36778e">getInfo</a>(void)</td><td class="entry"><a class="el" href="classsd_scene.html">sdScene</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classsd_scene.html#a3a323f8f9e8b4472f4bd06309ba0332d">getNumberOfActivatedExtensions</a>(void)</td><td class="entry"><a class="el" href="classsd_scene.html">sdScene</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classsd_scene.html#a2c39b04de7d6d8f2ce72c2a91886a64e">getNumberOfEntities</a>(void)</td><td class="entry"><a class="el" href="classsd_scene.html">sdScene</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classsd_scene.html#a4c75942623e7bdd83ec1e53148df4064">getValue</a>(string name, float time, EDescriptor descriptor)</td><td class="entry"><a class="el" href="classsd_scene.html">sdScene</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classsd_scene.html#a2eca600ab7627a06ad523485a74ff028">getOrdering</a>(void)</td><td class="entry"><a class="el" href="classsd_scene.html">sdScene</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classsd_scene.html#ae75411e394deb65de00d2c2551ed69c7">getOrderingAsString</a>(void)</td><td class="entry"><a class="el" href="classsd_scene.html">sdScene</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classsd_scene.html#ae54c0a8fdb412b4d210ebef25a23c6a3">getValue</a>(string name, double time, EDescriptor descriptor)</td><td class="entry"><a class="el" href="classsd_scene.html">sdScene</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classsd_scene.html#a64b8f2e46c2800ea7b6c817cc85b2594">removeAllEntities</a>(void)</td><td class="entry"><a class="el" href="classsd_scene.html">sdScene</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classsd_scene.html#a0b02c3ae6f696f17c48cc9c37f89112c">removeAllExtensions</a>(void)</td><td class="entry"><a class="el" href="classsd_scene.html">sdScene</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classsd_scene.html#a787fe2d8de6bb276f75726b64ec10fe8">removeEntity</a>(string name)</td><td class="entry"><a class="el" href="classsd_scene.html">sdScene</a></td><td class="entry"></td></tr>
@@ -107,12 +109,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <tr class="even"><td class="entry"><a class="el" href="classsd_scene.html#a1f71b9af371b95132f942b59e93c30b5">removeExtension</a>(EExtension extension)</td><td class="entry"><a class="el" href="classsd_scene.html">sdScene</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classsd_scene.html#a962f5309edf7e3866522b1bdc60c68b4">sdScene</a>(void)</td><td class="entry"><a class="el" href="classsd_scene.html">sdScene</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classsd_scene.html#ae94bf3b24b2719f0721a5aeac016645f">sdScene</a>(sdInfo info)</td><td class="entry"><a class="el" href="classsd_scene.html">sdScene</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classsd_scene.html#ac7abc33a62fa0934f00b30bda8a69541">setInfo</a>(sdInfo info)</td><td class="entry"><a class="el" href="classsd_scene.html">sdScene</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classsd_scene.html#a3d794886e19997e5de6ea6e99109383b">setValue</a>(string name, float time, EDescriptor descriptor, void *value)</td><td class="entry"><a class="el" href="classsd_scene.html">sdScene</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classsd_scene.html#a8411e9c3fa696e7a0f24bf073ab8ea1c">sdScene</a>(sdInfo info, EOrdering ordering)</td><td class="entry"><a class="el" href="classsd_scene.html">sdScene</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classsd_scene.html#ac7abc33a62fa0934f00b30bda8a69541">setInfo</a>(sdInfo info)</td><td class="entry"><a class="el" href="classsd_scene.html">sdScene</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classsd_scene.html#aef37a695bc8912995b0167c530cb1793">setOrdering</a>(EOrdering ordering)</td><td class="entry"><a class="el" href="classsd_scene.html">sdScene</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classsd_scene.html#aa4356859900326d8770de796d37640ea">setValue</a>(string name, double time, EDescriptor descriptor, void *value)</td><td class="entry"><a class="el" href="classsd_scene.html">sdScene</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Aug 30 2013 16:34:11 for spatdiflib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 9 2013 13:45:35 for spatdiflib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

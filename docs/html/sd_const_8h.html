@@ -86,12 +86,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">sdConst.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;string&gt;</code><br/>
+<code>#include &lt;iostream&gt;</code><br/>
+<code>#include &lt;sstream&gt;</code><br/>
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for sdConst.h:</div>
 <div class="dyncontent">
@@ -102,22 +105,37 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="sd_const_8h__dep__incl.png" border="0" usemap="#src_2sd_const_8hdep" alt=""/></div>
 <map name="src_2sd_const_8hdep" id="src_2sd_const_8hdep">
-<area shape="rect" id="node2" href="sd_entity_8h.html" title="src/sdEntity.h" alt="" coords="5,80,107,107"/><area shape="rect" id="node3" href="sd_entity_core_8h.html" title="src/sdEntityCore.h" alt="" coords="95,229,225,256"/><area shape="rect" id="node5" href="sd_scene_8h.html" title="src/sdScene.h" alt="" coords="263,304,369,331"/><area shape="rect" id="node12" href="sd_scene_8cpp.html" title="src/sdScene.cpp" alt="" coords="583,379,703,405"/><area shape="rect" id="node13" href="sd_entity_extension_8h.html" title="src/sdEntityExtension.h" alt="" coords="183,155,343,181"/><area shape="rect" id="node14" href="sd_entity_extension_media_8h.html" title="src/sdEntityExtensionMedia.h" alt="" coords="485,229,683,256"/><area shape="rect" id="node16" href="sd_info_8h.html" title="src/sdInfo.h" alt="" coords="367,155,457,181"/><area shape="rect" id="node10" href="sd_saver_8cpp.html" title="src/sdSaver.cpp" alt="" coords="36,453,153,480"/><area shape="rect" id="node4" href="sd_entity_core_8cpp.html" title="src/sdEntityCore.cpp" alt="" coords="87,304,232,331"/><area shape="rect" id="node6" href="sd_loader_8h.html" title="src/sdLoader.h" alt="" coords="261,379,371,405"/><area shape="rect" id="node8" href="sd_o_s_c_responder_8h.html" title="src/sdOSCResponder.h" alt="" coords="396,379,559,405"/><area shape="rect" id="node11" href="sd_saver_8h.html" title="src/sdSaver.h" alt="" coords="132,379,236,405"/><area shape="rect" id="node7" href="sd_loader_8cpp.html" title="src/sdLoader.cpp" alt="" coords="247,453,371,480"/><area shape="rect" id="node9" href="sd_o_s_c_responder_8cpp.html" title="src/sdOSCResponder.cpp" alt="" coords="395,453,572,480"/><area shape="rect" id="node15" href="sd_entity_extension_media_8cpp.html" title="src/sdEntityExtensionMedia.cpp" alt="" coords="479,304,689,331"/></map>
+<area shape="rect" id="node2" href="sd_entity_8h.html" title="src/sdEntity.h" alt="" coords="618,80,720,107"/><area shape="rect" id="node3" href="sd_entity_core_8h.html" title="src/sdEntityCore.h" alt="" coords="385,229,516,256"/><area shape="rect" id="node5" href="sd_scene_8h.html" title="src/sdScene.h" alt="" coords="184,304,291,331"/><area shape="rect" id="node10" href="sd_saver_8cpp.html" title="src/sdSaver.cpp" alt="" coords="575,453,692,480"/><area shape="rect" id="node12" href="sd_scene_8cpp.html" title="src/sdScene.cpp" alt="" coords="521,379,641,405"/><area shape="rect" id="node13" href="sd_entity_extension_8h.html" title="src/sdEntityExtension.h" alt="" coords="485,155,645,181"/><area shape="rect" id="node14" href="sd_entity_extension_media_8h.html" title="src/sdEntityExtensionMedia.h" alt="" coords="540,229,737,256"/><area shape="rect" id="node16" href="sd_info_8h.html" title="src/sdInfo.h" alt="" coords="169,155,260,181"/><area shape="rect" id="node4" href="sd_entity_core_8cpp.html" title="src/sdEntityCore.cpp" alt="" coords="315,304,460,331"/><area shape="rect" id="node6" href="sd_loader_8h.html" title="src/sdLoader.h" alt="" coords="14,379,124,405"/><area shape="rect" id="node8" href="sd_o_s_c_responder_8h.html" title="src/sdOSCResponder.h" alt="" coords="156,379,319,405"/><area shape="rect" id="node11" href="sd_saver_8h.html" title="src/sdSaver.h" alt="" coords="343,379,447,405"/><area shape="rect" id="node7" href="sd_loader_8cpp.html" title="src/sdLoader.cpp" alt="" coords="5,453,128,480"/><area shape="rect" id="node9" href="sd_o_s_c_responder_8cpp.html" title="src/sdOSCResponder.cpp" alt="" coords="153,453,329,480"/><area shape="rect" id="node15" href="sd_entity_extension_media_8cpp.html" title="src/sdEntityExtensionMedia.cpp" alt="" coords="536,304,747,331"/></map>
 </div>
 </div>
 <p><a href="sd_const_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:aecbf4e48e6db27aeea9da915a4e20c17"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> { <a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17a466ad86d2dca26906dc381fee2f2cbf2">SD_TYPE</a>, 
+<tr class="memitem:aecbf4e48e6db27aeea9da915a4e20c17"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> { <br/>
+&#160;&#160;<a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17a466ad86d2dca26906dc381fee2f2cbf2">SD_TYPE</a>, 
 <a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17a0d50b57f0116f57926d61c4f9d9bd6bd">SD_PRESENT</a>, 
 <a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17a3af2ad71098492ea15dd1dd5b45c1550">SD_POSITION</a>, 
-<a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17ad0bc2d01a44b61e9aa584aee6d0f8bd6">SD_ORIENTATION</a>
+<a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17ad0bc2d01a44b61e9aa584aee6d0f8bd6">SD_ORIENTATION</a>, 
+<br/>
+&#160;&#160;<a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17aa3069893c216df6e570262260046989e">SD_MEDIA_ID</a>, 
+<a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17ac877c825bba07c2e86a55e021a831c72">SD_MEDIA_TYPE</a>, 
+<a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17aa0e66219047149493b8e7a11b5bc3f08">SD_MEDIA_LOCATION</a>, 
+<a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17ab404a134aa8cc5ddc3b7243868c6e95c">SD_MEDIA_CHANNEL</a>, 
+<br/>
+&#160;&#160;<a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17ae11711f6f4f4bd36cad2cf11e3e36a32">SD_MEDIA_TIME_OFFSET</a>, 
+<a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17a3fa898652d16471c1b27593c39d1879e">SD_MEDIA_GAIN</a>, 
+<a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17a0002d0c8feceb0fb4cd7d9fc96066c3d">SD_ERROR</a>
+<br/>
  }</td></tr>
 <tr class="separator:aecbf4e48e6db27aeea9da915a4e20c17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5d0e87f61ba99c47a539492df7917a1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sd_const_8h.html#ad5d0e87f61ba99c47a539492df7917a1">EType</a> { <a class="el" href="sd_const_8h.html#ad5d0e87f61ba99c47a539492df7917a1ad6d6f4bc282cad1e439f6329e28d411b">SD_POINT</a>
  }</td></tr>
 <tr class="separator:ad5d0e87f61ba99c47a539492df7917a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5036bb0a49706c712b29cff6dd8ec24b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sd_const_8h.html#a5036bb0a49706c712b29cff6dd8ec24b">EOrdering</a> { <a class="el" href="sd_const_8h.html#a5036bb0a49706c712b29cff6dd8ec24ba6816a1997416327083ba79973af154d5">SD_TIME</a>, 
+<a class="el" href="sd_const_8h.html#a5036bb0a49706c712b29cff6dd8ec24bab3760017f39a6f01aca8073ee7557a0b">SD_TRACK</a>
+ }</td></tr>
+<tr class="separator:a5036bb0a49706c712b29cff6dd8ec24b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90240a380b9e4422246ca2141cfc3674"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sd_const_8h.html#a90240a380b9e4422246ca2141cfc3674">EKind</a> { <a class="el" href="sd_const_8h.html#a90240a380b9e4422246ca2141cfc3674ad40d246452bce8c81267f9151b3c71eb">SD_SOURCE</a>, 
 <a class="el" href="sd_const_8h.html#a90240a380b9e4422246ca2141cfc3674a5965a1748696833b115e2d1db3863896">SD_SINK</a>
  }</td></tr>
@@ -127,6 +145,25 @@ Enumerations</h2></td></tr>
 <a class="el" href="sd_const_8h.html#af51df71fa9965445e8824df5a78ceae1a24740c7b07bb1703a1709f3fd8e16e81">SD_DIRECT_TO_ONE</a>
  }</td></tr>
 <tr class="separator:af51df71fa9965445e8824df5a78ceae1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a2e4342bd50c4c585f85d074a765b4550"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sd_const_8h.html#a2e4342bd50c4c585f85d074a765b4550">doublesToString</a> (double *db, int num)</td></tr>
+<tr class="separator:a2e4342bd50c4c585f85d074a765b4550"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6ea173327acc9bc1ed456517a81dc9f"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sd_const_8h.html#af6ea173327acc9bc1ed456517a81dc9f">doubleToString</a> (double db)</td></tr>
+<tr class="separator:af6ea173327acc9bc1ed456517a81dc9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7ae4ebb27c32496c48bac787cc5bcf7"><td class="memItemLeft" align="right" valign="top">double *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sd_const_8h.html#ae7ae4ebb27c32496c48bac787cc5bcf7">stringToDoubles</a> (string str, double *db, int num)</td></tr>
+<tr class="separator:ae7ae4ebb27c32496c48bac787cc5bcf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e564ec0266d67f518a0b0f80f17e203"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sd_const_8h.html#a7e564ec0266d67f518a0b0f80f17e203">stringToDouble</a> (string str)</td></tr>
+<tr class="separator:a7e564ec0266d67f518a0b0f80f17e203"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a899dc7e45ae29f557c46c5959373b1ba"><td class="memItemLeft" align="right" valign="top">int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sd_const_8h.html#a899dc7e45ae29f557c46c5959373b1ba">stringToInts</a> (string str, int *it, int num)</td></tr>
+<tr class="separator:a899dc7e45ae29f557c46c5959373b1ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78c1010c4b555e73736c0bc524c26111"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sd_const_8h.html#a78c1010c4b555e73736c0bc524c26111">stringToInt</a> (string str)</td></tr>
+<tr class="separator:a78c1010c4b555e73736c0bc524c26111"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f06f639581e8f36cbc9d51e53eee915"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sd_const_8h.html#a5f06f639581e8f36cbc9d51e53eee915">stringToDescriptor</a> (string str, const string *ds, const <a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> *dc, const int num)</td></tr>
+<tr class="separator:a5f06f639581e8f36cbc9d51e53eee915"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b0d05038cb62764b45ace0051c0023e"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sd_const_8h.html#a8b0d05038cb62764b45ace0051c0023e">descriptorToString</a> (<a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> descriptor, const string *ds, const <a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> *dc, const int num)</td></tr>
+<tr class="separator:a8b0d05038cb62764b45ace0051c0023e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a class="anchor" id="aecbf4e48e6db27aeea9da915a4e20c17"></a>
@@ -147,6 +184,20 @@ Enumerations</h2></td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="aecbf4e48e6db27aeea9da915a4e20c17a3af2ad71098492ea15dd1dd5b45c1550"></a>SD_POSITION</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="aecbf4e48e6db27aeea9da915a4e20c17ad0bc2d01a44b61e9aa584aee6d0f8bd6"></a>SD_ORIENTATION</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="aecbf4e48e6db27aeea9da915a4e20c17aa3069893c216df6e570262260046989e"></a>SD_MEDIA_ID</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="aecbf4e48e6db27aeea9da915a4e20c17ac877c825bba07c2e86a55e021a831c72"></a>SD_MEDIA_TYPE</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="aecbf4e48e6db27aeea9da915a4e20c17aa0e66219047149493b8e7a11b5bc3f08"></a>SD_MEDIA_LOCATION</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="aecbf4e48e6db27aeea9da915a4e20c17ab404a134aa8cc5ddc3b7243868c6e95c"></a>SD_MEDIA_CHANNEL</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="aecbf4e48e6db27aeea9da915a4e20c17ae11711f6f4f4bd36cad2cf11e3e36a32"></a>SD_MEDIA_TIME_OFFSET</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="aecbf4e48e6db27aeea9da915a4e20c17a3fa898652d16471c1b27593c39d1879e"></a>SD_MEDIA_GAIN</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="aecbf4e48e6db27aeea9da915a4e20c17a0002d0c8feceb0fb4cd7d9fc96066c3d"></a>SD_ERROR</em>&nbsp;</td><td class="fielddoc">
 </td></tr>
 </table>
 
@@ -192,6 +243,25 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a5036bb0a49706c712b29cff6dd8ec24b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="sd_const_8h.html#a5036bb0a49706c712b29cff6dd8ec24b">EOrdering</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>enum for ordering </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="a5036bb0a49706c712b29cff6dd8ec24ba6816a1997416327083ba79973af154d5"></a>SD_TIME</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a5036bb0a49706c712b29cff6dd8ec24bab3760017f39a6f01aca8073ee7557a0b"></a>SD_TRACK</em>&nbsp;</td><td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
 <a class="anchor" id="ad5d0e87f61ba99c47a539492df7917a1"></a>
 <div class="memitem">
 <div class="memproto">
@@ -209,10 +279,385 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a8b0d05038cb62764b45ace0051c0023e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const string descriptorToString </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string *&#160;</td>
+          <td class="paramname"><em>ds</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> *&#160;</td>
+          <td class="paramname"><em>dc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int&#160;</td>
+          <td class="paramname"><em>num</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="sd_const_8h_a8b0d05038cb62764b45ace0051c0023e_icgraph.png" border="0" usemap="#sd_const_8h_a8b0d05038cb62764b45ace0051c0023e_icgraph" alt=""/></div>
+<map name="sd_const_8h_a8b0d05038cb62764b45ace0051c0023e_icgraph" id="sd_const_8h_a8b0d05038cb62764b45ace0051c0023e_icgraph">
+<area shape="rect" id="node2" href="classsd_event_extension_media.html#aca21faf9ceebab82361ab7d0965f2c57" title="sdEventExtensionMedia\l::getDescriptorAsString" alt="" coords="184,5,349,46"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a2e4342bd50c4c585f85d074a765b4550"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string doublesToString </td>
+          <td>(</td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>db</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>num</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>utility function that convert doubles to a string </p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="sd_const_8h_a2e4342bd50c4c585f85d074a765b4550_icgraph.png" border="0" usemap="#sd_const_8h_a2e4342bd50c4c585f85d074a765b4550_icgraph" alt=""/></div>
+<map name="sd_const_8h_a2e4342bd50c4c585f85d074a765b4550_icgraph" id="sd_const_8h_a2e4342bd50c4c585f85d074a765b4550_icgraph">
+<area shape="rect" id="node2" href="sd_const_8h.html#af6ea173327acc9bc1ed456517a81dc9f" title="doubleToString" alt="" coords="223,64,335,91"/><area shape="rect" id="node6" href="classsd_event_core.html#a90bb7c69858b3274ec6abc0c86ff818c" title="sdEventCore::getValueAsString" alt="" coords="174,119,383,145"/><area shape="rect" id="node3" href="classsd_event.html#a43dc0ffb37fdf843cc8bd3888dd7289f" title="sdEvent::getTimeAsString" alt="" coords="432,5,608,32"/><area shape="rect" id="node5" href="classsd_event_extension_media.html#a649915acca0bba19994f851caf9592a5" title="sdEventExtensionMedia\l::getValueAsString" alt="" coords="437,57,603,98"/><area shape="rect" id="node4" href="classsd_scene.html#a1e61037274d374f8ab33e347fde8b65b" title="sdScene::dump" alt="" coords="656,64,771,91"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="af6ea173327acc9bc1ed456517a81dc9f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string doubleToString </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>db</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>utility function that convert a double to a string </p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="sd_const_8h_af6ea173327acc9bc1ed456517a81dc9f_cgraph.png" border="0" usemap="#sd_const_8h_af6ea173327acc9bc1ed456517a81dc9f_cgraph" alt=""/></div>
+<map name="sd_const_8h_af6ea173327acc9bc1ed456517a81dc9f_cgraph" id="sd_const_8h_af6ea173327acc9bc1ed456517a81dc9f_cgraph">
+<area shape="rect" id="node2" href="sd_const_8h.html#a2e4342bd50c4c585f85d074a765b4550" title="doublesToString" alt="" coords="166,5,285,32"/></map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="sd_const_8h_af6ea173327acc9bc1ed456517a81dc9f_icgraph.png" border="0" usemap="#sd_const_8h_af6ea173327acc9bc1ed456517a81dc9f_icgraph" alt=""/></div>
+<map name="sd_const_8h_af6ea173327acc9bc1ed456517a81dc9f_icgraph" id="sd_const_8h_af6ea173327acc9bc1ed456517a81dc9f_icgraph">
+<area shape="rect" id="node2" href="classsd_event.html#a43dc0ffb37fdf843cc8bd3888dd7289f" title="sdEvent::getTimeAsString" alt="" coords="165,5,341,32"/><area shape="rect" id="node4" href="classsd_event_extension_media.html#a649915acca0bba19994f851caf9592a5" title="sdEventExtensionMedia\l::getValueAsString" alt="" coords="171,57,336,98"/><area shape="rect" id="node3" href="classsd_scene.html#a1e61037274d374f8ab33e347fde8b65b" title="sdScene::dump" alt="" coords="389,5,504,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a5f06f639581e8f36cbc9d51e53eee915"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> stringToDescriptor </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string *&#160;</td>
+          <td class="paramname"><em>ds</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> *&#160;</td>
+          <td class="paramname"><em>dc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int&#160;</td>
+          <td class="paramname"><em>num</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="sd_const_8h_a5f06f639581e8f36cbc9d51e53eee915_icgraph.png" border="0" usemap="#sd_const_8h_a5f06f639581e8f36cbc9d51e53eee915_icgraph" alt=""/></div>
+<map name="sd_const_8h_a5f06f639581e8f36cbc9d51e53eee915_icgraph" id="sd_const_8h_a5f06f639581e8f36cbc9d51e53eee915_icgraph">
+<area shape="rect" id="node2" href="classsd_entity_extension_media.html#aac62ba87baf7db292f61b883a11b6179" title="sdEntityExtensionMedia\l::removeEvent" alt="" coords="185,5,349,46"/><area shape="rect" id="node3" href="classsd_entity_extension_media.html#a9ba0b7a1faabea9756f32ea7c7b283a2" title="sdEntityExtensionMedia\l::addEvent" alt="" coords="398,5,562,46"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a7e564ec0266d67f518a0b0f80f17e203"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double stringToDouble </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>str</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>utility function that convert a string to a double </p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="sd_const_8h_a7e564ec0266d67f518a0b0f80f17e203_cgraph.png" border="0" usemap="#sd_const_8h_a7e564ec0266d67f518a0b0f80f17e203_cgraph" alt=""/></div>
+<map name="sd_const_8h_a7e564ec0266d67f518a0b0f80f17e203_cgraph" id="sd_const_8h_a7e564ec0266d67f518a0b0f80f17e203_cgraph">
+<area shape="rect" id="node2" href="sd_const_8h.html#ae7ae4ebb27c32496c48bac787cc5bcf7" title="stringToDoubles" alt="" coords="166,5,285,32"/></map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="sd_const_8h_a7e564ec0266d67f518a0b0f80f17e203_icgraph.png" border="0" usemap="#sd_const_8h_a7e564ec0266d67f518a0b0f80f17e203_icgraph" alt=""/></div>
+<map name="sd_const_8h_a7e564ec0266d67f518a0b0f80f17e203_icgraph" id="sd_const_8h_a7e564ec0266d67f518a0b0f80f17e203_icgraph">
+<area shape="rect" id="node2" href="classsd_event.html#ab73641182126973ab01eea80cf1898ea" title="sdEvent::setTime" alt="" coords="195,5,320,32"/><area shape="rect" id="node3" href="classsd_entity_core.html#a7fb536dde5bcdd15bc788e9d8aa85afa" title="sdEntityCore::removeEvent" alt="" coords="165,56,349,83"/><area shape="rect" id="node4" href="classsd_entity_extension_media.html#aac62ba87baf7db292f61b883a11b6179" title="sdEntityExtensionMedia\l::removeEvent" alt="" coords="175,107,339,149"/><area shape="rect" id="node5" href="classsd_entity_extension_media.html#a9ba0b7a1faabea9756f32ea7c7b283a2" title="sdEntityExtensionMedia\l::addEvent" alt="" coords="398,107,562,149"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ae7ae4ebb27c32496c48bac787cc5bcf7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double* stringToDoubles </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>db</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>num</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>utility function that convert a string to doubles </p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="sd_const_8h_ae7ae4ebb27c32496c48bac787cc5bcf7_icgraph.png" border="0" usemap="#sd_const_8h_ae7ae4ebb27c32496c48bac787cc5bcf7_icgraph" alt=""/></div>
+<map name="sd_const_8h_ae7ae4ebb27c32496c48bac787cc5bcf7_icgraph" id="sd_const_8h_ae7ae4ebb27c32496c48bac787cc5bcf7_icgraph">
+<area shape="rect" id="node2" href="sd_const_8h.html#a7e564ec0266d67f518a0b0f80f17e203" title="stringToDouble" alt="" coords="173,56,285,83"/><area shape="rect" id="node3" href="classsd_event.html#ab73641182126973ab01eea80cf1898ea" title="sdEvent::setTime" alt="" coords="363,5,488,32"/><area shape="rect" id="node4" href="classsd_entity_core.html#a7fb536dde5bcdd15bc788e9d8aa85afa" title="sdEntityCore::removeEvent" alt="" coords="333,56,517,83"/><area shape="rect" id="node5" href="classsd_entity_extension_media.html#aac62ba87baf7db292f61b883a11b6179" title="sdEntityExtensionMedia\l::removeEvent" alt="" coords="343,107,507,149"/><area shape="rect" id="node6" href="classsd_entity_extension_media.html#a9ba0b7a1faabea9756f32ea7c7b283a2" title="sdEntityExtensionMedia\l::addEvent" alt="" coords="566,107,730,149"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a78c1010c4b555e73736c0bc524c26111"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int stringToInt </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>str</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>utility function that convert int to a string </p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="sd_const_8h_a78c1010c4b555e73736c0bc524c26111_cgraph.png" border="0" usemap="#sd_const_8h_a78c1010c4b555e73736c0bc524c26111_cgraph" alt=""/></div>
+<map name="sd_const_8h_a78c1010c4b555e73736c0bc524c26111_cgraph" id="sd_const_8h_a78c1010c4b555e73736c0bc524c26111_cgraph">
+<area shape="rect" id="node2" href="sd_const_8h.html#a899dc7e45ae29f557c46c5959373b1ba" title="stringToInts" alt="" coords="139,5,231,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a899dc7e45ae29f557c46c5959373b1ba"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int* stringToInts </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>it</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>num</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>utility function that convert a string to a int </p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="sd_const_8h_a899dc7e45ae29f557c46c5959373b1ba_icgraph.png" border="0" usemap="#sd_const_8h_a899dc7e45ae29f557c46c5959373b1ba_icgraph" alt=""/></div>
+<map name="sd_const_8h_a899dc7e45ae29f557c46c5959373b1ba_icgraph" id="sd_const_8h_a899dc7e45ae29f557c46c5959373b1ba_icgraph">
+<area shape="rect" id="node2" href="sd_const_8h.html#a78c1010c4b555e73736c0bc524c26111" title="stringToInt" alt="" coords="147,5,232,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Aug 30 2013 16:34:10 for spatdiflib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 9 2013 13:45:34 for spatdiflib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

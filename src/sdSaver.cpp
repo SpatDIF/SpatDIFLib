@@ -95,12 +95,12 @@ string sdSaver::XMLFromScene(sdScene *scene){
         
         // 1. pool all events in globalEvent Set
         vector<sdEntityCore*>::iterator it = entityVector.begin();
-        set<sdGlobalEvent, sdGlobalEventCompare> allEventSet;
+        multiset<sdGlobalEvent, sdGlobalEventCompare> allEventSet;
         
         while(it != entityVector.end()){
             sdEntityCore *entity = *it;
-            set<sdEvent*, sdEventCompare> eventSet = entity->getEventSet();
-            set<sdEvent*, sdEventCompare>::iterator iit =eventSet.begin();
+            multiset<sdEvent*, sdEventCompare> eventSet = entity->getEventSet();
+            multiset<sdEvent*, sdEventCompare>::iterator iit =eventSet.begin();
             while(iit != eventSet.end()){
                 sdEvent* event = *iit;
                 sdGlobalEvent globalEvent(event, entity->getName(), entity->getKind());                
@@ -111,7 +111,7 @@ string sdSaver::XMLFromScene(sdScene *scene){
         }
 
         // 2. create string
-        set<sdGlobalEvent, sdGlobalEventCompare>::iterator eit = allEventSet.begin();
+        multiset<sdGlobalEvent, sdGlobalEventCompare>::iterator eit = allEventSet.begin();
         while(eit != allEventSet.end()){
             sdGlobalEvent event = *eit;
             
@@ -144,8 +144,8 @@ string sdSaver::XMLFromScene(sdScene *scene){
 
         while(it != entityVector.end()){
             sdEntityCore *entity = *it;
-            set<sdEvent*, sdEventCompare> eventSet = entity->getEventSet();
-            set<sdEvent*, sdEventCompare>::iterator iit = eventSet.begin();
+            multiset<sdEvent*, sdEventCompare> eventSet = entity->getEventSet();
+            multiset<sdEvent*, sdEventCompare>::iterator iit = eventSet.begin();
 
             while(iit != eventSet.end()){
                 sdEvent* event = *iit;

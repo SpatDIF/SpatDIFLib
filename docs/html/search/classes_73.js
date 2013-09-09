@@ -8,6 +8,7 @@ var searchData=
   ['sdevent',['sdEvent',['../classsd_event.html',1,'']]],
   ['sdeventcompare',['sdEventCompare',['../classsd_event_compare.html',1,'']]],
   ['sdeventcore',['sdEventCore',['../classsd_event_core.html',1,'']]],
+  ['sdeventextensionmedia',['sdEventExtensionMedia',['../classsd_event_extension_media.html',1,'']]],
   ['sdglobalevent',['sdGlobalEvent',['../classsd_global_event.html',1,'']]],
   ['sdglobaleventcompare',['sdGlobalEventCompare',['../classsd_global_event_compare.html',1,'']]],
   ['sdinfo',['sdInfo',['../classsd_info.html',1,'']]],

@@ -91,13 +91,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="sd_scene_8h_source.html">sdScene.h</a>&gt;</code></p>
-<div class="dynheader">
-Collaboration diagram for sdScene:</div>
-<div class="dyncontent">
-<div class="center"><img src="classsd_scene__coll__graph.png" border="0" usemap="#sd_scene_coll__map" alt="Collaboration graph"/></div>
-<map name="sd_scene_coll__map" id="sd_scene_coll__map">
-</map>
-</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -106,11 +99,19 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a962f5309edf7e3866522b1bdc60c68b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae94bf3b24b2719f0721a5aeac016645f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_scene.html#ae94bf3b24b2719f0721a5aeac016645f">sdScene</a> (<a class="el" href="classsd_info.html">sdInfo</a> info)</td></tr>
 <tr class="separator:ae94bf3b24b2719f0721a5aeac016645f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8411e9c3fa696e7a0f24bf073ab8ea1c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_scene.html#a8411e9c3fa696e7a0f24bf073ab8ea1c">sdScene</a> (<a class="el" href="classsd_info.html">sdInfo</a> info, <a class="el" href="sd_const_8h.html#a5036bb0a49706c712b29cff6dd8ec24b">EOrdering</a> ordering)</td></tr>
+<tr class="separator:a8411e9c3fa696e7a0f24bf073ab8ea1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Meta data handing</div></td></tr>
 <tr class="memitem:ac7abc33a62fa0934f00b30bda8a69541"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_scene.html#ac7abc33a62fa0934f00b30bda8a69541">setInfo</a> (<a class="el" href="classsd_info.html">sdInfo</a> info)</td></tr>
 <tr class="separator:ac7abc33a62fa0934f00b30bda8a69541"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a04e558bcf268832b77cfbb576a36778e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classsd_info.html">sdInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_scene.html#a04e558bcf268832b77cfbb576a36778e">getInfo</a> (void)</td></tr>
 <tr class="separator:a04e558bcf268832b77cfbb576a36778e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2eca600ab7627a06ad523485a74ff028"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sd_const_8h.html#a5036bb0a49706c712b29cff6dd8ec24b">EOrdering</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_scene.html#a2eca600ab7627a06ad523485a74ff028">getOrdering</a> (void)</td></tr>
+<tr class="separator:a2eca600ab7627a06ad523485a74ff028"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae75411e394deb65de00d2c2551ed69c7"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_scene.html#ae75411e394deb65de00d2c2551ed69c7">getOrderingAsString</a> (void)</td></tr>
+<tr class="separator:ae75411e394deb65de00d2c2551ed69c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef37a695bc8912995b0167c530cb1793"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_scene.html#aef37a695bc8912995b0167c530cb1793">setOrdering</a> (<a class="el" href="sd_const_8h.html#a5036bb0a49706c712b29cff6dd8ec24b">EOrdering</a> ordering)</td></tr>
+<tr class="separator:aef37a695bc8912995b0167c530cb1793"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Entity handling</div></td></tr>
 <tr class="memitem:a00b8ea89cce0690109649a262eac0911"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classsd_entity_core.html">sdEntityCore</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_scene.html#a00b8ea89cce0690109649a262eac0911">getEntity</a> (string name)</td></tr>
 <tr class="separator:a00b8ea89cce0690109649a262eac0911"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -127,10 +128,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a64b8f2e46c2800ea7b6c817cc85b2594"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_scene.html#a64b8f2e46c2800ea7b6c817cc85b2594">removeAllEntities</a> (void)</td></tr>
 <tr class="separator:a64b8f2e46c2800ea7b6c817cc85b2594"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Value handling</div></td></tr>
-<tr class="memitem:a3d794886e19997e5de6ea6e99109383b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_scene.html#a3d794886e19997e5de6ea6e99109383b">setValue</a> (string name, float time, <a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> descriptor, void *value)</td></tr>
-<tr class="separator:a3d794886e19997e5de6ea6e99109383b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c75942623e7bdd83ec1e53148df4064"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_scene.html#a4c75942623e7bdd83ec1e53148df4064">getValue</a> (string name, float time, <a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> descriptor)</td></tr>
-<tr class="separator:a4c75942623e7bdd83ec1e53148df4064"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4356859900326d8770de796d37640ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_scene.html#aa4356859900326d8770de796d37640ea">setValue</a> (string name, double time, <a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> descriptor, void *value)</td></tr>
+<tr class="separator:aa4356859900326d8770de796d37640ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae54c0a8fdb412b4d210ebef25a23c6a3"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_scene.html#ae54c0a8fdb412b4d210ebef25a23c6a3">getValue</a> (string name, double time, <a class="el" href="sd_const_8h.html#aecbf4e48e6db27aeea9da915a4e20c17">EDescriptor</a> descriptor)</td></tr>
+<tr class="separator:ae54c0a8fdb412b4d210ebef25a23c6a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Extension handling</div></td></tr>
 <tr class="memitem:a6d977aed4bab194b7ab955d24a436a05"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="sd_const_8h.html#af51df71fa9965445e8824df5a78ceae1">EExtension</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsd_scene.html#a6d977aed4bab194b7ab955d24a436a05">getActivatedExtensionVector</a> (void)</td></tr>
 <tr class="separator:a6d977aed4bab194b7ab955d24a436a05"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -203,6 +204,41 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a8411e9c3fa696e7a0f24bf073ab8ea1c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">sdScene::sdScene </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classsd_info.html">sdInfo</a>&#160;</td>
+          <td class="paramname"><em>info</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="sd_const_8h.html#a5036bb0a49706c712b29cff6dd8ec24b">EOrdering</a>&#160;</td>
+          <td class="paramname"><em>ordering</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>constructor with <a class="el" href="classsd_info.html">sdInfo</a> and ordering </p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="ab7636b274d6194fad189d8890e9336eb"></a>
 <div class="memitem">
@@ -235,6 +271,24 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classsd_scene_ab7636b274d6194fad189d8890e9336eb_cgraph.png" border="0" usemap="#classsd_scene_ab7636b274d6194fad189d8890e9336eb_cgraph" alt=""/></div>
+<map name="classsd_scene_ab7636b274d6194fad189d8890e9336eb_cgraph" id="classsd_scene_ab7636b274d6194fad189d8890e9336eb_cgraph">
+<area shape="rect" id="node2" href="classsd_entity_core.html#a0e23dde45e5c231e8d8b524926b49b05" title="sdEntityCore::addExtension" alt="" coords="192,5,379,32"/></map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classsd_scene_ab7636b274d6194fad189d8890e9336eb_icgraph.png" border="0" usemap="#classsd_scene_ab7636b274d6194fad189d8890e9336eb_icgraph" alt=""/></div>
+<map name="classsd_scene_ab7636b274d6194fad189d8890e9336eb_icgraph" id="classsd_scene_ab7636b274d6194fad189d8890e9336eb_icgraph">
+<area shape="rect" id="node2" href="classsd_loader.html#a90eb4d4a140652fc18f7bc0551870020" title="sdLoader::sceneFromJSON" alt="" coords="192,5,379,32"/></map>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="ad5bc6a91ac1e28bf9182ae00ef7d1bbd"></a>
@@ -258,6 +312,15 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classsd_scene_ad5bc6a91ac1e28bf9182ae00ef7d1bbd_cgraph.png" border="0" usemap="#classsd_scene_ad5bc6a91ac1e28bf9182ae00ef7d1bbd_cgraph" alt=""/></div>
+<map name="classsd_scene_ad5bc6a91ac1e28bf9182ae00ef7d1bbd_cgraph" id="classsd_scene_ad5bc6a91ac1e28bf9182ae00ef7d1bbd_cgraph">
+<area shape="rect" id="node2" href="classsd_entity_core.html#a0e23dde45e5c231e8d8b524926b49b05" title="sdEntityCore::addExtension" alt="" coords="216,5,403,32"/></map>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="a1e61037274d374f8ab33e347fde8b65b"></a>
@@ -280,7 +343,7 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classsd_scene_a1e61037274d374f8ab33e347fde8b65b_cgraph.png" border="0" usemap="#classsd_scene_a1e61037274d374f8ab33e347fde8b65b_cgraph" alt=""/></div>
 <map name="classsd_scene_a1e61037274d374f8ab33e347fde8b65b_cgraph" id="classsd_scene_a1e61037274d374f8ab33e347fde8b65b_cgraph">
-<area shape="rect" id="node2" href="classsd_event.html#a0b6810faec49cbc26bbfd300e307c079" title="sdEvent::getDescriptorAs\lString" alt="" coords="169,5,341,46"/><area shape="rect" id="node3" href="classsd_event.html#a553bef7960cf0391f7e01990878aa416" title="sdEvent::getDescriptor" alt="" coords="176,71,333,97"/><area shape="rect" id="node4" href="classsd_event.html#adba2ca29642bd8d730dfdc3acadeeb00" title="sdEvent::getValue" alt="" coords="189,121,320,148"/><area shape="rect" id="node5" href="classsd_event.html#af53aac6620476deff34a2b87a2939144" title="sdEvent::getTime" alt="" coords="192,172,317,199"/></map>
+<area shape="rect" id="node2" href="classsd_event.html#a43dc0ffb37fdf843cc8bd3888dd7289f" title="sdEvent::getTimeAsString" alt="" coords="173,5,349,32"/><area shape="rect" id="node5" href="classsd_event_core.html#a01cc217ba7619c011978356980fd2381" title="sdEventCore::getDescriptor\lAsString" alt="" coords="169,57,354,98"/><area shape="rect" id="node6" href="classsd_event_core.html#a90bb7c69858b3274ec6abc0c86ff818c" title="sdEventCore::getValueAsString" alt="" coords="403,89,613,116"/><area shape="rect" id="node7" href="classsd_entity_extension.html#a5d2edcbe47d637441fa1e975c2c00f70" title="sdEntityExtension::\lgetExtensionNameAsString" alt="" coords="169,174,354,215"/><area shape="rect" id="node8" href="classsd_entity.html#ac76388a648acbe06328d5e6ae8e4847e" title="sdEntity::getEventSet" alt="" coords="187,240,336,267"/><area shape="rect" id="node9" href="classsd_event.html#a0b6810faec49cbc26bbfd300e307c079" title="sdEvent::getDescriptorAs\lString" alt="" coords="175,291,347,333"/><area shape="rect" id="node10" href="classsd_event.html#a2941bfbdbb11cb95d16bcbc50c19a161" title="sdEvent::getValueAsString" alt="" coords="171,357,351,384"/><area shape="rect" id="node3" href="sd_const_8h.html#af6ea173327acc9bc1ed456517a81dc9f" title="doubleToString" alt="" coords="452,23,564,49"/><area shape="rect" id="node4" href="sd_const_8h.html#a2e4342bd50c4c585f85d074a765b4550" title="doublesToString" alt="" coords="662,56,781,83"/></map>
 </div>
 </p>
 
@@ -333,6 +396,15 @@ Here is the call graph for this function:</div>
 </div>
 </p>
 
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classsd_scene_a00b8ea89cce0690109649a262eac0911_icgraph.png" border="0" usemap="#classsd_scene_a00b8ea89cce0690109649a262eac0911_icgraph" alt=""/></div>
+<map name="classsd_scene_a00b8ea89cce0690109649a262eac0911_icgraph" id="classsd_scene_a00b8ea89cce0690109649a262eac0911_icgraph">
+<area shape="rect" id="node2" href="classsd_loader.html#a90eb4d4a140652fc18f7bc0551870020" title="sdLoader::sceneFromJSON" alt="" coords="187,5,373,32"/></map>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="abc96077751c152f5f8cb37846a80b676"></a>
@@ -363,7 +435,7 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classsd_scene_abc96077751c152f5f8cb37846a80b676_icgraph.png" border="0" usemap="#classsd_scene_abc96077751c152f5f8cb37846a80b676_icgraph" alt=""/></div>
 <map name="classsd_scene_abc96077751c152f5f8cb37846a80b676_icgraph" id="classsd_scene_abc96077751c152f5f8cb37846a80b676_icgraph">
-<area shape="rect" id="node2" href="classsd_saver.html#a5c400fd4c94da51ac1bf2aa82e6e2885" title="sdSaver::XMLFromScene" alt="" coords="227,5,402,32"/></map>
+<area shape="rect" id="node2" href="classsd_saver.html#a2095f1dd3d75b3f5d5f9ae323fa0f971" title="sdSaver::XMLFromScene" alt="" coords="227,5,402,32"/></map>
 </div>
 </p>
 
@@ -403,7 +475,7 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classsd_scene_a04e558bcf268832b77cfbb576a36778e_icgraph.png" border="0" usemap="#classsd_scene_a04e558bcf268832b77cfbb576a36778e_icgraph" alt=""/></div>
 <map name="classsd_scene_a04e558bcf268832b77cfbb576a36778e_icgraph" id="classsd_scene_a04e558bcf268832b77cfbb576a36778e_icgraph">
-<area shape="rect" id="node2" href="classsd_saver.html#a5c400fd4c94da51ac1bf2aa82e6e2885" title="sdSaver::XMLFromScene" alt="" coords="177,5,351,32"/></map>
+<area shape="rect" id="node2" href="classsd_saver.html#a2095f1dd3d75b3f5d5f9ae323fa0f971" title="sdSaver::XMLFromScene" alt="" coords="177,5,351,32"/></map>
 </div>
 </p>
 
@@ -443,7 +515,75 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a class="anchor" id="a4c75942623e7bdd83ec1e53148df4064"></a>
+<a class="anchor" id="a2eca600ab7627a06ad523485a74ff028"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="sd_const_8h.html#a5036bb0a49706c712b29cff6dd8ec24b">EOrdering</a> sdScene::getOrdering </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname">)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>gets an enum ordering </p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classsd_scene_a2eca600ab7627a06ad523485a74ff028_icgraph.png" border="0" usemap="#classsd_scene_a2eca600ab7627a06ad523485a74ff028_icgraph" alt=""/></div>
+<map name="classsd_scene_a2eca600ab7627a06ad523485a74ff028_icgraph" id="classsd_scene_a2eca600ab7627a06ad523485a74ff028_icgraph">
+<area shape="rect" id="node2" href="classsd_saver.html#a2095f1dd3d75b3f5d5f9ae323fa0f971" title="sdSaver::XMLFromScene" alt="" coords="206,5,381,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ae75411e394deb65de00d2c2551ed69c7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string sdScene::getOrderingAsString </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname">)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>gets ordering as String </p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classsd_scene_ae75411e394deb65de00d2c2551ed69c7_icgraph.png" border="0" usemap="#classsd_scene_ae75411e394deb65de00d2c2551ed69c7_icgraph" alt=""/></div>
+<map name="classsd_scene_ae75411e394deb65de00d2c2551ed69c7_icgraph" id="classsd_scene_ae75411e394deb65de00d2c2551ed69c7_icgraph">
+<area shape="rect" id="node2" href="classsd_saver.html#a2095f1dd3d75b3f5d5f9ae323fa0f971" title="sdSaver::XMLFromScene" alt="" coords="257,5,431,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ae54c0a8fdb412b4d210ebef25a23c6a3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -456,7 +596,7 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">float&#160;</td>
+          <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>time</em>, </td>
         </tr>
         <tr>
@@ -485,9 +625,9 @@ Here is the caller graph for this function:</div>
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="classsd_scene_a4c75942623e7bdd83ec1e53148df4064_cgraph.png" border="0" usemap="#classsd_scene_a4c75942623e7bdd83ec1e53148df4064_cgraph" alt=""/></div>
-<map name="classsd_scene_a4c75942623e7bdd83ec1e53148df4064_cgraph" id="classsd_scene_a4c75942623e7bdd83ec1e53148df4064_cgraph">
-<area shape="rect" id="node2" href="classsd_entity_core.html#ad30e752d61061bf6c7b204d6df733074" title="sdEntityCore::getValue" alt="" coords="187,5,346,32"/><area shape="rect" id="node3" href="classsd_event.html#adba2ca29642bd8d730dfdc3acadeeb00" title="sdEvent::getValue" alt="" coords="395,5,525,32"/></map>
+<div class="center"><img src="classsd_scene_ae54c0a8fdb412b4d210ebef25a23c6a3_cgraph.png" border="0" usemap="#classsd_scene_ae54c0a8fdb412b4d210ebef25a23c6a3_cgraph" alt=""/></div>
+<map name="classsd_scene_ae54c0a8fdb412b4d210ebef25a23c6a3_cgraph" id="classsd_scene_ae54c0a8fdb412b4d210ebef25a23c6a3_cgraph">
+<area shape="rect" id="node2" href="classsd_entity_core.html#a4cacb54fb3c38a23232ca89672b76c24" title="sdEntityCore::getValue" alt="" coords="187,5,346,32"/><area shape="rect" id="node3" href="classsd_entity.html#a10bfcf57477433b546f92b4f75a7c74e" title="sdEntity::getValue" alt="" coords="395,5,525,32"/><area shape="rect" id="node4" href="classsd_event.html#adba2ca29642bd8d730dfdc3acadeeb00" title="sdEvent::getValue" alt="" coords="573,5,704,32"/></map>
 </div>
 </p>
 
@@ -625,9 +765,49 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classsd_scene_ac7abc33a62fa0934f00b30bda8a69541_icgraph.png" border="0" usemap="#classsd_scene_ac7abc33a62fa0934f00b30bda8a69541_icgraph" alt=""/></div>
+<map name="classsd_scene_ac7abc33a62fa0934f00b30bda8a69541_icgraph" id="classsd_scene_ac7abc33a62fa0934f00b30bda8a69541_icgraph">
+<area shape="rect" id="node2" href="classsd_loader.html#a90eb4d4a140652fc18f7bc0551870020" title="sdLoader::sceneFromJSON" alt="" coords="176,5,363,32"/></map>
+</div>
+</p>
+
 </div>
 </div>
-<a class="anchor" id="a3d794886e19997e5de6ea6e99109383b"></a>
+<a class="anchor" id="aef37a695bc8912995b0167c530cb1793"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sdScene::setOrdering </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="sd_const_8h.html#a5036bb0a49706c712b29cff6dd8ec24b">EOrdering</a>&#160;</td>
+          <td class="paramname"><em>ordering</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>sets an enum of ordering </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ordering</td><td>the ordering enum declared in <a class="el" href="sd_const_8h.html">sdConst.h</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aa4356859900326d8770de796d37640ea"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -640,7 +820,7 @@ Here is the call graph for this function:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">float&#160;</td>
+          <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>time</em>, </td>
         </tr>
         <tr>
@@ -676,9 +856,9 @@ Here is the call graph for this function:</div>
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="classsd_scene_a3d794886e19997e5de6ea6e99109383b_cgraph.png" border="0" usemap="#classsd_scene_a3d794886e19997e5de6ea6e99109383b_cgraph" alt=""/></div>
-<map name="classsd_scene_a3d794886e19997e5de6ea6e99109383b_cgraph" id="classsd_scene_a3d794886e19997e5de6ea6e99109383b_cgraph">
-<area shape="rect" id="node2" href="classsd_entity_core.html#af22d276d2bca91464ad874b47016e24a" title="sdEntityCore::addEvent" alt="" coords="187,5,349,32"/></map>
+<div class="center"><img src="classsd_scene_aa4356859900326d8770de796d37640ea_cgraph.png" border="0" usemap="#classsd_scene_aa4356859900326d8770de796d37640ea_cgraph" alt=""/></div>
+<map name="classsd_scene_aa4356859900326d8770de796d37640ea_cgraph" id="classsd_scene_aa4356859900326d8770de796d37640ea_cgraph">
+<area shape="rect" id="node2" href="classsd_entity_core.html#a4a2537e1b5b8c17bac298a37b306ae87" title="sdEntityCore::addEvent" alt="" coords="187,5,349,32"/></map>
 </div>
 </p>
 
@@ -691,7 +871,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Aug 30 2013 16:34:11 for spatdiflib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 9 2013 13:45:35 for spatdiflib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

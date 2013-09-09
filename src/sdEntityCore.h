@@ -17,7 +17,6 @@ using namespace std;
 /*!
  this class stores event info (i.e. time, descriptor and value) of sdEntityCore. 
  */
-
 class sdEventCore: public sdEvent{
     
     /*! only sdEntityCore can make an instance of this class */
@@ -41,10 +40,8 @@ public:
     /*! overrided method. get descriptor as string e.g. "position" */
     string getDescriptorAsString(void);
     
-    
     /*! overrided method. get value as string e.g. "0.3 0.5 0.2"*/
     string getValueAsString(void);
-    
     
 private:
     /*! 
@@ -60,11 +57,7 @@ private:
     /*! same as above but you can give all arguments with strings */
     bool setValue(string descriptor, string value);
     
-    /*!
-     @}
-     */
-    
-    
+    /*! @} */
 };
 
 class sdScene;
@@ -117,7 +110,6 @@ private:
         sdEntityCore::type = type;
     };
    
-    
 public:
     
     /*!
@@ -164,26 +156,22 @@ public:
     /*! removing extension from the entity*/
     void removeExtension(EExtension extension);
 
-    /*!
-     @}
-     */
+    /*! @} */
     
     /*! @name Utilities
-     @{
-     */
+     @{ */
+
     /*! this class provides static functions for conversion */
     static const EDescriptor stringToDescriptor(string str);
     static const string descriptorToString(EDescriptor descriptor);
-    /*!
-     @}
+    
+    /*! @} */
      
     /*!overrided function*/
     void* getValue(double time, EDescriptor descriptor);
 
     /*!static function for sorting. employed by sdSaver*/
-    static bool sortAlphabetically( sdEntityCore *leftEntity,  sdEntityCore *rightEntity);
-    
-
+    static bool sortAlphabetically( sdEntityCore *leftEntity, sdEntityCore *rightEntity);
 };
 
 
@@ -203,7 +191,6 @@ inline EType sdEntityCore::getType(void){
 inline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){
     return extensionVector;
 }
-
 
 inline bool sdEntityCore::sortAlphabetically( sdEntityCore *leftEntity,  sdEntityCore *rightEntity){
     return leftEntity->getName().compare(rightEntity->getName()) ? false:true;

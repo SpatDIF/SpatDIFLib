@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['name',['name',['../classsd_entity_extension.html#a33bcbbfbc4dfa946a0bf017f8af3e93f',1,'sdEntityExtension']]]
+  ['numberofrelevantdescriptors',['numberOfRelevantDescriptors',['../classsd_entity_extension_media.html#a27bcad95894f66d3d5cb5e26c74f539b',1,'sdEntityExtensionMedia']]]
 ];
