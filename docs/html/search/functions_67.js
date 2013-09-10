@@ -13,7 +13,7 @@ var searchData=
   ['getentityname',['getEntityName',['../classsd_global_event.html#a6003837be549e8728c7207255f0455fb',1,'sdGlobalEvent']]],
   ['getentityvector',['getEntityVector',['../classsd_scene.html#abc96077751c152f5f8cb37846a80b676',1,'sdScene']]],
   ['getevent',['getEvent',['../classsd_entity.html#ac114c94bfc707b913ca8c8fa40cd1dd3',1,'sdEntity::getEvent()'],['../classsd_global_event.html#adaed6293abb3b24fc34705659114a2c6',1,'sdGlobalEvent::getEvent()']]],
-  ['geteventset',['getEventSet',['../classsd_entity.html#ac76388a648acbe06328d5e6ae8e4847e',1,'sdEntity::getEventSet(void)'],['../classsd_entity.html#a1416e04f3bb9920c78fefed6277980da',1,'sdEntity::getEventSet(double start, double end)'],['../classsd_entity.html#a257fb9e4c04aba79ae1f5e90b4eabc2f',1,'sdEntity::getEventSet(double start, double end, EDescriptor descriptor)']]],
+  ['geteventset',['getEventSet',['../classsd_entity.html#acc339121114228be8609b9055b080a28',1,'sdEntity::getEventSet(void)'],['../classsd_entity.html#a92c4247ed632e32120cb0ce960dceefe',1,'sdEntity::getEventSet(double start, double end)'],['../classsd_entity.html#a66f804b6392564d7f6589a60ba8ae525',1,'sdEntity::getEventSet(double start, double end, EDescriptor descriptor)']]],
   ['getextensionnameasstring',['getExtensionNameAsString',['../classsd_entity_extension.html#a5d2edcbe47d637441fa1e975c2c00f70',1,'sdEntityExtension::getExtensionNameAsString()'],['../classsd_entity_extension_media.html#a37b52490ee53dfdd825c95e5679a5055',1,'sdEntityExtensionMedia::getExtensionNameAsString()']]],
   ['getextensionvector',['getExtensionVector',['../classsd_entity_core.html#a856a6d3f1f7bf294875b208db5e2fc7e',1,'sdEntityCore']]],
   ['gethost',['getHost',['../classsd_info.html#a7c613f208d9b0f3f742900821cb96f2b',1,'sdInfo']]],

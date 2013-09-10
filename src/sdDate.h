@@ -165,7 +165,6 @@ inline string sdDate::getDateAsString(void){
     return os.str();
 }
 
-// getters
 inline unsigned short sdDate::getYear(void){
     return year;
 }

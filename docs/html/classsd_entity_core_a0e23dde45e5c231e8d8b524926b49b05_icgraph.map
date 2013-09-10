@@ -1,0 +1,5 @@
+<map id="sdEntityCore::addExtension" name="sdEntityCore::addExtension">
+<area shape="rect" id="node2" href="$classsd_scene.html#ab7636b274d6194fad189d8890e9336eb" title="sdScene::addEntity" alt="" coords="253,5,390,32"/>
+<area shape="rect" id="node4" href="$classsd_scene.html#ad5bc6a91ac1e28bf9182ae00ef7d1bbd" title="sdScene::addExtension" alt="" coords="240,56,403,83"/>
+<area shape="rect" id="node3" href="$classsd_loader.html#a90eb4d4a140652fc18f7bc0551870020" title="sdLoader::sceneFromJSON" alt="" coords="451,5,637,32"/>
+</map>

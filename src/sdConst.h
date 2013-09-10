@@ -126,6 +126,9 @@ inline int stringToInt(string str){
     return it;
 }
 
+/*!
+ utility function that convert a string to a descriptor. 
+ */
 inline const EDescriptor stringToDescriptor(string str, const string *ds, const EDescriptor *dc, const int num){
     for(int i = 0; i<num; i++ ){
         if(ds[i] == str)
@@ -134,6 +137,9 @@ inline const EDescriptor stringToDescriptor(string str, const string *ds, const 
     return SD_ERROR;
 }
 
+/*!
+ utility function that convert a descriptor to a string.
+ */
 inline const string descriptorToString(EDescriptor descriptor, const string *ds, const EDescriptor *dc, const int num){
     for(int i = 0; i<num; i++ ){
         if(dc[i] == descriptor)

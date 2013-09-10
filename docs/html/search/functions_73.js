@@ -4,8 +4,6 @@ var searchData=
   ['scenefromxml',['sceneFromXML',['../classsd_loader.html#ab3d7cf4919f50673ec7f9649a9be09b1',1,'sdLoader']]],
   ['scenefromyaml',['sceneFromYAML',['../classsd_loader.html#a24284eaae62db9e18ae7866c5f2704f4',1,'sdLoader']]],
   ['sddate',['sdDate',['../classsd_date.html#a2a3837141d6bbc2f229b8d65fbe5f711',1,'sdDate::sdDate(bool autoInit=true)'],['../classsd_date.html#ae35223603f3187bd1528c5d9bebc5657',1,'sdDate::sdDate(unsigned short year, unsigned short month, unsigned short day)'],['../classsd_date.html#ae47e330a34bd908d1b0860f72351665c',1,'sdDate::sdDate(string dateString)']]],
-  ['sdentity',['sdEntity',['../classsd_entity.html#a1f5b664b74435796d27ef559171e370a',1,'sdEntity']]],
-  ['sdevent',['sdEvent',['../classsd_event.html#ac608ecec6aea59de835cabdfbb81876f',1,'sdEvent']]],
   ['sdeventcore',['sdEventCore',['../classsd_event_core.html#ae1680c34d08f61bcb1c39818583b2bfe',1,'sdEventCore::sdEventCore(double time, EDescriptor descriptor, void *value)'],['../classsd_event_core.html#af7abb109e0c02cbcf8d92ecb187d9a6f',1,'sdEventCore::sdEventCore(string time, string descriptor, string value)']]],
   ['sdeventextensionmedia',['sdEventExtensionMedia',['../classsd_event_extension_media.html#a36f303f452b20259857ea752de9740f5',1,'sdEventExtensionMedia::sdEventExtensionMedia(double time, EDescriptor descriptor, void *value)'],['../classsd_event_extension_media.html#a80bdb45a7ce9aa6e3a3bf8c667dd0bdc',1,'sdEventExtensionMedia::sdEventExtensionMedia(string time, string descriptor, string value)']]],
   ['sdglobalevent',['sdGlobalEvent',['../classsd_global_event.html#a51d485074d373b0fbcf5b5660ca7c5f6',1,'sdGlobalEvent']]],

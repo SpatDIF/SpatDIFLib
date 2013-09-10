@@ -1,0 +1,6 @@
+<map id="stringToDouble" name="stringToDouble">
+<area shape="rect" id="node2" href="$classsd_event.html#ab73641182126973ab01eea80cf1898ea" title="sdEvent::setTime" alt="" coords="195,5,320,32"/>
+<area shape="rect" id="node3" href="$classsd_entity_core.html#a7fb536dde5bcdd15bc788e9d8aa85afa" title="sdEntityCore::removeEvent" alt="" coords="165,56,349,83"/>
+<area shape="rect" id="node4" href="$classsd_entity_extension_media.html#aac62ba87baf7db292f61b883a11b6179" title="sdEntityExtensionMedia\l::removeEvent" alt="" coords="175,107,339,149"/>
+<area shape="rect" id="node5" href="$classsd_entity_extension_media.html#a9ba0b7a1faabea9756f32ea7c7b283a2" title="sdEntityExtensionMedia\l::addEvent" alt="" coords="398,107,562,149"/>
+</map>
