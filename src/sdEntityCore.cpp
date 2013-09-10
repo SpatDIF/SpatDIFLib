@@ -46,18 +46,10 @@ sdEventCore::~sdEventCore(){
 }
 
 string sdEventCore::getDescriptorAsString(void){
-    string str;
-    switch(descriptor){
-        case SD_PRESENT:
-            str = string("present");break;
-        case SD_POSITION:
-            str = string("position");break;
-        case SD_ORIENTATION:
-            str =string("orientation");break;
-        default:
-            break;
-    }
-    return str;
+    return descriptorToString(descriptor,
+                              sdEntityCore::coreDescriptorStrings,
+                              sdEntityCore::coreDescriptors,
+                              sdEntityCore::numberOfCoreDescriptors);
 }
 
 string sdEventCore::getValueAsString(void){
@@ -115,12 +107,12 @@ bool sdEventCore::setValue(EDescriptor descriptor, void* value){
     return true;
 }
 
-bool sdEventCore::setValue(string descriptor, string value){    
+bool sdEventCore::setValue(string descriptor, string value){
     // set descriptor
-    if(descriptor == "present") sdEventCore::descriptor = SD_PRESENT;
-    else if(descriptor == "position") sdEventCore::descriptor = SD_POSITION;
-    else if(descriptor == "orientation") sdEventCore::descriptor = SD_ORIENTATION;
-    else return false;
+    sdEventCore::descriptor = stringToDescriptor(descriptor,
+                                                 sdEntityCore::coreDescriptorStrings,
+                                                 sdEntityCore::coreDescriptors,
+                                                 sdEntityCore::numberOfCoreDescriptors);
     
     // set value
     string str;
@@ -310,7 +302,6 @@ sdEntityExtension* sdEntityCore::addExtension(EExtension extension){
             for(int i = 0; i < sdEntityExtensionMedia::numberOfRelevantDescriptors; i++){
                 sdRedirector rd;
                 rd.descriptor = sdEntityExtensionMedia::relevantDescriptors[i];
-                rd.extensionName = SD_MEDIA;
                 rd.responsibleExtension = static_cast<sdEntityExtension*>(mediaExtension);
                 redirectorVector.push_back(rd);
             }

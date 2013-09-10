@@ -75,16 +75,11 @@ class sdEntityCore: public sdEntity{
     friend class sdScene; // only sdScene can instantiate this class
     
 private:
-    const static int numberOfCoreDescriptors;
-    const static EDescriptor coreDescriptors[];
-    const static string coreDescriptorStrings[];
-    static bool isCoreDescriptor(EDescriptor descriptor);
-    static bool isCoreDescriptor(string descriptor);
+
     
     typedef struct{
         EDescriptor descriptor;
         string descriptorString;
-        EExtension extensionName;
         sdEntityExtension* responsibleExtension;
     } sdRedirector;
     
@@ -111,6 +106,12 @@ private:
     };
    
 public:
+    
+    const static int numberOfCoreDescriptors;
+    const static EDescriptor coreDescriptors[];
+    const static string coreDescriptorStrings[];
+    static bool isCoreDescriptor(EDescriptor descriptor);
+    static bool isCoreDescriptor(string descriptor);
     
     /*!
      @name Setter/Getter
