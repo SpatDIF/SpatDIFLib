@@ -21,8 +21,10 @@ all:
 
 Darwin: tinyxml2.o libjson.a libspatdif.dylib
 	cp libspatdif.dylib ../examples
+	cd ../examples; make 
 
 Linux: tinyxml2.o libjson.a libspatdif.so
+	cd ../examples; make 
 
 tinyxml2.o : $(TXML_PATH)/$(TXML_FILES)
 	$(CC) -c $(TXML_PATH)/$(TXML_FILE)	
@@ -36,7 +38,6 @@ libspatdif.so: $(FILES)
 
 libspatdif.dylib: $(FILES)
 	$(CC) $(CFLAGS) -o $@ -dynamiclib $(LIBS) $(INCLUDE_PATH) tinyxml2.o libjson.a $(FILES)
-	
 
 install:
 	-@make install_$(UNAME)
@@ -47,7 +48,14 @@ install_Linux:
 install_Darwin:
 	cp libspatdif.dylib $(INSTALL_PATH)
 
-clean:
-	rm *.dylib *.so *.o *.a
-	make clean -C $(JSON_PATH) 
 
+clean:	
+	-@make clean_$(UNAME)
+
+clean_Linux:
+	rm *.so *.o *.a
+	cd ../examples; make clean
+
+clean_Darwin:
+	rm *.dylib *.o *.a
+	cd ../examples; make clean
