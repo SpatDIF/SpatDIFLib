@@ -12,7 +12,7 @@ How to compile:
 execute the following commands from your terminal.
 
 > cd src
-> cd make
+> make
 
 The makefile detects the OS you are using, compiles and generates a shared library named 
 spatdiflib.dynlib on MacOS or spatdiflib.so on Linux, subsequently compiles the sources in the example folder.
