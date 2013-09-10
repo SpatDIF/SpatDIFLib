@@ -156,15 +156,7 @@ public:
     /*! removing extension from the entity*/
     void removeExtension(EExtension extension);
 
-    /*! @} */
-    
-    /*! @name Utilities
-     @{ */
-
-    /*! this class provides static functions for conversion */
-    static const EDescriptor stringToDescriptor(string str);
-    static const string descriptorToString(EDescriptor descriptor);
-    
+       
     /*! @} */
      
     /*!overrided function*/

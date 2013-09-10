@@ -253,9 +253,14 @@ inline int sdEntity::getNumberOfEvents(){
 }
 
 inline void sdEntity::removeEvent(double time, EDescriptor descriptor){
-    sdEvent* event = getEvent(time, descriptor);
-    if(event){
-        eventSet.erase(event);
+    multiset<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
+    while(it != eventSet.end()){
+        sdEvent* event = *it;
+        if((event->getTime() == time) && (event->getDescriptor() == descriptor)){
+            eventSet.erase(it++);
+        }else{
+            ++it;
+        }
     }
 }
 

@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <string>
+#include "sdConst.h"
 #include "sdEntityCore.h"
 #include "sdEntityExtensionMedia.h"
 
@@ -247,26 +248,40 @@ sdEvent* sdEntityCore::addEvent(string time, string descriptor, string value){
 }
 
 void sdEntityCore::removeEvent(double time, EDescriptor descriptor){
-    multiset <sdEvent*>::iterator it = eventSet.begin();
-    while(it != eventSet.end()) {
-        sdEvent* event = *it;
-        if(event->getTime() == time){
-            if(event->getDescriptor() == descriptor)
-            {
-                eventSet.erase(it++); // very important incrementor
+    // if core descriptor
+    if(isCoreDescriptor(descriptor)){
+        multiset <sdEvent*>::iterator it = eventSet.begin();
+        while(it != eventSet.end()) {
+            sdEvent* event = *it;
+            if(event->getTime() == time){
+                if(event->getDescriptor() == descriptor)
+                {
+                    eventSet.erase(it++); // very important incrementor
+                }
             }
+            it++;
         }
-        it++;
+    }else{
+        // if extended descriptor
+        vector <sdRedirector>::iterator it =   redirectorVector.begin();
+        while(it != redirectorVector.end()){
+            sdRedirector rd = *it;
+            if(rd.descriptor == descriptor){
+                rd.responsibleExtension->removeEvent(time, descriptor);
+            }
+            it++;
+        }
+        
     }
 }
 
 void sdEntityCore::removeEvent(string time, string descriptor){
-    EDescriptor des;
-    if(descriptor == "present") des = SD_PRESENT;
-    else if(descriptor == "position") des = SD_POSITION;
-    else if(descriptor == "orientation") des = SD_ORIENTATION;
-    
-    removeEvent(stringToDouble(time), des);
+    // convert and call the function above
+    removeEvent(stringToDouble(time),
+                stringToDescriptor(descriptor,
+                                   sdEntityCore::coreDescriptorStrings,
+                                   sdEntityCore::coreDescriptors,
+                                   sdEntityCore::numberOfCoreDescriptors ));
 }
 
 void* sdEntityCore::getValue(double time, EDescriptor descriptor){

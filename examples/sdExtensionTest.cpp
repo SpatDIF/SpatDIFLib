@@ -43,9 +43,15 @@ int main(void){
     entityOne->addEvent(5.3, SD_MEDIA_ID, static_cast<void*>(&string("sound source1")));
     entityOne->addEvent(5.0, SD_MEDIA_TYPE, static_cast<void*>(&string("stream")));
     entityOne->addEvent(5.5, SD_MEDIA_LOCATION, static_cast<void*>(&string("mySoundFile.wav")));
-    
 
     // dump the scene
+    scene.dump();
+    
+    // remove two events
+    entityOne->removeEvent(5.2, SD_MEDIA_TIME_OFFSET);
+    entityOne->removeEvent(5.0, SD_MEDIA_GAIN);
+
+    // check
     scene.dump();
     
     // ask the entity about the extension descriptor
