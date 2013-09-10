@@ -57,5 +57,10 @@ int main(void){
     // ask the entity about the extension descriptor
     cout<< "entityOne media:location at 4.0 " << *static_cast<string*>(entityOne->getValue(4.0, SD_MEDIA_LOCATION)) << endl;
     
+    // remove the media extension
+    entityOne->removeExtension(SD_MEDIA);
+    
+    // check again
+    scene.dump();
     return 0;
 }

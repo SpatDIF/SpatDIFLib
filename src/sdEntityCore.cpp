@@ -326,12 +326,11 @@ sdEntityExtension* sdEntityCore::addExtension(EExtension extension){
 
 void sdEntityCore::removeExtension(EExtension extension){
 
-    vector<sdRedirector>::iterator it= redirectorVector.begin();
-    while(it != redirectorVector.end()){
-        sdRedirector rd = *it;
-        if(rd.extensionName = extension){
-            delete rd.responsibleExtension;
-            it = redirectorVector.erase(it);
+    vector <sdEntityExtension*>::iterator it =  extensionVector.begin();
+    while(it != extensionVector.end()){
+        if((*it)->getExtensionName() == extension){
+            extensionVector.erase(it);
+            return;
         }
         it++;
     }

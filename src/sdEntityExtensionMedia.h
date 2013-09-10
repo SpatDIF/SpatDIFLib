@@ -96,15 +96,17 @@ public:
      @}
     */
     
+    EExtension getExtensionName(void);
     string getExtensionNameAsString(void);
     
 };
 
+inline EExtension sdEntityExtensionMedia::getExtensionName(void){
+    return extensionName;
+}
 
 inline string sdEntityExtensionMedia::getExtensionNameAsString(void){
     return extensionNameAsString;
 }
-
-
 
 #endif

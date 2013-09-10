@@ -143,6 +143,11 @@ public:
     /*! same as above but you can specify arguments with string */
     sdEvent* addEvent(string time, string descriptor, string value);
 
+    /*! remove specified event
+     @param time time of the event
+     @param descriptor desciprot of the event
+     */
+    
     void removeEvent(double time, EDescriptor descriptor);
     void removeEvent(string time, string descriptor);
 

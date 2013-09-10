@@ -25,6 +25,7 @@ protected:
 public:
     /*! returns vector of EDescriptor that a subclass of this class is responsible for */
     static vector<EDescriptor> getDescriptors(void);
+    virtual EExtension getExtensionName(void) = 0;
     virtual string getExtensionNameAsString(void) = 0;
 };
 
