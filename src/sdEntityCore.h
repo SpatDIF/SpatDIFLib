@@ -104,6 +104,7 @@ private:
     sdEntityCore(string name, EKind kind = SD_SOURCE, EType type = SD_POINT) :name(name), kind(kind){
         sdEntityCore::type = type;
     };
+    
    
 public:
     
@@ -137,7 +138,7 @@ public:
     EType getType(void);
     string getTypeAsString(void);
     
-    vector <sdEntityExtension*>getExtensionVector(void);
+      
     /*! This is the only method for adding an new event to the entity*/
     sdEvent* addEvent(double time, EDescriptor descriptor, void* value);
     
@@ -152,10 +153,15 @@ public:
     void removeEvent(double time, EDescriptor descriptor);
     void removeEvent(string time, string descriptor);
 
-    /*! @name Extensions
+    /*! @name Extension Handling
         @{
      */
+    /*! get the vector of sdExtensions */
+    vector <sdEntityExtension*>getExtensionVector(void);
     
+    /*! returns a pointer to activated sdEntityExtension in the extensionVector. returns NULL if not exists. */
+    sdEntityExtension* getExtension(EExtension);
+
     /*! adding extension to the entity*/
     sdEntityExtension* addExtension(EExtension extension);
     

@@ -92,6 +92,16 @@ vector <EExtension> sdScene::getActivatedExtensionVector(void){
 }
 
 void sdScene::addExtension(EExtension extension){
+    vector <EExtension>::iterator pos;
+    pos= find(activatedExtensionVector.begin(),
+         activatedExtensionVector.end(),
+         extension);
+    
+    if(pos != activatedExtensionVector.end()){
+        cout << "Error: Extension already activated. ignored." << endl;
+        return;
+    }
+    
     activatedExtensionVector.push_back(extension);
     vector <sdEntityCore*>::iterator it = entityVector.begin();
     while (it != entityVector.end()) {

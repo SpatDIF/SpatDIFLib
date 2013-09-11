@@ -32,6 +32,9 @@ int main(void){
     // now add the extension
     scene.addExtension(SD_MEDIA);
 
+    // you cannot add the same extension twice. will get an error if you do.
+    scene.addExtension(SD_MEDIA);
+    
     // the message below is the message for extension. so the core does not understand.
     evt= entityOne->addEvent(4.0, SD_MEDIA_LOCATION, static_cast<void*>(&loc));
     double gain = 0.51525;

@@ -294,7 +294,8 @@ void* sdEntityCore::getValue(double time, EDescriptor descriptor){
 }
 
 sdEntityExtension* sdEntityCore::addExtension(EExtension extension){
-    
+    sdEntityExtension *ext= getExtension(extension);
+
     switch (extension) {
         case SD_MEDIA:{
             sdEntityExtensionMedia* mediaExtension = new sdEntityExtensionMedia();
@@ -327,8 +328,17 @@ void sdEntityCore::removeExtension(EExtension extension){
     }
 }
 
-
-
+sdEntityExtension* sdEntityCore::getExtension(EExtension extension){
+    vector <sdEntityExtension*>::iterator it = extensionVector.begin();
+    if(it != extensionVector.end()){
+        sdEntityExtension* ext = *it;
+        if(ext->getExtensionName() == extension){
+            return *it;
+        }
+        it++;
+    }
+    return NULL;
+}
 
 
 
