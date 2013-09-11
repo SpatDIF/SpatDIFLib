@@ -18,8 +18,8 @@ sdEntityCore* sdScene::getEntity(string name){
         if(entityName == name){
             return *it;
         }
-		it++;
-	}
+	it++;
+    }
     return NULL;
 }
 
@@ -97,8 +97,9 @@ void sdScene::addExtension(EExtension extension){
          activatedExtensionVector.end(),
          extension);
     
+    //duplication check
     if(pos != activatedExtensionVector.end()){
-        cout << "Error: Extension already activated. ignored." << endl;
+        cout << "addExtension: Error. Extension already activated." << endl;
         return;
     }
     
@@ -107,8 +108,11 @@ void sdScene::addExtension(EExtension extension){
     while (it != entityVector.end()) {
         sdEntityCore* entityCore = *it;
         entityCore->addExtension(extension);
+        return;
         it++;
     }
+    
+    cout << "addExtension: Error. No such extension." << endl;
 }
 
 void sdScene::removeExtension(EExtension extension){
@@ -121,6 +125,8 @@ void sdScene::removeExtension(EExtension extension){
         }
         it++;
     }
+    cout << "removeExtension: Error. No such activated extension." << endl;
+
 }
 
 void sdScene::dump(void){

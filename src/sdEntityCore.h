@@ -105,6 +105,12 @@ private:
         sdEntityCore::type = type;
     };
     
+    
+    /*! adding extension to the entity. invoked only by sdScene*/
+    sdEntityExtension* addExtension(EExtension extension);
+    
+    /*! removing extension from the entity. invoked only by sdScene*/
+    void removeExtension(EExtension extension);
    
 public:
     
@@ -162,11 +168,6 @@ public:
     /*! returns a pointer to activated sdEntityExtension in the extensionVector. returns NULL if not exists. */
     sdEntityExtension* getExtension(EExtension);
 
-    /*! adding extension to the entity*/
-    sdEntityExtension* addExtension(EExtension extension);
-    
-    /*! removing extension from the entity*/
-    void removeExtension(EExtension extension);
 
        
     /*! @} */
