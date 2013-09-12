@@ -99,7 +99,7 @@ void sdScene::addExtension(EExtension extension){
     
     //duplication check
     if(pos != activatedExtensionVector.end()){
-        cout << "addExtension: Error. Extension already activated." << endl;
+        cout << "sdScene Error: Extension already activated." << endl;
         return;
     }
     
@@ -112,7 +112,7 @@ void sdScene::addExtension(EExtension extension){
         it++;
     }
     
-    cout << "addExtension: Error. No such extension." << endl;
+    cout << "sdScene Error: No such extension." << endl;
 }
 
 void sdScene::removeExtension(EExtension extension){
@@ -125,7 +125,7 @@ void sdScene::removeExtension(EExtension extension){
         }
         it++;
     }
-    cout << "removeExtension: Error. No such activated extension." << endl;
+    cout << "sdScene Error: No such activated extension." << endl;
 
 }
 

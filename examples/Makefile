@@ -3,7 +3,7 @@ CFLAGS =
 INCLUDE = ../src
 LIB_PATH = ../src
 LIBS =  -lstdc++ -lspatdif
-TARGETS = sdEventTest sdDateTest sdInfoTest sdSaverTest sdLoaderTest sdSceneTest sdExtensionTest sdConverter How_to_query
+TARGETS = sdEventTest sdDateTest sdInfoTest sdSaverTest sdLoaderTest sdSceneTest sdExtensionTest sdConverter How_to_query sdOSCTest
 
 all: $(TARGETS)
 
@@ -31,7 +31,10 @@ sdExtensionTest: sdExtensionTest.cpp
 How_to_query:  How_to_query.cpp
 	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
 
-sdConverter: sdConverter.cpp
+sdConverter: sdConverter.cpp	
+	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 	
+
+sdOSCTest: sdOSCTest.cpp
 	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
 
 clean:

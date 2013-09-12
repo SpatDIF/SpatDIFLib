@@ -6,6 +6,7 @@
 #define ____sdOSCResponder__
 
 #include "sdScene.h"
+#include <string>
 
 using namespace std;
 
@@ -15,13 +16,12 @@ private:
     /*! The interpreted OSC messages will be sent do this sdScene*/
     sdScene *scene;
     double time;
+    vector <string> splitString(const string &str);
     
 public:
-    /*! the scene must be created before the instantiation of this class
+    /*! constructor. the scene must be created before the instantiation of this class
      @param scene the target scene
      */
-    
-    /*! constructor. a pointer to the target scene should be provided*/
     sdOSCResponder(sdScene *scene);
     
     /*! this function interprets incoming string as a OSCMessage and forward it to the scene

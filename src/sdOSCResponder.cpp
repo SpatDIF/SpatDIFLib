@@ -9,25 +9,61 @@ sdOSCResponder::sdOSCResponder(sdScene *scene){
     sdOSCResponder::scene =scene;
 }
 
+vector<string> sdOSCResponder::splitString(const string &str){
+    vector<string> res;
+    size_t current = 0, found;
+    while((found = str.find_first_of('/', current)) != string::npos){
+        res.push_back(string(str, current, found - current));
+        current = found + 1;
+    }
+    res.push_back(string(str, current, str.size() - current));
+    return res;
+}
+
 void sdOSCResponder::forwardOSCMessage(string oscMessage){
     // interpret
-    
-    string addressPattern, typeTag, argument;
+    bool withTypeTag;
+    string addressPattern, typeTag, argument, temp;
     vector <string>argumentVector;
     istringstream iss(oscMessage);
-    iss >> addressPattern;
-    iss >> typeTag; // type tag will be ignored
     
-    if(typeTag[0] != ','){
-        // typeTag ommited
-        argumentVector.push_back(typeTag);
+    int count = 0;
+    while(iss.good()){
+        if(count == 0){
+            iss >> addressPattern;
+            if (addressPattern[0] != '/') {
+                cout << "sdOSCReponder Error: The first element of incoming OSC Message is not an address pattern." << endl;
+                return;
+            }
+            //split into parts
+            vector <string>ads = splitString(addressPattern);
+            vector <string>::iterator it = ads.begin();
+            while (it != ads.end()) {
+                cout << *it << endl;
+                it++;
+            }
+            
+            
+        }else if(count == 1){
+            iss >> temp;
+            if(temp[0] == ','){ 
+                withTypeTag = true;
+                
+            }else{
+                withTypeTag = false;
+            }
+        }else{
+            iss >> argument;
+            
+        }
+        
+        count++;
     }
     
-    iss >> argument;
-    while(argument != " "){
-        argumentVector.push_back(argument);
-        iss >> argument;
-    }
+    
+
+    
+
     
     // separate address Pattern to segments
     vector<string> addressVector;
