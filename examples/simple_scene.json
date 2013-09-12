@@ -27,7 +27,7 @@
         "time":3.331,
         "source":{
             "name": "voice2",
-            "present": "false"
+            "present": false
         }
     }
 }

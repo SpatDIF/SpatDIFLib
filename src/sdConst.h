@@ -80,6 +80,20 @@ inline string doublesToString(double *db, int num){
 }
 
 /*!
+ utility function that convert a bool to a string
+ */
+inline string boolToString(bool bl){
+    return bl ? string("true") : string("false");
+}
+
+/*!
+ utility function that convert a string to a bool
+ */
+inline bool stringToBool(string str){
+    return str == "true" ? true : false;
+}
+
+/*!
  utility function that convert a double to a string
  */
 inline string doubleToString(double db){

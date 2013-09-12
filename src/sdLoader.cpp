@@ -161,6 +161,11 @@ sdScene sdLoader::sceneFromJSON(string jsonString){
                                 targetEntity->addEvent(timeString, iiit->name(),os.str());
                                 break;
                             }
+                            case JSON_BOOL:{
+                                string bl = boolToString(iiit->as_bool());
+                                targetEntity->addEvent(timeString, iiit->name(), bl);
+                                break;
+                            }
                             case JSON_NUMBER:{
                                 
                                 break;
