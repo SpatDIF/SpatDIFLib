@@ -1,4 +1,5 @@
 
+#include "sdConst.h"
 #include "sdOSCResponder.h"
 #include <vector>
 #include <sstream>
@@ -7,6 +8,7 @@ using namespace std;
 
 sdOSCResponder::sdOSCResponder(sdScene *scene){
     sdOSCResponder::scene =scene;
+    currentTime = "0.0";
 }
 
 vector<string> sdOSCResponder::splitString(const string &str){
@@ -23,10 +25,8 @@ vector<string> sdOSCResponder::splitString(const string &str){
 void sdOSCResponder::forwardOSCMessage(string oscMessage){
     // interpret
     bool withTypeTag;
-    string addressPattern, typeTag, argument, temp;
-    vector <string>argumentVector;
+    string addressPattern, typeTag, temp, kind, entityName, descriptor, argument, arguments;
     istringstream iss(oscMessage);
-    
     int count = 0;
     while(iss.good()){
         if(count == 0){
@@ -37,70 +37,37 @@ void sdOSCResponder::forwardOSCMessage(string oscMessage){
             }
             //split into parts
             vector <string>ads = splitString(addressPattern);
-            vector <string>::iterator it = ads.begin();
-            while (it != ads.end()) {
-                cout << *it << endl;
-                it++;
+            ads.erase (ads.begin());
+            
+            if(ads[0] != "spatdif"){
+                cout << "sdOSCResponder Error: The address pattern of the received message does not begin with \"spatdif\"." << endl;
+                return;
             }
-            
-            
+            kind = ads[1];
+            if ((kind != "source") && (kind != "sink")) {
+                cout << "sdOSCResponder Error: Kind of given address pattern is neither \"source\" nor \"sink\"." << endl;
+            }
+            entityName = ads[2];
+            descriptor = ads[3];
         }else if(count == 1){
             iss >> temp;
-            if(temp[0] == ','){ 
-                withTypeTag = true;
-                
-            }else{
-                withTypeTag = false;
-            }
+            if(temp[0] != ',')
+                arguments = temp;
+                arguments += " ";
         }else{
             iss >> argument;
-            
+            arguments += argument;
+            arguments += " ";
         }
-        
         count++;
     }
     
-    
-
-    
-
-    
-    // separate address Pattern to segments
-    vector<string> addressVector;
-    size_t pos = 0, offset = 1;
-    while (pos != string::npos) {
-        int len;
-        pos  = addressPattern.find('/',offset);
-        len = pos - offset;
-        addressVector.push_back(addressPattern.substr(offset, len));
-        offset = pos+1;
+    sdEntityCore* ent = scene->getEntity(entityName);
+    if(!ent){
+        EKind kd = kind == "source" ? SD_SOURCE : SD_SINK;
+        ent = scene->addEntity(entityName, kd);
     }
-    
-    // if it's not a spatdif message
-    if(addressVector[0] != "spatdif") return;
-    
-    // check type of message
-    string type = addressVector[1];
-    if(type == "source" || type == "sink"){
-        
-        string entityName = addressVector[2];
-        sdEntity* entity = scene-> getEntity(entityName);
-        if(!entity){
-            EKind kind = type == "source" ? SD_SOURCE : SD_SINK;
-            entity = scene->addEntity(entityName, kind);
-        }
-        
-        string descriptor = addressVector[3];
-        
-        
-    }else if(type == "time"){
-        istringstream is;
-        is.str(argumentVector[0]);
-        is >> time;
-    }else if(type == "meta"){
-        
-    }
-    
+    cout << "addEvent" << entityName << arguments << endl;
+    ent->addEvent(currentTime, descriptor, arguments);
 
-    
 }

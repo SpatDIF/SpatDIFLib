@@ -11,8 +11,12 @@ int main(void){
     sdScene scene;
     sdOSCResponder oscResponder = sdOSCResponder(&scene);
     
-    string oscMessage = string("/spatdif/source/2/position  ,fff    1.41 1.41 0.0");
+    string oscMessage = string("/spatdif/source/myEntity/position  ,fff    1.41 1.41 0.0");
+    oscResponder.forwardOSCMessage(oscMessage);
+
+     oscMessage = string("/spatdif/source/myEntity/orientation  ,fff    3 4 2");
     oscResponder.forwardOSCMessage(oscMessage);
     
+    scene.dump();
     return 0;
 }

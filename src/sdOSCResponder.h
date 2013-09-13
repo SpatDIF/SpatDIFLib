@@ -15,7 +15,7 @@ class sdOSCResponder{
 private:
     /*! The interpreted OSC messages will be sent do this sdScene*/
     sdScene *scene;
-    double time;
+    string currentTime;
     vector <string> splitString(const string &str);
     
 public:
