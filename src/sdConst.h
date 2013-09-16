@@ -52,6 +52,7 @@ typedef enum {
 typedef enum {
     SD_SOURCE,
     SD_SINK
+    
 } EKind;
 
 /*!
@@ -121,7 +122,7 @@ inline double stringToDouble(string str){
 }
 
 /*!
- utility function that convert a string to a int
+ utility function that converts a string to a int
  */
 inline int *stringToInts(string str, int *it, int num){
     istringstream is(str);

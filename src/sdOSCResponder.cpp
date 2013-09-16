@@ -8,7 +8,7 @@ using namespace std;
 
 sdOSCResponder::sdOSCResponder(sdScene *scene){
     sdOSCResponder::scene =scene;
-    currentTime = "0.0";
+    currentTimeString = "0.0";
 }
 
 vector<string> sdOSCResponder::splitString(const string &str){
@@ -22,12 +22,22 @@ vector<string> sdOSCResponder::splitString(const string &str){
     return res;
 }
 
+void sdOSCResponder::setCurrentTime(double time){
+    currentTimeString = doubleToString(time);
+}
+
+void sdOSCResponder::forwardOSCMessage(string oscMessage, double time){
+    setCurrentTime(time);
+    forwardOSCMessage(oscMessage);
+}
+
 void sdOSCResponder::forwardOSCMessage(string oscMessage){
     // interpret
-    bool withTypeTag;
+    bool timeFlag = false;
     string addressPattern, typeTag, temp, kind, entityName, descriptor, argument, arguments;
     istringstream iss(oscMessage);
     int count = 0;
+    EKind kd;
     while(iss.good()){
         if(count == 0){
             iss >> addressPattern;
@@ -44,16 +54,26 @@ void sdOSCResponder::forwardOSCMessage(string oscMessage){
                 return;
             }
             kind = ads[1];
-            if ((kind != "source") && (kind != "sink")) {
-                cout << "sdOSCResponder Error: Kind of given address pattern is neither \"source\" nor \"sink\"." << endl;
+            if (kind == "source") {
+                kd = SD_SOURCE;
+                entityName = ads[2];
+                descriptor = ads[3];
+            }else if(kind == "sink"){
+                kd = SD_SINK;
+                entityName = ads[2];
+                descriptor = ads[3];
+            }else if(kind == "time"){
+                timeFlag = true;
+            }else{
+                cout << "sdOSCResponder Error: Kind of given address pattern should be  \"source\", \"sink\", or \"time\"." << endl;
+                return;
             }
-            entityName = ads[2];
-            descriptor = ads[3];
         }else if(count == 1){
             iss >> temp;
-            if(temp[0] != ',')
+            if(temp[0] != ','){
                 arguments = temp;
                 arguments += " ";
+            }
         }else{
             iss >> argument;
             arguments += argument;
@@ -62,12 +82,15 @@ void sdOSCResponder::forwardOSCMessage(string oscMessage){
         count++;
     }
     
+    // store in the library
+    if (timeFlag) {
+        currentTimeString = arguments;
+    }
     sdEntityCore* ent = scene->getEntity(entityName);
     if(!ent){
-        EKind kd = kind == "source" ? SD_SOURCE : SD_SINK;
         ent = scene->addEntity(entityName, kd);
     }
     cout << "addEvent" << entityName << arguments << endl;
-    ent->addEvent(currentTime, descriptor, arguments);
+    ent->addEvent(currentTimeString, descriptor, arguments);
 
 }
