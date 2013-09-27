@@ -15,7 +15,10 @@ class sdOSCResponder{
 private:
     /*! The interpreted OSC messages will be sent do this sdScene*/
     sdScene *scene;
-    string currentTimeString;
+    
+    string currentTimeString; /*< contains current time of responder as a string. */
+    
+    /*! private utility function for spliting string with slash*/
     vector <string> splitString(const string &str);
     
 public:
@@ -25,10 +28,20 @@ public:
     sdOSCResponder(sdScene *scene);
     
     /*! this function interprets incoming string as a OSCMessage and forward it to the scene
+     @param oscMessage a OSC string to be interpreted and forwarded to the library
      */
     void forwardOSCMessage(string oscMessage);
+    
+    /*!
+     overloaded funtion.
+     @param oscMessage a OSC string to be interpreted and forwarded to the library
+     @param time set current time to this value before forwarding the message
+     */
     void forwardOSCMessage(string oscMessage, double time);
 
+    /*!
+     @param time set current time to this value
+     */
     void setCurrentTime(double time);
 };
 

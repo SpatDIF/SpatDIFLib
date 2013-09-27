@@ -119,7 +119,7 @@ bool sdEventCore::setValue(string descriptor, string value){
     switch (sdEventCore::descriptor) {
         case SD_PRESENT:
         {
-            bool present = value=="true" ? true : false;
+            bool present = stringToBool(value);
             setValue(sdEventCore::descriptor, static_cast<void*>(&present));
             break;
         }
@@ -144,8 +144,6 @@ bool sdEventCore::setValue(string descriptor, string value){
     }
     return true;
 }
-
-
 
 /*** sdEntityCore ***/
 const int sdEntityCore::numberOfCoreDescriptors = 3;

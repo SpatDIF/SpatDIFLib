@@ -61,14 +61,18 @@ sdScene sdLoader::sceneFromXML(string xmlString){
         if(tagType == "time"){
             timeString = string(element->GetText());
         }
-        else if(tagType == "source"){
+        else if(tagType == "source" || tagType == "sink"){
             XMLElement *name = element->FirstChildElement("name");
             string entityName = string(name->GetText());
             sdEntityCore* targetEntity;
             
             targetEntity = scene.getEntity(entityName);
             if(!targetEntity){
-                targetEntity = scene.addEntity(entityName);
+                if (tagType == "source") {
+                    targetEntity = scene.addEntity(entityName, SD_SOURCE);
+                }else{
+                    targetEntity = scene.addEntity(entityName, SD_SINK);
+                }
             }
 
             XMLElement *descriptor = name->NextSiblingElement();
@@ -77,9 +81,7 @@ sdScene sdLoader::sceneFromXML(string xmlString){
                 descriptor = descriptor->NextSiblingElement();
             }
         }
-	else if(tagType == "sink"){
-	    //to be coded
-	}
+
         element = element->NextSiblingElement();
     }
     
@@ -129,7 +131,7 @@ sdScene sdLoader::sceneFromJSON(string jsonString){
             }else if(iit->name() == "time"){
                 JSONNode timeNode = *iit;
                 timeString = timeNode.as_string();
-            }else if(iit->name() == "source"){
+            }else if(iit->name() == "source" || iit->name() == "sink" ){
                 JSONNode source = *iit;
                 JSONNode::iterator iiit = source.begin();
                 sdEntityCore* targetEntity;
@@ -175,8 +177,6 @@ sdScene sdLoader::sceneFromJSON(string jsonString){
                     }
                     iiit++;
                 }
-            }else if(iit->name() == "sink"){
-                //to be coded 
             }
             iit++;
         }
