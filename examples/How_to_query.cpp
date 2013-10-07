@@ -1,4 +1,3 @@
-/* this example examines all functionalities of sdDate class */
 
 #include <string>
 #include <iostream>
@@ -12,7 +11,6 @@ int main(void){
     
     ifstream ifs("simple_scene.xml");
     string xmlString;
-    
     
     // load entire file onto a string
     if (ifs.is_open())
@@ -43,10 +41,24 @@ int main(void){
         
     }
     
+    cout << "-- timed query test" << endl;
     // get value pointer from the sdEntityCore cast it and post
-    double* pos = static_cast<double*>(voice1->getValue(2.52 , SD_POSITION));
-    cout << "position of voice1 at 2.52:" << pos[0] << ' ' << pos[1] << ' ' << pos[2] << endl;
+    double* pos = static_cast<double*>(voice1->getValue(2.0 , SD_POSITION));
+    cout << "position of voice1 at 2.0:" << pos[0] << ' ' << pos[1] << ' ' << pos[2] << endl;
     
+    
+    cout << "-- sequential query test" << endl;
+    // get Event sequentially
+    double currentTime = 0.0;
+    while (true) {
+        sdEvent* sEvent = voice1->getNextEvent(currentTime, SD_POSITION);
+        if(sEvent == NULL) break;
+        cout << "Position event at:" << sEvent->getTimeAsString() << " value:" << sEvent->getValueAsString() << endl;
+        currentTime = sEvent->getTime();
+    }
+    
+    cout << "-- time frame query test" << endl;
+
     // you can also ask events in a certain time frame.
     multiset <sdEvent*, sdEventCompare> myEventSet;
 

@@ -8,24 +8,24 @@
         </info>
         <ordering>time</ordering>
     </meta>
-	<time>0.0</time> <!-- default -->
+	<time>0.0</time> 
     <source>
         <name>voice1</name>
-        <position>-1.41 1.41 0.0</position> <!-- defaults to 0. 0. 0. type xyz -->
+        <position>0.0 0.0 0.0</position> 
     </source>
-    <time>1.12</time><!-- source is placed at time: 1.0 seconds -->
+    <time>1.0</time>
     <source>
         <name>voice2</name>
-        <position>1.41 1.41 0.0</position>
+        <position>3.0 2.0 1.0</position>
     </source>
-    <time>2.52</time> <!-- source is prelaced at time: 2.0 seconds -->
+    <time>2.0</time> 
     <source>
         <name>voice1</name>
         <position>0.0 1.0 0.0</position>
     </source>
-    <time>3.331</time> <!-- source is prelaced at time: 2.0 seconds -->
+    <time>3.0</time>
     <source>
-        <name>voice2</name>
-        <present>false</present>
+        <name>voice1</name>
+        <position>1.0 1.0 2.0</position>
     </source>
-</spatdif>
+   </spatdif>

@@ -148,11 +148,18 @@ public:
     
     /*!
      return all events related to the given descriptor
-     @param descriptor the descriptor of the event declared in sdConst.h
      @param time the time of the event in second
+     @param descriptor the descriptor of the event declared in sdConst.h
      */
     sdEvent* getEvent(double time, EDescriptor descriptor);
-
+    
+    /*!
+     return next event from the given time index that holds the specified descriptor.
+     @param time index
+     @param descriptor the descriptor of the event declared in sdConst.h
+     */
+    sdEvent* getNextEvent(double time, EDescriptor descriptor);
+    
     /*!
      this function is the only way to instantiate sdEvent.
      */
@@ -241,6 +248,19 @@ inline sdEvent* sdEntity::getEvent(double time, EDescriptor descriptor){
     while(it != eventSet.end()){
         sdEvent* event = *it;
         if((event->getTime() == time) && (event->getDescriptor() == descriptor)){
+            return event;
+        }
+        ++it;
+    }
+    return NULL;
+}
+
+inline sdEvent* sdEntity::getNextEvent(double time, EDescriptor descriptor){
+
+    multiset<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
+    while(it != eventSet.end()){
+        sdEvent* event = *it;
+        if((event->getTime() > time) && (event->getDescriptor() == descriptor)){
             return event;
         }
         ++it;
