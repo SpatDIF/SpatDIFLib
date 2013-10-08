@@ -60,6 +60,13 @@ int main(void){
     // dump the scene
     scene.dump();
     
+    // query event
+    sdEvent* mediaLocation = entityOne->getNextEvent(5.2, SD_MEDIA_ID);
+    if(mediaLocation == NULL){
+        cout << "no such event" << endl;
+    }else{
+        cout << "time:" << mediaLocation->getTime() << " " <<  mediaLocation->getValueAsString() << endl;
+    }
     // remove two events
     entityOne->removeEvent(5.2, SD_MEDIA_TIME_OFFSET);
     entityOne->removeEvent(5.0, SD_MEDIA_GAIN);

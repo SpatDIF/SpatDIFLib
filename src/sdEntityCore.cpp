@@ -339,6 +339,36 @@ sdEntityExtension* sdEntityCore::getExtension(EExtension extension){
 }
 
 
+sdEvent* sdEntityCore::getEvent(double time, EDescriptor descriptor){
+    if(isCoreDescriptor(descriptor)){
+        return sdEntity::getEvent(time, descriptor);
+    }else{
+        vector <sdRedirector>::iterator it = redirectorVector.begin();
+        while (it != redirectorVector.end()) {
+            sdRedirector rd = *it;
+            if(rd.descriptor == descriptor){
+                return rd.responsibleExtension->getEvent(time, descriptor);
+            }
+            it++;
+        }
+        return NULL;
+    }
+}
 
+sdEvent* sdEntityCore::getNextEvent(double time, EDescriptor descriptor){
+    if(isCoreDescriptor(descriptor)){
+        return sdEntity::getNextEvent(time, descriptor);
+    }else{
+        vector <sdRedirector>::iterator it = redirectorVector.begin();
+        while (it != redirectorVector.end()) {
+            sdRedirector rd = *it;
+            if(rd.descriptor == descriptor){
+                return rd.responsibleExtension->getNextEvent(time, descriptor);
+            }
+            it++;
+        }
+        return NULL;
+    }
+}
 
 

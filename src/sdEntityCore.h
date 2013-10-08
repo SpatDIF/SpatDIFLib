@@ -43,6 +43,7 @@ public:
     /*! overrided method. get value as string e.g. "0.3 0.5 0.2"*/
     string getValueAsString(void);
     
+    
 private:
     /*! 
      @name private setter
@@ -168,10 +169,24 @@ public:
     /*! returns a pointer to activated sdEntityExtension in the extensionVector. returns NULL if not exists. */
     sdEntityExtension* getExtension(EExtension);
 
-
        
     /*! @} */
-     
+    
+    /*!
+     overrided method. this function forwards the query to the extensions
+     @param time the time of the event in second
+     @param descriptor the descriptor of the event declared in sdConst.h
+     */
+    sdEvent* getEvent(double time, EDescriptor descriptor);
+    
+    /*!
+     overrided method. this function forwards the query to the extensions
+     @param time index
+     @param descriptor the descriptor of the event declared in sdConst.h
+     */
+    sdEvent* getNextEvent(double time, EDescriptor descriptor);
+    
+    
     /*!overrided function*/
     void* getValue(double time, EDescriptor descriptor);
 
