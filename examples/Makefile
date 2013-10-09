@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = 
+CFLAGS = -arch i386
 INCLUDE = ../src
 LIB_PATH = ../src
 LIBS =  -lstdc++ -lspatdif

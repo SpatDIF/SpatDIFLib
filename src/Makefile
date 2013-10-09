@@ -1,6 +1,6 @@
 UNAME := $(shell uname -s)
 CC = g++
-CFLAGS =  -g -O0
+CFLAGS =  -g -O0 -arch i386
 LIBS = -lstdc++
 OBJECTS = *.o *.a
 FILES = *.cpp
@@ -8,6 +8,7 @@ EXAMPLE_DIR = ../examples
 
 TXML_PATH = ./libs/tinyxml2
 TXML_FILE = tinyxml2.cpp 
+TXML_FLAG = -arch i386
 
 JSON_PATH = ./libs/libjson
 JSON_SOURCE_PATH = $(JSON_PATH)/_internal/Source
@@ -27,7 +28,7 @@ Linux: tinyxml2.o libjson.a libspatdif.so
 	cd ../examples; make 
 
 tinyxml2.o : $(TXML_PATH)/$(TXML_FILES)
-	$(CC) -c $(TXML_PATH)/$(TXML_FILE)	
+	$(CC) $(TXML_FLAG) -c $(TXML_PATH)/$(TXML_FILE)	
 
 libjson.a : $(JSON_PATH)/$(JSON_MAKE)
 	make -C $(JSON_PATH)
