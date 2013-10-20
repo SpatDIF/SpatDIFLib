@@ -36,8 +36,6 @@ int main(void){
     scene.addExtension(SD_MEDIA);
 
 
-
-
     // the message below is the message for extension. so the core does not understand.
     evt= entityOne->addEvent(4.0, SD_MEDIA_LOCATION, static_cast<void*>(&loc));
     double gain = 0.51525;
@@ -51,11 +49,10 @@ int main(void){
     
     string id = "sound source1";
     string type = "stream";
-    string location = "mySoundfile.wav";
     
     entityOne->addEvent(5.3, SD_MEDIA_ID, static_cast<void*>(&id));
     entityOne->addEvent(5.0, SD_MEDIA_TYPE, static_cast<void*>(&type));
-    entityOne->addEvent(5.5, SD_MEDIA_LOCATION, static_cast<void*>(&location));
+    entityOne->addEvent(string("5.5"), string("location"), string("mysoundfile.wav"));
 
     // dump the scene
     scene.dump();

@@ -71,6 +71,7 @@ sdScene sdLoader::sceneFromXML(string xmlString){
             string entityName = string(name->GetText());
             sdEntityCore* targetEntity;
             
+            // if target entity does not exist, create one
             targetEntity = scene.getEntity(entityName);
             if(!targetEntity){
                 if (tagType == "source") {
@@ -79,11 +80,22 @@ sdScene sdLoader::sceneFromXML(string xmlString){
                     targetEntity = scene.addEntity(entityName, SD_SINK);
                 }
             }
-
-            XMLElement *descriptor = name->NextSiblingElement();
-            while(descriptor) {
-                targetEntity->addEvent(timeString, string(descriptor->Name()), string(descriptor->GetText()));
-                descriptor = descriptor->NextSiblingElement();
+            
+            // get descriptor or extension type
+            XMLElement *tempTag = name->NextSiblingElement();
+            while(tempTag) {
+                XMLElement *childTag = tempTag->FirstChildElement();
+                if(!childTag){ // tempTag is a descriptor
+                    XMLElement *descriptor = tempTag;
+                    targetEntity->addEvent(timeString, string(descriptor->Name()), string(descriptor->GetText()));
+                }else{ // tempTag is a exType
+                    XMLElement *descriptor = childTag;
+                    while (descriptor) {
+                        targetEntity->addEvent(timeString, string(descriptor->Name()), string(descriptor->GetText()));
+                        descriptor = descriptor->NextSiblingElement();
+                    }
+                }
+                tempTag = tempTag->NextSiblingElement();
             }
         }
 

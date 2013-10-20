@@ -301,6 +301,7 @@ sdEntityExtension* sdEntityCore::addExtension(EExtension extension){
             for(int i = 0; i < sdEntityExtensionMedia::numberOfRelevantDescriptors; i++){
                 sdRedirector rd;
                 rd.descriptor = sdEntityExtensionMedia::relevantDescriptors[i];
+                rd.descriptorString = sdEntityExtensionMedia::relevantDescriptorStrings[i];
                 rd.responsibleExtension = static_cast<sdEntityExtension*>(mediaExtension);
                 redirectorVector.push_back(rd);
             }
