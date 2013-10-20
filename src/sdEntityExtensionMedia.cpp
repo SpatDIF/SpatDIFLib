@@ -131,7 +131,6 @@ bool sdEventExtensionMedia::setValue(string descriptor, string value){
             break;
         }
         case SD_MEDIA_CHANNEL:{
-            cout << "channel value:" << stringToInt(value) << endl;
             sdEventExtensionMedia::value = static_cast<void*>(new int(stringToInt(value)));
             break;
         }

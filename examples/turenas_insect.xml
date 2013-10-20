@@ -14,9 +14,19 @@
 			<name>insect</name>
 			<position>0.0 8.0 0.0</position>
 			<media>
-				<id>suond1</id>
+				<id>sound_0001</id>
 			   <type>file</type>
-			   <location>../audio/insect_simulated.aiff</location>
+			   <location>insect_simulated.aiff</location>
+			   <channel>1</channel> 
+			</media>
+		</source>
+		<source>
+			<name>elephant</name>
+			<position>0.0 1.0. 0.0</position>
+			<media>
+				<id>sound_0002</id>
+			   <type>file</type>
+			   <location>elephant_simulated.aiff</location>
 			   <channel>1</channel> 
 			</media>
 		</source>
