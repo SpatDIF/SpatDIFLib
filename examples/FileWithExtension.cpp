@@ -30,8 +30,8 @@ int main(void){
     sdEntityCore* elephant = scene.getEntity("elephant");
     
     // now you can ask these entities about their attached extensions
-    sdEvent* insectMediaLocationEvent = insect->getNextEvent(-1.0, SD_MEDIA_LOCATION);
-    sdEvent* elephantMediaLocationEvent = elephant->getNextEvent(-1.0, SD_MEDIA_LOCATION);
+    sdEvent* insectMediaLocationEvent = insect->getFirstEvent(SD_MEDIA_LOCATION);
+    sdEvent* elephantMediaLocationEvent = elephant->getFirstEvent(SD_MEDIA_LOCATION);
     
     cout << "Entity Name:" << insect->getName() << endl;
     cout << "Attached Sound File:" << insectMediaLocationEvent->getValueAsString() << endl;

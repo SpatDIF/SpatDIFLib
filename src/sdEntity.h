@@ -154,11 +154,17 @@ public:
     sdEvent* getEvent(double time, EDescriptor descriptor);
     
     /*!
+     return the very first event with the specified descriptor.
+     @param descriptor the descriptor of the event declared in sdConst.h
+     */
+    sdEvent* getFirstEvent(EDescriptor descriptor);
+    
+    /*!
      return next event from the given time index that holds the specified descriptor.
      @param time index
      @param descriptor the descriptor of the event declared in sdConst.h
      */
-    sdEvent* getNextEvent(double time, EDescriptor descriptor);
+    virtual sdEvent* getNextEvent(double time, EDescriptor descriptor);
     
     /*!
      this function is the only way to instantiate sdEvent.
@@ -253,6 +259,10 @@ inline sdEvent* sdEntity::getEvent(double time, EDescriptor descriptor){
         ++it;
     }
     return NULL;
+}
+
+inline sdEvent* sdEntity::getFirstEvent(EDescriptor descriptor){
+    return getNextEvent(-1.0, descriptor);
 }
 
 inline sdEvent* sdEntity::getNextEvent(double time, EDescriptor descriptor){
