@@ -91,6 +91,20 @@ vector <EExtension> sdScene::getActivatedExtensionVector(void){
     return activatedExtensionVector;
 }
 
+EExtension sdScene::convertExtensionString(string extension){
+    EExtension ext;
+    if(extension == "media"){
+        ext = SD_MEDIA;
+    }else if(extension == "interpolation"){
+        ext = SD_INTERPOLATION;
+    }else if(extension == "direct-to-one"){
+        ext = SD_DIRECT_TO_ONE;
+    }else{
+        ext = SD_EXTENSION_ERROR;
+    }
+    return ext;
+}
+
 void sdScene::addExtension(EExtension extension){
     vector <EExtension>::iterator pos;
     pos= find(activatedExtensionVector.begin(),
@@ -108,11 +122,18 @@ void sdScene::addExtension(EExtension extension){
     while (it != entityVector.end()) {
         sdEntityCore* entityCore = *it;
         entityCore->addExtension(extension);
-        return;
         it++;
     }
     
-    cout << "sdScene Error: No such extension." << endl;
+}
+
+void sdScene::addExtension(string extension){
+    EExtension ext = convertExtensionString(extension);
+    if(ext == SD_EXTENSION_ERROR){
+        cout << "sdScene Error: No such extension." << endl;
+        return;
+    }
+    addExtension(ext);
 }
 
 void sdScene::removeExtension(EExtension extension){
@@ -127,6 +148,14 @@ void sdScene::removeExtension(EExtension extension){
     }
     cout << "sdScene Error: No such activated extension." << endl;
 
+}
+
+void sdScene::removeExtension(string extension){
+    EExtension ext = convertExtensionString(extension);
+    if(ext == SD_EXTENSION_ERROR){
+        cout << "sdScene Error: No such activated extension." << endl;
+    }
+    removeExtension(ext);
 }
 
 void sdScene::dump(void){

@@ -32,7 +32,10 @@ private:
     
     /*! contains "info" part of the meta section*/
     sdInfo info;
-    
+
+    /*! internal function for conversion*/
+    EExtension convertExtensionString(string extension);
+
 public:
     
     /*! @name Constructors
@@ -163,12 +166,14 @@ public:
      @param extension enum EExtension of extension to be added
      */
     void addExtension(EExtension extension);
-    
-    /*! deactivate an extension specified by enum EExtension. This function removes instances of the designated extension (i.e. a subclass of sdEntityExtension )  attached  to all existing sdEntityCores in the scene. 
+    void addExtension(string extension);
+
+    /*! deactivate an extension specified by enum EExtension. This function removes instances of the designated extension (i.e. a subclass of sdEntityExtension )  attached  to all existing sdEntityCores in the scene.
         Thus, all events data stored in the extension will be lost.
      @param extension enum EExtension of extension to be removed
      */
     void removeExtension(EExtension extension);
+    void removeExtension(string extension);
 
     /*! 
      remove all exntesions from the extensionVector and sdEntityCores in the scene.

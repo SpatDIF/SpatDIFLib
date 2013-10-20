@@ -3,7 +3,7 @@ CFLAGS = -arch i386
 INCLUDE = ../src
 LIB_PATH = ../src
 LIBS =  -lstdc++ -lspatdif
-TARGETS = sdEventTest sdDateTest sdInfoTest sdSaverTest sdLoaderTest sdSceneTest sdExtensionTest sdConverter How_to_query sdOSCTest
+TARGETS = sdEventTest sdDateTest sdInfoTest sdSaverTest sdLoaderTest sdSceneTest sdExtensionTest sdConverter How_to_query sdOSCTest FileWithExtension
 
 all: $(TARGETS)
 
@@ -35,6 +35,9 @@ sdConverter: sdConverter.cpp
 	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 	
 
 sdOSCTest: sdOSCTest.cpp
+	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
+
+FileWithExtension: FileWithExtension.cpp
 	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
 
 clean:

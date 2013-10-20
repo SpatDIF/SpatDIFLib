@@ -61,7 +61,8 @@ typedef enum {
 typedef enum {
     SD_MEDIA,
     SD_INTERPOLATION,
-    SD_DIRECT_TO_ONE
+    SD_DIRECT_TO_ONE,
+    SD_EXTENSION_ERROR
 } EExtension;
 
 

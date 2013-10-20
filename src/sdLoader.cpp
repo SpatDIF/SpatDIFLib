@@ -30,7 +30,8 @@ sdScene sdLoader::sceneFromXML(string xmlString){
     XMLElement* session = information->FirstChildElement("session");
     XMLElement* location = information->FirstChildElement("location");
     XMLElement* annotation = information->FirstChildElement("annotation");
-
+    XMLElement* extensions = meta->FirstChildElement("extensions");
+    
     if(author){
         info.setAuthor(string(author->GetText()));
     }
@@ -50,6 +51,10 @@ sdScene sdLoader::sceneFromXML(string xmlString){
         info.setAnnotation(string(annotation->GetText()));
     }
     scene.setInfo(info);
+    
+    if(extensions){
+        scene.addExtension(string(extensions->GetText()));
+    }
     
     //first time tag
     string timeString;
