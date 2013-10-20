@@ -66,6 +66,25 @@ typedef enum {
 } EExtension;
 
 
+/*!
+ utility function that convert ints to a string
+ */
+inline string intsToString(int *it, int num){
+    ostringstream os;
+    for(int i=0;i<num;i++){
+        os << it[i];
+        if(i != (num-1))
+            os << ' ';
+    }
+    return os.str();
+}
+
+/*!
+ utility function that convert a int to a string
+ */
+inline string intToString(int it){
+    return intsToString(&it, 1);
+}
 
 
 /*! 
@@ -82,6 +101,13 @@ inline string doublesToString(double *db, int num){
 }
 
 /*!
+ utility function that convert a double to a string
+ */
+inline string doubleToString(double db){
+    return doublesToString(&db, 1);
+}
+
+/*!
  utility function that convert a bool to a string
  */
 inline string boolToString(bool bl){
@@ -95,12 +121,7 @@ inline bool stringToBool(string str){
     return str == "true" ? true : false;
 }
 
-/*!
- utility function that convert a double to a string
- */
-inline string doubleToString(double db){
-    return doublesToString(&db, 1);
-}
+
 
 /*!
  utility function that convert a string to doubles

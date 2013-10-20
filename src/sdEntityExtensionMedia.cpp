@@ -71,9 +71,7 @@ string sdEventExtensionMedia::getValueAsString(void){
             str = *static_cast<string*>(value);
             break;
         case SD_MEDIA_CHANNEL:{
-            int *channel;
-            ostringstream os;
-            channel = static_cast<int *>(value);
+            str = intToString(*static_cast<int *>(value));
             break;
         }
         case SD_MEDIA_TIME_OFFSET:
@@ -133,12 +131,13 @@ bool sdEventExtensionMedia::setValue(string descriptor, string value){
             break;
         }
         case SD_MEDIA_CHANNEL:{
-            sdEvent::value = static_cast<int*>(new int(stringToInt(value)));
+            cout << "channel value:" << stringToInt(value) << endl;
+            sdEventExtensionMedia::value = static_cast<void*>(new int(stringToInt(value)));
             break;
         }
         case SD_MEDIA_TIME_OFFSET:
         case SD_MEDIA_GAIN:{
-            sdEvent::value = static_cast<double*>(new double(stringToDouble(value)));
+            sdEventExtensionMedia::value = static_cast<void*>(new double(stringToDouble(value)));
             break;
         }
         default:{
