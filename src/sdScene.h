@@ -173,6 +173,12 @@ public:
     void addExtension(EExtension extension);
     void addExtension(string extension);
 
+    /*! check if the specified extension is activated
+     @param extension enum EExtension of extension to be checked
+     */
+    bool isExtensionActivated(EExtension extension);
+
+    
     /*! deactivate an extension specified by enum EExtension. This function removes instances of the designated extension (i.e. a subclass of sdEntityExtension )  attached  to all existing sdEntityCores in the scene.
         Thus, all events data stored in the extension will be lost.
      @param extension enum EExtension of extension to be removed

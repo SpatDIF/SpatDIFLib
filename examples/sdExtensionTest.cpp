@@ -29,8 +29,16 @@ int main(void){
         cout << "the scene does not understand provided descriptor" << endl;
     }
     
+    
+    if(scene.isExtensionActivated(SD_MEDIA)){ // returns false
+        cout << "media extension activated!" << endl; // this line will be not posted
+    }
     // now add the extension
     scene.addExtension(SD_MEDIA);
+
+    if(scene.isExtensionActivated(SD_MEDIA)){ // returns true
+        cout << "media extension activated!!" << endl; // this line will be  posted
+    }
 
     // you cannot add the same extension twice. will get an error if you do.
     scene.addExtension(SD_MEDIA);

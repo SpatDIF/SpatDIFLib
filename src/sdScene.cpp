@@ -151,6 +151,18 @@ void sdScene::addExtension(string extension){
     addExtension(ext);
 }
 
+bool sdScene::isExtensionActivated(EExtension extension){
+    vector <EExtension>::iterator it = activatedExtensionVector.begin();
+    while(it != activatedExtensionVector.end()){
+        EExtension et = *it;
+        if(et == extension){
+            return true;
+        }
+        it++;
+    }
+    return false;
+}
+
 void sdScene::removeExtension(EExtension extension){
 
     vector <EExtension>::iterator it = activatedExtensionVector.begin();
