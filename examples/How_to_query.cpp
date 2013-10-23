@@ -61,10 +61,8 @@ int main(void){
 
     // you can also ask events in a certain time frame.
     multiset <sdEvent*, sdEventCompare> myEventSet;
-
     myEventSet = voice1->getEventSet(0.00, 5.00, SD_POSITION);
     cout << "there are " << myEventSet.size() << " position events within 0.00 and 5.00" << endl;
-    
     multiset <sdEvent*, sdEventCompare> ::iterator it = myEventSet.begin();
     
     // much easier way to post
@@ -74,6 +72,19 @@ int main(void){
         it++;
         count++;
     }
+    
+    cout << "-- utility functions" << endl;
+    
+    sdEvent* first = voice1->getFirstEvent(SD_POSITION);
+    cout << "first position event- time:" << first->getTime() << " value:" << first->getValueAsString() << endl;
+    sdEvent* last = voice1->getLastEvent(SD_POSITION);
+    cout << "last  position event- time:" << last->getTime() << " value:" << last->getValueAsString() << endl;
+    
+    // just get last and first time tag
+    cout << "first time tag of voice1 :" << voice1->getFirstTimeTag() << endl;
+    cout << "last  time tag of voice1 :" << voice1->getLastTimeTag() << endl;
+
+    
     sdEntityCore *voice2 = myScene.getEntity(string("voice2"));
 
     multiset <sdEvent*, sdEventCompare> yourEventSet;
@@ -85,6 +96,8 @@ int main(void){
         cout << (*it)->getTimeAsString() << ' ' << (*it)->getDescriptorAsString() << ' ' << (*it)->getValueAsString() << endl;
         it++;
     }
+    
+
     
     /*** 2. let sdScene handle the query ***/
     // simpler but less efficient

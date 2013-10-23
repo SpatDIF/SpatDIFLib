@@ -76,9 +76,15 @@ int main(void){
     sdEntityCore* duplicated = scene.addEntity("myEntity"); //if the name of existing entity, returns pointer to existing one
     //returns 2 not 3
     cout << "Num Entities:" << scene.getNumberOfEntities() << endl;
+    for(int i = 0; i < scene.getNumberOfEntities(); i++){
+	cout << "entity no." << i << ": " << scene.getEntityName(i) << endl;
+    }
+
     if(duplicated == providedEntity){
         cout << "same pointer" << endl;
     }
+
+
     
     return 0;
 }

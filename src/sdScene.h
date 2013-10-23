@@ -92,6 +92,11 @@ public:
      @{
      */
     
+    /*! return name of the entity at the specified index
+     @param index
+     */
+    string getEntityName(int index);
+    
     /*! search an entity in the entity vector by its name and return the pointer. returns null if the entity can not be found.
      @param name the name of a designated entity
      */

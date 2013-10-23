@@ -11,6 +11,21 @@
 
 using namespace std;
 
+string sdScene::getEntityName(int index)
+{
+    int cnt = 0;
+    vector <sdEntityCore*>::iterator it = entityVector.begin();
+    
+    while( it != entityVector.end()) {
+        if(cnt == index){
+            return (*it)->getName();
+        }
+        it++;
+        cnt++;
+    }
+    return NULL;
+}
+
 sdEntityCore* sdScene::getEntity(string name){
     vector <sdEntityCore*>::iterator it = entityVector.begin();
     while( it != entityVector.end() ){

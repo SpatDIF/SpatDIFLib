@@ -160,6 +160,24 @@ public:
     sdEvent* getFirstEvent(EDescriptor descriptor);
     
     /*!
+     return the time tag of the first event
+     */
+    double getFirstTimeTag();
+    
+    /*!
+     return the timeTag of the very last event with the specified descriptor.
+     @param descriptor the descriptor of the event declared in sdConst.h
+     */
+    sdEvent* getLastEvent(EDescriptor descriptor);
+
+    /*!
+     return the time tag of the last event
+     */
+    double getLastTimeTag();
+
+    
+    
+    /*!
      return next event from the given time index that holds the specified descriptor.
      @param time index
      @param descriptor the descriptor of the event declared in sdConst.h
@@ -265,6 +283,41 @@ inline sdEvent* sdEntity::getFirstEvent(EDescriptor descriptor){
     return getNextEvent(-1.0, descriptor);
 }
 
+inline sdEvent* sdEntity::getLastEvent(EDescriptor descriptor){
+    
+    sdEvent* event = getFirstEvent(descriptor);
+    if(!event){
+        return NULL;
+    }
+    while (event) {
+        sdEvent* tmpEvent;
+        tmpEvent = getNextEvent(event->getTime(), descriptor);
+        if(tmpEvent){
+            event = tmpEvent;
+        }else{
+            return event;
+        }
+    }
+}
+
+inline double sdEntity::getFirstTimeTag(){
+    sdEvent* event = *(eventSet.begin());
+    if (event) {
+        return event->getTime();
+    }else{
+        return -1.0; // no event at all
+    }
+}
+
+inline double sdEntity::getLastTimeTag(){
+    sdEvent* event = *(eventSet.rbegin());
+    if (event) {
+        return event->getTime();
+    }else{
+        return -1.0; // no event at all
+    }
+}
+
 inline sdEvent* sdEntity::getNextEvent(double time, EDescriptor descriptor){
 
     multiset<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
@@ -306,6 +359,8 @@ inline void* sdEntity::getValue(double time, EDescriptor descriptor){
     }
     return NULL;
 }
+
+
 
 
 
