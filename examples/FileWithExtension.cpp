@@ -42,5 +42,14 @@ int main(void){
     cout << "Entity Name:" << elephant->getName() << endl;
     cout << "Attached Sound File:" << elephantMediaLocationEvent->getValueAsString() << endl;
     cout << "Attached at:" << elephantMediaLocationEvent->getTimeAsString() << endl;
+    
+    string generatedString = sdSaver::XMLFromScene(&scene);
+    // save string as a file
+    ofstream ofs("turenas_generated.xml");
+    ofs << generatedString << endl;
+    ofs.close();
+    
     return 0;
+    
+    
 }

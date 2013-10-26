@@ -10,18 +10,20 @@
 
 using namespace std;
 
+
 /*!
  convert a sdScene to XML, JSON, or YAML strings
  */
 class sdSaver
 {
+
 public:
     
     /*! converts a scene to XML string
      @param sdScene a sdScene
      */
     static string XMLFromScene(sdScene *scene);
-
+    
     /*! converts a scene to JSON string
      @param sdScene a sdScene
      */
@@ -31,6 +33,8 @@ public:
      @param sdScene a sdScene
      */
     static string YAMLFromScene(sdScene *scene);
+
+
 };
 
 

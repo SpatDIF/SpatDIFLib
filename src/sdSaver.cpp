@@ -50,36 +50,32 @@ string sdSaver::XMLFromScene(sdScene *scene){
     meta->InsertEndChild(info);
     
     sdInfo information = scene->getInfo();
+
+    string infoStrings[6];
+    string elementNameStrings[6];
     
-    XMLElement* author = xml.NewElement("author");
-    XMLText* authorText = xml.NewText(information.getAuthor().c_str());
-    author->InsertEndChild(authorText);
-    info->InsertEndChild(author);
-   
-    XMLElement* host = xml.NewElement("host");
-    XMLText* hostText = xml.NewText(information.getHost().c_str());
-    host->InsertEndChild(hostText);
-    info->InsertEndChild(host);
+    infoStrings[0] = information.getAuthor();
+    infoStrings[1] = information.getHost();
+    infoStrings[2] = information.getDateAsString();
+    infoStrings[3] = information.getLocation();
+    infoStrings[4] = information.getSession();
+    infoStrings[5] = information.getAnnotation();
+
+    elementNameStrings[0] = "author";
+    elementNameStrings[1] = "host";
+    elementNameStrings[2] = "date";
+    elementNameStrings[3] = "location";
+    elementNameStrings[4] = "session";
+    elementNameStrings[5] = "annotation";
     
-    XMLElement* date = xml.NewElement("date");
-    XMLText* dateText = xml.NewText(information.getDateAsString().c_str());
-    date->InsertEndChild(dateText);
-    info->InsertEndChild(date);
-    
-    XMLElement* location = xml.NewElement("location");
-    XMLText* locationText = xml.NewText(information.getLocation().c_str());
-    location->InsertEndChild(locationText);
-    info->InsertEndChild(location);
- 
-    XMLElement* session = xml.NewElement("session");
-    XMLText* sessionText = xml.NewText(information.getSession().c_str());
-    session->InsertEndChild(sessionText);
-    info->InsertEndChild(session);
-    
-    XMLElement* annotation = xml.NewElement("annotation");
-    XMLText* annotationText = xml.NewText(information.getAnnotation().c_str());
-    annotation->InsertEndChild(annotationText);
-    info->InsertEndChild(annotation);
+    for(int i = 0; i< 6; i++){
+        if(!infoStrings[i].empty()){
+            XMLElement* e  = xml.NewElement(elementNameStrings[i].c_str());
+            XMLText* t = xml.NewText(infoStrings[i].c_str());
+            e->InsertEndChild(t);
+            info->InsertEndChild(e);
+        }
+    }
     
     // check the number of extension
     int num = scene->getNumberOfActivatedExtensions();
