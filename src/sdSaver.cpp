@@ -143,29 +143,45 @@ string sdSaver::XMLFromScene(sdScene *scene){
         }
 
         // 2. create string
+        double previousTime = -1.0;
+        string previousName;
+        XMLElement* kind;
+
         multiset<sdGlobalEvent, sdGlobalEventCompare>::iterator eit = allEventSet.begin();
         while(eit != allEventSet.end()){
-            sdGlobalEvent event = *eit;
+            sdGlobalEvent event = *eit;            
+            if(event.getEvent()->getTime() != previousTime){
+                XMLElement* time = xml.NewElement("time");
+                XMLText* timeText = xml.NewText(event.getEvent()->getTimeAsString().c_str());
+                time->InsertEndChild(timeText);
+                spatdif->InsertEndChild(time);
+            }
             
-            XMLElement* time = xml.NewElement("time");
-            XMLText* timeText = xml.NewText(event.getEvent()->getTimeAsString().c_str());
-            time->InsertEndChild(timeText);
-            spatdif->InsertEndChild(time);
-
-            XMLElement* kind;
-            kind = xml.NewElement(event.getKindAsString().c_str());
-            XMLElement* name = xml.NewElement("name");
-            XMLText* nameText = xml.NewText(event.getEntityName().c_str());
-            name->InsertEndChild(nameText);
-            kind->InsertEndChild(name);
+            if((event.getEvent()->getTime() == previousTime) && (event.getEntityName() == previousName)){
+                XMLElement* element = xml.NewElement(event.getEvent()->getDescriptorAsString().c_str());
+                XMLText* text = xml.NewText(event.getEvent()->getValueAsString().c_str());
+                element->InsertEndChild(text);
+                kind->InsertEndChild(element);
+                spatdif->InsertEndChild(kind);
+                
+            }else{
+                kind = xml.NewElement(event.getKindAsString().c_str());
+                XMLElement* name = xml.NewElement("name");
+                XMLText* nameText = xml.NewText(event.getEntityName().c_str());
+                name->InsertEndChild(nameText);
+                kind->InsertEndChild(name);
             
-            XMLElement* element = xml.NewElement(event.getEvent()->getDescriptorAsString().c_str());
-            XMLText* text = xml.NewText(event.getEvent()->getValueAsString().c_str());
-            element->InsertEndChild(text);
-            kind->InsertEndChild(element);
-            
-            spatdif->InsertEndChild(kind);
+                XMLElement* element = xml.NewElement(event.getEvent()->getDescriptorAsString().c_str());
+                XMLText* text = xml.NewText(event.getEvent()->getValueAsString().c_str());
+                element->InsertEndChild(text);
+                kind->InsertEndChild(element);
+                spatdif->InsertEndChild(kind);
+                previousName = event.getEntityName();
+                
+            }
             ++eit;
+            previousTime = event.getEvent()->getTime();
+
         }
 
     }else if(scene->getOrdering() == SD_TRACK){
