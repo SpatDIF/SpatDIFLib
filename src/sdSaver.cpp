@@ -8,6 +8,7 @@
 #include <algorithm>
 #include "sdConst.h"
 #include "sdEntity.h"
+#include "sdEntityExtension.h"
 #include "sdScene.h"
 #include "sdSaver.h"
 #include "tinyxml2.h"
@@ -70,10 +71,10 @@ string sdSaver::XMLFromScene(sdScene *scene){
     
     for(int i = 0; i< 6; i++){
         if(!infoStrings[i].empty()){
-            XMLElement* e  = xml.NewElement(elementNameStrings[i].c_str());
-            XMLText* t = xml.NewText(infoStrings[i].c_str());
-            e->InsertEndChild(t);
-            info->InsertEndChild(e);
+            XMLElement* elem  = xml.NewElement(elementNameStrings[i].c_str());
+            XMLText* tex = xml.NewText(infoStrings[i].c_str());
+            elem->InsertEndChild(tex);
+            info->InsertEndChild(elem);
         }
     }
     
@@ -91,7 +92,9 @@ string sdSaver::XMLFromScene(sdScene *scene){
         
         XMLText* extensionsText = xml.NewText(extString.c_str());
         extensions->InsertEndChild(extensionsText);
+        meta->InsertEndChild(extensions);
     }
+    
     XMLElement* order = xml.NewElement("ordering");
     XMLText* orderingText = xml.NewText(scene->getOrderingAsString().c_str());
     order->InsertEndChild(orderingText);
@@ -109,6 +112,8 @@ string sdSaver::XMLFromScene(sdScene *scene){
         multiset<sdGlobalEvent, sdGlobalEventCompare> allEventSet;
         
         while(it != entityVector.end()){
+            
+            // core event
             sdEntityCore *entity = *it;
             multiset<sdEvent*, sdEventCompare> eventSet = entity->getEventSet();
             multiset<sdEvent*, sdEventCompare>::iterator iit =eventSet.begin();
@@ -118,6 +123,22 @@ string sdSaver::XMLFromScene(sdScene *scene){
                 allEventSet.insert(globalEvent); // gather pointer to all existing instances of sdEvent
                 ++iit;
             }
+            // extension event
+            vector <sdEntityExtension*> extensionVector = entity->getExtensionVector();
+            vector <sdEntityExtension*>::iterator evit = extensionVector.begin();
+            while (evit != extensionVector.end()) {
+                sdEntityExtension* attachedExtension = *evit;
+                multiset<sdEvent*, sdEventCompare> extEventSet = attachedExtension->getEventSet();
+                multiset<sdEvent*, sdEventCompare>::iterator aeit = extEventSet.begin();
+                while (aeit != extEventSet.end()) {
+                    sdEvent* extEvent = *aeit;
+                    sdGlobalEvent globalExtEvent(extEvent, entity->getName(), entity->getKind());
+                    allEventSet.insert(globalExtEvent);
+                    ++aeit;
+                }
+                evit++;
+            }
+            
             ++it;
         }
 
