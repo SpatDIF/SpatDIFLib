@@ -12,6 +12,7 @@ int main(void){
     sdInfo info(string("chikashi miyama"), string("sdSaverTest"), string("2013-08-04"), string("Cologne"), string("1.2"), string("this is a test"));
     sdScene scene(info);
     
+    scene.addExtension(SD_MEDIA);
     //the scene has one entities
     sdEntityCore *myEntity = scene.addEntity("myEntity", SD_SOURCE);
     sdEntityCore *yourEntity = scene.addEntity("yourEntity", SD_SOURCE);

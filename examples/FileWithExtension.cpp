@@ -24,7 +24,7 @@ int main(void){
     
     sdScene scene = sdLoader::sceneFromXML(xmlString);
     //scene.dump();
-    
+
     // here how you get a pointer to two source entities
     sdEntityCore* insect = scene.getEntity("insect");
     sdEntityCore* elephant = scene.getEntity("elephant");
@@ -32,6 +32,7 @@ int main(void){
     // now you can ask these entities about their attached extensions
     sdEvent* insectMediaLocationEvent = insect->getFirstEvent(SD_MEDIA_LOCATION);
     sdEvent* elephantMediaLocationEvent = elephant->getFirstEvent(SD_MEDIA_LOCATION);
+    
     
     cout << "Entity Name:" << insect->getName() << endl;
     cout << "Attached Sound File:" << insectMediaLocationEvent->getValueAsString() << endl;

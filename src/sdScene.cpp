@@ -46,6 +46,7 @@ unsigned int sdScene::getNumberOfEntities(void){
 sdEntityCore* sdScene::addEntity(string name, EKind kind){
     
     sdEntityCore* ent = getEntity(name);
+    // if already exist just return the existing one
     if(ent){
         return ent;
     }
@@ -54,6 +55,7 @@ sdEntityCore* sdScene::addEntity(string name, EKind kind){
 
     // attach extensions to the newly created sdEntityCore.
     vector <EExtension> ::iterator it = activatedExtensionVector.begin();
+
 
     while(it != activatedExtensionVector.end()){
         entityCore->addExtension(*it);
@@ -102,36 +104,25 @@ int sdScene::getNumberOfActivatedExtensions(void){
     return activatedExtensionVector.size();
 }
 
-vector <EExtension> sdScene::getActivatedExtensionVector(void){
-    return activatedExtensionVector;
+
+
+EExtension sdScene::getActivatedExtension(int index){
+    return activatedExtensionVector[index];
 }
 
-EExtension sdScene::convertExtensionString(string extension){
-    EExtension ext;
-    if(extension == "media"){
-        ext = SD_MEDIA;
-    }else if(extension == "interpolation"){
-        ext = SD_INTERPOLATION;
-    }else if(extension == "direct-to-one"){
-        ext = SD_DIRECT_TO_ONE;
-    }else{
-        ext = SD_EXTENSION_ERROR;
-    }
-    return ext;
-}
 
 void sdScene::addExtension(EExtension extension){
     vector <EExtension>::iterator pos;
     pos= find(activatedExtensionVector.begin(),
          activatedExtensionVector.end(),
          extension);
-    
+
     //duplication check
     if(pos != activatedExtensionVector.end()){
         cout << "sdScene Error: Extension already activated." << endl;
         return;
     }
-    
+
     activatedExtensionVector.push_back(extension);
     vector <sdEntityCore*>::iterator it = entityVector.begin();
     while (it != entityVector.end()) {
@@ -143,7 +134,7 @@ void sdScene::addExtension(EExtension extension){
 }
 
 void sdScene::addExtension(string extension){
-    EExtension ext = convertExtensionString(extension);
+    EExtension ext = stringToExtension(extension);
     if(ext == SD_EXTENSION_ERROR){
         cout << "sdScene Error: No such extension." << endl;
         return;
@@ -178,7 +169,7 @@ void sdScene::removeExtension(EExtension extension){
 }
 
 void sdScene::removeExtension(string extension){
-    EExtension ext = convertExtensionString(extension);
+    EExtension ext = stringToExtension(extension);
     if(ext == SD_EXTENSION_ERROR){
         cout << "sdScene Error: No such activated extension." << endl;
     }

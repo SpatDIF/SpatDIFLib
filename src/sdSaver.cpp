@@ -81,6 +81,21 @@ string sdSaver::XMLFromScene(sdScene *scene){
     annotation->InsertEndChild(annotationText);
     info->InsertEndChild(annotation);
     
+    // check the number of extension
+    int num = scene->getNumberOfActivatedExtensions();
+
+    if(num > 0){
+        XMLElement* extensions = xml.NewElement("extensions");
+        string extString;
+        for(int i = 0; i< num; i++){
+
+            EExtension ext = scene->getActivatedExtension(i);
+            extString = extString + extensionToString(ext);
+        }
+        
+        XMLText* extensionsText = xml.NewText(extString.c_str());
+        extensions->InsertEndChild(extensionsText);
+    }
     XMLElement* order = xml.NewElement("ordering");
     XMLText* orderingText = xml.NewText(scene->getOrderingAsString().c_str());
     order->InsertEndChild(orderingText);

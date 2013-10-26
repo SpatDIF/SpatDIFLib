@@ -164,7 +164,7 @@ inline int stringToInt(string str){
 }
 
 /*!
- utility function that convert a string to a descriptor. 
+ utility function that converts a string to a descriptor. 
  */
 inline const EDescriptor stringToDescriptor(string str, const string *ds, const EDescriptor *dc, const int num){
     for(int i = 0; i<num; i++ ){
@@ -175,7 +175,7 @@ inline const EDescriptor stringToDescriptor(string str, const string *ds, const 
 }
 
 /*!
- utility function that convert a descriptor to a string.
+ utility function that converts a descriptor to a string.
  */
 inline const string descriptorToString(EDescriptor descriptor, const string *ds, const EDescriptor *dc, const int num){
     for(int i = 0; i<num; i++ ){
@@ -183,5 +183,34 @@ inline const string descriptorToString(EDescriptor descriptor, const string *ds,
             return ds[i];
     }
 }
+
+inline const string extensionToString(EExtension extension){
+    string extensionStr;
+    if(extension == SD_MEDIA){
+        extensionStr = "media";
+    }else if(extension == SD_INTERPOLATION){
+        extensionStr = "interpolation";
+    }else if(extension == SD_DIRECT_TO_ONE){
+        extensionStr = "directo-to-one";
+    }else{
+        extensionStr = "error";
+    }
+    return extensionStr;
+}
+
+inline const EExtension stringToExtension(string extensionStr){
+    EExtension ext;
+    if(extensionStr == "media"){
+        ext = SD_MEDIA;
+    }else if(extensionStr == "interpolation"){
+        ext = SD_INTERPOLATION;
+    }else if(extensionStr == "direct-to-one"){
+        ext = SD_DIRECT_TO_ONE;
+    }else{
+        ext = SD_EXTENSION_ERROR;
+    }
+    return ext;
+}
+
 
 #endif

@@ -166,28 +166,45 @@ public:
     /*! get the vector of sdExtensions */
     vector <sdEntityExtension*>getExtensionVector(void);
     
-    /*! returns a pointer to activated sdEntityExtension in the extensionVector. returns NULL if not exists. */
-    sdEntityExtension* getExtension(EExtension);
+    /*! returns a pointer to a sdEntityExtension in the extensionVector. returns NULL if not exists. */
+    sdEntityExtension* getExtension(EExtension extension);
 
-       
+    /*! returns a pointer to a sdEntityExtension in the extensionVector. returns NULL if not exists */
+    sdEntityExtension* getResponsibleExtension(EDescriptor descriptor);
+    
     /*! @} */
     
     /*!
-     overrided method. this function forwards the query to the extensions
+     overrided function. this function forwards the query to the extensions if an extended descriptor is provided as an argument.
      @param time the time of the event in second
      @param descriptor the descriptor of the event declared in sdConst.h
      */
     sdEvent* getEvent(double time, EDescriptor descriptor);
     
     /*!
-     overrided method. this function forwards the query to the extensions
-     @param time index
+     overrided function. this function forwards the query to the extensions if an extended descriptor is provided as an argument.
+     @param time the next event from this time point will be returned
      @param descriptor the descriptor of the event declared in sdConst.h
      */
     sdEvent* getNextEvent(double time, EDescriptor descriptor);
     
+    /*!
+     overrided function. this function forwards the query to the extensions if an extended descriptor is provided as an argument.
+     @param descriptor only the event with this descriptor will be examined
+     */
+    sdEvent* getFirstEvent(EDescriptor descriptor);
     
-    /*!overrided function*/
+    /*!
+     overrided function. this function forwards the query to the extensions if an extended descriptor is provided as an argument.
+     @param descriptor only the event with this descriptor will be examined
+     */
+    sdEvent* getLastEvent(EDescriptor descriptor);
+    
+    /*!
+     overrided function. this function forwards the query to the extensions if an extended descriptor is provided as an argument.
+     @param time time of the event
+     @param descriptor descriptor of the event
+     */
     void* getValue(double time, EDescriptor descriptor);
 
     /*!static function for sorting. employed by sdSaver*/

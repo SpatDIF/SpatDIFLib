@@ -152,6 +152,7 @@ const EDescriptor sdEntityCore::coreDescriptors[] = {
     SD_POSITION,
     SD_ORIENTATION
 };
+
 const string sdEntityCore::coreDescriptorStrings[] = {
     string("present"),
     string("position"),
@@ -293,7 +294,6 @@ void* sdEntityCore::getValue(double time, EDescriptor descriptor){
 
 sdEntityExtension* sdEntityCore::addExtension(EExtension extension){
     sdEntityExtension *ext= getExtension(extension);
-
     switch (extension) {
         case SD_MEDIA:{
             sdEntityExtensionMedia* mediaExtension = new sdEntityExtensionMedia();
@@ -340,37 +340,68 @@ sdEntityExtension* sdEntityCore::getExtension(EExtension extension){
     return NULL;
 }
 
+sdEntityExtension* sdEntityCore::getResponsibleExtension(EDescriptor descriptor){
+    vector <sdRedirector>::iterator it = redirectorVector.begin();
+    while(it != redirectorVector.end()){
+        sdRedirector rd = *it;
+        if(rd.descriptor == descriptor){
+            return rd.responsibleExtension;
+        }
+        it++;
+    }
+    return NULL;
+}
+
 
 sdEvent* sdEntityCore::getEvent(double time, EDescriptor descriptor){
     if(isCoreDescriptor(descriptor)){
         return sdEntity::getEvent(time, descriptor);
     }else{
-        vector <sdRedirector>::iterator it = redirectorVector.begin();
-        while (it != redirectorVector.end()) {
-            sdRedirector rd = *it;
-            if(rd.descriptor == descriptor){
-                return rd.responsibleExtension->getEvent(time, descriptor);
-            }
-            it++;
+        sdEntityExtension* extension = getResponsibleExtension(descriptor);
+        if (!extension) {
+            return NULL;
         }
-        return NULL;
+        return extension->getEvent(time, descriptor);
     }
+    return NULL;
 }
 
 sdEvent* sdEntityCore::getNextEvent(double time, EDescriptor descriptor){
     if(isCoreDescriptor(descriptor)){
         return sdEntity::getNextEvent(time, descriptor);
     }else{
-        vector <sdRedirector>::iterator it = redirectorVector.begin();
-        while (it != redirectorVector.end()) {
-            sdRedirector rd = *it;
-            if(rd.descriptor == descriptor){
-                return rd.responsibleExtension->getNextEvent(time, descriptor);
-            }
-            it++;
+        sdEntityExtension* extension = getResponsibleExtension(descriptor);
+        if (!extension) {
+            return NULL;
         }
-        return NULL;
+        return extension->getNextEvent(time, descriptor);
     }
+    return NULL;
 }
 
+sdEvent* sdEntityCore::getFirstEvent(EDescriptor descriptor){
+    if(isCoreDescriptor(descriptor)){
+        return sdEntity::getFirstEvent(descriptor);
+    }else{
+        sdEntityExtension* extension = getResponsibleExtension(descriptor);
+        if (!extension) {
+            return NULL;
+        }
+        return extension->getFirstEvent(descriptor);
+    }
+    return NULL;
+}
+
+sdEvent* sdEntityCore::getLastEvent(EDescriptor descriptor){
+    if(isCoreDescriptor(descriptor)){
+        return sdEntity::getLastEvent(descriptor);
+    }else{
+        sdEntityExtension* extension = getResponsibleExtension(descriptor);
+        if (!extension) {
+            return NULL;
+        }
+        return extension->getLastEvent(descriptor);
+    }
+    return NULL;
+}
 
