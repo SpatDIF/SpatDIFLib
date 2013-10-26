@@ -52,8 +52,15 @@ sdScene sdLoader::sceneFromXML(string xmlString){
     }
     scene.setInfo(info);
     
+    
     if(extensions){
-        scene.addExtension(string(extensions->GetText()));
+        string extensionsString = string(extensions->GetText());
+        istringstream iss(extensionsString);
+        while (iss.good()) { // add extensions one by one
+            string extensionString;
+            iss >> extensionString;
+            scene.addExtension(extensionString);
+        }
     }
     
     //first time tag
