@@ -9,6 +9,7 @@
             <session>Cologne</session>
             <annotation>this is a test</annotation>
         </info>
+        <extensions>media</extensions>
         <ordering>time</ordering>
     </meta>
     <time>2.12</time>

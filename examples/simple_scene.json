@@ -7,6 +7,7 @@
                 "date": "2013-08-13",
                 "author": "Chikashi Miyama"
             },
+            "extensions": "media",
             "ordering": "time"
         },
         "time": 0.0,
