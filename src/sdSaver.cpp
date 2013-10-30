@@ -145,41 +145,63 @@ string sdSaver::XMLFromScene(sdScene *scene){
         // 2. create string
         double previousTime = -1.0;
         string previousName;
+        string previousExtension;
+        XMLElement* extension;
         XMLElement* kind;
 
+        
         multiset<sdGlobalEvent, sdGlobalEventCompare>::iterator eit = allEventSet.begin();
         while(eit != allEventSet.end()){
-            sdGlobalEvent event = *eit;            
-            if(event.getEvent()->getTime() != previousTime){
+            sdGlobalEvent event = *eit;
+
+            //time tag
+            if(event.getEvent()->getTime() != previousTime){ // next time tag
                 XMLElement* time = xml.NewElement("time");
                 XMLText* timeText = xml.NewText(event.getEvent()->getTimeAsString().c_str());
                 time->InsertEndChild(timeText);
                 spatdif->InsertEndChild(time);
             }
             
-            if((event.getEvent()->getTime() == previousTime) && (event.getEntityName() == previousName)){
-                XMLElement* element = xml.NewElement(event.getEvent()->getDescriptorAsString().c_str());
-                XMLText* text = xml.NewText(event.getEvent()->getValueAsString().c_str());
-                element->InsertEndChild(text);
-                kind->InsertEndChild(element);
-                spatdif->InsertEndChild(kind);
+            //event
+            if(event.getEvent()->getTime() != previousTime || event.getEntityName() != previousName){
+                // if name of entity or time tag changes we need to write many tags!
                 
-            }else{
                 kind = xml.NewElement(event.getKindAsString().c_str());
+                
+                // the name of entity always comes first
                 XMLElement* name = xml.NewElement("name");
                 XMLText* nameText = xml.NewText(event.getEntityName().c_str());
                 name->InsertEndChild(nameText);
                 kind->InsertEndChild(name);
+                previousName = event.getEntityName();
+            }
             
-                XMLElement* element = xml.NewElement(event.getEvent()->getDescriptorAsString().c_str());
-                XMLText* text = xml.NewText(event.getEvent()->getValueAsString().c_str());
-                element->InsertEndChild(text);
+            XMLElement* element = xml.NewElement(event.getEvent()->getDescriptorAsString().c_str());
+            XMLText* text = xml.NewText(event.getEvent()->getValueAsString().c_str());
+            string relevantExtension = extensionToString(getRelevantExtension(event.getEvent()->getDescriptor()));
+
+            element->InsertEndChild(text);
+
+            if(relevantExtension == "core"){
                 kind->InsertEndChild(element);
                 spatdif->InsertEndChild(kind);
-                previousName = event.getEntityName();
-                
+                previousExtension = relevantExtension;
+            }else{
+                if(previousExtension != relevantExtension){
+                    extension = xml.NewElement((relevantExtension).c_str());
+                    extension->InsertEndChild(element);
+                    kind->InsertEndChild(extension);
+                    spatdif->InsertEndChild(kind);
+                }else{
+                    extension->InsertEndChild(element);
+                    kind->InsertEndChild(extension);
+                    spatdif->InsertEndChild(kind);
+                }
             }
+
             ++eit;
+            
+            previousExtension = relevantExtension;
             previousTime = event.getEvent()->getTime();
 
         }

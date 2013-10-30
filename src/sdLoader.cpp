@@ -149,6 +149,16 @@ sdScene sdLoader::sceneFromJSON(string jsonString){
                             iiiit++;
                         }
                     }
+                    else if(iiit->name() == "extensions"){
+                        JSONNode extensionsNode = *iiit;
+                        string extensionsString = iiit->as_string();
+                        istringstream iss(extensionsString);
+                        while (iss.good()) { // add extensions one by one
+                            string extensionString;
+                            iss >> extensionString;
+                            scene.addExtension(extensionString);
+                        }
+                    }
                     iiit++;
                 }
                 scene.setInfo(info);

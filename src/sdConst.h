@@ -59,6 +59,7 @@ typedef enum {
  enum for extension. all sdEntityExtension must have one of these enum as a static variable in order to identify themselves
  */
 typedef enum {
+    SD_CORE,
     SD_MEDIA,
     SD_INTERPOLATION,
     SD_DIRECT_TO_ONE,
@@ -192,6 +193,8 @@ inline const string extensionToString(EExtension extension){
         extensionStr = "interpolation";
     }else if(extension == SD_DIRECT_TO_ONE){
         extensionStr = "directo-to-one";
+    }else if(extension == SD_CORE){
+        extensionStr = "core";
     }else{
         extensionStr = "error";
     }
@@ -212,5 +215,14 @@ inline const EExtension stringToExtension(string extensionStr){
     return ext;
 }
 
+inline const EExtension getRelevantExtension(EDescriptor descriptor){
+    if(SD_TYPE <= descriptor && descriptor <= SD_ORIENTATION){
+        return SD_CORE;
+    }else if(SD_MEDIA_ID <= descriptor && descriptor <= SD_MEDIA_GAIN){
+        return SD_MEDIA;
+    }else{
+        return SD_EXTENSION_ERROR;
+    }
+}
 
 #endif

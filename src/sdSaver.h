@@ -88,17 +88,52 @@ class sdGlobalEventCompare{
 public:
     bool operator()(sdGlobalEvent e1, sdGlobalEvent e2){
         if(e1.getEvent()->getTime() < e2.getEvent()->getTime()){
+            //e1 before e2 on the time line
             return true;
-        }else if(e1.getEvent()->getTime() == e2.getEvent()->getTime()){
-            if(e1.getKind() == SD_SOURCE){ // source first then sink
-                return true;
+        }else if(e1.getEvent()->getTime() > e2.getEvent()->getTime()){
+            //e2 before e1 on the time line
+            return false;
+        }else{
+            // e1 and e2 at the same time
+            
+            //1. check kind --- if different, source first
+            if(e1.getKind() != e2.getKind()){
+                if(e1.getKind() == SD_SOURCE){
+                    return true;
+                }else{
+                    return false;
+                }
             }else{
-                return false;
+                //if kind is same
+                //2. order by name of attached entity
+                string e1EntityName = e1.getEntityName();
+                string e2EntityName = e2.getEntityName();
+                
+                if(e1EntityName < e2EntityName){
+                    return true;
+                }else if(e1EntityName > e2EntityName){
+                    return false;
+                }else{
+                    // if same entity
+                    //3. check descriptor --- core first
+                    bool e1Core = sdEntityCore::isCoreDescriptor(e1.getEvent()->getDescriptor());
+                    bool e2Core = sdEntityCore::isCoreDescriptor(e2.getEvent()->getDescriptor());
+                    if(e1Core == true && e2Core == false){// core before extension
+                        return true; 
+                    }else if(e1Core == false && e2Core == true){//extension before core
+                        return false;
+                    }else{
+                        //4. sort descriptor alphabetically
+                        if(e1.getEvent()->getDescriptorAsString() < e2.getEvent()->getDescriptorAsString()){
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    }
+                }
             }
         }
-        else{
-            return false;
-        }
+        
     }
 };
 
