@@ -3,41 +3,41 @@ CFLAGS = -arch i386
 INCLUDE = ../src
 LIB_PATH = ../src
 LIBS =  -lstdc++ -lspatdif
-TARGETS = sdEventTest sdDateTest sdInfoTest sdSaverTest sdLoaderTest sdSceneTest sdExtensionTest sdConverter How_to_query sdOSCTest FileWithExtension
+TARGETS = How_to_query.out FileWithExtension.out sdConverter.out sdDateTest.out sdEventTest.out sdExtensionTest.out sdInfoTest.out sdLoaderTest.out sdOSCTest.out sdSaverTest.out sdSceneTest.out
 
 all: $(TARGETS)
 
-sdEventTest: sdEventTest.cpp
-	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS)
-
-sdDateTest: sdDateTest.cpp
-	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS)
-
-sdInfoTest: sdInfoTest.cpp
+How_to_query.out:  How_to_query.cpp
 	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
 
-sdSaverTest: sdSaverTest.cpp
+FileWithExtension.out: FileWithExtension.cpp
 	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
 
-sdLoaderTest: sdLoaderTest.cpp
-	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS)  
-
-sdSceneTest:  sdSceneTest.cpp
+sdConverter.out: sdConverter.cpp
 	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
 
-sdExtensionTest: sdExtensionTest.cpp
-	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 	
-
-How_to_query:  How_to_query.cpp
+sdDateTest.out: sdDateTest.cpp
 	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
 
-sdConverter: sdConverter.cpp	
-	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 	
-
-sdOSCTest: sdOSCTest.cpp
+sdEventTest.out: sdEventTest.cpp
 	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
 
-FileWithExtension: FileWithExtension.cpp
+sdExtensionTest.out:  sdExtensionTest.cpp
+	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
+
+sdInfoTest.out: sdInfoTest.cpp
+	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
+
+sdLoaderTest.out: sdLoaderTest.cpp
+	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
+
+sdOSCTest.out: sdOSCTest.cpp
+	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
+
+sdSaverTest.out: sdSaverTest.cpp
+	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
+
+sdSceneTest.out: sdSceneTest.cpp
 	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
 
 clean:
