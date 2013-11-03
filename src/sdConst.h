@@ -183,6 +183,7 @@ inline const string descriptorToString(EDescriptor descriptor, const string *ds,
         if(dc[i] == descriptor)
             return ds[i];
     }
+    return NULL;
 }
 
 inline const string extensionToString(EExtension extension){

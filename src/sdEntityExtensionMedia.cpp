@@ -145,7 +145,7 @@ bool sdEventExtensionMedia::setValue(string descriptor, string value){
         }
     }
 
-    
+    return true;
 }
 
 /*** sdEntityExtensionMedia ***/

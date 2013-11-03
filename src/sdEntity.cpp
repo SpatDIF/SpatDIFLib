@@ -101,6 +101,7 @@ sdEvent* sdEntity::getLastEvent(EDescriptor descriptor){
             return event;
         }
     }
+    return NULL;
 }
 
 double sdEntity::getFirstTimeTag(){
