@@ -22,7 +22,8 @@ all:
 
 Darwin: tinyxml2.o libjson.a libspatdif.dylib
 	cp libspatdif.dylib ../examples
-	cd ../examples; make 
+	cd ../examples; make
+	install_name_tool -id @executable_path/libspatdif.dylib libspatdif.dylib
 
 Linux: tinyxml2.o libjson.a libspatdif.so
 	cd ../examples; make 
