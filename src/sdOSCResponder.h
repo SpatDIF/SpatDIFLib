@@ -16,10 +16,17 @@ private:
     /*! The interpreted OSC messages will be sent do this sdScene*/
     sdScene *scene;
     
-    string currentTimeString; /*< contains current time of responder as a string. */
+    string queryTimeString; /*< contains current time of responder as a string. */
     
     /*! private utility function for spliting string with slash*/
     vector <string> splitString(const string &str);
+    
+    /*!
+     @param expectedNumber expected number of arguments
+     @param actualNumber actual number of arguments
+     @param command command name
+     */
+    bool checkNumberOfArguments(int expectedNumber, int actualNumber, string command);
     
 public:
     /*! constructor. the scene must be created before the instantiation of this class
@@ -30,7 +37,7 @@ public:
     /*! this function interprets incoming string as a OSCMessage and forward it to the scene
      @param oscMessage a OSC string to be interpreted and forwarded to the library
      */
-    void forwardOSCMessage(string oscMessage);
+    string forwardOSCMessage(string oscMessage);
     
     /*!
      overloaded funtion.
@@ -42,7 +49,9 @@ public:
     /*!
      @param time set current time to this value
      */
-    void setCurrentTime(double time);
+    void setQueryTime(double time);
+    
+    
 };
 
 #endif /* defined(____sdOSCResponder__) */

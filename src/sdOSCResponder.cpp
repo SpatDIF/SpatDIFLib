@@ -8,7 +8,7 @@ using namespace std;
 
 sdOSCResponder::sdOSCResponder(sdScene *scene){
     sdOSCResponder::scene =scene;
-    currentTimeString = "0.0";
+    queryTimeString = "0.0";
 }
 
 vector<string> sdOSCResponder::splitString(const string &str){
@@ -22,75 +22,103 @@ vector<string> sdOSCResponder::splitString(const string &str){
     return res;
 }
 
-void sdOSCResponder::setCurrentTime(double time){
-    currentTimeString = doubleToString(time);
+void sdOSCResponder::setQueryTime(double time){
+    queryTimeString = doubleToString(time);
 }
 
 void sdOSCResponder::forwardOSCMessage(string oscMessage, double time){
-    setCurrentTime(time);
+    setQueryTime(time);
     forwardOSCMessage(oscMessage);
 }
 
-void sdOSCResponder::forwardOSCMessage(string oscMessage){
+bool sdOSCResponder::checkNumberOfArguments(int expectedNumber, int actualNumber, string command){
+    if (actualNumber < expectedNumber) {
+        cout << "sdOSCReponder Error: too few arguments for comannd." << command << endl;
+        return false;
+    }
+    else if(actualNumber > expectedNumber){
+        cout << "sdOSCReponder Error: too many arguments for comannd." << command << endl;
+        return false;
+    }
+    return true;
+}
+
+string sdOSCResponder::forwardOSCMessage(string oscMessage){
     // interpret
-    bool timeFlag = false;
-    string addressPattern, typeTag, temp, kind, entityName, descriptor, argument, arguments;
+    string element, command;
+    vector<string> arguments;
     istringstream iss(oscMessage);
     int count = 0;
     EKind kd;
     while(iss.good()){
-        if(count == 0){
-            iss >> addressPattern;
-            if (addressPattern[0] != '/') {
-                cout << "sdOSCReponder Error: The first element of incoming OSC Message is not an address pattern." << endl;
-                return;
+        iss >> element;
+        
+        switch(count){
+            case 0:{
+                //address pattern
+                if (element[0] != '/') {
+                    cout << "sdOSCReponder Error: The first element of incoming OSC Message is not an address pattern." << endl;
+                    return NULL;
+                }
+                //split into parts
+                vector <string>ads = splitString(element);
+                ads.erase (ads.begin());
+                
+                if (ads.size() < 2 ) {
+                    cout << "sdOSCResponder Error: The address pattern consists of two few elements." << endl;
+                    return NULL;
+                }
+                
+                if(ads[0] != "spatdifcmd"){
+                    cout << "sdOSCResponder Error: The address pattern of the received message does not begin with \"spatdifcmd\"." << endl;
+                    return NULL;
+                }
+                
+                command = ads[1];
+                
+                break;
             }
-            //split into parts
-            vector <string>ads = splitString(addressPattern);
-            ads.erase (ads.begin());
-            
-            if(ads[0] != "spatdif"){
-                cout << "sdOSCResponder Error: The address pattern of the received message does not begin with \"spatdif\"." << endl;
-                return;
+            case 1:{
+                if (element[0] == ',') {  // with type tag, just ignore
+                    iss >> element;
+                }
             }
-            kind = ads[1];
-            if (kind == "source") {
-                kd = SD_SOURCE;
-                entityName = ads[2];
-                descriptor = ads[3];
-            }else if(kind == "sink"){
-                kd = SD_SINK;
-                entityName = ads[2];
-                descriptor = ads[3];
-            }else if(kind == "time"){
-                timeFlag = true;
-            }else{
-                cout << "sdOSCResponder Error: Kind of given address pattern should be  \"source\", \"sink\", or \"time\"." << endl;
-                return;
+            default:{
+                arguments.push_back(element); // copy all arguments to vector
             }
-        }else if(count == 1){
-            iss >> temp;
-            if(temp[0] != ','){
-                arguments = temp;
-                arguments += " ";
-            }
-        }else{
-            iss >> argument;
-            arguments += argument;
-            arguments += " ";
         }
         count++;
     }
-    
-    // store in the library
-    if (timeFlag) {
-        currentTimeString = arguments;
-    }
-    sdEntityCore* ent = scene->getEntity(entityName);
-    if(!ent){
-        ent = scene->addEntity(entityName, kd);
-    }
-    cout << "addEvent" << entityName << arguments << endl;
-    ent->addEvent(currentTimeString, descriptor, arguments);
 
+
+    if( command == "setQueryTime"){
+
+        if(!checkNumberOfArguments( 1, arguments.size() ,command)){
+            return "/spatdif/error";
+        }
+
+        queryTimeString = arguments[0];
+
+        return "/spatdif/time " + queryTimeString;
+        
+    }else if(command == "getPosition"){
+        checkNumberOfArguments( 1, arguments.size() ,command);
+        sdEntityCore *entity = scene->getEntity(arguments[0]);
+        if (!entity) {
+            cout << "sdOSCResponder Error: no such entity " << arguments[0] << endl;
+            return "/spatdif/error";
+        }
+        string returnMessage;
+        sdEvent* event = entity->getEvent(stringToDouble(queryTimeString), SD_POSITION);
+        if (!event) {
+            cout << "sdOSCResponder Error: no such event " <<  endl;
+            return "/spatdif/error";
+        }
+        returnMessage = "/spatdif/source/" + arguments[0] + "/position " + event->getValueAsString();
+        return returnMessage;
+    }
+    
+    return NULL;
+    
+    
 }
