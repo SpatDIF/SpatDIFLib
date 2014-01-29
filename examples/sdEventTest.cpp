@@ -58,9 +58,10 @@ int main(void){
         rit++;
     }
     
-    cout << "events between 4.0 and 6.0 of the all entities:" <<  endl;
-    reportVector = scene.getEventSetsFromAllEntities(1.0, 9.0);
-    cout << "number of match:" << reportVector.size();
+    cout << "events between 6.0 and 12.0 of the all entities:" <<  endl;
+    reportVector = scene.getEventSetsFromAllEntities(6.0, 12.0);
+    cout << "number of match:" << reportVector.size() << endl;
+    rit = reportVector.begin() ;
     while (rit != reportVector.end()) {
         sdReport report = *rit;
         cout << "---Entity:" << report.entity->getName() << endl;

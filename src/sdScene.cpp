@@ -206,7 +206,9 @@ vector<sdReport> sdScene::getEventSetsFromAllEntities(double start, double end){
         sdReport report;
         report.entity = entityCore;
         report.eventSet= entityCore->getEventSet(start, end);
-        reportVector.push_back(report);
+        if(report.eventSet.size() != 0){
+            reportVector.push_back(report);
+        }
         it++;
     }
     return reportVector;
