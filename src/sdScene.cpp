@@ -176,6 +176,43 @@ void sdScene::removeExtension(string extension){
     removeExtension(ext);
 }
 
+vector<sdReport> sdScene::getNextEventSetsFromAllEntities(double time){
+    vector<sdReport> reportVector;
+    vector<sdEntityCore*>::iterator it = entityVector.begin();
+    while (it != entityVector.end()) {
+        sdReport report;
+        sdEntityCore* entityCore = *it;
+        report.entity = entityCore;
+        report.eventSet= entityCore->getNextEventSet(time);
+        if(report.eventSet.size() != 0){
+            multiset<sdEvent*, sdEventCompare>::iterator it=report.eventSet.begin();
+            sdEvent* firstEvent = *it;
+            reportVector.push_back(report);
+        }
+        it++;
+    }
+    return reportVector;
+}
+
+vector<sdReport> sdScene::getFirstEventSetsFromAllEntities(){
+    return getNextEventSetsFromAllEntities(-1.0);
+}
+
+vector<sdReport> sdScene::getEventSetsFromAllEntities(double start, double end){
+    vector<sdReport> reportVector;
+    vector<sdEntityCore*>::iterator it = entityVector.begin();
+    while (it != entityVector.end()) {
+        sdEntityCore* entityCore = *it;
+        sdReport report;
+        report.entity = entityCore;
+        report.eventSet= entityCore->getEventSet(start, end);
+        reportVector.push_back(report);
+        it++;
+    }
+    return reportVector;
+}
+
+
 void sdScene::dump(void){
     using namespace std;
     cout << "---------- Meta ----------"<< endl;

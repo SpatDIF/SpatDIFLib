@@ -86,6 +86,10 @@ sdEvent* sdEntity::getFirstEvent(EDescriptor descriptor){
     return getNextEvent(-1.0, descriptor);
 }
 
+multiset<sdEvent*, sdEventCompare> sdEntity::getFirstEventSet(){
+    return getNextEventSet(-1.0);
+}
+
 sdEvent* sdEntity::getLastEvent(EDescriptor descriptor){
     
     sdEvent* event = getFirstEvent(descriptor);
@@ -133,6 +137,36 @@ sdEvent* sdEntity::getNextEvent(double time, EDescriptor descriptor){
         ++it;
     }
     return NULL;
+}
+
+
+multiset<sdEvent*, sdEventCompare> sdEntity::getNextEventSet(double time){
+    
+    multiset<sdEvent*, sdEventCompare> eventVector;
+    multiset<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
+    bool flag = false;
+    double eventTime = -1.0;
+    while(it != eventSet.end()){
+        sdEvent* event = *it;
+        if (!flag ) {
+            // before the time index
+            if(event->getTime() > time){
+                eventVector.insert(event);
+                flag = true;
+                eventTime = event->getTime();
+            }
+        }else{
+            // look for simultaneous events
+            if (event->getTime() == eventTime) {
+                //simultaneous event
+                eventVector.insert(event);
+            }else{
+                return eventVector;
+            }
+        }
+        ++it;
+    }
+    return eventVector;
 }
 
 int sdEntity::getNumberOfEvents(){

@@ -3,6 +3,7 @@
 #define ____sdEntity__
 
 #include <set>
+#include <vector>
 #include <string>
 #include <iostream>
 #include "sdConst.h"
@@ -130,6 +131,11 @@ public:
     sdEvent* getFirstEvent(EDescriptor descriptor);
     
     /*!
+     return the very first events regardless of descriptors.
+     */
+    multiset<sdEvent*, sdEventCompare> getFirstEventSet();
+
+    /*!
      return the time tag of the first event
      */
     double getFirstTimeTag();
@@ -152,7 +158,14 @@ public:
      @param time index
      @param descriptor the descriptor of the event declared in sdConst.h
      */
+    
     virtual sdEvent* getNextEvent(double time, EDescriptor descriptor);
+    
+    /*!
+     return next events from the given time index .
+     @param time index
+     */
+    virtual multiset<sdEvent*, sdEventCompare> getNextEventSet(double time);
     
     /*!
      this function is the only way to instantiate sdEvent.

@@ -14,6 +14,13 @@
 
 using namespace std;
 
+class sdReport {
+public:
+    sdEntityCore* entity;
+    multiset<sdEvent*, sdEventCompare> eventSet;
+};
+
+
 /*! is responsible for 
  - adding, removing, and maintaining sdEntityCores.
  - attaching and detaching extensions to the exisiting and newly instantiated cores
@@ -196,7 +203,21 @@ public:
      remove all exntesions from the extensionVector and sdEntityCores in the scene.
      The data stored in the instances of sdEntityExtension will be lost.
      */
+    
     void removeAllExtensions(void);
+
+    /*!
+     @}
+     */
+    
+    /*! @name Utility function
+     @{
+     */
+    
+    vector<sdReport> getNextEventSetsFromAllEntities(double time);
+    vector<sdReport> getFirstEventSetsFromAllEntities();
+    vector<sdReport> getEventSetsFromAllEntities(double start, double end);
+
 
     /*!
      @}
