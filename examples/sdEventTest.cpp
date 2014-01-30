@@ -78,5 +78,27 @@ int main(void){
         rit++;
     }
     
+    cout << "what is(are) the next event(s) and which entity has that event:" <<  endl;
+    
+    reportVector = scene.getNextEventSets(2.0);
+    cout << "number of match:" << reportVector.size() << endl;
+    rit = reportVector.begin() ;
+    while (rit != reportVector.end()) {
+        sdReport report = *rit;
+        cout << "---Entity:" << report.entity->getName() << endl;
+        multiset<sdEvent*, sdEventCompare>::iterator eit = report.eventSet.begin();
+        sdEvent* event = *eit;
+        cout << "time:" << event->getTime() << endl;
+        int i = 0;
+        while (eit != report.eventSet.end()) {
+            sdEvent* event = *eit;
+            cout << "event " << i << ": "<< event->getDescriptorAsString() << ' ' << event->getValueAsString() << endl;
+            eit++;
+            i++;
+        }
+        rit++;
+    }
+
+
     return 0;
 }

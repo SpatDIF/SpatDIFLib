@@ -214,11 +214,27 @@ public:
      @{
      */
     
+    
+    /*!   collect next event(s) from all entities and report them  */
     vector<sdReport> getNextEventSetsFromAllEntities(double time);
+    
+    /*!   collect first event(s) from all entities and report them  */
     vector<sdReport> getFirstEventSetsFromAllEntities();
+    
+    /*!   collect  event(s) from all entities in range and report them */
     vector<sdReport> getEventSetsFromAllEntities(double start, double end);
 
+    /*!
+     collect first event(s) from all entities, compare the time tag, and return the very first event(s).
+     */
+    vector<sdReport> getFirstEventSets();
+    
+    /*!
+     collect next events from all entities, compare the time tag, and return the soonest events
+     */
+    vector<sdReport> getNextEventSets(double time);
 
+    
     /*!
      @}
      */
