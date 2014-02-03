@@ -1,4 +1,4 @@
-
+#include <cfloat>
 #include "sdEntity.h"
 
 void sdEvent::set(double time, EDescriptor descriptor, void* value){
@@ -110,11 +110,11 @@ double sdEntity::getFirstEventTime(){
 
 // last event
 sdEvent* sdEntity::getLastEvent(EDescriptor descriptor){
-    return getPreviousEvent(1000000000, descriptor);
+    return getPreviousEvent(DBL_MAX, descriptor);
 }
 
 multiset<sdEvent*, sdEventCompare> sdEntity::getLastEventSet(){
-    return getPreviousEventSet(1000000000);
+    return getPreviousEventSet(DBL_MAX);
 }
 
 double sdEntity::getLastEventTime(){

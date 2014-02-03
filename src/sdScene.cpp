@@ -5,6 +5,7 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
+#include <cfloat>
 #include "sdConst.h"
 #include "sdScene.h"
 #include "sdEntityExtensionMedia.h"
@@ -217,7 +218,7 @@ vector<sdReport> sdScene::getFirstEventSetsFromAllEntities(){
 }
 
 vector<sdReport> sdScene::getLastEventSetsFromAllEntities(){
-    return getNextEventSetsFromAllEntities(100000000.0);
+    return getPreviousEventSetsFromAllEntities(DBL_MAX);
 }
 
 vector<sdReport> sdScene::getNextEventSets(double time){

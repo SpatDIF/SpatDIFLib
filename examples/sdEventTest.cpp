@@ -31,13 +31,13 @@ int main(void){
         cout << "===== getting event(s) at specfied time =====" << endl;
      
         // 1. specified entity and descriptor
-        cout << "Time:5.0 Entity:myEntity Descriptor:position" << endl;
+        cout << "Time:5 Entity:myEntity Descriptor:position" << endl;
         sdEvent *myEvent = myEntity->getEvent(5.0, SD_POSITION);
         cout << "value: " << myEvent->getValueAsString() << endl;
         cout << "=====" << endl;
         
         // 2. specified entity
-        cout << "Time:5.0 Entity:myEntity " << endl;
+        cout << "Time:5 Entity:myEntity " << endl;
         eventSet = myEntity->getEventSet(5.0);
         it = eventSet.begin();
         while (it != eventSet.end()) {
@@ -48,7 +48,7 @@ int main(void){
         cout << "=====" << endl;
         
         // 3. all events in the scene regardless of entity
-        cout << "Time:5.0" << endl;
+        cout << "Time:5" << endl;
         reports = scene.getEventSetsFromAllEntities(5.0);
         rit = reports.begin();
         while (rit != reports.end()) {
@@ -64,26 +64,26 @@ int main(void){
         }
     }
     {
-        cout << "===== getting previous event(s)  =====" << endl;
+        cout << "===== getting next event(s)  =====" << endl;
         // 1. specified entity and descriptor
-        cout << "Time:7.0 Entity:myEntity Descriptor:position" << endl;
-        sdEvent *myEvent = myEntity->getPreviousEvent(7.0, SD_POSITION);
-        cout << "value: " << myEvent->getValueAsString() << endl;
+        cout << "Time:3 Entity:myEntity Descriptor:position" << endl;
+        sdEvent *myEvent = myEntity->getNextEvent(3.0, SD_POSITION);
+        cout << "time:" << myEvent->getTime() << " value: " << myEvent->getValueAsString() << endl;
         cout << "=====" << endl;
         
         // 2. specified entity
-        cout << "Time:3.0 Entity:myEntity " << endl;
+        cout << "Time:3 Entity:myEntity " << endl;
         eventSet = myEntity->getNextEventSet(3.0);
         it = eventSet.begin();
         while (it != eventSet.end()) {
             sdEvent* event = *it;
-            cout << event->getDescriptorAsString() << ' ' << event->getValueAsString() << endl;
+            cout << "time:" << event->getTime() << " descriptor:" <<event->getDescriptorAsString() << ' ' << event->getValueAsString() << endl;
             it++;
         }
         cout << "=====" << endl;
         
         // 3. all events in the scene regardless of entity
-        cout << "Time:3.0" << endl;
+        cout << "Time:3" << endl;
         reports = scene.getNextEventSetsFromAllEntities(3.0);
         rit = reports.begin();
         while (rit != reports.end()) {
@@ -92,7 +92,7 @@ int main(void){
             it = report.eventSet.begin();
             while (it != report.eventSet.end()) {
                 sdEvent* event = *it;
-                cout << event->getDescriptorAsString() << ' ' << event->getValueAsString() << endl;
+                cout << "time:" << event->getTime() << " descriptor:" << event->getDescriptorAsString() << ' ' << event->getValueAsString() << endl;
                 it++;
             }
             rit++;
@@ -101,24 +101,24 @@ int main(void){
     {
         cout << "===== getting previous event(s)  =====" << endl;
         // 1. specified entity and descriptor
-        cout << "Time:7.0 Entity:myEntity Descriptor:position" << endl;
+        cout << "Time:7 Entity:myEntity Descriptor:position" << endl;
         sdEvent *myEvent = myEntity->getPreviousEvent(7.0, SD_POSITION);
-        cout << "value: " << myEvent->getValueAsString() << endl;
+        cout << "time:" << myEvent->getTime() << " value: " << myEvent->getValueAsString() << endl;
         cout << "=====" << endl;
         
         // 2. specified entity
-        cout << "Time:7.0 Entity:myEntity " << endl;
+        cout << "Time:7 Entity:myEntity " << endl;
         eventSet = myEntity->getPreviousEventSet(7.0);
         it = eventSet.begin();
         while (it != eventSet.end()) {
             sdEvent* event = *it;
-            cout << event->getDescriptorAsString() << ' ' << event->getValueAsString() << endl;
+            cout << "time:" << event->getTime() << " descriptor:" <<event->getDescriptorAsString() << ' ' << event->getValueAsString() << endl;
             it++;
         }
         cout << "=====" << endl;
         
         // 3. all events in the scene regardless of entity
-        cout << "Time:7.0" << endl;
+        cout << "Time:7" << endl;
         reports = scene.getPreviousEventSetsFromAllEntities(7.0);
         rit = reports.begin();
         while (rit != reports.end()) {
@@ -127,13 +127,80 @@ int main(void){
             it = report.eventSet.begin();
             while (it != report.eventSet.end()) {
                 sdEvent* event = *it;
-                cout << event->getDescriptorAsString() << ' ' << event->getValueAsString() << endl;
+                cout << "time:" << event->getTime()  << " descriptor:" <<event->getDescriptorAsString() << ' ' << event->getValueAsString() << endl;
                 it++;
             }
             rit++;
         }
     }
-
+    {
+        cout << "===== getting first event(s)  =====" << endl;
+        // 1. specified entity and descriptor
+        cout << "Entity:myEntity Descriptor:position" << endl;
+        sdEvent *myEvent = myEntity->getFirstEvent(SD_POSITION);
+        cout << "time:" << myEvent->getTime() << " value: " << myEvent->getValueAsString() << endl;
+        cout << "=====" << endl;
+        
+        // 2. specified entity
+        cout << "Entity:myEntity " << endl;
+        eventSet = myEntity->getFirstEventSet();
+        it = eventSet.begin();
+        while (it != eventSet.end()) {
+            sdEvent* event = *it;
+            cout << "time:" << event->getTime()  << " descriptor:" << event->getDescriptorAsString() << ' ' << event->getValueAsString() << endl;
+            it++;
+        }
+        cout << "=====" << endl;
+        
+        // 3. all events in the scene regardless of entity
+        reports = scene.getFirstEventSetsFromAllEntities();
+        rit = reports.begin();
+        while (rit != reports.end()) {
+            sdReport report = *rit;
+            cout << "entity:" << report.entity->getName() << endl;
+            it = report.eventSet.begin();
+            while (it != report.eventSet.end()) {
+                sdEvent* event = *it;
+                cout << "time:" << event->getTime()  << " descriptor:" << event->getDescriptorAsString() << ' ' << event->getValueAsString() << endl;
+                it++;
+            }
+            rit++;
+        }
+    }
+    {
+        cout << "===== getting last event(s)  =====" << endl;
+        // 1. specified entity and descriptor
+        cout << "Entity:myEntity Descriptor:position" << endl;
+        sdEvent *myEvent = myEntity->getLastEvent(SD_POSITION);
+        cout << "time:" << myEvent->getTime() << " value: " << myEvent->getValueAsString() << endl;
+        cout << "=====" << endl;
+        
+        // 2. specified entity
+        cout << "Entity:myEntity " << endl;
+        eventSet = myEntity->getLastEventSet();
+        it = eventSet.begin();
+        while (it != eventSet.end()) {
+            sdEvent* event = *it;
+            cout << "time:" << event->getTime()  << " descriptor:" << event->getDescriptorAsString() << ' ' << event->getValueAsString() << endl;
+            it++;
+        }
+        cout << "=====" << endl;
+        
+        // 3. all events in the scene regardless of entity
+        reports = scene.getLastEventSetsFromAllEntities();
+        rit = reports.begin();
+        while (rit != reports.end()) {
+            sdReport report = *rit;
+            cout << "entity:" << report.entity->getName() << endl;
+            it = report.eventSet.begin();
+            while (it != report.eventSet.end()) {
+                sdEvent* event = *it;
+                cout << "time:" << event->getTime()  << " descriptor:" << event->getDescriptorAsString() << ' ' << event->getValueAsString() << endl;
+                it++;
+            }
+            rit++;
+        }
+    }
     
     return 0;
 }
