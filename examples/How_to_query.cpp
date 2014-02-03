@@ -81,8 +81,8 @@ int main(void){
     cout << "last  position event- time:" << last->getTime() << " value:" << last->getValueAsString() << endl;
     
     // just get last and first time tag
-    cout << "first time tag of voice1 :" << voice1->getFirstTimeTag() << endl;
-    cout << "last  time tag of voice1 :" << voice1->getLastTimeTag() << endl;
+    cout << "first time tag of voice1 :" << voice1->getFirstEventTime() << endl;
+    cout << "last  time tag of voice1 :" << voice1->getLastEventTime() << endl;
 
     
     sdEntityCore *voice2 = myScene.getEntity(string("voice2"));

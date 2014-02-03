@@ -41,6 +41,8 @@ multiset<sdEvent*, sdEventCompare> sdEntity::getEventSet(void){
     return eventSet;
 }
 
+// get current event or events in range
+
 multiset <sdEvent*, sdEventCompare>sdEntity::getEventSet(double start, double end){
     multiset <sdEvent*, sdEventCompare>rangedSet;
     multiset <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
@@ -70,11 +72,13 @@ multiset <sdEvent*, sdEventCompare>sdEntity::getEventSet(double start, double en
     return rangedSet;
 }
 
+// current event
 sdEvent* sdEntity::getEvent(double time, EDescriptor descriptor){
-    multiset<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
-    while(it != eventSet.end()){
+    multiset<sdEvent*, sdEventCompare> currentEventSet = getEventSet(time);
+    multiset<sdEvent*, sdEventCompare>::iterator it = currentEventSet.begin();
+    while(it != currentEventSet.end()){
         sdEvent* event = *it;
-        if((event->getTime() == time) && (event->getDescriptor() == descriptor)){
+        if(event->getDescriptor() == descriptor){
             return event;
         }
         ++it;
@@ -82,6 +86,11 @@ sdEvent* sdEntity::getEvent(double time, EDescriptor descriptor){
     return NULL;
 }
 
+multiset<sdEvent*, sdEventCompare> sdEntity::getEventSet(double time){
+    return createEventSet(time, SD_ENTITY_CURRENT);
+}
+
+// first event
 sdEvent* sdEntity::getFirstEvent(EDescriptor descriptor){
     return getNextEvent(-1.0, descriptor);
 }
@@ -90,25 +99,7 @@ multiset<sdEvent*, sdEventCompare> sdEntity::getFirstEventSet(){
     return getNextEventSet(-1.0);
 }
 
-sdEvent* sdEntity::getLastEvent(EDescriptor descriptor){
-    
-    sdEvent* event = getFirstEvent(descriptor);
-    if(!event){
-        return NULL;
-    }
-    while (event) {
-        sdEvent* tmpEvent;
-        tmpEvent = getNextEvent(event->getTime(), descriptor);
-        if(tmpEvent){
-            event = tmpEvent;
-        }else{
-            return event;
-        }
-    }
-    return NULL;
-}
-
-double sdEntity::getFirstTimeTag(){
+double sdEntity::getFirstEventTime(){
     sdEvent* event = *(eventSet.begin());
     if (event) {
         return event->getTime();
@@ -117,7 +108,16 @@ double sdEntity::getFirstTimeTag(){
     }
 }
 
-double sdEntity::getLastTimeTag(){
+// last event
+sdEvent* sdEntity::getLastEvent(EDescriptor descriptor){
+    return getPreviousEvent(1000000000, descriptor);
+}
+
+multiset<sdEvent*, sdEventCompare> sdEntity::getLastEventSet(){
+    return getPreviousEventSet(1000000000);
+}
+
+double sdEntity::getLastEventTime(){
     sdEvent* event = *(eventSet.rbegin());
     if (event) {
         return event->getTime();
@@ -126,12 +126,13 @@ double sdEntity::getLastTimeTag(){
     }
 }
 
+// next event
 sdEvent* sdEntity::getNextEvent(double time, EDescriptor descriptor){
-
-    multiset<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
-    while(it != eventSet.end()){
+    multiset<sdEvent*, sdEventCompare> previousEventSet = getPreviousEventSet(time);
+    multiset<sdEvent*, sdEventCompare>::iterator it = previousEventSet.begin();
+    while(it != previousEventSet.end()){
         sdEvent* event = *it;
-        if((event->getTime() > time) && (event->getDescriptor() == descriptor)){
+        if((event->getDescriptor() == descriptor)){
             return event;
         }
         ++it;
@@ -139,36 +140,43 @@ sdEvent* sdEntity::getNextEvent(double time, EDescriptor descriptor){
     return NULL;
 }
 
-
 multiset<sdEvent*, sdEventCompare> sdEntity::getNextEventSet(double time){
-    
-    multiset<sdEvent*, sdEventCompare> eventVector;
-    multiset<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
-    bool flag = false;
-    double eventTime = -1.0;
-    while(it != eventSet.end()){
+    return createEventSet(time, SD_ENTITY_NEXT);
+}
+
+double sdEntity::getNextEventTime(double time){
+    multiset<sdEvent*, sdEventCompare> nextEventSet = getNextEventSet(time);
+    multiset<sdEvent*, sdEventCompare>::iterator it = nextEventSet.begin();
+    sdEvent* event = *it;
+    return event->getTime();
+}
+
+// previous event
+sdEvent* sdEntity::getPreviousEvent(double time, EDescriptor descriptor){
+    multiset<sdEvent*, sdEventCompare> previousEventSet = getPreviousEventSet(time);
+    multiset<sdEvent*, sdEventCompare>::iterator it = previousEventSet.begin();
+    while(it != previousEventSet.end()){
         sdEvent* event = *it;
-        if (!flag ) {
-            // before the time index
-            if(event->getTime() > time){
-                eventVector.insert(event);
-                flag = true;
-                eventTime = event->getTime();
-            }
-        }else{
-            // look for simultaneous events
-            if (event->getTime() == eventTime) {
-                //simultaneous event
-                eventVector.insert(event);
-            }else{
-                return eventVector;
-            }
+        if((event->getDescriptor() == descriptor)){
+            return event;
         }
         ++it;
     }
-    return eventVector;
+    return NULL;
 }
 
+multiset<sdEvent*, sdEventCompare> sdEntity::getPreviousEventSet(double time){
+    return createEventSet(time, SD_ENTITY_PREVIOUS);
+}
+
+double sdEntity::getPreviousEventTime(double time){
+    multiset<sdEvent*, sdEventCompare> previousEventSet = getPreviousEventSet(time);
+    multiset<sdEvent*, sdEventCompare>::iterator it = previousEventSet.begin();
+    sdEvent* event = *it;
+    return event->getTime();
+}
+
+// number of events
 int sdEntity::getNumberOfEvents(){
     return static_cast<int>(eventSet.size());
 }
@@ -196,4 +204,60 @@ void* sdEntity::getValue(double time, EDescriptor descriptor){
         return evt->getValue();
     }
     return NULL;
+}
+
+multiset<sdEvent*, sdEventCompare> sdEntity::createEventSet(double time, EMode mode ){
+    
+    multiset<sdEvent*, sdEventCompare> eventSet;
+    multiset<sdEvent*, sdEventCompare>::iterator it;
+    if (mode == SD_ENTITY_NEXT || mode == SD_ENTITY_CURRENT) {
+        it = eventSet.begin();
+    }else{
+        it = eventSet.end();
+    }
+    bool flag = false;
+    double eventTime = -1.0;
+    while(it != eventSet.end()){
+        sdEvent* event = *it;
+        if (!flag ) {
+            switch (mode) {
+                case SD_ENTITY_PREVIOUS:
+                    if(event->getTime() < time){
+                        eventSet.insert(event);
+                        flag = true;
+                        eventTime = event->getTime();
+                    }
+                    break;
+                case SD_ENTITY_NEXT:
+                    if(event->getTime() > time){
+                        eventSet.insert(event);
+                        flag = true;
+                        eventTime = event->getTime();
+                    }
+                    break;
+                case SD_ENTITY_CURRENT:
+                    if(event->getTime() == time){
+                        eventSet.insert(event);
+                        flag = true;
+                        eventTime = event->getTime();
+                    }
+                    break;
+            }
+        
+        }else{
+            // look for simultaneous events
+            if (event->getTime() == eventTime) {
+                //simultaneous event
+                eventSet.insert(event);
+            }else{
+                return eventSet;
+            }
+        }
+        
+        if (mode == SD_ENTITY_NEXT || mode == SD_ENTITY_CURRENT) {
+            it++;
+        }else{
+            it--;
+        }
+    }
 }

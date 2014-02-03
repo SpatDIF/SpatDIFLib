@@ -298,11 +298,5 @@ void sdScene::dump(void){
             vit++;
         }
 		it++;
-        
-
 	}
-    
-
-    
-    
 }

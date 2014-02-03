@@ -96,7 +96,12 @@ public:
  sdEntity is a pure abstract class. This class maintains and handles all events associated to relevant descriptors. This class is also responsible for answering queries about it's relevant descriptors.
 */
 class sdEntity{
-
+    typedef enum{
+        SD_ENTITY_PREVIOUS,
+        SD_ENTITY_NEXT,
+        SD_ENTITY_CURRENT
+    } EMode;
+    
 protected:
     multiset<sdEvent*, sdEventCompare> eventSet; /*!< maintains pointers to all relevant sdEvents */
 
@@ -108,21 +113,49 @@ public:
     /*! @name EventHandling
      @{ */
     
-    /*! return a multiset of sdEvent pointers. To get events in the specific timeframe, use start and end arguments.*/
 
-    multiset<sdEvent*, sdEventCompare> getEventSet(void);
-    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end);
-    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);
 
     /*! return number of registerd events in the eventSet*/
     int getNumberOfEvents(void);
     
+    /*! @name Getting  Event(s) in the specified Range
+     @{
+     */
+
+    /*! return a multiset of sdEvent pointers. To get events in the specific timeframe, use start and end arguments.*/
+    multiset<sdEvent*, sdEventCompare> getEventSet(void);
+    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end);
+    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);
+    
     /*!
-     return all events related to the given descriptor
+     @}
+     */
+    
+    /*! @name Current Event(s)
+     @{
+     */
+    
+    /*!
+     return all events at the specified time with the given descriptor
      @param time the time of the event in second
      @param descriptor the descriptor of the event declared in sdConst.h
      */
     sdEvent* getEvent(double time, EDescriptor descriptor);
+    
+    /*!
+     return all events at the specified time regardless of descriptors.
+     @param time the time of the event in second
+     @param descriptor the descriptor of the event declared in sdConst.h
+     */
+    multiset<sdEvent*, sdEventCompare> getEventSet(double time);
+
+    /*!
+     @}
+     */
+    
+    /*! @name Getting frist Event(s)
+     @{
+     */
     
     /*!
      return the very first event with the specified descriptor.
@@ -138,7 +171,15 @@ public:
     /*!
      return the time tag of the first event
      */
-    double getFirstTimeTag();
+    double getFirstEventTime();
+    
+    /*!
+     @}
+     */
+    
+    /*! @name Last Event(s)
+     @{
+     */
     
     /*!
      return the timeTag of the very last event with the specified descriptor.
@@ -147,11 +188,22 @@ public:
     sdEvent* getLastEvent(EDescriptor descriptor);
 
     /*!
+     return the very last events regardless of descriptors.
+     */
+    multiset<sdEvent*, sdEventCompare> getLastEventSet();
+    
+    /*!
      return the time tag of the last event
      */
-    double getLastTimeTag();
+    double getLastEventTime();
 
+    /*!
+    }
+     */
     
+    /*! @name Next Event(s)
+     @{
+     */
     
     /*!
      return next event from the given time index that holds the specified descriptor.
@@ -167,6 +219,42 @@ public:
      */
     virtual multiset<sdEvent*, sdEventCompare> getNextEventSet(double time);
     
+    /*!
+     return the time tag of the next event
+     */
+    double getNextEventTime(double time);
+
+    /*!
+     @}
+     */
+    
+    /*! @name Previous Event(s)
+     @{
+     */
+    
+    /*!
+     return previous event from the given time index that holds the specified descriptor.
+     @param time index
+     @param descriptor the descriptor of the event declared in sdConst.h
+     */
+    
+    virtual sdEvent* getPreviousEvent(double time, EDescriptor descriptor);
+    
+    /*!
+     return next events from the given time index .
+     @param time index
+     */
+    virtual multiset<sdEvent*, sdEventCompare> getPreviousEventSet(double time);
+    
+    /*!
+     return the time tag of the next event
+     */
+    double getPreviousEventTime(double time);
+    
+    /*!
+     @}
+     */
+     
     /*!
      this function is the only way to instantiate sdEvent.
      */
@@ -207,7 +295,12 @@ public:
     void* getValue(double time, EDescriptor descriptor);
     /*!
      @} */
+    
+private:
+    
+    multiset<sdEvent*, sdEventCompare> createEventSet(double time,  EMode mode );
 
+    
 };
 
 
