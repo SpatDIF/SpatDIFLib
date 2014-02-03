@@ -194,8 +194,30 @@ vector<sdReport> sdScene::getNextEventSetsFromAllEntities(double time){
     return reportVector;
 }
 
+vector<sdReport> sdScene::getPreviousEventSetsFromAllEntities(double time){
+    vector<sdReport> reportVector;
+    vector<sdEntityCore*>::iterator it = entityVector.begin();
+    while (it != entityVector.end()) {
+        sdReport report;
+        sdEntityCore* entityCore = *it;
+        report.entity = entityCore;
+        report.eventSet= entityCore->getPreviousEventSet(time);
+        if(report.eventSet.size() != 0){
+            multiset<sdEvent*, sdEventCompare>::iterator it=report.eventSet.begin();
+            sdEvent* firstEvent = *it;
+            reportVector.push_back(report);
+        }
+        it++;
+    }
+    return reportVector;
+}
+
 vector<sdReport> sdScene::getFirstEventSetsFromAllEntities(){
     return getNextEventSetsFromAllEntities(-1.0);
+}
+
+vector<sdReport> sdScene::getLastEventSetsFromAllEntities(){
+    return getNextEventSetsFromAllEntities(100000000.0);
 }
 
 vector<sdReport> sdScene::getNextEventSets(double time){
@@ -233,6 +255,22 @@ vector<sdReport> sdScene::getNextEventSets(double time){
 
 vector<sdReport> sdScene::getFirstEventSets(){
     return getNextEventSets(-1.0);
+}
+
+vector<sdReport> sdScene::getEventSetsFromAllEntities(double time){
+    vector<sdReport> reportVector;
+    vector<sdEntityCore*>::iterator it = entityVector.begin();
+    while (it != entityVector.end()) {
+        sdEntityCore* entityCore = *it;
+        sdReport report;
+        report.entity = entityCore;
+        report.eventSet= entityCore->getEventSet(time);
+        if(report.eventSet.size() != 0){
+            reportVector.push_back(report);
+        }
+        it++;
+    }
+    return reportVector;
 }
 
 vector<sdReport> sdScene::getEventSetsFromAllEntities(double start, double end){

@@ -217,11 +217,14 @@ public:
     
     /*!   collect next event(s) from all entities and report them  */
     vector<sdReport> getNextEventSetsFromAllEntities(double time);
-    
+    vector<sdReport> getPreviousEventSetsFromAllEntities(double time);
+
     /*!   collect first event(s) from all entities and report them  */
     vector<sdReport> getFirstEventSetsFromAllEntities();
-    
+    vector<sdReport> getLastEventSetsFromAllEntities();
+
     /*!   collect  event(s) from all entities in range and report them */
+    vector<sdReport> getEventSetsFromAllEntities(double time);
     vector<sdReport> getEventSetsFromAllEntities(double start, double end);
 
     /*!

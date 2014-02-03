@@ -128,9 +128,9 @@ double sdEntity::getLastEventTime(){
 
 // next event
 sdEvent* sdEntity::getNextEvent(double time, EDescriptor descriptor){
-    multiset<sdEvent*, sdEventCompare> previousEventSet = getPreviousEventSet(time);
-    multiset<sdEvent*, sdEventCompare>::iterator it = previousEventSet.begin();
-    while(it != previousEventSet.end()){
+    multiset<sdEvent*, sdEventCompare> nextEventSet = getNextEventSet(time);
+    multiset<sdEvent*, sdEventCompare>::iterator it = nextEventSet.begin();
+    while(it != nextEventSet.end()){
         sdEvent* event = *it;
         if((event->getDescriptor() == descriptor)){
             return event;
@@ -207,57 +207,66 @@ void* sdEntity::getValue(double time, EDescriptor descriptor){
 }
 
 multiset<sdEvent*, sdEventCompare> sdEntity::createEventSet(double time, EMode mode ){
-    
-    multiset<sdEvent*, sdEventCompare> eventSet;
+    multiset<sdEvent*, sdEventCompare> createdSet;
     multiset<sdEvent*, sdEventCompare>::iterator it;
-    if (mode == SD_ENTITY_NEXT || mode == SD_ENTITY_CURRENT) {
-        it = eventSet.begin();
-    }else{
-        it = eventSet.end();
-    }
+    multiset<sdEvent*, sdEventCompare>::reverse_iterator rt;
     bool flag = false;
-    double eventTime = -1.0;
-    while(it != eventSet.end()){
-        sdEvent* event = *it;
-        if (!flag ) {
-            switch (mode) {
-                case SD_ENTITY_PREVIOUS:
+    double eventTime = 0.0;
+    switch (mode) {
+        case SD_ENTITY_PREVIOUS:
+            rt = eventSet.rbegin();
+            while(rt != eventSet.rend()){
+                sdEvent* event = *rt;
+                if (!flag ) {
                     if(event->getTime() < time){
-                        eventSet.insert(event);
+                        createdSet.insert(event);
                         flag = true;
                         eventTime = event->getTime();
                     }
-                    break;
-                case SD_ENTITY_NEXT:
+                }else{
+                    if(event->getTime() == eventTime) {
+                            createdSet.insert(event);
+                        }
+                    }
+                ++rt;
+            }
+            break;
+        case SD_ENTITY_NEXT:
+            it = eventSet.begin();
+            while(it != eventSet.end()){
+                sdEvent* event = *it;
+                if (!flag ) {
                     if(event->getTime() > time){
-                        eventSet.insert(event);
+                        createdSet.insert(event);
                         flag = true;
                         eventTime = event->getTime();
                     }
-                    break;
-                case SD_ENTITY_CURRENT:
+                }else{
+                    if(event->getTime() == eventTime) {
+                        createdSet.insert(event);
+                    }
+                }
+                ++it;
+            }
+            break;
+        case SD_ENTITY_CURRENT:
+            it = eventSet.begin();
+            while(it != eventSet.end()){
+                sdEvent* event = *it;
+                if (!flag ) {
                     if(event->getTime() == time){
-                        eventSet.insert(event);
+                        createdSet.insert(event);
                         flag = true;
                         eventTime = event->getTime();
                     }
-                    break;
+                }else{
+                    if(event->getTime() == eventTime) {
+                        createdSet.insert(event);
+                    }
+                }
+                ++it;
             }
-        
-        }else{
-            // look for simultaneous events
-            if (event->getTime() == eventTime) {
-                //simultaneous event
-                eventSet.insert(event);
-            }else{
-                return eventSet;
-            }
-        }
-        
-        if (mode == SD_ENTITY_NEXT || mode == SD_ENTITY_CURRENT) {
-            it++;
-        }else{
-            it--;
-        }
+            break;
     }
+    return createdSet;
 }
