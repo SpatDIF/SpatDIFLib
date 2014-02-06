@@ -1,4 +1,0 @@
-var searchData=
-[
-  ['convert',['convert',['../classsd_event.html#a475716af35d855d8ac55db19bdad6de9',1,'sdEvent::convert(EDescriptor descriptor)=0'],['../classsd_event.html#ab9589787ed1ef30ed0dbdc16c097dc60',1,'sdEvent::convert(EKind kind)=0'],['../classsd_event.html#a54d0d8e539327df15afd5eb29d1c9a75',1,'sdEvent::convert(EType type)=0'],['../classsd_event.html#af8e7d979562187be03d31dbcb91eba0a',1,'sdEvent::convert(string str)=0'],['../classsd_event_core.html#aec8e1553003bb855beb4be4a0de7829c',1,'sdEventCore::convert(EDescriptor)'],['../classsd_event_core.html#a422dea6631aedc3613b2da582320ff7d',1,'sdEventCore::convert(EKind)'],['../classsd_event_core.html#a714fbc770c5b39c5d49ce835b9d90063',1,'sdEventCore::convert(EType)'],['../classsd_event_core.html#af66676052eabdec8eca3533103cf91f6',1,'sdEventCore::convert(std::string)']]]
-];

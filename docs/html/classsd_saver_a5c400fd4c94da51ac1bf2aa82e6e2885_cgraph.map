@@ -1,9 +1,0 @@
-<map id="sdSaver::XMLFromScene" name="sdSaver::XMLFromScene">
-<area shape="rect" id="node2" href="$classsd_scene.html#a04e558bcf268832b77cfbb576a36778e" title="sdScene::getInfo" alt="" coords="273,5,396,32"/>
-<area shape="rect" id="node3" href="$classsd_scene.html#abc96077751c152f5f8cb37846a80b676" title="sdScene::getEntityVector" alt="" coords="249,56,421,83"/>
-<area shape="rect" id="node4" href="$classsd_entity.html#ac76388a648acbe06328d5e6ae8e4847e" title="sdEntity::getEventSet" alt="" coords="260,107,409,133"/>
-<area shape="rect" id="node5" href="$classsd_entity_core.html#a97d5b5f189b386620bb898b0f5e0358a" title="sdEntityCore::getName" alt="" coords="488,208,648,235"/>
-<area shape="rect" id="node6" href="$classsd_entity_core.html#a66b6d0ebd81278a21854f8b074883342" title="sdEntityCore::getKind" alt="" coords="259,208,410,235"/>
-<area shape="rect" id="node7" href="$classsd_entity_core.html#a4cdcaf53be00654310d23d2fc69facef" title="sdEntityCore::sortAlphabetically" alt="" coords="229,259,440,285"/>
-<area shape="rect" id="node8" href="$classsd_entity_core.html#a4d96b7306ddabefd1c7467d06c256afa" title="sdEntityCore::getKindAsString" alt="" coords="234,309,435,336"/>
-</map>
