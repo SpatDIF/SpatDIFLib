@@ -1,4 +1,18 @@
-/* this example examines all functionalities of sdDate class */
+/** @file
+ *
+ * @ingroup spatdiflib-examples
+ *
+ * @brief Example: Test #sdOSCResponder
+ *
+ * @details
+ *
+ * @authors Chikashi Miyama, Trond Lossius
+ *
+ * @copyright Copyright © 2013 by ??? @n
+ * This code is licensed under the terms of the "New BSD License" @n
+ * http://creativecommons.org/licenses/BSD/
+ */
+
 
 #include "sdOSCResponder.h"
 #include "sdScene.h"
