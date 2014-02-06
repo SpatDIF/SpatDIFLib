@@ -38,7 +38,7 @@ PROJECT_NUMBER         = "specification 0.3"
 # for a project that appears at the top of each page and should give viewer 
 # a quick idea about the purpose of the project. Keep the description short.
 
-PROJECT_BRIEF          = "the Spatial Sound Description Interchange Format"
+PROJECT_BRIEF          = "The Spatial Sound Description Interchange Format"
 
 # With the PROJECT_LOGO tag one can specify an logo or icon that is 
 # included in the documentation. The maximum height of the logo should not 
@@ -1051,13 +1051,13 @@ DOCSET_FEEDNAME        = "Doxygen generated docs"
 # reverse domain-name style string, e.g. com.mycompany.MyDocSet. Doxygen 
 # will append .docset to the name.
 
-DOCSET_BUNDLE_ID       = org.doxygen.Project
+DOCSET_BUNDLE_ID       = org.spatdif.spatlib
 
 # When GENERATE_PUBLISHER_ID tag specifies a string that should uniquely 
 # identify the documentation publisher. This should be a reverse domain-name 
 # style string, e.g. com.mycompany.MyDocSet.documentation.
 
-DOCSET_PUBLISHER_ID    = org.doxygen.Publisher
+DOCSET_PUBLISHER_ID    = org.spatlib.Publisher
 
 # The GENERATE_PUBLISHER_NAME tag identifies the documentation publisher.
 
@@ -1105,7 +1105,7 @@ BINARY_TOC             = NO
 # The TOC_EXPAND flag can be set to YES to add extra items for group members 
 # to the contents of the HTML help documentation and to the tree view.
 
-TOC_EXPAND             = NO
+TOC_EXPAND             = YES
 
 # If the GENERATE_QHP tag is set to YES and both QHP_NAMESPACE and 
 # QHP_VIRTUAL_FOLDER are set, an additional index file will be generated 
@@ -1195,7 +1195,7 @@ DISABLE_INDEX          = NO
 # Since the tree basically has the same information as the tab index you 
 # could consider to set DISABLE_INDEX to NO when enabling this option.
 
-GENERATE_TREEVIEW      = NO
+GENERATE_TREEVIEW      = YES
 
 # The ENUM_VALUES_PER_LINE tag can be used to set the number of enum values 
 # (range [0,1..20]) that doxygen will group on one line in the generated HTML 
@@ -1208,7 +1208,7 @@ ENUM_VALUES_PER_LINE   = 4
 # used to set the initial width (in pixels) of the frame in which the tree 
 # is shown.
 
-TREEVIEW_WIDTH         = 250
+TREEVIEW_WIDTH         = 350
 
 # When the EXT_LINKS_IN_WINDOW option is set to YES doxygen will open 
 # links to external symbols imported via tag files in a separate window.
@@ -1784,7 +1784,7 @@ CLASS_GRAPH            = YES
 # indirect implementation dependencies (inheritance, containment, and 
 # class references variables) of the class with other documented classes.
 
-COLLABORATION_GRAPH    = NO
+COLLABORATION_GRAPH    = YES
 
 # If the GROUP_GRAPHS and HAVE_DOT tags are set to YES then doxygen 
 # will generate a graph for groups, showing the direct groups dependencies
@@ -1809,7 +1809,7 @@ UML_LIMIT_NUM_FIELDS   = 10
 # If set to YES, the inheritance and collaboration graphs will show the 
 # relations between templates and their instances.
 
-TEMPLATE_RELATIONS     = NO
+TEMPLATE_RELATIONS     = YES
 
 # If the ENABLE_PREPROCESSING, SEARCH_INCLUDES, INCLUDE_GRAPH, and HAVE_DOT 
 # tags are set to YES then doxygen will generate a graph for each documented 
@@ -1859,7 +1859,7 @@ DIRECTORY_GRAPH        = YES
 # HTML_FILE_EXTENSION to xhtml in order to make the SVG files 
 # visible in IE 9+ (other browsers do not have this requirement).
 
-DOT_IMAGE_FORMAT       = png
+DOT_IMAGE_FORMAT       = svg
 
 # If DOT_IMAGE_FORMAT is set to svg, then this option can be set to YES to 
 # enable generation of interactive SVG images that allow zooming and panning. 
@@ -1873,7 +1873,7 @@ INTERACTIVE_SVG        = NO
 # The tag DOT_PATH can be used to specify the path where the dot tool can be 
 # found. If left blank, it is assumed the dot tool can be found in the path.
 
-DOT_PATH               = /usr/local/bin/
+DOT_PATH               = /opt/local/bin/dot
 
 # The DOTFILE_DIRS tag can be used to specify one or more directories that 
 # contain dot files that are included in the documentation (see the 
