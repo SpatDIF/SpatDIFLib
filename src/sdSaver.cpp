@@ -17,11 +17,7 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
-#include "sdConst.h"
-#include "sdEntity.h"
-#include "sdEntityExtension.h"
-#include "sdScene.h"
-#include "sdSaver.h"
+#include "sdMain.h"
 #include "tinyxml2.h"
 #include "JSONNode.h"
 

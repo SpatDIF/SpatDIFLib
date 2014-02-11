@@ -17,9 +17,8 @@
 #include <sstream>
 #include <iomanip>
 #include <cfloat>
-#include "sdConst.h"
-#include "sdScene.h"
-#include "sdEntityExtensionMedia.h"
+#include "sdMain.h"
+
 
 using namespace std;
 

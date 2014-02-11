@@ -19,9 +19,9 @@
 
 #include <set>
 #include <string>
-#include "sdConst.h"
 #include "sdEntity.h"
 #include "sdEntityExtension.h"
+
 
 using namespace std;
 

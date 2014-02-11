@@ -15,9 +15,8 @@
 
 #include <stdio.h>
 #include <string>
-#include "sdConst.h"
-#include "sdEntityCore.h"
-#include "sdEntityExtensionMedia.h"
+#include "sdMain.h"
+
 
 using namespace std;
 
