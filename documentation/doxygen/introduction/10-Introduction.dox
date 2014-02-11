@@ -1,0 +1,28 @@
+/**
+	@mainpage Introduction to SpatDIF-lib
+	
+	@author Jan Schacher, Chikashi Miyama, Trond Lossius, Nils Peters, 
+
+  @section What is SpatDIF
+
+  In computer music, many spatialization algorithms use a self-contained syntax and storage-format, wherein control messages (e.g. trajectories to move a sound virtually) programmed for one application are incompatible with any other implementation.
+
+  This lack of a standardization complicates the portability of compositions and requires manual synchronization and conversion of control data - a time consuming affair. Incompatible data formats also prevent collaboration between researchers and institutions.
+  SpatDIF - Spatial Sound Description Interchange Format, is a format that describes spatial sound information in a structured way, in order to support real-time and non-real-time applications. The format serves to describe, store and share spatial audio scenes across audio applications and concert venues.
+
+  @section Compiling SpatDIF-lib
+
+  Execute the following commands from your terminal:
+
+	@code
+  cd src
+  make
+	@endcode
+
+  The makefile detects the OS you are using, compiles and generates a shared library named 
+  libspatdif.dylib on MacOS or spatdiflib.so on Linux, and subsequently it compiles the sources in the example folder.
+
+  For Mac OSX an Xcode project is available as a front end for the make script, so that Xcode can be used as an IDE.
+
+*/
+

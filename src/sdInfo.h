@@ -1,6 +1,17 @@
-//
-//  sdInfo.h
-//
+/** @file
+ *
+ * @ingroup spatdiflib
+ *
+ * @brief
+ *
+ * @details
+ *
+ * @authors Chikashi Miyama, Trond Lossius
+ *
+ * @copyright Copyright © 2013 by ??? @n
+ * This code is licensed under the terms of the "New BSD License" @n
+ * http://creativecommons.org/licenses/BSD/
+ */
 
 #ifndef ____sdInfo__
 #define ____sdInfo__

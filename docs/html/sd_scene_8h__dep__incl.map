@@ -1,9 +1,0 @@
-<map id="src/sdScene.h" name="src/sdScene.h">
-<area shape="rect" id="node2" href="$sd_loader_8h.html" title="src/sdLoader.h" alt="" coords="18,80,128,107"/>
-<area shape="rect" id="node4" href="$sd_o_s_c_responder_8h.html" title="src/sdOSCResponder.h" alt="" coords="156,80,319,107"/>
-<area shape="rect" id="node6" href="$sd_saver_8cpp.html" title="src/sdSaver.cpp" alt="" coords="365,155,483,181"/>
-<area shape="rect" id="node7" href="$sd_saver_8h.html" title="src/sdSaver.h" alt="" coords="393,80,497,107"/>
-<area shape="rect" id="node8" href="$sd_scene_8cpp.html" title="src/sdScene.cpp" alt="" coords="521,80,641,107"/>
-<area shape="rect" id="node3" href="$sd_loader_8cpp.html" title="src/sdLoader.cpp" alt="" coords="5,155,128,181"/>
-<area shape="rect" id="node5" href="$sd_o_s_c_responder_8cpp.html" title="src/sdOSCResponder.cpp" alt="" coords="153,155,329,181"/>
-</map>

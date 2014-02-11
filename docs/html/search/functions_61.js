@@ -1,6 +1,0 @@
-var searchData=
-[
-  ['addentity',['addEntity',['../classsd_scene.html#ab7636b274d6194fad189d8890e9336eb',1,'sdScene']]],
-  ['addevent',['addEvent',['../classsd_entity.html#a2e865180dbfd9d5b8895ecdb396c1a25',1,'sdEntity::addEvent(double time, EDescriptor descriptor, void *value)=0'],['../classsd_entity.html#aa6b26582c5bc4eab86f2350084521299',1,'sdEntity::addEvent(string time, string descriptor, string value)=0'],['../classsd_entity_core.html#a4a2537e1b5b8c17bac298a37b306ae87',1,'sdEntityCore::addEvent(double time, EDescriptor descriptor, void *value)'],['../classsd_entity_core.html#a1fea312d56597386eaa51fecbdc259a4',1,'sdEntityCore::addEvent(string time, string descriptor, string value)'],['../classsd_entity_extension_media.html#ac32a1b4626b46d063537a4bd4503b565',1,'sdEntityExtensionMedia::addEvent(double time, EDescriptor descriptor, void *value)'],['../classsd_entity_extension_media.html#a9ba0b7a1faabea9756f32ea7c7b283a2',1,'sdEntityExtensionMedia::addEvent(string time, string descriptor, string value)']]],
-  ['addextension',['addExtension',['../classsd_entity_core.html#a0e23dde45e5c231e8d8b524926b49b05',1,'sdEntityCore::addExtension()'],['../classsd_scene.html#ad5bc6a91ac1e28bf9182ae00ef7d1bbd',1,'sdScene::addExtension()']]]
-];

@@ -1,7 +1,0 @@
-<map id="doublesToString" name="doublesToString">
-<area shape="rect" id="node2" href="$sd_const_8h.html#af6ea173327acc9bc1ed456517a81dc9f" title="doubleToString" alt="" coords="223,64,335,91"/>
-<area shape="rect" id="node6" href="$classsd_event_core.html#a90bb7c69858b3274ec6abc0c86ff818c" title="sdEventCore::getValueAsString" alt="" coords="174,119,383,145"/>
-<area shape="rect" id="node3" href="$classsd_event.html#a43dc0ffb37fdf843cc8bd3888dd7289f" title="sdEvent::getTimeAsString" alt="" coords="432,5,608,32"/>
-<area shape="rect" id="node5" href="$classsd_event_extension_media.html#a649915acca0bba19994f851caf9592a5" title="sdEventExtensionMedia\l::getValueAsString" alt="" coords="437,57,603,98"/>
-<area shape="rect" id="node4" href="$classsd_scene.html#a1e61037274d374f8ab33e347fde8b65b" title="sdScene::dump" alt="" coords="656,64,771,91"/>
-</map>

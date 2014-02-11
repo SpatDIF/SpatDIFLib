@@ -1,0 +1,16 @@
+/*
+ Define doxygen groups used to structure the documentation.
+*/
+
+/**
+ * @defgroup spatdiflib SpatDIF Library
+ * 
+ * SpatDIF-lib provides required functionalities for interacting wuth SpatDIF scenes.
+*/
+
+
+/**
+ * @defgroup spatdiflib-examples SpatDIF Library Examples
+ * 
+ * Prototype command-line applications examplifying interaction with SpatDIF-lib.
+*/

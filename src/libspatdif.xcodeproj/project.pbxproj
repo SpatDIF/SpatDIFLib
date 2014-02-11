@@ -1,0 +1,220 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXFileReference section */
+		A7E1E39B18A3B44F003BE78B /* sdConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdConst.h; sourceTree = "<group>"; };
+		A7E1E39C18A3B44F003BE78B /* sdDate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdDate.h; sourceTree = "<group>"; };
+		A7E1E39D18A3B44F003BE78B /* sdEntity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdEntity.cpp; sourceTree = "<group>"; };
+		A7E1E39E18A3B44F003BE78B /* sdEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdEntity.h; sourceTree = "<group>"; };
+		A7E1E39F18A3B44F003BE78B /* sdEntityCore.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdEntityCore.cpp; sourceTree = "<group>"; };
+		A7E1E3A018A3B44F003BE78B /* sdEntityCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdEntityCore.h; sourceTree = "<group>"; };
+		A7E1E3A118A3B44F003BE78B /* sdEntityExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdEntityExtension.h; sourceTree = "<group>"; };
+		A7E1E3A218A3B44F003BE78B /* sdEntityExtensionMedia.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdEntityExtensionMedia.cpp; sourceTree = "<group>"; };
+		A7E1E3A318A3B44F003BE78B /* sdEntityExtensionMedia.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdEntityExtensionMedia.h; sourceTree = "<group>"; };
+		A7E1E3A418A3B44F003BE78B /* sdInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdInfo.h; sourceTree = "<group>"; };
+		A7E1E3A518A3B44F003BE78B /* sdLoader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdLoader.cpp; sourceTree = "<group>"; };
+		A7E1E3A618A3B44F003BE78B /* sdLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdLoader.h; sourceTree = "<group>"; };
+		A7E1E3A718A3B44F003BE78B /* sdMain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdMain.h; sourceTree = "<group>"; };
+		A7E1E3A818A3B44F003BE78B /* sdOSCResponder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdOSCResponder.cpp; sourceTree = "<group>"; };
+		A7E1E3A918A3B44F003BE78B /* sdOSCResponder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdOSCResponder.h; sourceTree = "<group>"; };
+		A7E1E3AA18A3B44F003BE78B /* sdSaver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdSaver.cpp; sourceTree = "<group>"; };
+		A7E1E3AB18A3B44F003BE78B /* sdSaver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdSaver.h; sourceTree = "<group>"; };
+		A7E1E3AC18A3B44F003BE78B /* sdScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdScene.cpp; sourceTree = "<group>"; };
+		A7E1E3AD18A3B44F003BE78B /* sdScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdScene.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		A7E1E38F18A3B3F8003BE78B = {
+			isa = PBXGroup;
+			children = (
+				A7E1E39A18A3B43F003BE78B /* Sources */,
+			);
+			sourceTree = "<group>";
+		};
+		A7E1E39A18A3B43F003BE78B /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				A7E1E39B18A3B44F003BE78B /* sdConst.h */,
+				A7E1E39C18A3B44F003BE78B /* sdDate.h */,
+				A7E1E39D18A3B44F003BE78B /* sdEntity.cpp */,
+				A7E1E39E18A3B44F003BE78B /* sdEntity.h */,
+				A7E1E39F18A3B44F003BE78B /* sdEntityCore.cpp */,
+				A7E1E3A018A3B44F003BE78B /* sdEntityCore.h */,
+				A7E1E3A118A3B44F003BE78B /* sdEntityExtension.h */,
+				A7E1E3A218A3B44F003BE78B /* sdEntityExtensionMedia.cpp */,
+				A7E1E3A318A3B44F003BE78B /* sdEntityExtensionMedia.h */,
+				A7E1E3A418A3B44F003BE78B /* sdInfo.h */,
+				A7E1E3A518A3B44F003BE78B /* sdLoader.cpp */,
+				A7E1E3A618A3B44F003BE78B /* sdLoader.h */,
+				A7E1E3A718A3B44F003BE78B /* sdMain.h */,
+				A7E1E3A818A3B44F003BE78B /* sdOSCResponder.cpp */,
+				A7E1E3A918A3B44F003BE78B /* sdOSCResponder.h */,
+				A7E1E3AA18A3B44F003BE78B /* sdSaver.cpp */,
+				A7E1E3AB18A3B44F003BE78B /* sdSaver.h */,
+				A7E1E3AC18A3B44F003BE78B /* sdScene.cpp */,
+				A7E1E3AD18A3B44F003BE78B /* sdScene.h */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		A7E1E39418A3B3F8003BE78B /* libspatdif */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = A7E1E39718A3B3F8003BE78B /* Build configuration list for PBXLegacyTarget "libspatdif" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			dependencies = (
+			);
+			name = libspatdif;
+			passBuildSettingsInEnvironment = 1;
+			productName = libspatdif;
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXProject section */
+		A7E1E39018A3B3F8003BE78B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = org.spatdif;
+			};
+			buildConfigurationList = A7E1E39318A3B3F8003BE78B /* Build configuration list for PBXProject "libspatdif" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A7E1E38F18A3B3F8003BE78B;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A7E1E39418A3B3F8003BE78B /* libspatdif */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		A7E1E39518A3B3F8003BE78B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		A7E1E39618A3B3F8003BE78B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		A7E1E39818A3B3F8003BE78B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUGGING_SYMBOLS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A7E1E39918A3B3F8003BE78B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A7E1E39318A3B3F8003BE78B /* Build configuration list for PBXProject "libspatdif" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A7E1E39518A3B3F8003BE78B /* Debug */,
+				A7E1E39618A3B3F8003BE78B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A7E1E39718A3B3F8003BE78B /* Build configuration list for PBXLegacyTarget "libspatdif" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A7E1E39818A3B3F8003BE78B /* Debug */,
+				A7E1E39918A3B3F8003BE78B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A7E1E39018A3B3F8003BE78B /* Project object */;
+}

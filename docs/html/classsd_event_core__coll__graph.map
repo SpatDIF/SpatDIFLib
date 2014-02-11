@@ -1,3 +1,0 @@
-<map id="sdEventCore" name="sdEventCore">
-<area shape="rect" id="node2" href="$classsd_event.html" title="{sdEvent\n|# time\l# descriptor\l# value\l|+ set()\l+ setTime()\l+ setTime()\l+ getTime()\l+ getTimeAsString()\l+ getDescriptor()\l+ getValue()\l+ setValue()\l+ setValue()\l+ getDescriptorAsString()\l+ getValueAsString()\l# sdEvent()\l* set()\l* setTime()\l* setTime()\l* getTime()\l* getTimeAsString()\l* getDescriptor()\l* getValue()\l* setValue()\l* setValue()\l* getDescriptorAsString()\l* getValueAsString()\l}" alt="" coords="5,5,176,435"/>
-</map>
