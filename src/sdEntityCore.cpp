@@ -257,11 +257,12 @@ void sdEntityCore::removeEvent(double time, EDescriptor descriptor){
             if(event->getTime() == time){
                 if(event->getDescriptor() == descriptor)
                 {
-                    eventSet.erase(it++); // very important incrementor
+                    eventSet.erase(it); // very important incrementor
                 }
             }
             it++;
         }
+
     }else{
         // if extended descriptor
         vector <sdRedirector>::iterator it =   redirectorVector.begin();
