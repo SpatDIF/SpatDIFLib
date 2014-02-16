@@ -1,0 +1,23 @@
+<map id="main" name="main">
+<area shape="rect" id="node2" href="$classsd_loader.html#ab3d7cf4919f50673ec7f9649a9be09b1" title="sdLoader::sceneFromXML" alt="" coords="107,56,275,83"/>
+<area shape="rect" id="node5" href="$classsd_event.html#a2941bfbdbb11cb95d16bcbc50c19a161" title="sdEvent::getValueAsString" alt="" coords="105,267,277,293"/>
+<area shape="rect" id="node6" href="$classsd_saver.html#a2095f1dd3d75b3f5d5f9ae323fa0f971" title="sdSaver::XMLFromScene" alt="" coords="108,477,273,504"/>
+<area shape="rect" id="node3" href="$classsd_info.html#a93a8e95d4e6f54544089151c10abe646" title="sdInfo::setAuthor" alt="" coords="371,5,485,32"/>
+<area shape="rect" id="node4" href="$classsd_entity_core.html#a4a2537e1b5b8c17bac298a37b306ae87" title="sdEntityCore::addEvent" alt="" coords="351,56,505,83"/>
+<area shape="rect" id="node7" href="$classsd_scene.html#a04e558bcf268832b77cfbb576a36778e" title="sdScene::getInfo" alt="" coords="371,107,485,133"/>
+<area shape="rect" id="node8" href="$classsd_info.html#ab881d19b222fca09d4af8d32e8bb4843" title="sdInfo::getAuthor" alt="" coords="371,157,485,184"/>
+<area shape="rect" id="node9" href="$classsd_scene.html#a3a323f8f9e8b4472f4bd06309ba0332d" title="sdScene::getNumberOfActivated\lExtensions" alt="" coords="325,209,531,250"/>
+<area shape="rect" id="node10" href="$classsd_scene.html#ac144977efe9b247870c4a1c6bed5b14f" title="sdScene::getActivatedExtension" alt="" coords="327,275,529,301"/>
+<area shape="rect" id="node11" href="$sd_const_8h.html#adaff5a0973824f6bedbac783f32d7b15" title="extensionToString" alt="" coords="367,325,489,352"/>
+<area shape="rect" id="node12" href="$classsd_scene.html#ae75411e394deb65de00d2c2551ed69c7" title="sdScene::getOrderingAsString" alt="" coords="333,376,523,403"/>
+<area shape="rect" id="node13" href="$classsd_scene.html#abc96077751c152f5f8cb37846a80b676" title="sdScene::getEntityVector" alt="" coords="347,427,509,453"/>
+<area shape="rect" id="node14" href="$classsd_scene.html#a2eca600ab7627a06ad523485a74ff028" title="sdScene::getOrdering" alt="" coords="357,477,499,504"/>
+<area shape="rect" id="node15" href="$classsd_entity.html#acc339121114228be8609b9055b080a28" title="sdEntity::getEventSet" alt="" coords="357,528,499,555"/>
+<area shape="rect" id="node16" href="$classsd_entity_core.html#a97d5b5f189b386620bb898b0f5e0358a" title="sdEntityCore::getName" alt="" coords="579,713,730,740"/>
+<area shape="rect" id="node17" href="$classsd_entity_core.html#a66b6d0ebd81278a21854f8b074883342" title="sdEntityCore::getKind" alt="" coords="357,629,499,656"/>
+<area shape="rect" id="node18" href="$classsd_entity_core.html#a856a6d3f1f7bf294875b208db5e2fc7e" title="sdEntityCore::getExtension\lVector" alt="" coords="341,681,515,722"/>
+<area shape="rect" id="node19" href="$classsd_global_event.html#a6003837be549e8728c7207255f0455fb" title="sdGlobalEvent::getEntityName" alt="" coords="331,747,525,773"/>
+<area shape="rect" id="node20" href="$sd_const_8h.html#a43df1781add708debe292a97c334b4bf" title="getRelevantExtension" alt="" coords="355,797,501,824"/>
+<area shape="rect" id="node21" href="$classsd_entity_core.html#a4cdcaf53be00654310d23d2fc69facef" title="sdEntityCore::sortAlphabetically" alt="" coords="329,848,527,875"/>
+<area shape="rect" id="node22" href="$classsd_entity_core.html#a4d96b7306ddabefd1c7467d06c256afa" title="sdEntityCore::getKindAsString" alt="" coords="333,899,523,925"/>
+</map>

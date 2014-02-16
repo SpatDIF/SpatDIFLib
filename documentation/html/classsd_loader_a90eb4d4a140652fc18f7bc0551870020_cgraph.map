@@ -1,0 +1,15 @@
+<map id="sdLoader::sceneFromJSON" name="sdLoader::sceneFromJSON">
+<area shape="rect" id="node2" href="$classsd_info.html#a93a8e95d4e6f54544089151c10abe646" title="sdInfo::setAuthor" alt="" coords="253,5,368,32"/>
+<area shape="rect" id="node3" href="$classsd_info.html#a297e4c88aec05ec55b43889f763095ac" title="sdInfo::setHost" alt="" coords="258,56,363,83"/>
+<area shape="rect" id="node4" href="$classsd_info.html#a804743b40da45751cda131149c8c616f" title="sdInfo::setDate" alt="" coords="257,107,364,133"/>
+<area shape="rect" id="node5" href="$classsd_info.html#ac5a8019293a84ffcd56f48fcfaf70cb7" title="sdInfo::setSession" alt="" coords="248,157,373,184"/>
+<area shape="rect" id="node6" href="$classsd_info.html#a7c1dd7da9d8e19f76cc372636326b078" title="sdInfo::setLocation" alt="" coords="247,208,374,235"/>
+<area shape="rect" id="node7" href="$classsd_info.html#adb14ece5126bc347f00e4d6a2b3c19d5" title="sdInfo::setAnnotation" alt="" coords="241,259,380,285"/>
+<area shape="rect" id="node8" href="$classsd_scene.html#ad5bc6a91ac1e28bf9182ae00ef7d1bbd" title="sdScene::addExtension" alt="" coords="233,309,389,336"/>
+<area shape="rect" id="node9" href="$classsd_scene.html#ac7abc33a62fa0934f00b30bda8a69541" title="sdScene::setInfo" alt="" coords="253,360,368,387"/>
+<area shape="rect" id="node10" href="$classsd_scene.html#a00b8ea89cce0690109649a262eac0911" title="sdScene::getEntity" alt="" coords="247,411,374,437"/>
+<area shape="rect" id="node12" href="$classsd_scene.html#ab7636b274d6194fad189d8890e9336eb" title="sdScene::addEntity" alt="" coords="245,461,376,488"/>
+<area shape="rect" id="node13" href="$classsd_entity_core.html#a4a2537e1b5b8c17bac298a37b306ae87" title="sdEntityCore::addEvent" alt="" coords="233,512,388,539"/>
+<area shape="rect" id="node14" href="$sd_const_8h.html#adefd8a789b1929eef874e1e0d0ea2eb9" title="boolToString" alt="" coords="265,563,356,589"/>
+<area shape="rect" id="node11" href="$classsd_entity_core.html#a97d5b5f189b386620bb898b0f5e0358a" title="sdEntityCore::getName" alt="" coords="438,411,589,437"/>
+</map>

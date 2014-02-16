@@ -1,0 +1,14 @@
+<map id="main" name="main">
+<area shape="rect" id="node2" href="$classsd_info.html#a93a8e95d4e6f54544089151c10abe646" title="sdInfo::setAuthor" alt="" coords="124,5,239,32"/>
+<area shape="rect" id="node3" href="$classsd_info.html#a297e4c88aec05ec55b43889f763095ac" title="sdInfo::setHost" alt="" coords="129,56,234,83"/>
+<area shape="rect" id="node4" href="$classsd_info.html#a804743b40da45751cda131149c8c616f" title="sdInfo::setDate" alt="" coords="128,107,235,133"/>
+<area shape="rect" id="node5" href="$classsd_info.html#ac5a8019293a84ffcd56f48fcfaf70cb7" title="sdInfo::setSession" alt="" coords="119,157,244,184"/>
+<area shape="rect" id="node6" href="$classsd_info.html#a7c1dd7da9d8e19f76cc372636326b078" title="sdInfo::setLocation" alt="" coords="118,208,245,235"/>
+<area shape="rect" id="node7" href="$classsd_info.html#adb14ece5126bc347f00e4d6a2b3c19d5" title="sdInfo::setAnnotation" alt="" coords="112,259,251,285"/>
+<area shape="rect" id="node8" href="$classsd_info.html#ab881d19b222fca09d4af8d32e8bb4843" title="sdInfo::getAuthor" alt="" coords="124,309,239,336"/>
+<area shape="rect" id="node9" href="$classsd_info.html#a7c613f208d9b0f3f742900821cb96f2b" title="sdInfo::getHost" alt="" coords="129,360,234,387"/>
+<area shape="rect" id="node10" href="$classsd_info.html#a18ab07df7b93aecac6c17f7b268a29bb" title="sdInfo::getDateAsString" alt="" coords="104,411,259,437"/>
+<area shape="rect" id="node11" href="$classsd_info.html#ab85a3c95bbf2b89937ad9ad3126d978f" title="sdInfo::getSession" alt="" coords="119,461,244,488"/>
+<area shape="rect" id="node12" href="$classsd_info.html#a4d19c77415e4570fc60a59d40c608394" title="sdInfo::getLocation" alt="" coords="118,512,245,539"/>
+<area shape="rect" id="node13" href="$classsd_info.html#a33f2c9cfb11f76e19fd0afa391e09b4a" title="sdInfo::getAnnotation" alt="" coords="112,563,251,589"/>
+</map>
