@@ -22,7 +22,7 @@ INSTALL_PATH = /usr/local/lib
 all: 
 	-@make $(UNAME)
 
-Darwin: tinyxml2.o libspatdif.dylib $(JSON_MAKE)
+Darwin: tinyxml2.o libjson libspatdif.dylib
 	install_name_tool -id @loader_path/../Resources/libspatdif.dylib libspatdif.dylib
 	cp libspatdif.dylib libspatdif.dylib.dSYM/Contents/resources/DWARF/
 	cp libspatdif.dylib ../examples
@@ -34,9 +34,8 @@ Linux: tinyxml2.o libjson.a libspatdif.so
 tinyxml2.o : $(TXML_PATH)/$(TXML_FILES)
 	$(CC) $(TXML_FLAG) -c $(TXML_PATH)/$(TXML_FILE)	
 
-libjson.a : $(JSON_PATH)/$(JSON_MAKE)
+libjson : $(JSON_PATH)/$(JSON_MAKE)
 	make -C $(JSON_PATH)
-	cp $(JSON_PATH)/$@ ./
 
 libspatdif.so: $(FILES)
 	$(CC) $(CFLAGS) -o $@ -shared $(LIBS) $(INCLUDE_PATH) tinyxml2.o libjson.a
