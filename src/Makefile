@@ -1,6 +1,6 @@
 UNAME := $(shell uname -s)
 CC = g++
-CFLAGS =  -g -O0 -arch i386
+CFLAGS =  -g -O0 -arch x86_64 #i386 #
 LIBS = -lstdc++
 OBJECTS = *.o *.a
 FILES = *.cpp
@@ -8,7 +8,7 @@ EXAMPLE_DIR = ../examples
 
 TXML_PATH = ./libs/tinyxml2
 TXML_FILE = tinyxml2.cpp 
-TXML_FLAG = -arch i386
+TXML_FLAG = -arch x86_64 #i386 #
 
 JSON_PATH = ./libs/libjson
 JSON_SOURCE_PATH = $(JSON_PATH)/_internal/Source
@@ -23,7 +23,7 @@ all:
 Darwin: tinyxml2.o libjson.a libspatdif.dylib
 	cp libspatdif.dylib ../examples
 	cd ../examples; make
-	install_name_tool -id @executable_path/libspatdif.dylib libspatdif.dylib
+	install_name_tool -id @loader_path/../Resources/libspatdif.dylib libspatdif.dylib
 
 Linux: tinyxml2.o libjson.a libspatdif.so
 	cd ../examples; make 

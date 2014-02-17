@@ -132,9 +132,9 @@ OS=$(shell uname)
 
 # Defaults
 ifeq ($(OS), Darwin)
-	cxxflags_default = -fast -ffast-math -fexpensive-optimizations -DNDEBUG  -arch i386
+	cxxflags_default = -fast -ffast-math -fexpensive-optimizations -DNDEBUG  -arch x86_64 #i386 #
 else
-	cxxflags_default = -O3 -ffast-math -fexpensive-optimizations -DNDEBUG  -arch i386
+	cxxflags_default = -O3 -ffast-math -fexpensive-optimizations -DNDEBUG  -arch x86_64 #i386 #
 endif
 cxxflags_small   = -Os -ffast-math -DJSON_LESS_MEMORY -DNDEBUG
 cxxflags_debug   = -g -DJSON_SAFE -DJSON_DEBUG
