@@ -1,6 +1,6 @@
 UNAME := $(shell uname -s)
 CC = g++
-CFLAGS =  -g -O0 -arch x86_64 #i386 #
+CFLAGS =  -O0 -arch x86_64 -arch i386
 LIBS = -lstdc++
 OBJECTS = *.o *.a
 FILES = *.cpp
@@ -8,10 +8,12 @@ EXAMPLE_DIR = ../examples
 
 TXML_PATH = ./libs/tinyxml2
 TXML_FILE = tinyxml2.cpp 
-TXML_FLAG = -arch x86_64 #i386 #
+TXML_FLAG = -arch x86_64 -arch i386 #FAT
 
 JSON_PATH = ./libs/libjson
 JSON_SOURCE_PATH = $(JSON_PATH)/_internal/Source
+JSON_OBJECT_PATH = $(JSON_PATH)/Objects_static
+
 JSON_MAKE = makefile 
 
 INCLUDE_PATH = -I$(TXML_PATH) -I$(JSON_PATH) -I$(JSON_SOURCE_PATH)
@@ -20,9 +22,9 @@ INSTALL_PATH = /usr/local/lib
 all: 
 	-@make $(UNAME)
 
-Darwin: tinyxml2.o libjson.a libspatdif.dylib
+Darwin: tinyxml2.o libspatdif.dylib $(JSON_OBJECTS)
 	cp libspatdif.dylib ../examples
-	cd ../examples; make
+	cd ../examples;	make
 	install_name_tool -id @loader_path/../Resources/libspatdif.dylib libspatdif.dylib
 
 Linux: tinyxml2.o libjson.a libspatdif.so
@@ -36,10 +38,10 @@ libjson.a : $(JSON_PATH)/$(JSON_MAKE)
 	cp $(JSON_PATH)/$@ ./
 
 libspatdif.so: $(FILES)
-	$(CC) $(CFLAGS) -o $@ -shared $(LIBS) $(INCLUDE_PATH) tinyxml2.o $(FILES) libjson.a
+	$(CC) $(CFLAGS) -o $@ -shared $(LIBS) $(INCLUDE_PATH) tinyxml2.o libjson.a
 
 libspatdif.dylib: $(FILES)
-	$(CC) $(CFLAGS) -o $@ -dynamiclib $(LIBS) $(INCLUDE_PATH) tinyxml2.o libjson.a $(FILES)
+	$(CC) $(CFLAGS) -o $@ -dynamiclib $(LIBS) $(INCLUDE_PATH) tinyxml2.o $(JSON_OBJECT_PATH)/*.o $(FILES)
 
 install:
 	-@make install_$(UNAME)
@@ -59,5 +61,6 @@ clean_Linux:
 	cd ../examples; make clean
 
 clean_Darwin:
-	rm *.dylib *.o *.a
+	rm *.dylib *.o
 	cd ../examples; make clean
+	cd ../src/libs/libjson ;make clean
