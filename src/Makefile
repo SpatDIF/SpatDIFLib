@@ -1,6 +1,6 @@
 UNAME := $(shell uname -s)
 CC = g++
-CFLAGS =  -O0 -arch x86_64 -arch i386
+CFLAGS =  -g -O0 -arch x86_64 -arch i386
 LIBS = -lstdc++
 OBJECTS = *.o *.a
 FILES = *.cpp
@@ -25,8 +25,9 @@ all:
 Darwin: tinyxml2.o libjson libspatdif.dylib
 	install_name_tool -id @loader_path/../Resources/libspatdif.dylib libspatdif.dylib
 	cp libspatdif.dylib libspatdif.dylib.dSYM/Contents/resources/DWARF/
-	cp libspatdif.dylib ../examples
-	cd ../examples;	make
+	cp libspatdif.dylib ../examples # local library with local path for examples
+	cd ../examples; install_name_tool -id @loader_path/libspatdif.dylib libspatdif.dylib
+	cd ../examples; make
 
 Linux: tinyxml2.o libjson.a libspatdif.so
 	cd ../examples; make 
