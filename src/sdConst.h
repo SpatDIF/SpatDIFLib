@@ -178,7 +178,7 @@ inline int stringToInt(string str){
 /*!
  utility function that converts a string to a descriptor. 
  */
-inline const EDescriptor stringToDescriptor(string str, const string *ds, const EDescriptor *dc, const int num){
+inline EDescriptor stringToDescriptor(string str, const string *ds, const EDescriptor *dc, const int num){
     for(int i = 0; i<num; i++ ){
         if(ds[i] == str)
             return dc[i];
@@ -213,7 +213,7 @@ inline const string extensionToString(EExtension extension){
     return extensionStr;
 }
 
-inline const EExtension stringToExtension(string extensionStr){
+inline  EExtension stringToExtension(string extensionStr){
     EExtension ext;
     if(extensionStr == "media"){
         ext = SD_MEDIA;
@@ -227,7 +227,7 @@ inline const EExtension stringToExtension(string extensionStr){
     return ext;
 }
 
-inline const EExtension getRelevantExtension(EDescriptor descriptor){
+inline EExtension getRelevantExtension(EDescriptor descriptor){
     if(SD_TYPE <= descriptor && descriptor <= SD_ORIENTATION){
         return SD_CORE;
     }else if(SD_MEDIA_ID <= descriptor && descriptor <= SD_MEDIA_GAIN){

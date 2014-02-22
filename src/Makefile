@@ -25,9 +25,6 @@ all:
 Darwin: tinyxml2.o libjson libspatdif.dylib
 	install_name_tool -id @loader_path/../Resources/libspatdif.dylib libspatdif.dylib
 	cp libspatdif.dylib libspatdif.dylib.dSYM/Contents/resources/DWARF/
-	cp libspatdif.dylib ../examples # local library with local path for examples
-	cd ../examples; install_name_tool -id @loader_path/libspatdif.dylib libspatdif.dylib
-	cd ../examples; make
 
 Linux: tinyxml2.o libjson.a libspatdif.so
 	cd ../examples; make 
@@ -42,7 +39,7 @@ libspatdif.so: $(FILES)
 	$(CC) $(CFLAGS) -o $@ -shared $(LIBS) $(INCLUDE_PATH) tinyxml2.o libjson.a
 
 libspatdif.dylib: $(FILES)
-	$(CC) $(CFLAGS) -o $@ -dynamiclib $(LIBS) $(INCLUDE_PATH) tinyxml2.o $(JSON_OBJECT_PATH)/*.o $(FILES)
+	$(CC) $(CFLAGS) -o $@ -dynamiclib -flat_namespace $(LIBS) $(INCLUDE_PATH) tinyxml2.o $(JSON_OBJECT_PATH)/*.o $(FILES)
 
 install:
 	-@make install_$(UNAME)
@@ -51,8 +48,8 @@ install_Linux:
 	sudo cp libspatdif.so $(INSTALL_PATH)
 
 install_Darwin:
-	cp libspatdif.dylib $(INSTALL_PATH)
-
+	install_name_tool -id $(INSTALL_PATH)/libspatdif.dylib libspatdif.dylib
+	sudo cp libspatdif.dylib $(INSTALL_PATH)
 
 clean:	
 	-@make clean_$(UNAME)

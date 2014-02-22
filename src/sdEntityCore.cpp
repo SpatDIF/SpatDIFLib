@@ -251,6 +251,7 @@ sdEvent* sdEntityCore::addEvent(string time, string descriptor, string value){
 void sdEntityCore::removeEvent(double time, EDescriptor descriptor){
     // if core descriptor
     if(isCoreDescriptor(descriptor)){
+        
         multiset <sdEvent*>::iterator it = eventSet.begin();
         while(it != eventSet.end()) {
             sdEvent* event = *it;
@@ -258,6 +259,7 @@ void sdEntityCore::removeEvent(double time, EDescriptor descriptor){
                 if(event->getDescriptor() == descriptor)
                 {
                     eventSet.erase(it); // very important incrementor
+                    break;
                 }
             }
             it++;

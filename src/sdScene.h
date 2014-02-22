@@ -258,7 +258,7 @@ public:
      */
     
     /*! varifies the content of scene by sending all containing data (meta and timed) on the standard output. It is useful for debugging the scene*/
-    void dump(void);
+    string dump(void);
     
     /*!
      @}
