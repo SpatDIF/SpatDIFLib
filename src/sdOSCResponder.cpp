@@ -166,7 +166,40 @@ string sdOSCResponder::forwardOSCMessage(string oscMessage){
         string returnStr = "/spatdif/source/";
         return  returnStr + entity->getName() + "/position ddd " + event->getValueAsString();
         
-    }else if(command == "setOrientation"){
+    }else if(command == "getNextPosition"){
+        if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
+            return errorMessage;
+        }
+        
+        sdEntityCore* entity =  scene->getEntity(arguments[0]);
+        if (!entity) {
+            return "/spatdif/error";
+        }
+        sdEventCore* event = (sdEventCore*)entity->getNextEvent(queryTime, SD_POSITION);
+        if(!event){
+            return "/spatdif/error";
+        }
+        string returnStr = "/spatdif/source/";
+        return  returnStr + entity->getName() + "/position dddd " + event->getTimeAsString() + ' ' + event->getValueAsString();
+        
+    }else if(command == "getPreviousPosition"){
+        if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
+            return errorMessage;
+        }
+        
+        sdEntityCore* entity =  scene->getEntity(arguments[0]);
+        if (!entity) {
+            return "/spatdif/error";
+        }
+        sdEventCore* event = (sdEventCore*)entity->getPreviousEvent(queryTime, SD_POSITION);
+        if(!event){
+            return "/spatdif/error";
+        }
+        string returnStr = "/spatdif/source/";
+        return  returnStr + entity->getName() + "/position dddd " + event->getTimeAsString() + ' ' + event->getValueAsString();
+        
+    }
+    else if(command == "setOrientation"){
         if(!checkNumberOfArguments( 4, arguments.size() ,command, errorMessage)){
             return errorMessage;
         }
@@ -193,7 +226,40 @@ string sdOSCResponder::forwardOSCMessage(string oscMessage){
         string returnStr = "/spatdif/source/";
         return  returnStr + entity->getName() + "/orientation ddd " + event->getValueAsString();
         
-    }else if(command == "setPresent"){
+    }else if(command == "getNextOrientation"){
+        if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
+            return errorMessage;
+        }
+        
+        sdEntityCore* entity =  scene->getEntity(arguments[0]);
+        if (!entity) {
+            return "/spatdif/error";
+        }
+        sdEventCore* event = (sdEventCore*)entity->getNextEvent(queryTime, SD_ORIENTATION);
+        if(!event){
+            return "/spatdif/error";
+        }
+        string returnStr = "/spatdif/source/";
+        return  returnStr + entity->getName() + "/orientation dddd " + event->getTimeAsString() + ' '+ event->getValueAsString();
+        
+    }else if(command == "getPreviousOrientation"){
+        if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
+            return errorMessage;
+        }
+        
+        sdEntityCore* entity =  scene->getEntity(arguments[0]);
+        if (!entity) {
+            return "/spatdif/error";
+        }
+        sdEventCore* event = (sdEventCore*)entity->getPreviousEvent(queryTime, SD_ORIENTATION);
+        if(!event){
+            return "/spatdif/error";
+        }
+        string returnStr = "/spatdif/source/";
+        return  returnStr + entity->getName() + "/orientation dddd " + event->getTimeAsString() + ' ' + event->getValueAsString();
+        
+    }
+else if(command == "setPresent"){
         if(!checkNumberOfArguments( 2, arguments.size() ,command, errorMessage)){
             return errorMessage;
         }
@@ -216,6 +282,38 @@ string sdOSCResponder::forwardOSCMessage(string oscMessage){
         }
         return "/spatdif/source/" + entity->getName() + "/present s " + event->getValueAsString();
 
+    }else if(command == "getNextPresent"){
+        
+        if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
+            return errorMessage;
+        }
+        
+        sdEntityCore* entity =  scene->getEntity(arguments[0]);
+        if (!entity) {
+            return "/spatdif/error";
+        }
+        sdEventCore* event = (sdEventCore*)entity->getNextEvent(queryTime, SD_PRESENT);
+        if(!event){
+            return "/spatdif/error";
+        }
+        return "/spatdif/source/" + entity->getName() + "/present ds " + event->getTimeAsString() + ' ' + event->getValueAsString();
+        
+    }else if(command == "getPreviousPresent"){
+        
+        if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
+            return errorMessage;
+        }
+        
+        sdEntityCore* entity =  scene->getEntity(arguments[0]);
+        if (!entity) {
+            return "/spatdif/error";
+        }
+        sdEventCore* event = (sdEventCore*)entity->getPreviousEvent(queryTime, SD_PRESENT);
+        if(!event){
+            return "/spatdif/error";
+        }
+        return "/spatdif/source/" + entity->getName() + "/present ds " + event->getTimeAsString() + ' ' + event->getValueAsString();
+        
     }else if(command == "getNumberOfEntities"){
         
         if(!checkNumberOfArguments( 0, arguments.size() ,command, errorMessage)){
