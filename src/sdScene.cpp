@@ -98,6 +98,10 @@ void sdScene::removeEntity(sdEntityCore *entity){
     }
 }
 
+void sdScene::removeAllEntities(void){
+    entityVector.clear();
+}
+
 void sdScene::setValue(string name, double time, EDescriptor descriptor,  void* value){
     sdEntityCore* entity = getEntity(name);
     if(!entity){

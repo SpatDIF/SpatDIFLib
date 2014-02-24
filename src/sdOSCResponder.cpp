@@ -255,6 +255,22 @@ string sdOSCResponder::forwardOSCMessage(string oscMessage){
         }else{
             return "/spatdif/error";
         }
+    }else if(command == "addEntity"){
+        if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
+            return errorMessage;
+        }
+        scene->addEntity(arguments[0]);
+    }else if(command == "removeEntity"){
+        if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
+            return errorMessage;
+        }
+        scene->removeEntity(arguments[0]);
+
+    }else if(command == "removeAllEntities"){
+        if(!checkNumberOfArguments( 0, arguments.size() ,command, errorMessage)){
+            return errorMessage;
+        }
+        scene->removeAllEntities();
     }
     
     return "/spatdif/success";
