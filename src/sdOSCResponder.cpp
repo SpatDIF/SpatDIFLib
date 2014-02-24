@@ -124,7 +124,7 @@ string sdOSCResponder::forwardOSCMessage(string oscMessage){
         if(!checkNumberOfArguments( 0, arguments.size(), command, errorMessage))
             return errorMessage;
 
-        return "/spatdif/queryTime d " + doubleToString(getQueryTime());
+        return "/spatdif/queryTime ,d " + doubleToString(getQueryTime());
 
     }else if(command == "setWriteTime"){
         
@@ -137,7 +137,7 @@ string sdOSCResponder::forwardOSCMessage(string oscMessage){
         if(!checkNumberOfArguments( 0, arguments.size(), command, errorMessage)){
             return errorMessage;
         }
-        return "/spatdif/writeTime d " + doubleToString(getWriteTime());
+        return "/spatdif/writeTime ,d " + doubleToString(getWriteTime());
         
     }else if(command == "setPosition"){
         if(!checkNumberOfArguments( 4, arguments.size() ,command, errorMessage)){
@@ -164,7 +164,7 @@ string sdOSCResponder::forwardOSCMessage(string oscMessage){
             return "/spatdif/error";
         }
         string returnStr = "/spatdif/source/";
-        return  returnStr + entity->getName() + "/position ddd " + event->getValueAsString();
+        return  returnStr + entity->getName() + "/position ,ddd " + event->getValueAsString();
         
     }else if(command == "getNextPosition"){
         if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
@@ -180,7 +180,7 @@ string sdOSCResponder::forwardOSCMessage(string oscMessage){
             return "/spatdif/error";
         }
         string returnStr = "/spatdif/source/";
-        return  returnStr + entity->getName() + "/position dddd " + event->getTimeAsString() + ' ' + event->getValueAsString();
+        return  returnStr + entity->getName() + "/position ,dddd " + event->getTimeAsString() + ' ' + event->getValueAsString();
         
     }else if(command == "getPreviousPosition"){
         if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
@@ -196,7 +196,7 @@ string sdOSCResponder::forwardOSCMessage(string oscMessage){
             return "/spatdif/error";
         }
         string returnStr = "/spatdif/source/";
-        return  returnStr + entity->getName() + "/position dddd " + event->getTimeAsString() + ' ' + event->getValueAsString();
+        return  returnStr + entity->getName() + "/position ,dddd " + event->getTimeAsString() + ' ' + event->getValueAsString();
         
     }
     else if(command == "setOrientation"){
@@ -224,7 +224,7 @@ string sdOSCResponder::forwardOSCMessage(string oscMessage){
             return "/spatdif/error";
         }
         string returnStr = "/spatdif/source/";
-        return  returnStr + entity->getName() + "/orientation ddd " + event->getValueAsString();
+        return  returnStr + entity->getName() + "/orientation ,ddd " + event->getValueAsString();
         
     }else if(command == "getNextOrientation"){
         if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
@@ -240,7 +240,7 @@ string sdOSCResponder::forwardOSCMessage(string oscMessage){
             return "/spatdif/error";
         }
         string returnStr = "/spatdif/source/";
-        return  returnStr + entity->getName() + "/orientation dddd " + event->getTimeAsString() + ' '+ event->getValueAsString();
+        return  returnStr + entity->getName() + "/orientation ,dddd " + event->getTimeAsString() + ' '+ event->getValueAsString();
         
     }else if(command == "getPreviousOrientation"){
         if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
@@ -256,7 +256,7 @@ string sdOSCResponder::forwardOSCMessage(string oscMessage){
             return "/spatdif/error";
         }
         string returnStr = "/spatdif/source/";
-        return  returnStr + entity->getName() + "/orientation dddd " + event->getTimeAsString() + ' ' + event->getValueAsString();
+        return  returnStr + entity->getName() + "/orientation ,dddd " + event->getTimeAsString() + ' ' + event->getValueAsString();
         
     }
 else if(command == "setPresent"){
@@ -280,7 +280,7 @@ else if(command == "setPresent"){
         if(!event){
             return "/spatdif/error";
         }
-        return "/spatdif/source/" + entity->getName() + "/present s " + event->getValueAsString();
+        return "/spatdif/source/" + entity->getName() + "/present ,s " + event->getValueAsString();
 
     }else if(command == "getNextPresent"){
         
@@ -296,7 +296,7 @@ else if(command == "setPresent"){
         if(!event){
             return "/spatdif/error";
         }
-        return "/spatdif/source/" + entity->getName() + "/present ds " + event->getTimeAsString() + ' ' + event->getValueAsString();
+        return "/spatdif/source/" + entity->getName() + "/present ,ds " + event->getTimeAsString() + ' ' + event->getValueAsString();
         
     }else if(command == "getPreviousPresent"){
         
@@ -312,14 +312,14 @@ else if(command == "setPresent"){
         if(!event){
             return "/spatdif/error";
         }
-        return "/spatdif/source/" + entity->getName() + "/present ds " + event->getTimeAsString() + ' ' + event->getValueAsString();
+        return "/spatdif/source/" + entity->getName() + "/present ,ds " + event->getTimeAsString() + ' ' + event->getValueAsString();
         
     }else if(command == "getNumberOfEntities"){
         
         if(!checkNumberOfArguments( 0, arguments.size() ,command, errorMessage)){
             return errorMessage;
         }
-        return "/spatdif/source/numberOfEntities i " + intToString(scene->getNumberOfEntities());
+        return "/spatdif/source/numberOfEntities ,i " + intToString(scene->getNumberOfEntities());
         
     }else if(command == "getEntityNames"){
         
@@ -339,7 +339,7 @@ else if(command == "setPresent"){
         if(!checkNumberOfArguments( 0, arguments.size() ,command, errorMessage)){
             return errorMessage;
         }
-        return "/spatdif/ordering s " + scene->getOrderingAsString();
+        return "/spatdif/ordering ,s " + scene->getOrderingAsString();
    
     }else if(command == "setOrdering"){
         if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
