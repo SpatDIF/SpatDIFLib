@@ -328,12 +328,13 @@ else if(command == "setPresent"){
         }
         int num = scene->getNumberOfEntities();
         string tt, names;
-        for(int i = 0; i< num; i++){
+        tt = ',';
+        for(int i = 0; i < num; i++){
             tt += 's';
             names += scene->getEntityName(i);
             names += ' ';
         }
-        return "/spatdif/source/entityNames " + tt + ' ' + names;
+        return "/spatdif/source/entityNames " + tt + names;
         
     }else if(command == "getOrdering"){
         if(!checkNumberOfArguments( 0, arguments.size() ,command, errorMessage)){
