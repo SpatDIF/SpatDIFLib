@@ -139,6 +139,19 @@ string sdOSCResponder::forwardOSCMessage(string oscMessage){
         }
         return "/spatdif/writeTime ,d " + doubleToString(getWriteTime());
         
+    }else if(command == "setInterval"){
+        
+        if(!checkNumberOfArguments( 1, arguments.size(), command, errorMessage))
+            return errorMessage;
+        
+        setInterval(stringToDouble(arguments[0]));
+        
+    }else if(command == "getInterval"){
+        if(!checkNumberOfArguments( 0, arguments.size(), command, errorMessage)){
+            return errorMessage;
+        }
+        return "/spatdif/interval ,d " + doubleToString(getInterval());
+        
     }else if(command == "setPosition"){
         if(!checkNumberOfArguments( 4, arguments.size() ,command, errorMessage)){
             return errorMessage;

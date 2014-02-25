@@ -23,6 +23,7 @@ all:
 	-@make $(UNAME)
 
 Darwin: tinyxml2.o libjson libspatdif.dylib
+	cp libspatdif.dylib ../examples
 	install_name_tool -id @loader_path/../Resources/libspatdif.dylib libspatdif.dylib
 	cp libspatdif.dylib libspatdif.dylib.dSYM/Contents/resources/DWARF/
 

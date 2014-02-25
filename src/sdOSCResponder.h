@@ -39,6 +39,7 @@ private:
     
     double queryTime;
     double writeTime;
+    double interval;
     
     /*! private utility function for spliting string with slash*/
     vector <string> splitString(const string &str);
@@ -92,6 +93,12 @@ public:
      @param time set writeTime to this value
      */
     void setWriteTime(double time);
+
+    /*!
+     @param time set interval to this value
+     */
+    void setInterval(double time);
+    
     
     /*!
      returns queryTime
@@ -103,6 +110,10 @@ public:
      */
     double getWriteTime(void);
     
+    /*!
+     returns interval
+     */
+    double getInterval(void);
     
 };
 
@@ -124,6 +135,10 @@ inline void sdOSCResponder::setWriteTime(double time){
     writeTime = time;
 }
 
+inline void sdOSCResponder::setInterval(double time){
+    interval =  time;
+}
+
 inline double sdOSCResponder::getQueryTime(void){
     return queryTime;
 }
@@ -132,6 +147,11 @@ inline double sdOSCResponder::getWriteTime(void){
     return writeTime;
     
 }
+
+inline double sdOSCResponder::getInterval(void){
+    return interval;
+}
+
 
 
 /*! \page osc_commands
