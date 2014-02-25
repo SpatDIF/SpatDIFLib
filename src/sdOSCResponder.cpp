@@ -55,15 +55,15 @@ bool sdOSCResponder::checkNumberOfArguments(int expectedNumber, int actualNumber
 }
 
 
-string sdOSCResponder::forwardOSCMessage(string oscMessage, double time){
+vector<string> sdOSCResponder::forwardOSCMessage(string oscMessage, double time){
     setQueryTime(time);
     return forwardOSCMessage(oscMessage);
 }
 
-string sdOSCResponder::forwardOSCMessage(string oscMessage){
+vector<string> sdOSCResponder::forwardOSCMessage(string oscMessage){
 
-// interpret
     string element, command, errorMessage;
+    vector<string> returnMessageVector;
     vector<string> arguments;
     istringstream iss(oscMessage);
     int count = 0;
@@ -78,7 +78,7 @@ string sdOSCResponder::forwardOSCMessage(string oscMessage){
                 //address pattern
                 if (element[0] != '/') {
                     cout << "sdOSCReponder Error: The first element of incoming OSC Message is not an address pattern." << endl;
-                    return NULL;
+                    return returnMessageVector;
                 }
                 //split into parts
                 vector <string>ads = splitString(element);
@@ -86,12 +86,12 @@ string sdOSCResponder::forwardOSCMessage(string oscMessage){
                 
                 if (ads.size() < 2 ) {
                     cout << "sdOSCResponder Error: The address pattern consists of two few elements." << endl;
-                    return NULL;
+                    return returnMessageVector;
                 }
                 
                 if(ads[0] != "spatdifcmd"){
                     cout << "sdOSCResponder Error: The address pattern of the received message does not begin with \"spatdifcmd\"." << endl;
-                    return NULL;
+                    return returnMessageVector;
                 }
                 
                 command = ads[1];
@@ -115,106 +115,108 @@ string sdOSCResponder::forwardOSCMessage(string oscMessage){
     if( command == "setQueryTime"){
     
         if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage))
-            return errorMessage;
-        
-        setQueryTime(stringToDouble(arguments[0]));
+            returnMessageVector.push_back(errorMessage);
+        else
+            setQueryTime(stringToDouble(arguments[0]));
 
     }else if(command == "getQueryTime"){
 
         if(!checkNumberOfArguments( 0, arguments.size(), command, errorMessage))
-            return errorMessage;
-
-        return "/spatdif/queryTime ,d " + doubleToString(getQueryTime());
+            returnMessageVector.push_back(errorMessage);
+        else
+            returnMessageVector.push_back("/spatdif/queryTime ,d " + doubleToString(getQueryTime()));
 
     }else if(command == "setWriteTime"){
         
         if(!checkNumberOfArguments( 1, arguments.size(), command, errorMessage))
-            return errorMessage;
-
-        setWriteTime(stringToDouble(arguments[0]));
+            returnMessageVector.push_back(errorMessage);
+        else
+            setWriteTime(stringToDouble(arguments[0]));
         
     }else if(command == "getWriteTime"){
-        if(!checkNumberOfArguments( 0, arguments.size(), command, errorMessage)){
-            return errorMessage;
-        }
-        return "/spatdif/writeTime ,d " + doubleToString(getWriteTime());
+        
+        if(!checkNumberOfArguments( 0, arguments.size(), command, errorMessage))
+            returnMessageVector.push_back(errorMessage);
+        else
+            returnMessageVector.push_back("/spatdif/writeTime ,d " + doubleToString(getWriteTime()));
         
     }else if(command == "setInterval"){
         
         if(!checkNumberOfArguments( 1, arguments.size(), command, errorMessage))
-            return errorMessage;
-        
-        setInterval(stringToDouble(arguments[0]));
+            returnMessageVector.push_back(errorMessage);
+        else
+            setInterval(stringToDouble(arguments[0]));
         
     }else if(command == "getInterval"){
-        if(!checkNumberOfArguments( 0, arguments.size(), command, errorMessage)){
-            return errorMessage;
-        }
-        return "/spatdif/interval ,d " + doubleToString(getInterval());
+        
+        if(!checkNumberOfArguments( 0, arguments.size(), command, errorMessage))
+            returnMessageVector.push_back(errorMessage);
+        else
+            returnMessageVector.push_back("/spatdif/interval ,d " + doubleToString(getInterval()));
         
     }else if(command == "setPosition"){
-        if(!checkNumberOfArguments( 4, arguments.size() ,command, errorMessage)){
-            return errorMessage;
+        if(!checkNumberOfArguments( 4, arguments.size() ,command, errorMessage))
+            returnMessageVector.push_back(errorMessage);
+        else{
+            double pos[3];
+            pos[0] = stringToDouble(arguments[1]);
+            pos[1] = stringToDouble(arguments[2]);
+            pos[2] = stringToDouble(arguments[3]);
+            scene->setValue(arguments[0], writeTime, SD_POSITION, (void*)pos);
         }
-        double pos[3];
-        pos[0] = stringToDouble(arguments[1]);
-        pos[1] = stringToDouble(arguments[2]);
-        pos[2] = stringToDouble(arguments[3]);
-        scene->setValue(arguments[0], writeTime, SD_POSITION, (void*)pos);
-           
     }else if(command == "getPosition"){
 
         if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
-            return errorMessage;
+            returnMessageVector.push_back(errorMessage);
         }
         
         sdEntityCore* entity =  scene->getEntity(arguments[0]);
         if (!entity) {
-            return "/spatdif/error";
+            returnMessageVector.push_back("/spatdif/error");
         }
         sdEventCore* event = (sdEventCore*)entity->getEvent(queryTime, SD_POSITION);
         if(!event){
-            return "/spatdif/error";
+            returnMessageVector.push_back("/spatdif/error");
         }
         string returnStr = "/spatdif/source/";
-        return  returnStr + entity->getName() + "/position ,ddd " + event->getValueAsString();
+        returnMessageVector.push_back(returnStr + entity->getName() + "/position ,ddd " + event->getValueAsString());
         
     }else if(command == "getNextPosition"){
         if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
-            return errorMessage;
+            returnMessageVector.push_back(errorMessage);
         }
         
         sdEntityCore* entity =  scene->getEntity(arguments[0]);
         if (!entity) {
-            return "/spatdif/error";
+            returnMessageVector.push_back("/spatdif/error");
         }
         sdEventCore* event = (sdEventCore*)entity->getNextEvent(queryTime, SD_POSITION);
         if(!event){
-            return "/spatdif/error";
+            returnMessageVector.push_back("/spatdif/error");
         }
         string returnStr = "/spatdif/source/";
-        return  returnStr + entity->getName() + "/position ,dddd " + event->getTimeAsString() + ' ' + event->getValueAsString();
+        returnMessageVector.push_back(returnStr + entity->getName() + "/position ,dddd " + event->getTimeAsString() + ' ' + event->getValueAsString());
         
     }else if(command == "getPreviousPosition"){
         if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
-            return errorMessage;
+            returnMessageVector.push_back(errorMessage);
         }
         
         sdEntityCore* entity =  scene->getEntity(arguments[0]);
         if (!entity) {
-            return "/spatdif/error";
+            returnMessageVector.push_back("/spatdif/error");
         }
         sdEventCore* event = (sdEventCore*)entity->getPreviousEvent(queryTime, SD_POSITION);
         if(!event){
-            return "/spatdif/error";
+            returnMessageVector.push_back("/spatdif/error");
         }
         string returnStr = "/spatdif/source/";
-        return  returnStr + entity->getName() + "/position ,dddd " + event->getTimeAsString() + ' ' + event->getValueAsString();
+        returnMessageVector.push_back(returnStr + entity->getName() + "/position ,dddd " + event->getTimeAsString() + ' ' + event->getValueAsString());
         
     }
     else if(command == "setOrientation"){
         if(!checkNumberOfArguments( 4, arguments.size() ,command, errorMessage)){
-            return errorMessage;
+            returnMessageVector.push_back(errorMessage);
         }
         double ori[3];
         ori[0] = stringToDouble(arguments[1]);
@@ -225,56 +227,56 @@ string sdOSCResponder::forwardOSCMessage(string oscMessage){
     }else if(command == "getOrientation"){
         
         if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
-            return errorMessage;
+            returnMessageVector.push_back(errorMessage);
         }
         
         sdEntityCore* entity =  scene->getEntity(arguments[0]);
         if (!entity) {
-            return "/spatdif/error";
+            returnMessageVector.push_back("/spatdif/error");
         }
         sdEventCore* event = (sdEventCore*)entity->getEvent(queryTime, SD_ORIENTATION);
         if(!event){
-            return "/spatdif/error";
+            returnMessageVector.push_back("/spatdif/error");
         }
         string returnStr = "/spatdif/source/";
-        return  returnStr + entity->getName() + "/orientation ,ddd " + event->getValueAsString();
+        returnMessageVector.push_back(returnStr + entity->getName() + "/orientation ,ddd " + event->getValueAsString());
         
     }else if(command == "getNextOrientation"){
         if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
-            return errorMessage;
+            returnMessageVector.push_back(errorMessage);
         }
         
         sdEntityCore* entity =  scene->getEntity(arguments[0]);
         if (!entity) {
-            return "/spatdif/error";
+            returnMessageVector.push_back("/spatdif/error");
         }
         sdEventCore* event = (sdEventCore*)entity->getNextEvent(queryTime, SD_ORIENTATION);
         if(!event){
-            return "/spatdif/error";
+            returnMessageVector.push_back("/spatdif/error");
         }
         string returnStr = "/spatdif/source/";
-        return  returnStr + entity->getName() + "/orientation ,dddd " + event->getTimeAsString() + ' '+ event->getValueAsString();
+        returnMessageVector.push_back(returnStr + entity->getName() + "/orientation ,dddd " + event->getTimeAsString() + ' '+ event->getValueAsString());
         
     }else if(command == "getPreviousOrientation"){
         if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
-            return errorMessage;
+            returnMessageVector.push_back(errorMessage);
         }
         
         sdEntityCore* entity =  scene->getEntity(arguments[0]);
         if (!entity) {
-            return "/spatdif/error";
+            returnMessageVector.push_back("/spatdif/error");
         }
         sdEventCore* event = (sdEventCore*)entity->getPreviousEvent(queryTime, SD_ORIENTATION);
         if(!event){
-            return "/spatdif/error";
+            returnMessageVector.push_back("/spatdif/error");
         }
         string returnStr = "/spatdif/source/";
-        return  returnStr + entity->getName() + "/orientation ,dddd " + event->getTimeAsString() + ' ' + event->getValueAsString();
+        returnMessageVector.push_back(returnStr + entity->getName() + "/orientation ,dddd " + event->getTimeAsString() + ' ' + event->getValueAsString());
         
     }
-else if(command == "setPresent"){
+    else if(command == "setPresent"){
         if(!checkNumberOfArguments( 2, arguments.size() ,command, errorMessage)){
-            return errorMessage;
+            returnMessageVector.push_back(errorMessage);
         }
         bool present = stringToBool(arguments[1]);
         scene->setValue(arguments[0], writeTime, SD_PRESENT, (void*)&present);
@@ -282,62 +284,63 @@ else if(command == "setPresent"){
     }else if(command == "getPresent"){
         
         if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
-            return errorMessage;
+            returnMessageVector.push_back(errorMessage);
         }
         
         sdEntityCore* entity =  scene->getEntity(arguments[0]);
         if (!entity) {
-            return "/spatdif/error";
+            returnMessageVector.push_back("/spatdif/error");
         }
         sdEventCore* event = (sdEventCore*)entity->getEvent(queryTime, SD_PRESENT);
         if(!event){
-            return "/spatdif/error";
+            returnMessageVector.push_back("/spatdif/error");
         }
-        return "/spatdif/source/" + entity->getName() + "/present ,s " + event->getValueAsString();
+        returnMessageVector.push_back("/spatdif/source/" + entity->getName() + "/present ,s " + event->getValueAsString());
 
     }else if(command == "getNextPresent"){
         
         if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
-            return errorMessage;
+            returnMessageVector.push_back(errorMessage);
         }
         
         sdEntityCore* entity =  scene->getEntity(arguments[0]);
         if (!entity) {
-            return "/spatdif/error";
+            returnMessageVector.push_back("/spatdif/error");
         }
         sdEventCore* event = (sdEventCore*)entity->getNextEvent(queryTime, SD_PRESENT);
         if(!event){
-            return "/spatdif/error";
+            returnMessageVector.push_back("/spatdif/error");
         }
-        return "/spatdif/source/" + entity->getName() + "/present ,ds " + event->getTimeAsString() + ' ' + event->getValueAsString();
+        
+        returnMessageVector.push_back("/spatdif/source/" + entity->getName() + "/present ,ds " + event->getTimeAsString() + ' ' + event->getValueAsString());
         
     }else if(command == "getPreviousPresent"){
         
         if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
-            return errorMessage;
+            returnMessageVector.push_back(errorMessage);
         }
         
         sdEntityCore* entity =  scene->getEntity(arguments[0]);
         if (!entity) {
-            return "/spatdif/error";
+            returnMessageVector.push_back("/spatdif/error");
         }
         sdEventCore* event = (sdEventCore*)entity->getPreviousEvent(queryTime, SD_PRESENT);
         if(!event){
-            return "/spatdif/error";
+            returnMessageVector.push_back("/spatdif/error");
         }
-        return "/spatdif/source/" + entity->getName() + "/present ,ds " + event->getTimeAsString() + ' ' + event->getValueAsString();
+        returnMessageVector.push_back("/spatdif/source/" + entity->getName() + "/present ,ds " + event->getTimeAsString() + ' ' + event->getValueAsString());
         
     }else if(command == "getNumberOfEntities"){
         
-        if(!checkNumberOfArguments( 0, arguments.size() ,command, errorMessage)){
-            return errorMessage;
-        }
-        return "/spatdif/source/numberOfEntities ,i " + intToString(scene->getNumberOfEntities());
+        if(!checkNumberOfArguments( 0, arguments.size() ,command, errorMessage))
+            returnMessageVector.push_back(errorMessage);
+        else
+            returnMessageVector.push_back("/spatdif/source/numberOfEntities ,i " + intToString(scene->getNumberOfEntities()));
         
     }else if(command == "getEntityNames"){
         
         if(!checkNumberOfArguments( 0, arguments.size() ,command, errorMessage)){
-            return errorMessage;
+            returnMessageVector.push_back(errorMessage);
         }
         int num = scene->getNumberOfEntities();
         string tt, names;
@@ -347,17 +350,17 @@ else if(command == "setPresent"){
             names += scene->getEntityName(i);
             names += ' ';
         }
-        return "/spatdif/source/entityNames " + tt + names;
+        returnMessageVector.push_back( "/spatdif/source/entityNames " + tt + names);
         
     }else if(command == "getOrdering"){
-        if(!checkNumberOfArguments( 0, arguments.size() ,command, errorMessage)){
-            return errorMessage;
-        }
-        return "/spatdif/ordering ,s " + scene->getOrderingAsString();
+        if(!checkNumberOfArguments( 0, arguments.size() ,command, errorMessage))
+            returnMessageVector.push_back(errorMessage);
+        else
+            returnMessageVector.push_back("/spatdif/ordering ,s " + scene->getOrderingAsString());
    
     }else if(command == "setOrdering"){
         if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
-            return errorMessage;
+            returnMessageVector.push_back(errorMessage);
         }
         
         if(arguments[0] == "track"){
@@ -365,27 +368,27 @@ else if(command == "setPresent"){
         }else if(arguments[0] == "time"){
             scene->setOrdering(SD_TIME);
         }else{
-            return "/spatdif/error";
+            returnMessageVector.push_back( "/spatdif/error" );
         }
     }else if(command == "addEntity"){
-        if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
-            return errorMessage;
-        }
-        scene->addEntity(arguments[0]);
+        if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage))
+            returnMessageVector.push_back(errorMessage);
+        else
+            scene->addEntity(arguments[0]);
     }else if(command == "removeEntity"){
-        if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage)){
-            return errorMessage;
-        }
-        scene->removeEntity(arguments[0]);
+        if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage))
+            returnMessageVector.push_back(errorMessage);
+        else
+            scene->removeEntity(arguments[0]);
 
     }else if(command == "removeAllEntities"){
-        if(!checkNumberOfArguments( 0, arguments.size() ,command, errorMessage)){
-            return errorMessage;
-        }
-        scene->removeAllEntities();
+        if(!checkNumberOfArguments( 0, arguments.size() ,command, errorMessage))
+            returnMessageVector.push_back(errorMessage);
+        else
+            scene->removeAllEntities();
     }
     
-    return "/spatdif/success";
+    return returnMessageVector;
     
 }
             

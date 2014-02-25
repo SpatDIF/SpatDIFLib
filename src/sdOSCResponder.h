@@ -75,14 +75,14 @@ public:
     /*! this function interprets incoming string as a OSCMessage and forward it to the scene
      @param oscMessage a OSC string to be interpreted and forwarded to the library
      */
-    string forwardOSCMessage(string oscMessage);
+    vector<string> forwardOSCMessage(string oscMessage);
     
     /*!
      overloaded funtion.
      @param oscMessage a OSC string to be interpreted and forwarded to the library
      @param time set current time to this value before forwarding the message
      */
-    string forwardOSCMessage(string oscMessage, double time);
+    vector<string> forwardOSCMessage(string oscMessage, double time);
 
     /*!
      @param time set queryTime to this value
