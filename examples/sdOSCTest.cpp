@@ -25,7 +25,7 @@ int main(void){
     sdEntityCore *myEntity = scene.addEntity("myEntity");
     myEntity->addEvent(string("1.0"), string("position"), string("0.0 0.1 0.2"));
 
-    sdOSCResponder oscResponder = sdOSCResponder(&scene);
+    sdOSCResponder oscResponder(&scene);
     scene.dump();
     
     // query with OSC message
@@ -34,7 +34,14 @@ int main(void){
     oscResponder.forwardOSCMessage(oscMessage);
     
     oscMessage = string("/spatdifcmd/getPosition myEntity");
-    cout << oscResponder.forwardOSCMessage(oscMessage) << endl;
+    vector<string> returnedMessages = oscResponder.forwardOSCMessage(oscMessage);
+    vector<string>::iterator it = returnedMessages.begin();
+    
+    while (it!=returnedMessages.end()) {
+        string str = *it;
+        cout << str << endl;
+        it++;
+    }
 
     return 0;
 }

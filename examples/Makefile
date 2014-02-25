@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -arch x86_64 -arch i386 
 INCLUDE = ../src
-LIB_PATH = .
+LIB_PATH = /usr/local/lib
 LIBS =  -lstdc++ -lspatdif
 TARGETS = How_to_query.out FileWithExtension.out sdConverter.out sdDateTest.out sdEventTest.out sdExtensionTest.out sdInfoTest.out sdLoaderTest.out sdOSCTest.out sdSaverTest.out sdSceneTest.out
 
