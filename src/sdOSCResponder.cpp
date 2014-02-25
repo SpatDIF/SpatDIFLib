@@ -111,8 +111,52 @@ vector<string> sdOSCResponder::forwardOSCMessage(string oscMessage){
     }
 
     // interpet the command
-    
-    if( command == "setQueryTime"){
+    if ( command == "getEventSetsFromAllEntities"){
+        if(!checkNumberOfArguments( 0, arguments.size() ,command, errorMessage))
+            returnMessageVector.push_back(errorMessage);
+        else{
+            vector<sdReport> reports;
+            reports = scene->getEventSetsFromAllEntities(queryTime, queryTime+interval);
+            vector<sdReport>::iterator rit = reports.begin();
+            while(rit != reports.begin()){
+                sdReport report = *rit;
+                sdEntityCore* entity = report.entity;
+                multiset<sdEvent*, sdEventCompare>eventSet = report.eventSet;
+                multiset<sdEvent*, sdEventCompare>::iterator eit = eventSet.begin();
+                while (eit != eventSet.end()) {
+                    sdEvent *event = *eit;
+                    
+                    switch (event->getDescriptor()) {
+                        case SD_POSITION:
+                            returnMessageVector.push_back("/spatdif/event ,dssddd "
+                                                          + event->getTimeAsString() + ' '
+                                                          + entity->getName() + ' '
+                                                          + event->getDescriptorAsString() + ' '
+                                                          + event->getValueAsString());
+                            break;
+                        case SD_ORIENTATION:
+                            returnMessageVector.push_back("/spatdif/event ,dssddd "
+                                                          + event->getTimeAsString()
+                                                          + entity->getName() + ' '
+                                                          + event->getDescriptorAsString() + ' '
+                                                          + event->getValueAsString());
+                            break;
+                        case SD_PRESENT:
+                            returnMessageVector.push_back("/spatdif/event ,dsss "
+                                                          + event->getTimeAsString()
+                                                          + entity->getName() +' '
+                                                          + event->getDescriptorAsString() +' '
+                                                          + event->getValueAsString());
+                            break;
+                        default:
+                            break;
+                    }
+                    eit++;
+                }
+                rit++;
+            }
+        }
+    }else if( command == "setQueryTime"){
     
         if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage))
             returnMessageVector.push_back(errorMessage);
