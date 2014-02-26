@@ -1,10 +1,20 @@
-#include "sdOSCConverter.h"
-#include <string>
 #include <iostream>
+#include <vector>
+#include "sdOSCConverter.h"
 
-int main(void){
-  sdOSCConverter converter;
-  cout << converter.floatToOSC(5.678) << endl;
-  
-  return 0;
+using namespace std;
+int main (void){
+
+    sdOSCConverter converter;
+    
+    vector<char> ic = converter.intToNibble(1523421);
+    cout << converter.nibbleToInt(ic) << endl;
+    
+    vector<char> fc = converter.floatToNibble(-2.31523);
+    cout << converter.nibbleToFloat(fc) << endl;
+    
+    vector<char> sc = converter.stringToNibbles("testing");
+    cout << converter.nibblesToString(sc);
+    
+    return 0;
 }

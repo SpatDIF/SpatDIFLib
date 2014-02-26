@@ -3,7 +3,7 @@ CFLAGS = -arch x86_64 -arch i386
 INCLUDE = ../src
 LIB_PATH = /usr/local/lib
 LIBS =  -lstdc++ -lspatdif
-TARGETS = How_to_query.out FileWithExtension.out sdConverter.out sdDateTest.out sdEventTest.out sdExtensionTest.out sdInfoTest.out sdLoaderTest.out sdOSCTest.out sdSaverTest.out sdSceneTest.out
+TARGETS = How_to_query.out FileWithExtension.out sdConverter.out sdDateTest.out sdEventTest.out sdExtensionTest.out sdInfoTest.out sdLoaderTest.out sdOSCTest.out sdSaverTest.out sdSceneTest.out sdOSCConverterTest.out
 
 all: $(TARGETS)
 
@@ -32,6 +32,9 @@ sdLoaderTest.out: sdLoaderTest.cpp
 	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
 
 sdOSCTest.out: sdOSCTest.cpp
+	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
+
+sdOSCConverterTest.out: sdOSCConverterTest.cpp
 	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
 
 sdSaverTest.out: sdSaverTest.cpp
