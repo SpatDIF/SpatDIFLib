@@ -156,6 +156,30 @@ vector<string> sdOSCResponder::forwardOSCMessage(string oscMessage){
                 rit++;
             }
         }
+    }else if( command == "setAuthor"){
+            
+    }else if( command == "getAuthor"){
+        
+    }else if( command == "setHost"){
+        
+    }else if( command == "getHost"){
+        
+    }else if( command == "setDate"){
+        
+    }else if( command == "getDate"){
+        
+    }else if( command == "setLocation"){
+        
+    }else if( command == "getLication"){
+        
+    }else if( command == "setSession"){
+        
+    }else if ( command == "getSession"){
+        
+    }else if(commnad == "setAnnotation"){
+            
+    }else if(comamnd == "getAnnotation"){
+        
     }else if( command == "setQueryTime"){
     
         if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage))
@@ -424,7 +448,6 @@ vector<string> sdOSCResponder::forwardOSCMessage(string oscMessage){
             returnMessageVector.push_back(errorMessage);
         else
             scene->removeEntity(arguments[0]);
-
     }else if(command == "removeAllEntities"){
         if(!checkNumberOfArguments( 0, arguments.size() ,command, errorMessage))
             returnMessageVector.push_back(errorMessage);
