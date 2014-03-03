@@ -30,59 +30,59 @@ using namespace std;
 class sdOSCConverter{
     
 public:
-    inline vector<char> intToNibble(int value);
-    inline int nibbleToInt(vector<char> nibble);
-    inline vector<char> floatToNibble(float value);
-    inline float nibbleToFloat(vector<char> nibble);
-    inline vector<char> stringToNibbles(string str);
-    inline string nibblesToString(vector<char> nibbles);
+    inline vector<unsigned char> intToNibble(int value);
+    inline int nibbleToInt(vector<unsigned char> nibble);
+    inline vector<unsigned char> floatToNibble(float value);
+    inline float nibbleToFloat(vector<unsigned char> nibble);
+    inline vector<unsigned char> stringToNibbles(string str);
+    inline string nibblesToString(vector<unsigned char> nibbles);
 };
 
-vector<char> sdOSCConverter::intToNibble(int value){
-    char *c = reinterpret_cast<char*>(&value);
-    vector<char> nibble;
-    nibble.push_back(c[0]);
-    nibble.push_back(c[1]);
-    nibble.push_back(c[2]);
+vector<unsigned char> sdOSCConverter::intToNibble(int value){
+    unsigned char *c = reinterpret_cast<unsigned char*>(&value);
+    vector<unsigned char> nibble;
     nibble.push_back(c[3]);
+    nibble.push_back(c[2]);
+    nibble.push_back(c[1]);
+    nibble.push_back(c[0]);
     return nibble;
 }
 
-int sdOSCConverter::nibbleToInt(vector<char> nibble){
-    char c[4];
-    c[0] = nibble[0];
-    c[1] = nibble[1];
-    c[2] = nibble[2];
-    c[3] = nibble[3];
+int sdOSCConverter::nibbleToInt(vector<unsigned char> nibble){
+    unsigned char c[4];
+    c[0] = nibble[3];
+    c[1] = nibble[2];
+    c[2] = nibble[1];
+    c[3] = nibble[0];
     int *value = reinterpret_cast<int*>(&c);
     return *value;
 }
 
-vector<char> sdOSCConverter::floatToNibble(float value){
-    char *c = reinterpret_cast<char*>(&value);
-    vector<char> nibble;
-    nibble.push_back(c[0]);
-    nibble.push_back(c[1]);
-    nibble.push_back(c[2]);
+vector<unsigned char> sdOSCConverter::floatToNibble(float value){
+    unsigned char *c = reinterpret_cast<unsigned char*>(&value);
+    vector<unsigned char> nibble;
     nibble.push_back(c[3]);
+    nibble.push_back(c[2]);
+    nibble.push_back(c[1]);
+    nibble.push_back(c[0]);
     return nibble;
 }
 
-float sdOSCConverter::nibbleToFloat(vector<char> nibble){
-    char c[4];
-    c[0] = nibble[0];
-    c[1] = nibble[1];
-    c[2] = nibble[2];
-    c[3] = nibble[3];
+float sdOSCConverter::nibbleToFloat(vector<unsigned char> nibble){
+    unsigned char c[4];
+    c[0] = nibble[3];
+    c[1] = nibble[2];
+    c[2] = nibble[1];
+    c[3] = nibble[0];
     float *value = reinterpret_cast<float*>(&c);
     return *value;
 }
 
-vector<char> sdOSCConverter::stringToNibbles(string str){
+vector<unsigned char> sdOSCConverter::stringToNibbles(string str){
     
     int rest = str.size() % 4 ;
     int numberOfNulls = 4-rest;
-    vector<char> nibbles;
+    vector<unsigned char> nibbles;
     for(int i = 0; i < str.size(); i++){
         nibbles.push_back(str[i]);
     }
@@ -92,7 +92,7 @@ vector<char> sdOSCConverter::stringToNibbles(string str){
     return nibbles;
 }
 
-string sdOSCConverter::nibblesToString(vector<char> nibbles){
+string sdOSCConverter::nibblesToString(vector<unsigned char> nibbles){
     string str;
     
     for(int i = 0; i < nibbles.size(); i++){

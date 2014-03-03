@@ -1,42 +1,50 @@
 #include <iostream>
 #include <vector>
+#include <iomanip>
 #include "sdOSCConverter.h"
 
 using namespace std;
 
-void dumpBytes(vector<char> bytes) {
-    cout << "number of bytes:" << bytes.size() << endl;
-    cout << "content:";
+void dumpBytes(vector<unsigned char> bytes) {
+    cout << "number of bytes:" << std::dec << bytes.size() << endl;
+    cout << "content:" << endl;
     
-    vector<char>::iterator it = bytes.begin();
+    vector<unsigned char>::iterator it = bytes.begin();
+    int count = 0;
     while (it != bytes.end()) {
-        char c = *it;
-        cout << c << "(" << static_cast<int>(c) << ") ";
+        unsigned char c = *it;
+        cout << hex <<  setw(2) << setfill('0') << static_cast<int>(c) << ' ';
         it++;
+        count++;
+        if(count % 4 == 0){
+            cout << endl;
+        }
     }
-    cout << endl;
+    
     
 }
 
 int main (void){
 
+    // conform to http://opensoundcontrol.org/spec-1_0-examples#OSCstrings
+
     sdOSCConverter converter;
     
-    int ioriginal = 123456789;
+    int ioriginal = 1000;
     cout << "original:" << ioriginal << endl;;
-    vector<char> ic = converter.intToNibble(ioriginal);
+    vector<unsigned char> ic = converter.intToNibble(ioriginal);
     dumpBytes(ic);
-    cout << "decoded:" << converter.nibbleToInt(ic) << endl << endl;
+    cout << "decoded:" << std::dec << converter.nibbleToInt(ic) << endl << endl;
     
-    float foriginal = -1.23456789;
+    float foriginal = 1.234;
     cout << "original:" << foriginal << endl;
-    vector<char> fc = converter.floatToNibble(foriginal);
+    vector<unsigned char> fc = converter.floatToNibble(foriginal);
     dumpBytes(fc);
     cout << "decoded:" << converter.nibbleToFloat(fc) << endl << endl;
     
-    string soriginal = "testing";
+    string soriginal = "hello";
     cout << "original:" << soriginal << endl;
-    vector<char> sc = converter.stringToNibbles(soriginal);
+    vector<unsigned char> sc = converter.stringToNibbles(soriginal);
     dumpBytes(sc);
     cout << "decoded:" << converter.nibblesToString(sc) << endl << endl;
     
