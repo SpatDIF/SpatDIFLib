@@ -98,6 +98,26 @@ inline string intToString(int it){
     return intsToString(&it, 1);
 }
 
+/*!
+ utility function that convert ints to a string
+ */
+inline string floatsToString(float *ft, int num){
+    ostringstream os;
+    for(int i=0;i<num;i++){
+        os << ft[i];
+        if(i != (num-1))
+            os << ' ';
+    }
+    return os.str();
+}
+
+/*!
+ utility function that convert a int to a string
+ */
+inline string floatToString(float ft){
+    return floatsToString(&ft, 1);
+}
+
 
 /*! 
  utility function that convert doubles to a string
@@ -174,6 +194,7 @@ inline int stringToInt(string str){
     stringToInts(str, &it, 1);
     return it;
 }
+
 
 /*!
  utility function that converts a string to a descriptor. 

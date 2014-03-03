@@ -1,27 +1,20 @@
 
 
 #include "sdOSCMessage.h"
-
+#include "sdConst.h"
 
 sdOSCMessage::sdOSCMessage(string address){
     sdOSCMessage::address = stringToNibbles(address); // conform to nibbles (4 byte block)
     typetags.push_back(','); // the length is unknown, conform later
 }
 
-sdOSCMessage::sdOSCMessage(vector<char> oscMessage){
+sdOSCMessage::sdOSCMessage(vector<unsigned char> oscMessage){
     setOSCMessage(oscMessage);
 }
 
-vector<char> sdOSCMessage::getOSCMessage(){
-    vector<char> OSCMessage;
-    vector<char> conformedTypetags;
-    
-    int numNulls = 4-(typetags.size() % 4);
-    conformedTypetags = typetags;
-    
-    for(int i = 0; i< numNulls;i++){
-        conformedTypetags.push_back('\0');
-    }
+vector<unsigned char> sdOSCMessage::getOSCMessage(){
+    vector<unsigned char> OSCMessage;
+    vector<unsigned char> conformedTypetags = getTypetags(); // with null padding
                                    
     OSCMessage.insert(OSCMessage.end(), address.begin(), address.end()); // concatenate address
     OSCMessage.insert(OSCMessage.end(), conformedTypetags.begin(), conformedTypetags.end()); // concatenate conformed type tags
@@ -30,41 +23,44 @@ vector<char> sdOSCMessage::getOSCMessage(){
     return OSCMessage;
 }
 
-void sdOSCMessage::setOSCMessage(vector<char> message){
+void sdOSCMessage::setOSCMessage(vector<unsigned char> newMessage){
     
-    int cursor = 0, length = 0, numberOfArguments;
+    int cursor = 0, length = 0;
     address.clear();
     typetags.clear();
     arguments.clear();
     
     // get address
-    length = getLengthOfString(cursor); // get the length of address
-    address.insert(address.begin(), message.begin(), message.begin()+length);
+    length = getLengthOfOSCString(newMessage, cursor); // get the length of address
+    address.insert(address.begin(), newMessage.begin(), newMessage.begin()+length);
     
     // get type tag
     cursor = length;
-    length = getLengthOfString(cursor);
-    typetags.insert(typetags.begin(), message.begin()+cursor, message.begin()+cursor+length);
-    numberOfArguments = getTypetagsAsString().size() - 1;
+    length = getLengthOfOSCString(newMessage, cursor);
+    typetags.insert(typetags.begin(), newMessage.begin()+cursor, newMessage.begin()+cursor+length);
     
     // get arguments;
     cursor = length;
-    length = getLengthOfString(cursor);
-    arguments.insert(arguments.begin(), message.begin()+cursor, message.begin()+cursor+length);
-    
-    
-    
-    
-
+    length = getLengthOfOSCString(newMessage, cursor);
+    arguments.insert(arguments.begin(), newMessage.begin()+cursor, newMessage.begin()+cursor+length);
 }
 
-int sdOSCMessage::getLengthOfString(int startIndex){
+vector<unsigned char> sdOSCMessage::nullPadding(vector<unsigned char> string){
+    int size = string.size();
+    int numNullsToBeAdded = 4 - (size % 4);
+    while(numNullsToBeAdded--){
+        string.push_back('\0');
+    }
+    return string;
+}
+
+int sdOSCMessage::getLengthOfOSCString(vector<unsigned char> OSCString, int onset){
     
-    vector<char>::iterator it = arguments.begin();
+    vector<unsigned char>::iterator it = OSCString.begin() + onset;
     int count = 0;
     while (it != arguments.end()) {
-        char byte = *it;
-        count++; // number of bytes including null character
+        unsigned char byte = *it;
+        count++; // number of bytes including null unsigned character
         if(byte == '\0'){ // if null
             break;
         }
@@ -74,41 +70,67 @@ int sdOSCMessage::getLengthOfString(int startIndex){
 }
 
 void sdOSCMessage::appendInt(int value){
-    delimeters.push_back(arguments.size());
+    delimiters.push_back(arguments.size());
     typetags.push_back('i');
-    vector<char> nibble = intToNibble(value);
+    vector<unsigned char> nibble = intToNibble(value);
     arguments.insert(arguments.end(),nibble.begin(),nibble.end());
 }
 
 void sdOSCMessage::appendFloat(float value){
-    delimeters.push_back(arguments.size());
+    delimiters.push_back(arguments.size());
     typetags.push_back('f');
-    vector<char> nibble = floatToNibble(value);
+    vector<unsigned char> nibble = floatToNibble(value);
     arguments.insert(arguments.end(),nibble.begin(),nibble.end());
 }
 
 void sdOSCMessage::appendString(string str){
-    delimeters.push_back(arguments.size());
+    delimiters.push_back(arguments.size());
     typetags.push_back('s');
-    vector<char> nibbles = stringToNibbles(str);
+    vector<unsigned char> nibbles = stringToNibbles(str);
     arguments.insert(arguments.end(),nibbles.begin(),nibbles.end());
 }
 
-
-
-int getArgumentAsInt(int index){
-    int argument;
-    return argument;
+int sdOSCMessage::getArgumentAsInt(int index){
+    int posDelimiter = delimiters[index];
+    vector<unsigned char> nibble;
+    nibble.insert(nibble.end(), arguments.begin()+posDelimiter , arguments.begin()+posDelimiter+4);
+    return nibbleToInt(nibble);
 }
 
-float getArgumentAsFloat(int index){
-    float argument;
-    return argument;
+float sdOSCMessage::getArgumentAsFloat(int index){
+    int posDelimiter = delimiters[index];
+    vector<unsigned char> nibble;
+    nibble.insert(nibble.end(), arguments.begin()+posDelimiter , arguments.begin()+posDelimiter+4);
+    return nibbleToFloat(nibble);
 }
 
-string getArgumentAsString(int index){
-    string argument;
-    return argument;
+string sdOSCMessage::getArgumentAsString(int index){
+    int posDelimiter = delimiters[index];
+    vector<unsigned char> nibbles;
+    int length = getLengthOfOSCString(arguments, posDelimiter);
+    nibbles.insert(nibbles.end(), arguments.begin()+posDelimiter, arguments.begin()+posDelimiter+length);
+    return nibblesToString(nibbles);
 }
+
+string sdOSCMessage::getEntireArgumentsAsString(void){
+    int numArguments = typetags.size() -1;
+    string str;
+    for(int i = 0; i < numArguments; i++){
+        switch(typetags[i+1]){ // we need to skip ','
+            case 'i':
+                str += intToString(getArgumentAsInt(i));
+                break;
+            case 'f':
+                str += floatToString(getArgumentAsFloat(i));
+                break;
+            case 's':
+                str += getArgumentAsString(i);
+                break;
+        }
+        str += " ";
+    }
+    return str;
+}
+
 
 

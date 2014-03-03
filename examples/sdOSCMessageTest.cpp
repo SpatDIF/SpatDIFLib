@@ -6,6 +6,27 @@
 
 using namespace std;
 
+void dumpBytes(vector<unsigned char> bytes){
+    vector<unsigned char>::iterator it = bytes.begin();
+    unsigned char c;
+    char o;
+    int count = 0;
+    while (it != bytes.end()) {
+        c = *it;
+        o = static_cast<char>(c);
+        if(o == '\0'){
+            o = '_';
+        }
+        cout << noskipws << std::hex << setfill('0') << setw(2) << static_cast<int>(c) << "(" << o << ") ";
+        it++; count++;
+        
+        if (count % 4 == 0){
+            cout << endl;
+        }
+    }
+    cout << "number of bytes:" << std::dec << bytes.size() << endl;
+}
+
 int main(void){
     
     sdOSCMessage message("/test/sample");
@@ -14,37 +35,73 @@ int main(void){
     message.appendString("this is a test string");
     message.appendFloat(2.345);
     
-    vector<char> rawMessage =message.getOSCMessage();
-    
-    vector<char>::iterator it = rawMessage.begin();
-    char c;
-    int count = 0;
-    while (it != rawMessage.end()) {
-        c = *it;
-        cout << noskipws << c << '('  <<  setfill('0') << setw(3) << static_cast<int>(c) << ") ";
-        it++; count++;
-        if (count % 4 == 0){
-            cout << endl;
+
+
+    cout << "---------------" << endl;
+    {
+        cout << "getAddress:" << endl;
+        vector<unsigned char>address = message.getAddress();
+        dumpBytes(address);
+    }
+    cout << "---------------" << endl;
+    {
+        cout << "getTypetags:" << endl;
+        vector<unsigned char>typetags = message.getTypetags();
+        dumpBytes(typetags);
+    }
+    cout << "---------------" << endl;
+    {
+        cout << "getArguments:" << endl;
+        vector<unsigned char>arguments = message.getArguments();
+        dumpBytes(arguments);
+    }
+    cout << "---------------" << endl;
+    {
+        cout << "getDelimiters:" << endl;
+        vector<int> delimiters = message.getDelimiters();
+        cout << "number of delimeters:" << delimiters.size() << endl;
+
+        vector<int>::iterator it = delimiters.begin();
+        while(it != delimiters.end()){
+            int x = *it;
+            cout << std::dec << x << ' ';
+            it++;
         }
+        cout << endl;
     }
-    vector<int> delimiters = message.getDelimiters();
-    vector<int>::iterator dit = delimiters.begin();
-    cout << "delimiters:" ;
-    while(dit != delimiters.end()){
-        cout << *dit << ' ' ;
-        dit++;
+    cout << "---------------" << endl;
+    {
+        cout << "getOSCMessage:" << endl;
+        vector<unsigned char>oscMessage = message.getOSCMessage();
+        dumpBytes(oscMessage);
     }
-    cout << endl;
-    cout << "size:" << count <<endl;
-    
-    cout << "address as string:" << message.getAddressAsString() << endl;
-    cout << "typetags as string:" << message.getTypetagsAsString() << endl;
+    cout << "---------------" << endl;
+    {
+        cout << "getAddressAsString:" << message.getAddressAsString() << endl;
+        cout << "getTypetagsAsString:" << message.getTypetagsAsString() << endl;
+        cout << "getDelimitersAsString:" << message.getDelimitersAsString() << endl;
 
-    sdOSCMessage decodedMessage(rawMessage);
-    cout << "sdOSCMessage from raw mesage:" << endl;
-    cout << "address:" << decodedMessage.getAddressAsString();
-    cout << "typetags:" << decodedMessage.getTypetagsAsString();
+        cout << "getArgumentAsInt:" << message.getArgumentAsInt(0) << endl;
+        cout << "getArgumentAsFloat:" << message.getArgumentAsFloat(1) << endl;
+        cout << "getArgumentAsString:" << message.getArgumentAsString(2) << endl;
+        cout << "getEntireArgumentsAsString:\n" << message.getEntireArgumentsAsString() << endl;
 
+    }
+    cout << "---------------" << endl;
+    {
+        // create a new one from raw OSCMessage
+        vector<unsigned char> rawMessage = message.getOSCMessage();
+        sdOSCMessage decodedMessage(rawMessage);
+        cout << "from a new sdOSCMessage created by a raw mesage. This proves the functionalities of reconstruction of object through raw message:" << endl;
+        cout << "getAddressAsString:" << decodedMessage.getAddressAsString() << endl;
+        cout << "getTypetagsAsString:" << decodedMessage.getTypetagsAsString() << endl;
+        cout << "getDelimitersAsString:" << message.getDelimitersAsString() << endl;
+        cout << "getArgumentAsInt:" << message.getArgumentAsInt(0) << endl;
+        cout << "getArgumentAsFloat:" << message.getArgumentAsFloat(1) << endl;
+        cout << "getArgumentAsString:" << message.getArgumentAsString(2) << endl;
+        cout << "getEntireArgumentsAsString:" << decodedMessage.getEntireArgumentsAsString() << endl;
+
+    }
     return 0;
     
 }
