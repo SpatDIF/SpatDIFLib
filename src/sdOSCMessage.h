@@ -20,7 +20,7 @@ private:
      this function looks for \0 unsigned character from the onset byte and return the length of string
      @param startIndex the onset of search point
      */
-    int getLengthOfOSCString(vector<unsigned char> OSCString, int onset);
+    int getLengthOfOSCString(vector<unsigned char> OSCString, int onset, bool includingNullPaddings);
     vector<unsigned char> nullPadding(vector<unsigned char> string);
     
 public:

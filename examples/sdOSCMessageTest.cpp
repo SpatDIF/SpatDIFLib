@@ -92,14 +92,14 @@ int main(void){
         // create a new one from raw OSCMessage
         vector<unsigned char> rawMessage = message.getOSCMessage();
         sdOSCMessage decodedMessage(rawMessage);
-        cout << "from a new sdOSCMessage created by a raw mesage. This proves the functionalities of reconstruction of object through raw message:" << endl;
+        cout << "from a new sdOSCMessage created by a raw mesage." << endl;
         cout << "getAddressAsString:" << decodedMessage.getAddressAsString() << endl;
         cout << "getTypetagsAsString:" << decodedMessage.getTypetagsAsString() << endl;
-        cout << "getDelimitersAsString:" << message.getDelimitersAsString() << endl;
-        cout << "getArgumentAsInt:" << message.getArgumentAsInt(0) << endl;
-        cout << "getArgumentAsFloat:" << message.getArgumentAsFloat(1) << endl;
-        cout << "getArgumentAsString:" << message.getArgumentAsString(2) << endl;
-        cout << "getEntireArgumentsAsString:" << decodedMessage.getEntireArgumentsAsString() << endl;
+        cout << "getDelimitersAsString:" << decodedMessage.getDelimitersAsString() << endl;
+        cout << "getArgumentAsInt:" << decodedMessage.getArgumentAsInt(0) << endl;
+        cout << "getArgumentAsFloat:" << decodedMessage.getArgumentAsFloat(1) << endl;
+        cout << "getArgumentAsString:" << decodedMessage.getArgumentAsString(2) << endl;
+        cout << "getEntireArgumentsAsString:\n" << decodedMessage.getEntireArgumentsAsString() << endl;
 
     }
     return 0;

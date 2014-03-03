@@ -25,24 +25,50 @@ vector<unsigned char> sdOSCMessage::getOSCMessage(){
 
 void sdOSCMessage::setOSCMessage(vector<unsigned char> newMessage){
     
-    int cursor = 0, length = 0;
+    int cursor = 0, length = 0, lengthWithNullPaddings = 0;
     address.clear();
     typetags.clear();
     arguments.clear();
+    delimiters.clear();
     
     // get address
-    length = getLengthOfOSCString(newMessage, cursor); // get the length of address
-    address.insert(address.begin(), newMessage.begin(), newMessage.begin()+length);
-    
-    // get type tag
-    cursor = length;
-    length = getLengthOfOSCString(newMessage, cursor);
+    lengthWithNullPaddings = getLengthOfOSCString(newMessage, cursor, true); // get the length of address with null paddings
+    address.insert(address.begin(), newMessage.begin(), newMessage.begin()+lengthWithNullPaddings);
+
+
+    // get type tag ... without null padding because typetags can be added later
+    cursor += lengthWithNullPaddings;
+    length = getLengthOfOSCString(newMessage, cursor, false);
+    lengthWithNullPaddings = getLengthOfOSCString(newMessage, cursor, true);
     typetags.insert(typetags.begin(), newMessage.begin()+cursor, newMessage.begin()+cursor+length);
     
-    // get arguments;
-    cursor = length;
-    length = getLengthOfOSCString(newMessage, cursor);
+    // get arguments ... with null padding;
+    cursor += lengthWithNullPaddings;
+    length = newMessage.size() - cursor;
     arguments.insert(arguments.begin(), newMessage.begin()+cursor, newMessage.begin()+cursor+length);
+
+    //cout << "size of address:" << address.size() << endl;
+    //cout << "size of typetags:" << typetags.size() << endl;
+    //cout << "size of arguments:" << arguments.size() << endl;
+
+    cursor = 0;
+    // analyze delimiters
+    int numArguements = typetags.size()-1;//because of ','
+    for(int i = 0; i < numArguements; i++){
+        delimiters.push_back(cursor);
+        switch(typetags[i+1]){
+            case 'i':
+            case 'f':
+                cursor += 4;
+                break;
+            case 's':
+                cursor += getLengthOfOSCString(arguments, cursor, true);
+                break;
+            default:
+                cout << "sdOSCMessage: unknown type tag" << endl;
+        }
+    }
+    
 }
 
 vector<unsigned char> sdOSCMessage::nullPadding(vector<unsigned char> string){
@@ -54,19 +80,24 @@ vector<unsigned char> sdOSCMessage::nullPadding(vector<unsigned char> string){
     return string;
 }
 
-int sdOSCMessage::getLengthOfOSCString(vector<unsigned char> OSCString, int onset){
+int sdOSCMessage::getLengthOfOSCString(vector<unsigned char> OSCString, int onset, bool includingNullPaddings){
     
     vector<unsigned char>::iterator it = OSCString.begin() + onset;
     int count = 0;
     while (it != arguments.end()) {
         unsigned char byte = *it;
-        count++; // number of bytes including null unsigned character
         if(byte == '\0'){ // if null
             break;
         }
+        count++; // number of bytes including null unsigned character
         it++;
     }
-    return count + ( 4 - (count % 4));
+    if (includingNullPaddings)
+    {
+        count = count + ( 4 - (count % 4 ));
+    }
+
+    return count;
 }
 
 void sdOSCMessage::appendInt(int value){
@@ -107,7 +138,7 @@ float sdOSCMessage::getArgumentAsFloat(int index){
 string sdOSCMessage::getArgumentAsString(int index){
     int posDelimiter = delimiters[index];
     vector<unsigned char> nibbles;
-    int length = getLengthOfOSCString(arguments, posDelimiter);
+    int length = getLengthOfOSCString(arguments, posDelimiter, false);
     nibbles.insert(nibbles.end(), arguments.begin()+posDelimiter, arguments.begin()+posDelimiter+length);
     return nibblesToString(nibbles);
 }
