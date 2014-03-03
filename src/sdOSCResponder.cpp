@@ -41,14 +41,70 @@ vector<string> sdOSCResponder::splitString(const string &str){
     return res;
 }
 
-
-vector<sdOSCMessage> sdOSCResponder::forwardOSCMessage(sdOSCMessage message){
-    vector<sdOSCMessage> messages;
-    return messages;
+// low level interface
+vector<vector<unsigned char> > sdOSCResponder::forwardOSCMessage(vector<unsigned char> message){
+    sdOSCMessage mes(message);
+    vector<sdOSCMessage> rMesVector = forwardOSCMessage(mes);
+    vector<sdOSCMessage>::iterator it = rMesVector.begin();
+    vector<vector<unsigned char> > rRawVector;
+    while(it != rMesVector.end()){
+        sdOSCMessage m = *it;
+        rRawVector.push_back(m.getOSCMessage());
+        it++;
+    }
+    return rRawVector;
 }
 
-vector<vector<char> > sdOSCResponder::forwardOSCMessage(vector<char> message){
-    vector<vector<char> > returnMessageVector;
+// high level interface
+vector<sdOSCMessage> sdOSCResponder::forwardOSCMessage(sdOSCMessage message){
+    vector<sdOSCMessage> returnMessageVector;
+    
+    string address = message.getAddressAsString();
+    if (address[0] != '/') {
+        cout << "sdOSCReponder Error: invalid OSC address" << endl;
+        returnMessageVector.clear();
+        return returnMessageVector;
+    }
+    
+    vector <string>ads = splitString(address);
+    ads.erase (ads.begin());
+    
+    if (ads.size() < 2 ) {
+        cout << "sdOSCResponder Error: The address pattern consists of two few elements." << endl;
+        return returnMessageVector;
+    }
+    
+    if(ads[0] != "spatdifcmd"){
+        cout << "sdOSCReponder Error: invalid command" << endl;
+        returnMessageVector.clear();
+        return returnMessageVector;
+    }
+    
+    string command = ads[1]; // get the element right after /spatdifcmd
+    
+    if( command == "setQueryTime"){
+        if (message.getArguments().size() != 1) {
+            cout << "sdOSCResponder Error: invalid number of arguments for setQueryTime";
+            return returnMessageVector;
+        }
+        setQueryTime(static_cast<double>(message.getArgumentAsFloat(0)));
+        sdOSCMessage message("/spatdif/success");
+        returnMessageVector.push_back(message);
+        return returnMessageVector;
+    }else if(command == "getQueryTime"){
+        if (message.getArguments().size() != 0) {
+            cout << "sdOSCResponder Error: invalid number of arguments for setQueryTime";
+            return returnMessageVector;
+        }
+        sdOSCMessage returnMessage("/spatdif/queryTime");
+        returnMessage.appendFloat(static_cast<float>(getQueryTime()));
+        returnMessageVector.push_back(returnMessage);
+    }
+    
+    return returnMessageVector;;
+}
+
+
 
     /*
     string element, command, errorMessage;
@@ -414,10 +470,10 @@ vector<vector<char> > sdOSCResponder::forwardOSCMessage(vector<char> message){
             returnMessageVector.push_back(errorMessage);
         else
             scene->removeAllEntities();
-    }*/
-    
+    }
     return returnMessageVector;
     
 }
+     */
             
 

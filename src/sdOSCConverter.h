@@ -30,15 +30,15 @@ using namespace std;
 class sdOSCConverter{
     
 public:
-    inline vector<unsigned char> intTo(int value);
+    inline vector<unsigned char> intToBlock(int value);
     inline int blockToInt(vector<unsigned char> block);
-    inline vector<unsigned char> floatTo(float value);
+    inline vector<unsigned char> floatToBlock(float value);
     inline float blockToFloat(vector<unsigned char> block);
     inline vector<unsigned char> stringToBlocks(string str);
     inline string blocksToString(vector<unsigned char> blocks);
 };
 
-vector<unsigned char> sdOSCConverter::intTo(int value){
+vector<unsigned char> sdOSCConverter::intToBlock(int value){
     unsigned char *c = reinterpret_cast<unsigned char*>(&value);
     vector<unsigned char> block;
     block.push_back(c[3]);
@@ -58,7 +58,7 @@ int sdOSCConverter::blockToInt(vector<unsigned char> block){
     return *value;
 }
 
-vector<unsigned char> sdOSCConverter::floatTo(float value){
+vector<unsigned char> sdOSCConverter::floatToBlock(float value){
     unsigned char *c = reinterpret_cast<unsigned char*>(&value);
     vector<unsigned char> block;
     block.push_back(c[3]);

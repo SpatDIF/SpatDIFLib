@@ -77,7 +77,7 @@ public:
     /*! this function interprets incoming raw OSCMessage and forward it to the scene
      @param message raw oscMessage, consisting of multiple blocks (4 byte blocks)
      */
-    vector<vector<char> > forwardOSCMessage(vector<char> message);
+    vector<vector<unsigned char> > forwardOSCMessage(vector<unsigned char> message);
 
     /*! this is the overloaded high level interface function of the function above.
      easier to handle but less compatible.
