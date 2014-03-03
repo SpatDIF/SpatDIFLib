@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		62A2B3F918C3F49100BE6CF5 /* sdOSCMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdOSCMessage.cpp; sourceTree = "<group>"; };
+		62A2B3FA18C3F49100BE6CF5 /* sdOSCMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdOSCMessage.h; sourceTree = "<group>"; };
+		62F932B518BDF377005A7D10 /* sdOSCConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdOSCConverter.h; sourceTree = "<group>"; };
 		A7E1E39B18A3B44F003BE78B /* sdConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdConst.h; sourceTree = "<group>"; };
 		A7E1E39C18A3B44F003BE78B /* sdDate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdDate.h; sourceTree = "<group>"; };
 		A7E1E39D18A3B44F003BE78B /* sdEntity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdEntity.cpp; sourceTree = "<group>"; };
@@ -49,6 +52,9 @@
 				A7E1E3A218A3B44F003BE78B /* sdEntityExtensionMedia.cpp */,
 				A7E1E3A318A3B44F003BE78B /* sdEntityExtensionMedia.h */,
 				A7E1E3A418A3B44F003BE78B /* sdInfo.h */,
+				62F932B518BDF377005A7D10 /* sdOSCConverter.h */,
+				62A2B3F918C3F49100BE6CF5 /* sdOSCMessage.cpp */,
+				62A2B3FA18C3F49100BE6CF5 /* sdOSCMessage.h */,
 				A7E1E3A518A3B44F003BE78B /* sdLoader.cpp */,
 				A7E1E3A618A3B44F003BE78B /* sdLoader.h */,
 				A7E1E3A718A3B44F003BE78B /* sdMain.h */,

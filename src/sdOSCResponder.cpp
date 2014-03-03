@@ -41,29 +41,17 @@ vector<string> sdOSCResponder::splitString(const string &str){
     return res;
 }
 
-bool sdOSCResponder::checkNumberOfArguments(int expectedNumber, int actualNumber, string command, string &errorMessage){
-    string mes;
-    if (actualNumber == expectedNumber){
-        return true;
-    }else if (actualNumber < expectedNumber) {
-        mes = "too few arguments";
-    }else if(actualNumber > expectedNumber){
-        mes = "too many arguments";
-    }
-    errorMessage = "/spatdif/error";
-    return false;
+
+vector<sdOSCMessage> sdOSCResponder::forwardOSCMessage(sdOSCMessage message){
+    vector<sdOSCMessage> messages;
+    return messages;
 }
 
+vector<vector<char> > sdOSCResponder::forwardOSCMessage(vector<char> message){
+    vector<vector<char> > returnMessageVector;
 
-vector<string> sdOSCResponder::forwardOSCMessage(string oscMessage, double time){
-    setQueryTime(time);
-    return forwardOSCMessage(oscMessage);
-}
-
-vector<string> sdOSCResponder::forwardOSCMessage(string oscMessage){
-
+    /*
     string element, command, errorMessage;
-    vector<string> returnMessageVector;
     vector<string> arguments;
     istringstream iss(oscMessage);
     int count = 0;
@@ -111,7 +99,18 @@ vector<string> sdOSCResponder::forwardOSCMessage(string oscMessage){
     }
 
     // interpet the command
-    if ( command == "getEventSetsFromAllEntities"){
+    if( command == "setQueryTime"){
+        if (arguments.size() != 0) {
+            
+        }
+        setQueryTime();
+        
+    }else if(command == "getQueryTime"){
+        
+        returnMessageVector.push_back(errorMessage);
+        returnMessageVector.push_back("/spatdif/queryTime ,d " + doubleToString(getQueryTime()));
+        
+    }else if ( command == "getEventSetsFromAllEntities"){
         if(!checkNumberOfArguments( 0, arguments.size() ,command, errorMessage))
             returnMessageVector.push_back(errorMessage);
         else{
@@ -156,44 +155,6 @@ vector<string> sdOSCResponder::forwardOSCMessage(string oscMessage){
                 rit++;
             }
         }
-    }else if( command == "setAuthor"){
-            
-    }else if( command == "getAuthor"){
-        
-    }else if( command == "setHost"){
-        
-    }else if( command == "getHost"){
-        
-    }else if( command == "setDate"){
-        
-    }else if( command == "getDate"){
-        
-    }else if( command == "setLocation"){
-        
-    }else if( command == "getLication"){
-        
-    }else if( command == "setSession"){
-        
-    }else if ( command == "getSession"){
-        
-    }else if(commnad == "setAnnotation"){
-            
-    }else if(comamnd == "getAnnotation"){
-        
-    }else if( command == "setQueryTime"){
-    
-        if(!checkNumberOfArguments( 1, arguments.size() ,command, errorMessage))
-            returnMessageVector.push_back(errorMessage);
-        else
-            setQueryTime(stringToDouble(arguments[0]));
-
-    }else if(command == "getQueryTime"){
-
-        if(!checkNumberOfArguments( 0, arguments.size(), command, errorMessage))
-            returnMessageVector.push_back(errorMessage);
-        else
-            returnMessageVector.push_back("/spatdif/queryTime ,d " + doubleToString(getQueryTime()));
-
     }else if(command == "setWriteTime"){
         
         if(!checkNumberOfArguments( 1, arguments.size(), command, errorMessage))
@@ -453,7 +414,7 @@ vector<string> sdOSCResponder::forwardOSCMessage(string oscMessage){
             returnMessageVector.push_back(errorMessage);
         else
             scene->removeAllEntities();
-    }
+    }*/
     
     return returnMessageVector;
     

@@ -2,8 +2,8 @@
  *
  * @ingroup spatdiflib
  *
- * @brief
- *
+ * @brief sdOSCConverter provides utility functions to convert float, int, string to
+ * OSC-compatible nibbles (4-byte blocks).
  *
  *
  *
@@ -14,8 +14,9 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef __libspatdif__sdOSCConverter__
-#define __libspatdif__sdOSCConverter__
+#ifndef __sdOSCConverter__
+#define __sdOSCConverter__
+
 #include <string>
 #include <iostream>
 #include <vector>
@@ -23,10 +24,11 @@
 using namespace std;
 
 /*!
- add inheritd classes functionalities to convert normal float, int, string to osc compatible sequence of binary and vise versa.
- */
+ this class provides nibble to int, float, string converter and vice versa.
+ if the length of given strings multiples of four, a nibble of \0 (null) will be added at the end automatically in order to conform to the OSC-string regulation.
+*/
 class sdOSCConverter{
-
+    
 public:
     inline vector<char> intToNibble(int value);
     inline int nibbleToInt(vector<char> nibble);
@@ -34,7 +36,6 @@ public:
     inline float nibbleToFloat(vector<char> nibble);
     inline vector<char> stringToNibbles(string str);
     inline string nibblesToString(vector<char> nibbles);
-
 };
 
 vector<char> sdOSCConverter::intToNibble(int value){
@@ -78,17 +79,15 @@ float sdOSCConverter::nibbleToFloat(vector<char> nibble){
 }
 
 vector<char> sdOSCConverter::stringToNibbles(string str){
+    
     int rest = str.size() % 4 ;
-    int numberOfNulls = 0;
-    if(rest){
-       numberOfNulls = 4-rest;
-    }
+    int numberOfNulls = 4-rest;
     vector<char> nibbles;
     for(int i = 0; i < str.size(); i++){
         nibbles.push_back(str[i]);
     }
     for (int i = 0; i < numberOfNulls; i++) {
-        nibbles.push_back('\0'); //null paddings
+        nibbles.push_back('\0');
     }
     return nibbles;
 }
@@ -106,4 +105,4 @@ string sdOSCConverter::nibblesToString(vector<char> nibbles){
 }
 
 
-#endif /* defined(__libspatdif__sdOSCConverter__) */
+#endif

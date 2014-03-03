@@ -30,18 +30,18 @@ int main(void){
     
     // query with OSC message
     
-    string oscMessage = string("/spatdifcmd/setQueryTime 1.0");
-    oscResponder.forwardOSCMessage(oscMessage);
-    
-    oscMessage = string("/spatdifcmd/getPosition myEntity");
-    vector<string> returnedMessages = oscResponder.forwardOSCMessage(oscMessage);
-    vector<string>::iterator it = returnedMessages.begin();
-    
-    while (it!=returnedMessages.end()) {
-        string str = *it;
-        cout << str << endl;
-        it++;
-    }
+//    string oscMessage = string("/spatdifcmd/setQueryTime 1.0");
+//    oscResponder.forwardOSCMessage(oscMessage);
+//    
+//    oscMessage = string("/spatdifcmd/getPosition myEntity");
+//    vector<string> returnedMessages = oscResponder.forwardOSCMessage(oscMessage);
+//    vector<string>::iterator it = returnedMessages.begin();
+//    
+//    while (it!=returnedMessages.end()) {
+//        string str = *it;
+//        cout << str << endl;
+//        it++;
+//    }
 
     return 0;
 }

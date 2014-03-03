@@ -18,7 +18,9 @@
 #define ____sdOSCResponder__
 
 #include "sdScene.h"
+#include "sdOSCMessage.h"
 #include <string>
+
 
 using namespace std;
 
@@ -72,18 +74,17 @@ public:
      */
     sdScene* getScene(void);
     
-    /*! this function interprets incoming string as a OSCMessage and forward it to the scene
-     @param oscMessage a OSC string to be interpreted and forwarded to the library
+    /*! this function interprets incoming raw OSCMessage and forward it to the scene
+     @param message raw oscMessage, consisting of multiple nibbles (4 byte blocks)
      */
-    vector<string> forwardOSCMessage(string oscMessage);
-    
-    /*!
-     overloaded funtion.
-     @param oscMessage a OSC string to be interpreted and forwarded to the library
-     @param time set current time to this value before forwarding the message
-     */
-    vector<string> forwardOSCMessage(string oscMessage, double time);
+    vector<vector<char> > forwardOSCMessage(vector<char> message);
 
+    /*! this is the overloaded high level interface function of the function above.
+     easier to handle but less compatible.
+     @param message an instance sdOSCMessage
+     */
+    vector<sdOSCMessage> forwardOSCMessage(sdOSCMessage message);
+    
     /*!
      @param time set queryTime to this value
      */
