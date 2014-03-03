@@ -5,7 +5,7 @@
 #include <sstream>
 
 /*!
- sdOSCMessage generates and interprets a valid OSC message consisting of multiple nibbles (blocks of 4 bytes)
+ sdOSCMessage generates and interprets a valid OSC message consisting of multiple blocks (blocks of 4 bytes)
  */
 class sdOSCMessage: public sdOSCConverter{
 

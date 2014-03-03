@@ -75,7 +75,7 @@ public:
     sdScene* getScene(void);
     
     /*! this function interprets incoming raw OSCMessage and forward it to the scene
-     @param message raw oscMessage, consisting of multiple nibbles (4 byte blocks)
+     @param message raw oscMessage, consisting of multiple blocks (4 byte blocks)
      */
     vector<vector<char> > forwardOSCMessage(vector<char> message);
 

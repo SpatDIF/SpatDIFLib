@@ -3,7 +3,7 @@
  * @ingroup spatdiflib
  *
  * @brief sdOSCConverter provides utility functions to convert float, int, string to
- * OSC-compatible nibbles (4-byte blocks).
+ * OSC-compatible blocks 
  *
  *
  *
@@ -24,82 +24,82 @@
 using namespace std;
 
 /*!
- this class provides nibble to int, float, string converter and vice versa.
- if the length of given strings multiples of four, a nibble of \0 (null) will be added at the end automatically in order to conform to the OSC-string regulation.
+ this class provides block to int, float, string converter and vice versa.
+ if the length of given strings multiples of four, a block of \0 (null) will be added at the end automatically in order to conform to the OSC-string regulation.
 */
 class sdOSCConverter{
     
 public:
-    inline vector<unsigned char> intToNibble(int value);
-    inline int nibbleToInt(vector<unsigned char> nibble);
-    inline vector<unsigned char> floatToNibble(float value);
-    inline float nibbleToFloat(vector<unsigned char> nibble);
-    inline vector<unsigned char> stringToNibbles(string str);
-    inline string nibblesToString(vector<unsigned char> nibbles);
+    inline vector<unsigned char> intTo(int value);
+    inline int blockToInt(vector<unsigned char> block);
+    inline vector<unsigned char> floatTo(float value);
+    inline float blockToFloat(vector<unsigned char> block);
+    inline vector<unsigned char> stringToBlocks(string str);
+    inline string blocksToString(vector<unsigned char> blocks);
 };
 
-vector<unsigned char> sdOSCConverter::intToNibble(int value){
+vector<unsigned char> sdOSCConverter::intTo(int value){
     unsigned char *c = reinterpret_cast<unsigned char*>(&value);
-    vector<unsigned char> nibble;
-    nibble.push_back(c[3]);
-    nibble.push_back(c[2]);
-    nibble.push_back(c[1]);
-    nibble.push_back(c[0]);
-    return nibble;
+    vector<unsigned char> block;
+    block.push_back(c[3]);
+    block.push_back(c[2]);
+    block.push_back(c[1]);
+    block.push_back(c[0]);
+    return block;
 }
 
-int sdOSCConverter::nibbleToInt(vector<unsigned char> nibble){
+int sdOSCConverter::blockToInt(vector<unsigned char> block){
     unsigned char c[4];
-    c[0] = nibble[3];
-    c[1] = nibble[2];
-    c[2] = nibble[1];
-    c[3] = nibble[0];
+    c[0] = block[3];
+    c[1] = block[2];
+    c[2] = block[1];
+    c[3] = block[0];
     int *value = reinterpret_cast<int*>(&c);
     return *value;
 }
 
-vector<unsigned char> sdOSCConverter::floatToNibble(float value){
+vector<unsigned char> sdOSCConverter::floatTo(float value){
     unsigned char *c = reinterpret_cast<unsigned char*>(&value);
-    vector<unsigned char> nibble;
-    nibble.push_back(c[3]);
-    nibble.push_back(c[2]);
-    nibble.push_back(c[1]);
-    nibble.push_back(c[0]);
-    return nibble;
+    vector<unsigned char> block;
+    block.push_back(c[3]);
+    block.push_back(c[2]);
+    block.push_back(c[1]);
+    block.push_back(c[0]);
+    return block;
 }
 
-float sdOSCConverter::nibbleToFloat(vector<unsigned char> nibble){
+float sdOSCConverter::blockToFloat(vector<unsigned char> block){
     unsigned char c[4];
-    c[0] = nibble[3];
-    c[1] = nibble[2];
-    c[2] = nibble[1];
-    c[3] = nibble[0];
+    c[0] = block[3];
+    c[1] = block[2];
+    c[2] = block[1];
+    c[3] = block[0];
     float *value = reinterpret_cast<float*>(&c);
     return *value;
 }
 
-vector<unsigned char> sdOSCConverter::stringToNibbles(string str){
+vector<unsigned char> sdOSCConverter::stringToBlocks(string str){
     
     int rest = str.size() % 4 ;
     int numberOfNulls = 4-rest;
-    vector<unsigned char> nibbles;
+    vector<unsigned char> blocks;
     for(int i = 0; i < str.size(); i++){
-        nibbles.push_back(str[i]);
+        blocks.push_back(str[i]);
     }
     for (int i = 0; i < numberOfNulls; i++) {
-        nibbles.push_back('\0');
+        blocks.push_back('\0');
     }
-    return nibbles;
+    return blocks;
 }
 
-string sdOSCConverter::nibblesToString(vector<unsigned char> nibbles){
+string sdOSCConverter::blocksToString(vector<unsigned char> blocks){
     string str;
     
-    for(int i = 0; i < nibbles.size(); i++){
-        if(nibbles[i] == '\0'){
+    for(int i = 0; i < blocks.size(); i++){
+        if(blocks[i] == '\0'){
             break;
         }
-        str += nibbles[i];
+        str += blocks[i];
     }
     return str;
 }

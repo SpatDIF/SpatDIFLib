@@ -4,7 +4,7 @@
 #include "sdConst.h"
 
 sdOSCMessage::sdOSCMessage(string address){
-    sdOSCMessage::address = stringToNibbles(address); // conform to nibbles (4 byte block)
+    sdOSCMessage::address = stringToBlocks(address); // conform to blocks (4 byte block)
     typetags.push_back(','); // the length is unknown, conform later
 }
 
@@ -103,44 +103,44 @@ int sdOSCMessage::getLengthOfOSCString(vector<unsigned char> OSCString, int onse
 void sdOSCMessage::appendInt(int value){
     delimiters.push_back(arguments.size());
     typetags.push_back('i');
-    vector<unsigned char> nibble = intToNibble(value);
-    arguments.insert(arguments.end(),nibble.begin(),nibble.end());
+    vector<unsigned char> block = intToBlock(value);
+    arguments.insert(arguments.end(),block.begin(),block.end());
 }
 
 void sdOSCMessage::appendFloat(float value){
     delimiters.push_back(arguments.size());
     typetags.push_back('f');
-    vector<unsigned char> nibble = floatToNibble(value);
-    arguments.insert(arguments.end(),nibble.begin(),nibble.end());
+    vector<unsigned char> block = floatToBlock(value);
+    arguments.insert(arguments.end(),block.begin(),block.end());
 }
 
 void sdOSCMessage::appendString(string str){
     delimiters.push_back(arguments.size());
     typetags.push_back('s');
-    vector<unsigned char> nibbles = stringToNibbles(str);
-    arguments.insert(arguments.end(),nibbles.begin(),nibbles.end());
+    vector<unsigned char> blocks = stringToBlocks(str);
+    arguments.insert(arguments.end(),blocks.begin(),blocks.end());
 }
 
 int sdOSCMessage::getArgumentAsInt(int index){
     int posDelimiter = delimiters[index];
-    vector<unsigned char> nibble;
-    nibble.insert(nibble.end(), arguments.begin()+posDelimiter , arguments.begin()+posDelimiter+4);
-    return nibbleToInt(nibble);
+    vector<unsigned char> block;
+    block.insert(block.end(), arguments.begin()+posDelimiter , arguments.begin()+posDelimiter+4);
+    return blockToInt(block);
 }
 
 float sdOSCMessage::getArgumentAsFloat(int index){
     int posDelimiter = delimiters[index];
-    vector<unsigned char> nibble;
-    nibble.insert(nibble.end(), arguments.begin()+posDelimiter , arguments.begin()+posDelimiter+4);
-    return nibbleToFloat(nibble);
+    vector<unsigned char> block;
+    block.insert(block.end(), arguments.begin()+posDelimiter , arguments.begin()+posDelimiter+4);
+    return blockToFloat(block);
 }
 
 string sdOSCMessage::getArgumentAsString(int index){
     int posDelimiter = delimiters[index];
-    vector<unsigned char> nibbles;
+    vector<unsigned char> blocks;
     int length = getLengthOfOSCString(arguments, posDelimiter, false);
-    nibbles.insert(nibbles.end(), arguments.begin()+posDelimiter, arguments.begin()+posDelimiter+length);
-    return nibblesToString(nibbles);
+    blocks.insert(blocks.end(), arguments.begin()+posDelimiter, arguments.begin()+posDelimiter+length);
+    return blocksToString(blocks);
 }
 
 string sdOSCMessage::getEntireArgumentsAsString(void){

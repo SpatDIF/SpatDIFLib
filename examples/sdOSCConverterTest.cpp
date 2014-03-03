@@ -34,25 +34,25 @@ int main (void){
     cout << "original:" << ioriginal << endl;;
     vector<unsigned char> ic = converter.intToNibble(ioriginal);
     dumpBytes(ic);
-    cout << "decoded:" << std::dec << converter.nibbleToInt(ic) << endl << endl;
+    cout << "decoded:" << std::dec << converter.blockToInt(ic) << endl << endl;
     
     float foriginal = 1.234;
     cout << "original:" << foriginal << endl;
     vector<unsigned char> fc = converter.floatToNibble(foriginal);
     dumpBytes(fc);
-    cout << "decoded:" << converter.nibbleToFloat(fc) << endl << endl;
+    cout << "decoded:" << converter.blockToFloat(fc) << endl << endl;
     
     string soriginal = "hello";
     cout << "original:" << soriginal << endl;
     vector<unsigned char> sc = converter.stringToNibbles(soriginal);
     dumpBytes(sc);
-    cout << "decoded:" << converter.nibblesToString(sc) << endl << endl;
+    cout << "decoded:" << converter.blocksToString(sc) << endl << endl;
     
     soriginal = "testing!";
     cout << "original:" << soriginal << endl;
     sc = converter.stringToNibbles(soriginal);
     dumpBytes(sc);
-    cout << "decoded:" << converter.nibblesToString(sc) << endl;
+    cout << "decoded:" << converter.blocksToString(sc) << endl;
     
     return 0;
 }
