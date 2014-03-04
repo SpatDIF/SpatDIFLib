@@ -3,6 +3,10 @@
 #include "sdOSCMessage.h"
 #include "sdConst.h"
 
+sdOSCMessage::sdOSCMessage(){
+
+}
+
 sdOSCMessage::sdOSCMessage(string address){
     sdOSCMessage::address = stringToBlocks(address); // conform to blocks (4 byte block)
     typetags.push_back(','); // the length is unknown, conform later
@@ -26,11 +30,7 @@ vector<unsigned char> sdOSCMessage::getOSCMessage(){
 void sdOSCMessage::setOSCMessage(vector<unsigned char> newMessage){
     
     int cursor = 0, length = 0, lengthWithNullPaddings = 0;
-    address.clear();
-    typetags.clear();
-    arguments.clear();
-    delimiters.clear();
-    
+    clear();
     // get address
     lengthWithNullPaddings = getLengthOfOSCString(newMessage, cursor, true); // get the length of address with null paddings
     address.insert(address.begin(), newMessage.begin(), newMessage.begin()+lengthWithNullPaddings);
@@ -107,11 +107,23 @@ void sdOSCMessage::appendInt(int value){
     arguments.insert(arguments.end(),block.begin(),block.end());
 }
 
+void sdOSCMessage::appendInts(int *ints, int number){
+    for (int i = 0; i < number; i++){
+        appendInt(ints[i]);
+    }
+}
+
 void sdOSCMessage::appendFloat(float value){
     delimiters.push_back(arguments.size());
     typetags.push_back('f');
     vector<unsigned char> block = floatToBlock(value);
     arguments.insert(arguments.end(),block.begin(),block.end());
+}
+
+void sdOSCMessage::appendFloats(float *floats, int number){
+    for (int i = 0; i < number; i++){
+        appendFloat(floats[i]);
+    }
 }
 
 void sdOSCMessage::appendString(string str){
@@ -143,7 +155,7 @@ string sdOSCMessage::getArgumentAsString(int index){
     return blocksToString(blocks);
 }
 
-string sdOSCMessage::getEntireArgumentsAsString(void){
+string sdOSCMessage::getAllArgumentsAsString(void){
     int numArguments = typetags.size() -1;
     string str;
     for(int i = 0; i < numArguments; i++){
@@ -163,5 +175,13 @@ string sdOSCMessage::getEntireArgumentsAsString(void){
     return str;
 }
 
-
+string sdOSCMessage::getMessageAsString(void){
+    string str;
+    str = getAddressAsString();
+    str += ' ';
+    str += getTypetagsAsString();
+    str += ' ';
+    str += getAllArgumentsAsString();
+    return str;
+}
 

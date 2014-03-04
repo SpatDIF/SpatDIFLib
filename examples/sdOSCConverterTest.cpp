@@ -20,8 +20,6 @@ void dumpBytes(vector<unsigned char> bytes) {
             cout << endl;
         }
     }
-    
-    
 }
 
 int main (void){
@@ -32,25 +30,25 @@ int main (void){
     
     int ioriginal = 1000;
     cout << "original:" << ioriginal << endl;;
-    vector<unsigned char> ic = converter.intToNibble(ioriginal);
+    vector<unsigned char> ic = converter.intToBlock(ioriginal);
     dumpBytes(ic);
     cout << "decoded:" << std::dec << converter.blockToInt(ic) << endl << endl;
     
     float foriginal = 1.234;
     cout << "original:" << foriginal << endl;
-    vector<unsigned char> fc = converter.floatToNibble(foriginal);
+    vector<unsigned char> fc = converter.floatToBlock(foriginal);
     dumpBytes(fc);
     cout << "decoded:" << converter.blockToFloat(fc) << endl << endl;
     
     string soriginal = "hello";
     cout << "original:" << soriginal << endl;
-    vector<unsigned char> sc = converter.stringToNibbles(soriginal);
+    vector<unsigned char> sc = converter.stringToBlocks(soriginal);
     dumpBytes(sc);
     cout << "decoded:" << converter.blocksToString(sc) << endl << endl;
     
     soriginal = "testing!";
     cout << "original:" << soriginal << endl;
-    sc = converter.stringToNibbles(soriginal);
+    sc = converter.stringToBlocks(soriginal);
     dumpBytes(sc);
     cout << "decoded:" << converter.blocksToString(sc) << endl;
     

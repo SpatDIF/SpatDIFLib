@@ -31,13 +31,18 @@ public:
 
     inline string getAddressAsString(void);
     inline string getTypetagsAsString(void);
-    inline string getArgumentsAsString(void);
     inline string getDelimitersAsString(void);
-    
+    int getArgumentAsInt(int index);
+    float getArgumentAsFloat(int index);
+    string getArgumentAsString(int index);
+    string getAllArgumentsAsString(void);
+    string getMessageAsString(void);
+
     /*!
      constructor. the OSC address must be specified.
      @param oscAddress the OSC address string
      */
+    sdOSCMessage();
     sdOSCMessage(string address);
     sdOSCMessage(vector<unsigned char> message);
     
@@ -56,20 +61,28 @@ public:
      */
     void appendInt(int value);
     
+     /*!
+     append multiple ints at once
+    */
+    void appendInts(int *ints, int number);
+
     /*!
      append an float and add an typetag
      */
     void appendFloat(float value);
 
     /*!
+     append multiple floats at once
+    */
+    void appendFloats(float *floats, int number);
+
+    /*!
      append an string and add an typetag
      */
     void appendString(string str);
     
-    int getArgumentAsInt(int index);
-    float getArgumentAsFloat(int index);
-    string getArgumentAsString(int index);
-    string getEntireArgumentsAsString(void);
+    inline void clear();
+
 };
 
 vector<unsigned char> sdOSCMessage::getAddress(void){
@@ -127,12 +140,11 @@ string sdOSCMessage::getDelimitersAsString(void){
     return os.str();
 }
 
-
-// to be implemented
-string sdOSCMessage::getArgumentsAsString(void){
-    
-    string rstr;
-    return rstr;
+void sdOSCMessage::clear(void){
+    address.clear();
+    typetags.clear();
+    arguments.clear();
+    delimiters.clear();
 }
 
 #endif

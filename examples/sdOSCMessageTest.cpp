@@ -34,8 +34,6 @@ int main(void){
     message.appendFloat(-1.234567);
     message.appendString("this is a test string");
     message.appendFloat(2.345);
-    
-
 
     cout << "---------------" << endl;
     {
@@ -84,7 +82,7 @@ int main(void){
         cout << "getArgumentAsInt:" << message.getArgumentAsInt(0) << endl;
         cout << "getArgumentAsFloat:" << message.getArgumentAsFloat(1) << endl;
         cout << "getArgumentAsString:" << message.getArgumentAsString(2) << endl;
-        cout << "getEntireArgumentsAsString:\n" << message.getEntireArgumentsAsString() << endl;
+        cout << "getEntireArgumentsAsString:\n" << message.getAllArgumentsAsString() << endl;
 
     }
     cout << "---------------" << endl;
@@ -99,7 +97,7 @@ int main(void){
         cout << "getArgumentAsInt:" << decodedMessage.getArgumentAsInt(0) << endl;
         cout << "getArgumentAsFloat:" << decodedMessage.getArgumentAsFloat(1) << endl;
         cout << "getArgumentAsString:" << decodedMessage.getArgumentAsString(2) << endl;
-        cout << "getEntireArgumentsAsString:\n" << decodedMessage.getEntireArgumentsAsString() << endl;
+        cout << "getEntireArgumentsAsString:\n" << decodedMessage.getAllArgumentsAsString() << endl;
 
     }
     return 0;

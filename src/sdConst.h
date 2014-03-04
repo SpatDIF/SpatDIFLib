@@ -118,6 +118,25 @@ inline string floatToString(float ft){
     return floatsToString(&ft, 1);
 }
 
+/*!
+ utility function that convert floats to double. buffer must be allocated properly beforehand
+ */
+inline double *floatsToDoubles(float *floats, double *doubles, int num){
+    for (int i = 0; i < num; i++){
+        doubles[i] = static_cast<double>(floats[i]);
+    }
+    return doubles;
+}
+
+/*!
+ utility function that convert floats to double. buffer must be allocated properly beforehand
+ */
+inline float *doublesToFloats(double *doubles, float *floats, int num){
+    for (int i = 0; i < num; i++){
+        floats[i] = static_cast<float>(doubles[i]);
+    }
+    return floats;
+}
 
 /*! 
  utility function that convert doubles to a string

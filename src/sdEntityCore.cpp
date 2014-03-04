@@ -328,7 +328,6 @@ sdEntityExtension* sdEntityCore::addExtension(EExtension extension){
     return NULL;
 }
 
-
 void sdEntityCore::removeExtension(EExtension extension){
 
     vector <sdEntityExtension*>::iterator it =  extensionVector.begin();

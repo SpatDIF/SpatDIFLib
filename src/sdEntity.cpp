@@ -213,8 +213,24 @@ void sdEntity::removeAllEvents(){
 }
 
 void* sdEntity::getValue(double time, EDescriptor descriptor){
-    
     sdEvent *evt = getEvent(time, descriptor);
+    if(evt){
+        return evt->getValue();
+    }
+    return NULL;
+}
+
+void* sdEntity::getNextValue(double time, EDescriptor descriptor){
+    sdEvent *evt = getNextEvent(time, descriptor);
+    if(evt){
+        return evt->getValue();
+    }
+    return NULL;
+}
+
+
+void* sdEntity::getPreviousValue(double time, EDescriptor descriptor){
+    sdEvent *evt = getPreviousEvent(time, descriptor);
     if(evt){
         return evt->getValue();
     }

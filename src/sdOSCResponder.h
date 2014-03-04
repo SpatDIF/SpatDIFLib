@@ -45,14 +45,9 @@ private:
     
     /*! private utility function for spliting string with slash*/
     vector <string> splitString(const string &str);
-    
-    /*!
-     @param expectedNumber expected number of arguments
-     @param actualNumber actual number of arguments
-     @param command command name
-     @param errorMessage the error message will be stored in this stirng
-     */
-    bool checkNumberOfArguments(int expectedNumber, int actualNumber, string command, string &errorMessage);
+
+    vector<sdOSCMessage> getAction(string command, sdOSCMessage message);
+    void setAction(string command, sdOSCMessage message);
 
 
 public:

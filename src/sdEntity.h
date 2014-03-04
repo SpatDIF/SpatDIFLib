@@ -301,20 +301,36 @@ public:
     /*! @name Getting value directly
      @{
      */
+
     /*!
-     query method. it simply returns a pointer to the buffer, where the designated data are stored. returns null if not found. 
+     this function looks for an event at specified time and descriptor and returns a pointer to the data.
      @param time 
      @param descriptor specify descriptor defined in sdConst.h
      */
     void* getValue(double time, EDescriptor descriptor);
+
     /*!
-     @} */
+     this function looks for a next event from the specified time with the designated descriptor and returns a pointer to the data.
+     @param time 
+     @param descriptor specify descriptor defined in sdConst.h
+     */
+    void* getNextValue(double time, EDescriptor descriptor);
+
+    /*!
+     this function looks for a next event from the specified time with the designated descriptor and returns a pointer to the data.
+     @param time 
+     @param descriptor specify descriptor defined in sdConst.h
+     */
+    void* getPreviousValue(double time, EDescriptor descriptor);
+
+    /*!
+     @} 
+     */
     
 private:
     
     multiset<sdEvent*, sdEventCompare> createEventSet(double time,  EMode mode );
 
-    
 };
 
 
