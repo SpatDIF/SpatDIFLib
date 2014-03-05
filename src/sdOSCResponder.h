@@ -141,7 +141,6 @@ inline double sdOSCResponder::getQueryTime(void){
 
 inline double sdOSCResponder::getWriteTime(void){
     return writeTime;
-    
 }
 
 inline double sdOSCResponder::getInterval(void){

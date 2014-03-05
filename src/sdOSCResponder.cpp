@@ -151,11 +151,11 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
         returnMessage.appendFloat(static_cast<float>(getQueryTime()));
         returnMessageVector.push_back(returnMessage);
     }else if(command == "getWriteTime"){
-        sdOSCMessage returnMessage("/spatdif/WriteTime");
+        sdOSCMessage returnMessage("/spatdif/writeTime");
         returnMessage.appendFloat(static_cast<float>(getWriteTime()));
         returnMessageVector.push_back(returnMessage);
     }else if(command == "getInterval"){
-        sdOSCMessage returnMessage("/spatdif/Interval");
+        sdOSCMessage returnMessage("/spatdif/interval");
         returnMessage.appendFloat(static_cast<float>(getInterval()));
         returnMessageVector.push_back(returnMessage);
     }// query about scene{
