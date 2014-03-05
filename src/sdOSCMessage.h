@@ -57,30 +57,39 @@ public:
     void setOSCMessage(vector<unsigned char> message);
 
     /*!
-     append an int and add an typetag
+     appends an int and add an typetag
      */
     void appendInt(int value);
     
      /*!
-     append multiple ints at once
+     appends multiple ints at once
     */
     void appendInts(int *ints, int number);
 
     /*!
-     append an float and add an typetag
+     appends an float and add an typetag
      */
     void appendFloat(float value);
 
     /*!
-     append multiple floats at once
+     appends multiple floats at once
     */
     void appendFloats(float *floats, int number);
 
     /*!
-     append an string and add an typetag
+     appends an string and add an typetag
      */
     void appendString(string str);
+
+    /*!
+     appends multiple strings at once
+     */
+    void appendStrings(vector<string> str);
     
+    /*!
+     delete entire content
+    */
+    inline int getNumberOfArgument();
     inline void clear();
 
 };
@@ -138,6 +147,10 @@ string sdOSCMessage::getDelimitersAsString(void){
         it++;
     }
     return os.str();
+}
+
+int sdOSCMessage::getNumberOfArgument(){
+    return delimiters.size();
 }
 
 void sdOSCMessage::clear(void){

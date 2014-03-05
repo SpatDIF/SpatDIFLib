@@ -24,17 +24,20 @@ using namespace std;
 
 string sdScene::getEntityName(int index)
 {
-    int cnt = 0;
-    vector <sdEntityCore*>::iterator it = entityVector.begin();
-    
-    while( it != entityVector.end()) {
-        if(cnt == index){
-            return (*it)->getName();
-        }
+    vector<string> names = getEntityNames();
+    return names[index];
+}
+
+vector<string> sdScene::getEntityNames()
+{
+    vector <string> names;
+    vector <sdEntityCore *>::iterator it = entityVector.begin();
+    while(it != entityVector.end()){
+        sdEntityCore* entity = *it;
+        names.push_back(entity->getName());
         it++;
-        cnt++;
     }
-    return NULL;
+    return names;
 }
 
 sdEntityCore* sdScene::getEntity(string name){
@@ -121,8 +124,6 @@ void* sdScene::getValue(string name, double time, EDescriptor descriptor){
 int sdScene::getNumberOfActivatedExtensions(void){
     return activatedExtensionVector.size();
 }
-
-
 
 EExtension sdScene::getActivatedExtension(int index){
     return activatedExtensionVector[index];

@@ -133,6 +133,15 @@ void sdOSCMessage::appendString(string str){
     arguments.insert(arguments.end(),blocks.begin(),blocks.end());
 }
 
+void sdOSCMessage::appendStrings(vector<string> strs){
+    vector<string>::iterator it = strs.begin();
+    while(it != strs.end()){
+        string str= *it;
+        appendString(str);
+        it++;
+    }
+}
+
 int sdOSCMessage::getArgumentAsInt(int index){
     int posDelimiter = delimiters[index];
     vector<unsigned char> block;

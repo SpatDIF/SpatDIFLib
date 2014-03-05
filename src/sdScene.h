@@ -25,6 +25,9 @@
 
 using namespace std;
 
+/*!
+    a structure for associating an entity and multiple events
+*/
 class sdReport {
 public:
     sdEntityCore* entity;
@@ -100,6 +103,11 @@ public:
      */
     void setOrdering(EOrdering ordering);
     
+    /*! sets an enum of ordering
+     @param ordering the ordering enum declared in sdConst.h
+     */
+    void setOrdering(string string);
+
     /*!
      @}
      */
@@ -112,7 +120,11 @@ public:
      @param index
      */
     string getEntityName(int index);
-    
+
+    /*! return the name of all entities in the scene as vector of string
+    */
+    vector<string> getEntityNames();
+
     /*! search an entity in the entity vector by its name and return the pointer. returns null if the entity can not be found.
      @param name the name of a designated entity
      */
@@ -305,4 +317,15 @@ inline string sdScene::getOrderingAsString(void){
 inline void sdScene::setOrdering(EOrdering ordering ){
     sdScene::ordering = ordering;
 }
+
+inline void sdScene::setOrdering(string ordering){
+    if(ordering == "time"){
+        sdScene::ordering = SD_TIME;
+    }else if(ordering == "track"){
+        sdScene::ordering = SD_TRACK;
+    }else{
+        cout << "sdScene Error: Unknown Ordering" << endl;
+    }
+}
+
 #endif /* defined(____sdScene__) */

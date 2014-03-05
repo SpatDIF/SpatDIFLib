@@ -23,13 +23,9 @@ int main(void){
   using namespace std;
   
   sdScene scene;
-  sdEntityCore *myEntity = scene.addEntity("myEntity");
-  myEntity->addEvent(string("1.0"), string("position"), string("0.0 0.1 0.2"));
 
   sdOSCResponder oscResponder(&scene);
-  scene.dump();
   std::cout.setf( std::ios::showpoint );  
-
   vector<sdOSCMessage> returnedMessageVector;
 
   cout << "----set/get queryTime----" << endl;
@@ -60,10 +56,66 @@ int main(void){
     returnedMessageVector = oscResponder.forwardOSCMessage(getInterval);
     cout << returnedMessageVector[0].getMessageAsString() << endl;
   }
-  
+  cout << "----set/get Ordering----" << endl;
+  {
+    sdOSCMessage setOrderingToTrack("/spatdifcmd/setOrdering");
+    setOrderingToTrack.appendString("track");
+    oscResponder.forwardOSCMessage(setOrderingToTrack);
+
+    sdOSCMessage getOrdering("/spatdifcmd/getOrdering");
+    returnedMessageVector = oscResponder.forwardOSCMessage(getOrdering);
+    cout << returnedMessageVector[0].getMessageAsString() << endl;
+
+    sdOSCMessage setOrderingToTime("/spatdifcmd/setOrdering");
+    setOrderingToTime.appendString("time");
+    oscResponder.forwardOSCMessage(setOrderingToTime);
+
+    returnedMessageVector = oscResponder.forwardOSCMessage(getOrdering);
+    cout << returnedMessageVector[0].getMessageAsString() << endl;
+
+  }
+  cout << "----add/remove/query/removeAll Entities----" << endl;
+  {
+    sdOSCMessage addTest1Entity("/spatdifcmd/addEntity");
+    addTest1Entity.appendString("test1Entity");
+    oscResponder.forwardOSCMessage(addTest1Entity);
+    cout << "test1Entity added" << endl;
+
+    sdOSCMessage addTest2Entity("/spatdifcmd/addEntity");
+    addTest2Entity.appendString("test2Entity");
+    oscResponder.forwardOSCMessage(addTest2Entity);
+    cout << "test2Entity added" << endl;
+
+    sdOSCMessage getNumberOfEntities("/spatdifcmd/getNumberOfEntities");
+    returnedMessageVector = oscResponder.forwardOSCMessage(getNumberOfEntities);
+    cout << returnedMessageVector[0].getMessageAsString() << endl;
+
+    sdOSCMessage getEntityNames("/spatdifcmd/getEntityNames");
+    returnedMessageVector = oscResponder.forwardOSCMessage(getEntityNames);
+    cout << returnedMessageVector[0].getMessageAsString() << endl;
+
+    sdOSCMessage removeTest1Entity("/spatdifcmd/removeEntity");
+    removeTest1Entity.appendString("test1Entity");
+    returnedMessageVector = oscResponder.forwardOSCMessage(removeTest1Entity);
+    cout << "test1Entity removed from the scene " << endl;
+
+    returnedMessageVector = oscResponder.forwardOSCMessage(getEntityNames);
+    cout << returnedMessageVector[0].getMessageAsString() << endl;
+
+    sdOSCMessage removeAllEntities("/spatdifcmd/removeAllEntities");
+    oscResponder.forwardOSCMessage(removeAllEntities);
+    cout << "all entities removed" << endl;
+
+    returnedMessageVector = oscResponder.forwardOSCMessage(getNumberOfEntities);
+    cout << returnedMessageVector[0].getMessageAsString() << endl;
+
+  }
   cout << "----set/get Position----" << endl;
   {
   // both query and write at 10.0
+    sdEntityCore *myEntity = scene.addEntity("myEntity");
+    myEntity->addEvent(string("1.0"), string("position"), string("0.0 0.1 0.2"));
+
     sdOSCMessage setWriteTime("/spatdifcmd/setWriteTime");
     setWriteTime.appendFloat(10.0);
     oscResponder.forwardOSCMessage(setWriteTime);
@@ -126,6 +178,40 @@ int main(void){
     getOrientation.appendString("myEntity");
     returnedMessageVector = oscResponder.forwardOSCMessage(getOrientation);
     cout << returnedMessageVector[0].getMessageAsString() << endl;
+  }
+  cout << "----set/get Present----" << endl;
+  {
+    sdOSCMessage setPresent("/spatdifcmd/setPresent");
+    setPresent.appendString("myEntity");
+    setPresent.appendInt(1);
+    oscResponder.forwardOSCMessage(setPresent);
+
+    sdOSCMessage getPresent("/spatdifcmd/getPresent");
+    getPresent.appendString("myEntity");
+    returnedMessageVector = oscResponder.forwardOSCMessage(getPresent);
+    cout << returnedMessageVector[0].getMessageAsString() << endl;
+  }
+  cout << "----get all events in the specified time frame----" << endl;
+  { 
+
+    sdOSCMessage setQueryTime("/spatdifcmd/setQueryTime");
+    setQueryTime.appendFloat(5.0);
+    oscResponder.forwardOSCMessage(setQueryTime);
+
+    sdOSCMessage setInterval("/spatdifcmd/setInterval");
+    setInterval.appendFloat(10.0);
+    oscResponder.forwardOSCMessage(setInterval);
+
+    sdOSCMessage getEventsSetsFromAllEntities("/spatdifcmd/getEventSetsFromAllEntities");
+    returnedMessageVector = oscResponder.forwardOSCMessage(getEventsSetsFromAllEntities);
+    cout << "number of events found:" << returnedMessageVector.size() << endl;
+    vector<sdOSCMessage>::iterator it = returnedMessageVector.begin();
+
+    while(it != returnedMessageVector.end()){
+      sdOSCMessage mes = *it;
+      cout << mes.getMessageAsString() << endl;
+      it++;
+    }
   }
 
   return 0;
