@@ -42,13 +42,13 @@ int main (void){
     
     string soriginal = "hello";
     cout << "original:" << soriginal << endl;
-    vector<unsigned char> sc = converter.stringToBlocks(soriginal);
+    vector<unsigned char> sc = sdOSCConverter::stringToBlocks(soriginal); // here call it directly
     dumpBytes(sc);
     cout << "decoded:" << converter.blocksToString(sc) << endl << endl;
     
     soriginal = "testing!";
     cout << "original:" << soriginal << endl;
-    sc = converter.stringToBlocks(soriginal);
+    sc = sdOSCConverter::stringToBlocks(soriginal);
     dumpBytes(sc);
     cout << "decoded:" << converter.blocksToString(sc) << endl;
     

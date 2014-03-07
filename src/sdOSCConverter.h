@@ -30,12 +30,12 @@ using namespace std;
 class sdOSCConverter{
     
 public:
-    inline vector<unsigned char> intToBlock(int value);
-    inline int blockToInt(vector<unsigned char> block);
-    inline vector<unsigned char> floatToBlock(float value);
-    inline float blockToFloat(vector<unsigned char> block);
-    inline vector<unsigned char> stringToBlocks(string str);
-    inline string blocksToString(vector<unsigned char> blocks);
+    static inline vector<unsigned char> intToBlock(int value);
+    static inline int blockToInt(vector<unsigned char> block);
+    static inline vector<unsigned char> floatToBlock(float value);
+    static inline float blockToFloat(vector<unsigned char> block);
+    static inline vector<unsigned char> stringToBlocks(string str);
+    static inline string blocksToString(vector<unsigned char> blocks);
 };
 
 vector<unsigned char> sdOSCConverter::intToBlock(int value){
