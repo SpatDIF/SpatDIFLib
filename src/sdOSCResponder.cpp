@@ -171,6 +171,30 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
         sdOSCMessage returnMessage("/spatdif/ordering");
         returnMessage.appendString(scene->getOrderingAsString());
         returnMessageVector.push_back(returnMessage);   
+    }else if(command == "getAuthor"){
+        sdOSCMessage returnMessage("/spatdif/author");
+        returnMessage.appendString(scene->getInfo().getAuthor());
+        returnMessageVector.push_back(returnMessage);  
+    }else if(command == "getHost"){
+        sdOSCMessage returnMessage("/spatdif/host");
+        returnMessage.appendString(scene->getInfo().getHost());
+        returnMessageVector.push_back(returnMessage);  
+    }else if(command == "getDate"){
+        sdOSCMessage returnMessage("/spatdif/date");
+        returnMessage.appendString(scene->getInfo().getDateAsString());
+        returnMessageVector.push_back(returnMessage);  
+    }else if(command == "getLocation"){
+        sdOSCMessage returnMessage("/spatdif/location");
+        returnMessage.appendString(scene->getInfo().getLocation());
+        returnMessageVector.push_back(returnMessage);  
+    }else if(command == "getSession"){
+        sdOSCMessage returnMessage("/spatdif/session");
+        returnMessage.appendString(scene->getInfo().getSession());
+        returnMessageVector.push_back(returnMessage);  
+    }else if(command == "getAnnotation"){
+        sdOSCMessage returnMessage("/spatdif/annotation");
+        returnMessage.appendString(scene->getInfo().getAnnotation());
+        returnMessageVector.push_back(returnMessage);  
     }
     // core descriptors
     else if(command.find("Position") != string::npos){ // contains keyword "Position"
@@ -261,6 +285,30 @@ void sdOSCResponder::setAction(string command, sdOSCMessage message){
     // scene properties
     else if(command == "setOrdering"){
         scene->setOrdering(message.getArgumentAsString(0));
+    }else if(command == "setAuthor"){
+        sdInfo info = scene->getInfo();
+        info.setAuthor(message.getArgumentAsString(0));
+        scene->setInfo(info);
+    }else if(command == "setHost"){
+        sdInfo info = scene->getInfo();
+        info.setHost(message.getArgumentAsString(0));
+        scene->setInfo(info);
+    }else if(command == "setDate"){
+        sdInfo info = scene->getInfo();
+        info.setDate(message.getArgumentAsString(0));
+        scene->setInfo(info);
+    }else if(command == "setLocation"){
+        sdInfo info = scene->getInfo();
+        info.setLocation(message.getArgumentAsString(0));
+        scene->setInfo(info);
+    }else if(command == "setSession"){
+        sdInfo info = scene->getInfo();
+        info.setSession(message.getArgumentAsString(0));
+        scene->setInfo(info);
+    }else if(command == "setAnnotation"){
+        sdInfo info = scene->getInfo();
+        info.setAnnotation(message.getArgumentAsString(0));
+        scene->setInfo(info);
     }
 }
 

@@ -213,6 +213,59 @@ int main(void){
       it++;
     }
   }
+  cout << "----set/get metadata " << endl;
+  {
+    sdOSCMessage returnedMessage;
+    sdOSCMessage setAuthor("/spatdifcmd/setAuthor");
+    setAuthor.appendString("Chikashi Miyama");
+    oscResponder.forwardOSCMessage(setAuthor);
 
+    sdOSCMessage setHost("/spatdifcmd/setHost");
+    setHost.appendString("Some computer");
+    oscResponder.forwardOSCMessage(setHost);
+   
+    sdOSCMessage setDate("/spatdifcmd/setDate");
+    setDate.appendString("2014-3-7");
+    oscResponder.forwardOSCMessage(setDate);
+
+    sdOSCMessage setLocation("/spatdifcmd/setLocation");
+    setLocation.appendString("ICST, Zürich, Switzerland");
+    oscResponder.forwardOSCMessage(setLocation);
+
+    sdOSCMessage setSession("/spatdifcmd/setSession");
+    setSession.appendString("1.1");
+    oscResponder.forwardOSCMessage(setSession);
+   
+    sdOSCMessage setAnnotation("/spatdifcmd/setAnnotation");
+    setAnnotation.appendString("This is a test with OSC messages");
+    oscResponder.forwardOSCMessage(setAnnotation);
+
+    sdOSCMessage getAuthor("/spatdifcmd/getAuthor");
+    returnedMessageVector = oscResponder.forwardOSCMessage(getAuthor);
+    cout << returnedMessageVector[0].getMessageAsString() << endl;
+
+    sdOSCMessage getHost("/spatdifcmd/getHost");
+    returnedMessageVector = oscResponder.forwardOSCMessage(getHost);
+    cout << returnedMessageVector[0].getMessageAsString() << endl;
+
+    sdOSCMessage getDate("/spatdifcmd/getDate");
+    returnedMessageVector = oscResponder.forwardOSCMessage(getDate);
+    cout << returnedMessageVector[0].getMessageAsString() << endl;
+
+    sdOSCMessage getLocation("/spatdifcmd/getLocation");
+    returnedMessageVector = oscResponder.forwardOSCMessage(getLocation);
+    cout << returnedMessageVector[0].getMessageAsString() << endl;
+
+    sdOSCMessage getSession("/spatdifcmd/getSession");
+    returnedMessageVector = oscResponder.forwardOSCMessage(getSession);
+    cout << returnedMessageVector[0].getMessageAsString() << endl;
+
+    sdOSCMessage getAnnotation("/spatdifcmd/getAnnotation");
+    returnedMessageVector = oscResponder.forwardOSCMessage(getAnnotation);
+    cout << returnedMessageVector[0].getMessageAsString() << endl;
+
+
+
+  }
   return 0;
 }
