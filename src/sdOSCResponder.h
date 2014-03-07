@@ -21,34 +21,35 @@
 #include "sdOSCMessage.h"
 #include <string>
 
-
 using namespace std;
 
-
 /*!
-    This class interpret incoming OSC messages and forward it to a specified instance of sdScene.
+    This class interprets incoming OSC messages and forward it to a specified instance of sdScene.
     The response from sdScene will be formatted in OSC format and returned to the client.
     
-    The List commands can be found in the following page.
+    The List commands can be found in the following separate page.
     - \subpage osc_commands
  
  */
 class sdOSCResponder{
     
 private:
-    /*! The interpreted OSC messages will be sent do this sdScene*/
+    /*! The interpreted OSC messages will be sent do this sdScene */
     sdScene *scene;
-    
+
+    /*! time index for queries*/
     double queryTime;
+
+    /*! time index for editing*/
     double writeTime;
+
+    /*! time interval for queries with time frame  */
     double interval;
     
-    /*! private utility function for spliting string with slash*/
+    /*! private utility function for spliting strings by slash */
     vector <string> splitString(const string &str);
-
     vector<sdOSCMessage> getAction(string command, sdOSCMessage message);
     void setAction(string command, sdOSCMessage message);
-
 
 public:
     
@@ -63,11 +64,11 @@ public:
     
     /*! setTergetScene
      */
-    void setScene(sdScene *scene);
+    inline void setScene(sdScene *scene);
     
     /*! getTargetScene
      */
-    sdScene* getScene(void);
+    inline sdScene* getScene(void);
     
     /*! this function interprets incoming raw OSCMessage and forward it to the scene
      @param message raw oscMessage, consisting of multiple blocks (4 byte blocks)
@@ -83,67 +84,67 @@ public:
     /*!
      @param time set queryTime to this value
      */
-    void setQueryTime(double time);
+    inline void setQueryTime(double time);
 
     /*!
      @param time set writeTime to this value
      */
-    void setWriteTime(double time);
+    inline void setWriteTime(double time);
 
     /*!
      @param time set interval to this value
      */
-    void setInterval(double time);
+    inline void setInterval(double time);
     
     
     /*!
      returns queryTime
      */
-    double getQueryTime(void);
+    inline double getQueryTime(void);
     
     /*!
      returns writeTime
      */
-    double getWriteTime(void);
+    inline double getWriteTime(void);
     
     /*!
      returns interval
      */
-    double getInterval(void);
+    inline double getInterval(void);
     
 };
 
 
 
-inline void sdOSCResponder::setScene(sdScene *scene){
+void sdOSCResponder::setScene(sdScene *scene){
     sdOSCResponder::scene = scene;
 }
 
-inline sdScene* sdOSCResponder::getScene(void){
+sdScene* sdOSCResponder::getScene(void){
     return  scene;
 }
 
-inline void sdOSCResponder::setQueryTime(double time){
+void sdOSCResponder::setQueryTime(double time){
     queryTime = time;
 }
 
-inline void sdOSCResponder::setWriteTime(double time){
+void sdOSCResponder::setWriteTime(double time){
     writeTime = time;
 }
 
-inline void sdOSCResponder::setInterval(double time){
+void sdOSCResponder::setInterval(double time){
     interval =  time;
 }
 
-inline double sdOSCResponder::getQueryTime(void){
+double sdOSCResponder::getQueryTime(void){
     return queryTime;
 }
 
-inline double sdOSCResponder::getWriteTime(void){
+double sdOSCResponder::getWriteTime(void){
     return writeTime;
 }
 
-inline double sdOSCResponder::getInterval(void){
+double sdOSCResponder::getInterval(void){
     return interval;
 }
 

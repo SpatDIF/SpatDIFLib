@@ -11,10 +11,11 @@ class sdOSCMessage: public sdOSCConverter{
 
     
 private:
-    vector<unsigned char> address;
-    vector<unsigned char> typetags;
-    vector<unsigned char> arguments;
-    vector<int> delimiters;
+
+    vector<unsigned char> address; /*!< OSC address pattern in OSC-String format */
+    vector<unsigned char> typetags;  /*!< OSC typetags in OSC-String format */
+    vector<unsigned char> arguments; /*!< OSC Arguments in 4-bytes-block sequence */
+    vector<int> delimiters; /*!< stores delimiters of OSC arguments. This increase the speed of data access */
     
     /*!
      this function looks for \0 unsigned character from the onset byte and return the length of string
@@ -24,73 +25,100 @@ private:
     vector<unsigned char> nullPadding(vector<unsigned char> string);
     
 public:
+
+    /*! returns OSC address pattern in OSC-string format */
     inline vector<unsigned char> getAddress(void);
+
+    /*! returns OSC typetags in OSC-string format */
     inline vector<unsigned char> getTypetags(void);
+
+    /*! returns all Arguments in in 4-bytes-block sequence */
     inline vector<unsigned char> getArguments(void);
+    
+    /*! returns delimiters as vector of int */
     inline vector<int> getDelimiters(void);
 
+    /*! returns OSC address pattern as a string */
     inline string getAddressAsString(void);
+
+    /*! returns OSC address pattern as a string */
     inline string getTypetagsAsString(void);
+
+    /*! returns delimiters as a string */
     inline string getDelimitersAsString(void);
+
+    /*! @param index argument index
+     returns specified argument at index as int.*/
     int getArgumentAsInt(int index);
+
+    /*! @param index argument index
+     returns specified argument at index as float.*/
     float getArgumentAsFloat(int index);
+
+    /*! @param index argument index
+     returns specified argument at index as string.*/
     string getArgumentAsString(int index);
+
+    /*! returns all arguments as a string*/
     string getAllArgumentsAsString(void);
+
+    /*! returns the entire message as a string*/
     string getMessageAsString(void);
 
-    /*!
-     constructor. the OSC address must be specified.
-     @param oscAddress the OSC address string
-     */
+    /*! constructor. typeyags initialized. */
     sdOSCMessage();
+
+    /*! constructor. with initialization of typetags and address pattern. */
     sdOSCMessage(string address);
+
+    /*! constructor. initialize message with OSC-conformed 4-bytes-block sequence */
     sdOSCMessage(vector<unsigned char> message);
     
+    /*! @param address new OSC address pattern
+    set address pattern*/
     void setAddress(string address);
-    /*!
-     output osc conformed message
-     */
+
+    /*! output osc conformed message */
     vector<unsigned char> getOSCMessage(void);
     
-    /*!
-     interpret raw OSC message and store it in the local buffer
-     */
+    /*! interpret raw OSC message and store it in the local buffer */
     void setOSCMessage(vector<unsigned char> message);
 
-    /*!
-     appends an int and add an typetag
-     */
+    /*! @param value an int value to be appended.
+     appends an int and add an typetag */
     void appendInt(int value);
     
-     /*!
-     appends multiple ints at once
-    */
+    /*! 
+     @param ints a pointer to int values to be appended.
+     @param number number of ints to be added
+     appends multiple ints at once */
     void appendInts(int *ints, int number);
 
     /*!
-     appends an float and add an typetag
-     */
+     @param value an float value to be appended.
+     appends an float and add an typetag */
     void appendFloat(float value);
 
-    /*!
-     appends multiple floats at once
-    */
+    /*! 
+     @param floats a pointer to float values to be appended.
+     @param number number of floats to be added
+     appends multiple floats at once */
     void appendFloats(float *floats, int number);
 
     /*!
-     appends an string and add an typetag
-     */
+     @param str string to be appended
+     appends an string and add an typetag */
     void appendString(string str);
 
-    /*!
-     appends multiple strings at once
-     */
+    /*! 
+     @param str strings to be appended
+     appends multiple strings at once */
     void appendStrings(vector<string> str);
     
-    /*!
-     delete entire content
-    */
+    /*! returns the number of OSC arguments */
     inline int getNumberOfArgument();
+
+    /*! delete entire content. typeyag initialized */
     inline void clear();
 
 };

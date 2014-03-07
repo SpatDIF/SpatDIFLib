@@ -24,17 +24,43 @@
 using namespace std;
 
 /*!
- this class provides block to int, float, string converter and vice versa.
- if the length of given strings multiples of four, a block of \0 (null) will be added at the end automatically in order to conform to the OSC-string regulation.
+ this class provides block (4 bytes block) to int, float, string converter and vice versa.
+ if the length of given strings multiples of four, a block of \0 (null) will be added at the end automatically 
+ in order to conform to the OSC-string regulation.
+ All functions are declared as static; They can be employed without instantiation of this class.
 */
+
 class sdOSCConverter{
     
 public:
+    /*! convert an int value to a 4-bytes block
+    @param value the int value to be converted
+    */
     static inline vector<unsigned char> intToBlock(int value);
+
+    /*! convert a 4-bytes block to an int
+    @param block the block to be converted
+    */
     static inline int blockToInt(vector<unsigned char> block);
+
+    /*! convert a float value to a 4-bytes block 
+    @param value the float value to be converted
+    */
     static inline vector<unsigned char> floatToBlock(float value);
+
+    /*! convert a 4-bytes block to a float
+    @param block the block to be converted
+    */
     static inline float blockToFloat(vector<unsigned char> block);
+
+    /*! convert a string to 4-bytes blocks
+    @param str the string to be converted
+     */
     static inline vector<unsigned char> stringToBlocks(string str);
+
+    /*! convert 4-bytes blocks to a string
+    @param blocks the blocks to be converted
+    */
     static inline string blocksToString(vector<unsigned char> blocks);
 };
 
