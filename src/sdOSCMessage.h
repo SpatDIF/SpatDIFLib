@@ -46,6 +46,7 @@ public:
     sdOSCMessage(string address);
     sdOSCMessage(vector<unsigned char> message);
     
+    void setAddress(string address);
     /*!
      output osc conformed message
      */
@@ -158,6 +159,7 @@ void sdOSCMessage::clear(void){
     typetags.clear();
     arguments.clear();
     delimiters.clear();
+    typetags.push_back(','); 
 }
 
 #endif

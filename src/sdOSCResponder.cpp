@@ -102,8 +102,9 @@ vector<sdOSCMessage> sdOSCResponder::forwardOSCMessage(sdOSCMessage message){
 }
 
 vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage message){
+    sdOSCMessage returnMessage;
     vector<sdOSCMessage> returnMessageVector;
-    
+    bool singleMessage = true;
     // internal variable
     if(command == "getEventSetsFromAllEntities"){
         vector<sdReport> reports;
@@ -115,9 +116,9 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
             multiset<sdEvent*, sdEventCompare>eventSet = report.eventSet;
             multiset<sdEvent*, sdEventCompare>::iterator eit = eventSet.begin();
             while (eit != eventSet.end()) {
-
                 sdEvent *event = *eit;
-                sdOSCMessage returnMessage("/spatdif/event");
+                returnMessage.clear();
+                returnMessage.setAddress("/spatdif/event");
                 returnMessage.appendFloat(static_cast<float>(event->getTime()));
                 returnMessage.appendString(entity->getName());
                 returnMessage.appendString(event->getDescriptorAsString());
@@ -139,62 +140,49 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
                     default:{
                         cout << "sdOSCResponder Error: unexpected descriptor" << endl;
                     }
-
                 }
                 eit++;
             }
             rit++;
         }
-    
+        singleMessage = false;
     }else if(command == "getQueryTime"){
-        sdOSCMessage returnMessage("/spatdif/queryTime");
+        returnMessage.setAddress("/spatdif/queryTime");
         returnMessage.appendFloat(static_cast<float>(getQueryTime()));
-        returnMessageVector.push_back(returnMessage);
     }else if(command == "getWriteTime"){
-        sdOSCMessage returnMessage("/spatdif/writeTime");
+        returnMessage.setAddress("/spatdif/writeTime");
         returnMessage.appendFloat(static_cast<float>(getWriteTime()));
-        returnMessageVector.push_back(returnMessage);
     }else if(command == "getInterval"){
-        sdOSCMessage returnMessage("/spatdif/interval");
+        returnMessage.setAddress("/spatdif/interval");
         returnMessage.appendFloat(static_cast<float>(getInterval()));
-        returnMessageVector.push_back(returnMessage);
     }// query about scene{
     else if(command == "getNumberOfEntities"){
-        sdOSCMessage returnMessage("/spatdif/numberOfEntities");
+        returnMessage.setAddress("/spatdif/numberOfEntities");
         returnMessage.appendInt(scene->getNumberOfEntities());
-        returnMessageVector.push_back(returnMessage);
     }else if(command == "getEntityNames"){
-        sdOSCMessage returnMessage("/spatdif/entityNames");
+        returnMessage.setAddress("/spatdif/entityNames");
         returnMessage.appendStrings(scene->getEntityNames());
-        returnMessageVector.push_back(returnMessage);
     }else if(command == "getOrdering"){
-        sdOSCMessage returnMessage("/spatdif/ordering");
+        returnMessage.setAddress("/spatdif/ordering");
         returnMessage.appendString(scene->getOrderingAsString());
-        returnMessageVector.push_back(returnMessage);   
     }else if(command == "getAuthor"){
-        sdOSCMessage returnMessage("/spatdif/author");
+        returnMessage.setAddress("/spatdif/author");
         returnMessage.appendString(scene->getInfo().getAuthor());
-        returnMessageVector.push_back(returnMessage);  
     }else if(command == "getHost"){
-        sdOSCMessage returnMessage("/spatdif/host");
+        returnMessage.setAddress("/spatdif/host");
         returnMessage.appendString(scene->getInfo().getHost());
-        returnMessageVector.push_back(returnMessage);  
     }else if(command == "getDate"){
-        sdOSCMessage returnMessage("/spatdif/date");
+        returnMessage.setAddress("/spatdif/date");
         returnMessage.appendString(scene->getInfo().getDateAsString());
-        returnMessageVector.push_back(returnMessage);  
     }else if(command == "getLocation"){
-        sdOSCMessage returnMessage("/spatdif/location");
+        returnMessage.setAddress("/spatdif/location");
         returnMessage.appendString(scene->getInfo().getLocation());
-        returnMessageVector.push_back(returnMessage);  
     }else if(command == "getSession"){
-        sdOSCMessage returnMessage("/spatdif/session");
+        returnMessage.setAddress("/spatdif/session");
         returnMessage.appendString(scene->getInfo().getSession());
-        returnMessageVector.push_back(returnMessage);  
     }else if(command == "getAnnotation"){
-        sdOSCMessage returnMessage("/spatdif/annotation");
+        returnMessage.setAddress("/spatdif/annotation");
         returnMessage.appendString(scene->getInfo().getAnnotation());
-        returnMessageVector.push_back(returnMessage);  
     }
     // core descriptors
     else if(command.find("Position") != string::npos){ // contains keyword "Position"
@@ -210,10 +198,9 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
         }else if(command == "getPreviousPosition"){
             dpos = static_cast<double*>(entity->getPreviousValue(queryTime, SD_POSITION));
         }
-        sdOSCMessage returnMessage("/spatdif/position");
+        returnMessage.setAddress("/spatdif/position");
         returnMessage.appendString(entity->getName());
         returnMessage.appendFloats(doublesToFloats(dpos, fpos, 3),3);
-        returnMessageVector.push_back(returnMessage);
     }else if(command.find("Orientation") != string::npos){ // contains keyword "Position"
         sdEntityCore* entity = scene->getEntity(message.getArgumentAsString(0));
         if(!entity) 
@@ -227,10 +214,9 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
         }else if(command == "getPreviousOrientation"){
             dori = static_cast<double*>(entity->getPreviousValue(queryTime, SD_ORIENTATION));
         }
-        sdOSCMessage returnMessage("/spatdif/orientation");
+        returnMessage.setAddress("/spatdif/orientation");
         returnMessage.appendString(entity->getName());
         returnMessage.appendFloats(doublesToFloats(dori, fori, 3),3);
-        returnMessageVector.push_back(returnMessage);
     }else if(command.find("Present")){
         sdEntityCore* entity = scene->getEntity(message.getArgumentAsString(0));
         if(!entity) 
@@ -243,12 +229,15 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
         }else if(command == "getPreviousPresent"){
             flag = static_cast<bool*>(entity->getPreviousValue(queryTime, SD_PRESENT));
         }
-        sdOSCMessage returnMessage("/spatdif/present");
+        returnMessage.setAddress("/spatdif/present");
         returnMessage.appendString(entity->getName());
         returnMessage.appendInt(static_cast<int>(flag));
-        returnMessageVector.push_back(returnMessage);
     }else{
         cout << "sdOSCMessage Error: unknown command:" << command << endl;
+    }
+
+    if(singleMessage){
+        returnMessageVector.push_back(returnMessage);  
     }
     return returnMessageVector;
 }

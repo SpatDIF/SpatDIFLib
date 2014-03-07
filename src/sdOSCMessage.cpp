@@ -4,12 +4,12 @@
 #include "sdConst.h"
 
 sdOSCMessage::sdOSCMessage(){
-
+    typetags.push_back(','); // the length is unknown, conform later
 }
 
 sdOSCMessage::sdOSCMessage(string address){
     sdOSCMessage::address = stringToBlocks(address); // conform to blocks (4 byte block)
-    typetags.push_back(','); // the length is unknown, conform later
+    sdOSCMessage(); // call default constructor
 }
 
 sdOSCMessage::sdOSCMessage(vector<unsigned char> oscMessage){
@@ -25,6 +25,10 @@ vector<unsigned char> sdOSCMessage::getOSCMessage(){
     OSCMessage.insert(OSCMessage.end(), arguments.begin(), arguments.end()); // concatenate arguments
 
     return OSCMessage;
+}
+
+void sdOSCMessage::setAddress(string address){
+    sdOSCMessage::address = stringToBlocks(address);
 }
 
 void sdOSCMessage::setOSCMessage(vector<unsigned char> newMessage){
