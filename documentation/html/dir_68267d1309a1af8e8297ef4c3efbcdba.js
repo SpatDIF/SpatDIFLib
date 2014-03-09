@@ -28,21 +28,29 @@ var dir_68267d1309a1af8e8297ef4c3efbcdba =
     ] ],
     [ "sdLoader.cpp", "sd_loader_8cpp.html", null ],
     [ "sdLoader.h", "sd_loader_8h.html", [
-      [ "sdLoader", "classsd_loader.html", "classsd_loader" ]
+      [ "sdLoader", "classsd_loader.html", null ]
     ] ],
     [ "sdMain.h", "sd_main_8h.html", null ],
+    [ "sdOSCConverter.h", "sd_o_s_c_converter_8h.html", [
+      [ "sdOSCConverter", "classsd_o_s_c_converter.html", null ]
+    ] ],
+    [ "sdOSCMessage.cpp", "sd_o_s_c_message_8cpp.html", null ],
+    [ "sdOSCMessage.h", "sd_o_s_c_message_8h.html", [
+      [ "sdOSCMessage", "classsd_o_s_c_message.html", "classsd_o_s_c_message" ]
+    ] ],
     [ "sdOSCResponder.cpp", "sd_o_s_c_responder_8cpp.html", null ],
     [ "sdOSCResponder.h", "sd_o_s_c_responder_8h.html", [
       [ "sdOSCResponder", "classsd_o_s_c_responder.html", "classsd_o_s_c_responder" ]
     ] ],
     [ "sdSaver.cpp", "sd_saver_8cpp.html", null ],
     [ "sdSaver.h", "sd_saver_8h.html", [
-      [ "sdSaver", "classsd_saver.html", "classsd_saver" ],
+      [ "sdSaver", "classsd_saver.html", null ],
       [ "sdGlobalEvent", "classsd_global_event.html", "classsd_global_event" ],
       [ "sdGlobalEventCompare", "classsd_global_event_compare.html", "classsd_global_event_compare" ]
     ] ],
     [ "sdScene.cpp", "sd_scene_8cpp.html", null ],
     [ "sdScene.h", "sd_scene_8h.html", [
+      [ "sdReport", "classsd_report.html", "classsd_report" ],
       [ "sdScene", "classsd_scene.html", "classsd_scene" ]
     ] ]
 ];

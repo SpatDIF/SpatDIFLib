@@ -13,6 +13,7 @@ var group__spatdiflib =
     [ "sdLoader.cpp", "sd_loader_8cpp.html", null ],
     [ "sdLoader.h", "sd_loader_8h.html", null ],
     [ "sdMain.h", "sd_main_8h.html", null ],
+    [ "sdOSCConverter.h", "sd_o_s_c_converter_8h.html", null ],
     [ "sdOSCResponder.cpp", "sd_o_s_c_responder_8cpp.html", null ],
     [ "sdOSCResponder.h", "sd_o_s_c_responder_8h.html", null ],
     [ "sdSaver.cpp", "sd_saver_8cpp.html", null ],

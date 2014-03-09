@@ -16,7 +16,7 @@
 </g>
 <!-- Node2 -->
 <g id="node2" class="node"><title>Node2</title>
-<g id="a_node2"><a xlink:href="classsd_loader.html#ab3d7cf4919f50673ec7f9649a9be09b1" target="_top" xlink:title="sdLoader::sceneFromXML">
+<g id="a_node2"><a xlink:href="classsd_loader.html#ab3d7cf4919f50673ec7f9649a9be09b1" target="_top" target="_top" xlink:title="sdLoader::sceneFromXML">
 <polygon fill="white" stroke="black" points="76,-632.5 76,-651.5 202,-651.5 202,-632.5 76,-632.5"/>
 <text text-anchor="middle" x="139" y="-639.5" font-family="Helvetica,sans-Serif" font-size="10.00">sdLoader::sceneFromXML</text>
 </a>
@@ -29,7 +29,7 @@
 </g>
 <!-- Node5 -->
 <g id="node5" class="node"><title>Node5</title>
-<g id="a_node5"><a xlink:href="classsd_event.html#a2941bfbdbb11cb95d16bcbc50c19a161" target="_top" xlink:title="sdEvent::getValueAsString">
+<g id="a_node5"><a xlink:href="classsd_event.html#a2941bfbdbb11cb95d16bcbc50c19a161" target="_top" target="_top" xlink:title="sdEvent::getValueAsString">
 <polygon fill="white" stroke="black" points="74.5,-474.5 74.5,-493.5 203.5,-493.5 203.5,-474.5 74.5,-474.5"/>
 <text text-anchor="middle" x="139" y="-481.5" font-family="Helvetica,sans-Serif" font-size="10.00">sdEvent::getValueAsString</text>
 </a>
@@ -42,7 +42,7 @@
 </g>
 <!-- Node6 -->
 <g id="node6" class="node"><title>Node6</title>
-<g id="a_node6"><a xlink:href="classsd_saver.html#a2095f1dd3d75b3f5d5f9ae323fa0f971" target="_top" xlink:title="sdSaver::XMLFromScene">
+<g id="a_node6"><a xlink:href="classsd_saver.html#a2095f1dd3d75b3f5d5f9ae323fa0f971" target="_top" target="_top" xlink:title="sdSaver::XMLFromScene">
 <polygon fill="white" stroke="black" points="77,-316.5 77,-335.5 201,-335.5 201,-316.5 77,-316.5"/>
 <text text-anchor="middle" x="139" y="-323.5" font-family="Helvetica,sans-Serif" font-size="10.00">sdSaver::XMLFromScene</text>
 </a>
@@ -55,7 +55,7 @@
 </g>
 <!-- Node3 -->
 <g id="node3" class="node"><title>Node3</title>
-<g id="a_node3"><a xlink:href="classsd_info.html#a93a8e95d4e6f54544089151c10abe646" target="_top" xlink:title="sdInfo::setAuthor">
+<g id="a_node3"><a xlink:href="classsd_info.html#a93a8e95d4e6f54544089151c10abe646" target="_top" target="_top" xlink:title="sdInfo::setAuthor">
 <polygon fill="white" stroke="black" points="274,-670.5 274,-689.5 360,-689.5 360,-670.5 274,-670.5"/>
 <text text-anchor="middle" x="317" y="-677.5" font-family="Helvetica,sans-Serif" font-size="10.00">sdInfo::setAuthor</text>
 </a>
@@ -68,7 +68,7 @@
 </g>
 <!-- Node4 -->
 <g id="node4" class="node"><title>Node4</title>
-<g id="a_node4"><a xlink:href="classsd_entity_core.html#a4a2537e1b5b8c17bac298a37b306ae87" target="_top" xlink:title="sdEntityCore::addEvent">
+<g id="a_node4"><a xlink:href="classsd_entity_core.html#a4a2537e1b5b8c17bac298a37b306ae87" target="_top" target="_top" xlink:title="sdEntityCore::addEvent">
 <polygon fill="white" stroke="black" points="259,-632.5 259,-651.5 375,-651.5 375,-632.5 259,-632.5"/>
 <text text-anchor="middle" x="317" y="-639.5" font-family="Helvetica,sans-Serif" font-size="10.00">sdEntityCore::addEvent</text>
 </a>
@@ -81,7 +81,7 @@
 </g>
 <!-- Node7 -->
 <g id="node7" class="node"><title>Node7</title>
-<g id="a_node7"><a xlink:href="classsd_scene.html#a04e558bcf268832b77cfbb576a36778e" target="_top" xlink:title="sdScene::getInfo">
+<g id="a_node7"><a xlink:href="classsd_scene.html#a04e558bcf268832b77cfbb576a36778e" target="_top" target="_top" xlink:title="sdScene::getInfo">
 <polygon fill="white" stroke="black" points="274,-594.5 274,-613.5 360,-613.5 360,-594.5 274,-594.5"/>
 <text text-anchor="middle" x="317" y="-601.5" font-family="Helvetica,sans-Serif" font-size="10.00">sdScene::getInfo</text>
 </a>
@@ -94,7 +94,7 @@
 </g>
 <!-- Node8 -->
 <g id="node8" class="node"><title>Node8</title>
-<g id="a_node8"><a xlink:href="classsd_info.html#ab881d19b222fca09d4af8d32e8bb4843" target="_top" xlink:title="sdInfo::getAuthor">
+<g id="a_node8"><a xlink:href="classsd_info.html#ab881d19b222fca09d4af8d32e8bb4843" target="_top" target="_top" xlink:title="sdInfo::getAuthor">
 <polygon fill="white" stroke="black" points="274,-556.5 274,-575.5 360,-575.5 360,-556.5 274,-556.5"/>
 <text text-anchor="middle" x="317" y="-563.5" font-family="Helvetica,sans-Serif" font-size="10.00">sdInfo::getAuthor</text>
 </a>
@@ -107,7 +107,7 @@
 </g>
 <!-- Node9 -->
 <g id="node9" class="node"><title>Node9</title>
-<g id="a_node9"><a xlink:href="classsd_scene.html#a3a323f8f9e8b4472f4bd06309ba0332d" target="_top" xlink:title="sdScene::getNumberOfActivated\lExtensions">
+<g id="a_node9"><a xlink:href="classsd_scene.html#a3a323f8f9e8b4472f4bd06309ba0332d" target="_top" target="_top" xlink:title="sdScene::getNumberOfActivated\lExtensions">
 <polygon fill="white" stroke="black" points="240,-507 240,-537 394,-537 394,-507 240,-507"/>
 <text text-anchor="start" x="248" y="-525" font-family="Helvetica,sans-Serif" font-size="10.00">sdScene::getNumberOfActivated</text>
 <text text-anchor="middle" x="317" y="-514" font-family="Helvetica,sans-Serif" font-size="10.00">Extensions</text>
@@ -121,7 +121,7 @@
 </g>
 <!-- Node10 -->
 <g id="node10" class="node"><title>Node10</title>
-<g id="a_node10"><a xlink:href="classsd_scene.html#ac144977efe9b247870c4a1c6bed5b14f" target="_top" xlink:title="sdScene::getActivatedExtension">
+<g id="a_node10"><a xlink:href="classsd_scene.html#ac144977efe9b247870c4a1c6bed5b14f" target="_top" target="_top" xlink:title="sdScene::getActivatedExtension">
 <polygon fill="white" stroke="black" points="241,-468.5 241,-487.5 393,-487.5 393,-468.5 241,-468.5"/>
 <text text-anchor="middle" x="317" y="-475.5" font-family="Helvetica,sans-Serif" font-size="10.00">sdScene::getActivatedExtension</text>
 </a>
@@ -134,7 +134,7 @@
 </g>
 <!-- Node11 -->
 <g id="node11" class="node"><title>Node11</title>
-<g id="a_node11"><a xlink:href="sd_const_8h.html#adaff5a0973824f6bedbac783f32d7b15" target="_top" xlink:title="extensionToString">
+<g id="a_node11"><a xlink:href="sd_const_8h.html#adaff5a0973824f6bedbac783f32d7b15" target="_top" target="_top" xlink:title="extensionToString">
 <polygon fill="white" stroke="black" points="271.5,-430.5 271.5,-449.5 362.5,-449.5 362.5,-430.5 271.5,-430.5"/>
 <text text-anchor="middle" x="317" y="-437.5" font-family="Helvetica,sans-Serif" font-size="10.00">extensionToString</text>
 </a>
@@ -147,7 +147,7 @@
 </g>
 <!-- Node12 -->
 <g id="node12" class="node"><title>Node12</title>
-<g id="a_node12"><a xlink:href="classsd_scene.html#ae75411e394deb65de00d2c2551ed69c7" target="_top" xlink:title="sdScene::getOrderingAsString">
+<g id="a_node12"><a xlink:href="classsd_scene.html#ae75411e394deb65de00d2c2551ed69c7" target="_top" target="_top" xlink:title="sdScene::getOrderingAsString">
 <polygon fill="white" stroke="black" points="246,-392.5 246,-411.5 388,-411.5 388,-392.5 246,-392.5"/>
 <text text-anchor="middle" x="317" y="-399.5" font-family="Helvetica,sans-Serif" font-size="10.00">sdScene::getOrderingAsString</text>
 </a>
@@ -160,7 +160,7 @@
 </g>
 <!-- Node13 -->
 <g id="node13" class="node"><title>Node13</title>
-<g id="a_node13"><a xlink:href="classsd_scene.html#abc96077751c152f5f8cb37846a80b676" target="_top" xlink:title="sdScene::getEntityVector">
+<g id="a_node13"><a xlink:href="classsd_scene.html#abc96077751c152f5f8cb37846a80b676" target="_top" target="_top" xlink:title="sdScene::getEntityVector">
 <polygon fill="white" stroke="black" points="256.5,-354.5 256.5,-373.5 377.5,-373.5 377.5,-354.5 256.5,-354.5"/>
 <text text-anchor="middle" x="317" y="-361.5" font-family="Helvetica,sans-Serif" font-size="10.00">sdScene::getEntityVector</text>
 </a>
@@ -173,7 +173,7 @@
 </g>
 <!-- Node14 -->
 <g id="node14" class="node"><title>Node14</title>
-<g id="a_node14"><a xlink:href="classsd_scene.html#a2eca600ab7627a06ad523485a74ff028" target="_top" xlink:title="sdScene::getOrdering">
+<g id="a_node14"><a xlink:href="classsd_scene.html#a2eca600ab7627a06ad523485a74ff028" target="_top" target="_top" xlink:title="sdScene::getOrdering">
 <polygon fill="white" stroke="black" points="263.5,-316.5 263.5,-335.5 370.5,-335.5 370.5,-316.5 263.5,-316.5"/>
 <text text-anchor="middle" x="317" y="-323.5" font-family="Helvetica,sans-Serif" font-size="10.00">sdScene::getOrdering</text>
 </a>
@@ -186,7 +186,7 @@
 </g>
 <!-- Node15 -->
 <g id="node15" class="node"><title>Node15</title>
-<g id="a_node15"><a xlink:href="classsd_entity.html#acc339121114228be8609b9055b080a28" target="_top" xlink:title="sdEntity::getEventSet">
+<g id="a_node15"><a xlink:href="classsd_entity.html#acc339121114228be8609b9055b080a28" target="_top" target="_top" xlink:title="sdEntity::getEventSet">
 <polygon fill="white" stroke="black" points="263.5,-278.5 263.5,-297.5 370.5,-297.5 370.5,-278.5 263.5,-278.5"/>
 <text text-anchor="middle" x="317" y="-285.5" font-family="Helvetica,sans-Serif" font-size="10.00">sdEntity::getEventSet</text>
 </a>
@@ -199,7 +199,7 @@
 </g>
 <!-- Node16 -->
 <g id="node16" class="node"><title>Node16</title>
-<g id="a_node16"><a xlink:href="classsd_entity_core.html#a97d5b5f189b386620bb898b0f5e0358a" target="_top" xlink:title="sdEntityCore::getName">
+<g id="a_node16"><a xlink:href="classsd_entity_core.html#a97d5b5f189b386620bb898b0f5e0358a" target="_top" target="_top" xlink:title="sdEntityCore::getName">
 <polygon fill="white" stroke="black" points="430.5,-139.5 430.5,-158.5 543.5,-158.5 543.5,-139.5 430.5,-139.5"/>
 <text text-anchor="middle" x="487" y="-146.5" font-family="Helvetica,sans-Serif" font-size="10.00">sdEntityCore::getName</text>
 </a>
@@ -212,7 +212,7 @@
 </g>
 <!-- Node17 -->
 <g id="node17" class="node"><title>Node17</title>
-<g id="a_node17"><a xlink:href="classsd_entity_core.html#a66b6d0ebd81278a21854f8b074883342" target="_top" xlink:title="sdEntityCore::getKind">
+<g id="a_node17"><a xlink:href="classsd_entity_core.html#a66b6d0ebd81278a21854f8b074883342" target="_top" target="_top" xlink:title="sdEntityCore::getKind">
 <polygon fill="white" stroke="black" points="263.5,-202.5 263.5,-221.5 370.5,-221.5 370.5,-202.5 263.5,-202.5"/>
 <text text-anchor="middle" x="317" y="-209.5" font-family="Helvetica,sans-Serif" font-size="10.00">sdEntityCore::getKind</text>
 </a>
@@ -225,7 +225,7 @@
 </g>
 <!-- Node18 -->
 <g id="node18" class="node"><title>Node18</title>
-<g id="a_node18"><a xlink:href="classsd_entity_core.html#a856a6d3f1f7bf294875b208db5e2fc7e" target="_top" xlink:title="sdEntityCore::getExtension\lVector">
+<g id="a_node18"><a xlink:href="classsd_entity_core.html#a856a6d3f1f7bf294875b208db5e2fc7e" target="_top" target="_top" xlink:title="sdEntityCore::getExtension\lVector">
 <polygon fill="white" stroke="black" points="252,-153 252,-183 382,-183 382,-153 252,-153"/>
 <text text-anchor="start" x="260" y="-171" font-family="Helvetica,sans-Serif" font-size="10.00">sdEntityCore::getExtension</text>
 <text text-anchor="middle" x="317" y="-160" font-family="Helvetica,sans-Serif" font-size="10.00">Vector</text>
@@ -239,7 +239,7 @@
 </g>
 <!-- Node19 -->
 <g id="node19" class="node"><title>Node19</title>
-<g id="a_node19"><a xlink:href="classsd_global_event.html#a6003837be549e8728c7207255f0455fb" target="_top" xlink:title="sdGlobalEvent::getEntityName">
+<g id="a_node19"><a xlink:href="classsd_global_event.html#a6003837be549e8728c7207255f0455fb" target="_top" target="_top" xlink:title="sdGlobalEvent::getEntityName">
 <polygon fill="white" stroke="black" points="244,-114.5 244,-133.5 390,-133.5 390,-114.5 244,-114.5"/>
 <text text-anchor="middle" x="317" y="-121.5" font-family="Helvetica,sans-Serif" font-size="10.00">sdGlobalEvent::getEntityName</text>
 </a>
@@ -252,7 +252,7 @@
 </g>
 <!-- Node20 -->
 <g id="node20" class="node"><title>Node20</title>
-<g id="a_node20"><a xlink:href="sd_const_8h.html#a43df1781add708debe292a97c334b4bf" target="_top" xlink:title="getRelevantExtension">
+<g id="a_node20"><a xlink:href="sd_const_8h.html#a43df1781add708debe292a97c334b4bf" target="_top" target="_top" xlink:title="getRelevantExtension">
 <polygon fill="white" stroke="black" points="262,-76.5 262,-95.5 372,-95.5 372,-76.5 262,-76.5"/>
 <text text-anchor="middle" x="317" y="-83.5" font-family="Helvetica,sans-Serif" font-size="10.00">getRelevantExtension</text>
 </a>
@@ -265,7 +265,7 @@
 </g>
 <!-- Node21 -->
 <g id="node21" class="node"><title>Node21</title>
-<g id="a_node21"><a xlink:href="classsd_entity_core.html#a4cdcaf53be00654310d23d2fc69facef" target="_top" xlink:title="sdEntityCore::sortAlphabetically">
+<g id="a_node21"><a xlink:href="classsd_entity_core.html#a4cdcaf53be00654310d23d2fc69facef" target="_top" target="_top" xlink:title="sdEntityCore::sortAlphabetically">
 <polygon fill="white" stroke="black" points="242.5,-38.5 242.5,-57.5 391.5,-57.5 391.5,-38.5 242.5,-38.5"/>
 <text text-anchor="middle" x="317" y="-45.5" font-family="Helvetica,sans-Serif" font-size="10.00">sdEntityCore::sortAlphabetically</text>
 </a>
@@ -278,7 +278,7 @@
 </g>
 <!-- Node22 -->
 <g id="node22" class="node"><title>Node22</title>
-<g id="a_node22"><a xlink:href="classsd_entity_core.html#a4d96b7306ddabefd1c7467d06c256afa" target="_top" xlink:title="sdEntityCore::getKindAsString">
+<g id="a_node22"><a xlink:href="classsd_entity_core.html#a4d96b7306ddabefd1c7467d06c256afa" target="_top" target="_top" xlink:title="sdEntityCore::getKindAsString">
 <polygon fill="white" stroke="black" points="246,-0.5 246,-19.5 388,-19.5 388,-0.5 246,-0.5"/>
 <text text-anchor="middle" x="317" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">sdEntityCore::getKindAsString</text>
 </a>

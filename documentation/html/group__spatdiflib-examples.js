@@ -8,7 +8,7 @@ var group__spatdiflib_examples =
     [ "sdExtensionTest.cpp", "sd_extension_test_8cpp.html", null ],
     [ "sdInfoTest.cpp", "sd_info_test_8cpp.html", null ],
     [ "sdLoaderTest.cpp", "sd_loader_test_8cpp.html", null ],
-    [ "sdOSCTest.cpp", "sd_o_s_c_test_8cpp.html", null ],
+    [ "sdOSCResponderTest.cpp", "sd_o_s_c_responder_test_8cpp.html", null ],
     [ "sdSaverTest.cpp", "sd_saver_test_8cpp.html", null ],
     [ "sdSceneTest.cpp", "sd_scene_test_8cpp.html", null ]
 ];

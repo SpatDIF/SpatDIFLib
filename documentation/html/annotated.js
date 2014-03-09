@@ -12,8 +12,11 @@ var annotated =
     [ "sdGlobalEvent", "classsd_global_event.html", "classsd_global_event" ],
     [ "sdGlobalEventCompare", "classsd_global_event_compare.html", "classsd_global_event_compare" ],
     [ "sdInfo", "classsd_info.html", "classsd_info" ],
-    [ "sdLoader", "classsd_loader.html", "classsd_loader" ],
+    [ "sdLoader", "classsd_loader.html", null ],
+    [ "sdOSCConverter", "classsd_o_s_c_converter.html", null ],
+    [ "sdOSCMessage", "classsd_o_s_c_message.html", "classsd_o_s_c_message" ],
     [ "sdOSCResponder", "classsd_o_s_c_responder.html", "classsd_o_s_c_responder" ],
-    [ "sdSaver", "classsd_saver.html", "classsd_saver" ],
+    [ "sdReport", "classsd_report.html", "classsd_report" ],
+    [ "sdSaver", "classsd_saver.html", null ],
     [ "sdScene", "classsd_scene.html", "classsd_scene" ]
 ];

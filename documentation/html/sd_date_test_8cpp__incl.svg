@@ -18,7 +18,7 @@
 </g>
 <!-- Node2 -->
 <g id="node2" class="node"><title>Node2</title>
-<g id="a_node2"><a xlink:href="sd_date_8h.html" target="_top" xlink:title="sdDate.h">
+<g id="a_node2"><a xlink:href="sd_date_8h.html" target="_top" target="_top" xlink:title="sdDate.h">
 <polygon fill="white" stroke="black" points="112,-56.5 112,-75.5 168,-75.5 168,-56.5 112,-56.5"/>
 <text text-anchor="middle" x="140" y="-63.5" font-family="Helvetica,sans-Serif" font-size="10.00">sdDate.h</text>
 </a>

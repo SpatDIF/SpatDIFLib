@@ -8,7 +8,9 @@ var dir_d28a4824dc47e487b107a5db32ef43c4 =
     [ "sdExtensionTest.cpp", "sd_extension_test_8cpp.html", "sd_extension_test_8cpp" ],
     [ "sdInfoTest.cpp", "sd_info_test_8cpp.html", "sd_info_test_8cpp" ],
     [ "sdLoaderTest.cpp", "sd_loader_test_8cpp.html", "sd_loader_test_8cpp" ],
-    [ "sdOSCTest.cpp", "sd_o_s_c_test_8cpp.html", "sd_o_s_c_test_8cpp" ],
+    [ "sdOSCConverterTest.cpp", "sd_o_s_c_converter_test_8cpp.html", "sd_o_s_c_converter_test_8cpp" ],
+    [ "sdOSCMessageTest.cpp", "sd_o_s_c_message_test_8cpp.html", "sd_o_s_c_message_test_8cpp" ],
+    [ "sdOSCResponderTest.cpp", "sd_o_s_c_responder_test_8cpp.html", "sd_o_s_c_responder_test_8cpp" ],
     [ "sdSaverTest.cpp", "sd_saver_test_8cpp.html", "sd_saver_test_8cpp" ],
     [ "sdSceneTest.cpp", "sd_scene_test_8cpp.html", "sd_scene_test_8cpp" ]
 ];

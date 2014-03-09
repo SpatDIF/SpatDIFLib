@@ -118,10 +118,8 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
             while (eit != eventSet.end()) {
                 sdEvent *event = *eit;
                 returnMessage.clear();
-                returnMessage.setAddress("/spatdif/event");
+                returnMessage.setAddress("/spatdif/source/"+entity->getName()+"/"+event->getDescriptorAsString());
                 returnMessage.appendFloat(static_cast<float>(event->getTime()));
-                returnMessage.appendString(entity->getName());
-                returnMessage.appendString(event->getDescriptorAsString());
                 switch (event->getDescriptor()){
                     case SD_POSITION:
                     case SD_ORIENTATION:{

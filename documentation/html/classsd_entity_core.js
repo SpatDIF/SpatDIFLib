@@ -15,13 +15,7 @@ var classsd_entity_core =
     [ "getType", "classsd_entity_core.html#a7c6d43323eec2f02dc538abfa02e0021", null ],
     [ "getTypeAsString", "classsd_entity_core.html#a853dbc08fd1ff0729f8423a0e71bb7dd", null ],
     [ "getValue", "classsd_entity_core.html#a4cacb54fb3c38a23232ca89672b76c24", null ],
-    [ "isCoreDescriptor", "classsd_entity_core.html#a47a33db0fcf4ad60317b1d34f7a680aa", null ],
-    [ "isCoreDescriptor", "classsd_entity_core.html#a2028cbb3aad681a7436476ce7aa47f18", null ],
     [ "removeEvent", "classsd_entity_core.html#aebb04f37019201f18227b962c2cbd8af", null ],
     [ "removeEvent", "classsd_entity_core.html#a7fb536dde5bcdd15bc788e9d8aa85afa", null ],
-    [ "sortAlphabetically", "classsd_entity_core.html#a4cdcaf53be00654310d23d2fc69facef", null ],
-    [ "sdScene", "classsd_entity_core.html#a66f424afa97efc595274b008a61dfbc6", null ],
-    [ "coreDescriptors", "classsd_entity_core.html#a45eccf24d879fafa11ac7dd7f0cecbee", null ],
-    [ "coreDescriptorStrings", "classsd_entity_core.html#a7cdeb3a686bcaa401db7faa8093ef927", null ],
-    [ "numberOfCoreDescriptors", "classsd_entity_core.html#acd5f58ca08365c1305f09c01480c2a85", null ]
+    [ "sdScene", "classsd_entity_core.html#a66f424afa97efc595274b008a61dfbc6", null ]
 ];
