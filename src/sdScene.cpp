@@ -242,7 +242,10 @@ vector<sdReport> sdScene::getLastEventSetsFromAllEntities(){
 vector<sdReport> sdScene::getNextEventSets(double time){
     vector<sdReport> reportVector = getNextEventSetsFromAllEntities(time);
     vector<sdReport> soonestReportVector;
-    
+    if(reportVector.empty()){
+        return soonestReportVector;
+    }
+
     vector<sdReport>::iterator it = reportVector.begin();
     double soonestEventTime = (*((*it).eventSet.begin()))->getTime();
 

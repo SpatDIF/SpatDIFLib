@@ -61,8 +61,9 @@ vector<sdOSCMessage> sdOSCResponder::forwardOSCMessage(sdOSCMessage message){
     
     string address = message.getAddressAsString();
     if (address[0] != '/') {
-        cout << "sdOSCReponder Error: invalid OSC address" << endl;
-        returnMessageVector.clear();
+        sdOSCMessage errorMessage("/spatdif/error");
+        errorMessage.appendString("Invalid OSC Address Pattern");
+        returnMessageVector.push_back(errorMessage);
         return returnMessageVector;
     }
     
@@ -70,13 +71,16 @@ vector<sdOSCMessage> sdOSCResponder::forwardOSCMessage(sdOSCMessage message){
     ads.erase (ads.begin());
     
     if (ads.size() < 2 ) {
-        cout << "sdOSCResponder Error: The address pattern consists of two few elements." << endl;
+        sdOSCMessage errorMessage("/spatdif/error");
+        errorMessage.appendString("Two few arguments");
+        returnMessageVector.push_back(errorMessage);
         return returnMessageVector;
     }
     
     if(ads[0] != "spatdifcmd"){
-        cout << "sdOSCReponder Error: invalid command" << endl;
-        returnMessageVector.clear();
+        sdOSCMessage errorMessage("/spatdif/error");
+        errorMessage.appendString("Invalid Comannd");
+        returnMessageVector.push_back(errorMessage);
         return returnMessageVector;
     }
     
@@ -95,7 +99,10 @@ vector<sdOSCMessage> sdOSCResponder::forwardOSCMessage(sdOSCMessage message){
         }else if(command == "removeAllEntities"){
             scene->removeAllEntities();
         }else{
-            cout << "sdOSCReponder Error: invalid command" << endl;
+            sdOSCMessage errorMessage("/spatdif/error");
+            errorMessage.appendString("Invalid Comannd");
+            returnMessageVector.push_back(errorMessage);
+            return returnMessageVector;
         }
     }
     return returnMessageVector;
@@ -144,7 +151,10 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
                         break;
                     }
                     default:{
-                        cout << "sdOSCResponder Error: unexpected descriptor" << endl;
+                        sdOSCMessage errorMessage("/spatdif/error");
+                        errorMessage.appendString("No such descriptors");
+                        returnMessageVector.push_back(errorMessage);
+                        return returnMessageVector;
                     }
                 }
                 eit++;
@@ -157,6 +167,7 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
         double nextEventTime = scene->getNextEventTime(queryTime);
         returnMessage.appendFloat(static_cast<float>(nextEventTime));
     }else if(command == "getDeltaTimeToNextEvent"){
+        returnMessage.setAddress("/spatdif/deltaTime");
         double deltaTime = scene->getDeltaTimeToNextEvent(queryTime);
         returnMessage.appendFloat(static_cast<float>(deltaTime));
     }else if(command == "getQueryTime"){
@@ -249,7 +260,10 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
         returnMessage.appendString(entity->getName());
         returnMessage.appendInt(static_cast<int>(flag));
     }else{
-        cout << "sdOSCMessage Error: unknown command:" << command << endl;
+        returnMessage.setAddress("/spatdif/error");
+        returnMessage.appendString("invalid command");
+        returnMessageVector.push_back(returnMessage);  
+        return returnMessageVector;
     }
 
     if(singleMessage){
@@ -262,6 +276,8 @@ void sdOSCResponder::setAction(string command, sdOSCMessage message){
     
     if(command == "setQueryTime"){
         setQueryTime(static_cast<double>(message.getArgumentAsFloat(0)));
+    }else if(command == "setQueryTimeToNextEvent"){
+        setQueryTime(scene->getNextEventTime(queryTime));
     }else if(command == "setWriteTime"){
         setWriteTime(static_cast<double>(message.getArgumentAsFloat(0)));
     }else if(command == "setInterval"){
