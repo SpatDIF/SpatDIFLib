@@ -237,7 +237,6 @@ public:
      @{
      */
     
-    
     /*!   collect next event(s) from all entities and report them  */
     vector<sdReport> getNextEventSetsFromAllEntities(double time);
     vector<sdReport> getPreviousEventSetsFromAllEntities(double time);
@@ -261,6 +260,13 @@ public:
     vector<sdReport> getNextEventSets(double time);
 
     
+    /*!
+     asks all existing entities in the scene the time of next event and returns the soonest event from @ptime
+	 @param time time of index. The soonest event from this time point will be searched
+     @return time of next event
+     */
+    double getNextEventTime(double time);
+
     /*!
      @}
      */

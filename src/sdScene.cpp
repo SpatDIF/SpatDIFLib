@@ -272,6 +272,17 @@ vector<sdReport> sdScene::getNextEventSets(double time){
     return soonestReportVector;
 }
 
+double sdScene::getNextEventTime(double time){
+    vector<sdReport> reportVector = getNextEventSets(time);
+    if(reportVector.empty()){
+        return -1.0;
+    }
+    sdReport report = reportVector[0];
+    multiset<sdEvent*, sdEventCompare> eventSet = report.eventSet;
+    multiset<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
+    return (*it)->getTime();
+}
+
 vector<sdReport> sdScene::getFirstEventSets(){
     return getNextEventSets(-1.0);
 }
