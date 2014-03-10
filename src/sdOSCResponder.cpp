@@ -108,7 +108,11 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
     // internal variable
     if(command == "getEventSetsFromAllEntities"){
         vector<sdReport> reports;
-        reports = scene->getEventSetsFromAllEntities(queryTime, queryTime+interval); // in the specified region
+        if(interval != 0.0){
+           reports = scene->getEventSetsFromAllEntities(queryTime, queryTime+interval); // in the specified region
+        }else{
+           reports = scene->getEventSetsFromAllEntities(queryTime); 
+        }
         vector<sdReport>::iterator rit = reports.begin();
         while(rit != reports.end()){
             sdReport report = *rit;
@@ -118,8 +122,12 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
             while (eit != eventSet.end()) {
                 sdEvent *event = *eit;
                 returnMessage.clear();
-                returnMessage.setAddress("/spatdif/source/"+entity->getName()+"/"+event->getDescriptorAsString());
+                sdOSCMessage timeMessage("/spatdif/time");
+                timeMessage.appendFloat(static_cast<float>(event->getTime()));
+                returnMessageVector.push_back(timeMessage);
+
                 returnMessage.appendFloat(static_cast<float>(event->getTime()));
+                returnMessage.setAddress("/spatdif/source/"+entity->getName()+"/"+event->getDescriptorAsString());
                 switch (event->getDescriptor()){
                     case SD_POSITION:
                     case SD_ORIENTATION:{
@@ -144,6 +152,10 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
             rit++;
         }
         singleMessage = false;
+    }else if(command == "getNextEventTime"){
+        returnMessage.setAddress("/spatdif/time");
+        double nextEventTime = scene->getNextEventTime(queryTime);
+        returnMessage.appendFloat(static_cast<float>(nextEventTime));
     }else if(command == "getQueryTime"){
         returnMessage.setAddress("/spatdif/queryTime");
         returnMessage.appendFloat(static_cast<float>(getQueryTime()));
@@ -196,7 +208,8 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
         }else if(command == "getPreviousPosition"){
             dpos = static_cast<double*>(entity->getPreviousValue(queryTime, SD_POSITION));
         }
-        returnMessage.setAddress("/spatdif/position");
+        string address = "/spatdif/source/" + entity->getName() + "/position";
+        returnMessage.setAddress(address);
         returnMessage.appendString(entity->getName());
         returnMessage.appendFloats(doublesToFloats(dpos, fpos, 3),3);
     }else if(command.find("Orientation") != string::npos){ // contains keyword "Position"
@@ -212,7 +225,8 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
         }else if(command == "getPreviousOrientation"){
             dori = static_cast<double*>(entity->getPreviousValue(queryTime, SD_ORIENTATION));
         }
-        returnMessage.setAddress("/spatdif/orientation");
+        string address = "/spatdif/source/" + entity->getName() + "/orientation";
+        returnMessage.setAddress(address);
         returnMessage.appendString(entity->getName());
         returnMessage.appendFloats(doublesToFloats(dori, fori, 3),3);
     }else if(command.find("Present")){
@@ -227,7 +241,8 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
         }else if(command == "getPreviousPresent"){
             flag = static_cast<bool*>(entity->getPreviousValue(queryTime, SD_PRESENT));
         }
-        returnMessage.setAddress("/spatdif/present");
+        string address = "/spatdif/source/" + entity->getName() + "/present";
+        returnMessage.setAddress(address);
         returnMessage.appendString(entity->getName());
         returnMessage.appendInt(static_cast<int>(flag));
     }else{
