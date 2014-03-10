@@ -122,10 +122,11 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
             while (eit != eventSet.end()) {
                 sdEvent *event = *eit;
                 returnMessage.clear();
-                sdOSCMessage timeMessage("/spatdif/time");
-                timeMessage.appendFloat(static_cast<float>(event->getTime()));
-                returnMessageVector.push_back(timeMessage);
-
+                if(interval > 0.0){ // if ranged query
+                   sdOSCMessage timeMessage("/spatdif/time");
+                    timeMessage.appendFloat(static_cast<float>(event->getTime()));
+                    returnMessageVector.push_back(timeMessage);
+                }
                 returnMessage.appendFloat(static_cast<float>(event->getTime()));
                 returnMessage.setAddress("/spatdif/source/"+entity->getName()+"/"+event->getDescriptorAsString());
                 switch (event->getDescriptor()){
@@ -153,7 +154,7 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
         }
         singleMessage = false;
     }else if(command == "getNextEventTime"){
-        returnMessage.setAddress("/spatdif/time");
+        returnMessage.setAddress("/spatdif/nextEventTime");
         double nextEventTime = scene->getNextEventTime(queryTime);
         returnMessage.appendFloat(static_cast<float>(nextEventTime));
     }else if(command == "getQueryTime"){
