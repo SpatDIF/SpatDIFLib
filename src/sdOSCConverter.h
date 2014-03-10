@@ -109,7 +109,7 @@ vector<unsigned char> sdOSCConverter::stringToBlocks(string str){
     int rest = str.size() % 4 ;
     int numberOfNulls = 4-rest;
     vector<unsigned char> blocks;
-    for(int i = 0; i < str.size(); i++){
+    for(int i = 0; i < static_cast<int>(str.size()); i++){
         blocks.push_back(str[i]);
     }
     for (int i = 0; i < numberOfNulls; i++) {
@@ -121,7 +121,7 @@ vector<unsigned char> sdOSCConverter::stringToBlocks(string str){
 string sdOSCConverter::blocksToString(vector<unsigned char> blocks){
     string str;
     
-    for(int i = 0; i < blocks.size(); i++){
+    for(int i = 0; i < static_cast<int>(blocks.size()); i++){
         if(blocks[i] == '\0'){
             break;
         }
