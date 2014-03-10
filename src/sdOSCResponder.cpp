@@ -127,7 +127,6 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
                     timeMessage.appendFloat(static_cast<float>(event->getTime()));
                     returnMessageVector.push_back(timeMessage);
                 }
-                returnMessage.appendFloat(static_cast<float>(event->getTime()));
                 returnMessage.setAddress("/spatdif/source/"+entity->getName()+"/"+event->getDescriptorAsString());
                 switch (event->getDescriptor()){
                     case SD_POSITION:
@@ -157,6 +156,9 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
         returnMessage.setAddress("/spatdif/nextEventTime");
         double nextEventTime = scene->getNextEventTime(queryTime);
         returnMessage.appendFloat(static_cast<float>(nextEventTime));
+    }else if(command == "getDeltaTimeToNextEvent"){
+        double deltaTime = scene->getDeltaTimeToNextEvent(queryTime);
+        returnMessage.appendFloat(static_cast<float>(deltaTime));
     }else if(command == "getQueryTime"){
         returnMessage.setAddress("/spatdif/queryTime");
         returnMessage.appendFloat(static_cast<float>(getQueryTime()));

@@ -266,6 +266,7 @@ public:
      @return time of next event
      */
     double getNextEventTime(double time);
+    double getDeltaTimeToNextEvent(double time);
 
     /*!
      @}

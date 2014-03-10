@@ -92,6 +92,11 @@ int main(void){
     double nextEventTime = scene.getNextEventTime(0.4);
     cout << "Next Event Time:" << nextEventTime << endl;
 
+    //you can ask just the time of next event
+    double deltaTime = scene.getDeltaTimeToNextEvent(0.4);
+    cout << "Delta time to next event:" << deltaTime << endl;
+
+
     sdEntityCore* duplicated = scene.addEntity("myEntity"); //if the name of existing entity, returns pointer to existing one
     //returns 2 not 3
     cout << "Num Entities:" << scene.getNumberOfEntities() << endl;

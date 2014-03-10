@@ -283,6 +283,10 @@ double sdScene::getNextEventTime(double time){
     return (*it)->getTime();
 }
 
+double sdScene::getDeltaTimeToNextEvent(double time){
+    return getNextEventTime(time) - time;
+}
+
 vector<sdReport> sdScene::getFirstEventSets(){
     return getNextEventSets(-1.0);
 }
