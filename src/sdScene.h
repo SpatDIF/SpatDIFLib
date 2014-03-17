@@ -195,7 +195,15 @@ public:
     /*! returns number of activated Extensions*/
     int getNumberOfActivatedExtensions(void);
      
-    /*! activate an extension specified by enum EExtension. This function instantiates instances of the designated extension (i.e. a subclass of sdEntityExtension ) and attached them to all existing sdEntityCores in the scene. The added extensions will be also attached to all newly instantiated sdEntityCores.
+    /*! returns enum EExtension as an Vector */
+    vector<EExtension> getActivatedExtensions();
+
+    /*! returns names of  activated extensions as a vector*/
+    vector<string> getActivatedExtensionsAsStrings();
+
+    /*! activate an extension specified by enum EExtension. This function instantiates instances of the
+     designated extension (i.e. a subclass of sdEntityExtension ) and attached them to all existing sdEntityCores
+    in the scene. The added extensions will be also attached to all newly instantiated sdEntityCores.
      @param extension enum EExtension of extension to be added
      */
     void addExtension(EExtension extension);

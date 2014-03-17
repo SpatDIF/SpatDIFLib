@@ -1,6 +1,0 @@
-<map id="sdEventExtensionMedia::getValueAsString" name="sdEventExtensionMedia::getValueAsString">
-<area shape="rect" id="node2" href="$sd_const_8h.html#a12aa713d71583f1deef6c563d4f342b2" title="intToString" alt="" coords="227,5,306,32"/>
-<area shape="rect" id="node4" href="$sd_const_8h.html#af6ea173327acc9bc1ed456517a81dc9f" title="doubleToString" alt="" coords="214,56,319,83"/>
-<area shape="rect" id="node3" href="$sd_const_8h.html#a7b52b91a3aa84def74aa35ad523aeef1" title="intsToString" alt="" coords="381,5,467,32"/>
-<area shape="rect" id="node5" href="$sd_const_8h.html#a2e4342bd50c4c585f85d074a765b4550" title="doublesToString" alt="" coords="368,56,480,83"/>
-</map>

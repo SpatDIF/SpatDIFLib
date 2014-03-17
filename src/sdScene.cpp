@@ -129,6 +129,19 @@ EExtension sdScene::getActivatedExtension(int index){
     return activatedExtensionVector[index];
 }
 
+vector<EExtension> sdScene::getActivatedExtensions(){
+    return activatedExtensionVector;
+}
+
+vector<string> sdScene::getActivatedExtensionsAsStrings(){
+    vector<string> strings;
+    vector<EExtension>::iterator it = activatedExtensionVector.begin();
+    while(it != activatedExtensionVector.end()){
+        strings.push_back(extensionToString(*it));
+        it++;
+    }
+    return strings;
+}
 
 void sdScene::addExtension(EExtension extension){
     vector <EExtension>::iterator pos;

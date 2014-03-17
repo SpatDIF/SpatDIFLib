@@ -54,7 +54,17 @@ int main(void){
         cout << "media extension activated!!" << endl; // this line will be  posted
     }
 
-    // you cannot add the same extension twice. will get an error if you do.
+    cout << "currently " << scene.getNumberOfActivatedExtensions() << "extension(s) are activated.";
+
+    cout << "list of activated extensions:" << endl;
+    vector<string> extensionStringVector = scene.getActivatedExtensionsAsStrings();
+    vector<string>::iterator it = extensionStringVector.begin();
+    while(it != extensionStringVector.end()){
+        cout << *it << endl;
+        it++;
+    }
+    cout << "-----" << endl;
+        // you cannot add the same extension twice. will get an error if you do.
     scene.addExtension(SD_MEDIA);
 
 

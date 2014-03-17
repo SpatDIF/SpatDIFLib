@@ -264,7 +264,9 @@ int main(void){
     returnedMessageVector = oscResponder.forwardOSCMessage(getAnnotation);
     cout << returnedMessageVector[0].getMessageAsString() << endl;
 
-
+    sdOSCMessage getNumberOfActivatedExtensions("/spatdifcmd/getNumberOfActivatedExtensions");
+    returnedMessageVector = oscResponder.forwardOSCMessage(getNumberOfActivatedExtensions);
+    cout << returnedMessageVector[0].getMessageAsString() << endl;
 
   }
   return 0;

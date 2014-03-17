@@ -207,6 +207,12 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
     }else if(command == "getAnnotation"){
         returnMessage.setAddress("/spatdif/annotation");
         returnMessage.appendString(scene->getInfo().getAnnotation());
+    }else if(command == "getNumberOfActivatedExtensions"){
+        returnMessage.setAddress("/spatdif/numberOfActivatedExtensions");
+        returnMessage.appendInt(scene->getNumberOfActivatedExtensions());
+    }else if(command == "getActivatedExtensions"){
+        returnMessage.setAddress("/spatdif/activatedExtensions");
+        returnMessage.appendInt(scene->getNumberOfActivatedExtensions());
     }
     // core descriptors
     else if(command.find("Position") != string::npos){ // contains keyword "Position"

@@ -1,7 +1,0 @@
-<map id="sdEntityExtensionMedia::addEvent" name="sdEntityExtensionMedia::addEvent">
-<area shape="rect" id="node2" href="$classsd_entity_extension_media.html#aac62ba87baf7db292f61b883a11b6179" title="sdEntityExtensionMedia\l::removeEvent" alt="" coords="214,49,373,90"/>
-<area shape="rect" id="node3" href="$sd_const_8h.html#a5f06f639581e8f36cbc9d51e53eee915" title="stringToDescriptor" alt="" coords="434,5,555,32"/>
-<area shape="rect" id="node4" href="$classsd_entity.html#af2f4241b73bd8d4322b01b7df060f9b4" title="sdEntity::removeEvent" alt="" coords="421,56,568,83"/>
-<area shape="rect" id="node5" href="$sd_const_8h.html#a7e564ec0266d67f518a0b0f80f17e203" title="stringToDouble" alt="" coords="441,107,548,133"/>
-<area shape="rect" id="node6" href="$sd_const_8h.html#ae7ae4ebb27c32496c48bac787cc5bcf7" title="stringToDoubles" alt="" coords="617,107,730,133"/>
-</map>

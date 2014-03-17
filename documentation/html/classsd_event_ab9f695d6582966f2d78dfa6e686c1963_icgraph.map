@@ -1,7 +1,0 @@
-<map id="sdEvent::getTime" name="sdEvent::getTime">
-<area shape="rect" id="node2" href="$_how__to__query_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe" title="main" alt="" coords="241,5,290,32"/>
-<area shape="rect" id="node3" href="$classsd_entity.html#ac755e8f352a8d44771aa2f3b76601a9e" title="sdEntity::getFirstTimeTag" alt="" coords="185,56,345,83"/>
-<area shape="rect" id="node4" href="$classsd_entity.html#a2a5521010b78a686ab355b04d1d88da6" title="sdEntity::getLastTimeTag" alt="" coords="184,107,347,133"/>
-<area shape="rect" id="node5" href="$classsd_event_compare.html#a1b3764c3b05ecc282cd5e9da32e6d7aa" title="sdEventCompare::operator()" alt="" coords="174,157,357,184"/>
-<area shape="rect" id="node6" href="$classsd_global_event_compare.html#a023faa3ab3a35e60324ad43d79d922a5" title="sdGlobalEventCompare\l::operator()" alt="" coords="185,209,345,250"/>
-</map>

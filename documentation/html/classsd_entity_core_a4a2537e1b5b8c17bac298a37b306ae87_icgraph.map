@@ -1,9 +1,0 @@
-<map id="sdEntityCore::addEvent" name="sdEntityCore::addEvent">
-<area shape="rect" id="node2" href="$sd_extension_test_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe" title="main" alt="" coords="314,5,363,32"/>
-<area shape="rect" id="node3" href="$classsd_loader.html#ab3d7cf4919f50673ec7f9649a9be09b1" title="sdLoader::sceneFromXML" alt="" coords="255,56,423,83"/>
-<area shape="rect" id="node5" href="$classsd_loader.html#a90eb4d4a140652fc18f7bc0551870020" title="sdLoader::sceneFromJSON" alt="" coords="250,107,427,133"/>
-<area shape="rect" id="node7" href="$classsd_o_s_c_responder.html#a286c1b3d5e2197aed9620f0785bab163" title="sdOSCResponder::forwardOSCMessage" alt="" coords="208,157,469,184"/>
-<area shape="rect" id="node8" href="$classsd_scene.html#aa4356859900326d8770de796d37640ea" title="sdScene::setValue" alt="" coords="275,208,403,235"/>
-<area shape="rect" id="node4" href="$_file_with_extension_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe" title="main" alt="" coords="518,56,567,83"/>
-<area shape="rect" id="node6" href="$sd_loader_test_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe" title="main" alt="" coords="518,107,567,133"/>
-</map>

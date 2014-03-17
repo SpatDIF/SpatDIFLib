@@ -1,5 +1,0 @@
-<map id="sdEntity::getFirstEvent" name="sdEntity::getFirstEvent">
-<area shape="rect" id="node2" href="$classsd_entity.html#a1b946cb0864e5b3963ed15c916aa6811" title="sdEntity::getLastEvent" alt="" coords="213,5,361,32"/>
-<area shape="rect" id="node4" href="$classsd_entity_core.html#ac4e5e6ca2e0508b206ccdf29c9b0c035" title="sdEntityCore::getFirstEvent" alt="" coords="201,56,373,83"/>
-<area shape="rect" id="node3" href="$classsd_entity_core.html#a620b06cfa24cc5f46590f3ff9a5c5c55" title="sdEntityCore::getLastEvent" alt="" coords="422,5,597,32"/>
-</map>

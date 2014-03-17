@@ -1,6 +1,0 @@
-<map id="descriptorToString" name="descriptorToString">
-<area shape="rect" id="node2" href="$classsd_event_core.html#a01cc217ba7619c011978356980fd2381" title="sdEventCore::getDescriptor\lAsString" alt="" coords="174,5,349,46"/>
-<area shape="rect" id="node5" href="$classsd_event_extension_media.html#aca21faf9ceebab82361ab7d0965f2c57" title="sdEventExtensionMedia\l::getDescriptorAsString" alt="" coords="181,70,341,111"/>
-<area shape="rect" id="node3" href="$classsd_scene.html#a1e61037274d374f8ab33e347fde8b65b" title="sdScene::dump" alt="" coords="398,12,509,39"/>
-<area shape="rect" id="node4" href="$sd_saver_test_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe" title="main" alt="" coords="558,12,607,39"/>
-</map>
