@@ -244,6 +244,24 @@ multiset<sdEvent*, sdEventCompare> sdEntity::createEventSet(double time, EMode m
     bool flag = false;
     double eventTime = 0.0;
     switch (mode) {
+        case SD_ENTITY_NEXT:
+            it = eventSet.begin();
+            while(it != eventSet.end()){
+                sdEvent* event = *it;
+                if (!flag ) {
+                    if(event->getTime() > time){
+                        flag = true; // find first event whose time tag is greater than time
+                        eventTime = event->getTime(); // store the time of event as eventTime
+                        createdSet.insert(event);
+                    }
+                }else{
+                    if(event->getTime() == eventTime) {
+                        createdSet.insert(event);
+                    }
+                }
+                ++it;
+            }
+            break;
         case SD_ENTITY_PREVIOUS:
             rt = eventSet.rbegin();
             while(rt != eventSet.rend()){
@@ -260,24 +278,6 @@ multiset<sdEvent*, sdEventCompare> sdEntity::createEventSet(double time, EMode m
                         }
                     }
                 ++rt;
-            }
-            break;
-        case SD_ENTITY_NEXT:
-            it = eventSet.begin();
-            while(it != eventSet.end()){
-                sdEvent* event = *it;
-                if (!flag ) {
-                    if(event->getTime() > time){
-                        createdSet.insert(event);
-                        flag = true;
-                        eventTime = event->getTime();
-                    }
-                }else{
-                    if(event->getTime() == eventTime) {
-                        createdSet.insert(event);
-                    }
-                }
-                ++it;
             }
             break;
         case SD_ENTITY_CURRENT:

@@ -185,6 +185,10 @@ public:
     
     /*! @} */
     
+
+    /*! overrided function. this function sum up all events (i.e. both core and extension events) and return it */
+     int getNumberOfEvents();
+
     /*!
      overrided function. this function forwards the query to the extensions if an extended descriptor is provided as an argument.
      @param time the time of the event in second
@@ -192,6 +196,16 @@ public:
      */
     sdEvent* getEvent(double time, EDescriptor descriptor);
     
+    /*!
+     overrided  and overloaded functions. this function forwards the query also to the attached extensions and return all events as a multiset.
+     @param time the time of the event in second
+     @param descriptor the descriptor of the event declared in sdConst.h
+     */
+    multiset<sdEvent*, sdEventCompare> getEventSet(void);
+    multiset<sdEvent*, sdEventCompare> getEventSet(double time);
+    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end);
+    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);
+
     /*!
      overrided function. this function forwards the query to the extensions if an extended descriptor is provided as an argument.
      @param time the next event from this time point will be returned

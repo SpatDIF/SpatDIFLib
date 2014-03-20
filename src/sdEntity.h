@@ -128,44 +128,21 @@ public:
      @{ */
     
 
-
     /*! return number of registerd events in the eventSet*/
-    int getNumberOfEvents(void);
+    virtual int getNumberOfEvents(void);
     
-    /*! @name Getting  Event(s) in the specified Range
-     @{
-     */
+    /*! @name Getting  Event(s) in the specified Range @{ */
 
-    /*! return a multiset of sdEvent pointers. To get events in the specific timeframe, use start and end arguments.*/
-    multiset<sdEvent*, sdEventCompare> getEventSet(void);
-    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end);
-    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);
-    
-    /*!
-     @}
-     */
-    
-    /*! @name Current Event(s)
-     @{
-     */
-    
-    /*!
-     return all events at the specified time with the given descriptor
-     @param time the time of the event in second
-     @param descriptor the descriptor of the event declared in sdConst.h
-     */
-    sdEvent* getEvent(double time, EDescriptor descriptor);
-    
-    /*!
-     return all events at the specified time regardless of descriptors.
-     @param time the time of the event in second
-     @param descriptor the descriptor of the event declared in sdConst.h
-     */
-    multiset<sdEvent*, sdEventCompare> getEventSet(double time);
+    /*! return single event with specific time and descriptor*/
+    virtual sdEvent* getEvent(double time, EDescriptor descriptor);
 
-    /*!
-     @}
-     */
+    /*! return a multiset of sdEvent pointers, depending on given filter arguments*/
+    virtual multiset<sdEvent*, sdEventCompare> getEventSet(void);
+    virtual multiset<sdEvent*, sdEventCompare> getEventSet(double time);
+    virtual multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end);
+    virtual multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);
+
+    /*! @} */
     
     /*! @name Getting frist Event(s)
      @{
@@ -255,7 +232,7 @@ public:
     virtual sdEvent* getPreviousEvent(double time, EDescriptor descriptor);
     
     /*!
-     return next events from the given time index .
+     return previous events from the given time index .
      @param time index
      */
     virtual multiset<sdEvent*, sdEventCompare> getPreviousEventSet(double time);
