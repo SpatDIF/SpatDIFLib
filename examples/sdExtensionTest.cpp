@@ -89,89 +89,108 @@ int main(void){
         cout << "getNumberOfEvents()" << endl;
         cout << "entityOne number of events(incl. events of extensions):" << entityOne->getNumberOfEvents() << endl;
     }
-    cout << "-----" << endl;
+    cout << "----------" << endl;
     {
         cout << "getEvent(4.0, SD_MEDIA_LOCATION)" << endl;
         cout << "media location event at time 1.0:" << entityOne->getEvent(1.0, SD_MEDIA_LOCATION)->getValueAsString() << endl;    
     }
-    cout << "-----" << endl;
+    cout << "----------" << endl;
     {
         cout << "getEventSet()" << endl;
         multiset <sdEvent*, sdEventCompare> eventSet = entityOne->getEventSet();
         cout << "number of all events attached to entity : " << eventSet.size() << endl; 
         populateMultiset(eventSet);
     }
-    cout << "-----" << endl;
+    cout << "----------" << endl;
     {
         cout << "getEventSet(5.0)" << endl;
         multiset <sdEvent*, sdEventCompare> eventSet = entityOne->getEventSet(5.0);
         cout << "number of events at 5.0: " << eventSet.size() << endl; 
         populateMultiset(eventSet);
     }
-    cout << "-----" << endl;
+    cout << "----------" << endl;
     {
         cout << "getEventSet(5.1, 5.4)" << endl;
         multiset <sdEvent*, sdEventCompare> eventSet = entityOne->getEventSet(5.1, 5.4);
         cout << "number of events between 5.1 and 5.4: " << eventSet.size() << endl; 
         populateMultiset(eventSet);
     }
-    cout << "-----" << endl;
+    cout << "----------" << endl;
     {
         cout << "getEventSet(5.1, 5.4, SD_MEDIA_TIME_OFFSET)" << endl;
         multiset <sdEvent*, sdEventCompare> eventSet = entityOne->getEventSet(5.1, 5.4, SD_MEDIA_TIME_OFFSET);
         cout << "number of time offset events between 5.1 and 5.4: " << eventSet.size() << endl; 
         populateMultiset(eventSet);
     }
-    cout << "-----" << endl;
+    cout << "----------" << endl;
     {
         cout << "getNextEvent(4.0, SD_MEDIA_GAIN)" << endl;
         sdEvent* event = entityOne->getNextEvent(4.0, SD_MEDIA_GAIN);
         cout << "   -" << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
     }
-    cout << "-----" << endl;
+    cout << "----------" << endl;
     {
         cout << "getNextEvent(4.0, SD_POSITION)" << endl;
         sdEvent* event = entityOne->getNextEvent(4.0, SD_POSITION);
         cout << "   -" << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
     }
-    cout << "-----" << endl;
+    cout << "----------" << endl;
     {
         cout << "getNextEventSet(5.1)" << endl;
         multiset <sdEvent*, sdEventCompare> eventSet = entityOne->getNextEventSet(5.1);
         populateMultiset(eventSet);
     }
-    cout << "-----" << endl;
+    cout << "----------" << endl;
     {
-        cout << "getFirstEvent(SD_MEDIA_LOCATION)" << endl;
-        sdEvent* event = entityOne->getFirstEvent(SD_MEDIA_LOCATION);
+        cout << "getNextEventTime(5.1)" << endl;
+        double nextEventTime = entityOne->getNextEventTime(5.1);
+        cout <<  "   -"  << nextEventTime << endl;
+    }
+    cout << "----------" << endl;
+    {
+        cout << "getPreviousEvent(6.1, SD_MEDIA_GAIN)" << endl;
+        sdEvent* event = entityOne->getPreviousEvent(6.1, SD_MEDIA_GAIN);
+        if(!event){
+            cout << "no such event" << endl;
+        }else{
+            cout << "   -" << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
+        }
+    }
+    cout << "----------" << endl;
+    {
+        cout << "getPreviousEvent(5.1, SD_POSITION)" << endl;
+        sdEvent* event = entityOne->getPreviousEvent(5.1, SD_POSITION);
         cout << "   -" << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
     }
-    cout << "-----" << endl;
+    cout << "----------" << endl;
+    {
+        cout << "getPreviousEventSet(5.1)" << endl;
+        multiset <sdEvent*, sdEventCompare> eventSet = entityOne->getPreviousEventSet(5.1);
+        populateMultiset(eventSet);
+    }
+    cout << "----------" << endl;
+    {
+        cout << "getPreviousEventTime(5.1)" << endl;
+        double PreviousEventTime = entityOne->getPreviousEventTime(5.1);
+        cout <<  "   -"  << PreviousEventTime << endl;
+    }
+    cout << "----------" << endl;
 
-        // query event
-    // sdEvent* mediaLocation = entityOne->getNextEvent(5.2, SD_MEDIA_ID);
-    // if(mediaLocation == NULL){
-    //     cout << "no such event" << endl;
-    // }else{
-    //     cout << "time:" << mediaLocation->getTime() << " " <<  mediaLocation->getValueAsString() << endl;
-    // }
-    // // remove two events
-    // entityOne->removeEvent(5.2, SD_MEDIA_TIME_OFFSET);
-    // entityOne->removeEvent(5.0, SD_MEDIA_GAIN);
+   
+    // remove two events
+    entityOne->removeEvent(5.2, SD_MEDIA_TIME_OFFSET);
+    entityOne->removeEvent(5.0, SD_MEDIA_GAIN);
 
-    // // check
-    // scene.dump();
+    // check
+    scene.dump();
     
-    // // ask the entity about the extension descriptor
-    // cout<< "entityOne media:location at 4.0 " << *static_cast<string*>(entityOne->getValue(4.0, SD_MEDIA_LOCATION)) << endl;
-    
-    // // remove the media extension
-    // scene.removeExtension(SD_MEDIA);
+    // remove the media extension
+    scene.removeExtension(SD_MEDIA);
 
-    // // you will get error.
-    // scene.removeExtension(SD_MEDIA);
+    // you will get error.
+    scene.removeExtension(SD_MEDIA);
     
-    // // check again
+    // check again
     // scene.dump();
     return 0;
 }

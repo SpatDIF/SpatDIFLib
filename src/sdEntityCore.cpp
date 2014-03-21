@@ -471,6 +471,62 @@ multiset<sdEvent*, sdEventCompare> sdEntityCore::getNextEventSet(double time){
     return returnSet;
 }
 
+double sdEntityCore::getNextEventTime(double time ){
+    multiset<sdEvent*, sdEventCompare> eventSet = getNextEventSet(time);    
+    if(eventSet.empty()){
+        return -1.0;
+    }
+    multiset<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
+    sdEvent* event = *it;
+    return event->getTime();
+}
+
+sdEvent* sdEntityCore::getPreviousEvent(double time, EDescriptor descriptor){
+    if(isCoreDescriptor(descriptor)){
+        return sdEntity::getPreviousEvent(time, descriptor);
+    }else{
+        sdEntityExtension* extension = getResponsibleExtension(descriptor);
+        if (!extension) {
+            return NULL;
+        }
+        return extension->getPreviousEvent(time, descriptor);
+    }
+    return NULL;
+}
+
+multiset<sdEvent*, sdEventCompare> sdEntityCore::getPreviousEventSet(double time){
+    multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getPreviousEventSet(time); 
+    double PreviousEventTime = sdEntity::getPreviousEventTime(time);
+    if(PreviousEventTime < 0){
+        PreviousEventTime = -1.0; //must be later replaced by the max value of double 
+    }
+    vector<sdEntityExtension*>::iterator it = extensionVector.begin();
+    while(it != extensionVector.end()){
+        sdEntityExtension* entityExtension = *it;
+        double PreviousExtensionEventTime = entityExtension->getPreviousEventTime(time);
+        if(PreviousExtensionEventTime < PreviousEventTime){ // if sooner replace returnSet
+            returnSet = entityExtension->getPreviousEventSet(time);
+            PreviousEventTime = PreviousExtensionEventTime;
+        }else if(PreviousExtensionEventTime == PreviousEventTime){ // if equal, merge
+            multiset<sdEvent*, sdEventCompare> eventSet = entityExtension->getPreviousEventSet(time);
+            returnSet.insert(eventSet.begin(), eventSet.end());
+        }
+        it++;
+    }
+    return returnSet;
+}
+
+double sdEntityCore::getPreviousEventTime(double time ){
+    multiset<sdEvent*, sdEventCompare> eventSet = getPreviousEventSet(time);    
+    if(eventSet.empty()){
+        return -1.0;
+    }
+    multiset<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
+    sdEvent* event = *it;
+    return event->getTime();
+}
+
+
 sdEvent* sdEntityCore::getFirstEvent(EDescriptor descriptor){
     if(isCoreDescriptor(descriptor)){
         return sdEntity::getFirstEvent(descriptor);

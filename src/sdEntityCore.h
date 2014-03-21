@@ -42,7 +42,12 @@ public:
      */
     sdEventCore(double time, EDescriptor descriptor, void* value);
     
-    /*! same as above but you can give all arguments with string */
+    /**
+     * @brief constructor with string arguments, useful when loading from files etc
+     * @param time time of event as a string
+     * @param descriptor descriptor of event as a string
+     * @param value value of event as a string
+     */ 
     sdEventCore(string time, string descriptor, string value);
     
     /*! destructor destroy all allocated memory to the value pointer*/
@@ -87,7 +92,6 @@ class sdEntityCore: public sdEntity{
     friend class sdScene; // only sdScene can instantiate this class
     
 private:
-
     
     typedef struct{
         EDescriptor descriptor;
@@ -174,6 +178,7 @@ public:
     /*! @name Extension Handling
         @{
      */
+
     /*! get the vector of sdExtensions */
     vector <sdEntityExtension*>getExtensionVector(void);
     
@@ -213,32 +218,20 @@ public:
      */
     sdEvent* getNextEvent(double time, EDescriptor descriptor);
     multiset<sdEvent*, sdEventCompare> getNextEventSet(double time);
-    double getNextEventTime();
-    
-    /*!
-     overrided function. this function forwards the query to the extensions if an extended descriptor is provided as an argument.
-     @param descriptor only the event with this descriptor will be examined
-     */
+    double getNextEventTime(double time);
+
+    sdEvent* getPreviousEvent(double time, EDescriptor descriptor);
+    multiset<sdEvent*, sdEventCompare> getPreviousEventSet(double time);
+    double getPreviousEventTime(double time);
+
     sdEvent* getFirstEvent(EDescriptor descriptor);
-
-    /*!
-     overrided function. this function forwards the query to the extensions if an extended descriptor is provided as an argument.
-     @param descriptor only the event with this descriptor will be examined
-     */
     multiset<sdEvent*, sdEventCompare> getFirstEventSet();
-
-    /*
-    overrided function. returns the time very first event regardless of core or extension.
-    */
     double getFirstEventTime();
 
-
-    /*!
-     overrided function. this function forwards the query to the extensions if an extended descriptor is provided as an argument.
-     @param descriptor only the event with this descriptor will be examined
-     */
     sdEvent* getLastEvent(EDescriptor descriptor);
-    
+    multiset<sdEvent*, sdEventCompare> getLastEventSet();
+    double getLastEventTime();
+
     /*!
      overrided function. this function forwards the query to the extensions if an extended descriptor is provided as an argument.
      @param time time of the event

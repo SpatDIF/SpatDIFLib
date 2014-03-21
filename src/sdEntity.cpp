@@ -94,25 +94,23 @@ multiset <sdEvent*, sdEventCompare>sdEntity::getEventSet(double start, double en
                 rangedSet.insert(*it);
             }
         }
-        ++it;
+        it++;
     }
     return rangedSet;
 }
-
 
 multiset<sdEvent*, sdEventCompare> sdEntity::getEventSet(double time){
     return createEventSet(time, SD_ENTITY_CURRENT);
 }
 
 sdEvent* sdEntity::getNextEvent(double time, EDescriptor descriptor){
-    multiset<sdEvent*, sdEventCompare> nextEventSet = getNextEventSet(time);
-    multiset<sdEvent*, sdEventCompare>::iterator it = nextEventSet.begin();
-    while(it != nextEventSet.end()){
+    multiset<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
+    while(it != eventSet.end()){
         sdEvent* event = *it;
-        if((event->getDescriptor() == descriptor)){
+        if((event->getDescriptor() == descriptor) && (event->getTime() > time )){
             return event;
         }
-        ++it;
+        it++;
     }
     return NULL;
 }
@@ -133,14 +131,13 @@ double sdEntity::getNextEventTime(double time){
 
 // previous event
 sdEvent* sdEntity::getPreviousEvent(double time, EDescriptor descriptor){
-    multiset<sdEvent*, sdEventCompare> previousEventSet = getPreviousEventSet(time);
-    multiset<sdEvent*, sdEventCompare>::iterator it = previousEventSet.begin();
-    while(it != previousEventSet.end()){
-        sdEvent* event = *it;
-        if((event->getDescriptor() == descriptor)){
+    multiset<sdEvent*, sdEventCompare>::reverse_iterator rit = eventSet.rbegin();
+    while(rit != eventSet.rend()){
+        sdEvent* event = *rit;
+        if((event->getDescriptor() == descriptor) && (event->getTime() < time )){
             return event;
         }
-        ++it;
+        rit++;
     }
     return NULL;
 }

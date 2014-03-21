@@ -147,20 +147,20 @@ public:
      @{
      */
     
-    /*!
-     return next event from the given time index that holds the specified descriptor.
-     @param time index
-     @param descriptor the descriptor of the event declared in sdConst.h
-     */
+
     
-    sdEvent* getNextEvent(double time, EDescriptor descriptor);
-    
-    /*!
-     return next events from the given time index .
-     @param time index
+    /**
+     * @brief return a multiset of chronologically next event from the provided time 
+     * 
+     * @param time index time
+     * @return a multiset of next events
      */
     multiset<sdEvent*, sdEventCompare> getNextEventSet(double time);
-    
+
+      
+    sdEvent* getNextEvent(double time, EDescriptor descriptor);
+
+
     /*!
      return the time tag of the next event
      */
@@ -196,7 +196,7 @@ public:
     /*!
      @}
      */
-    
+
     /*! @name Getting frist Event(s)
      @{
      */
@@ -205,7 +205,7 @@ public:
      return the very first event with the specified descriptor.
      @param descriptor the descriptor of the event declared in sdConst.h
      */
-    virtual sdEvent* getFirstEvent(EDescriptor descriptor);
+    sdEvent* getFirstEvent(EDescriptor descriptor);
     
     /*!
      return the very first events regardless of descriptors.
