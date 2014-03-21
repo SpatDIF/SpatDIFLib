@@ -212,6 +212,8 @@ public:
      @param descriptor the descriptor of the event declared in sdConst.h
      */
     sdEvent* getNextEvent(double time, EDescriptor descriptor);
+    multiset<sdEvent*, sdEventCompare> getNextEventSet(double time);
+    double getNextEventTime();
     
     /*!
      overrided function. this function forwards the query to the extensions if an extended descriptor is provided as an argument.

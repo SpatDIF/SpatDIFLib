@@ -19,6 +19,8 @@
 #include "sdScene.h"
 #include "sdEntityCore.h"
 
+void populateMultiset(multiset<sdEvent*, sdEventCompare> eventSet);
+
 int main(void){
     
     using namespace std;
@@ -35,7 +37,7 @@ int main(void){
 
     // this addEvent returns null to evt because extension is not added to the scene
     string loc = string("/User/john/sample.wav");
-    sdEvent* evt= entityOne->addEvent(3.0, SD_MEDIA_LOCATION, static_cast<void*>(&loc));
+    sdEvent* evt= entityOne->addEvent(1.0, SD_MEDIA_LOCATION, static_cast<void*>(&loc));
     
     if(!evt){
         cout << "the scene does not understand provided descriptor" << endl;
@@ -69,7 +71,7 @@ int main(void){
     // the message below is the message for extension. so the core does not understand.
     double gain = 0.51525;
     double time_offset = 0.5;
-    evt= entityOne->addEvent(4.0, SD_MEDIA_LOCATION, static_cast<void*>(&loc));
+    evt= entityOne->addEvent(1.0, SD_MEDIA_LOCATION, static_cast<void*>(&loc));
     entityOne->addEvent(5.0, SD_MEDIA_GAIN, static_cast<void*>(&gain));
     entityOne->addEvent(5.2, SD_MEDIA_TIME_OFFSET, static_cast<void*>(&time_offset));
     string id = "sound source1";
@@ -90,68 +92,63 @@ int main(void){
     cout << "-----" << endl;
     {
         cout << "getEvent(4.0, SD_MEDIA_LOCATION)" << endl;
-        cout << "media location event at time 4.0:" << entityOne->getEvent(4.0, SD_MEDIA_LOCATION)->getValueAsString() << endl;    
+        cout << "media location event at time 1.0:" << entityOne->getEvent(1.0, SD_MEDIA_LOCATION)->getValueAsString() << endl;    
     }
     cout << "-----" << endl;
     {
         cout << "getEventSet()" << endl;
         multiset <sdEvent*, sdEventCompare> eventSet = entityOne->getEventSet();
         cout << "number of all events attached to entity : " << eventSet.size() << endl; 
-        multiset <sdEvent*, sdEventCompare>::iterator eit = eventSet.begin();
-        while(eit != eventSet.end()){
-            sdEvent* event = *eit;
-            cout << "   -" << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
-            eit++;
-        }
+        populateMultiset(eventSet);
     }
     cout << "-----" << endl;
     {
         cout << "getEventSet(5.0)" << endl;
         multiset <sdEvent*, sdEventCompare> eventSet = entityOne->getEventSet(5.0);
         cout << "number of events at 5.0: " << eventSet.size() << endl; 
-        multiset <sdEvent*, sdEventCompare>::iterator eit = eventSet.begin();
-        while(eit != eventSet.end()){
-            sdEvent* event = *eit;
-            cout << "   -" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
-            eit++;
-        }
+        populateMultiset(eventSet);
     }
     cout << "-----" << endl;
     {
         cout << "getEventSet(5.1, 5.4)" << endl;
         multiset <sdEvent*, sdEventCompare> eventSet = entityOne->getEventSet(5.1, 5.4);
         cout << "number of events between 5.1 and 5.4: " << eventSet.size() << endl; 
-        multiset <sdEvent*, sdEventCompare>::iterator eit = eventSet.begin();
-        while(eit != eventSet.end()){
-            sdEvent* event = *eit;
-            cout << "   -" << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
-            eit++;
-        }
+        populateMultiset(eventSet);
     }
     cout << "-----" << endl;
     {
         cout << "getEventSet(5.1, 5.4, SD_MEDIA_TIME_OFFSET)" << endl;
         multiset <sdEvent*, sdEventCompare> eventSet = entityOne->getEventSet(5.1, 5.4, SD_MEDIA_TIME_OFFSET);
         cout << "number of time offset events between 5.1 and 5.4: " << eventSet.size() << endl; 
-        multiset <sdEvent*, sdEventCompare>::iterator eit = eventSet.begin();
-        while(eit != eventSet.end()){
-            sdEvent* event = *eit;
-            cout << "   -" << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
-            eit++;
-        }
+        populateMultiset(eventSet);
     }
     cout << "-----" << endl;
-    // {
-    //     cout << "getFirstEvent(SD_MEDIA_LOCATION)" << endl;
-    //     sdEvent* event = entityOne->getFirstEvent(SD_MEDIA_LOCATION);
-    //     if(event){
-    //         cout << "   -" << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
-    //     }else{
-    //         cout << "no such event" << endl;
-    //     }
-    // }
+    {
+        cout << "getNextEvent(4.0, SD_MEDIA_GAIN)" << endl;
+        sdEvent* event = entityOne->getNextEvent(4.0, SD_MEDIA_GAIN);
+        cout << "   -" << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
+    }
+    cout << "-----" << endl;
+    {
+        cout << "getNextEvent(4.0, SD_POSITION)" << endl;
+        sdEvent* event = entityOne->getNextEvent(4.0, SD_POSITION);
+        cout << "   -" << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
+    }
+    cout << "-----" << endl;
+    {
+        cout << "getNextEventSet(5.1)" << endl;
+        multiset <sdEvent*, sdEventCompare> eventSet = entityOne->getNextEventSet(5.1);
+        populateMultiset(eventSet);
+    }
+    cout << "-----" << endl;
+    {
+        cout << "getFirstEvent(SD_MEDIA_LOCATION)" << endl;
+        sdEvent* event = entityOne->getFirstEvent(SD_MEDIA_LOCATION);
+        cout << "   -" << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
+    }
+    cout << "-----" << endl;
 
-    // query event
+        // query event
     // sdEvent* mediaLocation = entityOne->getNextEvent(5.2, SD_MEDIA_ID);
     // if(mediaLocation == NULL){
     //     cout << "no such event" << endl;
@@ -177,4 +174,13 @@ int main(void){
     // // check again
     // scene.dump();
     return 0;
+}
+
+void populateMultiset(multiset<sdEvent*, sdEventCompare> eventSet){
+    multiset <sdEvent*, sdEventCompare>::iterator eit = eventSet.begin();
+    while(eit != eventSet.end()){
+        sdEvent* event = *eit;
+        cout << "   -" << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
+        eit++;
+    }
 }

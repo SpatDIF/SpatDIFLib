@@ -142,54 +142,7 @@ public:
 
     /*! @} */
     
-    /*! @name Getting frist Event(s)
-     @{
-     */
-    
-    /*!
-     return the very first event with the specified descriptor.
-     @param descriptor the descriptor of the event declared in sdConst.h
-     */
-    virtual sdEvent* getFirstEvent(EDescriptor descriptor);
-    
-    /*!
-     return the very first events regardless of descriptors.
-     */
-    multiset<sdEvent*, sdEventCompare> getFirstEventSet();
 
-    /*!
-     return the time tag of the first event
-     */
-    double getFirstEventTime();
-    
-    /*!
-     @}
-     */
-    
-    /*! @name Last Event(s)
-     @{
-     */
-    
-    /*!
-     return the timeTag of the very last event with the specified descriptor.
-     @param descriptor the descriptor of the event declared in sdConst.h
-     */
-    sdEvent* getLastEvent(EDescriptor descriptor);
-
-    /*!
-     return the very last events regardless of descriptors.
-     */
-    multiset<sdEvent*, sdEventCompare> getLastEventSet();
-    
-    /*!
-     return the time tag of the last event
-     */
-    double getLastEventTime();
-
-    /*!
-    }
-     */
-    
     /*! @name Next Event(s)
      @{
      */
@@ -243,6 +196,55 @@ public:
     /*!
      @}
      */
+    
+    /*! @name Getting frist Event(s)
+     @{
+     */
+    
+    /*!
+     return the very first event with the specified descriptor.
+     @param descriptor the descriptor of the event declared in sdConst.h
+     */
+    virtual sdEvent* getFirstEvent(EDescriptor descriptor);
+    
+    /*!
+     return the very first events regardless of descriptors.
+     */
+    multiset<sdEvent*, sdEventCompare> getFirstEventSet();
+
+    /*!
+     return the time tag of the first event
+     */
+    double getFirstEventTime();
+    
+    /*!
+     @}
+     */
+    
+    /*! @name Last Event(s)
+     @{
+     */
+    
+    /*!
+     return the timeTag of the very last event with the specified descriptor.
+     @param descriptor the descriptor of the event declared in sdConst.h
+     */
+    sdEvent* getLastEvent(EDescriptor descriptor);
+
+    /*!
+     return the very last events regardless of descriptors.
+     */
+    multiset<sdEvent*, sdEventCompare> getLastEventSet();
+    
+    /*!
+     return the time tag of the last event
+     */
+    double getLastEventTime();
+
+    /*!
+    }
+     */
+    
      
     /*!
      this function is the only way to instantiate sdEvent.
