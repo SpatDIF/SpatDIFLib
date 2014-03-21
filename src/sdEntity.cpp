@@ -45,12 +45,24 @@ void* sdEvent::getValue(void){
     return value;
 }
 
-
 sdEntity::~sdEntity(){
     // delete all allocated values of attached events
     eventSet.clear();
 }
 
+// current event
+sdEvent* sdEntity::getEvent(double time, EDescriptor descriptor){
+    multiset<sdEvent*, sdEventCompare> currentEventSet = getEventSet(time);
+    multiset<sdEvent*, sdEventCompare>::iterator it = currentEventSet.begin();
+    while(it != currentEventSet.end()){
+        sdEvent* event = *it;
+        if(event->getDescriptor() == descriptor){
+            return event;
+        }
+        ++it;
+    }
+    return NULL;
+}
 
 multiset<sdEvent*, sdEventCompare> sdEntity::getEventSet(void){
     return eventSet;
@@ -87,19 +99,6 @@ multiset <sdEvent*, sdEventCompare>sdEntity::getEventSet(double start, double en
     return rangedSet;
 }
 
-// current event
-sdEvent* sdEntity::getEvent(double time, EDescriptor descriptor){
-    multiset<sdEvent*, sdEventCompare> currentEventSet = getEventSet(time);
-    multiset<sdEvent*, sdEventCompare>::iterator it = currentEventSet.begin();
-    while(it != currentEventSet.end()){
-        sdEvent* event = *it;
-        if(event->getDescriptor() == descriptor){
-            return event;
-        }
-        ++it;
-    }
-    return NULL;
-}
 
 multiset<sdEvent*, sdEventCompare> sdEntity::getEventSet(double time){
     return createEventSet(time, SD_ENTITY_CURRENT);

@@ -218,7 +218,19 @@ public:
      @param descriptor only the event with this descriptor will be examined
      */
     sdEvent* getFirstEvent(EDescriptor descriptor);
-    
+
+    /*!
+     overrided function. this function forwards the query to the extensions if an extended descriptor is provided as an argument.
+     @param descriptor only the event with this descriptor will be examined
+     */
+    multiset<sdEvent*, sdEventCompare> getFirstEventSet();
+
+    /*
+    overrided function. returns the time very first event regardless of core or extension.
+    */
+    double getFirstEventTime();
+
+
     /*!
      overrided function. this function forwards the query to the extensions if an extended descriptor is provided as an argument.
      @param descriptor only the event with this descriptor will be examined

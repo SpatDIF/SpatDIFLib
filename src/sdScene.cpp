@@ -370,23 +370,6 @@ string sdScene::dump(void){
             itt++;
             
         }
-        vector <sdEntityExtension*> extensionVector = (*it)->getExtensionVector();
-        vector <sdEntityExtension*>::iterator vit = extensionVector.begin();
-        
-        while(vit != extensionVector.end()){
-            sdEntityExtension *extension= (*vit);
-            os << "-extension:" << extension->getExtensionNameAsString() << endl;
-            multiset <sdEvent*, sdEventCompare> eevnts = extension->getEventSet();
-            multiset <sdEvent*, sdEventCompare>::iterator eitt = eevnts.begin();
-            
-            while(eitt != eevnts.end()){
-                sdEvent* extensionEvent = *eitt;
-                os << "["  << extensionEvent->getTimeAsString() << " " << extensionEvent->getDescriptorAsString() << " " << extensionEvent->getValueAsString() << "]" << endl;
-                eitt++;
-            }
-            
-            vit++;
-        }
 		it++;
 	}
     cout << os.str() << endl;

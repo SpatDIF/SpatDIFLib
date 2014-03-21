@@ -25,15 +25,13 @@ int main(void){
     
     // a scene without extensions
     sdScene scene;
-    
-    // add an entity to the scene
     sdEntityCore* entityOne = scene.addEntity("voice1");
     
     // the following messages add event to the core
-    double position[3] = {0.0,0.3,0.4};
-
-    entityOne->addEvent(1.0, SD_POSITION, position);
-    entityOne->addEvent(2.0, SD_POSITION, position);
+    double position1[3] = {0.0,0.3,0.4};
+    double position2[3] = {3.0,4.3,5.0};
+    entityOne->addEvent(1.0, SD_POSITION, position1);
+    entityOne->addEvent(5.0, SD_POSITION, position2);
 
     // this addEvent returns null to evt because extension is not added to the scene
     string loc = string("/User/john/sample.wav");
@@ -54,7 +52,7 @@ int main(void){
         cout << "media extension activated!!" << endl; // this line will be  posted
     }
 
-    cout << "currently " << scene.getNumberOfActivatedExtensions() << "extension(s) are activated.";
+    cout << "Number of activated extensions: " << scene.getNumberOfActivatedExtensions();
 
     cout << "list of activated extensions:" << endl;
     vector<string> extensionStringVector = scene.getActivatedExtensionsAsStrings();
@@ -69,50 +67,114 @@ int main(void){
 
 
     // the message below is the message for extension. so the core does not understand.
-    evt= entityOne->addEvent(4.0, SD_MEDIA_LOCATION, static_cast<void*>(&loc));
     double gain = 0.51525;
     double time_offset = 0.5;
+    evt= entityOne->addEvent(4.0, SD_MEDIA_LOCATION, static_cast<void*>(&loc));
     entityOne->addEvent(5.0, SD_MEDIA_GAIN, static_cast<void*>(&gain));
     entityOne->addEvent(5.2, SD_MEDIA_TIME_OFFSET, static_cast<void*>(&time_offset));
-    time_offset = 0.4;
-    
-    // duplicate event will be ignored
-    entityOne->addEvent(5.2, SD_MEDIA_TIME_OFFSET, static_cast<void*>(&time_offset));
-    
     string id = "sound source1";
     string type = "stream";
-    
     entityOne->addEvent(5.3, SD_MEDIA_ID, static_cast<void*>(&id));
     entityOne->addEvent(5.0, SD_MEDIA_TYPE, static_cast<void*>(&type));
     entityOne->addEvent(string("5.5"), string("location"), string("mysoundfile.wav"));
 
-    // dump the scene
+    // scene with extension events
     scene.dump();
     
-    // query event
-    sdEvent* mediaLocation = entityOne->getNextEvent(5.2, SD_MEDIA_ID);
-    if(mediaLocation == NULL){
-        cout << "no such event" << endl;
-    }else{
-        cout << "time:" << mediaLocation->getTime() << " " <<  mediaLocation->getValueAsString() << endl;
+    // check each function of entity with extensions
+    cout << "function tests";
+    {
+        cout << "getNumberOfEvents()" << endl;
+        cout << "entityOne number of events(incl. events of extensions):" << entityOne->getNumberOfEvents() << endl;
     }
-    // remove two events
-    entityOne->removeEvent(5.2, SD_MEDIA_TIME_OFFSET);
-    entityOne->removeEvent(5.0, SD_MEDIA_GAIN);
+    cout << "-----" << endl;
+    {
+        cout << "getEvent(4.0, SD_MEDIA_LOCATION)" << endl;
+        cout << "media location event at time 4.0:" << entityOne->getEvent(4.0, SD_MEDIA_LOCATION)->getValueAsString() << endl;    
+    }
+    cout << "-----" << endl;
+    {
+        cout << "getEventSet()" << endl;
+        multiset <sdEvent*, sdEventCompare> eventSet = entityOne->getEventSet();
+        cout << "number of all events attached to entity : " << eventSet.size() << endl; 
+        multiset <sdEvent*, sdEventCompare>::iterator eit = eventSet.begin();
+        while(eit != eventSet.end()){
+            sdEvent* event = *eit;
+            cout << "   -" << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
+            eit++;
+        }
+    }
+    cout << "-----" << endl;
+    {
+        cout << "getEventSet(5.0)" << endl;
+        multiset <sdEvent*, sdEventCompare> eventSet = entityOne->getEventSet(5.0);
+        cout << "number of events at 5.0: " << eventSet.size() << endl; 
+        multiset <sdEvent*, sdEventCompare>::iterator eit = eventSet.begin();
+        while(eit != eventSet.end()){
+            sdEvent* event = *eit;
+            cout << "   -" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
+            eit++;
+        }
+    }
+    cout << "-----" << endl;
+    {
+        cout << "getEventSet(5.1, 5.4)" << endl;
+        multiset <sdEvent*, sdEventCompare> eventSet = entityOne->getEventSet(5.1, 5.4);
+        cout << "number of events between 5.1 and 5.4: " << eventSet.size() << endl; 
+        multiset <sdEvent*, sdEventCompare>::iterator eit = eventSet.begin();
+        while(eit != eventSet.end()){
+            sdEvent* event = *eit;
+            cout << "   -" << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
+            eit++;
+        }
+    }
+    cout << "-----" << endl;
+    {
+        cout << "getEventSet(5.1, 5.4, SD_MEDIA_TIME_OFFSET)" << endl;
+        multiset <sdEvent*, sdEventCompare> eventSet = entityOne->getEventSet(5.1, 5.4, SD_MEDIA_TIME_OFFSET);
+        cout << "number of time offset events between 5.1 and 5.4: " << eventSet.size() << endl; 
+        multiset <sdEvent*, sdEventCompare>::iterator eit = eventSet.begin();
+        while(eit != eventSet.end()){
+            sdEvent* event = *eit;
+            cout << "   -" << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
+            eit++;
+        }
+    }
+    cout << "-----" << endl;
+    // {
+    //     cout << "getFirstEvent(SD_MEDIA_LOCATION)" << endl;
+    //     sdEvent* event = entityOne->getFirstEvent(SD_MEDIA_LOCATION);
+    //     if(event){
+    //         cout << "   -" << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
+    //     }else{
+    //         cout << "no such event" << endl;
+    //     }
+    // }
 
-    // check
-    scene.dump();
-    
-    // ask the entity about the extension descriptor
-    cout<< "entityOne media:location at 4.0 " << *static_cast<string*>(entityOne->getValue(4.0, SD_MEDIA_LOCATION)) << endl;
-    
-    // remove the media extension
-    scene.removeExtension(SD_MEDIA);
+    // query event
+    // sdEvent* mediaLocation = entityOne->getNextEvent(5.2, SD_MEDIA_ID);
+    // if(mediaLocation == NULL){
+    //     cout << "no such event" << endl;
+    // }else{
+    //     cout << "time:" << mediaLocation->getTime() << " " <<  mediaLocation->getValueAsString() << endl;
+    // }
+    // // remove two events
+    // entityOne->removeEvent(5.2, SD_MEDIA_TIME_OFFSET);
+    // entityOne->removeEvent(5.0, SD_MEDIA_GAIN);
 
-    // you will get error.
-    scene.removeExtension(SD_MEDIA);
+    // // check
+    // scene.dump();
     
-    // check again
-    scene.dump();
+    // // ask the entity about the extension descriptor
+    // cout<< "entityOne media:location at 4.0 " << *static_cast<string*>(entityOne->getValue(4.0, SD_MEDIA_LOCATION)) << endl;
+    
+    // // remove the media extension
+    // scene.removeExtension(SD_MEDIA);
+
+    // // you will get error.
+    // scene.removeExtension(SD_MEDIA);
+    
+    // // check again
+    // scene.dump();
     return 0;
 }

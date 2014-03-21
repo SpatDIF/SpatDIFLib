@@ -124,11 +124,9 @@ public:
      Subsequently, all allocated buffers stored in the eventSet will be destroyed*/
     ~sdEntity();
     
-    /*! @name EventHandling
-     @{ */
-    
+    /*! @name Event Handling @{ */
 
-    /*! return number of registerd events in the eventSet*/
+    /*! return number of registerd events in the eventSet */
     virtual int getNumberOfEvents(void);
     
     /*! @name Getting  Event(s) in the specified Range @{ */
@@ -152,7 +150,7 @@ public:
      return the very first event with the specified descriptor.
      @param descriptor the descriptor of the event declared in sdConst.h
      */
-    sdEvent* getFirstEvent(EDescriptor descriptor);
+    virtual sdEvent* getFirstEvent(EDescriptor descriptor);
     
     /*!
      return the very first events regardless of descriptors.
@@ -202,13 +200,13 @@ public:
      @param descriptor the descriptor of the event declared in sdConst.h
      */
     
-    virtual sdEvent* getNextEvent(double time, EDescriptor descriptor);
+    sdEvent* getNextEvent(double time, EDescriptor descriptor);
     
     /*!
      return next events from the given time index .
      @param time index
      */
-    virtual multiset<sdEvent*, sdEventCompare> getNextEventSet(double time);
+    multiset<sdEvent*, sdEventCompare> getNextEventSet(double time);
     
     /*!
      return the time tag of the next event
@@ -229,13 +227,13 @@ public:
      @param descriptor the descriptor of the event declared in sdConst.h
      */
     
-    virtual sdEvent* getPreviousEvent(double time, EDescriptor descriptor);
+    sdEvent* getPreviousEvent(double time, EDescriptor descriptor);
     
     /*!
      return previous events from the given time index .
      @param time index
      */
-    virtual multiset<sdEvent*, sdEventCompare> getPreviousEventSet(double time);
+    multiset<sdEvent*, sdEventCompare> getPreviousEventSet(double time);
     
     /*!
      return the time tag of the next event

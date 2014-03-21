@@ -370,6 +370,7 @@ int sdEntityCore::getNumberOfEvents(){
     while(it != extensionVector.end()){
         sdEntityExtension* entityExtension = *it;
         sum += entityExtension->getEventSet().size(); 
+        it++;
     }
     return sum;
 }
@@ -394,6 +395,7 @@ multiset<sdEvent*, sdEventCompare> sdEntityCore::getEventSet(void){
         sdEntityExtension* entityExtension = *it;
         multiset<sdEvent*, sdEventCompare> extensionSet = entityExtension->getEventSet(); 
         returnSet.insert(extensionSet.begin(), extensionSet.end());
+        it++;
     }
     return returnSet;
 }
@@ -405,6 +407,7 @@ multiset<sdEvent*, sdEventCompare> sdEntityCore::getEventSet(double time){
         sdEntityExtension* entityExtension = *it;
         multiset<sdEvent*, sdEventCompare> extensionSet = entityExtension->getEventSet(time); // function derived from the superclass
         returnSet.insert(extensionSet.begin(), extensionSet.end());
+        it++;
     }
     return returnSet;
 }
@@ -416,8 +419,54 @@ multiset<sdEvent*, sdEventCompare> sdEntityCore::getEventSet(double start, doubl
         sdEntityExtension* entityExtension = *it;
         multiset<sdEvent*, sdEventCompare> extensionSet = entityExtension->getEventSet(start, end); // function derived from the superclass
         returnSet.insert(extensionSet.begin(), extensionSet.end());
+        it++;
     }
     return returnSet;
+}
+
+sdEvent* sdEntityCore::getFirstEvent(EDescriptor descriptor){
+    if(isCoreDescriptor(descriptor)){
+        return sdEntity::getFirstEvent(descriptor);
+    }else{
+        sdEntityExtension* extension = getResponsibleExtension(descriptor);
+        if (!extension) {
+            return NULL;
+        }
+        return extension->getFirstEvent(descriptor);
+    }
+    return NULL;
+}
+
+multiset<sdEvent*, sdEventCompare> sdEntityCore::getFirstEventSet(){
+    double firstEventTime = sdEntity::getFirstEventTime(); // ask parent, because this function is overrided
+    multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getFirstEventSet();
+    vector<sdEntityExtension*>::iterator it = extensionVector.begin();
+    while(it != extensionVector.end()){
+        sdEntityExtension* entityExtension = *it;
+        double extensionFirstEventTime = entityExtension->getFirstEventTime(); // function derived from the superclass
+        if(extensionFirstEventTime < firstEventTime ){
+            firstEventTime = extensionFirstEventTime;
+            returnSet = entityExtension->getFirstEventSet();
+        }else if(extensionFirstEventTime == firstEventTime){
+            multiset<sdEvent*, sdEventCompare> firstExtenstionSet = entityExtension->getFirstEventSet();
+            returnSet.insert(firstExtenstionSet.begin(), firstExtenstionSet.end());
+        }
+        it++;
+    }    
+    return returnSet;
+}
+
+double sdEntityCore::getFirstEventTime(){
+    double firstEventTime = sdEntity::getFirstEventTime(); // use parental function
+    vector<sdEntityExtension*>::iterator it = extensionVector.begin();
+    while(it != extensionVector.end()){
+        double extensionFirstEventTime  = (*it)->getFirstEventTime();
+        if(extensionFirstEventTime < firstEventTime){
+            firstEventTime = extensionFirstEventTime; //update
+        }
+        it++;
+    }
+    return  firstEventTime;
 }
 
 multiset<sdEvent*, sdEventCompare> sdEntityCore::getEventSet(double start, double end, EDescriptor descriptor){
@@ -427,6 +476,7 @@ multiset<sdEvent*, sdEventCompare> sdEntityCore::getEventSet(double start, doubl
         sdEntityExtension* entityExtension = *it;
         multiset<sdEvent*, sdEventCompare> extensionSet = entityExtension->getEventSet(start, end, descriptor); // function derived from the superclass
         returnSet.insert(extensionSet.begin(), extensionSet.end());
+        it++;
     }
     return returnSet; 
 }
@@ -440,19 +490,6 @@ sdEvent* sdEntityCore::getNextEvent(double time, EDescriptor descriptor){
             return NULL;
         }
         return extension->getNextEvent(time, descriptor);
-    }
-    return NULL;
-}
-
-sdEvent* sdEntityCore::getFirstEvent(EDescriptor descriptor){
-    if(isCoreDescriptor(descriptor)){
-        return sdEntity::getFirstEvent(descriptor);
-    }else{
-        sdEntityExtension* extension = getResponsibleExtension(descriptor);
-        if (!extension) {
-            return NULL;
-        }
-        return extension->getFirstEvent(descriptor);
     }
     return NULL;
 }
