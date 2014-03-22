@@ -284,8 +284,13 @@ public:
      @{
      */
     
-    /*! varifies the content of scene by sending all containing data (meta and timed) on the standard output. It is useful for debugging the scene*/
-    string dump(void);
+    /**
+     * @brief varifies the content of scene by sending all containing data (meta and timed) on the standard output. 
+     *  It is useful for debugging the scene
+     * @oaram consoleOut if false, does not send dump to standard output only returns a string
+     * @return dump string
+     */
+      string dump(bool consoleOut = true);
     
     /*!
      @}

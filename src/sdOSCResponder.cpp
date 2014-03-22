@@ -154,7 +154,8 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
                         break;
                     }
                     case SD_MEDIA_TYPE:
-                    case SD_MEDIA_LOCATION:{
+                    case SD_MEDIA_LOCATION:
+                    case SD_MEDIA_ID:{
                         returnMessage.appendString(event->getValueAsString());
                         returnMessageVector.push_back(returnMessage);
                         break;

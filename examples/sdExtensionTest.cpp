@@ -224,7 +224,6 @@ int main(void){
     scene.removeExtension(SD_MEDIA);
     
     // check again
-    // scene.dump();
     return 0;
 }
 

@@ -340,7 +340,7 @@ vector<sdReport> sdScene::getEventSetsFromAllEntities(double start, double end){
 }
 
 
-string sdScene::dump(void){
+string sdScene::dump(bool consoleOut){
     using namespace std;
     ostringstream os;
     
@@ -372,6 +372,8 @@ string sdScene::dump(void){
         }
 		it++;
 	}
-    cout << os.str() << endl;
+    if(consoleOut){
+        cout << os.str() << endl;
+    }
     return os.str();
 }
