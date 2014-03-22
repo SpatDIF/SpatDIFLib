@@ -17,9 +17,11 @@
 #include "sdLoader.h"
 #include "sdSaver.h"
 #include "sdEntityCore.h"
+
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <set>
 
 // a sdScene test
 // extension tests not included
@@ -42,30 +44,25 @@ int main(void){
     
     //activate media extension
     scene.addExtension(SD_MEDIA);
-   
+
     //query how many extension(s) are active
     int numExtensions = scene.getNumberOfActivatedExtensions();
     cout << "number of active extensions: " << numExtensions << endl;
     
+    cout << "making scene" << endl;
     //attach two entities
     sdEntityCore *myEntity = scene.addEntity("myEntity"); // spawn an entity
     double firstPos[3] = {0.0, 0.1, 0.2};
     double secondPos[3] = {0.3, 0.4, 0.5};
-    double thirdPos[3] = {0.6, 0.7, 0.8};
-
+    double gain = 0.5523;
     //addEvent to myEntity
-    myEntity->addEvent(string("0.2"), string("position"), string("0.0 0.1 0.2"));
-    myEntity->addEvent(0.5, SD_POSITION, static_cast<void*>(secondPos));
+    myEntity->addEvent(string("1.0"), string("position"), string("0.0 0.1 0.2"));
+    myEntity->addEvent(2.0, SD_POSITION, static_cast<void*>(firstPos));
+    myEntity->addEvent(2.0, SD_MEDIA_GAIN, static_cast<void*>(&gain));
+    cout << "end of making scene" << endl;
+    scene.dump();
 
-    cout << "num events attached to myEntity after second addition:" << myEntity->getNumberOfEvents() << endl;
-    cout << "values:" << myEntity->getEvent(0.5, SD_POSITION)->getValueAsString() << endl;
-
-    //add event but with same time and desciptor .. this will replace the previous one
-    sdEvent* returnedEvent = myEntity->addEvent(0.5, SD_POSITION, static_cast<void*>(thirdPos));
-    
-    cout << "num events attached to myEntity after third addition:" << myEntity->getNumberOfEvents() << endl;
-    cout << "descriptor:" << returnedEvent->getDescriptorAsString() << endl;
-    cout << "values:" << myEntity->getEvent(0.5, SD_POSITION)->getValueAsString() << endl;
+    cout << "------ queries ------" << endl;
     
     sdEntityCore *yourEntity = scene.addEntity("yourEntity"); // spawn an entity
 
@@ -86,7 +83,11 @@ int main(void){
         //convert recognaizes desciriptor and convert it to a string
         cout << "position value:" << positionEvent->getValueAsString() << endl;
     }
-    
+
+    //vector<sdReport> eventSetVector = scene.getNextEventSets(0.4);
+    vector<sdReport> eventSetVector = scene.getNextEventSetsFromAllEntities(0.4);
+
+
     //you can ask just the time of next event
     double nextEventTime = scene.getNextEventTime(0.4);
     cout << "Next Event Time:" << nextEventTime << endl;
@@ -101,10 +102,6 @@ int main(void){
     cout << "Num Entities:" << scene.getNumberOfEntities() << endl;
     for(int i = 0; i < scene.getNumberOfEntities(); i++){
 	cout << "entity no." << i << ": " << scene.getEntityName(i) << endl;
-    }
-
-    if(duplicated == providedEntity){
-        cout << "same pointer" << endl;
     }
 
 

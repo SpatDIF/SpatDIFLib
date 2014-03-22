@@ -9,6 +9,7 @@ TARGETS = How_to_query.out FileWithExtension.out sdConverter.out sdDateTest.out\
 
 all: $(TARGETS)
 
+
 How_to_query.out:  How_to_query.cpp
 	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
 

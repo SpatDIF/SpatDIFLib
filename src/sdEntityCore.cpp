@@ -451,22 +451,24 @@ sdEvent* sdEntityCore::getNextEvent(double time, EDescriptor descriptor){
 }
 
 multiset<sdEvent*, sdEventCompare> sdEntityCore::getNextEventSet(double time){
-    multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getNextEventSet(time); 
-    double nextEventTime = sdEntity::getNextEventTime(time);
-    if(nextEventTime < 0){
-        nextEventTime = DBL_MAX; //must be later replaced by the max value of double 
+    multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getNextEventSet(time); //get events with core descriptors
+    double nextEventTime = sdEntity::getNextEventTime(time); // its time
+    if(nextEventTime < 0){ // if no core event found
+        nextEventTime = DBL_MAX; 
     }
     vector<sdEntityExtension*>::iterator it = extensionVector.begin();
     while(it != extensionVector.end()){
         sdEntityExtension* entityExtension = *it;
         double nextExtensionEventTime = entityExtension->getNextEventTime(time);
-        if(nextExtensionEventTime < nextEventTime){ // if sooner replace returnSet
-            returnSet = entityExtension->getNextEventSet(time);
-            nextEventTime = nextExtensionEventTime;
-        }else if(nextExtensionEventTime == nextEventTime){ // if equal, merge
-            multiset<sdEvent*, sdEventCompare> eventSet = entityExtension->getNextEventSet(time);
-            returnSet.insert(eventSet.begin(), eventSet.end());
-        }
+        if(nextExtensionEventTime >= 0.0){
+            if(nextExtensionEventTime < nextEventTime){ // if sooner replace returnSet
+                returnSet = entityExtension->getNextEventSet(time);
+                nextEventTime = nextExtensionEventTime;
+            }else if(nextExtensionEventTime == nextEventTime){ // if equal, merge
+                multiset<sdEvent*, sdEventCompare> eventSet = entityExtension->getNextEventSet(time);
+                returnSet.insert(eventSet.begin(), eventSet.end());
+            }
+        }   
         it++;
     }
     return returnSet;
@@ -497,20 +499,22 @@ sdEvent* sdEntityCore::getPreviousEvent(double time, EDescriptor descriptor){
 
 multiset<sdEvent*, sdEventCompare> sdEntityCore::getPreviousEventSet(double time){
     multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getPreviousEventSet(time); 
-    double PreviousEventTime = sdEntity::getPreviousEventTime(time);
-    if(PreviousEventTime < 0){
-        PreviousEventTime = -1.0; //must be later replaced by the max value of double 
+    double previousEventTime = sdEntity::getPreviousEventTime(time);
+    if(previousEventTime < 0){
+        previousEventTime = -1.0; //must be later replaced by the max value of double 
     }
     vector<sdEntityExtension*>::iterator it = extensionVector.begin();
     while(it != extensionVector.end()){
         sdEntityExtension* entityExtension = *it;
-        double PreviousExtensionEventTime = entityExtension->getPreviousEventTime(time);
-        if(PreviousExtensionEventTime < PreviousEventTime){ // if sooner replace returnSet
-            returnSet = entityExtension->getPreviousEventSet(time);
-            PreviousEventTime = PreviousExtensionEventTime;
-        }else if(PreviousExtensionEventTime == PreviousEventTime){ // if equal, merge
-            multiset<sdEvent*, sdEventCompare> eventSet = entityExtension->getPreviousEventSet(time);
-            returnSet.insert(eventSet.begin(), eventSet.end());
+        double previousExtensionEventTime = entityExtension->getPreviousEventTime(time);
+        if(previousExtensionEventTime >= 0.0){ // if exists
+            if(previousExtensionEventTime > previousEventTime){ // if sooner replace returnSet
+                returnSet = entityExtension->getPreviousEventSet(time);
+                previousEventTime = previousExtensionEventTime;
+            }else if(previousExtensionEventTime == previousEventTime){ // if equal, merge
+                multiset<sdEvent*, sdEventCompare> eventSet = entityExtension->getPreviousEventSet(time);
+                returnSet.insert(eventSet.begin(), eventSet.end());
+            }
         }
         it++;
     }

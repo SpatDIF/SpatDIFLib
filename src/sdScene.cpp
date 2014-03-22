@@ -217,8 +217,6 @@ vector<sdReport> sdScene::getNextEventSetsFromAllEntities(double time){
         report.entity = entityCore;
         report.eventSet= entityCore->getNextEventSet(time);
         if(report.eventSet.size() != 0){
-            multiset<sdEvent*, sdEventCompare>::iterator it=report.eventSet.begin();
-            sdEvent* firstEvent = *it;
             reportVector.push_back(report);
         }
         it++;
@@ -235,8 +233,6 @@ vector<sdReport> sdScene::getPreviousEventSetsFromAllEntities(double time){
         report.entity = entityCore;
         report.eventSet= entityCore->getPreviousEventSet(time);
         if(report.eventSet.size() != 0){
-            multiset<sdEvent*, sdEventCompare>::iterator it=report.eventSet.begin();
-            sdEvent* firstEvent = *it;
             reportVector.push_back(report);
         }
         it++;
@@ -253,6 +249,7 @@ vector<sdReport> sdScene::getLastEventSetsFromAllEntities(){
 }
 
 vector<sdReport> sdScene::getNextEventSets(double time){
+    // collect next events from all entities, compare them and return the soonest events 
     vector<sdReport> reportVector = getNextEventSetsFromAllEntities(time);
     vector<sdReport> soonestReportVector;
     if(reportVector.empty()){
