@@ -150,6 +150,24 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
                         returnMessageVector.push_back(returnMessage);
                         break;
                     }
+                    case SD_MEDIA_TYPE:
+                    case SD_MEDIA_LOCATION:{
+                        returnMessage.appendString(event->getValueAsString());
+                        returnMessageVector.push_back(returnMessage);
+                        break;
+                    }
+                    case SD_MEDIA_CHANNEL:{
+                        int *channel = static_cast<int*>(event->getValue());
+                        returnMessage.appendInt(*channel);
+                        break;
+                    }
+                    case SD_MEDIA_TIME_OFFSET:
+                    case SD_MEDIA_GAIN:{
+                        float *value = static_cast<float*>(event->getValue());
+                        returnMessage.appendFloat(*value);
+                        returnMessageVector.push_back(returnMessage);
+                        break;
+                    }
                     default:{
                         sdOSCMessage errorMessage("/spatdif/error");
                         errorMessage.appendString("No such descriptors");

@@ -188,7 +188,6 @@ double sdEntity::getLastEventTime(){
     }
 }
 
-
 // number of events
 int sdEntity::getNumberOfEvents(){
     return static_cast<int>(eventSet.size());

@@ -15,6 +15,7 @@
 
 #include <stdio.h>
 #include <string>
+#include <cfloat>
 #include "sdMain.h"
 
 
@@ -453,7 +454,7 @@ multiset<sdEvent*, sdEventCompare> sdEntityCore::getNextEventSet(double time){
     multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getNextEventSet(time); 
     double nextEventTime = sdEntity::getNextEventTime(time);
     if(nextEventTime < 0){
-        nextEventTime = 1000000000.0; //must be later replaced by the max value of double 
+        nextEventTime = DBL_MAX; //must be later replaced by the max value of double 
     }
     vector<sdEntityExtension*>::iterator it = extensionVector.begin();
     while(it != extensionVector.end()){
@@ -569,7 +570,7 @@ double sdEntityCore::getFirstEventTime(){
         }
         it++;
     }
-    return  firstEventTime;
+    return firstEventTime;
 }
 
 sdEvent* sdEntityCore::getLastEvent(EDescriptor descriptor){
@@ -584,4 +585,37 @@ sdEvent* sdEntityCore::getLastEvent(EDescriptor descriptor){
     }
     return NULL;
 }
+
+multiset<sdEvent*, sdEventCompare> sdEntityCore::getLastEventSet(){
+    double lastEventTime = sdEntity::getLastEventTime(); // ask parent, because this function is overrided
+    multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getLastEventSet();
+    vector<sdEntityExtension*>::iterator it = extensionVector.begin();
+    while(it != extensionVector.end()){
+        sdEntityExtension* entityExtension = *it;
+        double extensionLastEventTime = entityExtension->getLastEventTime(); // function derived from the superclass
+        if(extensionLastEventTime > lastEventTime ){
+            lastEventTime = extensionLastEventTime;
+            returnSet = entityExtension->getLastEventSet();
+        }else if(extensionLastEventTime == lastEventTime){
+            multiset<sdEvent*, sdEventCompare> lastExtenstionSet = entityExtension->getLastEventSet();
+            returnSet.insert(lastExtenstionSet.begin(), lastExtenstionSet.end());
+        }
+        it++;
+    }    
+    return returnSet;
+}
+
+double sdEntityCore::getLastEventTime(){
+    double lastEventTime = sdEntity::getLastEventTime(); // use parental function
+    vector<sdEntityExtension*>::iterator it = extensionVector.begin();
+    while(it != extensionVector.end()){
+        double extensionLastEventTime  = (*it)->getLastEventTime();
+        if(extensionLastEventTime > lastEventTime){
+            lastEventTime = extensionLastEventTime; //update
+        }
+        it++;
+    }
+    return lastEventTime;
+}
+
 

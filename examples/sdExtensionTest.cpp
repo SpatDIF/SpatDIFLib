@@ -126,13 +126,13 @@ int main(void){
     {
         cout << "getNextEvent(4.0, SD_MEDIA_GAIN)" << endl;
         sdEvent* event = entityOne->getNextEvent(4.0, SD_MEDIA_GAIN);
-        cout << "   -" << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
+        cout << "   " << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
     }
     cout << "----------" << endl;
     {
         cout << "getNextEvent(4.0, SD_POSITION)" << endl;
         sdEvent* event = entityOne->getNextEvent(4.0, SD_POSITION);
-        cout << "   -" << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
+        cout << "   " << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
     }
     cout << "----------" << endl;
     {
@@ -144,7 +144,7 @@ int main(void){
     {
         cout << "getNextEventTime(5.1)" << endl;
         double nextEventTime = entityOne->getNextEventTime(5.1);
-        cout <<  "   -"  << nextEventTime << endl;
+        cout <<  "   "  << nextEventTime << endl;
     }
     cout << "----------" << endl;
     {
@@ -153,14 +153,14 @@ int main(void){
         if(!event){
             cout << "no such event" << endl;
         }else{
-            cout << "   -" << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
+            cout << "   " << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
         }
     }
     cout << "----------" << endl;
     {
         cout << "getPreviousEvent(5.1, SD_POSITION)" << endl;
         sdEvent* event = entityOne->getPreviousEvent(5.1, SD_POSITION);
-        cout << "   -" << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
+        cout << "   " << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
     }
     cout << "----------" << endl;
     {
@@ -172,11 +172,44 @@ int main(void){
     {
         cout << "getPreviousEventTime(5.1)" << endl;
         double PreviousEventTime = entityOne->getPreviousEventTime(5.1);
-        cout <<  "   -"  << PreviousEventTime << endl;
+        cout <<  "   "  << PreviousEventTime << endl;
     }
     cout << "----------" << endl;
-
-   
+    {
+        cout << "getFirstEvent(SD_POSITION)" << endl;
+        sdEvent* event = entityOne->getFirstEvent(SD_POSITION);
+        cout << "   " << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
+    }
+    cout << "----------" << endl;
+    {
+        cout << "getFirstEventSet" << endl;
+        multiset <sdEvent*, sdEventCompare> eventSet = entityOne->getFirstEventSet();
+        populateMultiset(eventSet);
+    }
+    cout << "----------" << endl;
+    {
+        cout << "getFirstEventTime" << endl;
+        double firstEventTime = entityOne->getFirstEventTime();
+        cout <<  "   "  << firstEventTime << endl;
+    }
+    cout << "----------" << endl;
+    {
+        cout << "getLastEvent(SD_POSITION)" << endl;
+        sdEvent* event = entityOne->getLastEvent(SD_POSITION);
+        cout << "   " << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
+    }
+    cout << "----------" << endl;
+    {
+        cout << "getLastEventSet" << endl;
+        multiset <sdEvent*, sdEventCompare> eventSet = entityOne->getLastEventSet();
+        populateMultiset(eventSet);
+    }
+    cout << "----------" << endl;
+    {
+        cout << "getLastEventTime" << endl;
+        double lastEventTime = entityOne->getLastEventTime();
+        cout <<  "   "  << lastEventTime << endl;
+    }
     // remove two events
     entityOne->removeEvent(5.2, SD_MEDIA_TIME_OFFSET);
     entityOne->removeEvent(5.0, SD_MEDIA_GAIN);
@@ -199,7 +232,7 @@ void populateMultiset(multiset<sdEvent*, sdEventCompare> eventSet){
     multiset <sdEvent*, sdEventCompare>::iterator eit = eventSet.begin();
     while(eit != eventSet.end()){
         sdEvent* event = *eit;
-        cout << "   -" << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
+        cout << "   " << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
         eit++;
     }
 }

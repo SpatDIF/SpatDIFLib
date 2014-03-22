@@ -23,7 +23,6 @@ int main(void){
   using namespace std;
   
   sdScene scene;
-
   sdOSCResponder oscResponder(&scene);
   std::cout.setf( std::ios::showpoint );  
   vector<sdOSCMessage> returnedMessageVector;
