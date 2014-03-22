@@ -129,12 +129,15 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
             while (eit != eventSet.end()) {
                 sdEvent *event = *eit;
                 returnMessage.clear();
-                if(interval > 0.0){ // if ranged query
-                   sdOSCMessage timeMessage("/spatdif/time");
-                    timeMessage.appendFloat(static_cast<float>(event->getTime()));
-                    returnMessageVector.push_back(timeMessage);
+                if(entity->isCoreDescriptor(event->getDescriptor())){
+                    returnMessage.setAddress("/spatdif/source/"+entity->getName()+"/"+event->getDescriptorAsString());
+                }else{
+                    sdEntityExtension* entityExtension = entity->getResponsibleExtension(event->getDescriptor());
+                    if(entityExtension){
+                        returnMessage.setAddress("/spatdif/source/"+entity->getName()+"/"+entityExtension->getExtensionNameAsString()+"/"+event->getDescriptorAsString());
+                    }
                 }
-                returnMessage.setAddress("/spatdif/source/"+entity->getName()+"/"+event->getDescriptorAsString());
+                
                 switch (event->getDescriptor()){
                     case SD_POSITION:
                     case SD_ORIENTATION:{
@@ -163,8 +166,8 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
                     }
                     case SD_MEDIA_TIME_OFFSET:
                     case SD_MEDIA_GAIN:{
-                        float *value = static_cast<float*>(event->getValue());
-                        returnMessage.appendFloat(*value);
+                        double *value = static_cast<double*>(event->getValue());
+                        returnMessage.appendFloat(static_cast<float>(*value));
                         returnMessageVector.push_back(returnMessage);
                         break;
                     }

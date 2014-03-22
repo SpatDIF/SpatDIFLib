@@ -23,6 +23,7 @@ int main(void){
   using namespace std;
   
   sdScene scene;
+  scene.addExtension(SD_MEDIA);
   sdOSCResponder oscResponder(&scene);
   std::cout.setf( std::ios::showpoint );  
   vector<sdOSCMessage> returnedMessageVector;
@@ -112,9 +113,6 @@ int main(void){
   cout << "----set/get Position----" << endl;
   {
   // both query and write at 10.0
-    sdEntityCore *myEntity = scene.addEntity("myEntity");
-    myEntity->addEvent(string("1.0"), string("position"), string("0.0 0.1 0.2"));
-
     sdOSCMessage setWriteTime("/spatdifcmd/setWriteTime");
     setWriteTime.appendFloat(10.0);
     oscResponder.forwardOSCMessage(setWriteTime);
@@ -268,5 +266,29 @@ int main(void){
     cout << returnedMessageVector[0].getMessageAsString() << endl;
 
   }
+  cout << "----set/get extentsion data " << endl;
+  {
+    // temporary it is not possible to add extension event via OSC
+    double gain = 0.66666;
+    sdEntityCore* myEntity = scene.getEntity("myEntity");
+    myEntity->addEvent(12.0, SD_MEDIA_GAIN, static_cast<void*>(&gain));
+    
+    cout << "set query time to 12.0." << endl;
+    sdOSCMessage setQueryTime("/spatdifcmd/setQueryTime");
+    setQueryTime.appendFloat(12.0);
+    oscResponder.forwardOSCMessage(setQueryTime);
+
+    sdOSCMessage getEventsSetsFromAllEntities("/spatdifcmd/getEventSetsFromAllEntities");
+    returnedMessageVector = oscResponder.forwardOSCMessage(getEventsSetsFromAllEntities);
+    cout << "number of events found:" << returnedMessageVector.size() << endl;
+    vector<sdOSCMessage>::iterator it = returnedMessageVector.begin();
+
+    while(it != returnedMessageVector.end()){
+      sdOSCMessage mes = *it;
+      cout << mes.getMessageAsString() << endl;
+      it++;
+    }
+  }
+
   return 0;
 }
