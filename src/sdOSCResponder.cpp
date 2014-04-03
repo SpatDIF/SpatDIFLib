@@ -83,14 +83,30 @@ vector<sdOSCMessage> sdOSCResponder::forwardOSCMessage(sdOSCMessage message){
         returnMessageVector.push_back(errorMessage);
         return returnMessageVector;
     }
-    
-    string command = ads[1]; // get the element right after /spatdifcmd
+    string command;
+    EExtension extension = SD_CORE;
+
+    if(ads.size() == 2){ // core or extension
+        command = ads[1]; // get the element right after /spatdifcmd
+    }else if(ads.size() == 3){  // extension
+        string extensionName = ads[1];
+        extension = stringToExtension(extensionName);
+        if(extension == SD_EXTENSION_ERROR){
+            sdOSCMessage errorMessage("/spatdif/error");
+            errorMessage.appendString("No such extension: " + extensionName);
+            returnMessageVector.push_back(errorMessage);
+            return returnMessageVector; 
+        }else{
+            scene->isExtensionActivated(extension);
+            command  = ads[2];
+        }
+    }
     string action =  command.substr(0, 3); //  check if the client try to set or get
 
     if(action == "get"){
         returnMessageVector = getAction(command, message);
     }else if(action == "set"){
-        setAction(command, message);
+        setAction(command, message, extension);
     }else{
         if(command == "addEntity"){
             scene->addEntity(message.getArgumentAsString(0));
@@ -98,6 +114,8 @@ vector<sdOSCMessage> sdOSCResponder::forwardOSCMessage(sdOSCMessage message){
             scene->removeEntity(message.getArgumentAsString(0));
         }else if(command == "removeAllEntities"){
             scene->removeAllEntities();
+        }else if(command == "addExtension"){
+            scene->addExtension(message.getArgumentAsString(0));
         }else{
             sdOSCMessage errorMessage("/spatdif/error");
             errorMessage.appendString("Invalid Comannd");
@@ -300,65 +318,94 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
     return returnMessageVector;
 }
 
-void sdOSCResponder::setAction(string command, sdOSCMessage message){
-    
-    if(command == "setQueryTime"){
-        setQueryTime(static_cast<double>(message.getArgumentAsFloat(0)));
-    }else if(command == "setQueryTimeToNextEvent"){
-        setQueryTime(scene->getNextEventTime(queryTime));
-    }else if(command == "setWriteTime"){
-        setWriteTime(static_cast<double>(message.getArgumentAsFloat(0)));
-    }else if(command == "setInterval"){
-        setInterval(static_cast<double>(message.getArgumentAsFloat(0)));
-    }
-    // core descriptors
-    else if(command == "setPosition"){
-        double dpos[3];
-        float fpos[3];
-        fpos[0] = message.getArgumentAsFloat(1);
-        fpos[1] = message.getArgumentAsFloat(2);
-        fpos[2] = message.getArgumentAsFloat(3);
-        scene->setValue(message.getArgumentAsString(0), writeTime, SD_POSITION, floatsToDoubles(fpos,dpos,3));
-    }else if(command == "setOrientation"){
-        double dori[3];
-        float fori[3];
-        fori[0] = message.getArgumentAsFloat(1);
-        fori[1] = message.getArgumentAsFloat(2);
-        fori[2] = message.getArgumentAsFloat(3);
-        scene->setValue(message.getArgumentAsString(0), writeTime, SD_ORIENTATION, floatsToDoubles(fori,dori,3));
-    }else if(command == "setPresent"){
-        bool flag;
-        flag = static_cast<bool>(message.getArgumentAsInt(1));
-        scene->setValue(message.getArgumentAsString(0), writeTime, SD_PRESENT, &flag);
-    }
-    // scene properties
-    else if(command == "setOrdering"){
-        scene->setOrdering(message.getArgumentAsString(0));
-    }else if(command == "setAuthor"){
-        sdInfo info = scene->getInfo();
-        info.setAuthor(message.getArgumentAsString(0));
-        scene->setInfo(info);
-    }else if(command == "setHost"){
-        sdInfo info = scene->getInfo();
-        info.setHost(message.getArgumentAsString(0));
-        scene->setInfo(info);
-    }else if(command == "setDate"){
-        sdInfo info = scene->getInfo();
-        info.setDate(message.getArgumentAsString(0));
-        scene->setInfo(info);
-    }else if(command == "setLocation"){
-        sdInfo info = scene->getInfo();
-        info.setLocation(message.getArgumentAsString(0));
-        scene->setInfo(info);
-    }else if(command == "setSession"){
-        sdInfo info = scene->getInfo();
-        info.setSession(message.getArgumentAsString(0));
-        scene->setInfo(info);
-    }else if(command == "setAnnotation"){
-        sdInfo info = scene->getInfo();
-        info.setAnnotation(message.getArgumentAsString(0));
-        scene->setInfo(info);
+void sdOSCResponder::setAction(string command, sdOSCMessage message, EExtension extension){
+
+    switch(extension){
+        case SD_MEDIA:{
+            // media extension
+            if(command == "setID"){
+                string id = message.getArgumentAsString(1);
+                scene->setValue(message.getArgumentAsString(0), writeTime, SD_MEDIA_ID, static_cast<void*>(&id));
+            }else if(command == "setType"){
+                string type = message.getArgumentAsString(1);
+                scene->setValue(message.getArgumentAsString(0), writeTime, SD_MEDIA_TYPE, static_cast<void*>(&type));
+            }else if(command == "setLocation"){
+                string location = message.getArgumentAsString(1);
+                scene->setValue(message.getArgumentAsString(0), writeTime, SD_MEDIA_LOCATION, static_cast<void*>(&location));
+            }else if(command == "setChannel"){
+                int channel = message.getArgumentAsInt(1);
+                scene->setValue(message.getArgumentAsString(0), writeTime, SD_MEDIA_CHANNEL, static_cast<void*>(&channel));
+            }else if(command == "setTimeOffset"){
+                double timeOffset = static_cast<double>(message.getArgumentAsFloat(1));
+                scene->setValue(message.getArgumentAsString(0), writeTime, SD_MEDIA_TIME_OFFSET, static_cast<void*>(&timeOffset));
+            }else if(command == "setGain"){
+                double gain = static_cast<double>(message.getArgumentAsFloat(1));
+                scene->setValue(message.getArgumentAsString(0), writeTime, SD_MEDIA_GAIN, static_cast<void*>(&gain));
+            }
+            break;
+        }
+        default:{
+            if(command == "setQueryTime"){
+                setQueryTime(static_cast<double>(message.getArgumentAsFloat(0)));
+            }else if(command == "setQueryTimeToNextEvent"){
+                setQueryTime(scene->getNextEventTime(queryTime));
+            }else if(command == "setWriteTime"){
+                setWriteTime(static_cast<double>(message.getArgumentAsFloat(0)));
+            }else if(command == "setInterval"){
+                setInterval(static_cast<double>(message.getArgumentAsFloat(0)));
+            // core descriptors
+
+            }else if(command == "setPosition"){
+                double dpos[3];
+                float fpos[3];
+                fpos[0] = message.getArgumentAsFloat(1);
+                fpos[1] = message.getArgumentAsFloat(2);
+                fpos[2] = message.getArgumentAsFloat(3);
+                scene->setValue(message.getArgumentAsString(0), writeTime, SD_POSITION, floatsToDoubles(fpos,dpos,3));
+            }else if(command == "setOrientation"){
+                double dori[3];
+                float fori[3];
+                fori[0] = message.getArgumentAsFloat(1);
+                fori[1] = message.getArgumentAsFloat(2);
+                fori[2] = message.getArgumentAsFloat(3);
+                scene->setValue(message.getArgumentAsString(0), writeTime, SD_ORIENTATION, floatsToDoubles(fori,dori,3));
+            }else if(command == "setPresent"){
+                bool flag;
+                flag = static_cast<bool>(message.getArgumentAsInt(1));
+                scene->setValue(message.getArgumentAsString(0), writeTime, SD_PRESENT, static_cast<void*>(&flag));
+            }
+            // scene properties
+            else if(command == "setOrdering"){
+                scene->setOrdering(message.getArgumentAsString(0));
+            }else if(command == "setAuthor"){
+                sdInfo info = scene->getInfo();
+                info.setAuthor(message.getArgumentAsString(0));
+                scene->setInfo(info);
+            }else if(command == "setHost"){
+                sdInfo info = scene->getInfo();
+                info.setHost(message.getArgumentAsString(0));
+                scene->setInfo(info);
+            }else if(command == "setDate"){
+                sdInfo info = scene->getInfo();
+                info.setDate(message.getArgumentAsString(0));
+                scene->setInfo(info);
+            }else if(command == "setLocation"){
+                sdInfo info = scene->getInfo();
+                info.setLocation(message.getArgumentAsString(0));
+                scene->setInfo(info);
+            }else if(command == "setSession"){
+                sdInfo info = scene->getInfo();
+                info.setSession(message.getArgumentAsString(0));
+                scene->setInfo(info);
+            }else if(command == "setAnnotation"){
+                sdInfo info = scene->getInfo();
+                info.setAnnotation(message.getArgumentAsString(0));
+                scene->setInfo(info);
+            }
+            break;
+        }
     }
 }
+
 
     

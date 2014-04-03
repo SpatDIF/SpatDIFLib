@@ -23,7 +23,6 @@ int main(void){
   using namespace std;
   
   sdScene scene;
-  scene.addExtension(SD_MEDIA);
   sdOSCResponder oscResponder(&scene);
   std::cout.setf( std::ios::showpoint );  
   vector<sdOSCMessage> returnedMessageVector;
@@ -210,6 +209,68 @@ int main(void){
       it++;
     }
   }
+  cout << "----set/get extentsion data " << endl;
+  {
+
+   //activate 
+  	sdOSCMessage addExtension("/spatdifcmd/addExtension");
+  	addExtension.appendString("media");
+  	oscResponder.forwardOSCMessage(addExtension);
+
+    sdOSCMessage getNumberOfActivatedExtensions("/spatdifcmd/getNumberOfActivatedExtensions");
+    returnedMessageVector = oscResponder.forwardOSCMessage(getNumberOfActivatedExtensions);
+    cout << returnedMessageVector[0].getMessageAsString() << endl;
+
+	sdOSCMessage setWriteTime("/spatdifcmd/setWriteTime");
+	setWriteTime.appendFloat(15.0);
+	oscResponder.forwardOSCMessage(setWriteTime);
+
+    sdOSCMessage setID("/spatdifcmd/media/setID");
+    setID.appendString("myEntity");
+    setID.appendString("piano");
+    oscResponder.forwardOSCMessage(setID);
+
+    sdOSCMessage setType("/spatdifcmd/media/setType");
+    setType.appendString("myEntity");
+    setType.appendString("file");
+    oscResponder.forwardOSCMessage(setType);
+
+    sdOSCMessage setLocation("/spatdifcmd/media/setLocation");
+    setLocation.appendString("myEntity");
+    setLocation.appendString("/Users/spat/Music/piano.aif");
+    oscResponder.forwardOSCMessage(setLocation);
+
+    sdOSCMessage setChannel("/spatdifcmd/media/setChannel");
+    setChannel.appendString("myEntity");
+    setChannel.appendInt(1);
+    oscResponder.forwardOSCMessage(setChannel);
+
+    sdOSCMessage setTimeOffset("/spatdifcmd/media/setTimeOffset");
+    setTimeOffset.appendString("myEntity");
+    setTimeOffset.appendFloat(12.4);
+    oscResponder.forwardOSCMessage(setTimeOffset);
+
+   	sdOSCMessage setGain("/spatdifcmd/media/setGain");
+    setGain.appendString("myEntity");
+    setGain.appendFloat(0.5);
+    oscResponder.forwardOSCMessage(setGain);
+
+    cout << "set query time to 15.0." << endl;
+    sdOSCMessage setQueryTime("/spatdifcmd/setQueryTime");
+    setQueryTime.appendFloat(15.0);
+    oscResponder.forwardOSCMessage(setQueryTime);
+
+    sdOSCMessage getEventsSetsFromAllEntities("/spatdifcmd/getEventSetsFromAllEntities");
+    returnedMessageVector = oscResponder.forwardOSCMessage(getEventsSetsFromAllEntities);
+    cout << "number of events found:" << returnedMessageVector.size() << endl;
+    vector<sdOSCMessage>::iterator it = returnedMessageVector.begin();
+
+    while(it != returnedMessageVector.end()){
+      sdOSCMessage mes = *it;
+      cout << mes.getMessageAsString() << endl;
+      it++;
+    }
+  }
   cout << "----set/get metadata " << endl;
   {
     sdOSCMessage returnedMessage;
@@ -261,34 +322,10 @@ int main(void){
     returnedMessageVector = oscResponder.forwardOSCMessage(getAnnotation);
     cout << returnedMessageVector[0].getMessageAsString() << endl;
 
-    sdOSCMessage getNumberOfActivatedExtensions("/spatdifcmd/getNumberOfActivatedExtensions");
-    returnedMessageVector = oscResponder.forwardOSCMessage(getNumberOfActivatedExtensions);
-    cout << returnedMessageVector[0].getMessageAsString() << endl;
+
 
   }
-  cout << "----set/get extentsion data " << endl;
-  {
-    // temporary it is not possible to add extension event via OSC
-    double gain = 0.66666;
-    sdEntityCore* myEntity = scene.getEntity("myEntity");
-    myEntity->addEvent(12.0, SD_MEDIA_GAIN, static_cast<void*>(&gain));
-    
-    cout << "set query time to 12.0." << endl;
-    sdOSCMessage setQueryTime("/spatdifcmd/setQueryTime");
-    setQueryTime.appendFloat(12.0);
-    oscResponder.forwardOSCMessage(setQueryTime);
-
-    sdOSCMessage getEventsSetsFromAllEntities("/spatdifcmd/getEventSetsFromAllEntities");
-    returnedMessageVector = oscResponder.forwardOSCMessage(getEventsSetsFromAllEntities);
-    cout << "number of events found:" << returnedMessageVector.size() << endl;
-    vector<sdOSCMessage>::iterator it = returnedMessageVector.begin();
-
-    while(it != returnedMessageVector.end()){
-      sdOSCMessage mes = *it;
-      cout << mes.getMessageAsString() << endl;
-      it++;
-    }
-  }
+  
 
   return 0;
 }

@@ -136,7 +136,11 @@ public:
     /*! returns the number of entity in the entityVector*/
     unsigned int getNumberOfEntities(void);
     
-    /*! add a sdEntityCore to this scene. this function is the only way to generate an instance of sdEntityCore because the constructor of sdEntityCore is intentionally declared as a private function. Thus, the constcutor can be called only by its friend i.e. this class. This prevent users to create entities not attached to any sdScene. Thus, all sdSceneCore are always aware of the list of activated extensions.this function returns a pointer to the new instance of sdEntityCore.
+    /*! add a sdEntityCore to this scene. this function is the only way to generate an instance of sdEntityCore because the
+     constructor of sdEntityCore is intentionally declared as a private function. Thus, the constcutor can be called only by
+      its friend i.e. this class. This prevent users to create entities not attached to any sdScene. 
+      Thus, all sdSceneCore are always aware of the list of activated extensions.
+      this function returns a pointer to the new instance of sdEntityCore.
         @param name the name of new sdEntityCore
      */
     sdEntityCore* addEntity(string name, EKind kind = SD_SOURCE);
@@ -217,8 +221,8 @@ public:
      @param extension enum EExtension of extension to be checked
      */
     bool isExtensionActivated(EExtension extension);
+    bool isExtensionActivated(string extensionString);
 
-    
     /*! deactivate an extension specified by enum EExtension. This function removes instances of the designated extension (i.e. a subclass of sdEntityExtension )  attached  to all existing sdEntityCores in the scene.
         Thus, all events data stored in the extension will be lost.
      @param extension enum EExtension of extension to be removed

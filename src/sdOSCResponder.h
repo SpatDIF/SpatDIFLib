@@ -49,7 +49,7 @@ private:
     /*! private utility function for spliting strings by slash */
     vector <string> splitString(const string &str);
     vector<sdOSCMessage> getAction(string command, sdOSCMessage message);
-    void setAction(string command, sdOSCMessage message);
+    void setAction(string command, sdOSCMessage message, EExtension extension);
 
 public:
     

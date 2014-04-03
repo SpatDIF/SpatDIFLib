@@ -186,6 +186,11 @@ bool sdScene::isExtensionActivated(EExtension extension){
     return false;
 }
 
+bool sdScene::isExtensionActivated(string extensionString){
+    EExtension extension = stringToExtension(extensionString);
+    return isExtensionActivated(extension);
+}
+
 void sdScene::removeExtension(EExtension extension){
 
     vector <EExtension>::iterator it = activatedExtensionVector.begin();
