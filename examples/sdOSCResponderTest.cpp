@@ -221,9 +221,9 @@ int main(void){
     returnedMessageVector = oscResponder.forwardOSCMessage(getNumberOfActivatedExtensions);
     cout << returnedMessageVector[0].getMessageAsString() << endl;
 
-	sdOSCMessage setWriteTime("/spatdifcmd/setWriteTime");
-	setWriteTime.appendFloat(15.0);
-	oscResponder.forwardOSCMessage(setWriteTime);
+    sdOSCMessage setWriteTime("/spatdifcmd/setWriteTime");
+    setWriteTime.appendFloat(15.0);
+    oscResponder.forwardOSCMessage(setWriteTime);
 
     sdOSCMessage setID("/spatdifcmd/media/setID");
     setID.appendString("myEntity");
@@ -270,6 +270,18 @@ int main(void){
       cout << mes.getMessageAsString() << endl;
       it++;
     }
+  }
+  cout << "----set a value to an unknown entity-----" << endl;
+  {
+    sdOSCMessage setUnknown("/spatdifcmd/setPosition");
+    setUnknown.appendString("unknownEntity");
+    float pos[3] = {1.0, 2.0, 3.0};
+    setUnknown.appendFloats(pos, 3);
+    oscResponder.forwardOSCMessage(setUnknown);
+
+    sdOSCMessage getEntityNames("/spatdifcmd/getEntityNames");
+    returnedMessageVector = oscResponder.forwardOSCMessage(getEntityNames);
+    cout << returnedMessageVector[0].getMessageAsString() << endl;
   }
   cout << "----set/get metadata " << endl;
   {

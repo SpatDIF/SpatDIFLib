@@ -181,6 +181,7 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
                     case SD_MEDIA_CHANNEL:{
                         int *channel = static_cast<int*>(event->getValue());
                         returnMessage.appendInt(*channel);
+                        returnMessageVector.push_back(returnMessage);
                         break;
                     }
                     case SD_MEDIA_TIME_OFFSET:
