@@ -130,22 +130,6 @@ string sdSaver::XMLFromScene(sdScene *scene){
                 allEventSet.insert(globalEvent); // gather pointer to all existing instances of sdEvent
                 ++iit;
             }
-            // extension event
-            vector <sdEntityExtension*> extensionVector = entity->getExtensionVector();
-            vector <sdEntityExtension*>::iterator evit = extensionVector.begin();
-            while (evit != extensionVector.end()) {
-                sdEntityExtension* attachedExtension = *evit;
-                multiset<sdEvent*, sdEventCompare> extEventSet = attachedExtension->getEventSet();
-                multiset<sdEvent*, sdEventCompare>::iterator aeit = extEventSet.begin();
-                while (aeit != extEventSet.end()) {
-                    sdEvent* extEvent = *aeit;
-                    sdGlobalEvent globalExtEvent(extEvent, entity->getName(), entity->getKind());
-                    allEventSet.insert(globalExtEvent);
-                    ++aeit;
-                }
-                evit++;
-            }
-            
             ++it;
         }
 
@@ -156,13 +140,12 @@ string sdSaver::XMLFromScene(sdScene *scene){
         XMLElement* extension;
         XMLElement* kind;
 
-        
         multiset<sdGlobalEvent, sdGlobalEventCompare>::iterator eit = allEventSet.begin();
         while(eit != allEventSet.end()){
             sdGlobalEvent event = *eit;
 
             //time tag
-            if(event.getEvent()->getTime() != previousTime){ // next time tag
+            if(event.getEvent()->getTime() != previousTime){ // if not same as the previous time tag, make a new time tag
                 XMLElement* time = xml.NewElement("time");
                 XMLText* timeText = xml.NewText(event.getEvent()->getTimeAsString().c_str());
                 time->InsertEndChild(timeText);
@@ -170,47 +153,45 @@ string sdSaver::XMLFromScene(sdScene *scene){
             }
             
             //event
-            if(event.getEvent()->getTime() != previousTime || event.getEntityName() != previousName){
+            if((event.getEvent()->getTime() != previousTime) || (event.getEntityName() != previousName)){
                 // if name of entity or time tag changes we need to write many tags!
                 
                 kind = xml.NewElement(event.getKindAsString().c_str());
                 
                 // the name of entity always comes first
-                XMLElement* name = xml.NewElement("name");
+                XMLElement* name = xml.NewElement("name"); // entity name
                 XMLText* nameText = xml.NewText(event.getEntityName().c_str());
                 name->InsertEndChild(nameText);
                 kind->InsertEndChild(name);
-                previousName = event.getEntityName();
             }
             
+            // packaging - combining element and text (value)
             XMLElement* element = xml.NewElement(event.getEvent()->getDescriptorAsString().c_str());
             XMLText* text = xml.NewText(event.getEvent()->getValueAsString().c_str());
-            string relevantExtension = extensionToString(getRelevantExtension(event.getEvent()->getDescriptor()));
-
             element->InsertEndChild(text);
+
+            string relevantExtension = extensionToString(getRelevantExtension(event.getEvent()->getDescriptor()));
 
             if(relevantExtension == "core"){
                 kind->InsertEndChild(element);
                 spatdif->InsertEndChild(kind);
-                previousExtension = relevantExtension;
             }else{
-                if(previousExtension != relevantExtension){
+                
+                if( (event.getEvent()->getTime() != previousTime) ||  (event.getEntityName() != previousName ) || (previousExtension != relevantExtension)){
+                    // if different entity, time, or extension from the previous put extension tag
                     extension = xml.NewElement((relevantExtension).c_str());
-                    extension->InsertEndChild(element);
-                    kind->InsertEndChild(extension);
-                    spatdif->InsertEndChild(kind);
-                }else{
-                    extension->InsertEndChild(element);
-                    kind->InsertEndChild(extension);
-                    spatdif->InsertEndChild(kind);
+                    cout << "extension " << endl;
                 }
+                extension->InsertEndChild(element);
+                kind->InsertEndChild(extension);
+                spatdif->InsertEndChild(kind);
             }
 
+            previousName = event.getEntityName(); // store current name in order to avoid the dupplication.
+            previousExtension = relevantExtension;
             ++eit;
             
-            previousExtension = relevantExtension;
             previousTime = event.getEvent()->getTime();
-
         }
 
     }else if(scene->getOrdering() == SD_TRACK){
@@ -249,7 +230,7 @@ string sdSaver::XMLFromScene(sdScene *scene){
             ++it;
         }
     }
-    
+
     XMLPrinter printer;
     xml.Print(&printer);
     return string(printer.CStr());

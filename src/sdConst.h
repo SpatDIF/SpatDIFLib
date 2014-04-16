@@ -237,6 +237,11 @@ inline const string descriptorToString(EDescriptor descriptor, const string *ds,
     return NULL;
 }
 
+/**
+ * @brief converts enum EExtension to string
+ * @param extension [description]
+ * @return [description]
+ */
 inline const string extensionToString(EExtension extension){
     string extensionStr;
     if(extension == SD_MEDIA){
@@ -253,6 +258,11 @@ inline const string extensionToString(EExtension extension){
     return extensionStr;
 }
 
+/**
+ * @brief converts string to enum EExtension
+ * @param extensionStr the name of extension in string 
+ * @return enum EExtension that represents the type of extension
+ */
 inline  EExtension stringToExtension(string extensionStr){
     EExtension ext;
     if(extensionStr == "media"){
@@ -267,6 +277,11 @@ inline  EExtension stringToExtension(string extensionStr){
     return ext;
 }
 
+/**
+ * @brief returns type of extension associated to the given descriptor. if no extension found, returns SD_EXTENSION_ERROR.
+ * @param descriptor an extension which includes this descriptor will be returned
+ * @return extension associated to the given descriptor
+ */
 inline EExtension getRelevantExtension(EDescriptor descriptor){
     if(SD_TYPE <= descriptor && descriptor <= SD_ORIENTATION){
         return SD_CORE;

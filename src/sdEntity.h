@@ -24,8 +24,8 @@
 
 using namespace std;
 
-/*!
- A pure virtual class of event. This class maintains data of time, descriptor, and value and responsible for converting incoming and outgoing data.
+/**
+ * @brief  A pure virtual class of event. This class maintains data of time, descriptor, and value and responsible for converting incoming and outgoing data.
  */
 
 class sdEvent{
