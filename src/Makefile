@@ -37,16 +37,9 @@ tinyxml2.o: $(TXML_PATH)/$(TXML_FILES)
 libjson: $(JSON_PATH)/$(JSON_MAKE)
 	make -C $(JSON_PATH)
 
-libspatdif.so: $(FILES)
-	$(CC) $(CFLAGS) -o $@ -shared $(LIBS) $(INCLUDE_PATH) tinyxml2.o libjson.a
-
 libspatdif.dylib: $(FILES)
-	$(CC) $(CFLAGS) -o $@ -dynamiclib -flat_namespace $(LIBS) $(INCLUDE_PATH) tinyxml2.o $(JSON_OBJECT_PATH)/*.o $(FILES)
-
-# static library
-libspatdif.a: tinyxml2.o libjson $(FILES)
-	$(CC) $(CFLAGS) -c $(LIBS) $(INCLUDE_PATH) $(FILES)
-	ar rv $@ *.o $(JSON_OBJECT_PATH)/*.o
+	$(CC) $(CFLAGS) $(LIBS) $(INCLUDE_PATH) -c $(FILES)
+	$(CC) $(CFLAGS) -o $@ -dynamiclib -flat_namespace *.o $(JSON_OBJECT_PATH)/*.o 
 
 install:
 	-@make install_$(UNAME)
@@ -62,9 +55,9 @@ clean:
 	-@make clean_$(UNAME)
 
 clean_Linux:
-	rm *.so *.o *.a
+	rm *.so *.o
 	cd ../examples; make clean
 
 clean_Darwin:
-	rm *.dylib *.o *a
+	rm *.dylib *.o
 	cd ../src/libs/libjson ;make clean
