@@ -24,7 +24,7 @@ all:
 
 Darwin: tinyxml2.o libjson libspatdif.dylib 
 	cp libspatdif.dylib ../examples
-	install_name_tool -id @loader_path/../Resources/libspatdif.dylib libspatdif.dylib # PD external needs this
+	# install_name_tool -id @loader_path/../Resources/libspatdif.dylib libspatdif.dylib # PD external needs this
 	# install_name_tool -id @loader_path/../../spatdiflib/src/libspatdif.dylib libspatdif.dylib # Max externals needs this
 	cp libspatdif.dylib libspatdif.dylib.dSYM/Contents/resources/DWARF/
 
