@@ -20,28 +20,52 @@
 int main(void){
 
 	sdInfo *info = sdInfo_new();
-	char author[] = "johannes";
-	char location[] = "cologne";
-	char annotation[] = "this is test";
-	char session[] = "1.2";
-	char date[] = "2014-5-31";
-	char host[] = "myHost";
+	char author1[] = "johannes";
+	char host1[] = "myHost";
+	char date1[] = "2014-5-31";
+	char session1[] = "1.2";
+	char location1[] = "cologne";
+	char annotation1[] = "this is first test";
 
-	sdInfo_setAuthor(info, author);
-	sdInfo_setLocation(info, location);
-	sdInfo_setAnnotation(info, annotation);
-	sdInfo_setSession(info, session);
-	sdInfo_setDateWithString(info, date);
-	sdInfo_setHost(info, host);
+	char author2[] = "thomas";
+	char host2[] = "yourHost";
+	char date2[] = "2014-6-1";
+	char session2[] = "1.3";
+	char location2[] = "zuerich";
+	char annotation2[] = "this is second test";
 
+
+	sdInfo_setAuthor(info, author1);
+	sdInfo_setHost(info, host1);
+	sdInfo_setDateWithString(info, date1);
+	sdInfo_setSession(info, session1);
+	sdInfo_setLocation(info, location1);
+	sdInfo_setAnnotation(info, annotation1);
 
 	printf("---info---\n");
 	printf("author:%s\n", sdInfo_getAuthor(info));
+	printf("host:%s\n",sdInfo_getHost(info));
+	printf("date:%s\n",sdInfo_getDateAsString(info));
+	printf("session:%s\n",sdInfo_getSession(info));
 	printf("location:%s\n", sdInfo_getLocation(info));
 	printf("annotation:%s\n", sdInfo_getAnnotation(info));
-	printf("session:%s\n",sdInfo_getSession(info));
-	printf("date:%s\n",sdInfo_getDateAsString(info));
+
+	sdInfo_set(info, author2, host2, date2, session2, location2, annotation2 );
+
+	printf("---info---\n");
+	printf("author:%s\n", sdInfo_getAuthor(info));
 	printf("host:%s\n",sdInfo_getHost(info));
+	printf("date:%s\n",sdInfo_getDateAsString(info));
+	printf("session:%s\n",sdInfo_getSession(info));
+	printf("location:%s\n", sdInfo_getLocation(info));
+	printf("annotation:%s\n", sdInfo_getAnnotation(info));
+
+	// create an instance of sdDate manually and pass it to get Date.
+	sdDate *date = sdDate_new(0,0,0);
+	sdInfo_getDate(info, date);
+
+	printf("%d/%d/%d \n", sdDate_getYear(date), sdDate_getMonth(date), sdDate_getDay(date));
+
 
 	return 0;
 }

@@ -47,6 +47,15 @@ extern "C" {
     	info->setSession(string(session));
     }
 
+	void sdInfo_set(sdInfo* info, char* author, char* host, char* dateString, char* session, char* location, char* annotation){
+		sdInfo_setAuthor(info, author);
+		sdInfo_setHost(info, host);
+		sdInfo_setDateWithString(info, dateString);
+		sdInfo_setSession(info, session);
+		sdInfo_setLocation(info, location);
+		sdInfo_setAnnotation(info, annotation);
+	}
+
     const char* sdInfo_getAuthor(sdInfo* info){
     	return info->getAuthor().c_str();
     }
@@ -69,5 +78,12 @@ extern "C" {
 
     const char* sdInfo_getSession(sdInfo* info){
     	return info->getSession().c_str();
+    }
+
+    void sdInfo_getDate(sdInfo* info, sdDate *date){
+    	sdDate infoDate = info->getDate();
+    	date->setYear(infoDate.getYear());
+    	date->setMonth(infoDate.getMonth());
+    	date->setDay(infoDate.getDay());
     }
 }
