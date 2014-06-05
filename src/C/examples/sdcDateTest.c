@@ -40,8 +40,6 @@ int main(void){
 	sdDate_setDateWithString(date, dateC);
 	printf("date C: %u-%u-%u\n", sdDate_getYear(date), sdDate_getMonth(date), sdDate_getDay(date));
 
-
-
 	return 0;
 }
 

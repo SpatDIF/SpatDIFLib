@@ -5,7 +5,7 @@ LIB_PATH = ../
 LIBS =  -lstdc++ -lspatdif
 TARGET = libspatDIFC.a
 
-all:  sdcDate.c
+all:  sdcDate.c sdcInfo.c
 	$(CC) -c $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) $? $(LIBS) 
 	libtool -static -o $(TARGET) *.o
 	make -C ./examples
