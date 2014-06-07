@@ -21,6 +21,7 @@
 extern "C" {
 #endif
 
+#include "sdInfo_c.h"
 #include "sdScene_c.h"
 // sdScene dummy
 typedef struct sdScene sdScene;
@@ -28,9 +29,7 @@ typedef struct sdScene sdScene;
 // wrapper functions 
 sdScene* sdScene_new();
 void sdScene_setInfo(sdScene* scene, sdInfo* info);
-void sdScene_getInfo(sdScene* scene);
-EOrdering sdScene_getOrdering();
-char* getOrderingAsString();
+const char* getOrderingAsString(sdScene* scene);
 
 
 
