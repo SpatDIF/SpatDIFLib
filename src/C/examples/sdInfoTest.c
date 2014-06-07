@@ -14,7 +14,7 @@
  */
 
 
-#include "sdcInfo.h"
+#include "sdInfo_c.h"
 #include <stdio.h>
 
 int main(void){

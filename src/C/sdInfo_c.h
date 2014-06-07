@@ -1,4 +1,4 @@
-/** @file
+ /** @file
  *
  * @ingroup spatdiflib
  *
@@ -13,15 +13,15 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef ____sdInfo_
-#define ____sdInfo_
+#ifndef ____sdInfo_c_
+#define ____sdInfo_c_
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "sdcDate.h"
+#include "sdDate_c.h"
 // sdInfo dummy
 typedef struct sdInfo sdInfo;
 

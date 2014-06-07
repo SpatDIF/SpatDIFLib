@@ -13,8 +13,8 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef ____sdcDate_
-#define ____sdcDate_
+#ifndef ____sdDate_c_
+#define ____sdDate_c_
 
 
 #ifdef __cplusplus

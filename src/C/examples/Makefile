@@ -4,15 +4,15 @@ INCLUDE = -I../ -I../..
 LIB_PATH = /usr/local/lib
 LIBS =  -lstdc++ -lspatdif
 WRAPPER = ../libspatDIFC.a
-TARGETS = sdcDateTest.out sdcInfoTest.out
+TARGETS = sdDateTest.out sdInfoTest.out
 
 
 all: $(TARGETS)
 
-sdcDateTest.out: sdcDateTest.c
+sdDateTest.out: sdDateTest.c
 	$(CC) $(CFLAGS) $(INCLUDE) -L$(LIB_PATH) -o $@ $? $(WRAPPER) $(LIBS) 
 
-sdcInfoTest.out: sdcInfoTest.c
+sdInfoTest.out: sdInfoTest.c
 	$(CC) $(CFLAGS) $(INCLUDE) -L$(LIB_PATH) -o $@ $? $(WRAPPER) $(LIBS) 
 
 clean:

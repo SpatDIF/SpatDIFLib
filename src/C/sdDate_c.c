@@ -1,4 +1,4 @@
-/** @file
+ /** @file
  *
  * @ingroup spatdiflib
  *
@@ -14,7 +14,7 @@
  */
 
 #include "sdDate.h"
-#include "sdcDate.h"
+#include "sdDate_c.h"
 #include <string.h>
 
 extern "C" {

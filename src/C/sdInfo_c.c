@@ -14,7 +14,7 @@
  */
 
 #include "sdInfo.h"
-#include "sdcInfo.h"
+#include "sdInfo_c.h"
 #include <string.h>
 
 extern "C" {

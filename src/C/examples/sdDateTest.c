@@ -14,7 +14,7 @@
  */
 
 
-#include "sdcDate.h"
+#include "sdDate_c.h"
 #include <stdio.h>
 
 int main(void){
