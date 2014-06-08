@@ -17,18 +17,35 @@
 #include "sdLoader_c.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(void){
 
 	char* loadedString;
+	char temp[512];
+	sdScene *scene = sdScene_new();
+	unsigned int length = 0;
+
+
 	FILE *fptr = fopen("turenas_insect.xml", "r");
 	if(!fptr){
 		printf("sdLoader: file open error\n");
 		exit(EXIT_FAILURE);
 	}
-
+	while(fgets(temp, 512, fptr) != NULL){
+		length += strlen(temp);
+		realloc(loadedString, length * sizeof(char));
+		if(!loadedString){
+			printf("sdLoader: loadedString allocation error\n");
+			exit(EXIT_FAILURE);
+		}
+		strcat(loadedString, temp);
+	}
 	fclose(fptr);
-	sdScene *scene = sdLoader_sceneFromXML(loadedString);
+	free(loadedString); 
+
+	// load a scene from the loadedString to scene
+	//sdLoader_sceneFromXML(scene, loadedString);
 
 	return 0;
 }

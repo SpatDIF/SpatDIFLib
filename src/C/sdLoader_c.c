@@ -18,15 +18,15 @@
 #include "sdScene_c.h"
 
  extern "C" {
- 	sdScene* sdLoader_sceneFromXML(char* xmlString){
- 		return sdLoader::sceneFromXML(xmlString);
+ 	void sdLoader_sceneFromXML(sdScene *scene, char* xmlString){
+ 		sdScene loadedScene = sdLoader::sceneFromXML(xmlString);
  	}
 
-	sdScene* sdLoader_sceneFromJSON(char* jsonString){
- 		return sdLoader::sceneFromJSON(jsonString);
+	void sdLoader_sceneFromJSON(sdScene *scene, char* jsonString){
+ 		sdScene loadedScene = sdLoader::sceneFromJSON(jsonString);
  	}
 
- 	sdScene* sdLoader_sceneFromYAML(char* yamlString){
- 		return sdLoader::sceneFromYAML(yamlString);
+ 	void sdLoader_sceneFromYAML(sdScene *scene, char* yamlString){
+ 		sdScene loadedScene = sdLoader::sceneFromYAML(yamlString);
  	}
 }

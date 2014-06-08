@@ -26,9 +26,9 @@ extern "C" {
 typedef struct sdLoader sdLoader;
 
 // wrapper functions 
-sdScene* sdLoader_sceneFromXML(char* xmlString);
-sdScene* sdLoader_sceneFromJSON(char* jsonString);
-sdScene* sdLoader_sceneFromYAML(char* yamlString);
+void sdLoader_sceneFromXML(sdScene *scene, char* xmlString);
+void sdLoader_sceneFromJSON(sdScene *scene, char* jsonString);
+void sdLoader_sceneFromYAML(sdScene *scene, char* yamlString);
 
 #ifdef __cplusplus
 }
