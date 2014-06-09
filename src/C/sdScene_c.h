@@ -29,7 +29,8 @@ typedef struct sdScene sdScene;
 // wrapper functions 
 sdScene* sdScene_new();
 void sdScene_setInfo(sdScene* scene, sdInfo* info);
-const char* getOrderingAsString(sdScene* scene);
+void sdScene_getInfo(sdScene* scene, sdInfo* info);
+const char* sdScene_getOrderingAsString(sdScene* scene);
 
 
 

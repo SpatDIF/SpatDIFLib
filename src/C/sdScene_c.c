@@ -25,7 +25,11 @@
  		scene->setInfo(*info);
  	}
 
- 	const char* getOrderingAsString(sdScene* scene){
+  	void sdScene_getInfo(sdScene* scene, sdInfo* info){
+ 		*info = scene->getInfo();
+ 	}
+
+ 	const char* sdScene_getOrderingAsString(sdScene* scene){
  		string type = scene->getOrderingAsString();
  		return type.c_str();
  	}
