@@ -34,8 +34,14 @@ int main(void){
 	printInfo(info);
 
 	printf("ordering: %s\n",sdScene_getOrderingAsString(scene));
-	printf("number of activated extensions: %d\n", sdScene_getNumberOfActivatedExtensions(scene));
+
 	printf("number of entities: %d\n", sdScene_getNumberOfEntities(scene));
+
+	sdScene_addExtension(scene, "media");
+	printf("number of activated extensions: %d\n", sdScene_getNumberOfActivatedExtensions(scene));
+	if(sdScene_isExtensionActivated(scene, "media")){
+		printf("media extension activated\n");
+	}
 
 	sdScene_removeAllEntities(scene);
 
