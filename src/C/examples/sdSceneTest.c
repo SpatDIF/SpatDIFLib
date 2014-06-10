@@ -34,6 +34,11 @@ int main(void){
 	printInfo(info);
 
 	printf("ordering: %s\n",sdScene_getOrderingAsString(scene));
+	printf("number of activated extensions: %d\n", sdScene_getNumberOfActivatedExtensions(scene));
+	printf("number of entities: %d\n", sdScene_getNumberOfEntities(scene));
+
+	sdScene_removeAllEntities(scene);
+
 
 	return 0;
 }

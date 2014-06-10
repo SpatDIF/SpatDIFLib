@@ -34,5 +34,21 @@
  		return type.c_str();
  	}
 
+ 	int sdScene_getNumberOfEntities(sdScene* scene){
+ 		return scene->getNumberOfEntities();
+ 	}
+
+	void sdScene_removeEntity(sdScene* scene, const char* entityName){
+		scene->removeEntity(entityName);
+	}
+
+	void sdScene_removeAllEntities(sdScene* scene){
+		scene->removeAllEntities();
+	}
+
+	int sdScene_getNumberOfActivatedExtensions(sdScene* scene){
+		return scene->getNumberOfActivatedExtensions();
+	}
+
 
 }

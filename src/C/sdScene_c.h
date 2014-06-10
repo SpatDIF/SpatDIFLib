@@ -33,6 +33,10 @@ void sdScene_getInfo(sdScene* scene, sdInfo* info);
 const char* sdScene_getOrderingAsString(sdScene* scene);
 
 
+int sdScene_getNumberOfEntities(sdScene* scene);
+void sdScene_removeEntity(sdScene* scene, const char* entityName);
+void sdScene_removeAllEntities(sdScene* scene);
+int sdScene_getNumberOfActivatedExtensions(sdScene* scene);
 
 #ifdef __cplusplus
 }
