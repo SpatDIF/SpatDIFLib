@@ -32,11 +32,18 @@ void sdScene_setInfo(sdScene* scene, sdInfo* info);
 void sdScene_getInfo(sdScene* scene, sdInfo* info);
 const char* sdScene_getOrderingAsString(sdScene* scene);
 
-
+//sdEntityCore* sdScene_addSourceEntity();
 int sdScene_getNumberOfEntities(sdScene* scene);
 void sdScene_removeEntity(sdScene* scene, const char* entityName);
 void sdScene_removeAllEntities(sdScene* scene);
 int sdScene_getNumberOfActivatedExtensions(sdScene* scene);
+
+void sdScene_addExtension(sdScene* scene, const char* extension);
+int sdScene_isExtensionActivated(sdScene* scene, const char* extension);
+void sdScene_removeExtension(sdScene* scene, const char* extension);
+void sdScene_removeAllExtensions(sdScene* scene);
+
+void sdScene_dump(sdScene* scene, char* dumpString);
 
 #ifdef __cplusplus
 }

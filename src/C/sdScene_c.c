@@ -33,6 +33,9 @@
  		string type = scene->getOrderingAsString();
  		return type.c_str();
  	}
+    // sdEntityCore* sdScene_addSourceEntity(sdScene* scene, const char* name){
+    // 	return  scene->addEntity(name, SD_SOURCE);
+    // }
 
  	int sdScene_getNumberOfEntities(sdScene* scene){
  		return scene->getNumberOfEntities();
@@ -49,6 +52,23 @@
 	int sdScene_getNumberOfActivatedExtensions(sdScene* scene){
 		return scene->getNumberOfActivatedExtensions();
 	}
+	
+	void sdScene_addExtension(sdScene* scene, const char* extension){
+		scene->addExtension(extension);
+	}
 
+	int sdScene_isExtensionActivated(sdScene* scene, const char* extension){
+		scene->isExtensionActivated(string(extension));
+	}
+	void sdScene_removeExtension(sdScene* scene, const char* extension){
+		scene->removeExtension(extension);
+	}
+	void sdScene_removeAllExtensions(sdScene* scene){
+		scene->removeAllExtensions();
+	}
+
+	void sdScene_dump(sdScene* scene, char* dumpString){
+		string str = scene->dump(false);
+	}
 
 }

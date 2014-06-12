@@ -202,7 +202,6 @@ void sdScene::removeExtension(EExtension extension){
         it++;
     }
     cout << "sdScene Error: No such activated extension." << endl;
-
 }
 
 void sdScene::removeExtension(string extension){
@@ -211,6 +210,10 @@ void sdScene::removeExtension(string extension){
         cout << "sdScene Error: No such activated extension." << endl;
     }
     removeExtension(ext);
+}
+
+void sdScene::removeAllExtensions(){
+    activatedExtensionVector.clear();
 }
 
 vector<sdReport> sdScene::getNextEventSetsFromAllEntities(double time){

@@ -42,8 +42,13 @@ int main(void){
 	if(sdScene_isExtensionActivated(scene, "media")){
 		printf("media extension activated\n");
 	}
+	sdScene_removeExtension(scene, "media");
+	printf("number of activated extensions: %d\n", sdScene_getNumberOfActivatedExtensions(scene));
+	sdScene_addExtension(scene, "media");
+	printf("number of activated extensions: %d\n", sdScene_getNumberOfActivatedExtensions(scene));
 
-	sdScene_removeAllEntities(scene);
+	sdScene_removeAllExtensions(scene);
+	printf("number of activated extensions: %d\n", sdScene_getNumberOfActivatedExtensions(scene));
 
 
 	return 0;
