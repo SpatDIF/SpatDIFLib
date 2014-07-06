@@ -92,8 +92,8 @@ public:
      */
     static const EExtension extensionName; /*< identification of the class */
     static const string extensionNameAsString; /*< identification of the class */
-    static const int numberOfRelevantDescriptors;
-    static const sdDescriptor relevantDescriptors[];
+    static const int numberOfDescriptors;
+    static const sdDescriptor descriptors[];
   
     /*! @name Event handling
      @{

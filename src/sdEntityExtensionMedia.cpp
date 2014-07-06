@@ -69,9 +69,9 @@ sdEventExtensionMedia::~sdEventExtensionMedia(){
 
 // returns descriptor of the event as a string
 string sdEventExtensionMedia::getDescriptorAsString(void){
-    for(int i = 0; i< sdEntityExtensionMedia::numberOfRelevantDescriptors; i++){
-        if(sdEntityExtensionMedia::relevantDescriptors[i].getDescriptor() == descriptor){
-            return sdEntityExtensionMedia::relevantDescriptors[i].getDescriptorAsString();
+    for(int i = 0; i< sdEntityExtensionMedia::numberOfDescriptors; i++){
+        if(sdEntityExtensionMedia::descriptors[i].getDescriptor() == descriptor){
+            return sdEntityExtensionMedia::descriptors[i].getDescriptorAsString();
         }
     }
     return string("error");
@@ -135,10 +135,10 @@ bool sdEventExtensionMedia::setValue(EDescriptor descriptor, void* value){
 // set value with strings
 bool sdEventExtensionMedia::setValue(string descriptor, string value){
     
-    for(int i = 0; i < sdEntityExtensionMedia::numberOfRelevantDescriptors; i++){
-        if(sdEntityExtensionMedia::relevantDescriptors[i].getDescriptorAsString() == descriptor){
+    for(int i = 0; i < sdEntityExtensionMedia::numberOfDescriptors; i++){
+        if(sdEntityExtensionMedia::descriptors[i].getDescriptorAsString() == descriptor){
             sdEventExtensionMedia::descriptor = 
-                sdEntityExtensionMedia::relevantDescriptors[i].getDescriptor();
+                sdEntityExtensionMedia::descriptors[i].getDescriptor();
         }
     }
 
@@ -171,8 +171,8 @@ bool sdEventExtensionMedia::setValue(string descriptor, string value){
 
 const EExtension sdEntityExtensionMedia::extensionName = SD_MEDIA;
 const string sdEntityExtensionMedia::extensionNameAsString = string("media");
-const int sdEntityExtensionMedia::numberOfRelevantDescriptors = 6;
-const sdDescriptor sdEntityExtensionMedia::relevantDescriptors[sdEntityExtensionMedia::numberOfRelevantDescriptors] = {
+const int sdEntityExtensionMedia::numberOfDescriptors = 6;
+const sdDescriptor sdEntityExtensionMedia::descriptors[sdEntityExtensionMedia::numberOfDescriptors] = {
     sdDescriptor(SD_MEDIA_ID, string("id"), false),
     sdDescriptor(SD_MEDIA_TYPE, string("type"), false),
     sdDescriptor(SD_MEDIA_LOCATION, string("location"), true),
@@ -202,9 +202,9 @@ sdEvent* sdEntityExtensionMedia::addEvent(string time, string descriptor, string
 
 void sdEntityExtensionMedia::removeEvent(string time, string descriptor){
     EDescriptor dc;
-    for(int i = 0; i < sdEntityExtensionMedia::numberOfRelevantDescriptors; i++){
-        if(sdEntityExtensionMedia::relevantDescriptors[i].getDescriptorAsString() == descriptor){
-            dc = sdEntityExtensionMedia::relevantDescriptors[i].getDescriptor();
+    for(int i = 0; i < sdEntityExtensionMedia::numberOfDescriptors; i++){
+        if(sdEntityExtensionMedia::descriptors[i].getDescriptorAsString() == descriptor){
+            dc = sdEntityExtensionMedia::descriptors[i].getDescriptor();
         }
     }
 

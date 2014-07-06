@@ -21,7 +21,7 @@
 #include <string>
 #include <iostream>
 #include "sdConst.h"
-
+#include "sdDescriptor.h"
 using namespace std;
 
 /**
@@ -82,7 +82,7 @@ public:
     
     /*!returns descriptor as string. a routine for conversion should be implemented in derived classes*/
     virtual string getDescriptorAsString(void) = 0;
-    
+
     /*!returns value through void pointer. It should be casted to propoer type manually.*/
     void* getValue(void);
 
@@ -299,8 +299,7 @@ public:
      @param descriptor specify descriptor defined in sdConst.h
      */
     void* getPreviousValue(double time, EDescriptor descriptor);
-
-    /*!
+   /*!
      @} 
      */
     
@@ -309,6 +308,9 @@ private:
     multiset<sdEvent*, sdEventCompare> createEventSet(double time,  EMode mode );
 
 };
+
+
+
 
 
 #endif /* defined(____sdEntity__) */

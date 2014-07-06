@@ -129,13 +129,11 @@ private:
    
 public:
     
-    const static int numberOfCoreDescriptors;
-    const static sdDescriptor coreDescriptors[];
+    const static int numberOfDescriptors;
+    const static sdDescriptor descriptors[];
     static bool isCoreDescriptor(EDescriptor descriptor);
     static bool isCoreDescriptor(string descriptor);
     
-    string getDescriptorAsString(EDescriptor descriptor);
-
     /*!
      @name Setter/Getter
      @{
@@ -260,17 +258,6 @@ inline EType sdEntityCore::getType(void){
 inline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){
     return extensionVector;
 }
-
-inline string sdEntityCore::getDescriptorAsString(EDescriptor descriptor){
-    string descriptorString = "error";
-    for(int i = 0; i < numberOfCoreDescriptors; i++){
-        if(coreDescriptors[i].getDescriptor() == descriptor){
-            descriptorString = coreDescriptors[i].getDescriptorAsString();
-        }
-    }
-    return descriptorString;
-}
-
 
 inline bool sdEntityCore::sortAlphabetically( sdEntityCore *leftEntity,  sdEntityCore *rightEntity){
     return leftEntity->getName().compare(rightEntity->getName()) ? false:true;

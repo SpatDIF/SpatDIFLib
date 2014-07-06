@@ -56,14 +56,7 @@ sdEventCore::~sdEventCore(){
     }
 }
 
-string sdEventCore::getDescriptorAsString(void){
-    for(int i = 0; i < sdEntityCore::numberOfCoreDescriptors; i++){
-        if(sdEntityCore::coreDescriptors[i].getDescriptor() == sdEventCore::descriptor){
-            return sdEntityCore::coreDescriptors[i].getDescriptorAsString();
-        }
-    }
-    return string("error");
-}
+
 
 string sdEventCore::getValueAsString(void){
     string str;
@@ -121,13 +114,9 @@ bool sdEventCore::setValue(EDescriptor descriptor, void* value){
 }
 
 bool sdEventCore::setValue(string descriptor, string value){
-    // set descriptor
-    sdEventCore::descriptor = SD_ERROR;
-    for (int i = 0; i < sdEntityCore::numberOfCoreDescriptors; i++){
-        if(sdEntityCore::coreDescriptors[i].getDescriptorAsString() == descriptor){
-            sdEventCore::descriptor = sdEntityCore::coreDescriptors[i].getDescriptor();
-        }
-    }
+    // set descriptor enum from the given string and static sdDescriptor array
+    sdEventCore::descriptor = 
+        getDescriptorAsEnum(descriptor, sdEntityCore::descriptors, sdEntityCore::numberOfDescriptors);
 
     // set value
     string str;
@@ -160,24 +149,28 @@ bool sdEventCore::setValue(string descriptor, string value){
     return true;
 }
 
+string sdEventCore::getDescriptorAsString(void){
+    return ::getDescriptorAsString(descriptor, sdEntityCore::descriptors, sdEntityCore::numberOfDescriptors); // global call
+}
+
 /*** sdEntityCore ***/
-const int sdEntityCore::numberOfCoreDescriptors = 3;
-const sdDescriptor sdEntityCore::coreDescriptors[sdEntityCore::numberOfCoreDescriptors] = {
+const int sdEntityCore::numberOfDescriptors = 3;
+const sdDescriptor sdEntityCore::descriptors[sdEntityCore::numberOfDescriptors] = {
     sdDescriptor(SD_PRESENT, string("present"), false),
     sdDescriptor(SD_POSITION, string("position"), true),
     sdDescriptor(SD_ORIENTATION, string("orientation"), true)
 };
 
 bool sdEntityCore::isCoreDescriptor(EDescriptor descriptor){
-    for(int i = 0; i< numberOfCoreDescriptors; i++){
-        if(coreDescriptors[i].getDescriptor() == descriptor) return true;
+    for(int i = 0; i< numberOfDescriptors; i++){
+        if(descriptors[i].getDescriptor() == descriptor) return true;
     }
     return false;
 }
 
 bool sdEntityCore::isCoreDescriptor(string descriptor){
-    for(int i = 0; i< numberOfCoreDescriptors; i++){
-        if(coreDescriptors[i].getDescriptorAsString() == descriptor) 
+    for(int i = 0; i< numberOfDescriptors; i++){
+        if(descriptors[i].getDescriptorAsString() == descriptor) 
             return true;
     }
     return false;
@@ -280,9 +273,9 @@ void sdEntityCore::removeEvent(double time, EDescriptor descriptor){
 
 void sdEntityCore::removeEvent(string time, string descriptor){
     EDescriptor ds = SD_ERROR;
-    for(int i = 0; i < sdEntityCore::numberOfCoreDescriptors; i++){
-        if(coreDescriptors[i].getDescriptorAsString() == descriptor){
-            ds = coreDescriptors[i].getDescriptor();
+    for(int i = 0; i < sdEntityCore::numberOfDescriptors; i++){
+        if(descriptors[i].getDescriptorAsString() == descriptor){
+            ds = descriptors[i].getDescriptor();
         }
     }
     // convert and call the function above
@@ -312,10 +305,10 @@ sdEntityExtension* sdEntityCore::addExtension(EExtension extension){
         case SD_MEDIA:{
             sdEntityExtensionMedia* mediaExtension = new sdEntityExtensionMedia();
             extensionVector.push_back(mediaExtension);
-            for(int i = 0; i < sdEntityExtensionMedia::numberOfRelevantDescriptors; i++){
+            for(int i = 0; i < sdEntityExtensionMedia::numberOfDescriptors; i++){
                 sdRedirector rd;
-                rd.descriptor = sdEntityExtensionMedia::relevantDescriptors[i].getDescriptor();
-                rd.descriptorString = sdEntityExtensionMedia::relevantDescriptors[i].getDescriptorAsString();
+                rd.descriptor = sdEntityExtensionMedia::descriptors[i].getDescriptor();
+                rd.descriptorString = sdEntityExtensionMedia::descriptors[i].getDescriptorAsString();
                 rd.responsibleExtension = static_cast<sdEntityExtension*>(mediaExtension);
                 redirectorVector.push_back(rd);
             }
