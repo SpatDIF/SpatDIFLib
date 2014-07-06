@@ -135,11 +135,12 @@ bool sdEventExtensionMedia::setValue(EDescriptor descriptor, void* value){
 // set value with strings
 bool sdEventExtensionMedia::setValue(string descriptor, string value){
     
-    for(int i = 0; i < sdEventExtensionMedia::numberOfRelevantDescriptors; i++){
-        
+    for(int i = 0; i < sdEntityExtensionMedia::numberOfRelevantDescriptors; i++){
+        if(sdEntityExtensionMedia::relevantDescriptors[i].getDescriptorAsString() == descriptor){
+            sdEventExtensionMedia::descriptor = 
+                sdEntityExtensionMedia::relevantDescriptors[i].getDescriptor();
+        }
     }
-
-    sdEventExtensionMedia::descriptor = sdEntityExtensionMedia::getDescriptorFromString(string);
 
     switch (sdEventExtensionMedia::descriptor) {
         case SD_MEDIA_ID:
@@ -171,7 +172,7 @@ bool sdEventExtensionMedia::setValue(string descriptor, string value){
 const EExtension sdEntityExtensionMedia::extensionName = SD_MEDIA;
 const string sdEntityExtensionMedia::extensionNameAsString = string("media");
 const int sdEntityExtensionMedia::numberOfRelevantDescriptors = 6;
-const sdDescriptor relevantDescriptors[sdEntityExtensionMedia::numberOfRelevantDescriptors] = {
+const sdDescriptor sdEntityExtensionMedia::relevantDescriptors[sdEntityExtensionMedia::numberOfRelevantDescriptors] = {
     sdDescriptor(SD_MEDIA_ID, string("id"), false),
     sdDescriptor(SD_MEDIA_TYPE, string("type"), false),
     sdDescriptor(SD_MEDIA_LOCATION, string("location"), true),
@@ -200,6 +201,12 @@ sdEvent* sdEntityExtensionMedia::addEvent(string time, string descriptor, string
 }
 
 void sdEntityExtensionMedia::removeEvent(string time, string descriptor){
-    EDescriptor dc = stringToDescriptor(descriptor, relevantDescriptorStrings, relevantDescriptors, numberOfRelevantDescriptors);
+    EDescriptor dc;
+    for(int i = 0; i < sdEntityExtensionMedia::numberOfRelevantDescriptors; i++){
+        if(sdEntityExtensionMedia::relevantDescriptors[i].getDescriptorAsString() == descriptor){
+            dc = sdEntityExtensionMedia::relevantDescriptors[i].getDescriptor();
+        }
+    }
+
     sdEntity::removeEvent(stringToDouble(time), dc);
 }

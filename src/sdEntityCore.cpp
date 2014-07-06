@@ -162,7 +162,7 @@ bool sdEventCore::setValue(string descriptor, string value){
 
 /*** sdEntityCore ***/
 const int sdEntityCore::numberOfCoreDescriptors = 3;
-const sdDescriptor coreDescriptors[sdEntityCore::numberOfCoreDescriptors] = {
+const sdDescriptor sdEntityCore::coreDescriptors[sdEntityCore::numberOfCoreDescriptors] = {
     sdDescriptor(SD_PRESENT, string("present"), false),
     sdDescriptor(SD_POSITION, string("position"), true),
     sdDescriptor(SD_ORIENTATION, string("orientation"), true)
