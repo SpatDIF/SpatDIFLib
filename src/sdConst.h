@@ -77,6 +77,14 @@ typedef enum {
     SD_EXTENSION_ERROR
 } EExtension;
 
+/*!
+ enum for interpolation types
+ */
+typedef enum {
+    SD_NO_INTERPOLATION,
+    SD_LINEAR_INTERPOLATION,
+    SD_CUBIC_INTERPOLATION
+} EInterpolation;
 
 /*!
  utility function that convert ints to a string
@@ -212,29 +220,6 @@ inline int stringToInt(string str){
     int it;
     stringToInts(str, &it, 1);
     return it;
-}
-
-
-/*!
- utility function that converts a string to a descriptor. 
- */
-inline EDescriptor stringToDescriptor(string str, const string *ds, const EDescriptor *dc, const int num){
-    for(int i = 0; i<num; i++ ){
-        if(ds[i] == str)
-            return dc[i];
-    }
-    return SD_ERROR;
-}
-
-/*!
- utility function that converts a descriptor to a string.
- */
-inline const string descriptorToString(EDescriptor descriptor, const string *ds, const EDescriptor *dc, const int num){
-    for(int i = 0; i<num; i++ ){
-        if(dc[i] == descriptor)
-            return ds[i];
-    }
-    return NULL;
 }
 
 /**

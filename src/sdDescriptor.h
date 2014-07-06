@@ -17,17 +17,46 @@
 #define ____sdDescriptor__
 
 #include <string>
-/*! sdDate
-	abstract class for descriptor
+#include "sdConst.h"
+
+/*! sdDescriptor
+	This class contains the name of descriptor in enum, string and interpolation flag of the descriptor. An instance of this class will be used as a static member of entities, in order to keep the name and interpolability of the value.
 */
 
 class sdDescriptor{
 	
-public:
+private:
 	EDescriptor descriptor;
 	std::string descriptorString;
-	bool interpolatable;
+	bool interpolability;
 
+public:
+
+	/*! 
+		constructor. All the member variable must be initialized at once when instantiated.
+	*/
+	sdDescriptor(EDescriptor descriptor, std::string descriptorString, bool interpolability);
+	EDescriptor getDescriptor() const;
+	std::string getDescriptorAsString() const;
+	bool getInterpolability() const;
 };
+
+inline sdDescriptor::sdDescriptor(EDescriptor descriptor, std::string descriptorString, bool interpolability){
+	sdDescriptor::descriptor = descriptor;
+	sdDescriptor::descriptorString = descriptorString;
+	sdDescriptor::interpolability = interpolability;
+}
+
+inline  EDescriptor sdDescriptor::getDescriptor() const{
+	return descriptor;
+}
+
+inline std::string sdDescriptor::getDescriptorAsString() const{
+	return descriptorString;
+}
+
+inline bool sdDescriptor::getInterpolability() const{
+	return interpolability;
+}
 
 #endif

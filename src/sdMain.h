@@ -27,5 +27,5 @@
 #include "sdOSCResponder.h"
 #include "sdSaver.h"
 #include "sdScene.h"
-
+#include "sdDescriptor.h"
 #endif

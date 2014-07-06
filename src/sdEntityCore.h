@@ -21,7 +21,7 @@
 #include <string>
 #include "sdEntity.h"
 #include "sdEntityExtension.h"
-
+#include "sdDescriptor.h"
 
 using namespace std;
 
@@ -53,12 +53,11 @@ public:
     /*! destructor destroy all allocated memory to the value pointer*/
     ~sdEventCore();
     
-    /*! overrided method. get descriptor as string e.g. "position" */
-    string getDescriptorAsString(void);
-    
     /*! overrided method. get value as string e.g. "0.3 0.5 0.2"*/
     string getValueAsString(void);
     
+    /*! overrided function. get descriptor as string*/
+    string getDescriptorAsString(void);
     
 private:
     /*! 
@@ -131,11 +130,12 @@ private:
 public:
     
     const static int numberOfCoreDescriptors;
-    const static EDescriptor coreDescriptors[];
-    const static string coreDescriptorStrings[];
+    const static sdDescriptor coreDescriptors[];
     static bool isCoreDescriptor(EDescriptor descriptor);
     static bool isCoreDescriptor(string descriptor);
     
+    string getDescriptorAsString(EDescriptor descriptor);
+
     /*!
      @name Setter/Getter
      @{
@@ -260,6 +260,17 @@ inline EType sdEntityCore::getType(void){
 inline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){
     return extensionVector;
 }
+
+inline string sdEntityCore::getDescriptorAsString(EDescriptor descriptor){
+    string descriptorString = "error";
+    for(int i = 0; i < numberOfCoreDescriptors; i++){
+        if(coreDescriptors[i].getDescriptor() == descriptor){
+            descriptorString = coreDescriptors[i].getDescriptorAsString();
+        }
+    }
+    return descriptorString;
+}
+
 
 inline bool sdEntityCore::sortAlphabetically( sdEntityCore *leftEntity,  sdEntityCore *rightEntity){
     return leftEntity->getName().compare(rightEntity->getName()) ? false:true;

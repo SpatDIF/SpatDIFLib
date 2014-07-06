@@ -19,6 +19,7 @@
 #include <string>
 #include "sdConst.h"
 #include "sdEntityExtension.h"
+#include "sdDescriptor.h"
 
 using namespace std;
 
@@ -92,8 +93,7 @@ public:
     static const EExtension extensionName; /*< identification of the class */
     static const string extensionNameAsString; /*< identification of the class */
     static const int numberOfRelevantDescriptors;
-    static const EDescriptor relevantDescriptors[];
-    static const string relevantDescriptorStrings[];
+    static const sdDescriptor relevantDescriptors[];
   
     /*! @name Event handling
      @{
