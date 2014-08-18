@@ -20,8 +20,9 @@
 #include "sdConst.h"
 
 using namespace std;
+
 /*! sdDescriptor
-	This class contains the name of descriptor in enum, string and interpolation flag of the descriptor. An instance of this class will be used as a static member of entities, in order to keep the name and interpolability of the value.
+	This class contains the name of descriptor in enum, string and interpolation flag of the descriptor. An instance of this class will be used as a static member of entities, in order to maintain the name and the interpolability of the value.
 */
 
 class sdDescriptor{

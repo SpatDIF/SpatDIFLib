@@ -26,7 +26,7 @@ sdOSCResponder::sdOSCResponder(void){
 }
 
 sdOSCResponder::sdOSCResponder(sdScene *scene){
-    sdOSCResponder::scene =scene;
+    sdOSCResponder::scene = scene;
     sdOSCResponder();
 }
 

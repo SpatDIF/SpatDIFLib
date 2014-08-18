@@ -20,21 +20,21 @@
 #include <ctime>
 #include <string>
 #include <sstream>
-
-using namespace std;
+#include <iostream>
 
 /*! sdDate
- maintains the data of a date (year, month, day) and offers utility functionalities listed below.
+ maintains data of a date (year, month, day) and offers utility functionalities listed below.
  - interpretation and generation of ISO 8601 formmated strings.
  - initialization of the member variables with the current date employing the system calls
  */
 
 class sdDate{
     
-private:
-    unsigned short year; /*!< year of the date*/
-    unsigned short month; /*!< month of the date*/
-    unsigned short day; /*!< day of the date*/
+protected:
+
+    unsigned short year; /*!< year of the date */
+    unsigned short month; /*!< month of the date */
+    unsigned short day; /*!< day of the date */
     
 public:
     /*! @name Constructors/Destructors
@@ -44,19 +44,25 @@ public:
     /*! a constructor. if the autoInit frag is set to true, the constructor initializes the date using the sytem calls.
      @param autoInit if true, the date will be initialized using the system call. if false, uninitialized. the default value is true.
      */
-    sdDate(bool autoInit = true);
+    sdDate(const bool autoInit = true);
     
     /*! construct with parameters
      @param year year of the date
      @param month month of the date
      @param day day of the date
      */
-    sdDate(unsigned short year, unsigned short month, unsigned short day);
+    sdDate(const unsigned short year, const unsigned short month, const unsigned short day);
+    
+    
+    /*! constrcut with cstr
+     @param cstr ISO 8601 string. must be YYYY-MM-DD format.
+     */
+    sdDate(const char *cDateString);
     
     /*! construct with date as string
      @param dateString ISO 8601 string. must be YYYY-MM-DD format.
      */
-    sdDate(string dateString);
+    sdDate(const std::string &dateString);
     
     /*! @} */
     
@@ -69,21 +75,21 @@ public:
      @param month month of the date
      @param day day od the date
      */
-    void setDate(unsigned short year, unsigned short month, unsigned short day);
+    void setDate(const unsigned short year, const unsigned short month, const unsigned short day);
     
     /*! a date setter with a ISO 8601 string.
      @param dateString ISO 8601 standard string. must be YYYY-MM-DD format. hyphens are not omittable.
      */
-    void setDate(string dateString);
+    void setDate(const std::string &dateString);
     
     /*! sets year.*/
-    void setYear(unsigned short year);
+    void setYear(const unsigned short year);
     
     /*! sets month.*/
-    void setMonth(unsigned short month);
+    void setMonth(const unsigned short month);
     
     /*! sets day.*/
-    void setDay(unsigned short day);
+    void setDay(const unsigned short day);
     
     /*! set member variables to current date using the system call */
     void setCurrentDate(void);
@@ -97,19 +103,23 @@ public:
     /*! gets date as an array.
      @date an allocated buffer of unsigned short. the size must be greater than 3.
      */
-    void getDate(unsigned short *date);
+    void getDate(unsigned short (&date)[3]) const;
     
     /*! generates ISO 8601 string from the given data and return it*/
-    string getDateAsString(void);
+    std::string getDateAsString(void) const;
     
+    /*! conversion function that internally calls getDateAsString() */
+    operator std::string(){return getDateAsString();};
+
     /*! gets year.*/
-    unsigned short getYear(void);
+    unsigned short getYear(void) const;
     
     /*! gets month.*/
-    unsigned short getMonth(void);
+    unsigned short getMonth(void) const;
     
     /*! gets day.*/
-    unsigned short getDay(void);
+    unsigned short getDay(void) const;
+    
     
     /*! @} */
 };
@@ -117,43 +127,47 @@ public:
 /*** implementation ***/
 
 // constructors/destructors
-inline sdDate::sdDate(bool autoInit){
+inline sdDate::sdDate(const bool autoInit){
     if(autoInit){
         setCurrentDate();
     }
 }
 
-inline sdDate::sdDate(unsigned short year, unsigned short month, unsigned short day){
+inline sdDate::sdDate(const unsigned short year, const unsigned short month, const unsigned short day){
     setDate(year,month,day);
 }
 
-inline sdDate::sdDate(string dateString){
+inline sdDate::sdDate(const char* const cDateString){
+    setDate(std::string(cDateString));
+}
+
+inline sdDate::sdDate(const std::string &dateString){
     setDate(dateString);
 }
 
 // setters
-inline void sdDate::setDate(unsigned short year, unsigned short month, unsigned short day){
-    sdDate::year = year;
-    sdDate::month = month;
-    sdDate::day = day;
+inline void sdDate::setDate(const unsigned short year, const unsigned short month, const unsigned short day){
+    this->year = year;
+    this->month = month;
+    this->day = day;
 }
 
-inline void sdDate::setDate(string dateString){
-    istringstream is(dateString);
+inline void sdDate::setDate(const std::string &dateString){
+    std::istringstream is(dateString);
     char dummy;
     is >> year >> dummy >> month >> dummy >> day;
 }
 
-inline void sdDate::setYear(unsigned short year){
-    sdDate::year = year;
+inline void sdDate::setYear(const unsigned short year){
+    this->year = year;
 }
 
-inline void sdDate::setMonth(unsigned short month){
-    sdDate::month = month;
+inline void sdDate::setMonth(const unsigned short month){
+    this->month = month;
 }
 
-inline void sdDate::setDay(unsigned short day){
-    sdDate::day = day;
+inline void sdDate::setDay(const unsigned short day){
+    this->day = day;
 }
 
 inline void sdDate::setCurrentDate(void){
@@ -164,27 +178,28 @@ inline void sdDate::setCurrentDate(void){
     day = now->tm_mday;
 }
 
-inline void sdDate::getDate(unsigned short *date){
+inline void sdDate::getDate(unsigned short (&date)[3]) const{
     date[0] = year;
     date[1] = month;
     date[2] = day;
 }
 
-inline string sdDate::getDateAsString(void){
-	ostringstream os;
+inline std::string sdDate::getDateAsString(void) const{
+    std::ostringstream os;
     os << year << '-' << month << '-' << day;
     return os.str();
 }
 
-inline unsigned short sdDate::getYear(void){
+inline unsigned short sdDate::getYear(void) const{
     return year;
 }
 
-inline unsigned short sdDate::getMonth(void){
+inline unsigned short sdDate::getMonth(void) const{
     return month;
 }
 
-inline unsigned short sdDate::getDay(void){
+inline unsigned short sdDate::getDay(void) const{
     return day;
 }
+
 #endif /* defined(____sdDate__) */

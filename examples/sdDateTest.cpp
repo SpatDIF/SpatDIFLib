@@ -22,50 +22,66 @@ int main(void){
     using namespace std;
     
     {
-        // the default constructor initializes the date with the current date
+        // the default constructor initializes the date with the current date using system calls
         sdDate date;
-        // output the result
-        std::cout << date.getYear() << '-' << date.getMonth() << '-' << date.getDay() << endl;
+        cout << "init with current date, using system calls:" << endl;
+        cout << date.getDateAsString() << endl;
     }
     
     {
         // autoInit disabled
         sdDate noDate(false);
-        // output the result
-        std::cout << noDate.getYear() << '-' << noDate.getMonth() << '-' << noDate.getDay() << endl;
+        cout << "auto init disabled:" << endl;
+        cout << noDate.getDateAsString() << endl;
     }
     
     {
         // manual initialization
+        cout << "manual initialization:" << endl;
         sdDate myDate(1979, 12, 4); // my birth day
-        // output the result
-        std::cout << myDate.getYear() << '-' << myDate.getMonth() << '-' << myDate.getDay() << endl;
+        cout << myDate.getDateAsString() << endl;
     }
     
     {
-        // manual initialization with a string, formatted by ISO 8601 
-        sdDate yourDate(string("1979-05-07")); // the birth day of my wife
-        // output the result
-        std::cout << yourDate.getYear() << '-' << yourDate.getMonth() << '-' << yourDate.getDay() << endl;
+        // manual initialization with a string, formatted by ISO 8601
+        sdDate manualDate("2011-10-11"); // my date of marrige
+        cout << "manual initialization from a string:" << endl;
+        cout << manualDate.getDateAsString() << endl;
+    }
+    
+    {
+        // you can assign a sdDate object to a string. it will be automatically converted to a ISO 8601 string
+        sdDate date; // initialized with current date
+        string convertedString = date; // converted to string
+        cout << "converted date:" << endl;
+        cout << convertedString << endl;
     }
     
     {
         sdDate date(false); // uninitialized
         
-        //set params
+        //set date with setters
         date.setYear(2010);
         date.setMonth(12);
         date.setDay(31);
         
-        //get params as an array
-        unsigned short dateArray[3];
-        date.getDate(&dateArray[0]);
+        cout << "get year, month, and day one by one:" << endl;
+        std::cout << date.getYear() << '-' << date.getMonth() << '-' << date.getDay() << endl;
         
-        std::cout << dateArray[0] << '-' << dateArray[1] << '-' << dateArray[2] << endl;
-        
+        cout << "reset to current date manually:" << endl;
         date.setCurrentDate();
         string dateString = date.getDateAsString();
         std::cout << dateString << endl;
+    }
+    
+    {
+        unsigned short array[3];
+        sdDate myDate(2002, 3, 2);
+        myDate.getDate(array);
+        
+        cout << "get date as an array:" << endl;
+        std::cout << array[0] << '-' << array[1] << '-' << array[2] << std::endl;
+        
     }
     return 0;
 }

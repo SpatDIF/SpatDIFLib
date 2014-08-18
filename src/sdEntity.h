@@ -36,6 +36,9 @@ protected:
     void *value;/*!<value of the event. the subclasses must allocates this void pointer */
     
 public:
+    
+    virtual ~sdEvent(){};
+
     /*! @name Setter
      @{ */
     
@@ -122,7 +125,7 @@ protected:
 public:
     /*!< desctructor. this function erases all contents of eventSet. 
      Subsequently, all allocated buffers stored in the eventSet will be destroyed*/
-    ~sdEntity();
+    virtual ~sdEntity();
     
     /*! @name Event Handling @{ */
 
@@ -305,6 +308,11 @@ public:
     
 private:
     
+    /*!
+    an utility function to create a new event set
+    @param time
+    @param mode specify the mode of new set
+    */
     multiset<sdEvent*, sdEventCompare> createEventSet(double time,  EMode mode );
 
 };

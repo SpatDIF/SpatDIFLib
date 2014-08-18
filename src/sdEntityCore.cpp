@@ -266,8 +266,7 @@ void sdEntityCore::removeEvent(double time, EDescriptor descriptor){
                 rd.responsibleExtension->removeEvent(time, descriptor);
             }
             it++;
-        }
-        
+        } 
     }
 }
 
