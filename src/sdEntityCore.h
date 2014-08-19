@@ -22,9 +22,6 @@
 #include "sdEntityExtension.h"
 #include "sdDescriptor.h"
 
-using namespace std;
-
-
 class sdScene;
 
 /*!
@@ -43,12 +40,12 @@ private:
     
     typedef struct{
         EDescriptor descriptor;
-        string descriptorString;
+        std::string descriptorString;
         sdEntityExtension* responsibleExtension;
     } sdRedirector;
     
     /*! the name of the entity. This name is invariable (const)*/
-    const string name;
+    const std::string name;
     
     /*! contains instances of sdEntityExtenstions */
     vector <sdEntityExtension*>extensionVector;
@@ -65,7 +62,7 @@ private:
      @param name the name of new Entity
      @param kind the kind of new Entity. default = SD_SOURCE
      */
-    sdEntityCore(string name, EKind kind = SD_SOURCE, EType type = SD_POINT) :name(name), kind(kind){
+    sdEntityCore(std::string name, EKind kind = SD_SOURCE, EType type = SD_POINT) :name(name), kind(kind){
         sdEntityCore::type = type;
     };
     
@@ -78,7 +75,7 @@ private:
    
 public:
     static bool isCoreDescriptor(EDescriptor descriptor);
-    static bool isCoreDescriptor(string descriptor);
+    static bool isCoreDescriptor(std::string descriptor);
     
     /*!
      @name Setter/Getter
@@ -92,24 +89,24 @@ public:
      */
     
     /*!  returns the name of the entity */
-    string getName(void);
+    std::string getName(void);
     
     /*! returns the kind of the entity */
     EKind getKind(void);
     
     /*! returns the kind of the entity as a string*/
-    string getKindAsString(void);
+    std::string getKindAsString(void);
 
     /*! returns the type of the entity */
     EType getType(void);
-    string getTypeAsString(void);
+    std::string getTypeAsString(void);
     
       
     /*! This is the only method for adding an new event to the entity*/
     sdEvent* addEvent(double time, EDescriptor descriptor, void* value);
     
     /*! same as above but you can specify arguments with string */
-    sdEvent* addEvent(string time, string descriptor, string value);
+    sdEvent* addEvent(std::string time, std::string descriptor, std::string value);
 
     /*! remove specified event
      @param time time of the event
@@ -117,7 +114,7 @@ public:
      */
     
     void removeEvent(double time, EDescriptor descriptor);
-    void removeEvent(string time, string descriptor);
+    void removeEvent(std::string time, std::string descriptor);
 
     /*! @name Extension Handling
         @{
@@ -189,7 +186,7 @@ public:
 
 
 /*** inline implementation ***/
-inline string sdEntityCore::getName(void){
+inline std::string sdEntityCore::getName(void){
     return name;
 }
 
@@ -216,7 +213,7 @@ inline bool sdEntityCore::isCoreDescriptor(EDescriptor descriptor){
     return false;
 }
 
-inline bool sdEntityCore::isCoreDescriptor(string descriptor){
+inline bool sdEntityCore::isCoreDescriptor(std::string descriptor){
     for(int i = 0; i< sdEventCore::numberOfDescriptors; i++){
         if(sdEventCore::descriptors[i].getDescriptorAsString() == descriptor)
             return true;
