@@ -16,10 +16,9 @@
 #ifndef ____sdEntityCore__
 #define ____sdEntityCore__
 
-
 #include <set>
 #include <string>
-#include "sdEntityCore.h"
+#include "sdEventCore.h"
 #include "sdEntityExtension.h"
 #include "sdDescriptor.h"
 
@@ -78,9 +77,6 @@ private:
     void removeExtension(EExtension extension);
    
 public:
-    
-    const static int numberOfDescriptors;
-    const static sdDescriptor descriptors[];
     static bool isCoreDescriptor(EDescriptor descriptor);
     static bool isCoreDescriptor(string descriptor);
     
@@ -212,5 +208,21 @@ inline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){
 inline bool sdEntityCore::sortAlphabetically( sdEntityCore *leftEntity,  sdEntityCore *rightEntity){
     return leftEntity->getName().compare(rightEntity->getName()) ? false:true;
 }
+
+bool sdEntityCore::isCoreDescriptor(EDescriptor descriptor){
+    for(int i = 0; i< sdEventCore::numberOfDescriptors; i++){
+        if(sdEventCore::descriptors[i].getDescriptor() == descriptor) return true;
+    }
+    return false;
+}
+
+bool sdEntityCore::isCoreDescriptor(string descriptor){
+    for(int i = 0; i< sdEventCore::numberOfDescriptors; i++){
+        if(sdEventCore::descriptors[i].getDescriptorAsString() == descriptor)
+            return true;
+    }
+    return false;
+}
+
 
 #endif /* defined(____sdEntityCore__) */

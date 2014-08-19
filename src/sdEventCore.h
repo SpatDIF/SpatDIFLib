@@ -17,7 +17,9 @@
 #define ___sdEventCore__
 
 #include "sdEvent.h"
+#include "sdDescriptor.h"
 
+#pragma mark declarations
 
 /*!
  this class stores event info (i.e. time, descriptor and value) of sdEntityCore.
@@ -28,13 +30,26 @@ class sdEventCore: public sdEvent{
     friend class sdEntityCore;
     
 public:
+    
     /*!
-     constructor with initialization.
+     @name static constants
+     @{
+     */
+    
+    const static unsigned int numberOfDescriptors;
+    const static sdDescriptor descriptors[];
+    /*!
+     @}
+     */
+    
+    /*!
+     constructor with initialization. simply call the identical constructor of the superclass
      @param time time of the event
      @param descriptor descriptor of the event. declared in sdConst.h
      @param value void pointer to value to be copied. Proper size of memory will be automatically allocated.
      */
-    sdEventCore(const double time, const EDescriptor descriptor, void* const value);
+    sdEventCore(const double time, const EDescriptor descriptor, void* const value):
+    sdEvent(time, descriptor, value){}; // initializer list
     
     /**
      * @brief constructor with string arguments, useful when loading from files etc
@@ -42,17 +57,18 @@ public:
      * @param descriptor descriptor of event as a string
      * @param value value of event as a string
      */
-    sdEventCore(const string time, const string descriptor, const string value);
+    sdEventCore(const std::string time, const std::string descriptor, const std::string value);
     
     /*! destructor destroy all allocated memory to the value pointer*/
     ~sdEventCore();
     
-    /*! overrided method. get value as string e.g. "0.3 0.5 0.2"*/
-    string getValueAsString(void) const;
+    /*! overrided function. get value as string e.g. "0.3 0.5 0.2"*/
+    std::string getValueAsString(void) const;
     
-    /*! overrided function. get descriptor as string*/
-    string getDescriptorAsString(void) const;
-    
+    /*! overrided function. get descriptor as string* e.g. "position" */
+    std::string getDescriptorAsString(void) const;
+
+
 private:
     /*!
      @name private setter
@@ -65,24 +81,29 @@ private:
     bool setValue(const EDescriptor descriptor, void* value);
     
     /*! same as above but you can give all arguments with strings */
-    bool setValue(const string descriptor, const string value);
+    bool setValue(const std::string descriptor, const std::string value);
     
     /*! @} */
 };
 
 #pragma mark implementations
 
-inline sdEventCore::sdEventCore(const double time, const EDescriptor descriptor, void* value){
-    setTime(time); // declared in the super class
-    setValue(descriptor, value); // private function
-}
+const unsigned int sdEventCore::numberOfDescriptors = 3;
+const sdDescriptor sdEventCore::descriptors[sdEventCore::numberOfDescriptors] = {
+    sdDescriptor(SD_PRESENT, std::string("present"), false),
+    sdDescriptor(SD_POSITION, std::string("position"), true),
+    sdDescriptor(SD_ORIENTATION, std::string("orientation"), true)
+};
 
-inline sdEventCore::sdEventCore(const string time, const string descriptor, const string value){
+inline sdEventCore::sdEventCore(const std::string time, const std::string descriptor, const std::string value){
     setTime(time); // declared in the super class
     setValue(descriptor, value); // private function
 }
 
 inline sdEventCore::~sdEventCore(){
+    
+    if(!value) return;
+    
     // we have to cast void pointer before deleting it. because void pointer deletion is undefined
     switch (descriptor) {
         case SD_PRESENT:{
@@ -105,13 +126,13 @@ inline sdEventCore::~sdEventCore(){
     }
 }
 
-inline string sdEventCore::getValueAsString(void) const{
-    string str;
+inline std::string sdEventCore::getValueAsString(void) const{
+    std::string str;
     switch (descriptor) {
         case SD_PRESENT:{
             bool *present;
             present = static_cast<bool*>(value);
-            str = *present ? string("true") : string("false");
+            str = *present ? std::string("true") : std::string("false");
             break;
         }
         case SD_POSITION:{
@@ -160,14 +181,14 @@ inline bool sdEventCore::setValue(const EDescriptor descriptor, void* const valu
     return true;
 }
 
-inline bool sdEventCore::setValue(const string descriptor, const string value){
+inline bool sdEventCore::setValue(const std::string descriptor, const std::string value){
     // set descriptor enum from the given string and static sdDescriptor array
-//    sdEventCore::descriptor =
-//    getDescriptorAsEnum(descriptor, sdEntityCore::descriptors, sdEntityCore::numberOfDescriptors);
+    
+    sdEventCore::descriptor = getDescriptorAsEnum(descriptor, descriptors, numberOfDescriptors);
     
     // set value
-    string str;
-    switch (sdEventCore::descriptor) {
+    std::string str;
+    switch (this->descriptor) {
         case SD_PRESENT:
         {
             bool present = stringToBool(value);
@@ -189,6 +210,7 @@ inline bool sdEventCore::setValue(const string descriptor, const string value){
             break;
         }
         default:{
+            std::cout << "Error: sdEventCore::setValue()\nunknown descriptor " << descriptor << std::endl;
             return false;
             break;
         }
@@ -196,8 +218,8 @@ inline bool sdEventCore::setValue(const string descriptor, const string value){
     return true;
 }
 
-inline string sdEventCore::getDescriptorAsString(void) const{
-//    return ::getDescriptorAsString(descriptor, sdEntityCore::descriptors, sdEntityCore::numberOfDescriptors); // global call
+inline std::string sdEventCore::getDescriptorAsString(void) const{
+    return ::getDescriptorAsString(descriptor, descriptors, numberOfDescriptors); // global call
     return NULL;
 }
 

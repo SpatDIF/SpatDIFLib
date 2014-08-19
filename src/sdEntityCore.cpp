@@ -22,27 +22,6 @@
 using namespace std;
 
 /*** sdEntityCore ***/
-const int sdEntityCore::numberOfDescriptors = 3;
-const sdDescriptor sdEntityCore::descriptors[sdEntityCore::numberOfDescriptors] = {
-    sdDescriptor(SD_PRESENT, string("present"), false),
-    sdDescriptor(SD_POSITION, string("position"), true),
-    sdDescriptor(SD_ORIENTATION, string("orientation"), true)
-};
-
-bool sdEntityCore::isCoreDescriptor(EDescriptor descriptor){
-    for(int i = 0; i< numberOfDescriptors; i++){
-        if(descriptors[i].getDescriptor() == descriptor) return true;
-    }
-    return false;
-}
-
-bool sdEntityCore::isCoreDescriptor(string descriptor){
-    for(int i = 0; i< numberOfDescriptors; i++){
-        if(descriptors[i].getDescriptorAsString() == descriptor) 
-            return true;
-    }
-    return false;
-}
 
 string sdEntityCore::getKindAsString(void){
     string str;
@@ -140,9 +119,9 @@ void sdEntityCore::removeEvent(double time, EDescriptor descriptor){
 
 void sdEntityCore::removeEvent(string time, string descriptor){
     EDescriptor ds = SD_ERROR;
-    for(int i = 0; i < sdEntityCore::numberOfDescriptors; i++){
-        if(descriptors[i].getDescriptorAsString() == descriptor){
-            ds = descriptors[i].getDescriptor();
+    for(int i = 0; i < sdEventCore::numberOfDescriptors; i++){
+        if(sdEventCore::descriptors[i].getDescriptorAsString() == descriptor){
+            ds = sdEventCore::descriptors[i].getDescriptor();
         }
     }
     // convert and call the function above

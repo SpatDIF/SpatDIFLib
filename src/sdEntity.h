@@ -67,8 +67,6 @@ public:
      @{
      */
     
-
-    
     /**
      * @brief return a multiset of chronologically next event from the provided time 
      * 

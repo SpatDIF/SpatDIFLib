@@ -35,6 +35,14 @@ protected:
     
 public:
     
+    /*! constructor */
+    sdEvent(){};
+    
+    sdEvent(const double time, const EDescriptor descriptor, void* const value):
+    time(time), descriptor(descriptor), value(value){};
+    
+    /*! destructor should be overrided by the subclasses and they are responsible for releaseing void *value */
+    virtual ~sdEvent() = 0;
     
     /*! @name Setter
      @{ */
@@ -96,7 +104,7 @@ public:
 
 inline void sdEvent::set(const double time, const EDescriptor descriptor, void* const value){
     if(!value){
-        std::cout << "sdEvent: value not allocated" << std::endl;
+        std::cout << "Error: sdEvent::set()\n value not allocated. " << std::endl;
         return;
     }
     setTime(time);
@@ -104,7 +112,11 @@ inline void sdEvent::set(const double time, const EDescriptor descriptor, void* 
 }
 
 inline void sdEvent::setTime(const double time){
-    sdEvent::time = time;
+    if(time < 0){
+        std::cout << "Error: sdEvent::setTime()\n time value less than 0.0. set to 0.0." << std::endl;
+        this->time = 0.0;
+    }
+    this->time = time;
 }
 
 inline void sdEvent::setTime(const std::string timeString){
