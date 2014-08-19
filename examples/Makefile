@@ -4,7 +4,7 @@ INCLUDE = ../src
 LIB_PATH = /usr/local/lib
 LIBS =  -lstdc++ -lspatdif
 TARGETS = How_to_query.out FileWithExtension.out sdConverter.out sdDateTest.out\
-			sdEventTest.out sdExtensionTest.out sdInfoTest.out sdLoaderTest.out sdOSCResponderTest.out\
+			sdCoreEventTest.out sdExtensionTest.out sdInfoTest.out sdLoaderTest.out sdOSCResponderTest.out\
 			sdSaverTest.out sdSceneTest.out sdOSCConverterTest.out sdOSCMessageTest.out
 
 all: $(TARGETS)
@@ -22,7 +22,7 @@ sdConverter.out: sdConverter.cpp
 sdDateTest.out: sdDateTest.cpp
 	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
 
-sdEventTest.out: sdEventTest.cpp
+sdCoreEventTest.out: sdCoreEventTest.cpp
 	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
 
 sdExtensionTest.out:  sdExtensionTest.cpp
