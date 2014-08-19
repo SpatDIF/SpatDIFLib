@@ -8,10 +8,9 @@ TARGETS = $(basename $(SRC))
 
 all: $(TARGETS)
 
-
 $(TARGETS):
 	@echo "building $@"
-	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) $(LIBS) -o $@ $@.cpp
+	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) $(LIBS) -o $@.out $@.cpp
 
 clean:
 	rm $(TARGETS)

@@ -38,8 +38,11 @@ public:
     /*! constructor */
     sdEvent(){};
     
+    /*! constructor with initialization. should be invoked by the subclass*/
     sdEvent(const double time, const EDescriptor descriptor, void* const value):
-    time(time), descriptor(descriptor), value(value){};
+    time(time),
+    descriptor(descriptor),
+    value(value){};
     
     /*! destructor should be overrided by the subclasses and they are responsible for releaseing void *value */
     virtual ~sdEvent() = 0;
