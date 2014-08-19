@@ -69,10 +69,10 @@ public:
     
     /*! @} */
 
-    /*! overrided function. get value as string e.g. "0.3 0.5 0.2"*/
+    /*! overridden function. get value as string e.g. "0.3 0.5 0.2"*/
     std::string getValueAsString(void) const;
     
-    /*! overrided function. get descriptor as string* e.g. "position" */
+    /*! overridden function. get descriptor as string* e.g. "position" */
     std::string getDescriptorAsString(void) const;
 
 private:

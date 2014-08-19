@@ -236,7 +236,7 @@ multiset<sdEvent*, sdEventCompare> sdEntityCore::getEventSet(void){
 }
     
 multiset<sdEvent*, sdEventCompare> sdEntityCore::getEventSet(double time){
-    multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getEventSet(time); // use non overrided function
+    multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getEventSet(time); // use non overridden function
     vector<sdEntityExtension*>::iterator it = extensionVector.begin();
     while(it != extensionVector.end()){
         sdEntityExtension* entityExtension = *it;
@@ -248,7 +248,7 @@ multiset<sdEvent*, sdEventCompare> sdEntityCore::getEventSet(double time){
 }
 
 multiset<sdEvent*, sdEventCompare> sdEntityCore::getEventSet(double start, double end){
-    multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getEventSet(start, end); // use non overrided function
+    multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getEventSet(start, end); // use non overridden function
     vector<sdEntityExtension*>::iterator it = extensionVector.begin();
     while(it != extensionVector.end()){
         sdEntityExtension* entityExtension = *it;
@@ -260,7 +260,7 @@ multiset<sdEvent*, sdEventCompare> sdEntityCore::getEventSet(double start, doubl
 }
 
 multiset<sdEvent*, sdEventCompare> sdEntityCore::getEventSet(double start, double end, EDescriptor descriptor){
-    multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getEventSet(start, end, descriptor); // use non overrided function
+    multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getEventSet(start, end, descriptor); // use non overridden function
     vector<sdEntityExtension*>::iterator it = extensionVector.begin();
     while(it != extensionVector.end()){
         sdEntityExtension* entityExtension = *it;
@@ -380,7 +380,7 @@ sdEvent* sdEntityCore::getFirstEvent(EDescriptor descriptor){
 }
 
 multiset<sdEvent*, sdEventCompare> sdEntityCore::getFirstEventSet(){
-    double firstEventTime = sdEntity::getFirstEventTime(); // ask parent, because this function is overrided
+    double firstEventTime = sdEntity::getFirstEventTime(); // ask parent, because this function is overridden
     multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getFirstEventSet();
     vector<sdEntityExtension*>::iterator it = extensionVector.begin();
     while(it != extensionVector.end()){
@@ -425,7 +425,7 @@ sdEvent* sdEntityCore::getLastEvent(EDescriptor descriptor){
 }
 
 multiset<sdEvent*, sdEventCompare> sdEntityCore::getLastEventSet(){
-    double lastEventTime = sdEntity::getLastEventTime(); // ask parent, because this function is overrided
+    double lastEventTime = sdEntity::getLastEventTime(); // ask parent, because this function is overridden
     multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getLastEventSet();
     vector<sdEntityExtension*>::iterator it = extensionVector.begin();
     while(it != extensionVector.end()){

@@ -44,7 +44,7 @@ public:
     descriptor(descriptor),
     value(value){};
     
-    /*! destructor should be overrided by the subclasses and they are responsible for releaseing void *value */
+    /*! destructor should be overridden by the subclasses and they are responsible for releaseing void *value */
     virtual ~sdEvent() = 0;
     
     /*! @name Setter
@@ -97,7 +97,7 @@ public:
     /*!returns value through void pointer. It should be casted to propoer type manually.*/
     void* getValue(void) const;
     
-    /*!returns value as string. overrided in the inherited classes */
+    /*!returns value as string. overridden in the inherited classes */
     virtual std::string getValueAsString(void) const = 0;
     
     /*! @} */

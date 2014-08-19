@@ -47,10 +47,10 @@ public:
     /*! destructor destroy all allocated memory to the value pointer*/
     ~sdEventExtensionMedia();
     
-    /*! overrided method. get descriptor as string e.g. "location" */
+    /*! overridden method. get descriptor as string e.g. "location" */
     string getDescriptorAsString(void) const;
     
-    /*! overrided method. get value as string e.g. "0.3 0.5 0.2"*/
+    /*! overridden method. get value as string e.g. "0.3 0.5 0.2"*/
     string getValueAsString(void) const;
     
 private:
