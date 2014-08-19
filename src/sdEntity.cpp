@@ -16,34 +16,6 @@
 #include <cfloat>
 #include "sdEntity.h"
 
-void sdEvent::set(double time, EDescriptor descriptor, void* value){
-    setTime(time);
-    setValue(descriptor, value);
-}
-
-void sdEvent::setTime(double time){
-    sdEvent::time = time;
-}
-
-void sdEvent::setTime(string timeString){
-    sdEvent::time = stringToDouble(timeString);
-}
-
-double sdEvent::getTime(void){
-    return time;
-}
-
-string sdEvent::getTimeAsString(void){
-    return doubleToString(time);
-}
-
-EDescriptor sdEvent::getDescriptor(void){
-    return descriptor;
-}
-
-void* sdEvent::getValue(void){
-    return value;
-}
 
 sdEntity::~sdEntity(){
     // delete all allocated values of attached events

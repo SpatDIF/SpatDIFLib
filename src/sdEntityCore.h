@@ -19,62 +19,12 @@
 
 #include <set>
 #include <string>
-#include "sdEntity.h"
+#include "sdEntityCore.h"
 #include "sdEntityExtension.h"
 #include "sdDescriptor.h"
 
 using namespace std;
 
-/*!
- this class stores event info (i.e. time, descriptor and value) of sdEntityCore. 
- */
-class sdEventCore: public sdEvent{
-    
-    /*! only sdEntityCore can make an instance of this class */
-    friend class sdEntityCore;
-
-public:
-    /*!
-     constructor with initialization.
-     @param time time of the event
-     @param descriptor descriptor of the event. declared in sdConst.h
-     @param value void pointer to value to be copied. Proper size of memory will be automatically allocated.
-     */
-    sdEventCore(double time, EDescriptor descriptor, void* value);
-    
-    /**
-     * @brief constructor with string arguments, useful when loading from files etc
-     * @param time time of event as a string
-     * @param descriptor descriptor of event as a string
-     * @param value value of event as a string
-     */ 
-    sdEventCore(string time, string descriptor, string value);
-    
-    /*! destructor destroy all allocated memory to the value pointer*/
-    ~sdEventCore();
-    
-    /*! overrided method. get value as string e.g. "0.3 0.5 0.2"*/
-    string getValueAsString(void);
-    
-    /*! overrided function. get descriptor as string*/
-    string getDescriptorAsString(void);
-    
-private:
-    /*! 
-     @name private setter
-     The modification of parameter after the instantiation is not allowed.
-     All member variables of this class should be initialized through the constructor and should not be modified after that in order to increase the stability
-     @{
-     */
-    
-    /*! set value. this function allocate memory to the void pointer member variable according to the given EDescriptor */
-    bool setValue(EDescriptor descriptor, void* value);
-    
-    /*! same as above but you can give all arguments with strings */
-    bool setValue(string descriptor, string value);
-    
-    /*! @} */
-};
 
 class sdScene;
 

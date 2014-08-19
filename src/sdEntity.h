@@ -21,93 +21,10 @@
 #include <string>
 #include <iostream>
 #include "sdConst.h"
+#include "sdEvent.h"
 #include "sdDescriptor.h"
+
 using namespace std;
-
-/**
- * @brief  A pure virtual class of event. This class maintains data of time, descriptor, and value and responsible for converting incoming and outgoing data.
- */
-
-class sdEvent{
-    
-protected:
-    double time;/*!< time of the event */
-    EDescriptor descriptor;/*!<descriptor of the event*/
-    void *value;/*!<value of the event. the subclasses must allocates this void pointer */
-    
-public:
-    
-    virtual ~sdEvent(){};
-
-    /*! @name Setter
-     @{ */
-    
-    /*!
-     set all three parameters at once
-     @param time time of event
-     @param desciptor desciprot of event declared in sdConst.h
-     @param value value of event
-     */
-    void set(double time, EDescriptor descriptor, void* value);
-    
-    /*! @} */
-
-    /*! @name Time handling
-     @{ */
-    
-    /*! set time of the event
-     @param time time of the event */
-    void setTime(double time);
-    
-    /*! set time of the event
-     @param time time of the event as String */
-    void setTime(string timeString);
-    
-    /*!returns time as double*/
-    double getTime(void);
-    
-    /*!returns time as string*/
-    string getTimeAsString(void);
-    
-    /*! @} */
-
-    /*! @name Value handling
-     @{ */
-    
-    /*! descriptor and value should be set at once. because this function allocates memory to void* value based on the descriptor*/
-    virtual bool setValue(EDescriptor descriptor, void* value) = 0;
-    
-    /*!overloaded function*/
-    virtual bool setValue(string descriptor, string value) = 0;
-    
-    /*!returns descriptor as Enum*/
-    EDescriptor getDescriptor(void);
-    
-    /*!returns descriptor as string. a routine for conversion should be implemented in derived classes*/
-    virtual string getDescriptorAsString(void) = 0;
-
-    /*!returns value through void pointer. It should be casted to propoer type manually.*/
-    void* getValue(void);
-
-    /*!returns value as string. a routine for conversion should be implemented in derived classes */
-    virtual string getValueAsString(void) = 0;
-
-    /*! @} */
-};
-
-
-/*!
- a helper class for sorting events
- */
-class sdEventCompare{
-public:
-    bool operator()(sdEvent* e1, sdEvent* e2){
-        if(e1->getTime() < e2->getTime()) // sort by time
-            return true;
-        else
-            return false;
-    }
-};
 
 /*! sdEntity
  sdEntity is a pure abstract class. This class maintains and handles all events associated to relevant descriptors. This class is also responsible for answering queries about it's relevant descriptors.
@@ -317,9 +234,4 @@ private:
 
 };
 
-
-
-
-
-#endif /* defined(____sdEntity__) */
-
+#endif

@@ -18,8 +18,13 @@
 
 #include "sdConst.h"
 #include "sdDate.h"
+
+#include "sdEvent.h"
 #include "sdEntity.h"
+
+#include "sdEventCore.h"
 #include "sdEntityCore.h"
+
 #include "sdEntityExtension.h"
 #include "sdEntityExtensionMedia.h"
 #include "sdInfo.h"

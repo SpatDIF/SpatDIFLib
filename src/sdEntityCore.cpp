@@ -21,138 +21,6 @@
 
 using namespace std;
 
-/*** sdEventCore ***/
-
-sdEventCore::sdEventCore(double time, EDescriptor descriptor, void* value){
-    setTime(time); // declared in the super class
-    setValue(descriptor, value); // private function
-}
-
-sdEventCore::sdEventCore(string time, string descriptor, string value){
-    setTime(time); // declared in the super class
-    setValue(descriptor, value); // private function
-}
-
-sdEventCore::~sdEventCore(){
-    // we have to cast void pointer before deleting it. because void pointer deletion is undefined
-    switch (descriptor) {
-        case SD_PRESENT:{
-            bool* valuePointer = static_cast<bool*>(value);
-            delete valuePointer;
-            break;
-        }
-        case SD_POSITION:{
-            double* valuePointer = static_cast<double*>(value);
-            delete valuePointer;
-            break;
-        }
-        case SD_ORIENTATION:{
-            double* valuePointer = static_cast<double*>(value);
-            delete valuePointer;
-            break;
-        }
-        default:
-            break;
-    }
-}
-
-
-
-string sdEventCore::getValueAsString(void){
-    string str;
-    switch (descriptor) {
-        case SD_PRESENT:{
-            bool *present;
-            present = static_cast<bool*>(value);
-            str = *present ? string("true") : string("false");
-            break;
-        }
-        case SD_POSITION:{
-            double *position = static_cast<double *>(value);
-            str = doublesToString(position, 3);
-            break;
-        }
-        case SD_ORIENTATION:{
-            double *orientation = static_cast<double *>(value);
-            str = doublesToString(orientation, 3);
-        }
-        default:
-            break;
-    }
-    return str;
-}
-
-bool sdEventCore::setValue(EDescriptor descriptor, void* value){
-    // this function is called by the constructor
-    sdEvent::descriptor = descriptor;
-    switch (sdEventCore::descriptor) {
-        case SD_PRESENT:{
-            bool *presentValue = static_cast<bool*>(value);
-            sdEvent::value = static_cast<void*>(new bool(*presentValue));
-            break;
-        }
-        case SD_POSITION:{
-            double *positionValueTo = new double[3];
-            double *positionValueFrom = static_cast<double*>(value);
-            memcpy(positionValueTo, positionValueFrom, sizeof(double) * 3);
-            sdEvent::value = static_cast<void*>(positionValueTo);
-            break;
-        }
-        case SD_ORIENTATION:{
-            double *orientationValueTo = new double[3];
-            double *orientationValueFrom = static_cast<double*>(value);
-            memcpy(orientationValueTo, orientationValueFrom, sizeof(double) * 3);
-            sdEvent::value = static_cast<void*>(orientationValueTo);
-            break;
-        }
-        default:{
-            return false;
-            break;
-        }
-    }
-    return true;
-}
-
-bool sdEventCore::setValue(string descriptor, string value){
-    // set descriptor enum from the given string and static sdDescriptor array
-    sdEventCore::descriptor = 
-        getDescriptorAsEnum(descriptor, sdEntityCore::descriptors, sdEntityCore::numberOfDescriptors);
-
-    // set value
-    string str;
-    switch (sdEventCore::descriptor) {
-        case SD_PRESENT:
-        {
-            bool present = stringToBool(value);
-            setValue(sdEventCore::descriptor, static_cast<void*>(&present));
-            break;
-        }
-        case SD_POSITION:
-        {
-            double position[3];
-            stringToDoubles(value, position, 3);
-            setValue(sdEventCore::descriptor, static_cast<void*>(&position));
-            break;
-        }
-        case SD_ORIENTATION:
-        {
-            double orientation[3];
-            stringToDoubles(value, orientation, 3);
-            setValue(sdEventCore::descriptor, static_cast<void*>(&orientation));
-            break;
-        }
-        default:{
-            return false;
-            break;
-        }
-    }
-    return true;
-}
-
-string sdEventCore::getDescriptorAsString(void){
-    return ::getDescriptorAsString(descriptor, sdEntityCore::descriptors, sdEntityCore::numberOfDescriptors); // global call
-}
-
 /*** sdEntityCore ***/
 const int sdEntityCore::numberOfDescriptors = 3;
 const sdDescriptor sdEntityCore::descriptors[sdEntityCore::numberOfDescriptors] = {
@@ -200,7 +68,7 @@ string sdEntityCore::getTypeAsString(void){
     return str;
 }
 
-sdEvent* sdEntityCore::addEvent(double time, EDescriptor descriptor, void* value){
+sdEvent* sdEntityCore::addEvent(double time, EDescriptor descriptor, void* const value){
     
     sdEvent *event = NULL;
     if(isCoreDescriptor(descriptor)){

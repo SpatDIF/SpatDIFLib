@@ -41,17 +41,17 @@ public:
      @param value void pointer to value to be copied. Proper size of memory will be automatically allocated.
      */
 
-    sdEventExtensionMedia(double time, EDescriptor descriptor, void* value);
-    sdEventExtensionMedia(string time, string descriptor, string value);
+    sdEventExtensionMedia(const double time, const EDescriptor descriptor, void* const value);
+    sdEventExtensionMedia(const string time, const string descriptor, const string value);
 
     /*! destructor destroy all allocated memory to the value pointer*/
     ~sdEventExtensionMedia();
     
     /*! overrided method. get descriptor as string e.g. "location" */
-    string getDescriptorAsString(void);
+    string getDescriptorAsString(void) const;
     
     /*! overrided method. get value as string e.g. "0.3 0.5 0.2"*/
-    string getValueAsString(void);
+    string getValueAsString(void) const;
     
 private:
     /*!
@@ -62,10 +62,10 @@ private:
      */
     
     /*! set value. this function allocate memory to the void pointer member variable according to the given EDescriptor */
-    bool setValue(EDescriptor descriptor, void* value);
+    bool setValue(const EDescriptor descriptor, void* const value);
     
     /*! same as above but you can give all arguments with strings */
-    bool setValue(string descriptor, string value);
+    bool setValue(const string descriptor, const string value);
 
 };
 
@@ -100,12 +100,12 @@ public:
      */
     
     /*! a method for adding a new event to the entity*/
-    sdEvent* addEvent(double time, EDescriptor descriptor, void* value);
+    sdEvent* addEvent(const double time, const EDescriptor descriptor, void* const value);
     
     /*! same as above but you can specify arguments with strings */
-    sdEvent* addEvent(string time, string descriptor, string value);
+    sdEvent* addEvent(const string time, const string descriptor, const string value);
     
-    void removeEvent(string time, string descriptor);
+    void removeEvent(const string time, const string descriptor);
 
     /*!
      @}

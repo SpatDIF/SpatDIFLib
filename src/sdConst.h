@@ -13,13 +13,12 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef ____sdConstant__
-#define ____sdConstant__
+#ifndef ____sdConst__
+#define ____sdConst__
 
 #include <string>
 #include <iostream>
 #include <sstream>
-using namespace std;
 
 /*!
     enum for descriptor. internally all descriptors are handled with this Enum
@@ -89,8 +88,8 @@ typedef enum {
 /*!
  utility function that convert ints to a string
  */
-inline string intsToString(int *it, int num){
-    ostringstream os;
+inline std::string intsToString(int *it, int num){
+    std::ostringstream os;
     for(int i=0;i<num;i++){
         os << it[i];
         if(i != (num-1))
@@ -102,15 +101,15 @@ inline string intsToString(int *it, int num){
 /*!
  utility function that convert a int to a string
  */
-inline string intToString(int it){
+inline std::string intToString(int it){
     return intsToString(&it, 1);
 }
 
 /*!
  utility function that convert ints to a string
  */
-inline string floatsToString(float *ft, int num){
-    ostringstream os;
+inline std::string floatsToString(float *ft, int num){
+    std::ostringstream os;
     for(int i=0;i<num;i++){
         os << ft[i];
         if(i != (num-1))
@@ -122,7 +121,7 @@ inline string floatsToString(float *ft, int num){
 /*!
  utility function that convert a int to a string
  */
-inline string floatToString(float ft){
+inline std::string floatToString(float ft){
     return floatsToString(&ft, 1);
 }
 
@@ -149,8 +148,8 @@ inline float *doublesToFloats(double *doubles, float *floats, int num){
 /*! 
  utility function that convert doubles to a string
  */
-inline string doublesToString(double *db, int num){
-    ostringstream os;
+inline std::string doublesToString(double *db, int num){
+    std::ostringstream os;
     for(int i=0;i<num;i++){
         os << db[i];
         if(i != (num-1))
@@ -162,21 +161,21 @@ inline string doublesToString(double *db, int num){
 /*!
  utility function that convert a double to a string
  */
-inline string doubleToString(double db){
+inline std::string doubleToString(double db){
     return doublesToString(&db, 1);
 }
 
 /*!
  utility function that convert a bool to a string
  */
-inline string boolToString(bool bl){
-    return bl ? string("true") : string("false");
+inline std::string boolToString(bool bl){
+    return bl ? std::string("true") : std::string("false");
 }
 
 /*!
  utility function that convert a string to a bool
  */
-inline bool stringToBool(string str){
+inline bool stringToBool(std::string str){
     return str == "true" ? true : false;
 }
 
@@ -185,8 +184,8 @@ inline bool stringToBool(string str){
 /*!
  utility function that convert a string to doubles
  */
-inline double *stringToDoubles(string str, double *db, int num){
-    istringstream is(str);
+inline double *stringToDoubles(std::string str, double *db, int num){
+    std::istringstream is(str);
     for(int i = 0; i < num; i++) {
         is >> db[i];
     }
@@ -196,7 +195,7 @@ inline double *stringToDoubles(string str, double *db, int num){
 /*!
  utility function that convert a string to a double
  */
-inline double stringToDouble(string str){
+inline double stringToDouble(std::string str){
     double db;
     stringToDoubles(str, &db, 1);
     return db;
@@ -205,8 +204,8 @@ inline double stringToDouble(string str){
 /*!
  utility function that converts a string to a int
  */
-inline int *stringToInts(string str, int *it, int num){
-    istringstream is(str);
+inline int *stringToInts(std::string str, int *it, int num){
+    std::istringstream is(str);
     for(int i = 0; i < num; i++) {
         is >> it[i];
     }
@@ -216,7 +215,7 @@ inline int *stringToInts(string str, int *it, int num){
 /*!
  utility function that convert int to a string
  */
-inline int stringToInt(string str){
+inline int stringToInt(std::string str){
     int it;
     stringToInts(str, &it, 1);
     return it;
@@ -227,8 +226,8 @@ inline int stringToInt(string str){
  * @param extension [description]
  * @return [description]
  */
-inline const string extensionToString(EExtension extension){
-    string extensionStr;
+inline const std::string extensionToString(EExtension extension){
+    std::string extensionStr;
     if(extension == SD_MEDIA){
         extensionStr = "media";
     }else if(extension == SD_INTERPOLATION){
@@ -248,7 +247,7 @@ inline const string extensionToString(EExtension extension){
  * @param extensionStr the name of extension in string 
  * @return enum EExtension that represents the type of extension
  */
-inline  EExtension stringToExtension(string extensionStr){
+inline  EExtension stringToExtension(std::string extensionStr){
     EExtension ext;
     if(extensionStr == "media"){
         ext = SD_MEDIA;

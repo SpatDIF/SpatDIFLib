@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		6279340919A296AA002BF8EB /* sdEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdEvent.h; sourceTree = "<group>"; };
+		6279340C19A2A018002BF8EB /* sdDescriptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdDescriptor.h; sourceTree = "<group>"; };
+		6282D5CA19A32FB8006446F2 /* sdEventCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdEventCore.h; sourceTree = "<group>"; };
 		62A2B3F918C3F49100BE6CF5 /* sdOSCMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdOSCMessage.cpp; sourceTree = "<group>"; };
 		62A2B3FA18C3F49100BE6CF5 /* sdOSCMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdOSCMessage.h; sourceTree = "<group>"; };
 		62F932B518BDF377005A7D10 /* sdOSCConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdOSCConverter.h; sourceTree = "<group>"; };
@@ -42,8 +45,11 @@
 		A7E1E39A18A3B43F003BE78B /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				6279340C19A2A018002BF8EB /* sdDescriptor.h */,
 				A7E1E39B18A3B44F003BE78B /* sdConst.h */,
 				A7E1E39C18A3B44F003BE78B /* sdDate.h */,
+				6279340919A296AA002BF8EB /* sdEvent.h */,
+				6282D5CA19A32FB8006446F2 /* sdEventCore.h */,
 				A7E1E39D18A3B44F003BE78B /* sdEntity.cpp */,
 				A7E1E39E18A3B44F003BE78B /* sdEntity.h */,
 				A7E1E39F18A3B44F003BE78B /* sdEntityCore.cpp */,

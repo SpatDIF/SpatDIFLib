@@ -22,6 +22,8 @@
 #include <sstream>
 #include <iostream>
 
+#pragma mark definitions
+
 /*! sdDate
  maintains data of a date (year, month, day) and offers utility functionalities listed below.
  - interpretation and generation of ISO 8601 formmated strings.
@@ -57,7 +59,7 @@ public:
     /*! constrcut with cstr
      @param cstr ISO 8601 string. must be YYYY-MM-DD format.
      */
-    sdDate(const char *cDateString);
+    sdDate(const char* const cDateString);
     
     /*! construct with date as string
      @param dateString ISO 8601 string. must be YYYY-MM-DD format.
@@ -101,15 +103,12 @@ public:
      */
     
     /*! gets date as an array.
-     @date an allocated buffer of unsigned short. the size must be greater than 3.
+     @date an allocated buffer of unsigned short. the size of unsighed short array must be exactly 3.
      */
     void getDate(unsigned short (&date)[3]) const;
     
     /*! generates ISO 8601 string from the given data and return it*/
     std::string getDateAsString(void) const;
-    
-    /*! conversion function that internally calls getDateAsString() */
-    operator std::string(){return getDateAsString();};
 
     /*! gets year.*/
     unsigned short getYear(void) const;
@@ -120,11 +119,21 @@ public:
     /*! gets day.*/
     unsigned short getDay(void) const;
     
+    /*! @} */
+    
+    
+    /*! @name conversion functions 
+     @{
+     */
+    
+    /*! conversion function that internally calls getDateAsString() */
+    operator std::string(){return getDateAsString();};
     
     /*! @} */
+
 };
 
-/*** implementation ***/
+#pragma mark implementations
 
 // constructors/destructors
 inline sdDate::sdDate(const bool autoInit){
