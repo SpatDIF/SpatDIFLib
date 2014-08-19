@@ -209,14 +209,14 @@ inline bool sdEntityCore::sortAlphabetically( sdEntityCore *leftEntity,  sdEntit
     return leftEntity->getName().compare(rightEntity->getName()) ? false:true;
 }
 
-bool sdEntityCore::isCoreDescriptor(EDescriptor descriptor){
+inline bool sdEntityCore::isCoreDescriptor(EDescriptor descriptor){
     for(int i = 0; i< sdEventCore::numberOfDescriptors; i++){
         if(sdEventCore::descriptors[i].getDescriptor() == descriptor) return true;
     }
     return false;
 }
 
-bool sdEntityCore::isCoreDescriptor(string descriptor){
+inline bool sdEntityCore::isCoreDescriptor(string descriptor){
     for(int i = 0; i< sdEventCore::numberOfDescriptors; i++){
         if(sdEventCore::descriptors[i].getDescriptorAsString() == descriptor)
             return true;

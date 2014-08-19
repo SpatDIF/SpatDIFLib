@@ -13,8 +13,8 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef _sdEntityExtensionMedia_h
-#define _sdEntityExtensionMedia_h
+#ifndef ____sdEntityExtensionMedia__
+#define ____sdEntityExtensionMedia__
 
 #include <string>
 #include "sdConst.h"

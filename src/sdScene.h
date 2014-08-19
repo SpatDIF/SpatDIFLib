@@ -301,10 +301,10 @@ public:
      */
 };
 
-/*** inline implementations ***/
+#pragma inline implementations
 
 inline sdScene::sdScene(void){
-    sdInfo info(string("unknown"), string("unknown"), sdDate(), string("unknown"), string("unknown"), string("unknown"));
+    sdInfo info("unknown", "unknown", sdDate(), "unknown", "unknown", "unknown");
     ordering = SD_TIME;
 }
 
@@ -352,4 +352,4 @@ inline void sdScene::setOrdering(string ordering){
     }
 }
 
-#endif /* defined(____sdScene__) */
+#endif

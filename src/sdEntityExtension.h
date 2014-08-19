@@ -13,8 +13,8 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef _sdEntityExtension_h
-#define _sdEntityExtension_h
+#ifndef ____sdEntityExtension__
+#define ____sdEntityExtension__
 
 #include <string>
 #include <vector>

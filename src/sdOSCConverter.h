@@ -14,8 +14,8 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef __sdOSCConverter__
-#define __sdOSCConverter__
+#ifndef ____sdOSCConverter__
+#define ____sdOSCConverter__
 
 #include <string>
 #include <iostream>

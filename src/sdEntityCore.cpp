@@ -13,34 +13,29 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#include <stdio.h>
 #include <string>
 #include <cfloat>
-#include "sdMain.h"
+#include "sdEntityCore.h"
+#include "sdEntityExtensionMedia.h"
 
-
-using namespace std;
-
-/*** sdEntityCore ***/
-
-string sdEntityCore::getKindAsString(void){
-    string str;
+std::string sdEntityCore::getKindAsString(void){
+    std::string str;
     switch(kind){
         case SD_SOURCE:
-            str = string("source");break;
+            str = std::string("source");break;
         case SD_SINK:
-            str = string("sink");break;
+            str = std::string("sink");break;
         default:
             break;
     }
     return str;
 }
 
-string sdEntityCore::getTypeAsString(void){
-    string str;
+std::string sdEntityCore::getTypeAsString(void){
+    std::string str;
     switch(type){
         case SD_POINT:
-            str = string("point");break;
+            str = std::string("point");break;
         default:
             break;
     }
@@ -67,7 +62,7 @@ sdEvent* sdEntityCore::addEvent(double time, EDescriptor descriptor, void* const
     return event;
 }
 
-sdEvent* sdEntityCore::addEvent(string time, string descriptor, string value){
+sdEvent* sdEntityCore::addEvent(std::string time, std::string descriptor, std::string value){
 
     sdEvent *event = NULL;
     if(isCoreDescriptor(descriptor)){
@@ -117,7 +112,7 @@ void sdEntityCore::removeEvent(double time, EDescriptor descriptor){
     }
 }
 
-void sdEntityCore::removeEvent(string time, string descriptor){
+void sdEntityCore::removeEvent(std::string time, std::string descriptor){
     EDescriptor ds = SD_ERROR;
     for(int i = 0; i < sdEventCore::numberOfDescriptors; i++){
         if(sdEventCore::descriptors[i].getDescriptorAsString() == descriptor){

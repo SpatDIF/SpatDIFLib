@@ -13,8 +13,8 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef __sdEvent__
-#define __sdEvent__
+#ifndef ____sdEvent__
+#define ____sdEvent__
 
 #include <string>
 #include "sdConst.h"
@@ -101,6 +101,9 @@ public:
 };
 
 #pragma mark implementations
+
+// in order to avoid unimplemented error
+inline sdEvent::~sdEvent(){};
 
 inline void sdEvent::set(const double time, const EDescriptor descriptor, void* const value){
     if(!value){
