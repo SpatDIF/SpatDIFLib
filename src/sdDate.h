@@ -22,7 +22,7 @@
 #include <sstream>
 #include <iostream>
 
-#pragma mark definitions
+#pragma mark decralations
 
 /*! sdDate
  maintains data of a date (year, month, day) and offers utility functionalities listed below.

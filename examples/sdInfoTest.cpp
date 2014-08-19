@@ -22,8 +22,9 @@ int main(void){
     using namespace std;
 
     {
-        sdInfo info;
+        sdInfo info; // empty
         
+        // set manually using accessors
         info.setAuthor(string("John"));
         info.setHost(string("sdInfoTest"));
         info.setDate(sdDate("2000-01-01"));
@@ -31,6 +32,7 @@ int main(void){
         info.setLocation(string("ZHDK"));
         info.setAnnotation(string("this is a test"));
         
+        // print everything inside
         cout << "author:" << info.getAuthor() << endl;
         cout << "host:" << info.getHost() << endl;
         cout << "date:" << info.getDateAsString() << endl;
@@ -41,6 +43,7 @@ int main(void){
     }
     
     {
+        // set at once with strings and sdDate
         sdInfo info(string("Tom"), string("sdInfoTest"), sdDate(string("2012-04-03")), string("1.2"), string("ESB"), string("this is second test"));
         
         cout << "author:" << info.getAuthor() << endl;
@@ -54,7 +57,8 @@ int main(void){
     }
     
     {
-        sdInfo info(string("Kevin"), string("sdInfoTest"), string("2012-05-01"), string("1.3"), string("SFEM"), string("this is third test"));
+        // initialization also possible with c-strings
+        sdInfo info("Kevin", "sdInfoTest", "2012-05-01", "1.3", "SFEM", "this is third test");
         
         cout << "author:" << info.getAuthor() << endl;
         cout << "host:" << info.getHost() << endl;

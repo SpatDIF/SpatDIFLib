@@ -18,29 +18,29 @@
 
 #include <string>
 #include <vector>
-#include "sdConst.h"
+
 #include "sdDate.h"
 
-using namespace std;
+#pragma mark declarations
 
 /*! sdInfo
  is responsible for keeping, adding, removing and modifying the "info" part of the meta section
  */
 class sdInfo{
     
-private:
-    string author; /*< creator of the scene*/
-    string host; /*< auhotring tool used for creating the scene*/
+protected:
+    std::string author; /*< creator of the scene*/
+    std::string host; /*< auhotring tool used for creating the scene*/
     sdDate date; /*< storing date*/
-    string session; /*< session number*/
-    string location; /*< studio or venue location */
-    string annotation; /*< general comments about this scene */
+    std::string session; /*< session number*/
+    std::string location; /*< studio or venue location */
+    std::string annotation; /*< general comments about this scene */
 
 public:
-    
-    /*! constructor */
-    sdInfo();
 
+    /*! default constructor */
+    sdInfo(){};
+    
     /*! construct with parameters
      @param author creator of the scene
      @param host auhotring tool used for creating the scene
@@ -49,7 +49,7 @@ public:
      @param location studio or venue location
      @param annotation general comments about this scene
      */
-    sdInfo(string author, string host, sdDate date, string session, string location, string annotation);
+    sdInfo(const std::string &author, const std::string &host, const sdDate &date, const std::string &session, const std::string &location, const std::string &annotation);
     
     /*! construct with parameters (date as string)
      @param author creator of the scene
@@ -59,8 +59,17 @@ public:
      @param location studio or venue location
      @param annotation general comments about this scene
      */
-    sdInfo(string author, string host, string date, string session, string location, string annotation);
+    sdInfo(const std::string &author, const std::string &host, const std::string &date, const std::string &session, const std::string &location, const std::string &annotation);
     
+    /*! construct with parameters (c-strings)
+     @param author creator of the scene
+     @param host auhotring tool used for creating the scene
+     @param date storing date
+     @param session session number
+     @param location studio or venue location
+     @param annotation general comments about this scene
+     */
+    sdInfo(const char* author, const char* host, const char* date, const char* session, const char* location, const char* annotation);
     /*! @name Setters 
      @{ 
      */
@@ -68,39 +77,39 @@ public:
     /*! sets author 
      @param author creator of the scene
      */
-    void setAuthor(string author);
+    void setAuthor(const std::string &author);
     
     /*! sets host
      @param host auhotring tool used for creating the scene
      */
-    void setHost(string host);
+    void setHost(const std::string &host);
     
     /*! sets date
      @param date storing date
      */
-    void setDate(sdDate date);
+    void setDate(const sdDate &date);
     
     /*! sets date
      @param date storing date with a ISO 8601 string
      */
-    void setDate(string date);
+    void setDate(const std::string &date);
     
     /*! sets session
      @param session session number
      */
-    void setSession(string session);
+    void setSession(const std::string &session);
 
     /*! sets location
      @param location studio or venue location
      */
-    void setLocation(string location);
+    void setLocation(const std::string &location);
 
     /*! sets annotation
      @param annotation general comments about this scene
      */
-    void setAnnotation(string annotation);
+    void setAnnotation(const std::string &annotation);
     
-    /*! sets all members at once
+    /*! sets all members at once. also used by some constructors
      @param author creator of the scene
      @param host auhotring tool used for creating the scene
      @param date storing date
@@ -108,7 +117,7 @@ public:
      @param location studio or venue location
      @param annotation general comments about this scene
      */
-    void set(string author, string host, sdDate date, string session, string location, string annotation);
+    void set(const std::string &author, const std::string &host, const sdDate &date, const std::string &session, const std::string &location, const std::string &annotation);
 
     /*! @} */
     
@@ -117,113 +126,114 @@ public:
      */
 
     /*! gets author */
-    string getAuthor(void);
+    std::string getAuthor(void) const;
         
     /*! gets host */
-    string getHost(void);
+    std::string getHost(void) const;
 
     /*! gets date */
-    sdDate getDate(void);
+    sdDate getDate(void) const;
 
-    /*! gets date as ISO8601 string */
-    string getDateAsString(void);
+    /*! gets date as ISO 8601 string */
+    std::string getDateAsString(void) const;
     
     /*! gets session */
-    string getSession(void);
+    std::string getSession(void) const;
         
     /*! gets location */
-    string getLocation(void);
+    std::string getLocation(void) const;
     
     /*! gets annotation */
-    string getAnnotation(void);
+    std::string getAnnotation(void) const;
 
     /*! @} */
 
 };
 
-/*** inline implementations ***/
+#pragma mark implementations
 
-inline sdInfo::sdInfo(){
-
-}
-
-inline sdInfo::sdInfo(string author, string host, sdDate date, string session, string location, string annotation){
+inline sdInfo::sdInfo(const std::string &author, const std::string &host, const sdDate &date, const std::string &session, const std::string &location, const std::string &annotation){
     set(author, host, date, session, location, annotation);
 }
 
-inline sdInfo::sdInfo(string author, string host, string date, string session, string location, string annotation){
-    sdDate dt(date);
+inline sdInfo::sdInfo(const std::string &author, const std::string &host, const std::string &date, const std::string &session, const std::string &location, const std::string &annotation){
+    const sdDate dt(date);
     set(author, host, dt, session, location, annotation);
+}
+
+inline sdInfo::sdInfo(const char* author, const char* host, const char* date, const char* session, const char* location, const char* annotation){
+    const sdDate dt(date);
+    // just for avoiding ambiguity
+    set(std::string(author), std::string(host), dt, std::string(session), std::string(location), std::string(annotation));
 }
 
 /* setters */
 
-inline void sdInfo::set(string author, string host, sdDate date, string session, string location, string annotation){
-    sdInfo::author = author;
-    sdInfo::host = host;
-    sdInfo::date = date;
-    sdInfo::location = location;
-    sdInfo::session = session;
-    sdInfo::annotation = annotation;
+inline void sdInfo::set(const std::string &author, const std::string &host, const sdDate &date, const std::string &session, const std::string &location, const std::string &annotation){
+    this->author = author;
+    this->host = host;
+    this->date = date;
+    this->location = location;
+    this->session = session;
+    this->annotation = annotation;
 }
 
-inline void sdInfo::setAuthor(string author){
-    sdInfo::author = author;
+inline void sdInfo::setAuthor(const std::string &author){
+    this->author = author;
 }
 
-inline void sdInfo::setHost(string host){
-    sdInfo::host = host;
+inline void sdInfo::setHost(const std::string &host){
+    this->host = host;
 }
 
-inline void sdInfo::setDate(sdDate date){
-    sdInfo::date = date;
+inline void sdInfo::setDate(const sdDate &date){
+    this->date = date;
 }
 
-inline void sdInfo::setDate(string date){
-    sdDate dt;
-    dt.setDate(date);
-    sdInfo::date = dt;
+inline void sdInfo::setDate(const std::string &date){
+    sdDate dt(date);
+    this->date = dt;
 }
 
-inline void sdInfo::setSession(string session){
-    sdInfo::session = session;
+inline void sdInfo::setSession(const std::string &session){
+    this->session = session;
 }
 
-inline void sdInfo::setLocation(string location){
-    sdInfo::location = location;
+inline void sdInfo::setLocation(const std::string &location){
+    this->location = location;
 }
 
-inline void sdInfo::setAnnotation(string annotation){
-    sdInfo::annotation = annotation;
+inline void sdInfo::setAnnotation(const std::string &annotation){
+    this->annotation = annotation;
 }
 
 /* getters */
-inline string sdInfo::getAuthor(){
+inline std::string sdInfo::getAuthor() const{
     return author;
 }
 
-inline string sdInfo::getHost(){
+inline std::string sdInfo::getHost() const{
     return host;
 }
 
-inline sdDate sdInfo::getDate(){
+inline sdDate sdInfo::getDate() const{
     return date;
 }
 
-inline string sdInfo::getDateAsString(){
+inline std::string sdInfo::getDateAsString() const{
     return date.getDateAsString();
 }
 
-inline string sdInfo::getSession(){
+inline std::string sdInfo::getSession() const{
     return session;
 }
 
-inline string sdInfo::getLocation(){
+inline std::string sdInfo::getLocation() const{
     return location;
 }
 
-inline string sdInfo::getAnnotation(){
+inline std::string sdInfo::getAnnotation() const{
     return annotation;
 }
 
-#endif /* defined(____sdInfo__) */
+#endif
