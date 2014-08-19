@@ -3,54 +3,15 @@ CFLAGS = -arch x86_64 -arch i386
 INCLUDE = ../src
 LIB_PATH = /usr/local/lib
 LIBS =  -lstdc++ -lspatdif
-TARGETS = How_to_query.out FileWithExtension.out sdConverter.out sdDateTest.out\
-			sdCoreEventTest.out sdExtensionTest.out sdInfoTest.out sdLoaderTest.out sdOSCResponderTest.out sdEventTest.out\
-			sdSaverTest.out sdSceneTest.out sdOSCConverterTest.out sdOSCMessageTest.out
+SRC = $(shell echo *.cpp)
+TARGETS = $(basename $(SRC))
 
 all: $(TARGETS)
 
 
-How_to_query.out:  How_to_query.cpp
-	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
-
-FileWithExtension.out: FileWithExtension.cpp
-	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
-
-sdConverter.out: sdConverter.cpp
-	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
-
-sdDateTest.out: sdDateTest.cpp
-	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
-
-sdEventTest.out: sdEventTest.cpp
-	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS)
-
-sdCoreEventTest.out: sdCoreEventTest.cpp
-	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
-
-sdExtensionTest.out:  sdExtensionTest.cpp
-	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
-
-sdInfoTest.out: sdInfoTest.cpp
-	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
-
-sdLoaderTest.out: sdLoaderTest.cpp
-	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
-
-sdOSCResponderTest.out: sdOSCResponderTest.cpp
-	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
-
-sdOSCConverterTest.out: sdOSCConverterTest.cpp
-	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
-
-sdOSCMessageTest.out: sdOSCMessageTest.cpp
-	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS)
-
-sdSaverTest.out: sdSaverTest.cpp
-	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
-
-sdSceneTest.out: sdSceneTest.cpp
-	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) -o $@ $? $(LIBS) 
+$(TARGETS):
+	@echo "building $@"
+	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) $(LIBS) -o $@ $@.cpp
 
 clean:
 	rm $(TARGETS)
