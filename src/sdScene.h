@@ -23,8 +23,6 @@
 #include "sdEntityCore.h"
 #include "sdEntityExtension.h"
 
-using namespace std;
-
 /*!
     a structure for associating an entity and multiple events
 */
@@ -96,7 +94,7 @@ public:
     /*!
      gets ordering as String
      */
-    string getOrderingAsString(void);
+    std::string getOrderingAsString(void);
     
     /*! sets an enum of ordering
      @param ordering the ordering enum declared in sdConst.h
@@ -106,7 +104,7 @@ public:
     /*! sets an enum of ordering
      @param ordering the ordering enum declared in sdConst.h
      */
-    void setOrdering(string string);
+    void setOrdering(std::string string);
 
     /*!
      @}
@@ -119,16 +117,16 @@ public:
     /*! return name of the entity at the specified index
      @param index
      */
-    string getEntityName(int index);
+    std::string getEntityName(int index);
 
     /*! return the name of all entities in the scene as vector of string
     */
-    vector<string> getEntityNames();
+    vector<std::string> getEntityNames();
 
     /*! search an entity in the entity vector by its name and return the pointer. returns null if the entity can not be found.
      @param name the name of a designated entity
      */
-    sdEntityCore* getEntity(string name);
+    sdEntityCore* getEntity(std::string name);
     
     /*! returns a pointer to the entityVector */
     vector <sdEntityCore*> getEntityVector(void);
@@ -143,12 +141,12 @@ public:
       this function returns a pointer to the new instance of sdEntityCore.
         @param name the name of new sdEntityCore
      */
-    sdEntityCore* addEntity(string name, EKind kind = SD_SOURCE);
+    sdEntityCore* addEntity(std::string name, EKind kind = SD_SOURCE);
     
     /*! remove the sdEntityCore specified by name from the entityVector]
      @param name the name of a sdEntityCore to be removed from the entityVector
      */
-    void removeEntity(string name);
+    void removeEntity(std::string name);
     
     /*! remove the entity refered by the pointer from the entityVector
      @param entityCore a pointer to a sdEntityCore to be removed from the entityVector
@@ -174,7 +172,7 @@ public:
      @param descriptor enum of target descriptor
      @param value allocated void pointer containing value(s)
      */
-    void setValue(string name, double time, EDescriptor descriptor,  void* value);
+    void setValue(std::string name, double time, EDescriptor descriptor,  void* value);
     
     /*! query timed data by specifying name of the target entity, descriptor, and time.
      sdScene forwards the query to a proper sdEntityCore and return the answer.
@@ -183,7 +181,7 @@ public:
      @param descriptor enum of target descriptor
      @param value allocated void pointer containing value(s)
      */
-    void* getValue(string name, double time, EDescriptor descriptor);
+    void* getValue(std::string name, double time, EDescriptor descriptor);
     
     /*!
      @}
@@ -203,7 +201,7 @@ public:
     vector<EExtension> getActivatedExtensions();
 
     /*! returns names of  activated extensions as a vector*/
-    vector<string> getActivatedExtensionsAsStrings();
+    vector<std::string> getActivatedExtensionsAsStrings();
 
     /*! activate an extension specified by enum EExtension. This function instantiates instances of the
      designated extension (i.e. a subclass of sdEntityExtension ) and attached them to all existing sdEntityCores
@@ -215,13 +213,13 @@ public:
     /*! activate an extension specified by a string. 
      @param extension string of extension to be added
      */
-    void addExtension(string extension);
+    void addExtension(std::string extension);
 
     /*! check if the specified extension is activated
      @param extension enum EExtension of extension to be checked
      */
     bool isExtensionActivated(EExtension extension);
-    bool isExtensionActivated(string extensionString);
+    bool isExtensionActivated(std::string extensionString);
 
     /*! deactivate an extension specified by enum EExtension. This function removes instances of the designated extension (i.e. a subclass of sdEntityExtension )  attached  to all existing sdEntityCores in the scene.
         Thus, all events data stored in the extension will be lost.
@@ -232,7 +230,7 @@ public:
     /*! deactivate an extension specified by a string
      @param extension string of extension to be removed
      */
-    void removeExtension(string extension);
+    void removeExtension(std::string extension);
 
     /*! 
      remove all exntesions from the extensionVector and sdEntityCores in the scene.
@@ -294,7 +292,7 @@ public:
      * @oaram consoleOut if false, does not send dump to standard output only returns a string
      * @return dump string
      */
-      string dump(bool consoleOut = true);
+      std::string dump(bool consoleOut = true);
     
     /*!
      @}
@@ -334,15 +332,15 @@ inline EOrdering sdScene::getOrdering(void){
     return ordering;
 }
 
-inline string sdScene::getOrderingAsString(void){
-    return ordering == SD_TIME ? string("time") : string("track");
+inline std::string sdScene::getOrderingAsString(void){
+    return ordering == SD_TIME ? std::string("time") : std::string("track");
 }
 
 inline void sdScene::setOrdering(EOrdering ordering ){
     sdScene::ordering = ordering;
 }
 
-inline void sdScene::setOrdering(string ordering){
+inline void sdScene::setOrdering(std::string ordering){
     if(ordering == "time"){
         sdScene::ordering = SD_TIME;
     }else if(ordering == "track"){
