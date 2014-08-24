@@ -146,10 +146,10 @@ sdEntityExtension* sdEntityCore::addExtension(EExtension extension){
         case SD_MEDIA:{
             sdEntityExtensionMedia* mediaExtension = new sdEntityExtensionMedia();
             extensionVector.push_back(mediaExtension);
-            for(int i = 0; i < sdEntityExtensionMedia::numberOfDescriptors; i++){
+            for(int i = 0; i < sdEventExtensionMedia::numberOfDescriptors; i++){
                 sdRedirector rd;
-                rd.descriptor = sdEntityExtensionMedia::descriptors[i].getDescriptor();
-                rd.descriptorString = sdEntityExtensionMedia::descriptors[i].getDescriptorAsString();
+                rd.descriptor = sdEventExtensionMedia::descriptors[i].getDescriptor();
+                rd.descriptorString = sdEventExtensionMedia::descriptors[i].getDescriptorAsString();
                 rd.responsibleExtension = static_cast<sdEntityExtension*>(mediaExtension);
                 redirectorVector.push_back(rd);
             }

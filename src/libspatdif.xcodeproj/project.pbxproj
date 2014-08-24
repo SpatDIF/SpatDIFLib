@@ -22,6 +22,8 @@
 		62087AB619A9FE5D00F8A3E6 /* sdSaverTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdSaverTest.cpp; path = ../examples/sdSaverTest.cpp; sourceTree = "<group>"; };
 		62087AB719A9FE5D00F8A3E6 /* sdSceneTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdSceneTest.cpp; path = ../examples/sdSceneTest.cpp; sourceTree = "<group>"; };
 		62087AB819AA002300F8A3E6 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; name = Makefile; path = ../examples/Makefile; sourceTree = "<group>"; };
+		62087AB919AA07FB00F8A3E6 /* sdEventExtensionMedia.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdEventExtensionMedia.cpp; sourceTree = "<group>"; };
+		62087ABA19AA07FB00F8A3E6 /* sdEventExtensionMedia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdEventExtensionMedia.h; sourceTree = "<group>"; };
 		6279340919A296AA002BF8EB /* sdEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdEvent.h; sourceTree = "<group>"; };
 		6279340C19A2A018002BF8EB /* sdDescriptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdDescriptor.h; sourceTree = "<group>"; };
 		627C6AD719A3B16A00D52E8F /* sdEventCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdEventCore.cpp; sourceTree = "<group>"; };
@@ -99,8 +101,10 @@
 		62087AA419A9F83F00F8A3E6 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				A7E1E3A218A3B44F003BE78B /* sdEntityExtensionMedia.cpp */,
+				62087ABA19AA07FB00F8A3E6 /* sdEventExtensionMedia.h */,
+				62087AB919AA07FB00F8A3E6 /* sdEventExtensionMedia.cpp */,
 				A7E1E3A318A3B44F003BE78B /* sdEntityExtensionMedia.h */,
+				A7E1E3A218A3B44F003BE78B /* sdEntityExtensionMedia.cpp */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -340,6 +344,7 @@
 				62087AA819A9FA4E00F8A3E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A7E1E39318A3B3F8003BE78B /* Build configuration list for PBXProject "libspatdif" */ = {
 			isa = XCConfigurationList;
