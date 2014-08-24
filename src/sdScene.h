@@ -29,7 +29,7 @@
 class sdReport {
 public:
     sdEntityCore* entity;
-    multiset<sdEvent*, sdEventCompare> eventSet;
+    std::multiset<sdEvent*, sdEventCompare> eventSet;
 };
 
 
@@ -41,10 +41,10 @@ class sdScene {
 
 private:
     /*! a vector of sdEntityCores */
-    vector <sdEntityCore*> entityVector;
+    std::vector <sdEntityCore*> entityVector;
     
     /*! a vector of activated extensions. A sdScene automatically instantiates the descendants of sdEntityExtensions and attached to a sdEntityCore, when it is instantiated. */
-    vector <EExtension> activatedExtensionVector;
+    std::vector <EExtension> activatedExtensionVector;
     
     /*! ordering flag */
     EOrdering ordering;
@@ -121,7 +121,7 @@ public:
 
     /*! return the name of all entities in the scene as vector of string
     */
-    vector<std::string> getEntityNames();
+    std::vector<std::string> getEntityNames();
 
     /*! search an entity in the entity vector by its name and return the pointer. returns null if the entity can not be found.
      @param name the name of a designated entity
@@ -129,7 +129,7 @@ public:
     sdEntityCore* getEntity(std::string name);
     
     /*! returns a pointer to the entityVector */
-    vector <sdEntityCore*> getEntityVector(void);
+    std::vector <sdEntityCore*> getEntityVector(void);
     
     /*! returns the number of entity in the entityVector*/
     unsigned int getNumberOfEntities(void);
@@ -198,10 +198,10 @@ public:
     int getNumberOfActivatedExtensions(void);
      
     /*! returns enum EExtension as an Vector */
-    vector<EExtension> getActivatedExtensions();
+    std::vector<EExtension> getActivatedExtensions();
 
     /*! returns names of  activated extensions as a vector*/
-    vector<std::string> getActivatedExtensionsAsStrings();
+    std::vector<std::string> getActivatedExtensionsAsStrings();
 
     /*! activate an extension specified by enum EExtension. This function instantiates instances of the
      designated extension (i.e. a subclass of sdEntityExtension ) and attached them to all existing sdEntityCores
@@ -248,26 +248,26 @@ public:
      */
     
     /*!   collect next event(s) from all entities and report them  */
-    vector<sdReport> getNextEventSetsFromAllEntities(double time);
-    vector<sdReport> getPreviousEventSetsFromAllEntities(double time);
+    std::vector<sdReport> getNextEventSetsFromAllEntities(double time);
+    std::vector<sdReport> getPreviousEventSetsFromAllEntities(double time);
 
     /*!   collect first event(s) from all entities and report them  */
-    vector<sdReport> getFirstEventSetsFromAllEntities();
-    vector<sdReport> getLastEventSetsFromAllEntities();
+    std::vector<sdReport> getFirstEventSetsFromAllEntities();
+    std::vector<sdReport> getLastEventSetsFromAllEntities();
 
     /*!   collect  event(s) from all entities in range and report them */
-    vector<sdReport> getEventSetsFromAllEntities(double time);
-    vector<sdReport> getEventSetsFromAllEntities(double start, double end);
+    std::vector<sdReport> getEventSetsFromAllEntities(double time);
+    std::vector<sdReport> getEventSetsFromAllEntities(double start, double end);
 
     /*!
      collect first event(s) from all entities, compare the time tag, and return the very first event(s).
      */
-    vector<sdReport> getFirstEventSets();
+    std::vector<sdReport> getFirstEventSets();
     
     /*!
      collect next events from all entities, compare the time tag, and return the soonest events
      */
-    vector<sdReport> getNextEventSets(double time);
+    std::vector<sdReport> getNextEventSets(double time);
 
     
     /*!
@@ -324,7 +324,7 @@ inline sdInfo sdScene::getInfo(void){
     return info;
 }
 
-inline vector <sdEntityCore*> sdScene::getEntityVector(void){
+inline std::vector <sdEntityCore*> sdScene::getEntityVector(void){
     return entityVector;
 }
 
@@ -346,7 +346,7 @@ inline void sdScene::setOrdering(std::string ordering){
     }else if(ordering == "track"){
         sdScene::ordering = SD_TRACK;
     }else{
-        cout << "sdScene Error: Unknown Ordering" << endl;
+        std::cout << "sdScene Error: Unknown Ordering" << std::endl;
     }
 }
 

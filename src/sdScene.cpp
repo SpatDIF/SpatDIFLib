@@ -20,18 +20,16 @@
 #include "sdMain.h"
 
 
-using namespace std;
-
-string sdScene::getEntityName(int index)
+std::string sdScene::getEntityName(int index)
 {
-    vector<string> names = getEntityNames();
+    std::vector<std::string> names = getEntityNames();
     return names[index];
 }
 
-vector<string> sdScene::getEntityNames()
+std::vector<std::string> sdScene::getEntityNames()
 {
-    vector <string> names;
-    vector <sdEntityCore *>::iterator it = entityVector.begin();
+    std::vector <std::string> names;
+    std::vector <sdEntityCore *>::iterator it = entityVector.begin();
     while(it != entityVector.end()){
         sdEntityCore* entity = *it;
         names.push_back(entity->getName());
@@ -40,10 +38,10 @@ vector<string> sdScene::getEntityNames()
     return names;
 }
 
-sdEntityCore* sdScene::getEntity(string name){
-    vector <sdEntityCore*>::iterator it = entityVector.begin();
+sdEntityCore* sdScene::getEntity(std::string name){
+    std::vector <sdEntityCore*>::iterator it = entityVector.begin();
     while( it != entityVector.end() ){
-		string entityName = (*it)->getName();
+		std::string entityName = (*it)->getName();
         if(entityName == name){
             return *it;
         }
@@ -57,7 +55,7 @@ unsigned int sdScene::getNumberOfEntities(void){
 }
 
 
-sdEntityCore* sdScene::addEntity(string name, EKind kind){
+sdEntityCore* sdScene::addEntity(std::string name, EKind kind){
     
     sdEntityCore* ent = getEntity(name);
     // if already exist just return the existing one
@@ -68,7 +66,7 @@ sdEntityCore* sdScene::addEntity(string name, EKind kind){
     sdEntityCore* entityCore = new sdEntityCore(name, kind); // private constructor
 
     // attach extensions to the newly created sdEntityCore.
-    vector <EExtension> ::iterator it = activatedExtensionVector.begin();
+    std::vector <EExtension> ::iterator it = activatedExtensionVector.begin();
 
 
     while(it != activatedExtensionVector.end()){
@@ -83,7 +81,7 @@ sdEntityCore* sdScene::addEntity(string name, EKind kind){
     return entityCore;
 }
 
-void sdScene::removeEntity(string name){
+void sdScene::removeEntity(std::string name){
     sdEntityCore* entity = getEntity(name);
     if(entity){
         removeEntity(entity);
@@ -91,7 +89,7 @@ void sdScene::removeEntity(string name){
 }
 
 void sdScene::removeEntity(sdEntityCore *entity){
-    vector <sdEntityCore*>::iterator it = entityVector.begin();
+    std::vector <sdEntityCore*>::iterator it = entityVector.begin();
     while (it != entityVector.end()) {
         if(*it == entity){
             it = entityVector.erase(it);
@@ -105,7 +103,7 @@ void sdScene::removeAllEntities(void){
     entityVector.clear();
 }
 
-void sdScene::setValue(string name, double time, EDescriptor descriptor,  void* value){
+void sdScene::setValue(std::string name, double time, EDescriptor descriptor,  void* value){
     sdEntityCore* entity = getEntity(name);
     if(!entity){
         entity = addEntity(name);
@@ -113,7 +111,7 @@ void sdScene::setValue(string name, double time, EDescriptor descriptor,  void* 
     entity->addEvent(time, descriptor, value);
 }
 
-void* sdScene::getValue(string name, double time, EDescriptor descriptor){
+void* sdScene::getValue(std::string name, double time, EDescriptor descriptor){
     sdEntityCore* entity = getEntity(name);
     if (!entity) {
         return NULL;
@@ -129,13 +127,13 @@ EExtension sdScene::getActivatedExtension(int index){
     return activatedExtensionVector[index];
 }
 
-vector<EExtension> sdScene::getActivatedExtensions(){
+std::vector<EExtension> sdScene::getActivatedExtensions(){
     return activatedExtensionVector;
 }
 
-vector<string> sdScene::getActivatedExtensionsAsStrings(){
-    vector<string> strings;
-    vector<EExtension>::iterator it = activatedExtensionVector.begin();
+std::vector<std::string> sdScene::getActivatedExtensionsAsStrings(){
+    std::vector<std::string> strings;
+    std::vector<EExtension>::iterator it = activatedExtensionVector.begin();
     while(it != activatedExtensionVector.end()){
         strings.push_back(extensionToString(*it));
         it++;
@@ -144,19 +142,19 @@ vector<string> sdScene::getActivatedExtensionsAsStrings(){
 }
 
 void sdScene::addExtension(EExtension extension){
-    vector <EExtension>::iterator pos;
+    std::vector <EExtension>::iterator pos;
     pos= find(activatedExtensionVector.begin(),
          activatedExtensionVector.end(),
          extension);
 
     //duplication check
     if(pos != activatedExtensionVector.end()){
-        cout << "sdScene Error: Extension already activated." << endl;
+        std::cout << "sdScene Error: Extension already activated." << std::endl;
         return;
     }
 
     activatedExtensionVector.push_back(extension);
-    vector <sdEntityCore*>::iterator it = entityVector.begin();
+    std::vector <sdEntityCore*>::iterator it = entityVector.begin();
     while (it != entityVector.end()) {
         sdEntityCore* entityCore = *it;
         entityCore->addExtension(extension);
@@ -165,17 +163,17 @@ void sdScene::addExtension(EExtension extension){
     
 }
 
-void sdScene::addExtension(string extension){
+void sdScene::addExtension(std::string extension){
     EExtension ext = stringToExtension(extension);
     if(ext == SD_EXTENSION_ERROR){
-        cout << "sdScene Error: No such extension." << endl;
+        std::cout << "sdScene Error: No such extension." << std::endl;
         return;
     }
     addExtension(ext);
 }
 
 bool sdScene::isExtensionActivated(EExtension extension){
-    vector <EExtension>::iterator it = activatedExtensionVector.begin();
+    std::vector <EExtension>::iterator it = activatedExtensionVector.begin();
     while(it != activatedExtensionVector.end()){
         EExtension et = *it;
         if(et == extension){
@@ -186,14 +184,14 @@ bool sdScene::isExtensionActivated(EExtension extension){
     return false;
 }
 
-bool sdScene::isExtensionActivated(string extensionString){
+bool sdScene::isExtensionActivated(std::string extensionString){
     EExtension extension = stringToExtension(extensionString);
     return isExtensionActivated(extension);
 }
 
 void sdScene::removeExtension(EExtension extension){
 
-    vector <EExtension>::iterator it = activatedExtensionVector.begin();
+    std::vector <EExtension>::iterator it = activatedExtensionVector.begin();
     while (it != activatedExtensionVector.end()) {
         if(*it == extension){
             it = activatedExtensionVector.erase(it);
@@ -201,13 +199,13 @@ void sdScene::removeExtension(EExtension extension){
         }
         it++;
     }
-    cout << "sdScene Error: No such activated extension." << endl;
+    std::cout << "sdScene Error: No such activated extension." << std::endl;
 }
 
-void sdScene::removeExtension(string extension){
+void sdScene::removeExtension(std::string extension){
     EExtension ext = stringToExtension(extension);
     if(ext == SD_EXTENSION_ERROR){
-        cout << "sdScene Error: No such activated extension." << endl;
+        std::cout << "sdScene Error: No such activated extension." << std::endl;
     }
     removeExtension(ext);
 }
@@ -216,9 +214,9 @@ void sdScene::removeAllExtensions(){
     activatedExtensionVector.clear();
 }
 
-vector<sdReport> sdScene::getNextEventSetsFromAllEntities(double time){
-    vector<sdReport> reportVector;
-    vector<sdEntityCore*>::iterator it = entityVector.begin();
+std::vector<sdReport> sdScene::getNextEventSetsFromAllEntities(double time){
+    std::vector<sdReport> reportVector;
+    std::vector<sdEntityCore*>::iterator it = entityVector.begin();
     while (it != entityVector.end()) {
         sdReport report;
         sdEntityCore* entityCore = *it;
@@ -232,9 +230,9 @@ vector<sdReport> sdScene::getNextEventSetsFromAllEntities(double time){
     return reportVector;
 }
 
-vector<sdReport> sdScene::getPreviousEventSetsFromAllEntities(double time){
-    vector<sdReport> reportVector;
-    vector<sdEntityCore*>::iterator it = entityVector.begin();
+std::vector<sdReport> sdScene::getPreviousEventSetsFromAllEntities(double time){
+    std::vector<sdReport> reportVector;
+    std::vector<sdEntityCore*>::iterator it = entityVector.begin();
     while (it != entityVector.end()) {
         sdReport report;
         sdEntityCore* entityCore = *it;
@@ -248,29 +246,29 @@ vector<sdReport> sdScene::getPreviousEventSetsFromAllEntities(double time){
     return reportVector;
 }
 
-vector<sdReport> sdScene::getFirstEventSetsFromAllEntities(){
+std::vector<sdReport> sdScene::getFirstEventSetsFromAllEntities(){
     return getNextEventSetsFromAllEntities(-1.0);
 }
 
-vector<sdReport> sdScene::getLastEventSetsFromAllEntities(){
+std::vector<sdReport> sdScene::getLastEventSetsFromAllEntities(){
     return getPreviousEventSetsFromAllEntities(DBL_MAX);
 }
 
-vector<sdReport> sdScene::getNextEventSets(double time){
+std::vector<sdReport> sdScene::getNextEventSets(double time){
     // collect next events from all entities, compare them and return the soonest events 
-    vector<sdReport> reportVector = getNextEventSetsFromAllEntities(time);
-    vector<sdReport> soonestReportVector;
+    std::vector<sdReport> reportVector = getNextEventSetsFromAllEntities(time);
+    std::vector<sdReport> soonestReportVector;
     if(reportVector.empty()){
         return soonestReportVector;
     }
 
-    vector<sdReport>::iterator it = reportVector.begin();
+    std::vector<sdReport>::iterator it = reportVector.begin();
     double soonestEventTime = (*((*it).eventSet.begin()))->getTime();
 
     // look for the soonest event
     while (it != reportVector.end()) {
         sdReport report = *it;
-        multiset<sdEvent*, sdEventCompare>::iterator rit=report.eventSet.begin();
+        std::multiset<sdEvent*, sdEventCompare>::iterator rit=report.eventSet.begin();
         while (rit != report.eventSet.end()) {
             sdEvent* event = *rit;
             if( soonestEventTime > event->getTime()){
@@ -294,13 +292,13 @@ vector<sdReport> sdScene::getNextEventSets(double time){
 }
 
 double sdScene::getNextEventTime(double time){
-    vector<sdReport> reportVector = getNextEventSets(time);
+    std::vector<sdReport> reportVector = getNextEventSets(time);
     if(reportVector.empty()){
         return -1.0;
     }
     sdReport report = reportVector[0];
-    multiset<sdEvent*, sdEventCompare> eventSet = report.eventSet;
-    multiset<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
+    std::multiset<sdEvent*, sdEventCompare> eventSet = report.eventSet;
+    std::multiset<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
     return (*it)->getTime();
 }
 
@@ -308,13 +306,13 @@ double sdScene::getDeltaTimeToNextEvent(double time){
     return getNextEventTime(time) - time;
 }
 
-vector<sdReport> sdScene::getFirstEventSets(){
+std::vector<sdReport> sdScene::getFirstEventSets(){
     return getNextEventSets(-1.0);
 }
 
-vector<sdReport> sdScene::getEventSetsFromAllEntities(double time){
-    vector<sdReport> reportVector;
-    vector<sdEntityCore*>::iterator it = entityVector.begin();
+std::vector<sdReport> sdScene::getEventSetsFromAllEntities(double time){
+    std::vector<sdReport> reportVector;
+    std::vector<sdEntityCore*>::iterator it = entityVector.begin();
     while (it != entityVector.end()) {
         sdEntityCore* entityCore = *it;
         sdReport report;
@@ -328,9 +326,9 @@ vector<sdReport> sdScene::getEventSetsFromAllEntities(double time){
     return reportVector;
 }
 
-vector<sdReport> sdScene::getEventSetsFromAllEntities(double start, double end){
-    vector<sdReport> reportVector;
-    vector<sdEntityCore*>::iterator it = entityVector.begin();
+std::vector<sdReport> sdScene::getEventSetsFromAllEntities(double start, double end){
+    std::vector<sdReport> reportVector;
+    std::vector<sdEntityCore*>::iterator it = entityVector.begin();
     while (it != entityVector.end()) {
         sdEntityCore* entityCore = *it;
         sdReport report;
@@ -345,40 +343,39 @@ vector<sdReport> sdScene::getEventSetsFromAllEntities(double start, double end){
 }
 
 
-string sdScene::dump(bool consoleOut){
-    using namespace std;
-    ostringstream os;
+std::string sdScene::dump(bool consoleOut){
+    std::ostringstream os;
     
-    os << "---------- Meta ----------"<< endl;
-    os << "author:" << info.getAuthor() <<endl;
-    os << "annotaion:" <<  info.getAnnotation() <<endl;
-    os << "ordering:" <<  getOrderingAsString()<<endl;
-    os << "extensions:" << activatedExtensionVector.size() << endl;
+    os << "---------- Meta ----------"<< std::endl;
+    os << "author:" << info.getAuthor() <<std::endl;
+    os << "annotaion:" <<  info.getAnnotation() <<std::endl;
+    os << "ordering:" <<  getOrderingAsString()<<std::endl;
+    os << "extensions:" << activatedExtensionVector.size() << std::endl;
     
-    os << "number of entity used:" <<  getNumberOfEntities()<<endl;
+    os << "number of entity used:" <<  getNumberOfEntities()<<std::endl;
 
-    os << "---------- Entities --------" << endl;
-    vector <sdEntityCore*>::iterator it = entityVector.begin();
+    os << "---------- Entities --------" << std::endl;
+    std::vector <sdEntityCore*>::iterator it = entityVector.begin();
     while( it != entityVector.end() )
 	{
-		string entityName = (*it)->getName();
-        string kind = (*it)->getKindAsString();
-        os << ">>entity name:" << entityName <<endl;
-        os << "kind:" << kind <<endl;
-        os << "number of events:" << (*it)->getNumberOfEvents()<< endl;
-        multiset <sdEvent*, sdEventCompare> evnts = (*it)->getEventSet();
-        multiset <sdEvent*, sdEventCompare>::iterator itt = evnts.begin();
+		std::string entityName = (*it)->getName();
+        std::string kind = (*it)->getKindAsString();
+        os << ">>entity name:" << entityName <<std::endl;
+        os << "kind:" << kind <<std::endl;
+        os << "number of events:" << (*it)->getNumberOfEvents()<< std::endl;
+        std::multiset <sdEvent*, sdEventCompare> evnts = (*it)->getEventSet();
+        std::multiset <sdEvent*, sdEventCompare>::iterator itt = evnts.begin();
 
         while(itt != evnts.end()){
             sdEventCore *eventCore = static_cast<sdEventCore*>(*itt);
-            os << "["  << eventCore->getTimeAsString() << " " << eventCore->getDescriptorAsString() << " " << eventCore->getValueAsString() << "]" << endl;
+            os << "["  << eventCore->getTimeAsString() << " " << eventCore->getDescriptorAsString() << " " << eventCore->getValueAsString() << "]" << std::endl;
             itt++;
             
         }
 		it++;
 	}
     if(consoleOut){
-        cout << os.str() << endl;
+        std::cout << os.str() << std::endl;
     }
     return os.str();
 }

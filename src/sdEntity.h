@@ -24,8 +24,6 @@
 #include "sdEvent.h"
 #include "sdDescriptor.h"
 
-using namespace std;
-
 /*! sdEntity
  sdEntity is a pure abstract class. This class maintains and handles all events associated to relevant descriptors. This class is also responsible for answering queries about it's relevant descriptors.
 */
@@ -37,7 +35,7 @@ class sdEntity{
     } EMode;
     
 protected:
-    multiset<sdEvent*, sdEventCompare> eventSet; /*!< maintains pointers to all relevant sdEvents */
+    std::multiset<sdEvent*, sdEventCompare> eventSet; /*!< maintains pointers to all relevant sdEvents */
 
 public:
     /*!< desctructor. this function erases all contents of eventSet. 
@@ -55,10 +53,10 @@ public:
     virtual sdEvent* getEvent(double time, EDescriptor descriptor);
 
     /*! return a multiset of sdEvent pointers, depending on given filter arguments*/
-    virtual multiset<sdEvent*, sdEventCompare> getEventSet(void);
-    virtual multiset<sdEvent*, sdEventCompare> getEventSet(double time);
-    virtual multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end);
-    virtual multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);
+    virtual std::multiset<sdEvent*, sdEventCompare> getEventSet(void);
+    virtual std::multiset<sdEvent*, sdEventCompare> getEventSet(double time);
+    virtual std::multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end);
+    virtual std::multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);
 
     /*! @} */
     
@@ -73,7 +71,7 @@ public:
      * @param time index time
      * @return a multiset of next events
      */
-    multiset<sdEvent*, sdEventCompare> getNextEventSet(double time);
+    std::multiset<sdEvent*, sdEventCompare> getNextEventSet(double time);
 
       
     sdEvent* getNextEvent(double time, EDescriptor descriptor);
@@ -104,7 +102,7 @@ public:
      return previous events from the given time index .
      @param time index
      */
-    multiset<sdEvent*, sdEventCompare> getPreviousEventSet(double time);
+    std::multiset<sdEvent*, sdEventCompare> getPreviousEventSet(double time);
     
     /*!
      return the time tag of the next event
@@ -128,7 +126,7 @@ public:
     /*!
      return the very first events regardless of descriptors.
      */
-    multiset<sdEvent*, sdEventCompare> getFirstEventSet();
+    std::multiset<sdEvent*, sdEventCompare> getFirstEventSet();
 
     /*!
      return the time tag of the first event
@@ -152,7 +150,7 @@ public:
     /*!
      return the very last events regardless of descriptors.
      */
-    multiset<sdEvent*, sdEventCompare> getLastEventSet();
+    std::multiset<sdEvent*, sdEventCompare> getLastEventSet();
     
     /*!
      return the time tag of the last event
@@ -168,7 +166,7 @@ public:
      this function is the only way to instantiate sdEvent.
      */
     virtual sdEvent* addEvent(double time, EDescriptor descriptor, void* value) = 0;
-    virtual sdEvent* addEvent(string time, string descriptor, string value) = 0;
+    virtual sdEvent* addEvent(std::string time, std::string descriptor, std::string value) = 0;
     
     /*<
      remove an event from the set
@@ -182,7 +180,7 @@ public:
      @param descriptor the descriptor of sdEvent to be removed
      */
     void removeEvent(double time, EDescriptor descriptor);
-    virtual void removeEvent(string time, string descriptor) = 0;
+    virtual void removeEvent(std::string time, std::string descriptor) = 0;
     
     /*!
      remove all events in the eventSet
@@ -228,7 +226,7 @@ private:
     @param time
     @param mode specify the mode of new set
     */
-    multiset<sdEvent*, sdEventCompare> createEventSet(double time,  EMode mode );
+    std::multiset<sdEvent*, sdEventCompare> createEventSet(double time,  EMode mode );
 
 };
 

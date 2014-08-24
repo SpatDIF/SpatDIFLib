@@ -48,10 +48,10 @@ private:
     const std::string name;
     
     /*! contains instances of sdEntityExtenstions */
-    vector <sdEntityExtension*>extensionVector;
+    std::vector <sdEntityExtension*>extensionVector;
     
     /*! contains pairs of EDescriptor descriptor and pointer to a responsible extension */
-    vector <sdRedirector>redirectorVector;
+    std::vector <sdRedirector>redirectorVector;
 
     /*! define the kind of the entity. This property is declared as const and invariable (const). */
     EKind kind;
@@ -121,7 +121,7 @@ public:
      */
 
     /*! get the vector of sdExtensions */
-    vector <sdEntityExtension*>getExtensionVector(void);
+    std::vector <sdEntityExtension*>getExtensionVector(void);
     
     /*! returns a pointer to a sdEntityExtension in the extensionVector. returns NULL if not exists. */
     sdEntityExtension* getExtension(EExtension extension);
@@ -147,10 +147,10 @@ public:
      @param time the time of the event in second
      @param descriptor the descriptor of the event declared in sdConst.h
      */
-    multiset<sdEvent*, sdEventCompare> getEventSet(void);
-    multiset<sdEvent*, sdEventCompare> getEventSet(double time);
-    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end);
-    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);
+    std::multiset<sdEvent*, sdEventCompare> getEventSet(void);
+    std::multiset<sdEvent*, sdEventCompare> getEventSet(double time);
+    std::multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end);
+    std::multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);
 
     /*!
      overridden function. this function forwards the query to the extensions if an extended descriptor is provided as an argument.
@@ -158,19 +158,19 @@ public:
      @param descriptor the descriptor of the event declared in sdConst.h
      */
     sdEvent* getNextEvent(double time, EDescriptor descriptor);
-    multiset<sdEvent*, sdEventCompare> getNextEventSet(double time);
+    std::multiset<sdEvent*, sdEventCompare> getNextEventSet(double time);
     double getNextEventTime(double time);
 
     sdEvent* getPreviousEvent(double time, EDescriptor descriptor);
-    multiset<sdEvent*, sdEventCompare> getPreviousEventSet(double time);
+    std::multiset<sdEvent*, sdEventCompare> getPreviousEventSet(double time);
     double getPreviousEventTime(double time);
 
     sdEvent* getFirstEvent(EDescriptor descriptor);
-    multiset<sdEvent*, sdEventCompare> getFirstEventSet();
+    std::multiset<sdEvent*, sdEventCompare> getFirstEventSet();
     double getFirstEventTime();
 
     sdEvent* getLastEvent(EDescriptor descriptor);
-    multiset<sdEvent*, sdEventCompare> getLastEventSet();
+    std::multiset<sdEvent*, sdEventCompare> getLastEventSet();
     double getLastEventTime();
 
     /*!
@@ -198,7 +198,7 @@ inline EType sdEntityCore::getType(void){
     return type;
 }
 
-inline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){
+inline std::vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){
     return extensionVector;
 }
 

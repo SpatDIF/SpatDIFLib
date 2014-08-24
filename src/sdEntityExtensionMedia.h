@@ -21,8 +21,6 @@
 #include "sdEntityExtension.h"
 #include "sdDescriptor.h"
 
-using namespace std;
-
 
 /*!
  this class stores event info (i.e. time, descriptor and value) of sdEntityExtensionMedia.
@@ -42,16 +40,16 @@ public:
      */
 
     sdEventExtensionMedia(const double time, const EDescriptor descriptor, void* const value);
-    sdEventExtensionMedia(const string time, const string descriptor, const string value);
+    sdEventExtensionMedia(const std::string time, const std::string descriptor, const std::string value);
 
     /*! destructor destroy all allocated memory to the value pointer*/
     ~sdEventExtensionMedia();
     
     /*! overridden method. get descriptor as string e.g. "location" */
-    string getDescriptorAsString(void) const;
+    std::string getDescriptorAsString(void) const;
     
     /*! overridden method. get value as string e.g. "0.3 0.5 0.2"*/
-    string getValueAsString(void) const;
+    std::string getValueAsString(void) const;
     
 private:
     /*!
@@ -65,7 +63,7 @@ private:
     bool setValue(const EDescriptor descriptor, void* const value);
     
     /*! same as above but you can give all arguments with strings */
-    bool setValue(const string descriptor, const string value);
+    bool setValue(const std::string descriptor, const std::string value);
 
 };
 
@@ -91,7 +89,7 @@ public:
      @{
      */
     static const EExtension extensionName; /*< identification of the class */
-    static const string extensionNameAsString; /*< identification of the class */
+    static const std::string extensionNameAsString; /*< identification of the class */
     static const int numberOfDescriptors;
     static const sdDescriptor descriptors[];
   
@@ -103,16 +101,16 @@ public:
     sdEvent* addEvent(const double time, const EDescriptor descriptor, void* const value);
     
     /*! same as above but you can specify arguments with strings */
-    sdEvent* addEvent(const string time, const string descriptor, const string value);
+    sdEvent* addEvent(const std::string time, const std::string descriptor, const std::string value);
     
-    void removeEvent(const string time, const string descriptor);
+    void removeEvent(const std::string time, const std::string descriptor);
 
     /*!
      @}
     */
     
     EExtension getExtensionName(void);
-    string getExtensionNameAsString(void);
+    std::string getExtensionNameAsString(void);
     
 };
 
@@ -120,7 +118,7 @@ inline EExtension sdEntityExtensionMedia::getExtensionName(void){
     return extensionName;
 }
 
-inline string sdEntityExtensionMedia::getExtensionNameAsString(void){
+inline std::string sdEntityExtensionMedia::getExtensionNameAsString(void){
     return extensionNameAsString;
 }
 

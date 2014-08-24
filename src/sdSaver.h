@@ -19,8 +19,6 @@
 #include <string>
 #include "sdScene.h"
 
-using namespace std;
-
 
 /*!
  convert a sdScene to XML, JSON, or YAML strings
@@ -33,17 +31,17 @@ public:
     /*! converts a scene to XML string
      @param sdScene a sdScene
      */
-    static string XMLFromScene(sdScene *scene);
+    static std::string XMLFromScene(sdScene *scene);
     
     /*! converts a scene to JSON string
      @param sdScene a sdScene
      */
-    static string JSONFromScene(sdScene *scene);
+    static std::string JSONFromScene(sdScene *scene);
     
     /*! converts a scene to JSON string
      @param sdScene a sdScene
      */
-    static string YAMLFromScene(sdScene *scene);
+    static std::string YAMLFromScene(sdScene *scene);
 
 
 };
@@ -58,21 +56,21 @@ class sdGlobalEvent{
     
 private:
     sdEvent *event; /*< a pointer to event */
-    string entityName; /*!< name of attached entity */
+    std::string entityName; /*!< name of attached entity */
     EKind kind; /*< kind of attached entity */
     
 public:
-    sdGlobalEvent(sdEvent *event, string entityName, EKind kind);
+    sdGlobalEvent(sdEvent *event, std::string entityName, EKind kind);
     
     sdEvent* getEvent(void);
-    string getEntityName(void);
+    std::string getEntityName(void);
     EKind getKind(void);
-    string getKindAsString(void);
+    std::string getKindAsString(void);
 };
 
 /*** inline implementation ***/
 
-inline sdGlobalEvent::sdGlobalEvent(sdEvent *event, string entityName, EKind kind){
+inline sdGlobalEvent::sdGlobalEvent(sdEvent *event, std::string entityName, EKind kind){
     sdGlobalEvent::event = event;
     sdGlobalEvent::entityName = entityName;
     sdGlobalEvent::kind = kind;
@@ -82,7 +80,7 @@ inline sdEvent* sdGlobalEvent::getEvent(void){
     return event;
 }
 
-inline string sdGlobalEvent::getEntityName(void){
+inline std::string sdGlobalEvent::getEntityName(void){
     return entityName;
 }
 
@@ -117,8 +115,8 @@ public:
             }else{
                 //if kind is same
                 //2. order by name of attached entity
-                string e1EntityName = e1.getEntityName();
-                string e2EntityName = e2.getEntityName();
+                std::string e1EntityName = e1.getEntityName();
+                std::string e2EntityName = e2.getEntityName();
                 
                 if(e1EntityName < e2EntityName){
                     return true;

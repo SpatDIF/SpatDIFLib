@@ -12,40 +12,40 @@ class sdOSCMessage: public sdOSCConverter{
     
 private:
 
-    vector<unsigned char> address; /*!< OSC address pattern in OSC-String format */
-    vector<unsigned char> typetags;  /*!< OSC typetags in OSC-String format */
-    vector<unsigned char> arguments; /*!< OSC Arguments in 4-bytes-block sequence */
-    vector<int> delimiters; /*!< stores delimiters of OSC arguments. This increase the speed of data access */
+    std::vector<unsigned char> address; /*!< OSC address pattern in OSC-String format */
+    std::vector<unsigned char> typetags;  /*!< OSC typetags in OSC-String format */
+    std::vector<unsigned char> arguments; /*!< OSC Arguments in 4-bytes-block sequence */
+    std::vector<int> delimiters; /*!< stores delimiters of OSC arguments. This increase the speed of data access */
     
     /*!
      this function looks for \0 unsigned character from the onset byte and return the length of string
      @param startIndex the onset of search point
      */
-    int getLengthOfOSCString(vector<unsigned char> OSCString, int onset, bool includingNullPaddings);
-    vector<unsigned char> nullPadding(vector<unsigned char> string);
+    int getLengthOfOSCString(std::vector<unsigned char> OSCString, int onset, bool includingNullPaddings);
+    std::vector<unsigned char> nullPadding(std::vector<unsigned char> string);
     
 public:
 
     /*! returns OSC address pattern in OSC-string format */
-    inline vector<unsigned char> getAddress(void);
+    inline std::vector<unsigned char> getAddress(void);
 
     /*! returns OSC typetags in OSC-string format */
-    inline vector<unsigned char> getTypetags(void);
+    inline std::vector<unsigned char> getTypetags(void);
 
     /*! returns all Arguments in in 4-bytes-block sequence */
-    inline vector<unsigned char> getArguments(void);
+    inline std::vector<unsigned char> getArguments(void);
     
     /*! returns delimiters as vector of int */
-    inline vector<int> getDelimiters(void);
+    inline std::vector<int> getDelimiters(void);
 
     /*! returns OSC address pattern as a string */
-    inline string getAddressAsString(void);
+    inline std::string getAddressAsString(void);
 
     /*! returns OSC address pattern as a string */
-    inline string getTypetagsAsString(void);
+    inline std::string getTypetagsAsString(void);
 
     /*! returns delimiters as a string */
-    inline string getDelimitersAsString(void);
+    inline std::string getDelimitersAsString(void);
 
     /*! @param index argument index
      returns specified argument at index as int.*/
@@ -57,32 +57,32 @@ public:
 
     /*! @param index argument index
      returns specified argument at index as string.*/
-    string getArgumentAsString(int index);
+    std::string getArgumentAsString(int index);
 
     /*! returns all arguments as a string*/
-    string getAllArgumentsAsString(void);
+    std::string getAllArgumentsAsString(void);
 
     /*! returns the entire message as a string*/
-    string getMessageAsString(void);
+    std::string getMessageAsString(void);
 
     /*! constructor. typeyags initialized. */
     sdOSCMessage();
 
     /*! constructor. with initialization of typetags and address pattern. */
-    sdOSCMessage(string address);
+    sdOSCMessage(std::string address);
 
     /*! constructor. initialize message with OSC-conformed 4-bytes-block sequence */
-    sdOSCMessage(vector<unsigned char> message);
+    sdOSCMessage(std::vector<unsigned char> message);
     
     /*! @param address new OSC address pattern
     set address pattern*/
-    void setAddress(string address);
+    void setAddress(std::string address);
 
     /*! output osc conformed message */
-    vector<unsigned char> getOSCMessage(void);
+    std::vector<unsigned char> getOSCMessage(void);
     
     /*! interpret raw OSC message and store it in the local buffer */
-    void setOSCMessage(vector<unsigned char> message);
+    void setOSCMessage(std::vector<unsigned char> message);
 
     /*! @param value an int value to be appended.
      appends an int and add an typetag */
@@ -108,12 +108,12 @@ public:
     /*!
      @param str string to be appended
      appends an string and add an typetag */
-    void appendString(string str);
+    void appendString(std::string str);
 
     /*! 
      @param str strings to be appended
      appends multiple strings at once */
-    void appendStrings(vector<string> str);
+    void appendStrings(std::vector<std::string> str);
     
     /*! returns the number of OSC arguments */
     inline int getNumberOfArgument();
@@ -123,25 +123,25 @@ public:
 
 };
 
-vector<unsigned char> sdOSCMessage::getAddress(void){
+std::vector<unsigned char> sdOSCMessage::getAddress(void){
     return address;
 }
 
-vector<unsigned char> sdOSCMessage::getTypetags(void){
+std::vector<unsigned char> sdOSCMessage::getTypetags(void){
     return nullPadding(typetags); // size must be multiple of 4 
 }
 
-vector<unsigned char> sdOSCMessage::getArguments(void){
+std::vector<unsigned char> sdOSCMessage::getArguments(void){
     return arguments;
 }
 
-vector<int> sdOSCMessage::getDelimiters(void){
+std::vector<int> sdOSCMessage::getDelimiters(void){
     return delimiters;
 }
 
-string sdOSCMessage::getAddressAsString(void){
-    vector<unsigned char>::iterator it = address.begin();
-    string str;
+std::string sdOSCMessage::getAddressAsString(void){
+    std::vector<unsigned char>::iterator it = address.begin();
+    std::string str;
     while(it != address.end()){
         unsigned char c = *it;
         if(!c){
@@ -153,9 +153,9 @@ string sdOSCMessage::getAddressAsString(void){
     return str;
 }
 
-string sdOSCMessage::getTypetagsAsString(void){
-    vector<unsigned char>::iterator it = typetags.begin();
-    string str;
+std::string sdOSCMessage::getTypetagsAsString(void){
+    std::vector<unsigned char>::iterator it = typetags.begin();
+    std::string str;
     while(it != typetags.end()){
         unsigned char c = *it;
         if(!c){
@@ -167,9 +167,9 @@ string sdOSCMessage::getTypetagsAsString(void){
     return str;
 }
 
-string sdOSCMessage::getDelimitersAsString(void){
-    ostringstream os;
-    vector<int>::iterator it = delimiters.begin();
+std::string sdOSCMessage::getDelimitersAsString(void){
+    std::ostringstream os;
+    std::vector<int>::iterator it = delimiters.begin();
     while(it != delimiters.end()){
         int i = *it;
         os << static_cast<int>(i) << ' ';

@@ -7,18 +7,18 @@ sdOSCMessage::sdOSCMessage(){
     typetags.push_back(','); // the length is unknown, conform later
 }
 
-sdOSCMessage::sdOSCMessage(string address){
+sdOSCMessage::sdOSCMessage(std::string address){
     sdOSCMessage::address = stringToBlocks(address); // conform to blocks (4 byte block)
     sdOSCMessage(); // call default constructor
 }
 
-sdOSCMessage::sdOSCMessage(vector<unsigned char> oscMessage){
+sdOSCMessage::sdOSCMessage(std::vector<unsigned char> oscMessage){
     setOSCMessage(oscMessage);
 }
 
-vector<unsigned char> sdOSCMessage::getOSCMessage(){
-    vector<unsigned char> OSCMessage;
-    vector<unsigned char> conformedTypetags = getTypetags(); // with null padding
+std::vector<unsigned char> sdOSCMessage::getOSCMessage(){
+    std::vector<unsigned char> OSCMessage;
+    std::vector<unsigned char> conformedTypetags = getTypetags(); // with null padding
                                    
     OSCMessage.insert(OSCMessage.end(), address.begin(), address.end()); // concatenate address
     OSCMessage.insert(OSCMessage.end(), conformedTypetags.begin(), conformedTypetags.end()); // concatenate conformed type tags
@@ -27,11 +27,11 @@ vector<unsigned char> sdOSCMessage::getOSCMessage(){
     return OSCMessage;
 }
 
-void sdOSCMessage::setAddress(string address){
+void sdOSCMessage::setAddress(std::string address){
     sdOSCMessage::address = stringToBlocks(address);
 }
 
-void sdOSCMessage::setOSCMessage(vector<unsigned char> newMessage){
+void sdOSCMessage::setOSCMessage(std::vector<unsigned char> newMessage){
     
     int cursor = 0, length = 0, lengthWithNullPaddings = 0;
     clear();
@@ -69,13 +69,13 @@ void sdOSCMessage::setOSCMessage(vector<unsigned char> newMessage){
                 cursor += getLengthOfOSCString(arguments, cursor, true);
                 break;
             default:
-                cout << "sdOSCMessage: unknown type tag" << endl;
+                std::cout << "sdOSCMessage: unknown type tag" << std::endl;
         }
     }
     
 }
 
-vector<unsigned char> sdOSCMessage::nullPadding(vector<unsigned char> string){
+std::vector<unsigned char> sdOSCMessage::nullPadding(std::vector<unsigned char> string){
     int size = string.size();
     int numNullsToBeAdded = 4 - (size % 4);
     while(numNullsToBeAdded--){
@@ -84,9 +84,9 @@ vector<unsigned char> sdOSCMessage::nullPadding(vector<unsigned char> string){
     return string;
 }
 
-int sdOSCMessage::getLengthOfOSCString(vector<unsigned char> OSCString, int onset, bool includingNullPaddings){
+int sdOSCMessage::getLengthOfOSCString(std::vector<unsigned char> OSCString, int onset, bool includingNullPaddings){
     
-    vector<unsigned char>::iterator it = OSCString.begin() + onset;
+    std::vector<unsigned char>::iterator it = OSCString.begin() + onset;
     int count = 0;
     while (it != arguments.end()) {
         unsigned char byte = *it;
@@ -107,7 +107,7 @@ int sdOSCMessage::getLengthOfOSCString(vector<unsigned char> OSCString, int onse
 void sdOSCMessage::appendInt(int value){
     delimiters.push_back(arguments.size());
     typetags.push_back('i');
-    vector<unsigned char> block = intToBlock(value);
+    std::vector<unsigned char> block = intToBlock(value);
     arguments.insert(arguments.end(),block.begin(),block.end());
 }
 
@@ -120,7 +120,7 @@ void sdOSCMessage::appendInts(int *ints, int number){
 void sdOSCMessage::appendFloat(float value){
     delimiters.push_back(arguments.size());
     typetags.push_back('f');
-    vector<unsigned char> block = floatToBlock(value);
+    std::vector<unsigned char> block = floatToBlock(value);
     arguments.insert(arguments.end(),block.begin(),block.end());
 }
 
@@ -130,17 +130,17 @@ void sdOSCMessage::appendFloats(float *floats, int number){
     }
 }
 
-void sdOSCMessage::appendString(string str){
+void sdOSCMessage::appendString(std::string str){
     delimiters.push_back(arguments.size());
     typetags.push_back('s');
-    vector<unsigned char> blocks = stringToBlocks(str);
+    std::vector<unsigned char> blocks = stringToBlocks(str);
     arguments.insert(arguments.end(),blocks.begin(),blocks.end());
 }
 
-void sdOSCMessage::appendStrings(vector<string> strs){
-    vector<string>::iterator it = strs.begin();
+void sdOSCMessage::appendStrings(std::vector<std::string> strs){
+    std::vector<std::string>::iterator it = strs.begin();
     while(it != strs.end()){
-        string str= *it;
+        std::string str= *it;
         appendString(str);
         it++;
     }
@@ -148,29 +148,29 @@ void sdOSCMessage::appendStrings(vector<string> strs){
 
 int sdOSCMessage::getArgumentAsInt(int index){
     int posDelimiter = delimiters[index];
-    vector<unsigned char> block;
+    std::vector<unsigned char> block;
     block.insert(block.end(), arguments.begin()+posDelimiter , arguments.begin()+posDelimiter+4);
     return blockToInt(block);
 }
 
 float sdOSCMessage::getArgumentAsFloat(int index){
     int posDelimiter = delimiters[index];
-    vector<unsigned char> block;
+    std::vector<unsigned char> block;
     block.insert(block.end(), arguments.begin()+posDelimiter , arguments.begin()+posDelimiter+4);
     return blockToFloat(block);
 }
 
-string sdOSCMessage::getArgumentAsString(int index){
+std::string sdOSCMessage::getArgumentAsString(int index){
     int posDelimiter = delimiters[index];
-    vector<unsigned char> blocks;
+    std::vector<unsigned char> blocks;
     int length = getLengthOfOSCString(arguments, posDelimiter, false);
     blocks.insert(blocks.end(), arguments.begin()+posDelimiter, arguments.begin()+posDelimiter+length);
     return blocksToString(blocks);
 }
 
-string sdOSCMessage::getAllArgumentsAsString(void){
+std::string sdOSCMessage::getAllArgumentsAsString(void){
     int numArguments = typetags.size() -1;
-    string str;
+    std::string str;
     for(int i = 0; i < numArguments; i++){
         switch(typetags[i+1]){ // we need to skip ','
             case 'i':
@@ -188,8 +188,8 @@ string sdOSCMessage::getAllArgumentsAsString(void){
     return str;
 }
 
-string sdOSCMessage::getMessageAsString(void){
-    string str;
+std::string sdOSCMessage::getMessageAsString(void){
+    std::string str;
     str = getAddressAsString();
     str += ' ';
     str += getTypetagsAsString();

@@ -22,9 +22,7 @@
 #include "JSONNode.h"
 #include "JSONOptions.h"
 
-using namespace std;
-
-sdScene sdLoader::sceneFromXML(string xmlString){
+sdScene sdLoader::sceneFromXML(std::string xmlString){
     using namespace tinyxml2;
     XMLDocument xml;
     xml.Parse(xmlString.c_str());
@@ -44,49 +42,49 @@ sdScene sdLoader::sceneFromXML(string xmlString){
     XMLElement* extensions = meta->FirstChildElement("extensions");
     
     if(author){
-        info.setAuthor(string(author->GetText()));
+        info.setAuthor(std::string(author->GetText()));
     }
     if(date){
-        info.setDate(string(date->GetText()));
+        info.setDate(std::string(date->GetText()));
     }
     if(host){
-        info.setHost(string(host->GetText()));
+        info.setHost(std::string(host->GetText()));
     }
     if(session){
-        info.setSession(string(session->GetText()));
+        info.setSession(std::string(session->GetText()));
     }
     if(location){
-        info.setLocation(string(location->GetText()));
+        info.setLocation(std::string(location->GetText()));
     }
     if(annotation){
-        info.setAnnotation(string(annotation->GetText()));
+        info.setAnnotation(std::string(annotation->GetText()));
     }
     scene.setInfo(info);
     
     
     if(extensions){
-        string extensionsString = string(extensions->GetText());
-        istringstream iss(extensionsString);
+        std::string extensionsString = std::string(extensions->GetText());
+        std::istringstream iss(extensionsString);
         while (iss.good()) { // add extensions one by one
-            string extensionString;
+            std::string extensionString;
             iss >> extensionString;
             scene.addExtension(extensionString);
         }
     }
     
     //first time tag
-    string timeString;
+    std::string timeString;
     XMLElement* element = meta->NextSiblingElement();
 
     while(element){
         
-        string tagType = element->Name();
+        std::string tagType = element->Name();
         if(tagType == "time"){
-            timeString = string(element->GetText());
+            timeString = std::string(element->GetText());
         }
         else if(tagType == "source" || tagType == "sink"){
             XMLElement *name = element->FirstChildElement("name");
-            string entityName = string(name->GetText());
+            std::string entityName = std::string(name->GetText());
             sdEntityCore* targetEntity;
             
             // if target entity does not exist, create one
@@ -105,11 +103,11 @@ sdScene sdLoader::sceneFromXML(string xmlString){
                 XMLElement *childTag = tempTag->FirstChildElement();
                 if(!childTag){ // tempTag is a descriptor
                     XMLElement *descriptor = tempTag;
-                    targetEntity->addEvent(timeString, string(descriptor->Name()), string(descriptor->GetText()));
+                    targetEntity->addEvent(timeString, std::string(descriptor->Name()), std::string(descriptor->GetText()));
                 }else{ // tempTag is a exType
                     XMLElement *descriptor = childTag;
                     while (descriptor) {
-                        targetEntity->addEvent(timeString, string(descriptor->Name()), string(descriptor->GetText()));
+                        targetEntity->addEvent(timeString, std::string(descriptor->Name()), std::string(descriptor->GetText()));
                         descriptor = descriptor->NextSiblingElement();
                     }
                 }
@@ -123,7 +121,7 @@ sdScene sdLoader::sceneFromXML(string xmlString){
     return scene;
 }
 
-sdScene sdLoader::sceneFromJSON(string jsonString){
+sdScene sdLoader::sceneFromJSON(std::string jsonString){
     JSONNode json;
     sdScene scene;
     sdInfo info;
@@ -133,7 +131,7 @@ sdScene sdLoader::sceneFromJSON(string jsonString){
     if(it != json.end()){
         JSONNode spatdif = *it;
         JSONNode::iterator iit = spatdif.find("meta");
-        string timeString;
+        std::string timeString;
 
         while(iit != spatdif.end()){
             if(iit->name() ==  "meta"){
@@ -162,10 +160,10 @@ sdScene sdLoader::sceneFromJSON(string jsonString){
                     }
                     else if(iiit->name() == "extensions"){
                         JSONNode extensionsNode = *iiit;
-                        string extensionsString = iiit->as_string();
-                        istringstream iss(extensionsString);
+                        std::string extensionsString = iiit->as_string();
+                        std::istringstream iss(extensionsString);
                         while (iss.good()) { // add extensions one by one
-                            string extensionString;
+                            std::string extensionString;
                             iss >> extensionString;
                             scene.addExtension(extensionString);
                         }
@@ -198,7 +196,7 @@ sdScene sdLoader::sceneFromJSON(string jsonString){
                             case JSON_ARRAY:{
                                 JSONNode array = iiit->as_array();
                                 JSONNode::iterator ait = array.begin();
-                                ostringstream os;
+                                std::ostringstream os;
                                 while (ait != array.end()) {
                                     JSONNode num = *ait;
                                     os << num.as_string() << ' ';
@@ -209,7 +207,7 @@ sdScene sdLoader::sceneFromJSON(string jsonString){
                                 break;
                             }
                             case JSON_BOOL:{
-                                string bl = boolToString(iiit->as_bool());
+                                std::string bl = boolToString(iiit->as_bool());
                                 targetEntity->addEvent(timeString, iiit->name(), bl);
                                 break;
                             }
@@ -229,7 +227,7 @@ sdScene sdLoader::sceneFromJSON(string jsonString){
     return scene;
 }
 
-sdScene sdLoader::sceneFromYAML(string yamlString){
+sdScene sdLoader::sceneFromYAML(std::string yamlString){
     sdScene scene;
     return scene;
 }

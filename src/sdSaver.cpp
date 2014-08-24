@@ -21,16 +21,15 @@
 #include "tinyxml2.h"
 #include "JSONNode.h"
 
-using namespace std;
 
-string sdGlobalEvent::getKindAsString(void){
-    string str;
+std::string sdGlobalEvent::getKindAsString(void){
+    std::string str;
     switch (kind) {
         case SD_SOURCE:
-            str = string("source");
+            str = std::string("source");
             break;
         case SD_SINK:
-            str = string("sink");
+            str = std::string("sink");
             break;
         default:
             break;
@@ -38,7 +37,7 @@ string sdGlobalEvent::getKindAsString(void){
     return str;
 }
 
-string sdSaver::XMLFromScene(sdScene *scene){
+std::string sdSaver::XMLFromScene(sdScene *scene){
     using namespace tinyxml2;
     
     XMLDocument xml;
@@ -59,8 +58,8 @@ string sdSaver::XMLFromScene(sdScene *scene){
     
     sdInfo information = scene->getInfo();
 
-    string infoStrings[6];
-    string elementNameStrings[6];
+    std::string infoStrings[6];
+    std::string elementNameStrings[6];
     
     infoStrings[0] = information.getAuthor();
     infoStrings[1] = information.getHost();
@@ -90,7 +89,7 @@ string sdSaver::XMLFromScene(sdScene *scene){
 
     if(num > 0){
         XMLElement* extensions = xml.NewElement("extensions");
-        string extString;
+        std::string extString;
         for(int i = 0; i< num; i++){
 
             EExtension ext = scene->getActivatedExtension(i);
@@ -109,21 +108,21 @@ string sdSaver::XMLFromScene(sdScene *scene){
     
     // time section
     
-    vector<sdEntityCore*> entityVector = scene->getEntityVector();
+    std::vector<sdEntityCore*> entityVector = scene->getEntityVector();
 
     /* ordered by time */
     if(scene->getOrdering() == SD_TIME){
         
         // 1. pool all events in globalEvent Set
-        vector<sdEntityCore*>::iterator it = entityVector.begin();
-        multiset<sdGlobalEvent, sdGlobalEventCompare> allEventSet;
+        std::vector<sdEntityCore*>::iterator it = entityVector.begin();
+        std::multiset<sdGlobalEvent, sdGlobalEventCompare> allEventSet;
         
         while(it != entityVector.end()){
             
             // core event
             sdEntityCore *entity = *it;
-            multiset<sdEvent*, sdEventCompare> eventSet = entity->getEventSet();
-            multiset<sdEvent*, sdEventCompare>::iterator iit =eventSet.begin();
+            std::multiset<sdEvent*, sdEventCompare> eventSet = entity->getEventSet();
+            std::multiset<sdEvent*, sdEventCompare>::iterator iit =eventSet.begin();
             while(iit != eventSet.end()){
                 sdEvent* event = *iit;
                 sdGlobalEvent globalEvent(event, entity->getName(), entity->getKind());                
@@ -135,12 +134,12 @@ string sdSaver::XMLFromScene(sdScene *scene){
 
         // 2. create string
         double previousTime = -1.0;
-        string previousName;
-        string previousExtension;
+        std::string previousName;
+        std::string previousExtension;
         XMLElement* extension;
         XMLElement* kind;
 
-        multiset<sdGlobalEvent, sdGlobalEventCompare>::iterator eit = allEventSet.begin();
+        std::multiset<sdGlobalEvent, sdGlobalEventCompare>::iterator eit = allEventSet.begin();
         while(eit != allEventSet.end()){
             sdGlobalEvent event = *eit;
 
@@ -170,7 +169,7 @@ string sdSaver::XMLFromScene(sdScene *scene){
             XMLText* text = xml.NewText(event.getEvent()->getValueAsString().c_str());
             element->InsertEndChild(text);
 
-            string relevantExtension = extensionToString(getRelevantExtension(event.getEvent()->getDescriptor()));
+            std::string relevantExtension = extensionToString(getRelevantExtension(event.getEvent()->getDescriptor()));
 
             if(relevantExtension == "core"){
                 kind->InsertEndChild(element);
@@ -180,7 +179,7 @@ string sdSaver::XMLFromScene(sdScene *scene){
                 if( (event.getEvent()->getTime() != previousTime) ||  (event.getEntityName() != previousName ) || (previousExtension != relevantExtension)){
                     // if different entity, time, or extension from the previous put extension tag
                     extension = xml.NewElement((relevantExtension).c_str());
-                    cout << "extension " << endl;
+                    std::cout << "extension " << std::endl;
                 }
                 extension->InsertEndChild(element);
                 kind->InsertEndChild(extension);
@@ -198,12 +197,12 @@ string sdSaver::XMLFromScene(sdScene *scene){
         // 1. Sort vector by name alphabetically
         
         sort(entityVector.begin(), entityVector.end(), sdEntityCore::sortAlphabetically);
-        vector<sdEntityCore*>::iterator it = entityVector.begin();
+        std::vector<sdEntityCore*>::iterator it = entityVector.begin();
 
         while(it != entityVector.end()){
             sdEntityCore *entity = *it;
-            multiset<sdEvent*, sdEventCompare> eventSet = entity->getEventSet();
-            multiset<sdEvent*, sdEventCompare>::iterator iit = eventSet.begin();
+            std::multiset<sdEvent*, sdEventCompare> eventSet = entity->getEventSet();
+            std::multiset<sdEvent*, sdEventCompare>::iterator iit = eventSet.begin();
 
             while(iit != eventSet.end()){
                 sdEvent* event = *iit;
@@ -233,16 +232,16 @@ string sdSaver::XMLFromScene(sdScene *scene){
 
     XMLPrinter printer;
     xml.Print(&printer);
-    return string(printer.CStr());
+    return std::string(printer.CStr());
     
 }
 
-string sdSaver::JSONFromScene( sdScene *sdScene){
+std::string sdSaver::JSONFromScene( sdScene *sdScene){
     return NULL;
     
     
 }
 
-string sdSaver::YAMLFromScene( sdScene *sdScene){
+std::string sdSaver::YAMLFromScene( sdScene *sdScene){
     return NULL;
 }

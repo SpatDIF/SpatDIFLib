@@ -18,7 +18,6 @@
 #include <vector>
 #include <sstream>
 
-using namespace std;
 
 sdOSCResponder::sdOSCResponder(void){
     queryTime = 0.0;
@@ -30,23 +29,23 @@ sdOSCResponder::sdOSCResponder(sdScene *scene){
     sdOSCResponder();
 }
 
-vector<string> sdOSCResponder::splitString(const string &str){
-    vector<string> res;
+std::vector<std::string> sdOSCResponder::splitString(const std::string &str){
+    std::vector<std::string> res;
     size_t current = 0, found;
-    while((found = str.find_first_of('/', current)) != string::npos){
-        res.push_back(string(str, current, found - current));
+    while((found = str.find_first_of('/', current)) != std::string::npos){
+        res.push_back(std::string(str, current, found - current));
         current = found + 1;
     }
-    res.push_back(string(str, current, str.size() - current));
+    res.push_back(std::string(str, current, str.size() - current));
     return res;
 }
 
 // low level interface
-vector<vector<unsigned char> > sdOSCResponder::forwardOSCMessage(vector<unsigned char> message){
+std::vector<std::vector<unsigned char> > sdOSCResponder::forwardOSCMessage(std::vector<unsigned char> message){
     sdOSCMessage mes(message);
-    vector<sdOSCMessage> rMesVector = forwardOSCMessage(mes);
-    vector<sdOSCMessage>::iterator it = rMesVector.begin();
-    vector<vector<unsigned char> > rRawVector;
+    std::vector<sdOSCMessage> rMesVector = forwardOSCMessage(mes);
+    std::vector<sdOSCMessage>::iterator it = rMesVector.begin();
+    std::vector<std::vector<unsigned char> > rRawVector;
     while(it != rMesVector.end()){
         sdOSCMessage m = *it;
         rRawVector.push_back(m.getOSCMessage());
@@ -56,10 +55,10 @@ vector<vector<unsigned char> > sdOSCResponder::forwardOSCMessage(vector<unsigned
 }
 
 // high level interface
-vector<sdOSCMessage> sdOSCResponder::forwardOSCMessage(sdOSCMessage message){
-    vector<sdOSCMessage> returnMessageVector;
+std::vector<sdOSCMessage> sdOSCResponder::forwardOSCMessage(sdOSCMessage message){
+    std::vector<sdOSCMessage> returnMessageVector;
     
-    string address = message.getAddressAsString();
+    std::string address = message.getAddressAsString();
     if (address[0] != '/') {
         sdOSCMessage errorMessage("/spatdif/error");
         errorMessage.appendString("Invalid OSC Address Pattern");
@@ -67,7 +66,7 @@ vector<sdOSCMessage> sdOSCResponder::forwardOSCMessage(sdOSCMessage message){
         return returnMessageVector;
     }
     
-    vector <string>ads = splitString(address);
+    std::vector <std::string>ads = splitString(address);
     ads.erase (ads.begin());
     
     if (ads.size() < 2 ) {
@@ -83,13 +82,13 @@ vector<sdOSCMessage> sdOSCResponder::forwardOSCMessage(sdOSCMessage message){
         returnMessageVector.push_back(errorMessage);
         return returnMessageVector;
     }
-    string command;
+    std::string command;
     EExtension extension = SD_CORE;
 
     if(ads.size() == 2){ // core or extension
         command = ads[1]; // get the element right after /spatdifcmd
     }else if(ads.size() == 3){  // extension
-        string extensionName = ads[1];
+        std::string extensionName = ads[1];
         extension = stringToExtension(extensionName);
         if(extension == SD_EXTENSION_ERROR){
             sdOSCMessage errorMessage("/spatdif/error");
@@ -101,7 +100,7 @@ vector<sdOSCMessage> sdOSCResponder::forwardOSCMessage(sdOSCMessage message){
             command  = ads[2];
         }
     }
-    string action =  command.substr(0, 3); //  check if the client try to set or get
+    std::string action =  command.substr(0, 3); //  check if the client try to set or get
 
     if(action == "get"){
         returnMessageVector = getAction(command, message);
@@ -126,24 +125,24 @@ vector<sdOSCMessage> sdOSCResponder::forwardOSCMessage(sdOSCMessage message){
     return returnMessageVector;
 }
 
-vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage message){
+std::vector<sdOSCMessage> sdOSCResponder::getAction(std::string command, sdOSCMessage message){
     sdOSCMessage returnMessage;
-    vector<sdOSCMessage> returnMessageVector;
+    std::vector<sdOSCMessage> returnMessageVector;
     bool singleMessage = true;
     // internal variable
     if(command == "getEventSetsFromAllEntities"){
-        vector<sdReport> reports;
+        std::vector<sdReport> reports;
         if(interval != 0.0){
            reports = scene->getEventSetsFromAllEntities(queryTime, queryTime+interval); // in the specified region
         }else{
            reports = scene->getEventSetsFromAllEntities(queryTime); 
         }
-        vector<sdReport>::iterator rit = reports.begin();
+        std::vector<sdReport>::iterator rit = reports.begin();
         while(rit != reports.end()){
             sdReport report = *rit;
             sdEntityCore* entity = report.entity;
-            multiset<sdEvent*, sdEventCompare>eventSet = report.eventSet;
-            multiset<sdEvent*, sdEventCompare>::iterator eit = eventSet.begin();
+            std::multiset<sdEvent*, sdEventCompare>eventSet = report.eventSet;
+            std::multiset<sdEvent*, sdEventCompare>::iterator eit = eventSet.begin();
             while (eit != eventSet.end()) {
                 sdEvent *event = *eit;
                 returnMessage.clear();
@@ -256,7 +255,7 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
         returnMessage.appendInt(scene->getNumberOfActivatedExtensions());
     }
     // core descriptors
-    else if(command.find("Position") != string::npos){ // contains keyword "Position"
+    else if(command.find("Position") != std::string::npos){ // contains keyword "Position"
         sdEntityCore* entity = scene->getEntity(message.getArgumentAsString(0));
         if(!entity) 
             return returnMessageVector;
@@ -269,11 +268,11 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
         }else if(command == "getPreviousPosition"){
             dpos = static_cast<double*>(entity->getPreviousValue(queryTime, SD_POSITION));
         }
-        string address = "/spatdif/source/" + entity->getName() + "/position";
+        std::string address = "/spatdif/source/" + entity->getName() + "/position";
         returnMessage.setAddress(address);
         returnMessage.appendString(entity->getName());
         returnMessage.appendFloats(doublesToFloats(dpos, fpos, 3),3);
-    }else if(command.find("Orientation") != string::npos){ // contains keyword "Position"
+    }else if(command.find("Orientation") != std::string::npos){ // contains keyword "Position"
         sdEntityCore* entity = scene->getEntity(message.getArgumentAsString(0));
         if(!entity) 
             return returnMessageVector;
@@ -286,7 +285,7 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
         }else if(command == "getPreviousOrientation"){
             dori = static_cast<double*>(entity->getPreviousValue(queryTime, SD_ORIENTATION));
         }
-        string address = "/spatdif/source/" + entity->getName() + "/orientation";
+        std::string address = "/spatdif/source/" + entity->getName() + "/orientation";
         returnMessage.setAddress(address);
         returnMessage.appendString(entity->getName());
         returnMessage.appendFloats(doublesToFloats(dori, fori, 3),3);
@@ -302,7 +301,7 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
         }else if(command == "getPreviousPresent"){
             flag = static_cast<bool*>(entity->getPreviousValue(queryTime, SD_PRESENT));
         }
-        string address = "/spatdif/source/" + entity->getName() + "/present";
+        std::string address = "/spatdif/source/" + entity->getName() + "/present";
         returnMessage.setAddress(address);
         returnMessage.appendString(entity->getName());
         returnMessage.appendInt(static_cast<int>(flag));
@@ -319,19 +318,19 @@ vector<sdOSCMessage> sdOSCResponder::getAction(string command, sdOSCMessage mess
     return returnMessageVector;
 }
 
-void sdOSCResponder::setAction(string command, sdOSCMessage message, EExtension extension){
+void sdOSCResponder::setAction(std::string command, sdOSCMessage message, EExtension extension){
 
     switch(extension){
         case SD_MEDIA:{
             // media extension
             if(command == "setID"){
-                string id = message.getArgumentAsString(1);
+                std::string id = message.getArgumentAsString(1);
                 scene->setValue(message.getArgumentAsString(0), writeTime, SD_MEDIA_ID, static_cast<void*>(&id));
             }else if(command == "setType"){
-                string type = message.getArgumentAsString(1);
+                std::string type = message.getArgumentAsString(1);
                 scene->setValue(message.getArgumentAsString(0), writeTime, SD_MEDIA_TYPE, static_cast<void*>(&type));
             }else if(command == "setLocation"){
-                string location = message.getArgumentAsString(1);
+                std::string location = message.getArgumentAsString(1);
                 scene->setValue(message.getArgumentAsString(0), writeTime, SD_MEDIA_LOCATION, static_cast<void*>(&location));
             }else if(command == "setChannel"){
                 int channel = message.getArgumentAsInt(1);

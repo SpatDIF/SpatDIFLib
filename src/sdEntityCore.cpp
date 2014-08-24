@@ -50,7 +50,7 @@ sdEvent* sdEntityCore::addEvent(double time, EDescriptor descriptor, void* const
             event = static_cast<sdEvent*>(new sdEventCore(time, descriptor, value));
             eventSet.insert(event);
     }else{
-            vector <sdRedirector>::iterator it =   redirectorVector.begin();
+            std::vector <sdRedirector>::iterator it =   redirectorVector.begin();
             while(it != redirectorVector.end()){
                 sdRedirector rd = *it;
                 if(rd.descriptor == descriptor){
@@ -70,7 +70,7 @@ sdEvent* sdEntityCore::addEvent(std::string time, std::string descriptor, std::s
         event = static_cast<sdEvent*>(new sdEventCore(time, descriptor, value));
         eventSet.insert(event);
     }else{
-        vector <sdRedirector>::iterator it =   redirectorVector.begin();
+        std::vector <sdRedirector>::iterator it =   redirectorVector.begin();
         while(it != redirectorVector.end()){
             sdRedirector rd = *it;
             if(rd.descriptorString == descriptor){
@@ -86,7 +86,7 @@ void sdEntityCore::removeEvent(double time, EDescriptor descriptor){
     // if core descriptor
     if(isCoreDescriptor(descriptor)){
         
-        multiset <sdEvent*>::iterator it = eventSet.begin();
+        std::multiset <sdEvent*>::iterator it = eventSet.begin();
         while(it != eventSet.end()) {
             sdEvent* event = *it;
             if(event->getTime() == time){
@@ -101,7 +101,7 @@ void sdEntityCore::removeEvent(double time, EDescriptor descriptor){
 
     }else{
         // if extended descriptor
-        vector <sdRedirector>::iterator it =   redirectorVector.begin();
+        std::vector <sdRedirector>::iterator it =   redirectorVector.begin();
         while(it != redirectorVector.end()){
             sdRedirector rd = *it;
             if(rd.descriptor == descriptor){
@@ -128,7 +128,7 @@ void* sdEntityCore::getValue(double time, EDescriptor descriptor){
     if(isCoreDescriptor(descriptor)){
         return sdEntity::getValue(time, descriptor);
     }else{
-        vector <sdRedirector>::iterator it = redirectorVector.begin();
+        std::vector <sdRedirector>::iterator it = redirectorVector.begin();
         while (it != redirectorVector.end()) {
             sdRedirector rd = *it;
             if(rd.descriptor == descriptor){
@@ -165,7 +165,7 @@ sdEntityExtension* sdEntityCore::addExtension(EExtension extension){
 
 void sdEntityCore::removeExtension(EExtension extension){
 
-    vector <sdEntityExtension*>::iterator it =  extensionVector.begin();
+    std::vector <sdEntityExtension*>::iterator it =  extensionVector.begin();
     while(it != extensionVector.end()){
         if((*it)->getExtensionName() == extension){
             extensionVector.erase(it);
@@ -176,7 +176,7 @@ void sdEntityCore::removeExtension(EExtension extension){
 }
 
 sdEntityExtension* sdEntityCore::getExtension(EExtension extension){
-    vector <sdEntityExtension*>::iterator it = extensionVector.begin();
+    std::vector <sdEntityExtension*>::iterator it = extensionVector.begin();
     if(it != extensionVector.end()){
         sdEntityExtension* ext = *it;
         if(ext->getExtensionName() == extension){
@@ -188,7 +188,7 @@ sdEntityExtension* sdEntityCore::getExtension(EExtension extension){
 }
 
 sdEntityExtension* sdEntityCore::getResponsibleExtension(EDescriptor descriptor){
-    vector <sdRedirector>::iterator it = redirectorVector.begin();
+    std::vector <sdRedirector>::iterator it = redirectorVector.begin();
     while(it != redirectorVector.end()){
         sdRedirector rd = *it;
         if(rd.descriptor == descriptor){
@@ -201,7 +201,7 @@ sdEntityExtension* sdEntityCore::getResponsibleExtension(EDescriptor descriptor)
 
 int sdEntityCore::getNumberOfEvents(){
     int sum = eventSet.size();
-    vector<sdEntityExtension*>::iterator it = extensionVector.begin();
+    std::vector<sdEntityExtension*>::iterator it = extensionVector.begin();
     while(it != extensionVector.end()){
         sdEntityExtension* entityExtension = *it;
         sum += entityExtension->getEventSet().size(); 
@@ -223,48 +223,48 @@ sdEvent* sdEntityCore::getEvent(double time, EDescriptor descriptor){
     return NULL;
 }
 
-multiset<sdEvent*, sdEventCompare> sdEntityCore::getEventSet(void){
-    multiset<sdEvent*, sdEventCompare> returnSet = eventSet;
-    vector<sdEntityExtension*>::iterator it = extensionVector.begin();
+std::multiset<sdEvent*, sdEventCompare> sdEntityCore::getEventSet(void){
+    std::multiset<sdEvent*, sdEventCompare> returnSet = eventSet;
+    std::vector<sdEntityExtension*>::iterator it = extensionVector.begin();
     while(it != extensionVector.end()){
         sdEntityExtension* entityExtension = *it;
-        multiset<sdEvent*, sdEventCompare> extensionSet = entityExtension->getEventSet(); 
+        std::multiset<sdEvent*, sdEventCompare> extensionSet = entityExtension->getEventSet(); 
         returnSet.insert(extensionSet.begin(), extensionSet.end());
         it++;
     }
     return returnSet;
 }
     
-multiset<sdEvent*, sdEventCompare> sdEntityCore::getEventSet(double time){
-    multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getEventSet(time); // use non overridden function
-    vector<sdEntityExtension*>::iterator it = extensionVector.begin();
+std::multiset<sdEvent*, sdEventCompare> sdEntityCore::getEventSet(double time){
+    std::multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getEventSet(time); // use non overridden function
+    std::vector<sdEntityExtension*>::iterator it = extensionVector.begin();
     while(it != extensionVector.end()){
         sdEntityExtension* entityExtension = *it;
-        multiset<sdEvent*, sdEventCompare> extensionSet = entityExtension->getEventSet(time); // function derived from the superclass
+        std::multiset<sdEvent*, sdEventCompare> extensionSet = entityExtension->getEventSet(time); // function derived from the superclass
         returnSet.insert(extensionSet.begin(), extensionSet.end());
         it++;
     }
     return returnSet;
 }
 
-multiset<sdEvent*, sdEventCompare> sdEntityCore::getEventSet(double start, double end){
-    multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getEventSet(start, end); // use non overridden function
-    vector<sdEntityExtension*>::iterator it = extensionVector.begin();
+std::multiset<sdEvent*, sdEventCompare> sdEntityCore::getEventSet(double start, double end){
+    std::multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getEventSet(start, end); // use non overridden function
+    std::vector<sdEntityExtension*>::iterator it = extensionVector.begin();
     while(it != extensionVector.end()){
         sdEntityExtension* entityExtension = *it;
-        multiset<sdEvent*, sdEventCompare> extensionSet = entityExtension->getEventSet(start, end); // function derived from the superclass
+        std::multiset<sdEvent*, sdEventCompare> extensionSet = entityExtension->getEventSet(start, end); // function derived from the superclass
         returnSet.insert(extensionSet.begin(), extensionSet.end());
         it++;
     }
     return returnSet;
 }
 
-multiset<sdEvent*, sdEventCompare> sdEntityCore::getEventSet(double start, double end, EDescriptor descriptor){
-    multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getEventSet(start, end, descriptor); // use non overridden function
-    vector<sdEntityExtension*>::iterator it = extensionVector.begin();
+std::multiset<sdEvent*, sdEventCompare> sdEntityCore::getEventSet(double start, double end, EDescriptor descriptor){
+    std::multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getEventSet(start, end, descriptor); // use non overridden function
+    std::vector<sdEntityExtension*>::iterator it = extensionVector.begin();
     while(it != extensionVector.end()){
         sdEntityExtension* entityExtension = *it;
-        multiset<sdEvent*, sdEventCompare> extensionSet = entityExtension->getEventSet(start, end, descriptor); // function derived from the superclass
+        std::multiset<sdEvent*, sdEventCompare> extensionSet = entityExtension->getEventSet(start, end, descriptor); // function derived from the superclass
         returnSet.insert(extensionSet.begin(), extensionSet.end());
         it++;
     }
@@ -284,13 +284,13 @@ sdEvent* sdEntityCore::getNextEvent(double time, EDescriptor descriptor){
     return NULL;
 }
 
-multiset<sdEvent*, sdEventCompare> sdEntityCore::getNextEventSet(double time){
-    multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getNextEventSet(time); //get events with core descriptors
+std::multiset<sdEvent*, sdEventCompare> sdEntityCore::getNextEventSet(double time){
+    std::multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getNextEventSet(time); //get events with core descriptors
     double nextEventTime = sdEntity::getNextEventTime(time); // its time
     if(nextEventTime < 0){ // if no core event found
         nextEventTime = DBL_MAX; 
     }
-    vector<sdEntityExtension*>::iterator it = extensionVector.begin();
+    std::vector<sdEntityExtension*>::iterator it = extensionVector.begin();
     while(it != extensionVector.end()){
         sdEntityExtension* entityExtension = *it;
         double nextExtensionEventTime = entityExtension->getNextEventTime(time);
@@ -299,7 +299,7 @@ multiset<sdEvent*, sdEventCompare> sdEntityCore::getNextEventSet(double time){
                 returnSet = entityExtension->getNextEventSet(time);
                 nextEventTime = nextExtensionEventTime;
             }else if(nextExtensionEventTime == nextEventTime){ // if equal, merge
-                multiset<sdEvent*, sdEventCompare> eventSet = entityExtension->getNextEventSet(time);
+                std::multiset<sdEvent*, sdEventCompare> eventSet = entityExtension->getNextEventSet(time);
                 returnSet.insert(eventSet.begin(), eventSet.end());
             }
         }   
@@ -309,11 +309,11 @@ multiset<sdEvent*, sdEventCompare> sdEntityCore::getNextEventSet(double time){
 }
 
 double sdEntityCore::getNextEventTime(double time ){
-    multiset<sdEvent*, sdEventCompare> eventSet = getNextEventSet(time);    
+    std::multiset<sdEvent*, sdEventCompare> eventSet = getNextEventSet(time);    
     if(eventSet.empty()){
         return -1.0;
     }
-    multiset<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
+    std::multiset<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
     sdEvent* event = *it;
     return event->getTime();
 }
@@ -331,13 +331,13 @@ sdEvent* sdEntityCore::getPreviousEvent(double time, EDescriptor descriptor){
     return NULL;
 }
 
-multiset<sdEvent*, sdEventCompare> sdEntityCore::getPreviousEventSet(double time){
-    multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getPreviousEventSet(time); 
+std::multiset<sdEvent*, sdEventCompare> sdEntityCore::getPreviousEventSet(double time){
+    std::multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getPreviousEventSet(time); 
     double previousEventTime = sdEntity::getPreviousEventTime(time);
     if(previousEventTime < 0){
         previousEventTime = -1.0; //must be later replaced by the max value of double 
     }
-    vector<sdEntityExtension*>::iterator it = extensionVector.begin();
+    std::vector<sdEntityExtension*>::iterator it = extensionVector.begin();
     while(it != extensionVector.end()){
         sdEntityExtension* entityExtension = *it;
         double previousExtensionEventTime = entityExtension->getPreviousEventTime(time);
@@ -346,7 +346,7 @@ multiset<sdEvent*, sdEventCompare> sdEntityCore::getPreviousEventSet(double time
                 returnSet = entityExtension->getPreviousEventSet(time);
                 previousEventTime = previousExtensionEventTime;
             }else if(previousExtensionEventTime == previousEventTime){ // if equal, merge
-                multiset<sdEvent*, sdEventCompare> eventSet = entityExtension->getPreviousEventSet(time);
+                std::multiset<sdEvent*, sdEventCompare> eventSet = entityExtension->getPreviousEventSet(time);
                 returnSet.insert(eventSet.begin(), eventSet.end());
             }
         }
@@ -356,11 +356,11 @@ multiset<sdEvent*, sdEventCompare> sdEntityCore::getPreviousEventSet(double time
 }
 
 double sdEntityCore::getPreviousEventTime(double time ){
-    multiset<sdEvent*, sdEventCompare> eventSet = getPreviousEventSet(time);    
+    std::multiset<sdEvent*, sdEventCompare> eventSet = getPreviousEventSet(time);    
     if(eventSet.empty()){
         return -1.0;
     }
-    multiset<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
+    std::multiset<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
     sdEvent* event = *it;
     return event->getTime();
 }
@@ -379,10 +379,10 @@ sdEvent* sdEntityCore::getFirstEvent(EDescriptor descriptor){
     return NULL;
 }
 
-multiset<sdEvent*, sdEventCompare> sdEntityCore::getFirstEventSet(){
+std::multiset<sdEvent*, sdEventCompare> sdEntityCore::getFirstEventSet(){
     double firstEventTime = sdEntity::getFirstEventTime(); // ask parent, because this function is overridden
-    multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getFirstEventSet();
-    vector<sdEntityExtension*>::iterator it = extensionVector.begin();
+    std::multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getFirstEventSet();
+    std::vector<sdEntityExtension*>::iterator it = extensionVector.begin();
     while(it != extensionVector.end()){
         sdEntityExtension* entityExtension = *it;
         double extensionFirstEventTime = entityExtension->getFirstEventTime(); // function derived from the superclass
@@ -390,7 +390,7 @@ multiset<sdEvent*, sdEventCompare> sdEntityCore::getFirstEventSet(){
             firstEventTime = extensionFirstEventTime;
             returnSet = entityExtension->getFirstEventSet();
         }else if(extensionFirstEventTime == firstEventTime){
-            multiset<sdEvent*, sdEventCompare> firstExtenstionSet = entityExtension->getFirstEventSet();
+            std::multiset<sdEvent*, sdEventCompare> firstExtenstionSet = entityExtension->getFirstEventSet();
             returnSet.insert(firstExtenstionSet.begin(), firstExtenstionSet.end());
         }
         it++;
@@ -400,7 +400,7 @@ multiset<sdEvent*, sdEventCompare> sdEntityCore::getFirstEventSet(){
 
 double sdEntityCore::getFirstEventTime(){
     double firstEventTime = sdEntity::getFirstEventTime(); // use parental function
-    vector<sdEntityExtension*>::iterator it = extensionVector.begin();
+    std::vector<sdEntityExtension*>::iterator it = extensionVector.begin();
     while(it != extensionVector.end()){
         double extensionFirstEventTime  = (*it)->getFirstEventTime();
         if(extensionFirstEventTime < firstEventTime){
@@ -424,10 +424,10 @@ sdEvent* sdEntityCore::getLastEvent(EDescriptor descriptor){
     return NULL;
 }
 
-multiset<sdEvent*, sdEventCompare> sdEntityCore::getLastEventSet(){
+std::multiset<sdEvent*, sdEventCompare> sdEntityCore::getLastEventSet(){
     double lastEventTime = sdEntity::getLastEventTime(); // ask parent, because this function is overridden
-    multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getLastEventSet();
-    vector<sdEntityExtension*>::iterator it = extensionVector.begin();
+    std::multiset<sdEvent*, sdEventCompare> returnSet = sdEntity::getLastEventSet();
+    std::vector<sdEntityExtension*>::iterator it = extensionVector.begin();
     while(it != extensionVector.end()){
         sdEntityExtension* entityExtension = *it;
         double extensionLastEventTime = entityExtension->getLastEventTime(); // function derived from the superclass
@@ -435,7 +435,7 @@ multiset<sdEvent*, sdEventCompare> sdEntityCore::getLastEventSet(){
             lastEventTime = extensionLastEventTime;
             returnSet = entityExtension->getLastEventSet();
         }else if(extensionLastEventTime == lastEventTime){
-            multiset<sdEvent*, sdEventCompare> lastExtenstionSet = entityExtension->getLastEventSet();
+            std::multiset<sdEvent*, sdEventCompare> lastExtenstionSet = entityExtension->getLastEventSet();
             returnSet.insert(lastExtenstionSet.begin(), lastExtenstionSet.end());
         }
         it++;
@@ -445,7 +445,7 @@ multiset<sdEvent*, sdEventCompare> sdEntityCore::getLastEventSet(){
 
 double sdEntityCore::getLastEventTime(){
     double lastEventTime = sdEntity::getLastEventTime(); // use parental function
-    vector<sdEntityExtension*>::iterator it = extensionVector.begin();
+    std::vector<sdEntityExtension*>::iterator it = extensionVector.begin();
     while(it != extensionVector.end()){
         double extensionLastEventTime  = (*it)->getLastEventTime();
         if(extensionLastEventTime > lastEventTime){

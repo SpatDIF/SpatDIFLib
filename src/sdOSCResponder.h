@@ -21,7 +21,6 @@
 #include "sdOSCMessage.h"
 #include <string>
 
-using namespace std;
 
 /*!
     This class interprets incoming OSC messages and forward it to a specified instance of sdScene.
@@ -47,9 +46,9 @@ private:
     double interval;
     
     /*! private utility function for spliting strings by slash */
-    vector <string> splitString(const string &str);
-    vector<sdOSCMessage> getAction(string command, sdOSCMessage message);
-    void setAction(string command, sdOSCMessage message, EExtension extension);
+    std::vector <std::string> splitString(const std::string &str);
+    std::vector<sdOSCMessage> getAction(std::string command, sdOSCMessage message);
+    void setAction(std::string command, sdOSCMessage message, EExtension extension);
 
 public:
     
@@ -73,13 +72,13 @@ public:
     /*! this function interprets incoming raw OSCMessage and forward it to the scene
      @param message raw oscMessage, consisting of multiple blocks (4 byte blocks)
      */
-    vector<vector<unsigned char> > forwardOSCMessage(vector<unsigned char> message);
+    std::vector<std::vector<unsigned char> > forwardOSCMessage(std::vector<unsigned char> message);
 
     /*! this is the overloaded high level interface function of the function above.
      easier to handle but less compatible.
      @param message an instance sdOSCMessage
      */
-    vector<sdOSCMessage> forwardOSCMessage(sdOSCMessage message);
+    std::vector<sdOSCMessage> forwardOSCMessage(sdOSCMessage message);
     
     /*!
      @param time set queryTime to this value
