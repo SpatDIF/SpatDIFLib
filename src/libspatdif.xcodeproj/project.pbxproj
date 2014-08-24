@@ -7,6 +7,21 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		62087AAA19A9FE5D00F8A3E6 /* FileWithExtension.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FileWithExtension.cpp; path = ../examples/FileWithExtension.cpp; sourceTree = "<group>"; };
+		62087AAB19A9FE5D00F8A3E6 /* How_to_query.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = How_to_query.cpp; path = ../examples/How_to_query.cpp; sourceTree = "<group>"; };
+		62087AAC19A9FE5D00F8A3E6 /* sdConverter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdConverter.cpp; path = ../examples/sdConverter.cpp; sourceTree = "<group>"; };
+		62087AAD19A9FE5D00F8A3E6 /* sdCoreEventTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdCoreEventTest.cpp; path = ../examples/sdCoreEventTest.cpp; sourceTree = "<group>"; };
+		62087AAE19A9FE5D00F8A3E6 /* sdDateTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdDateTest.cpp; path = ../examples/sdDateTest.cpp; sourceTree = "<group>"; };
+		62087AAF19A9FE5D00F8A3E6 /* sdEventTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdEventTest.cpp; path = ../examples/sdEventTest.cpp; sourceTree = "<group>"; };
+		62087AB019A9FE5D00F8A3E6 /* sdExtensionTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdExtensionTest.cpp; path = ../examples/sdExtensionTest.cpp; sourceTree = "<group>"; };
+		62087AB119A9FE5D00F8A3E6 /* sdInfoTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdInfoTest.cpp; path = ../examples/sdInfoTest.cpp; sourceTree = "<group>"; };
+		62087AB219A9FE5D00F8A3E6 /* sdLoaderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdLoaderTest.cpp; path = ../examples/sdLoaderTest.cpp; sourceTree = "<group>"; };
+		62087AB319A9FE5D00F8A3E6 /* sdOSCConverterTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdOSCConverterTest.cpp; path = ../examples/sdOSCConverterTest.cpp; sourceTree = "<group>"; };
+		62087AB419A9FE5D00F8A3E6 /* sdOSCMessageTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdOSCMessageTest.cpp; path = ../examples/sdOSCMessageTest.cpp; sourceTree = "<group>"; };
+		62087AB519A9FE5D00F8A3E6 /* sdOSCResponderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdOSCResponderTest.cpp; path = ../examples/sdOSCResponderTest.cpp; sourceTree = "<group>"; };
+		62087AB619A9FE5D00F8A3E6 /* sdSaverTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdSaverTest.cpp; path = ../examples/sdSaverTest.cpp; sourceTree = "<group>"; };
+		62087AB719A9FE5D00F8A3E6 /* sdSceneTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdSceneTest.cpp; path = ../examples/sdSceneTest.cpp; sourceTree = "<group>"; };
+		62087AB819AA002300F8A3E6 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; name = Makefile; path = ../examples/Makefile; sourceTree = "<group>"; };
 		6279340919A296AA002BF8EB /* sdEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdEvent.h; sourceTree = "<group>"; };
 		6279340C19A2A018002BF8EB /* sdDescriptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdDescriptor.h; sourceTree = "<group>"; };
 		627C6AD719A3B16A00D52E8F /* sdEventCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdEventCore.cpp; sourceTree = "<group>"; };
@@ -90,10 +105,33 @@
 			name = Extension;
 			sourceTree = "<group>";
 		};
+		62087AA919A9FE3C00F8A3E6 /* Examples */ = {
+			isa = PBXGroup;
+			children = (
+				62087AB819AA002300F8A3E6 /* Makefile */,
+				62087AAA19A9FE5D00F8A3E6 /* FileWithExtension.cpp */,
+				62087AAB19A9FE5D00F8A3E6 /* How_to_query.cpp */,
+				62087AAC19A9FE5D00F8A3E6 /* sdConverter.cpp */,
+				62087AAD19A9FE5D00F8A3E6 /* sdCoreEventTest.cpp */,
+				62087AAE19A9FE5D00F8A3E6 /* sdDateTest.cpp */,
+				62087AAF19A9FE5D00F8A3E6 /* sdEventTest.cpp */,
+				62087AB019A9FE5D00F8A3E6 /* sdExtensionTest.cpp */,
+				62087AB119A9FE5D00F8A3E6 /* sdInfoTest.cpp */,
+				62087AB219A9FE5D00F8A3E6 /* sdLoaderTest.cpp */,
+				62087AB319A9FE5D00F8A3E6 /* sdOSCConverterTest.cpp */,
+				62087AB419A9FE5D00F8A3E6 /* sdOSCMessageTest.cpp */,
+				62087AB519A9FE5D00F8A3E6 /* sdOSCResponderTest.cpp */,
+				62087AB619A9FE5D00F8A3E6 /* sdSaverTest.cpp */,
+				62087AB719A9FE5D00F8A3E6 /* sdSceneTest.cpp */,
+			);
+			name = Examples;
+			sourceTree = "<group>";
+		};
 		A7E1E38F18A3B3F8003BE78B = {
 			isa = PBXGroup;
 			children = (
 				A7E1E39A18A3B43F003BE78B /* Sources */,
+				62087AA919A9FE3C00F8A3E6 /* Examples */,
 			);
 			sourceTree = "<group>";
 		};

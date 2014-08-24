@@ -1,5 +1,5 @@
-CC = g++
-CFLAGS = -arch x86_64 -arch i386 
+CC = clang++
+CFLAGS = -arch x86_64 -arch i386 -g
 INCLUDE = ../src
 LIB_PATH = /usr/local/lib
 LIBS =  -lstdc++ -lspatdif
@@ -14,4 +14,5 @@ $(TARGETS):
 
 clean:
 	rm bin/*.out
+	rm -r bin/*.dSYM
 	rm *.dylib
