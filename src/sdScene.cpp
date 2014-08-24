@@ -20,14 +20,14 @@
 #include "sdMain.h"
 
 
-std::string sdScene::getEntityName(int index)
-{
+std::string sdScene::getEntityName(int index){
+    
     std::vector<std::string> names = getEntityNames();
     return names[index];
 }
 
-std::vector<std::string> sdScene::getEntityNames()
-{
+std::vector<std::string> sdScene::getEntityNames(){
+    
     std::vector <std::string> names;
     std::vector <sdEntityCore *>::iterator it = entityVector.begin();
     while(it != entityVector.end()){
@@ -53,7 +53,6 @@ sdEntityCore* sdScene::getEntity(std::string name){
 unsigned int sdScene::getNumberOfEntities(void){
     return entityVector.size();
 }
-
 
 sdEntityCore* sdScene::addEntity(std::string name, EKind kind){
     

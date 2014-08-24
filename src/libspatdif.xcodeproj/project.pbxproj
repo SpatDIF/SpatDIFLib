@@ -36,6 +36,60 @@
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
+		62087AA019A9F78D00F8A3E6 /* sdCore */ = {
+			isa = PBXGroup;
+			children = (
+				A7E1E39F18A3B44F003BE78B /* sdEntityCore.cpp */,
+				6282D5CA19A32FB8006446F2 /* sdEventCore.h */,
+				627C6AD719A3B16A00D52E8F /* sdEventCore.cpp */,
+				A7E1E3A018A3B44F003BE78B /* sdEntityCore.h */,
+			);
+			name = sdCore;
+			sourceTree = "<group>";
+		};
+		62087AA119A9F7D900F8A3E6 /* abstractClasses */ = {
+			isa = PBXGroup;
+			children = (
+				A7E1E3A118A3B44F003BE78B /* sdEntityExtension.h */,
+				6279340919A296AA002BF8EB /* sdEvent.h */,
+				A7E1E39D18A3B44F003BE78B /* sdEntity.cpp */,
+				A7E1E39E18A3B44F003BE78B /* sdEntity.h */,
+			);
+			name = abstractClasses;
+			sourceTree = "<group>";
+		};
+		62087AA219A9F80200F8A3E6 /* OSC */ = {
+			isa = PBXGroup;
+			children = (
+				A7E1E3A818A3B44F003BE78B /* sdOSCResponder.cpp */,
+				A7E1E3A918A3B44F003BE78B /* sdOSCResponder.h */,
+				62F932B518BDF377005A7D10 /* sdOSCConverter.h */,
+				62A2B3F918C3F49100BE6CF5 /* sdOSCMessage.cpp */,
+				62A2B3FA18C3F49100BE6CF5 /* sdOSCMessage.h */,
+			);
+			name = OSC;
+			sourceTree = "<group>";
+		};
+		62087AA319A9F81A00F8A3E6 /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				A7E1E3A518A3B44F003BE78B /* sdLoader.cpp */,
+				A7E1E3A618A3B44F003BE78B /* sdLoader.h */,
+				A7E1E3AA18A3B44F003BE78B /* sdSaver.cpp */,
+				A7E1E3AB18A3B44F003BE78B /* sdSaver.h */,
+			);
+			name = Files;
+			sourceTree = "<group>";
+		};
+		62087AA419A9F83F00F8A3E6 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				A7E1E3A218A3B44F003BE78B /* sdEntityExtensionMedia.cpp */,
+				A7E1E3A318A3B44F003BE78B /* sdEntityExtensionMedia.h */,
+			);
+			name = Extension;
+			sourceTree = "<group>";
+		};
 		A7E1E38F18A3B3F8003BE78B = {
 			isa = PBXGroup;
 			children = (
@@ -46,30 +100,16 @@
 		A7E1E39A18A3B43F003BE78B /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				6279340C19A2A018002BF8EB /* sdDescriptor.h */,
+				A7E1E3A718A3B44F003BE78B /* sdMain.h */,
 				A7E1E39B18A3B44F003BE78B /* sdConst.h */,
+				6279340C19A2A018002BF8EB /* sdDescriptor.h */,
 				A7E1E39C18A3B44F003BE78B /* sdDate.h */,
 				A7E1E3A418A3B44F003BE78B /* sdInfo.h */,
-				6279340919A296AA002BF8EB /* sdEvent.h */,
-				A7E1E39D18A3B44F003BE78B /* sdEntity.cpp */,
-				A7E1E39E18A3B44F003BE78B /* sdEntity.h */,
-				6282D5CA19A32FB8006446F2 /* sdEventCore.h */,
-				627C6AD719A3B16A00D52E8F /* sdEventCore.cpp */,
-				A7E1E3A018A3B44F003BE78B /* sdEntityCore.h */,
-				A7E1E39F18A3B44F003BE78B /* sdEntityCore.cpp */,
-				A7E1E3A118A3B44F003BE78B /* sdEntityExtension.h */,
-				A7E1E3A218A3B44F003BE78B /* sdEntityExtensionMedia.cpp */,
-				A7E1E3A318A3B44F003BE78B /* sdEntityExtensionMedia.h */,
-				62F932B518BDF377005A7D10 /* sdOSCConverter.h */,
-				62A2B3F918C3F49100BE6CF5 /* sdOSCMessage.cpp */,
-				62A2B3FA18C3F49100BE6CF5 /* sdOSCMessage.h */,
-				A7E1E3A518A3B44F003BE78B /* sdLoader.cpp */,
-				A7E1E3A618A3B44F003BE78B /* sdLoader.h */,
-				A7E1E3A718A3B44F003BE78B /* sdMain.h */,
-				A7E1E3A818A3B44F003BE78B /* sdOSCResponder.cpp */,
-				A7E1E3A918A3B44F003BE78B /* sdOSCResponder.h */,
-				A7E1E3AA18A3B44F003BE78B /* sdSaver.cpp */,
-				A7E1E3AB18A3B44F003BE78B /* sdSaver.h */,
+				62087AA119A9F7D900F8A3E6 /* abstractClasses */,
+				62087AA019A9F78D00F8A3E6 /* sdCore */,
+				62087AA419A9F83F00F8A3E6 /* Extension */,
+				62087AA219A9F80200F8A3E6 /* OSC */,
+				62087AA319A9F81A00F8A3E6 /* Files */,
 				A7E1E3AC18A3B44F003BE78B /* sdScene.cpp */,
 				A7E1E3AD18A3B44F003BE78B /* sdScene.h */,
 			);
@@ -79,6 +119,20 @@
 /* End PBXGroup section */
 
 /* Begin PBXLegacyTarget section */
+		62087AA519A9FA4E00F8A3E6 /* examples */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 62087AA619A9FA4E00F8A3E6 /* Build configuration list for PBXLegacyTarget "examples" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = ../examples;
+			dependencies = (
+			);
+			name = examples;
+			passBuildSettingsInEnvironment = 1;
+			productName = examples;
+		};
 		A7E1E39418A3B3F8003BE78B /* libspatdif */ = {
 			isa = PBXLegacyTarget;
 			buildArgumentsString = "$(ACTION)";
@@ -86,6 +140,7 @@
 			buildPhases = (
 			);
 			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "";
 			dependencies = (
 			);
 			name = libspatdif;
@@ -113,11 +168,41 @@
 			projectRoot = "";
 			targets = (
 				A7E1E39418A3B3F8003BE78B /* libspatdif */,
+				62087AA519A9FA4E00F8A3E6 /* examples */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin XCBuildConfiguration section */
+		62087AA719A9FA4E00F8A3E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEBUGGING_SYMBOLS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		62087AA819A9FA4E00F8A3E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		A7E1E39518A3B3F8003BE78B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -210,6 +295,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		62087AA619A9FA4E00F8A3E6 /* Build configuration list for PBXLegacyTarget "examples" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				62087AA719A9FA4E00F8A3E6 /* Debug */,
+				62087AA819A9FA4E00F8A3E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		A7E1E39318A3B3F8003BE78B /* Build configuration list for PBXProject "libspatdif" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

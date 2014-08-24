@@ -10,8 +10,8 @@ all: $(TARGETS)
 
 $(TARGETS):
 	@echo "building $@"
-	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) $(LIBS) -o $@.out $@.cpp
+	$(CC) $(CFLAGS) -I$(INCLUDE) -L$(LIB_PATH) $(LIBS) -o bin/$@.out $@.cpp
 
 clean:
-	rm $(TARGETS)
+	rm bin/*.out
 	rm *.dylib

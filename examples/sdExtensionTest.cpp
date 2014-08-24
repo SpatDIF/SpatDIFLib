@@ -15,11 +15,11 @@
 
 
 #include <string>
-
+#include <set>
 #include "sdScene.h"
 #include "sdEntityCore.h"
 
-void populateMultiset(multiset<sdEvent*, sdEventCompare> eventSet);
+void populateMultiset(std::multiset<sdEvent*, sdEventCompare> eventSet);
 
 int main(void){
     
@@ -227,11 +227,11 @@ int main(void){
     return 0;
 }
 
-void populateMultiset(multiset<sdEvent*, sdEventCompare> eventSet){
-    multiset <sdEvent*, sdEventCompare>::iterator eit = eventSet.begin();
+void populateMultiset(std::multiset<sdEvent*, sdEventCompare> eventSet){
+    std::multiset <sdEvent*, sdEventCompare>::iterator eit = eventSet.begin();
     while(eit != eventSet.end()){
         sdEvent* event = *eit;
-        cout << "   " << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << endl;
+        std::cout << "   " << event->getTime() << ":" << event->getDescriptorAsString() << " " << event->getValueAsString() << std::endl;
         eit++;
     }
 }
