@@ -147,3 +147,4 @@ inline bool sdEventCore::setValue(const std::string descriptor, const std::strin
     }
     return true;
 }
+

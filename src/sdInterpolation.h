@@ -23,23 +23,47 @@
 
 class sdInterpolation{
 
+protected:
+    typedef enum{
+        SD_ENTITY_INTERPOLATION_IMPOSSIBLE,
+        SD_ENTITY_INTERPOLATION_ACTIVATED,
+        SD_ENTITY_INTERPOLATION_DEACTIVATED
+    } EInterpolation;
+    
+    std::vector<EInterpolation> interpolationVector; /*! < activation status for each interpolation */
+
+    
+    /*! linear interpolation template */
+    template <typename T>
+    interpolate(T valueA, T valueB, double weight);
+    
 public:
-	/*!
-		virtual abstract function. should be overrided in subclasses.
-	*/
-	virtual void* interpolate(sdEntity* entity, EDescriptor descriptor, double time) = 0;
-
+    
+    /*!
+     activate an interpolation of a descriptor.
+     @param descriptor the values of this descriptor will be interpolated
+     */
+    virtual bool activateInterpolation(const EDescriptor descriptor) = 0;
+    
+    /*!
+     deactivate an interpolation of a descriptor.
+     @param descriptor the interpolation to the values of this descriptor will be deactivated
+     */
+    virtual bool deactivateInterpolation(const EDescriptor descriptor) = 0;
+    
+    /*!
+     ask if the interpolation for th descriptor is activated
+     @param descriptor the target descriptor
+     */
+    virtual bool isInterpolationActivatd(const EDescriptor descriptor) = 0;
+    
 };
 
-/*! sdLinearInterpolation
-	provides the linear interpolation functionality
-*/
 
-class sdLinearInterpolation: public sdInterpolation{
-	void* interpolate(sdEntity* entity, EDescriptor descriptor, double time);
-};
 
-inline void* sdLinearInterpolation::interpolate(sdEntity* entity, EDescriptor descriptor, double time)
-{
-
+template <typename T>
+T sdInterpolation::interpolate(T valueA, T valueB, double weight){
+    return (valueB - valueA)  * weight + valueA;
 }
+
+

@@ -28,6 +28,8 @@
 		6279340C19A2A018002BF8EB /* sdDescriptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdDescriptor.h; sourceTree = "<group>"; };
 		627C6AD719A3B16A00D52E8F /* sdEventCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdEventCore.cpp; sourceTree = "<group>"; };
 		6282D5CA19A32FB8006446F2 /* sdEventCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdEventCore.h; sourceTree = "<group>"; };
+		6287481419AB357A00CD2245 /* sdInterpolation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdInterpolation.h; sourceTree = "<group>"; };
+		6287481519AB3CD000CD2245 /* sdInterpolationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdInterpolationTest.cpp; path = ../examples/sdInterpolationTest.cpp; sourceTree = "<group>"; };
 		62A2B3F918C3F49100BE6CF5 /* sdOSCMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdOSCMessage.cpp; sourceTree = "<group>"; };
 		62A2B3FA18C3F49100BE6CF5 /* sdOSCMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdOSCMessage.h; sourceTree = "<group>"; };
 		62F932B518BDF377005A7D10 /* sdOSCConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdOSCConverter.h; sourceTree = "<group>"; };
@@ -56,10 +58,10 @@
 		62087AA019A9F78D00F8A3E6 /* sdCore */ = {
 			isa = PBXGroup;
 			children = (
-				A7E1E39F18A3B44F003BE78B /* sdEntityCore.cpp */,
 				6282D5CA19A32FB8006446F2 /* sdEventCore.h */,
 				627C6AD719A3B16A00D52E8F /* sdEventCore.cpp */,
 				A7E1E3A018A3B44F003BE78B /* sdEntityCore.h */,
+				A7E1E39F18A3B44F003BE78B /* sdEntityCore.cpp */,
 			);
 			name = sdCore;
 			sourceTree = "<group>";
@@ -69,8 +71,9 @@
 			children = (
 				A7E1E3A118A3B44F003BE78B /* sdEntityExtension.h */,
 				6279340919A296AA002BF8EB /* sdEvent.h */,
-				A7E1E39D18A3B44F003BE78B /* sdEntity.cpp */,
+				6287481419AB357A00CD2245 /* sdInterpolation.h */,
 				A7E1E39E18A3B44F003BE78B /* sdEntity.h */,
+				A7E1E39D18A3B44F003BE78B /* sdEntity.cpp */,
 			);
 			name = abstractClasses;
 			sourceTree = "<group>";
@@ -121,6 +124,7 @@
 				62087AAF19A9FE5D00F8A3E6 /* sdEventTest.cpp */,
 				62087AB019A9FE5D00F8A3E6 /* sdExtensionTest.cpp */,
 				62087AB119A9FE5D00F8A3E6 /* sdInfoTest.cpp */,
+				6287481519AB3CD000CD2245 /* sdInterpolationTest.cpp */,
 				62087AB219A9FE5D00F8A3E6 /* sdLoaderTest.cpp */,
 				62087AB319A9FE5D00F8A3E6 /* sdOSCConverterTest.cpp */,
 				62087AB419A9FE5D00F8A3E6 /* sdOSCMessageTest.cpp */,

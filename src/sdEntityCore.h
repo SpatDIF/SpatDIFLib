@@ -64,6 +64,13 @@ private:
      */
     sdEntityCore(std::string name, EKind kind = SD_SOURCE, EType type = SD_POINT) :name(name), kind(kind){
         sdEntityCore::type = type;
+        for(int i = 0; i < sdEventCore::numberOfDescriptors; i++){
+            if(sdEventCore::descriptors[i].getInterpolability()){
+                interpolationVector.push_back(SD_ENTITY_INTERPOLATION_DEACTIVATED);
+            }else{
+                interpolationVector.push_back(SD_ENTITY_INTERPOLATION_IMPOSSIBLE);
+            }
+        }
     };
     
     
@@ -180,12 +187,30 @@ public:
      */
     void* getValue(double time, EDescriptor descriptor);
 
+    
+    /*!
+     activate an interpolation of a descriptor.
+     @param descriptor the values of this descriptor will be interpolated
+     */
+    bool activateInterpolation(const EDescriptor descriptor);
+    
+    /*!
+     deactivate an interpolation of a descriptor.
+     @param descriptor the interpolation to the values of this descriptor will be deactivated
+     */
+    bool deactivateInterpolation(const EDescriptor descriptor);
+    
+    
     /*!static function for sorting. employed by sdSaver*/
     static bool sortAlphabetically( sdEntityCore *leftEntity, sdEntityCore *rightEntity);
+    
+    
+     
+     
 };
 
 
-/*** inline implementation ***/
+#pragma mark implementations
 inline std::string sdEntityCore::getName(void){
     return name;
 }

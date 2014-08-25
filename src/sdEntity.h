@@ -23,11 +23,13 @@
 #include "sdConst.h"
 #include "sdEvent.h"
 #include "sdDescriptor.h"
+#include "sdinterpolation.h"
 
 /*! sdEntity
  sdEntity is a pure abstract class. This class maintains and handles all events associated to relevant descriptors. This class is also responsible for answering queries about it's relevant descriptors.
 */
-class sdEntity{
+class sdEntity : public sdIntrpolation{
+    
     typedef enum{
         SD_ENTITY_PREVIOUS,
         SD_ENTITY_NEXT,
@@ -35,10 +37,12 @@ class sdEntity{
     } EMode;
     
 protected:
+    
     std::multiset<sdEvent*, sdEventCompare> eventSet; /*!< maintains pointers to all relevant sdEvents */
-
+    
 public:
-    /*!< desctructor. this function erases all contents of eventSet. 
+    
+    /*! desctructor. this function erases all contents of eventSet.
      Subsequently, all allocated buffers stored in the eventSet will be destroyed*/
     virtual ~sdEntity();
     

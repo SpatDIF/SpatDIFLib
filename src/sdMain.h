@@ -19,6 +19,7 @@
 #include "sdConst.h"
 #include "sdDate.h"
 
+#include "sdInterpolation.h"
 #include "sdEvent.h"
 #include "sdEntity.h"
 

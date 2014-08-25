@@ -36,7 +36,15 @@ private:
     /*!
      this constructor should be invoked from an instance of sdEntityCore
      */
-    sdEntityExtensionMedia(){};
+    sdEntityExtensionMedia(){
+        for(int i = 0; i < sdEntityExtensionMedia::numberOfDescriptors; i++){
+            if(sdEventExtensionMedia::descriptors[i].getInterpolability()){
+                interpolationVector.push_back(SD_ENTITY_INTERPOLATION_DEACTIVATED);
+            }else{
+                interpolationVector.push_back(SD_ENTITY_INTERPOLATION_IMPOSSIBLE);
+            }
+        }
+    };
     
 public:
     
@@ -58,6 +66,18 @@ public:
     /*!
      @}
     */
+    
+    /*!
+     activate an interpolation of a descriptor.
+     @param descriptor the values of this descriptor will be interpolated
+     */
+    bool activateInterpolation(const EDescriptor descriptor);
+    
+    /*!
+     deactivate an interpolation of a descriptor.
+     @param descriptor the interpolation to the values of this descriptor will be deactivated
+     */
+    bool deactivateInterpolation(const EDescriptor descriptor);
     
     EExtension getExtensionName(void);
     std::string getExtensionNameAsString(void);

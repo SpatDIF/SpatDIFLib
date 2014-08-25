@@ -457,3 +457,18 @@ double sdEntityCore::getLastEventTime(){
 }
 
 
+
+bool sdEntityCore::activateInterpolation(const EDescriptor descriptor){
+    
+    
+    return true;
+}
+
+bool sdEntityCore::deactivateInterpolation(const EDescriptor descriptor){
+    
+    
+    return true;
+}
+
+
+
