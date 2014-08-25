@@ -10,7 +10,7 @@ TXML_FLAG = -arch x86_64 -arch i386 #FAT
 
 LIBS =  -lstdc++
 SRC = $(shell echo *.cpp)
-TARGETS = sdDateTest sdInfoTest
+TARGETS = $(basename $(SRC))
 
 all: tinyxml2.o libjson $(TARGETS)
 
@@ -20,14 +20,10 @@ tinyxml2.o: $(TXML_PATH)/$(TXML_FILES)
 libjson: $(JSON_PATH)/$(JSON_MAKE)
 	make -C $(JSON_PATH)
 
-sdDateTest:
-	$(CC) $(CFLAGS) -I$(INCLUDE) -I$(JSON_PATH) -I$(JSON_CORE_PATH) -I$(TXML_PATH) $(LIBS) -o $@ $@.cpp ../src/*.cpp $(JSON_PATH)/Objects_static/*.o tinyxml2.o
-
-sdInfoTest:
+$(TARGETS):
 	$(CC) $(CFLAGS) -I$(INCLUDE) -I$(JSON_PATH) -I$(JSON_CORE_PATH) -I$(TXML_PATH) $(LIBS) -o $@ $@.cpp ../src/*.cpp $(JSON_PATH)/Objects_static/*.o tinyxml2.o
 
 clean:
 	rm $(TARGETS)
-	rm *.out
 	rm -rf *.dSYM
 	rm *.dylib

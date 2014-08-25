@@ -49,6 +49,12 @@ void sdEntityExtensionMedia::removeEvent(const std::string time, const std::stri
     sdEntity::removeEvent(stringToDouble(time), dc);
 }
 
+std::string sdEntityExtensionMedia::getValueAsString(double time, EDescriptor descriptor){
+    
+    return std::string("error");
+}
+
+
 bool sdEntityExtensionMedia::activateInterpolation(const EDescriptor descriptor){
     return true;
 }

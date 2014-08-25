@@ -49,18 +49,18 @@ public:
     /*! @name Event Handling @{ */
 
     /*! return number of registerd events in the eventSet */
-    virtual int getNumberOfEvents(void);
+    virtual int getNumberOfEvents(void) const;
     
     /*! @name Getting  Event(s) in the specified Range @{ */
 
     /*! return single event with specific time and descriptor*/
-    virtual sdEvent* getEvent(double time, EDescriptor descriptor);
+    virtual sdEvent* getEvent(const double time, const EDescriptor descriptor) const;
 
     /*! return a multiset of sdEvent pointers, depending on given filter arguments*/
-    virtual std::multiset<sdEvent*, sdEventCompare> getEventSet(void);
-    virtual std::multiset<sdEvent*, sdEventCompare> getEventSet(double time);
-    virtual std::multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end);
-    virtual std::multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);
+    virtual std::multiset<sdEvent*, sdEventCompare> getEventSet(void) const;
+    virtual std::multiset<sdEvent*, sdEventCompare> getEventSet(const double time) const;
+    virtual std::multiset<sdEvent*, sdEventCompare> getEventSet(const double start, const double end) const;
+    virtual std::multiset<sdEvent*, sdEventCompare> getEventSet(const double start, const double end, const EDescriptor descriptor) const;
 
     /*! @} */
     
@@ -75,16 +75,16 @@ public:
      * @param time index time
      * @return a multiset of next events
      */
-    std::multiset<sdEvent*, sdEventCompare> getNextEventSet(double time);
+    std::multiset<sdEvent*, sdEventCompare> getNextEventSet(const double time) const;
 
       
-    sdEvent* getNextEvent(double time, EDescriptor descriptor);
+    sdEvent* getNextEvent(const double time, const EDescriptor descriptor) const;
 
 
     /*!
      return the time tag of the next event
      */
-    double getNextEventTime(double time);
+    double getNextEventTime(const double time) const;
 
     /*!
      @}
@@ -100,18 +100,18 @@ public:
      @param descriptor the descriptor of the event declared in sdConst.h
      */
     
-    sdEvent* getPreviousEvent(double time, EDescriptor descriptor);
+    sdEvent* getPreviousEvent(const double time, const EDescriptor descriptor) const;
     
     /*!
      return previous events from the given time index .
      @param time index
      */
-    std::multiset<sdEvent*, sdEventCompare> getPreviousEventSet(double time);
+    std::multiset<sdEvent*, sdEventCompare> getPreviousEventSet(const double time) const;
     
     /*!
      return the time tag of the next event
      */
-    double getPreviousEventTime(double time);
+    double getPreviousEventTime(const double time) const;
     
     /*!
      @}
@@ -125,17 +125,17 @@ public:
      return the very first event with the specified descriptor.
      @param descriptor the descriptor of the event declared in sdConst.h
      */
-    sdEvent* getFirstEvent(EDescriptor descriptor);
+    sdEvent* getFirstEvent(const EDescriptor descriptor) const;
     
     /*!
      return the very first events regardless of descriptors.
      */
-    std::multiset<sdEvent*, sdEventCompare> getFirstEventSet();
+    std::multiset<sdEvent*, sdEventCompare> getFirstEventSet() const;
 
     /*!
      return the time tag of the first event
      */
-    double getFirstEventTime();
+    double getFirstEventTime() const;
     
     /*!
      @}
@@ -149,17 +149,17 @@ public:
      return the timeTag of the very last event with the specified descriptor.
      @param descriptor the descriptor of the event declared in sdConst.h
      */
-    sdEvent* getLastEvent(EDescriptor descriptor);
+    sdEvent* getLastEvent(const EDescriptor descriptor) const;
 
     /*!
      return the very last events regardless of descriptors.
      */
-    std::multiset<sdEvent*, sdEventCompare> getLastEventSet();
+    std::multiset<sdEvent*, sdEventCompare> getLastEventSet() const;
     
     /*!
      return the time tag of the last event
      */
-    double getLastEventTime();
+    double getLastEventTime() const;
 
     /*!
     }
@@ -201,11 +201,19 @@ public:
 
     /*!
      this function looks for an event at specified time and descriptor and returns a pointer to the data.
-     @param time 
+     @param time time of the event
      @param descriptor specify descriptor defined in sdConst.h
      */
     void* getValue(double time, EDescriptor descriptor);
-
+    
+    
+    /*!
+     this function search for an event at specified time and descriptor and return the data as a string.
+     @param time time of the event
+     @param descriptor specify descriptor defined in sdConst.h
+     */
+    virtual std::string getValueAsString(double time, EDescriptor descriptor) = 0;
+    
     /*!
      this function looks for a next event from the specified time with the designated descriptor and returns a pointer to the data.
      @param time 
@@ -230,7 +238,7 @@ private:
     @param time
     @param mode specify the mode of new set
     */
-    std::multiset<sdEvent*, sdEventCompare> createEventSet(double time,  EMode mode );
+    std::multiset<sdEvent*, sdEventCompare> createEventSet(const double time,  const EMode mode ) const;
 
 };
 

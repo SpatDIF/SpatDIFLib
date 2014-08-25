@@ -39,6 +39,11 @@ protected:
     /*! linear interpolation template */
     template <typename T>
     T interpolate(T valueA, T valueB, double weight);
+
+    /*! 2D interpolation template */
+    template <typename T>
+    std::vector<T> interpolate(std::vector<T> valueA, std::vector<T> valueB, double weight);
+
     
 public:
     
@@ -58,9 +63,25 @@ public:
      ask if the interpolation for th descriptor is activated
      @param descriptor the target descriptor
      */
+
     virtual bool isInterpolationActivated(const EDescriptor descriptor) = 0;
     
 };
+
+template <typename T>
+inline std::vector<T> sdInterpolation::interpolate(std::vector<T> vectorA, std::vector<T> vectorB, double weight){
+    
+    if(vectorA.size() != vectorB.size()){
+        std::cout << "sdInterpolation input vector size unmatched" << std::endl;
+    }
+    
+    std::vector<T> interpolatedVector;
+    size_t size = vectorA.size();
+    for(int i = 0; i < size; i++){
+        interpolatedVector.push_back(interpolate(vectorA[i], vectorB[i], weight));
+    }
+    return interpolatedVector;
+}
 
 template <typename T>
 inline T sdInterpolation::interpolate(T valueA, T valueB, double weight){

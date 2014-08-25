@@ -187,6 +187,12 @@ public:
      */
     void* getValue(double time, EDescriptor descriptor);
 
+    /*!
+     returns the value of an event at specified time with specific descriptor.
+     @param time time of the event
+     @param descriptor descriptor of the event
+     */
+    std::string getValueAsString(double time, EDescriptor descriptor);
     
     /*!
      activate an interpolation of a descriptor.

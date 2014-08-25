@@ -23,7 +23,7 @@ sdEntity::~sdEntity(){
 }
 
 // current event
-sdEvent* sdEntity::getEvent(double time, EDescriptor descriptor){
+sdEvent* sdEntity::getEvent(const double time, EDescriptor descriptor) const{
     std::multiset<sdEvent*, sdEventCompare> currentEventSet = getEventSet(time);
     std::multiset<sdEvent*, sdEventCompare>::iterator it = currentEventSet.begin();
     while(it != currentEventSet.end()){
@@ -36,13 +36,13 @@ sdEvent* sdEntity::getEvent(double time, EDescriptor descriptor){
     return NULL;
 }
 
-std::multiset<sdEvent*, sdEventCompare> sdEntity::getEventSet(void){
+std::multiset<sdEvent*, sdEventCompare> sdEntity::getEventSet(void) const{
     return eventSet;
 }
 
 // get current event or events in range
 
-std::multiset <sdEvent*, sdEventCompare>sdEntity::getEventSet(double start, double end){
+std::multiset <sdEvent*, sdEventCompare>sdEntity::getEventSet(const double start, const double end) const{
     std::multiset <sdEvent*, sdEventCompare>rangedSet;
     std::multiset <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
     while(it != eventSet.end()){
@@ -55,7 +55,7 @@ std::multiset <sdEvent*, sdEventCompare>sdEntity::getEventSet(double start, doub
     return rangedSet;
 }
 
-std::multiset <sdEvent*, sdEventCompare>sdEntity::getEventSet(double start, double end, EDescriptor descriptor){
+std::multiset <sdEvent*, sdEventCompare>sdEntity::getEventSet(const double start, const double end, const EDescriptor descriptor)const {
     
     std::multiset <sdEvent*, sdEventCompare>rangedSet;
     std::multiset <sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
@@ -71,11 +71,11 @@ std::multiset <sdEvent*, sdEventCompare>sdEntity::getEventSet(double start, doub
     return rangedSet;
 }
 
-std::multiset<sdEvent*, sdEventCompare> sdEntity::getEventSet(double time){
+std::multiset<sdEvent*, sdEventCompare> sdEntity::getEventSet(const double time) const{
     return createEventSet(time, SD_ENTITY_CURRENT);
 }
 
-sdEvent* sdEntity::getNextEvent(double time, EDescriptor descriptor){
+sdEvent* sdEntity::getNextEvent(const double time, EDescriptor descriptor)const{
     std::multiset<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
     while(it != eventSet.end()){
         sdEvent* event = *it;
@@ -87,11 +87,11 @@ sdEvent* sdEntity::getNextEvent(double time, EDescriptor descriptor){
     return NULL;
 }
 
-std::multiset<sdEvent*, sdEventCompare> sdEntity::getNextEventSet(double time){
+std::multiset<sdEvent*, sdEventCompare> sdEntity::getNextEventSet(const double time) const{
     return createEventSet(time, SD_ENTITY_NEXT);
 }
 
-double sdEntity::getNextEventTime(double time){
+double sdEntity::getNextEventTime(const double time) const{
     std::multiset<sdEvent*, sdEventCompare> nextEventSet = getNextEventSet(time);
     if(nextEventSet.size() == 0){
         return -1.0; // indicate no next event
@@ -102,7 +102,7 @@ double sdEntity::getNextEventTime(double time){
 }
 
 // previous event
-sdEvent* sdEntity::getPreviousEvent(double time, EDescriptor descriptor){
+sdEvent* sdEntity::getPreviousEvent(const double time, const EDescriptor descriptor) const{
     std::multiset<sdEvent*, sdEventCompare>::reverse_iterator rit = eventSet.rbegin();
     while(rit != eventSet.rend()){
         sdEvent* event = *rit;
@@ -114,26 +114,26 @@ sdEvent* sdEntity::getPreviousEvent(double time, EDescriptor descriptor){
     return NULL;
 }
 
-std::multiset<sdEvent*, sdEventCompare> sdEntity::getPreviousEventSet(double time){
+std::multiset<sdEvent*, sdEventCompare> sdEntity::getPreviousEventSet(const double time) const{
     return createEventSet(time, SD_ENTITY_PREVIOUS);
 }
 
-double sdEntity::getPreviousEventTime(double time){
+double sdEntity::getPreviousEventTime(const double time) const{
     std::multiset<sdEvent*, sdEventCompare> previousEventSet = getPreviousEventSet(time);
     std::multiset<sdEvent*, sdEventCompare>::iterator it = previousEventSet.begin();
     sdEvent* event = *it;
     return event->getTime();
 }
 // first event
-sdEvent* sdEntity::getFirstEvent(EDescriptor descriptor){
+sdEvent* sdEntity::getFirstEvent(const EDescriptor descriptor) const{
     return getNextEvent(-1.0, descriptor);
 }
 
-std::multiset<sdEvent*, sdEventCompare> sdEntity::getFirstEventSet(){
+std::multiset<sdEvent*, sdEventCompare> sdEntity::getFirstEventSet() const{
     return getNextEventSet(-1.0);
 }
 
-double sdEntity::getFirstEventTime(){
+double sdEntity::getFirstEventTime() const{
     sdEvent* event = *(eventSet.begin());
     if (event) {
         return event->getTime();
@@ -143,15 +143,15 @@ double sdEntity::getFirstEventTime(){
 }
 
 // last event
-sdEvent* sdEntity::getLastEvent(EDescriptor descriptor){
+sdEvent* sdEntity::getLastEvent(EDescriptor descriptor) const{
     return getPreviousEvent(DBL_MAX, descriptor);
 }
 
-std::multiset<sdEvent*, sdEventCompare> sdEntity::getLastEventSet(){
+std::multiset<sdEvent*, sdEventCompare> sdEntity::getLastEventSet() const{
     return getPreviousEventSet(DBL_MAX);
 }
 
-double sdEntity::getLastEventTime(){
+double sdEntity::getLastEventTime() const{
     sdEvent* event = *(eventSet.rbegin());
     if (event) {
         return event->getTime();
@@ -161,7 +161,7 @@ double sdEntity::getLastEventTime(){
 }
 
 // number of events
-int sdEntity::getNumberOfEvents(){
+int sdEntity::getNumberOfEvents() const{
     return static_cast<int>(eventSet.size());
 }
 
@@ -206,7 +206,7 @@ void* sdEntity::getPreviousValue(double time, EDescriptor descriptor){
     return NULL;
 }
 
-std::multiset<sdEvent*, sdEventCompare> sdEntity::createEventSet(double time, EMode mode ){
+std::multiset<sdEvent*, sdEventCompare> sdEntity::createEventSet(const double time, const EMode mode ) const{
     std::multiset<sdEvent*, sdEventCompare> createdSet;
     std::multiset<sdEvent*, sdEventCompare>::iterator it;
     std::multiset<sdEvent*, sdEventCompare>::reverse_iterator rt;

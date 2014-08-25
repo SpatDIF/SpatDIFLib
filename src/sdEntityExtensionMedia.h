@@ -63,6 +63,8 @@ public:
     
     void removeEvent(const std::string time, const std::string descriptor);
 
+    std::string getValueAsString(double time, EDescriptor descriptor);
+
     /*!
      @}
     */

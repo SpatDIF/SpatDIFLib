@@ -126,7 +126,41 @@ void sdEntityCore::removeEvent(std::string time, std::string descriptor){
 void* sdEntityCore::getValue(double time, EDescriptor descriptor){
 
     if(isCoreDescriptor(descriptor)){
-        return sdEntity::getValue(time, descriptor);
+        void* vPtr = NULL;
+        vPtr = sdEntity::getValue(time, descriptor);
+        if(vPtr) return vPtr;
+        // no event found at the specified time
+        // is the interpolation of the descriptor activated?
+        
+        for(int i = 0; i < sdEventCore::numberOfDescriptors; i++){
+            if(sdEventCore::descriptors[i].getDescriptor() == descriptor){
+                if(interpolationVector[i] == SD_ENTITY_INTERPOLATION_ACTIVATED){
+                    // interpolation
+                    sdEvent* preEvent = getPreviousEvent(time, descriptor);
+                    sdEvent* nextEvent = getNextEvent(time, descriptor);
+                    if(!(preEvent && nextEvent))
+                        return NULL;
+                    
+                    //case specific
+                    switch (descriptor){
+                        case SD_POSITION:
+                        case SD_ORIENTATION:{
+                            double* preValuePtr = static_cast<double*>(preEvent->getValue());
+                            double* nextValuePtr = static_cast<double*>(nextEvent->getValue());
+                            std::vector<double> preVector(preValuePtr, preValuePtr+3);
+                            std::vector<double> nextVector(nextValuePtr, nextValuePtr+3);
+                            double weight = (time - preEvent->getTime()) / (nextEvent->getTime() - preEvent->getTime());
+                            std::vector<double> interpolatedVector = interpolate(preVector, nextVector, weight);
+                            return static_cast<void *>(&interpolatedVector[0]);
+                            break;
+                        }
+                        default:
+                            return NULL;
+                    }
+                }
+            }
+        }
+        return NULL;
     }else{
         std::vector <sdRedirector>::iterator it = redirectorVector.begin();
         while (it != redirectorVector.end()) {
@@ -138,6 +172,29 @@ void* sdEntityCore::getValue(double time, EDescriptor descriptor){
         }
         return NULL;
     }
+}
+
+std::string sdEntityCore::getValueAsString(double time, EDescriptor descriptor){
+    
+    void* vPtr = getValue(time, descriptor);
+    if(!vPtr){
+        return std::string("error");
+    }
+    if(isCoreDescriptor(descriptor)){
+        switch (descriptor) {
+            case SD_POSITION:
+            case SD_ORIENTATION:
+                return doublesToString(static_cast<double*>(vPtr), 3);
+                break;
+            case SD_PRESENT:
+                return (*(static_cast<bool*>(vPtr))) ? std::string("true") : std::string("false");
+            default:
+                break;
+        }
+    }else{
+        // forward to extension
+    }
+    return std::string("error");
 }
 
 sdEntityExtension* sdEntityCore::addExtension(EExtension extension){
@@ -456,21 +513,49 @@ double sdEntityCore::getLastEventTime(){
     return lastEventTime;
 }
 
-
-
 bool sdEntityCore::activateInterpolation(const EDescriptor descriptor){
     
-    
-    return true;
+    for(int i = 0; i < sdEventCore::numberOfDescriptors; i++){
+        if(sdEventCore::descriptors[i].getDescriptor() == descriptor){
+            if(interpolationVector[i] == SD_ENTITY_INTERPOLATION_IMPOSSIBLE){
+                return false;
+            }else{
+                interpolationVector[i] = SD_ENTITY_INTERPOLATION_ACTIVATED;
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 bool sdEntityCore::deactivateInterpolation(const EDescriptor descriptor){
     
-    
-    return true;
+    for(int i = 0; i < sdEventCore::numberOfDescriptors; i++){
+        if(sdEventCore::descriptors[i].getDescriptor() == descriptor){
+            if(interpolationVector[i] == SD_ENTITY_INTERPOLATION_IMPOSSIBLE){
+                return false;
+            }else{
+                interpolationVector[i] = SD_ENTITY_INTERPOLATION_DEACTIVATED;
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 bool sdEntityCore::isInterpolationActivated(const EDescriptor descriptor){
-    
-    return true;
+    for(int i = 0; i < sdEventCore::numberOfDescriptors; i++){
+        if(sdEventCore::descriptors[i].getDescriptor() == descriptor){
+            switch(interpolationVector[i]){
+                case SD_ENTITY_INTERPOLATION_DEACTIVATED:
+                case SD_ENTITY_INTERPOLATION_IMPOSSIBLE:
+                    return false;
+                case SD_ENTITY_INTERPOLATION_ACTIVATED:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+    }
+    return false;
 }
