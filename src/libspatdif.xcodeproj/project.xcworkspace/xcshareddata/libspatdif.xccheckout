@@ -5,7 +5,7 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>53829B10-D4D9-4ADD-AAE1-AFE08E96E789</string>
+	<string>FEC1DDA1-3D1C-4DC6-9421-38BC82230F38</string>
 	<key>IDESourceControlProjectName</key>
 	<string>libspatdif</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
@@ -14,7 +14,7 @@
 		<string>ssh://code.zhdk.ch/spatdiflib.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>libspatdif/libspatdif.xcodeproj/project.xcworkspace</string>
+	<string>src/libspatdif.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>CF8CE92B-DFE7-4A33-A502-7DB576DD6B40</key>

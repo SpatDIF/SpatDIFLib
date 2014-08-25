@@ -470,5 +470,7 @@ bool sdEntityCore::deactivateInterpolation(const EDescriptor descriptor){
     return true;
 }
 
-
-
+bool sdEntityCore::isInterpolationActivated(const EDescriptor descriptor){
+    
+    return true;
+}

@@ -201,6 +201,10 @@ public:
     bool deactivateInterpolation(const EDescriptor descriptor);
     
     
+    
+    bool isInterpolationActivated(const EDescriptor descriptor);
+    
+    
     /*!static function for sorting. employed by sdSaver*/
     static bool sortAlphabetically( sdEntityCore *leftEntity, sdEntityCore *rightEntity);
     

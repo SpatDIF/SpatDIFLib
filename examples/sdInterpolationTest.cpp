@@ -22,7 +22,6 @@ int main(){
     
     sdScene scene;
     sdEntityCore * myEntity = scene.addEntity("myEntity");
-    sdEntityCore * yourEntity = scene.addEntity("yourEntity");
     
     // myEntity setup
     double pos1[3] = {0.0, 0.0, 0.0};

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		6202BE3919AB4F9C00D872DE /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		62087AAA19A9FE5D00F8A3E6 /* FileWithExtension.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FileWithExtension.cpp; path = ../examples/FileWithExtension.cpp; sourceTree = "<group>"; };
 		62087AAB19A9FE5D00F8A3E6 /* How_to_query.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = How_to_query.cpp; path = ../examples/How_to_query.cpp; sourceTree = "<group>"; };
 		62087AAC19A9FE5D00F8A3E6 /* sdConverter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdConverter.cpp; path = ../examples/sdConverter.cpp; sourceTree = "<group>"; };
@@ -146,6 +147,7 @@
 		A7E1E39A18A3B43F003BE78B /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				6202BE3919AB4F9C00D872DE /* Makefile */,
 				A7E1E3A718A3B44F003BE78B /* sdMain.h */,
 				A7E1E39B18A3B44F003BE78B /* sdConst.h */,
 				6279340C19A2A018002BF8EB /* sdDescriptor.h */,

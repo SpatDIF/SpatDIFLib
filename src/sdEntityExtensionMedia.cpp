@@ -50,13 +50,13 @@ void sdEntityExtensionMedia::removeEvent(const std::string time, const std::stri
 }
 
 bool sdEntityExtensionMedia::activateInterpolation(const EDescriptor descriptor){
-    
-    
     return true;
 }
 
 bool sdEntityExtensionMedia::deactivateInterpolation(const EDescriptor descriptor){
-    
-    
+    return true;
+}
+
+bool sdEntityExtensionMedia::isInterpolationActivated(const EDescriptor descriptor){
     return true;
 }

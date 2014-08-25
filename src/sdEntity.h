@@ -28,7 +28,7 @@
 /*! sdEntity
  sdEntity is a pure abstract class. This class maintains and handles all events associated to relevant descriptors. This class is also responsible for answering queries about it's relevant descriptors.
 */
-class sdEntity : public sdIntrpolation{
+class sdEntity : public sdInterpolation{
     
     typedef enum{
         SD_ENTITY_PREVIOUS,

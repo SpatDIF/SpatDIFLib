@@ -37,7 +37,7 @@ private:
      this constructor should be invoked from an instance of sdEntityCore
      */
     sdEntityExtensionMedia(){
-        for(int i = 0; i < sdEntityExtensionMedia::numberOfDescriptors; i++){
+        for(int i = 0; i < sdEventExtensionMedia::numberOfDescriptors; i++){
             if(sdEventExtensionMedia::descriptors[i].getInterpolability()){
                 interpolationVector.push_back(SD_ENTITY_INTERPOLATION_DEACTIVATED);
             }else{
@@ -78,6 +78,13 @@ public:
      @param descriptor the interpolation to the values of this descriptor will be deactivated
      */
     bool deactivateInterpolation(const EDescriptor descriptor);
+    
+    /*!
+     ask if the interpolation for th descriptor is activated
+     @param descriptor the target descriptor
+     */
+    bool isInterpolationActivated(const EDescriptor descriptor);
+    
     
     EExtension getExtensionName(void);
     std::string getExtensionNameAsString(void);

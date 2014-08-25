@@ -13,6 +13,9 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
+#ifndef ____sdInterpolation__
+#define ____sdInterpolation__
+
 /*! sdInterpolation
 	an abstract strategy class for the functionality of interpolation.
 	The subclasses of this abstract class provides sdEntities with the functionality of interpolation.
@@ -35,7 +38,7 @@ protected:
     
     /*! linear interpolation template */
     template <typename T>
-    interpolate(T valueA, T valueB, double weight);
+    T interpolate(T valueA, T valueB, double weight);
     
 public:
     
@@ -55,15 +58,13 @@ public:
      ask if the interpolation for th descriptor is activated
      @param descriptor the target descriptor
      */
-    virtual bool isInterpolationActivatd(const EDescriptor descriptor) = 0;
+    virtual bool isInterpolationActivated(const EDescriptor descriptor) = 0;
     
 };
 
-
-
 template <typename T>
-T sdInterpolation::interpolate(T valueA, T valueB, double weight){
+inline T sdInterpolation::interpolate(T valueA, T valueB, double weight){
     return (valueB - valueA)  * weight + valueA;
 }
 
-
+#endif

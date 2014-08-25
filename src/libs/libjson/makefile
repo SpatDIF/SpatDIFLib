@@ -133,7 +133,7 @@ OS=$(shell uname)
 # Defaults
 ifeq ($(OS), Darwin)
 #	cxxflags_default = -fast -ffast-math -fexpensive-optimizations -DNDEBUG  -arch x86_64 -arch i386
-	cxxflags_default = -ffast-math -DNDEBUG -arch x86_64 -arch i386
+	cxxflags_default = -O0 -ffast-math -DNDEBUG -arch x86_64 -arch i386
 else
 	cxxflags_default = -O3 -ffast-math -fexpensive-optimizations -DNDEBUG  -arch x86_64 -arch i386
 endif
@@ -156,7 +156,7 @@ exec_prefix     ?= $(prefix)
 libdir          ?= lib
 includedir      ?= include
 srcdir          ?= _internal/Source
-CXX             ?= c++
+CXX             ?= clang++
 AR              ?= ar
 PIC             ?= PIC
 BUILD_TYPE      ?= "default"
