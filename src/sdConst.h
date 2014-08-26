@@ -88,7 +88,7 @@ typedef enum {
 /*!
  utility function that convert ints to a string
  */
-inline std::string intsToString(int *it, int num){
+inline std::string intsToString(const int *it, const int num){
     std::ostringstream os;
     for(int i=0;i<num;i++){
         os << it[i];
@@ -101,14 +101,14 @@ inline std::string intsToString(int *it, int num){
 /*!
  utility function that convert a int to a string
  */
-inline std::string intToString(int it){
+inline std::string intToString(const int it){
     return intsToString(&it, 1);
 }
 
 /*!
  utility function that convert ints to a string
  */
-inline std::string floatsToString(float *ft, int num){
+inline std::string floatsToString(const float *ft, const int num){
     std::ostringstream os;
     for(int i=0;i<num;i++){
         os << ft[i];
@@ -121,14 +121,14 @@ inline std::string floatsToString(float *ft, int num){
 /*!
  utility function that convert a int to a string
  */
-inline std::string floatToString(float ft){
+inline std::string floatToString(const float ft){
     return floatsToString(&ft, 1);
 }
 
 /*!
  utility function that convert floats to double. buffer must be allocated properly beforehand
  */
-inline double *floatsToDoubles(float *floats, double *doubles, int num){
+inline double *floatsToDoubles(const float *floats, double *doubles, const int num){
     for (int i = 0; i < num; i++){
         doubles[i] = static_cast<double>(floats[i]);
     }
@@ -138,7 +138,7 @@ inline double *floatsToDoubles(float *floats, double *doubles, int num){
 /*!
  utility function that convert floats to double. buffer must be allocated properly beforehand
  */
-inline float *doublesToFloats(double *doubles, float *floats, int num){
+inline float *doublesToFloats(const double *doubles, float *floats, const int num){
     for (int i = 0; i < num; i++){
         floats[i] = static_cast<float>(doubles[i]);
     }
@@ -148,7 +148,7 @@ inline float *doublesToFloats(double *doubles, float *floats, int num){
 /*! 
  utility function that convert doubles to a string
  */
-inline std::string doublesToString(double *db, int num){
+inline std::string doublesToString(const double *db, const int num){
     std::ostringstream os;
     for(int i=0;i<num;i++){
         os << db[i];
@@ -161,21 +161,21 @@ inline std::string doublesToString(double *db, int num){
 /*!
  utility function that convert a double to a string
  */
-inline std::string doubleToString(double db){
+inline std::string doubleToString(const double db){
     return doublesToString(&db, 1);
 }
 
 /*!
  utility function that convert a bool to a string
  */
-inline std::string boolToString(bool bl){
+inline std::string boolToString(const bool bl){
     return bl ? std::string("true") : std::string("false");
 }
 
 /*!
  utility function that convert a string to a bool
  */
-inline bool stringToBool(std::string str){
+inline bool stringToBool(const std::string str){
     return str == "true" ? true : false;
 }
 

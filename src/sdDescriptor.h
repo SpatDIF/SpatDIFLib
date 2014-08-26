@@ -19,6 +19,7 @@
 #include <string>
 #include "sdConst.h"
 
+#pragma mark declaration
 
 /*! sdDescriptor
 	This class contains the name of descriptor in enum, string and interpolation flag of the descriptor. An instance of this class will be used as a static member of entities, in order to maintain the name and the interpolability of the value.
@@ -42,7 +43,9 @@ public:
 	bool getInterpolability() const;
 };
 
-inline sdDescriptor::sdDescriptor(EDescriptor descriptor, std::string descriptorString, bool interpolability){
+#pragma mark implemenation
+
+inline sdDescriptor::sdDescriptor(const EDescriptor descriptor, const std::string descriptorString, const bool interpolability){
 	sdDescriptor::descriptor = descriptor;
 	sdDescriptor::descriptorString = descriptorString;
 	sdDescriptor::interpolability = interpolability;
@@ -62,7 +65,7 @@ inline bool sdDescriptor::getInterpolability() const{
 
 // utility functions
 
-inline std::string getDescriptorAsString(EDescriptor descriptor, const sdDescriptor* descriptors, int numberOfDescriptors){
+inline std::string getDescriptorAsString(const EDescriptor descriptor, const sdDescriptor* const descriptors, const int numberOfDescriptors){
 
     for(int i = 0; i < numberOfDescriptors; i++){
         if(descriptors[i].getDescriptor() == descriptor){
@@ -72,7 +75,7 @@ inline std::string getDescriptorAsString(EDescriptor descriptor, const sdDescrip
     return std::string("error");
 }
 
-inline EDescriptor getDescriptorAsEnum(std::string descriptor, const sdDescriptor* descriptors, int numberOfDescriptors){
+inline EDescriptor getDescriptorAsEnum(const std::string descriptor, const sdDescriptor* const descriptors, const int numberOfDescriptors){
     for(int i = 0; i < numberOfDescriptors; i++){
         if(descriptors[i].getDescriptorAsString() == descriptor){
             return descriptors[i].getDescriptor();

@@ -53,7 +53,7 @@ public:
      @param month month of the date
      @param day day of the date
      */
-    sdDate(const unsigned short year, const unsigned short month, const unsigned short day);
+    sdDate(unsigned short year, unsigned short month, unsigned short day);
     
     
     /*! constrcut with cstr
@@ -77,7 +77,7 @@ public:
      @param month month of the date
      @param day day od the date
      */
-    void setDate(const unsigned short year, const unsigned short month, const unsigned short day);
+    void setDate(unsigned short year, unsigned short month, unsigned short day);
     
     /*! a date setter with a ISO 8601 string.
      @param dateString ISO 8601 standard string. must be YYYY-MM-DD format. hyphens are not omittable.
@@ -85,13 +85,13 @@ public:
     void setDate(const std::string &dateString);
     
     /*! sets year.*/
-    void setYear(const unsigned short year);
+    void setYear(unsigned short year);
     
     /*! sets month.*/
-    void setMonth(const unsigned short month);
+    void setMonth(unsigned short month);
     
     /*! sets day.*/
-    void setDay(const unsigned short day);
+    void setDay(unsigned short day);
     
     /*! set member variables to current date using the system call */
     void setCurrentDate(void);
