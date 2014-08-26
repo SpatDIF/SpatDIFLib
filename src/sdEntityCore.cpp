@@ -455,48 +455,15 @@ double sdEntityCore::getLastEventTime(){
 }
 
 bool sdEntityCore::activateInterpolation(const EDescriptor descriptor){
-    
-    for(int i = 0; i < sdEventCore::numberOfDescriptors; i++){
-        if(sdEventCore::descriptors[i].getDescriptor() == descriptor){
-            if(interpolationVector[i] == SD_ENTITY_INTERPOLATION_IMPOSSIBLE){
-                return false;
-            }else{
-                interpolationVector[i] = SD_ENTITY_INTERPOLATION_ACTIVATED;
-                return true;
-            }
-        }
-    }
-    return false;
+    return sdInterpolation::activateInterpolation(descriptor, sdEventCore::descriptors, sdEventCore::numberOfDescriptors);
 }
 
-bool sdEntityCore::deactivateInterpolation(const EDescriptor descriptor){
-    
-    for(int i = 0; i < sdEventCore::numberOfDescriptors; i++){
-        if(sdEventCore::descriptors[i].getDescriptor() == descriptor){
-            if(interpolationVector[i] == SD_ENTITY_INTERPOLATION_IMPOSSIBLE){
-                return false;
-            }else{
-                interpolationVector[i] = SD_ENTITY_INTERPOLATION_DEACTIVATED;
-                return true;
-            }
-        }
-    }
-    return false;
+bool sdEntityCore::deactivateInterpolation(const EDescriptor descriptor ){
+    return sdInterpolation::deactivateInterpolation(descriptor, sdEventCore::descriptors, sdEventCore::numberOfDescriptors);
 }
 
 bool sdEntityCore::isInterpolationActivated(const EDescriptor descriptor){
-    for(int i = 0; i < sdEventCore::numberOfDescriptors; i++){
-        if(sdEventCore::descriptors[i].getDescriptor() == descriptor){
-            switch(interpolationVector[i]){
-                case SD_ENTITY_INTERPOLATION_DEACTIVATED:
-                case SD_ENTITY_INTERPOLATION_IMPOSSIBLE:
-                    return false;
-                case SD_ENTITY_INTERPOLATION_ACTIVATED:
-                    return true;
-                default:
-                    return false;
-            }
-        }
-    }
-    return false;
+    return sdInterpolation::isInterpolationActivated(descriptor, sdEventCore::descriptors, sdEventCore::numberOfDescriptors);
+
 }
+

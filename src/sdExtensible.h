@@ -14,16 +14,21 @@
  */
 
 
+
 #ifndef ____sdExtensible__
 #define ____sdExtensible__
 
 #include "sdConst.h"
 #include "sdEntityExtension.h"
 
+
+/*! this class add an inherited class the functionalities to attach and manage an extension */
+
 class sdExtensible {
     
 protected:
     
+    /* to store the association between a descriptor and responsible extension */
     typedef struct{
         EDescriptor descriptor;
         std::string descriptorString;

@@ -29,7 +29,6 @@ class sdScene;
  sdEntityCore is responsible for
  - identifing its kind (source or sink)
  - maintaining its events
- - managing extensions
  - giveing pointer to a certain, ranged, or the entire list of event(s)
  - forwarding a query to a proper extension and answer to the client
  */
@@ -163,29 +162,14 @@ public:
      */
     std::string getValueAsString(double time, EDescriptor descriptor);
     
-    /*!
-     activate an interpolation of a descriptor.
-     @param descriptor the values of this descriptor will be interpolated
-     */
-    bool activateInterpolation(const EDescriptor descriptor);
     
-    /*!
-     deactivate an interpolation of a descriptor.
-     @param descriptor the interpolation to the values of this descriptor will be deactivated
-     */
-    bool deactivateInterpolation(const EDescriptor descriptor);
-    
-    
-    
+    bool activateInterpolation(const EDescriptor descriptor = SD_ALL);
+    bool deactivateInterpolation(const EDescriptor descriptor = SD_ALL);
     bool isInterpolationActivated(const EDescriptor descriptor);
-    
     
     /*!static function for sorting. employed by sdSaver*/
     static bool sortAlphabetically( sdEntityCore *leftEntity, sdEntityCore *rightEntity);
     
-    
-     
-     
 };
 
 

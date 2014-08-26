@@ -23,6 +23,7 @@
 */
 
 #include "sdConst.h"
+#include "sdDescriptor.h"
 
 class sdInterpolation{
 
@@ -44,28 +45,37 @@ protected:
     template <typename T>
     std::vector<T> interpolate(std::vector<T> valueA, std::vector<T> valueB, double weight);
 
-    
-public:
+
+    /*!
+     @name internal utility functions for inherited classes
+     @brief these three functions help the subclasss to implemment the following pure abstract functions.
+     */
     
     /*!
      activate an interpolation of a descriptor.
      @param descriptor the values of this descriptor will be interpolated
      */
-    virtual bool activateInterpolation(const EDescriptor descriptor) = 0;
+    bool activateInterpolation(const EDescriptor descriptor, const sdDescriptor* const descriptors, int numberOfDescriptors );
     
     /*!
      deactivate an interpolation of a descriptor.
      @param descriptor the interpolation to the values of this descriptor will be deactivated
      */
-    virtual bool deactivateInterpolation(const EDescriptor descriptor) = 0;
+    bool deactivateInterpolation(const EDescriptor descriptor, const sdDescriptor* const descriptors, int numberOfDescriptors);
     
     /*!
      ask if the interpolation for th descriptor is activated
      @param descriptor the target descriptor
      */
-
-    virtual bool isInterpolationActivated(const EDescriptor descriptor) = 0;
+    bool isInterpolationActivated(const EDescriptor descriptor, const sdDescriptor* const descriptors, int numberOfDescriptors);
     
+public:
+    
+    /*! pure abstract function that should be implemneted in the subclasses */
+    virtual bool activateInterpolation(const EDescriptor descriptor = SD_ALL) = 0;
+    virtual bool deactivateInterpolation(const EDescriptor descriptor = SD_ALL) = 0;
+    virtual bool isInterpolationActivated(const EDescriptor descriptor) = 0;
+
 };
 
 template <typename T>
@@ -87,5 +97,54 @@ template <typename T>
 inline T sdInterpolation::interpolate(T valueA, T valueB, double weight){
     return (valueB - valueA)  * weight + valueA;
 }
+
+
+
+bool sdInterpolation::activateInterpolation(const EDescriptor descriptor, const sdDescriptor* const descriptors, const int numberOfDescriptors){
+    
+    for(int i = 0; i < numberOfDescriptors; i++){
+        if(descriptors[i].getDescriptor() == descriptor){
+            if(interpolationVector[i] == SD_ENTITY_INTERPOLATION_IMPOSSIBLE){
+                return false;
+            }else{
+                interpolationVector[i] = SD_ENTITY_INTERPOLATION_ACTIVATED;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool sdInterpolation::deactivateInterpolation(const EDescriptor descriptor, const sdDescriptor* const descriptors, const int numberOfDescriptors){
+    for(int i = 0; i < numberOfDescriptors; i++){
+        if(descriptors[i].getDescriptor() == descriptor){
+            if(interpolationVector[i] == SD_ENTITY_INTERPOLATION_IMPOSSIBLE){
+                return false;
+            }else{
+                interpolationVector[i] = SD_ENTITY_INTERPOLATION_DEACTIVATED;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool sdInterpolation::isInterpolationActivated(const EDescriptor descriptor, const sdDescriptor* const descriptors, const int numberOfDescriptors){
+    for(int i = 0; i < numberOfDescriptors; i++){
+        if(descriptors[i].getDescriptor() == descriptor){
+            switch(interpolationVector[i]){
+                case SD_ENTITY_INTERPOLATION_DEACTIVATED:
+                case SD_ENTITY_INTERPOLATION_IMPOSSIBLE:
+                    return false;
+                case SD_ENTITY_INTERPOLATION_ACTIVATED:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+    }
+    return false;
+}
+
 
 #endif

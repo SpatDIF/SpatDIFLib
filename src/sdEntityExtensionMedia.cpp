@@ -56,13 +56,13 @@ std::string sdEntityExtensionMedia::getValueAsString(double time, EDescriptor de
 
 
 bool sdEntityExtensionMedia::activateInterpolation(const EDescriptor descriptor){
-    return true;
+    return sdInterpolation::activateInterpolation(descriptor, sdEventExtensionMedia::descriptors, sdEventExtensionMedia::numberOfDescriptors);
 }
 
 bool sdEntityExtensionMedia::deactivateInterpolation(const EDescriptor descriptor){
-    return true;
+    return sdInterpolation::deactivateInterpolation(descriptor, sdEventExtensionMedia::descriptors, sdEventExtensionMedia::numberOfDescriptors);
 }
 
 bool sdEntityExtensionMedia::isInterpolationActivated(const EDescriptor descriptor){
-    return true;
+    return sdInterpolation::isInterpolationActivated(descriptor, sdEventExtensionMedia::descriptors, sdEventExtensionMedia::numberOfDescriptors);
 }

@@ -73,13 +73,13 @@ public:
      activate an interpolation of a descriptor.
      @param descriptor the values of this descriptor will be interpolated
      */
-    bool activateInterpolation(const EDescriptor descriptor);
+    bool activateInterpolation(const EDescriptor descriptor = SD_ALL);
     
     /*!
      deactivate an interpolation of a descriptor.
      @param descriptor the interpolation to the values of this descriptor will be deactivated
      */
-    bool deactivateInterpolation(const EDescriptor descriptor);
+    bool deactivateInterpolation(const EDescriptor descriptor = SD_ALL);
     
     /*!
      ask if the interpolation for th descriptor is activated
