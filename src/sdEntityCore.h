@@ -21,6 +21,7 @@
 #include "sdEventCore.h"
 #include "sdEntityExtension.h"
 #include "sdDescriptor.h"
+#include "sdExtensible.h"
 
 class sdScene;
 
@@ -33,26 +34,16 @@ class sdScene;
  - forwarding a query to a proper extension and answer to the client
  */
 
-class sdEntityCore: public sdEntity{
+class sdEntityCore: public sdEntity, public sdExtensible{
     friend class sdScene; // only sdScene can instantiate this class
     
 private:
     
-    typedef struct{
-        EDescriptor descriptor;
-        std::string descriptorString;
-        sdEntityExtension* responsibleExtension;
-    } sdRedirector;
+ 
     
     /*! the name of the entity. This name is invariable (const)*/
     const std::string name;
-    
-    /*! contains instances of sdEntityExtenstions */
-    std::vector <sdEntityExtension*>extensionVector;
-    
-    /*! contains pairs of EDescriptor descriptor and pointer to a responsible extension */
-    std::vector <sdRedirector>redirectorVector;
-
+   
     /*! define the kind of the entity. This property is declared as const and invariable (const). */
     EKind kind;
     EType type;
@@ -72,13 +63,6 @@ private:
             }
         }
     };
-    
-    
-    /*! adding extension to the entity. invoked only by sdScene*/
-    sdEntityExtension* addExtension(EExtension extension);
-    
-    /*! removing extension from the entity. invoked only by sdScene*/
-    void removeExtension(EExtension extension);
    
 public:
     static bool isCoreDescriptor(EDescriptor descriptor);
@@ -123,21 +107,6 @@ public:
     void removeEvent(double time, EDescriptor descriptor);
     void removeEvent(std::string time, std::string descriptor);
 
-    /*! @name Extension Handling
-        @{
-     */
-
-    /*! get the vector of sdExtensions */
-    std::vector <sdEntityExtension*>getExtensionVector(void);
-    
-    /*! returns a pointer to a sdEntityExtension in the extensionVector. returns NULL if not exists. */
-    sdEntityExtension* getExtension(EExtension extension);
-
-    /*! returns a pointer to a sdEntityExtension in the extensionVector. returns NULL if not exists */
-    sdEntityExtension* getResponsibleExtension(EDescriptor descriptor);
-    
-    /*! @} */
-    
 
     /*! overridden function. this function sum up all events (i.e. both core and extension events) and return it */
      int getNumberOfEvents();
@@ -233,9 +202,7 @@ inline EType sdEntityCore::getType(void){
     return type;
 }
 
-inline std::vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){
-    return extensionVector;
-}
+
 
 inline bool sdEntityCore::sortAlphabetically( sdEntityCore *leftEntity,  sdEntityCore *rightEntity){
     return leftEntity->getName().compare(rightEntity->getName()) ? false:true;

@@ -8,6 +8,8 @@
 
 /* Begin PBXFileReference section */
 		6202BE3919AB4F9C00D872DE /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		6202BE3A19AC774900D872DE /* sdExtensible.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdExtensible.cpp; sourceTree = "<group>"; };
+		6202BE3B19AC774900D872DE /* sdExtensible.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdExtensible.h; sourceTree = "<group>"; };
 		62087AAA19A9FE5D00F8A3E6 /* FileWithExtension.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FileWithExtension.cpp; path = ../examples/FileWithExtension.cpp; sourceTree = "<group>"; };
 		62087AAB19A9FE5D00F8A3E6 /* How_to_query.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = How_to_query.cpp; path = ../examples/How_to_query.cpp; sourceTree = "<group>"; };
 		62087AAC19A9FE5D00F8A3E6 /* sdConverter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdConverter.cpp; path = ../examples/sdConverter.cpp; sourceTree = "<group>"; };
@@ -153,6 +155,8 @@
 				6279340C19A2A018002BF8EB /* sdDescriptor.h */,
 				A7E1E39C18A3B44F003BE78B /* sdDate.h */,
 				A7E1E3A418A3B44F003BE78B /* sdInfo.h */,
+				6202BE3B19AC774900D872DE /* sdExtensible.h */,
+				6202BE3A19AC774900D872DE /* sdExtensible.cpp */,
 				62087AA119A9F7D900F8A3E6 /* abstractClasses */,
 				62087AA019A9F78D00F8A3E6 /* sdCore */,
 				62087AA419A9F83F00F8A3E6 /* Extension */,

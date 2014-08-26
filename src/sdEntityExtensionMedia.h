@@ -28,7 +28,7 @@
  */
 class sdEntityExtensionMedia: public sdEntityExtension{
     
-    friend class sdEntityCore; /*< only entityCore can spawn instances of this class*/
+    friend class sdExtensible; /*< only sdExtensible can spawn instances of this class*/
 
 private:
 
