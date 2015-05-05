@@ -1,0 +1,545 @@
+Tlibspatdif
+v6
+r1
+cCheck dependencies
+cExternalBuildToolExecution libspatdif
+
+N/usr/bin/make
+c00000000527984520000000000003790
+t1383695442
+s14224
+
+CCheck dependencies
+r0
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependencies18"Check dependencies904a19494eaab841^1fdb3e494eaab841^---0#1#1#--18"Check dependencies36"03A23475-C67C-4365-8851-EC40A3C3B402-
+
+CExternalBuildToolExecution libspatdif
+s413814345.314144
+e413814363.132218
+r1
+xExternalBuildToolExecution
+xlibspatdif
+og++ -arch i386 -c ./libs/tinyxml2/tinyxml2.cpp 	
+omake -C ./libs/libjson
+o============================================================
+olibjson version: 7.6.1 target:  OS: Darwin
+o============================================================
+omkdir -p Objects_static
+oArchive
+ocd Objects_static ; \
+o	ar -cvq libjson.a internalJSONNode.o JSONAllocator.o JSONChildren.o JSONDebug.o JSONIterators.o JSONMemory.o JSONNode.o JSONNode_Mutex.o JSONPreparse.o JSONStream.o JSONValidator.o JSONWorker.o JSONWriter.o libjson.o  ; \
+o	mv -f libjson.a ../
+o/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: libjson.a(JSONAllocator.o) has no symbols
+o/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: libjson.a(JSONDebug.o) has no symbols
+o/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: libjson.a(JSONMemory.o) has no symbols
+o/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: libjson.a(JSONNode_Mutex.o) has no symbols
+o/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: libjson.a(JSONPreparse.o) has no symbols
+o/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: libjson.a(libjson.o) has no symbols
+oq - internalJSONNode.o
+oq - JSONAllocator.o
+oq - JSONChildren.o
+oq - JSONDebug.o
+oq - JSONIterators.o
+oq - JSONMemory.o
+oq - JSONNode.o
+oq - JSONNode_Mutex.o
+oq - JSONPreparse.o
+oq - JSONStream.o
+oq - JSONValidator.o
+oq - JSONWorker.o
+oq - JSONWriter.o
+oq - libjson.o
+oArchive: Done
+o============================================================
+oDone
+o============================================================
+ocp ./libs/libjson/libjson.a ./
+og++ -g -O0 -arch i386 -o libspatdif.dylib -dynamiclib -lstdc++ -I./libs/tinyxml2 -I./libs/libjson -I./libs/libjson/_internal/Source tinyxml2.o libjson.a *.cpp
+oIn file included from sdEntity.cpp:17:
+oIn file included from ./sdEntity.h:23:
+oIn file included from ./sdMain.h:22:
+o./sdEntityCore.h:30:27: error: expected class name
+oclass sdEventCore: public sdEvent{
+o                          ^
+o./sdEntityCore.h:85:28: error: expected class name
+oclass sdEntityCore: public sdEntity{
+o                           ^
+o./sdEntityCore.h:94:9: error: unknown type name 'sdEntityExtension'
+o        sdEntityExtension* responsibleExtension;
+o        ^
+o./sdEntityCore.h:101:13: error: use of undeclared identifier 'sdEntityExtension'
+o    vector <sdEntityExtension*>extensionVector;
+o            ^
+o./sdEntityCore.h:101:31: error: expected expression
+o    vector <sdEntityExtension*>extensionVector;
+o                              ^
+o./sdEntityCore.h:121:5: error: unknown type name 'sdEntityExtension'
+o    sdEntityExtension* addExtension(EExtension extension);
+o    ^
+o./sdEntityCore.h:160:5: error: unknown type name 'sdEvent'
+o    sdEvent* addEvent(double time, EDescriptor descriptor, void* value);
+o    ^
+o./sdEntityCore.h:163:5: error: unknown type name 'sdEvent'
+o    sdEvent* addEvent(string time, string descriptor, string value);
+o    ^
+o./sdEntityCore.h:177:13: error: use of undeclared identifier 'sdEntityExtension'
+o    vector <sdEntityExtension*>getExtensionVector(void);
+o            ^
+o./sdEntityCore.h:177:31: error: expected expression
+o    vector <sdEntityExtension*>getExtensionVector(void);
+o                              ^
+o./sdEntityCore.h:180:5: error: unknown type name 'sdEntityExtension'
+o    sdEntityExtension* getExtension(EExtension extension);
+o    ^
+o./sdEntityCore.h:183:5: error: unknown type name 'sdEntityExtension'
+o    sdEntityExtension* getResponsibleExtension(EDescriptor descriptor);
+o    ^
+o./sdEntityCore.h:192:5: error: unknown type name 'sdEvent'
+o    sdEvent* getEvent(double time, EDescriptor descriptor);
+o    ^
+o./sdEntityCore.h:199:5: error: unknown type name 'sdEvent'
+o    sdEvent* getNextEvent(double time, EDescriptor descriptor);
+o    ^
+o./sdEntityCore.h:205:5: error: unknown type name 'sdEvent'
+o    sdEvent* getFirstEvent(EDescriptor descriptor);
+o    ^
+o./sdEntityCore.h:211:5: error: unknown type name 'sdEvent'
+o    sdEvent* getLastEvent(EDescriptor descriptor);
+o    ^
+o./sdEntityCore.h:238:16: error: use of undeclared identifier 'sdEntityExtension'
+oinline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){
+o               ^
+o./sdEntityCore.h:238:34: error: expected expression
+oinline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){
+o                                 ^
+oIn file included from sdEntity.cpp:17:
+oIn file included from ./sdEntity.h:23:
+oIn file included from ./sdMain.h:23:
+o./sdEntityExtension.h:31:33: error: expected class name
+oclass sdEntityExtension: public sdEntity{
+o                                ^
+ofatal error: too many errors emitted, stopping now [-ferror-limit=]
+o20 errors generated.
+oIn file included from sdEntityCore.cpp:18:
+oIn file included from ./sdMain.h:22:
+o./sdEntityCore.h:94:9: error: unknown type name 'sdEntityExtension'
+o        sdEntityExtension* responsibleExtension;
+o        ^
+o./sdEntityCore.h:101:13: error: use of undeclared identifier 'sdEntityExtension'
+o    vector <sdEntityExtension*>extensionVector;
+o            ^
+o./sdEntityCore.h:101:31: error: expected expression
+o    vector <sdEntityExtension*>extensionVector;
+o                              ^
+o./sdEntityCore.h:121:5: error: unknown type name 'sdEntityExtension'
+o    sdEntityExtension* addExtension(EExtension extension);
+o    ^
+o./sdEntityCore.h:177:13: error: use of undeclared identifier 'sdEntityExtension'
+o    vector <sdEntityExtension*>getExtensionVector(void);
+o            ^
+o./sdEntityCore.h:177:31: error: expected expression
+o    vector <sdEntityExtension*>getExtensionVector(void);
+o                              ^
+o./sdEntityCore.h:180:5: error: unknown type name 'sdEntityExtension'
+o    sdEntityExtension* getExtension(EExtension extension);
+o    ^
+o./sdEntityCore.h:183:5: error: unknown type name 'sdEntityExtension'
+o    sdEntityExtension* getResponsibleExtension(EDescriptor descriptor);
+o    ^
+o./sdEntityCore.h:238:16: error: use of undeclared identifier 'sdEntityExtension'
+oinline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){
+o               ^
+o./sdEntityCore.h:238:34: error: expected expression
+oinline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){
+o                                 ^
+osdEntityCore.cpp:291:26: error: cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'
+o        return sdEntity::getValue(time, descriptor);
+o                         ^~~~~~~~
+osdEntityCore.cpp:305:34: error: out-of-line definition of 'sdEntityCore::addExtension' differs from the declaration in the return type
+osdEntityExtension* sdEntityCore::addExtension(EExtension extension){
+o                                 ^
+o./sdEntityCore.h:121:24: note: previous declaration is here
+o    sdEntityExtension* addExtension(EExtension extension);
+o                       ^
+osdEntityCore.cpp:309:58: error: calling a private constructor of class 'sdEntityExtensionMedia'
+o            sdEntityExtensionMedia* mediaExtension = new sdEntityExtensionMedia();
+o                                                         ^
+o./sdEntityExtensionMedia.h:86:5: note: declared private here
+o    sdEntityExtensionMedia(){};
+o    ^
+osdEntityCore.cpp:341:34: error: out-of-line definition of 'sdEntityCore::getExtension' differs from the declaration in the return type
+osdEntityExtension* sdEntityCore::getExtension(EExtension extension){
+o                                 ^
+o./sdEntityCore.h:180:24: note: previous declaration is here
+o    sdEntityExtension* getExtension(EExtension extension);
+o                       ^
+osdEntityCore.cpp:353:34: error: out-of-line definition of 'sdEntityCore::getResponsibleExtension' differs from the declaration in the return type
+osdEntityExtension* sdEntityCore::getResponsibleExtension(EDescriptor descriptor){
+o                                 ^
+o./sdEntityCore.h:183:24: note: previous declaration is here
+o    sdEntityExtension* getResponsibleExtension(EDescriptor descriptor);
+o                       ^
+osdEntityCore.cpp:368:26: error: cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'
+o        return sdEntity::getEvent(time, descriptor);
+o                         ^~~~~~~~
+osdEntityCore.cpp:381:26: error: cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'
+o        return sdEntity::getNextEvent(time, descriptor);
+o                         ^~~~~~~~~~~~
+osdEntityCore.cpp:394:26: error: cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'
+o        return sdEntity::getFirstEvent(descriptor);
+o                         ^~~~~~~~~~~~~
+osdEntityCore.cpp:407:26: error: cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'
+o        return sdEntity::getLastEvent(descriptor);
+o                         ^~~~~~~~~~~~
+o19 errors generated.
+oIn file included from sdEntityExtensionMedia.cpp:16:
+oIn file included from ./sdEntityExtensionMedia.h:21:
+oIn file included from ./sdEntityExtension.h:22:
+oIn file included from ./sdEntity.h:23:
+oIn file included from ./sdMain.h:22:
+o./sdEntityCore.h:30:27: error: expected class name
+oclass sdEventCore: public sdEvent{
+o                          ^
+o./sdEntityCore.h:85:28: error: expected class name
+oclass sdEntityCore: public sdEntity{
+o                           ^
+o./sdEntityCore.h:94:9: error: unknown type name 'sdEntityExtension'
+o        sdEntityExtension* responsibleExtension;
+o        ^
+o./sdEntityCore.h:101:13: error: use of undeclared identifier 'sdEntityExtension'
+o    vector <sdEntityExtension*>extensionVector;
+o            ^
+o./sdEntityCore.h:101:31: error: expected expression
+o    vector <sdEntityExtension*>extensionVector;
+o                              ^
+o./sdEntityCore.h:121:5: error: unknown type name 'sdEntityExtension'
+o    sdEntityExtension* addExtension(EExtension extension);
+o    ^
+o./sdEntityCore.h:160:5: error: unknown type name 'sdEvent'
+o    sdEvent* addEvent(double time, EDescriptor descriptor, void* value);
+o    ^
+o./sdEntityCore.h:163:5: error: unknown type name 'sdEvent'
+o    sdEvent* addEvent(string time, string descriptor, string value);
+o    ^
+o./sdEntityCore.h:177:13: error: use of undeclared identifier 'sdEntityExtension'
+o    vector <sdEntityExtension*>getExtensionVector(void);
+o            ^
+o./sdEntityCore.h:177:31: error: expected expression
+o    vector <sdEntityExtension*>getExtensionVector(void);
+o                              ^
+o./sdEntityCore.h:180:5: error: unknown type name 'sdEntityExtension'
+o    sdEntityExtension* getExtension(EExtension extension);
+o    ^
+o./sdEntityCore.h:183:5: error: unknown type name 'sdEntityExtension'
+o    sdEntityExtension* getResponsibleExtension(EDescriptor descriptor);
+o    ^
+o./sdEntityCore.h:192:5: error: unknown type name 'sdEvent'
+o    sdEvent* getEvent(double time, EDescriptor descriptor);
+o    ^
+o./sdEntityCore.h:199:5: error: unknown type name 'sdEvent'
+o    sdEvent* getNextEvent(double time, EDescriptor descriptor);
+o    ^
+o./sdEntityCore.h:205:5: error: unknown type name 'sdEvent'
+o    sdEvent* getFirstEvent(EDescriptor descriptor);
+o    ^
+o./sdEntityCore.h:211:5: error: unknown type name 'sdEvent'
+o    sdEvent* getLastEvent(EDescriptor descriptor);
+o    ^
+o./sdEntityCore.h:238:16: error: use of undeclared identifier 'sdEntityExtension'
+oinline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){
+o               ^
+o./sdEntityCore.h:238:34: error: expected expression
+oinline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){
+o                                 ^
+oIn file included from sdEntityExtensionMedia.cpp:16:
+oIn file included from ./sdEntityExtensionMedia.h:21:
+oIn file included from ./sdEntityExtension.h:22:
+oIn file included from ./sdEntity.h:23:
+oIn file included from ./sdMain.h:26:
+oIn file included from ./sdLoader.h:20:
+o./sdScene.h:31:14: error: use of undeclared identifier 'sdEvent'
+o    multiset<sdEvent*, sdEventCompare> eventSet;
+o             ^
+ofatal error: too many errors emitted, stopping now [-ferror-limit=]
+o20 errors generated.
+oIn file included from sdLoader.cpp:19:
+oIn file included from ./sdLoader.h:20:
+oIn file included from ./sdScene.h:23:
+oIn file included from ./sdEntityCore.h:22:
+oIn file included from ./sdMain.h:27:
+o./sdOSCResponder.h:28:5: error: unknown type name 'sdScene'
+o    sdScene *scene;
+o    ^
+o./sdOSCResponder.h:46:20: error: unknown type name 'sdScene'
+o    sdOSCResponder(sdScene *scene);
+o                   ^
+oIn file included from sdLoader.cpp:19:
+oIn file included from ./sdLoader.h:20:
+oIn file included from ./sdScene.h:23:
+oIn file included from ./sdEntityCore.h:22:
+oIn file included from ./sdMain.h:28:
+o./sdSaver.h:36:32: error: unknown type name 'sdScene'
+o    static string XMLFromScene(sdScene *scene);
+o                               ^
+o./sdSaver.h:41:33: error: unknown type name 'sdScene'
+o    static string JSONFromScene(sdScene *scene);
+o                                ^
+o./sdSaver.h:46:33: error: unknown type name 'sdScene'
+o    static string YAMLFromScene(sdScene *scene);
+o                                ^
+o./sdSaver.h:130:35: error: use of undeclared identifier 'sdEntityCore'; did you mean 'sdEntity'?
+o                    bool e1Core = sdEntityCore::isCoreDescriptor(e1.getEvent()->getDescriptor());
+o                                  ^~~~~~~~~~~~
+o                                  sdEntity
+o./sdEntity.h:112:7: note: 'sdEntity' declared here
+oclass sdEntity{
+o      ^
+oIn file included from sdLoader.cpp:19:
+oIn file included from ./sdLoader.h:20:
+oIn file included from ./sdScene.h:23:
+oIn file included from ./sdEntityCore.h:22:
+oIn file included from ./sdMain.h:28:
+o./sdSaver.h:130:49: error: no member named 'isCoreDescriptor' in 'sdEntity'
+o                    bool e1Core = sdEntityCore::isCoreDescriptor(e1.getEvent()->getDescriptor());
+o                                  ~~~~~~~~~~~~~~^
+o./sdSaver.h:131:35: error: use of undeclared identifier 'sdEntityCore'; did you mean 'sdEntity'?
+o                    bool e2Core = sdEntityCore::isCoreDescriptor(e2.getEvent()->getDescriptor());
+o                                  ^~~~~~~~~~~~
+o                                  sdEntity
+o./sdEntity.h:112:7: note: 'sdEntity' declared here
+oclass sdEntity{
+o      ^
+oIn file included from sdLoader.cpp:19:
+oIn file included from ./sdLoader.h:20:
+oIn file included from ./sdScene.h:23:
+oIn file included from ./sdEntityCore.h:22:
+oIn file included from ./sdMain.h:28:
+o./sdSaver.h:131:49: error: no member named 'isCoreDescriptor' in 'sdEntity'
+o                    bool e2Core = sdEntityCore::isCoreDescriptor(e2.getEvent()->getDescriptor());
+o                                  ~~~~~~~~~~~~~~^
+oIn file included from sdLoader.cpp:21:
+oIn file included from ./libs/libjson/libjson.h:4:
+o./libs/libjson/_internal/Source/JSONDefs.h:157:6: warning: , Release build of libjson, but NDEBUG is not on [-W#warnings]
+o                  #warning, Release build of libjson, but NDEBUG is not on
+o                   ^
+o1 warning and 9 errors generated.
+oIn file included from sdOSCResponder.cpp:17:
+oIn file included from ./sdOSCResponder.h:19:
+oIn file included from ./sdScene.h:23:
+oIn file included from ./sdEntityCore.h:22:
+oIn file included from ./sdMain.h:26:
+o./sdLoader.h:34:12: error: unknown type name 'sdScene'
+o    static sdScene sceneFromXML(string xmlString);
+o           ^
+o./sdLoader.h:39:12: error: unknown type name 'sdScene'
+o    static sdScene sceneFromJSON(string jsonString);
+o           ^
+o./sdLoader.h:44:12: error: unknown type name 'sdScene'
+o    static sdScene sceneFromYAML(string yamlString);
+o           ^
+oIn file included from sdOSCResponder.cpp:17:
+oIn file included from ./sdOSCResponder.h:19:
+oIn file included from ./sdScene.h:23:
+oIn file included from ./sdEntityCore.h:22:
+oIn file included from ./sdMain.h:28:
+o./sdSaver.h:36:32: error: unknown type name 'sdScene'
+o    static string XMLFromScene(sdScene *scene);
+o                               ^
+o./sdSaver.h:41:33: error: unknown type name 'sdScene'
+o    static string JSONFromScene(sdScene *scene);
+o                                ^
+o./sdSaver.h:46:33: error: unknown type name 'sdScene'
+o    static string YAMLFromScene(sdScene *scene);
+o                                ^
+o./sdSaver.h:130:35: error: use of undeclared identifier 'sdEntityCore'; did you mean 'sdEntity'?
+o                    bool e1Core = sdEntityCore::isCoreDescriptor(e1.getEvent()->getDescriptor());
+o                                  ^~~~~~~~~~~~
+o                                  sdEntity
+o./sdEntity.h:112:7: note: 'sdEntity' declared here
+oclass sdEntity{
+o      ^
+oIn file included from sdOSCResponder.cpp:17:
+oIn file included from ./sdOSCResponder.h:19:
+oIn file included from ./sdScene.h:23:
+oIn file included from ./sdEntityCore.h:22:
+oIn file included from ./sdMain.h:28:
+o./sdSaver.h:130:49: error: no member named 'isCoreDescriptor' in 'sdEntity'
+o                    bool e1Core = sdEntityCore::isCoreDescriptor(e1.getEvent()->getDescriptor());
+o                                  ~~~~~~~~~~~~~~^
+o./sdSaver.h:131:35: error: use of undeclared identifier 'sdEntityCore'; did you mean 'sdEntity'?
+o                    bool e2Core = sdEntityCore::isCoreDescriptor(e2.getEvent()->getDescriptor());
+o                                  ^~~~~~~~~~~~
+o                                  sdEntity
+o./sdEntity.h:112:7: note: 'sdEntity' declared here
+oclass sdEntity{
+o      ^
+oIn file included from sdOSCResponder.cpp:17:
+oIn file included from ./sdOSCResponder.h:19:
+oIn file included from ./sdScene.h:23:
+oIn file included from ./sdEntityCore.h:22:
+oIn file included from ./sdMain.h:28:
+o./sdSaver.h:131:49: error: no member named 'isCoreDescriptor' in 'sdEntity'
+o                    bool e2Core = sdEntityCore::isCoreDescriptor(e2.getEvent()->getDescriptor());
+o                                  ~~~~~~~~~~~~~~^
+o10 errors generated.
+oIn file included from sdSaver.cpp:20:
+oIn file included from ./sdMain.h:22:
+o./sdEntityCore.h:94:9: error: unknown type name 'sdEntityExtension'
+o        sdEntityExtension* responsibleExtension;
+o        ^
+o./sdEntityCore.h:101:13: error: use of undeclared identifier 'sdEntityExtension'
+o    vector <sdEntityExtension*>extensionVector;
+o            ^
+o./sdEntityCore.h:101:31: error: expected expression
+o    vector <sdEntityExtension*>extensionVector;
+o                              ^
+o./sdEntityCore.h:121:5: error: unknown type name 'sdEntityExtension'
+o    sdEntityExtension* addExtension(EExtension extension);
+o    ^
+o./sdEntityCore.h:177:13: error: use of undeclared identifier 'sdEntityExtension'
+o    vector <sdEntityExtension*>getExtensionVector(void);
+o            ^
+o./sdEntityCore.h:177:31: error: expected expression
+o    vector <sdEntityExtension*>getExtensionVector(void);
+o                              ^
+o./sdEntityCore.h:180:5: error: unknown type name 'sdEntityExtension'
+o    sdEntityExtension* getExtension(EExtension extension);
+o    ^
+o./sdEntityCore.h:183:5: error: unknown type name 'sdEntityExtension'
+o    sdEntityExtension* getResponsibleExtension(EDescriptor descriptor);
+o    ^
+o./sdEntityCore.h:238:16: error: use of undeclared identifier 'sdEntityExtension'
+oinline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){
+o               ^
+o./sdEntityCore.h:238:34: error: expected expression
+oinline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){
+o                                 ^
+oIn file included from sdSaver.cpp:22:
+oIn file included from ./libs/libjson/_internal/Source/JSONNode.h:4:
+oIn file included from ./libs/libjson/_internal/Source/JSONDebug.h:4:
+o./libs/libjson/_internal/Source/JSONDefs.h:157:6: warning: , Release build of libjson, but NDEBUG is not on [-W#warnings]
+o                  #warning, Release build of libjson, but NDEBUG is not on
+o                   ^
+osdSaver.cpp:125:67: error: no matching member function for call to 'getEventSet'
+o            multiset<sdEvent*, sdEventCompare> eventSet = entity->getEventSet();
+o                                                          ~~~~~~~~^~~~~~~~~~~
+o./sdEntity.h:140:40: note: candidate function not viable: no known conversion from 'sdEntityCore' to 'sdEntity' for object argument
+o    multiset<sdEvent*, sdEventCompare> getEventSet(void);
+o                                       ^
+o./sdEntity.h:141:40: note: candidate function not viable: requires 2 arguments, but 0 were provided
+o    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end);
+o                                       ^
+o./sdEntity.h:142:40: note: candidate function not viable: requires 3 arguments, but 0 were provided
+o    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);
+o                                       ^
+o./sdEntity.h:164:40: note: candidate function not viable: requires single argument 'time', but no arguments were provided
+o    multiset<sdEvent*, sdEventCompare> getEventSet(double time);
+o                                       ^
+osdSaver.cpp:224:67: error: no matching member function for call to 'getEventSet'
+o            multiset<sdEvent*, sdEventCompare> eventSet = entity->getEventSet();
+o                                                          ~~~~~~~~^~~~~~~~~~~
+o./sdEntity.h:140:40: note: candidate function not viable: no known conversion from 'sdEntityCore' to 'sdEntity' for object argument
+o    multiset<sdEvent*, sdEventCompare> getEventSet(void);
+o                                       ^
+o./sdEntity.h:141:40: note: candidate function not viable: requires 2 arguments, but 0 were provided
+o    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end);
+o                                       ^
+o./sdEntity.h:142:40: note: candidate function not viable: requires 3 arguments, but 0 were provided
+o    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);
+o                                       ^
+o./sdEntity.h:164:40: note: candidate function not viable: requires single argument 'time', but no arguments were provided
+o    multiset<sdEvent*, sdEventCompare> getEventSet(double time);
+o                                       ^
+o1 warning and 12 errors generated.
+oIn file included from sdScene.cpp:20:
+oIn file included from ./sdMain.h:22:
+o./sdEntityCore.h:94:9: error: unknown type name 'sdEntityExtension'
+o        sdEntityExtension* responsibleExtension;
+o        ^
+o./sdEntityCore.h:101:13: error: use of undeclared identifier 'sdEntityExtension'
+o    vector <sdEntityExtension*>extensionVector;
+o            ^
+o./sdEntityCore.h:101:31: error: expected expression
+o    vector <sdEntityExtension*>extensionVector;
+o                              ^
+o./sdEntityCore.h:121:5: error: unknown type name 'sdEntityExtension'
+o    sdEntityExtension* addExtension(EExtension extension);
+o    ^
+o./sdEntityCore.h:177:13: error: use of undeclared identifier 'sdEntityExtension'
+o    vector <sdEntityExtension*>getExtensionVector(void);
+o            ^
+o./sdEntityCore.h:177:31: error: expected expression
+o    vector <sdEntityExtension*>getExtensionVector(void);
+o                              ^
+o./sdEntityCore.h:180:5: error: unknown type name 'sdEntityExtension'
+o    sdEntityExtension* getExtension(EExtension extension);
+o    ^
+o./sdEntityCore.h:183:5: error: unknown type name 'sdEntityExtension'
+o    sdEntityExtension* getResponsibleExtension(EDescriptor descriptor);
+o    ^
+o./sdEntityCore.h:238:16: error: use of undeclared identifier 'sdEntityExtension'
+oinline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){
+o               ^
+o./sdEntityCore.h:238:34: error: expected expression
+oinline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){
+o                                 ^
+osdScene.cpp:197:26: error: cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'
+o        report.eventSet= entityCore->getNextEventSet(time);
+o                         ^~~~~~~~~~
+osdScene.cpp:215:26: error: cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'
+o        report.eventSet= entityCore->getPreviousEventSet(time);
+o                         ^~~~~~~~~~
+osdScene.cpp:278:38: error: no matching member function for call to 'getEventSet'
+o        report.eventSet= entityCore->getEventSet(time);
+o                         ~~~~~~~~~~~~^~~~~~~~~~~
+o./sdEntity.h:164:40: note: candidate function not viable: no known conversion from 'sdEntityCore' to 'sdEntity' for object argument
+o    multiset<sdEvent*, sdEventCompare> getEventSet(double time);
+o                                       ^
+o./sdEntity.h:140:40: note: candidate function not viable: requires 0 arguments, but 1 was provided
+o    multiset<sdEvent*, sdEventCompare> getEventSet(void);
+o                                       ^
+o./sdEntity.h:141:40: note: candidate function not viable: requires 2 arguments, but 1 was provided
+o    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end);
+o                                       ^
+o./sdEntity.h:142:40: note: candidate function not viable: requires 3 arguments, but 1 was provided
+o    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);
+o                                       ^
+osdScene.cpp:294:38: error: no matching member function for call to 'getEventSet'
+o        report.eventSet= entityCore->getEventSet(start, end);
+o                         ~~~~~~~~~~~~^~~~~~~~~~~
+o./sdEntity.h:141:40: note: candidate function not viable: no known conversion from 'sdEntityCore' to 'sdEntity' for object argument
+o    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end);
+o                                       ^
+o./sdEntity.h:140:40: note: candidate function not viable: requires 0 arguments, but 2 were provided
+o    multiset<sdEvent*, sdEventCompare> getEventSet(void);
+o                                       ^
+o./sdEntity.h:142:40: note: candidate function not viable: requires 3 arguments, but 2 were provided
+o    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);
+o                                       ^
+o./sdEntity.h:164:40: note: candidate function not viable: requires single argument 'time', but 2 arguments were provided
+o    multiset<sdEvent*, sdEventCompare> getEventSet(double time);
+o                                       ^
+osdScene.cpp:322:40: error: cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'
+o        cout << "number of events:" << (*it)->getNumberOfEvents()<< endl;
+o                                       ^~~~~
+osdScene.cpp:323:60: error: no matching member function for call to 'getEventSet'
+o        multiset <sdEvent*, sdEventCompare> evnts = (*it)->getEventSet();
+o                                                    ~~~~~~~^~~~~~~~~~~
+o./sdEntity.h:140:40: note: candidate function not viable: no known conversion from 'sdEntityCore' to 'sdEntity' for object argument
+o    multiset<sdEvent*, sdEventCompare> getEventSet(void);
+o                                       ^
+o./sdEntity.h:141:40: note: candidate function not viable: requires 2 arguments, but 0 were provided
+o    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end);
+o                                       ^
+o./sdEntity.h:142:40: note: candidate function not viable: requires 3 arguments, but 0 were provided
+o    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);
+o                                       ^
+o./sdEntity.h:164:40: note: candidate function not viable: requires single argument 'time', but no arguments were provided
+o    multiset<sdEvent*, sdEventCompare> getEventSet(double time);
+o                                       ^
+o16 errors generated.
+omake[1]: *** [libspatdif.dylib] Error 1
+omake: [all] Error 2 (ignored)
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection23"Run external build tool37"ExternalBuildToolExecution libspatdiff12d58494eaab841^c2dd215b4eaab841^-25434"g++ -arch i386 -c ./libs/tinyxml2/tinyxml2.cpp 	make -C ./libs/libjson============================================================libjson version: 7.6.1 target:  OS: Darwin============================================================mkdir -p Objects_staticArchivecd Objects_static ; \	ar -cvq libjson.a internalJSONNode.o JSONAllocator.o JSONChildren.o JSONDebug.o JSONIterators.o JSONMemory.o JSONNode.o JSONNode_Mutex.o JSONPreparse.o JSONStream.o JSONValidator.o JSONWorker.o JSONWriter.o libjson.o  ; \	mv -f libjson.a ..//Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: libjson.a(JSONAllocator.o) has no symbols/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: libjson.a(JSONDebug.o) has no symbols/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: libjson.a(JSONMemory.o) has no symbols/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: libjson.a(JSONNode_Mutex.o) has no symbols/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: libjson.a(JSONPreparse.o) has no symbols/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: libjson.a(libjson.o) has no symbolsq - internalJSONNode.oq - JSONAllocator.oq - JSONChildren.oq - JSONDebug.oq - JSONIterators.oq - JSONMemory.oq - JSONNode.oq - JSONNode_Mutex.oq - JSONPreparse.oq - JSONStream.oq - JSONValidator.oq - JSONWorker.oq - JSONWriter.oq - libjson.oArchive: Done============================================================Done============================================================cp ./libs/libjson/libjson.a ./g++ -g -O0 -arch i386 -o libspatdif.dylib -dynamiclib -lstdc++ -I./libs/tinyxml2 -I./libs/libjson -I./libs/libjson/_internal/Source tinyxml2.o libjson.a *.cppIn file included from sdEntity.cpp:17:In file included from ./sdEntity.h:23:In file included from ./sdMain.h:22:./sdEntityCore.h:30:27: error: expected class nameclass sdEventCore: public sdEvent{                          ^./sdEntityCore.h:85:28: error: expected class nameclass sdEntityCore: public sdEntity{                           ^./sdEntityCore.h:94:9: error: unknown type name 'sdEntityExtension'        sdEntityExtension* responsibleExtension;        ^./sdEntityCore.h:101:13: error: use of undeclared identifier 'sdEntityExtension'    vector <sdEntityExtension*>extensionVector;            ^./sdEntityCore.h:101:31: error: expected expression    vector <sdEntityExtension*>extensionVector;                              ^./sdEntityCore.h:121:5: error: unknown type name 'sdEntityExtension'    sdEntityExtension* addExtension(EExtension extension);    ^./sdEntityCore.h:160:5: error: unknown type name 'sdEvent'    sdEvent* addEvent(double time, EDescriptor descriptor, void* value);    ^./sdEntityCore.h:163:5: error: unknown type name 'sdEvent'    sdEvent* addEvent(string time, string descriptor, string value);    ^./sdEntityCore.h:177:13: error: use of undeclared identifier 'sdEntityExtension'    vector <sdEntityExtension*>getExtensionVector(void);            ^./sdEntityCore.h:177:31: error: expected expression    vector <sdEntityExtension*>getExtensionVector(void);                              ^./sdEntityCore.h:180:5: error: unknown type name 'sdEntityExtension'    sdEntityExtension* getExtension(EExtension extension);    ^./sdEntityCore.h:183:5: error: unknown type name 'sdEntityExtension'    sdEntityExtension* getResponsibleExtension(EDescriptor descriptor);    ^./sdEntityCore.h:192:5: error: unknown type name 'sdEvent'    sdEvent* getEvent(double time, EDescriptor descriptor);    ^./sdEntityCore.h:199:5: error: unknown type name 'sdEvent'    sdEvent* getNextEvent(double time, EDescriptor descriptor);    ^./sdEntityCore.h:205:5: error: unknown type name 'sdEvent'    sdEvent* getFirstEvent(EDescriptor descriptor);    ^./sdEntityCore.h:211:5: error: unknown type name 'sdEvent'    sdEvent* getLastEvent(EDescriptor descriptor);    ^./sdEntityCore.h:238:16: error: use of undeclared identifier 'sdEntityExtension'inline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){               ^./sdEntityCore.h:238:34: error: expected expressioninline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){                                 ^In file included from sdEntity.cpp:17:In file included from ./sdEntity.h:23:In file included from ./sdMain.h:23:./sdEntityExtension.h:31:33: error: expected class nameclass sdEntityExtension: public sdEntity{                                ^fatal error: too many errors emitted, stopping now [-ferror-limit=]20 errors generated.In file included from sdEntityCore.cpp:18:In file included from ./sdMain.h:22:./sdEntityCore.h:94:9: error: unknown type name 'sdEntityExtension'        sdEntityExtension* responsibleExtension;        ^./sdEntityCore.h:101:13: error: use of undeclared identifier 'sdEntityExtension'    vector <sdEntityExtension*>extensionVector;            ^./sdEntityCore.h:101:31: error: expected expression    vector <sdEntityExtension*>extensionVector;                              ^./sdEntityCore.h:121:5: error: unknown type name 'sdEntityExtension'    sdEntityExtension* addExtension(EExtension extension);    ^./sdEntityCore.h:177:13: error: use of undeclared identifier 'sdEntityExtension'    vector <sdEntityExtension*>getExtensionVector(void);            ^./sdEntityCore.h:177:31: error: expected expression    vector <sdEntityExtension*>getExtensionVector(void);                              ^./sdEntityCore.h:180:5: error: unknown type name 'sdEntityExtension'    sdEntityExtension* getExtension(EExtension extension);    ^./sdEntityCore.h:183:5: error: unknown type name 'sdEntityExtension'    sdEntityExtension* getResponsibleExtension(EDescriptor descriptor);    ^./sdEntityCore.h:238:16: error: use of undeclared identifier 'sdEntityExtension'inline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){               ^./sdEntityCore.h:238:34: error: expected expressioninline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){                                 ^sdEntityCore.cpp:291:26: error: cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'        return sdEntity::getValue(time, descriptor);                         ^~~~~~~~sdEntityCore.cpp:305:34: error: out-of-line definition of 'sdEntityCore::addExtension' differs from the declaration in the return typesdEntityExtension* sdEntityCore::addExtension(EExtension extension){                                 ^./sdEntityCore.h:121:24: note: previous declaration is here    sdEntityExtension* addExtension(EExtension extension);                       ^sdEntityCore.cpp:309:58: error: calling a private constructor of class 'sdEntityExtensionMedia'            sdEntityExtensionMedia* mediaExtension = new sdEntityExtensionMedia();                                                         ^./sdEntityExtensionMedia.h:86:5: note: declared private here    sdEntityExtensionMedia(){};    ^sdEntityCore.cpp:341:34: error: out-of-line definition of 'sdEntityCore::getExtension' differs from the declaration in the return typesdEntityExtension* sdEntityCore::getExtension(EExtension extension){                                 ^./sdEntityCore.h:180:24: note: previous declaration is here    sdEntityExtension* getExtension(EExtension extension);                       ^sdEntityCore.cpp:353:34: error: out-of-line definition of 'sdEntityCore::getResponsibleExtension' differs from the declaration in the return typesdEntityExtension* sdEntityCore::getResponsibleExtension(EDescriptor descriptor){                                 ^./sdEntityCore.h:183:24: note: previous declaration is here    sdEntityExtension* getResponsibleExtension(EDescriptor descriptor);                       ^sdEntityCore.cpp:368:26: error: cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'        return sdEntity::getEvent(time, descriptor);                         ^~~~~~~~sdEntityCore.cpp:381:26: error: cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'        return sdEntity::getNextEvent(time, descriptor);                         ^~~~~~~~~~~~sdEntityCore.cpp:394:26: error: cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'        return sdEntity::getFirstEvent(descriptor);                         ^~~~~~~~~~~~~sdEntityCore.cpp:407:26: error: cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'        return sdEntity::getLastEvent(descriptor);                         ^~~~~~~~~~~~19 errors generated.In file included from sdEntityExtensionMedia.cpp:16:In file included from ./sdEntityExtensionMedia.h:21:In file included from ./sdEntityExtension.h:22:In file included from ./sdEntity.h:23:In file included from ./sdMain.h:22:./sdEntityCore.h:30:27: error: expected class nameclass sdEventCore: public sdEvent{                          ^./sdEntityCore.h:85:28: error: expected class nameclass sdEntityCore: public sdEntity{                           ^./sdEntityCore.h:94:9: error: unknown type name 'sdEntityExtension'        sdEntityExtension* responsibleExtension;        ^./sdEntityCore.h:101:13: error: use of undeclared identifier 'sdEntityExtension'    vector <sdEntityExtension*>extensionVector;            ^./sdEntityCore.h:101:31: error: expected expression    vector <sdEntityExtension*>extensionVector;                              ^./sdEntityCore.h:121:5: error: unknown type name 'sdEntityExtension'    sdEntityExtension* addExtension(EExtension extension);    ^./sdEntityCore.h:160:5: error: unknown type name 'sdEvent'    sdEvent* addEvent(double time, EDescriptor descriptor, void* value);    ^./sdEntityCore.h:163:5: error: unknown type name 'sdEvent'    sdEvent* addEvent(string time, string descriptor, string value);    ^./sdEntityCore.h:177:13: error: use of undeclared identifier 'sdEntityExtension'    vector <sdEntityExtension*>getExtensionVector(void);            ^./sdEntityCore.h:177:31: error: expected expression    vector <sdEntityExtension*>getExtensionVector(void);                              ^./sdEntityCore.h:180:5: error: unknown type name 'sdEntityExtension'    sdEntityExtension* getExtension(EExtension extension);    ^./sdEntityCore.h:183:5: error: unknown type name 'sdEntityExtension'    sdEntityExtension* getResponsibleExtension(EDescriptor descriptor);    ^./sdEntityCore.h:192:5: error: unknown type name 'sdEvent'    sdEvent* getEvent(double time, EDescriptor descriptor);    ^./sdEntityCore.h:199:5: error: unknown type name 'sdEvent'    sdEvent* getNextEvent(double time, EDescriptor descriptor);    ^./sdEntityCore.h:205:5: error: unknown type name 'sdEvent'    sdEvent* getFirstEvent(EDescriptor descriptor);    ^./sdEntityCore.h:211:5: error: unknown type name 'sdEvent'    sdEvent* getLastEvent(EDescriptor descriptor);    ^./sdEntityCore.h:238:16: error: use of undeclared identifier 'sdEntityExtension'inline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){               ^./sdEntityCore.h:238:34: error: expected expressioninline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){                                 ^In file included from sdEntityExtensionMedia.cpp:16:In file included from ./sdEntityExtensionMedia.h:21:In file included from ./sdEntityExtension.h:22:In file included from ./sdEntity.h:23:In file included from ./sdMain.h:26:In file included from ./sdLoader.h:20:./sdScene.h:31:14: error: use of undeclared identifier 'sdEvent'    multiset<sdEvent*, sdEventCompare> eventSet;             ^fatal error: too many errors emitted, stopping now [-ferror-limit=]20 errors generated.In file included from sdLoader.cpp:19:In file included from ./sdLoader.h:20:In file included from ./sdScene.h:23:In file included from ./sdEntityCore.h:22:In file included from ./sdMain.h:27:./sdOSCResponder.h:28:5: error: unknown type name 'sdScene'    sdScene *scene;    ^./sdOSCResponder.h:46:20: error: unknown type name 'sdScene'    sdOSCResponder(sdScene *scene);                   ^In file included from sdLoader.cpp:19:In file included from ./sdLoader.h:20:In file included from ./sdScene.h:23:In file included from ./sdEntityCore.h:22:In file included from ./sdMain.h:28:./sdSaver.h:36:32: error: unknown type name 'sdScene'    static string XMLFromScene(sdScene *scene);                               ^./sdSaver.h:41:33: error: unknown type name 'sdScene'    static string JSONFromScene(sdScene *scene);                                ^./sdSaver.h:46:33: error: unknown type name 'sdScene'    static string YAMLFromScene(sdScene *scene);                                ^./sdSaver.h:130:35: error: use of undeclared identifier 'sdEntityCore'; did you mean 'sdEntity'?                    bool e1Core = sdEntityCore::isCoreDescriptor(e1.getEvent()->getDescriptor());                                  ^~~~~~~~~~~~                                  sdEntityclass sdEntity{      ^In file included from sdLoader.cpp:19:In file included from ./sdLoader.h:20:In file included from ./sdScene.h:23:In file included from ./sdEntityCore.h:22:In file included from ./sdMain.h:28:./sdSaver.h:130:49: error: no member named 'isCoreDescriptor' in 'sdEntity'                    bool e1Core = sdEntityCore::isCoreDescriptor(e1.getEvent()->getDescriptor());                                  ~~~~~~~~~~~~~~^./sdSaver.h:131:35: error: use of undeclared identifier 'sdEntityCore'; did you mean 'sdEntity'?                    bool e2Core = sdEntityCore::isCoreDescriptor(e2.getEvent()->getDescriptor());                                  ^~~~~~~~~~~~                                  sdEntityclass sdEntity{      ^In file included from sdLoader.cpp:19:In file included from ./sdLoader.h:20:In file included from ./sdScene.h:23:In file included from ./sdEntityCore.h:22:In file included from ./sdMain.h:28:./sdSaver.h:131:49: error: no member named 'isCoreDescriptor' in 'sdEntity'                    bool e2Core = sdEntityCore::isCoreDescriptor(e2.getEvent()->getDescriptor());                                  ~~~~~~~~~~~~~~^In file included from sdLoader.cpp:21:In file included from ./libs/libjson/libjson.h:4:./libs/libjson/_internal/Source/JSONDefs.h:157:6: warning: , Release build of libjson, but NDEBUG is not on [-W#warnings]                  #warning, Release build of libjson, but NDEBUG is not on                   ^1 warning and 9 errors generated.In file included from sdOSCResponder.cpp:17:In file included from ./sdOSCResponder.h:19:In file included from ./sdScene.h:23:In file included from ./sdEntityCore.h:22:In file included from ./sdMain.h:26:./sdLoader.h:34:12: error: unknown type name 'sdScene'    static sdScene sceneFromXML(string xmlString);           ^./sdLoader.h:39:12: error: unknown type name 'sdScene'    static sdScene sceneFromJSON(string jsonString);           ^./sdLoader.h:44:12: error: unknown type name 'sdScene'    static sdScene sceneFromYAML(string yamlString);           ^In file included from sdOSCResponder.cpp:17:In file included from ./sdOSCResponder.h:19:In file included from ./sdScene.h:23:In file included from ./sdEntityCore.h:22:In file included from ./sdMain.h:28:./sdSaver.h:36:32: error: unknown type name 'sdScene'    static string XMLFromScene(sdScene *scene);                               ^./sdSaver.h:41:33: error: unknown type name 'sdScene'    static string JSONFromScene(sdScene *scene);                                ^./sdSaver.h:46:33: error: unknown type name 'sdScene'    static string YAMLFromScene(sdScene *scene);                                ^./sdSaver.h:130:35: error: use of undeclared identifier 'sdEntityCore'; did you mean 'sdEntity'?                    bool e1Core = sdEntityCore::isCoreDescriptor(e1.getEvent()->getDescriptor());                                  ^~~~~~~~~~~~                                  sdEntityclass sdEntity{      ^In file included from sdOSCResponder.cpp:17:In file included from ./sdOSCResponder.h:19:In file included from ./sdScene.h:23:In file included from ./sdEntityCore.h:22:In file included from ./sdMain.h:28:./sdSaver.h:130:49: error: no member named 'isCoreDescriptor' in 'sdEntity'                    bool e1Core = sdEntityCore::isCoreDescriptor(e1.getEvent()->getDescriptor());                                  ~~~~~~~~~~~~~~^./sdSaver.h:131:35: error: use of undeclared identifier 'sdEntityCore'; did you mean 'sdEntity'?                    bool e2Core = sdEntityCore::isCoreDescriptor(e2.getEvent()->getDescriptor());                                  ^~~~~~~~~~~~                                  sdEntityclass sdEntity{      ^In file included from sdOSCResponder.cpp:17:In file included from ./sdOSCResponder.h:19:In file included from ./sdScene.h:23:In file included from ./sdEntityCore.h:22:In file included from ./sdMain.h:28:./sdSaver.h:131:49: error: no member named 'isCoreDescriptor' in 'sdEntity'                    bool e2Core = sdEntityCore::isCoreDescriptor(e2.getEvent()->getDescriptor());                                  ~~~~~~~~~~~~~~^10 errors generated.In file included from sdSaver.cpp:20:In file included from ./sdMain.h:22:./sdEntityCore.h:94:9: error: unknown type name 'sdEntityExtension'        sdEntityExtension* responsibleExtension;        ^./sdEntityCore.h:101:13: error: use of undeclared identifier 'sdEntityExtension'    vector <sdEntityExtension*>extensionVector;            ^./sdEntityCore.h:101:31: error: expected expression    vector <sdEntityExtension*>extensionVector;                              ^./sdEntityCore.h:121:5: error: unknown type name 'sdEntityExtension'    sdEntityExtension* addExtension(EExtension extension);    ^./sdEntityCore.h:177:13: error: use of undeclared identifier 'sdEntityExtension'    vector <sdEntityExtension*>getExtensionVector(void);            ^./sdEntityCore.h:177:31: error: expected expression    vector <sdEntityExtension*>getExtensionVector(void);                              ^./sdEntityCore.h:180:5: error: unknown type name 'sdEntityExtension'    sdEntityExtension* getExtension(EExtension extension);    ^./sdEntityCore.h:183:5: error: unknown type name 'sdEntityExtension'    sdEntityExtension* getResponsibleExtension(EDescriptor descriptor);    ^./sdEntityCore.h:238:16: error: use of undeclared identifier 'sdEntityExtension'inline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){               ^./sdEntityCore.h:238:34: error: expected expressioninline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){                                 ^In file included from sdSaver.cpp:22:In file included from ./libs/libjson/_internal/Source/JSONNode.h:4:In file included from ./libs/libjson/_internal/Source/JSONDebug.h:4:./libs/libjson/_internal/Source/JSONDefs.h:157:6: warning: , Release build of libjson, but NDEBUG is not on [-W#warnings]                  #warning, Release build of libjson, but NDEBUG is not on                   ^sdSaver.cpp:125:67: error: no matching member function for call to 'getEventSet'            multiset<sdEvent*, sdEventCompare> eventSet = entity->getEventSet();                                                          ~~~~~~~~^~~~~~~~~~~    multiset<sdEvent*, sdEventCompare> getEventSet(void);                                       ^    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end);                                       ^    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);                                       ^    multiset<sdEvent*, sdEventCompare> getEventSet(double time);                                       ^sdSaver.cpp:224:67: error: no matching member function for call to 'getEventSet'            multiset<sdEvent*, sdEventCompare> eventSet = entity->getEventSet();                                                          ~~~~~~~~^~~~~~~~~~~    multiset<sdEvent*, sdEventCompare> getEventSet(void);                                       ^    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end);                                       ^    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);                                       ^    multiset<sdEvent*, sdEventCompare> getEventSet(double time);                                       ^1 warning and 12 errors generated.In file included from sdScene.cpp:20:In file included from ./sdMain.h:22:./sdEntityCore.h:94:9: error: unknown type name 'sdEntityExtension'        sdEntityExtension* responsibleExtension;        ^./sdEntityCore.h:101:13: error: use of undeclared identifier 'sdEntityExtension'    vector <sdEntityExtension*>extensionVector;            ^./sdEntityCore.h:101:31: error: expected expression    vector <sdEntityExtension*>extensionVector;                              ^./sdEntityCore.h:121:5: error: unknown type name 'sdEntityExtension'    sdEntityExtension* addExtension(EExtension extension);    ^./sdEntityCore.h:177:13: error: use of undeclared identifier 'sdEntityExtension'    vector <sdEntityExtension*>getExtensionVector(void);            ^./sdEntityCore.h:177:31: error: expected expression    vector <sdEntityExtension*>getExtensionVector(void);                              ^./sdEntityCore.h:180:5: error: unknown type name 'sdEntityExtension'    sdEntityExtension* getExtension(EExtension extension);    ^./sdEntityCore.h:183:5: error: unknown type name 'sdEntityExtension'    sdEntityExtension* getResponsibleExtension(EDescriptor descriptor);    ^./sdEntityCore.h:238:16: error: use of undeclared identifier 'sdEntityExtension'inline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){               ^./sdEntityCore.h:238:34: error: expected expressioninline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){                                 ^sdScene.cpp:197:26: error: cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'        report.eventSet= entityCore->getNextEventSet(time);                         ^~~~~~~~~~sdScene.cpp:215:26: error: cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'        report.eventSet= entityCore->getPreviousEventSet(time);                         ^~~~~~~~~~sdScene.cpp:278:38: error: no matching member function for call to 'getEventSet'        report.eventSet= entityCore->getEventSet(time);                         ~~~~~~~~~~~~^~~~~~~~~~~    multiset<sdEvent*, sdEventCompare> getEventSet(double time);                                       ^    multiset<sdEvent*, sdEventCompare> getEventSet(void);                                       ^    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end);                                       ^    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);                                       ^sdScene.cpp:294:38: error: no matching member function for call to 'getEventSet'        report.eventSet= entityCore->getEventSet(start, end);                         ~~~~~~~~~~~~^~~~~~~~~~~    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end);                                       ^    multiset<sdEvent*, sdEventCompare> getEventSet(void);                                       ^    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);                                       ^    multiset<sdEvent*, sdEventCompare> getEventSet(double time);                                       ^sdScene.cpp:322:40: error: cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'        cout << "number of events:" << (*it)->getNumberOfEvents()<< endl;                                       ^~~~~sdScene.cpp:323:60: error: no matching member function for call to 'getEventSet'        multiset <sdEvent*, sdEventCompare> evnts = (*it)->getEventSet();                                                    ~~~~~~~^~~~~~~~~~~    multiset<sdEvent*, sdEventCompare> getEventSet(void);                                       ^    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end);                                       ^    multiset<sdEvent*, sdEventCompare> getEventSet(double start, double end, EDescriptor descriptor);                                       ^    multiset<sdEvent*, sdEventCompare> getEventSet(double time);                                       ^16 errors generated.make[1]: *** [libspatdif.dylib] Error 1make: [all] Error 2 (ignored)Showing first 200 notices onlyCommand /usr/bin/make emitted errors but did not return a nonzero exit code to indicate failure310(21%IDEActivityLogMessage2@49"g++ -arch i386 -c ./libs/tinyxml2/tinyxml2.cpp 	-413814352#0#49#-0#-----2@23"make -C ./libs/libjson-413814356#49#23#-0#-----2@61"============================================================-413814356#72#61#-0#-----2@43"libjson version: 7.6.1 target:  OS: Darwin-413814356#133#43#-0#-----2@61"============================================================-413814356#176#61#-0#-----2@24"mkdir -p Objects_static-413814356#237#24#-0#-----2@8"Archive-413814356#261#8#-0#-----2@22"cd Objects_static ; \-413814356#269#22#-0#-----2@223"	ar -cvq libjson.a internalJSONNode.o JSONAllocator.o JSONChildren.o JSONDebug.o JSONIterators.o JSONMemory.o JSONNode.o JSONNode_Mutex.o JSONPreparse.o JSONStream.o JSONValidator.o JSONWorker.o JSONWriter.o libjson.o  ; \-413814356#291#223#-0#-----2@21"	mv -f libjson.a ../-413814356#514#21#-0#-----2@143"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: libjson.a(JSONAllocator.o) has no symbols-413814357#535#143#-0#-----2@139"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: libjson.a(JSONDebug.o) has no symbols-413814357#678#139#-0#-----2@140"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: libjson.a(JSONMemory.o) has no symbols-413814357#817#140#-0#-----2@144"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: libjson.a(JSONNode_Mutex.o) has no symbols-413814357#957#144#-0#-----2@142"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: libjson.a(JSONPreparse.o) has no symbols-413814357#1101#142#-0#-----2@137"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: libjson.a(libjson.o) has no symbols-413814357#1243#137#-0#-----2@23"q - internalJSONNode.o-413814357#1380#23#-0#-----2@20"q - JSONAllocator.o-413814357#1403#20#-0#-----2@19"q - JSONChildren.o-413814357#1423#19#-0#-----2@16"q - JSONDebug.o-413814357#1442#16#-0#-----2@20"q - JSONIterators.o-413814357#1458#20#-0#-----2@17"q - JSONMemory.o-413814357#1478#17#-0#-----2@15"q - JSONNode.o-413814357#1495#15#-0#-----2@21"q - JSONNode_Mutex.o-413814357#1510#21#-0#-----2@19"q - JSONPreparse.o-413814357#1531#19#-0#-----2@17"q - JSONStream.o-413814357#1550#17#-0#-----2@20"q - JSONValidator.o-413814357#1567#20#-0#-----2@17"q - JSONWorker.o-413814357#1587#17#-0#-----2@17"q - JSONWriter.o-413814357#1604#17#-0#-----2@14"q - libjson.o-413814357#1621#14#-0#-----2@14"Archive: Done-413814357#1635#14#-0#-----2@61"============================================================-413814357#1649#61#-0#-----2@5"Done-413814357#1710#5#-0#-----2@61"============================================================-413814357#1715#61#-0#-----2@31"cp ./libs/libjson/libjson.a ./-413814357#1776#31#-0#-----2@159"g++ -g -O0 -arch i386 -o libspatdif.dylib -dynamiclib -lstdc++ -I./libs/tinyxml2 -I./libs/libjson -I./libs/libjson/_internal/Source tinyxml2.o libjson.a *.cpp-413814357#1807#159#-0#-----2@39"In file included from sdEntity.cpp:17:-413814358#1966#39#-0#-----2@39"In file included from ./sdEntity.h:23:-413814358#2005#39#-0#-----2@37"In file included from ./sdMain.h:22:-413814358#2044#37#-0#-----2@19"Expected class name-413814358#2081#51#-2#-23%DVTTextDocumentLocation3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^29#26#29#26#18446744073709551615#0#29"Shell Script Invocation Error--2@35"class sdEventCore: public sdEvent{-413814358#2132#35#-0#-----2@28"                          ^-413814358#2167#28#-0#-----2@19"Expected class name-413814358#2195#51#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^84#27#84#27#18446744073709551615#0#29"Shell Script Invocation Error--2@37"class sdEntityCore: public sdEntity{-413814358#2246#37#-0#-----2@29"                           ^-413814358#2283#29#-0#-----2@37"Unknown type name 'sdEntityExtension'-413814358#2312#68#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^93#8#93#8#18446744073709551615#0#29"Shell Script Invocation Error--2@49"        sdEntityExtension* responsibleExtension;-413814358#2380#49#-0#-----2@10"        ^-413814358#2429#10#-0#-----2@48"Use of undeclared identifier 'sdEntityExtension'-413814358#2439#81#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^100#12#100#12#18446744073709551615#0#29"Shell Script Invocation Error--2@48"    vector <sdEntityExtension*>extensionVector;-413814358#2520#48#-0#-----2@14"            ^-413814358#2568#14#-0#-----2@19"Expected expression-413814358#2582#52#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^100#30#100#30#18446744073709551615#0#29"Shell Script Invocation Error--2@48"    vector <sdEntityExtension*>extensionVector;-413814358#2634#48#-0#-----2@32"                              ^-413814358#2682#32#-0#-----2@37"Unknown type name 'sdEntityExtension'-413814358#2714#69#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^120#4#120#4#18446744073709551615#0#29"Shell Script Invocation Error--2@59"    sdEntityExtension* addExtension(EExtension extension);-413814358#2783#59#-0#-----2@6"    ^-413814358#2842#6#-0#-----2@27"Unknown type name 'sdEvent'-413814358#2848#59#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^159#4#159#4#18446744073709551615#0#29"Shell Script Invocation Error--2@73"    sdEvent* addEvent(double time, EDescriptor descriptor, void* value);-413814358#2907#73#-0#-----2@6"    ^-413814358#2980#6#-0#-----2@27"Unknown type name 'sdEvent'-413814358#2986#59#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^162#4#162#4#18446744073709551615#0#29"Shell Script Invocation Error--2@69"    sdEvent* addEvent(string time, string descriptor, string value);-413814358#3045#69#-0#-----2@6"    ^-413814358#3114#6#-0#-----2@48"Use of undeclared identifier 'sdEntityExtension'-413814358#3120#81#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^176#12#176#12#18446744073709551615#0#29"Shell Script Invocation Error--2@57"    vector <sdEntityExtension*>getExtensionVector(void);-413814358#3201#57#-0#-----2@14"            ^-413814358#3258#14#-0#-----2@19"Expected expression-413814358#3272#52#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^176#30#176#30#18446744073709551615#0#29"Shell Script Invocation Error--2@57"    vector <sdEntityExtension*>getExtensionVector(void);-413814358#3324#57#-0#-----2@32"                              ^-413814358#3381#32#-0#-----2@37"Unknown type name 'sdEntityExtension'-413814358#3413#69#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^179#4#179#4#18446744073709551615#0#29"Shell Script Invocation Error--2@59"    sdEntityExtension* getExtension(EExtension extension);-413814358#3482#59#-0#-----2@6"    ^-413814358#3541#6#-0#-----2@37"Unknown type name 'sdEntityExtension'-413814358#3547#69#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^182#4#182#4#18446744073709551615#0#29"Shell Script Invocation Error--2@72"    sdEntityExtension* getResponsibleExtension(EDescriptor descriptor);-413814358#3616#72#-0#-----2@6"    ^-413814358#3688#6#-0#-----2@27"Unknown type name 'sdEvent'-413814358#3694#59#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^191#4#191#4#18446744073709551615#0#29"Shell Script Invocation Error--2@60"    sdEvent* getEvent(double time, EDescriptor descriptor);-413814358#3753#60#-0#-----2@6"    ^-413814358#3813#6#-0#-----2@27"Unknown type name 'sdEvent'-413814358#3819#59#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^198#4#198#4#18446744073709551615#0#29"Shell Script Invocation Error--2@64"    sdEvent* getNextEvent(double time, EDescriptor descriptor);-413814358#3878#64#-0#-----2@6"    ^-413814358#3942#6#-0#-----2@27"Unknown type name 'sdEvent'-413814358#3948#59#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^204#4#204#4#18446744073709551615#0#29"Shell Script Invocation Error--2@52"    sdEvent* getFirstEvent(EDescriptor descriptor);-413814358#4007#52#-0#-----2@6"    ^-413814358#4059#6#-0#-----2@27"Unknown type name 'sdEvent'-413814358#4065#59#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^210#4#210#4#18446744073709551615#0#29"Shell Script Invocation Error--2@51"    sdEvent* getLastEvent(EDescriptor descriptor);-413814358#4124#51#-0#-----2@6"    ^-413814358#4175#6#-0#-----2@48"Use of undeclared identifier 'sdEntityExtension'-413814358#4181#81#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^237#15#237#15#18446744073709551615#0#29"Shell Script Invocation Error--2@74"inline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){-413814358#4262#74#-0#-----2@17"               ^-413814358#4336#17#-0#-----2@19"Expected expression-413814358#4353#52#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^237#33#237#33#18446744073709551615#0#29"Shell Script Invocation Error--2@74"inline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){-413814358#4405#74#-0#-----2@35"                                 ^-413814358#4479#35#-0#-----2@39"In file included from sdEntity.cpp:17:-413814358#4514#39#-0#-----2@39"In file included from ./sdEntity.h:23:-413814358#4553#39#-0#-----2@37"In file included from ./sdMain.h:23:-413814358#4592#37#-0#-----2@19"Expected class name-413814358#4629#56#-2#-3@69"file:///Users/chikashi/Development/spatdiflib/src/sdEntityExtension.h0000000000000000^30#32#30#32#18446744073709551615#0#29"Shell Script Invocation Error--2@42"class sdEntityExtension: public sdEntity{-413814358#4685#42#-0#-----2@34"                                ^-413814358#4727#34#-0#-----2@37"Too many errors emitted, stopping now-413814358#4761#68#-2#--29"Shell Script Invocation Error--2@21"20 errors generated.-413814358#4829#21#-0#-----2@43"In file included from sdEntityCore.cpp:18:-413814359#4850#43#-0#-----2@37"In file included from ./sdMain.h:22:-413814359#4893#37#-0#-----2@37"Unknown type name 'sdEntityExtension'-413814359#4930#68#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^93#8#93#8#18446744073709551615#0#29"Shell Script Invocation Error--2@49"        sdEntityExtension* responsibleExtension;-413814359#4998#49#-0#-----2@10"        ^-413814359#5047#10#-0#-----2@48"Use of undeclared identifier 'sdEntityExtension'-413814359#5057#81#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^100#12#100#12#18446744073709551615#0#29"Shell Script Invocation Error--2@48"    vector <sdEntityExtension*>extensionVector;-413814359#5138#48#-0#-----2@14"            ^-413814359#5186#14#-0#-----2@19"Expected expression-413814359#5200#52#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^100#30#100#30#18446744073709551615#0#29"Shell Script Invocation Error--2@48"    vector <sdEntityExtension*>extensionVector;-413814359#5252#48#-0#-----2@32"                              ^-413814359#5300#32#-0#-----2@37"Unknown type name 'sdEntityExtension'-413814359#5332#69#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^120#4#120#4#18446744073709551615#0#29"Shell Script Invocation Error--2@59"    sdEntityExtension* addExtension(EExtension extension);-413814359#5401#59#-0#-----2@6"    ^-413814359#5460#6#-0#-----2@48"Use of undeclared identifier 'sdEntityExtension'-413814359#5466#81#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^176#12#176#12#18446744073709551615#0#29"Shell Script Invocation Error--2@57"    vector <sdEntityExtension*>getExtensionVector(void);-413814359#5547#57#-0#-----2@14"            ^-413814359#5604#14#-0#-----2@19"Expected expression-413814359#5618#52#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^176#30#176#30#18446744073709551615#0#29"Shell Script Invocation Error--2@57"    vector <sdEntityExtension*>getExtensionVector(void);-413814359#5670#57#-0#-----2@32"                              ^-413814359#5727#32#-0#-----2@37"Unknown type name 'sdEntityExtension'-413814359#5759#69#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^179#4#179#4#18446744073709551615#0#29"Shell Script Invocation Error--2@59"    sdEntityExtension* getExtension(EExtension extension);-413814359#5828#59#-0#-----2@6"    ^-413814359#5887#6#-0#-----2@37"Unknown type name 'sdEntityExtension'-413814359#5893#69#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^182#4#182#4#18446744073709551615#0#29"Shell Script Invocation Error--2@72"    sdEntityExtension* getResponsibleExtension(EDescriptor descriptor);-413814359#5962#72#-0#-----2@6"    ^-413814359#6034#6#-0#-----2@48"Use of undeclared identifier 'sdEntityExtension'-413814359#6040#81#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^237#15#237#15#18446744073709551615#0#29"Shell Script Invocation Error--2@74"inline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){-413814359#6121#74#-0#-----2@17"               ^-413814359#6195#17#-0#-----2@19"Expected expression-413814359#6212#52#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^237#33#237#33#18446744073709551615#0#29"Shell Script Invocation Error--2@74"inline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){-413814359#6264#74#-0#-----2@35"                                 ^-413814359#6338#35#-0#-----2@95"Cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'-413814359#6373#128#-2#-3@66"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.cpp0000000000000000^290#25#290#25#18446744073709551615#0#29"Shell Script Invocation Error--2@53"        return sdEntity::getValue(time, descriptor);-413814359#6501#53#-0#-----2@34"                         ^~~~~~~~-413814359#6554#34#-0#-----2@102"Out-of-line definition of 'sdEntityCore::addExtension' differs from the declaration in the return type-413814359#6588#135#-2#-3@66"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.cpp0000000000000000^304#33#304#33#18446744073709551615#0#29"Shell Script Invocation Error--2@69"sdEntityExtension* sdEntityCore::addExtension(EExtension extension){-413814359#6723#69#-0#-----2@35"                                 ^-413814359#6792#35#-0#-----2@28"Previous declaration is here-413814359#6827#60#-0#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^120#23#120#23#18446744073709551615#0#30"Shell Script Invocation Notice--2@59"    sdEntityExtension* addExtension(EExtension extension);-413814359#6887#59#-0#-----2@25"                       ^-413814359#6946#25#-0#-----2@63"Calling a private constructor of class 'sdEntityExtensionMedia'-413814359#6971#96#-2#-3@66"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.cpp0000000000000000^308#57#308#57#18446744073709551615#0#29"Shell Script Invocation Error--2@83"            sdEntityExtensionMedia* mediaExtension = new sdEntityExtensionMedia();-413814359#7067#83#-0#-----2@59"                                                         ^-413814359#7150#59#-0#-----2@21"Declared private here-413814359#7209#61#-0#-3@74"file:///Users/chikashi/Development/spatdiflib/src/sdEntityExtensionMedia.h0000000000000000^85#4#85#4#18446744073709551615#0#30"Shell Script Invocation Notice--2@32"    sdEntityExtensionMedia(){};-413814359#7270#32#-0#-----2@6"    ^-413814359#7302#6#-0#-----2@102"Out-of-line definition of 'sdEntityCore::getExtension' differs from the declaration in the return type-413814359#7308#135#-2#-3@66"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.cpp0000000000000000^340#33#340#33#18446744073709551615#0#29"Shell Script Invocation Error--2@69"sdEntityExtension* sdEntityCore::getExtension(EExtension extension){-413814359#7443#69#-0#-----2@35"                                 ^-413814359#7512#35#-0#-----2@28"Previous declaration is here-413814359#7547#60#-0#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^179#23#179#23#18446744073709551615#0#30"Shell Script Invocation Notice--2@59"    sdEntityExtension* getExtension(EExtension extension);-413814359#7607#59#-0#-----2@25"                       ^-413814359#7666#25#-0#-----2@113"Out-of-line definition of 'sdEntityCore::getResponsibleExtension' differs from the declaration in the return type-413814359#7691#146#-2#-3@66"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.cpp0000000000000000^352#33#352#33#18446744073709551615#0#29"Shell Script Invocation Error--2@82"sdEntityExtension* sdEntityCore::getResponsibleExtension(EDescriptor descriptor){-413814359#7837#82#-0#-----2@35"                                 ^-413814359#7919#35#-0#-----2@28"Previous declaration is here-413814359#7954#60#-0#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^182#23#182#23#18446744073709551615#0#30"Shell Script Invocation Notice--2@72"    sdEntityExtension* getResponsibleExtension(EDescriptor descriptor);-413814359#8014#72#-0#-----2@25"                       ^-413814359#8086#25#-0#-----2@95"Cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'-413814359#8111#128#-2#-3@66"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.cpp0000000000000000^367#25#367#25#18446744073709551615#0#29"Shell Script Invocation Error--2@53"        return sdEntity::getEvent(time, descriptor);-413814359#8239#53#-0#-----2@34"                         ^~~~~~~~-413814359#8292#34#-0#-----2@95"Cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'-413814359#8326#128#-2#-3@66"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.cpp0000000000000000^380#25#380#25#18446744073709551615#0#29"Shell Script Invocation Error--2@57"        return sdEntity::getNextEvent(time, descriptor);-413814359#8454#57#-0#-----2@38"                         ^~~~~~~~~~~~-413814359#8511#38#-0#-----2@95"Cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'-413814359#8549#128#-2#-3@66"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.cpp0000000000000000^393#25#393#25#18446744073709551615#0#29"Shell Script Invocation Error--2@52"        return sdEntity::getFirstEvent(descriptor);-413814359#8677#52#-0#-----2@39"                         ^~~~~~~~~~~~~-413814359#8729#39#-0#-----2@95"Cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'-413814359#8768#128#-2#-3@66"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.cpp0000000000000000^406#25#406#25#18446744073709551615#0#29"Shell Script Invocation Error--2@51"        return sdEntity::getLastEvent(descriptor);-413814359#8896#51#-0#-----2@38"                         ^~~~~~~~~~~~-413814359#8947#38#-0#-----2@21"19 errors generated.-413814359#8985#21#-0#-----2@53"In file included from sdEntityExtensionMedia.cpp:16:-413814359#9006#53#-0#-----2@53"In file included from ./sdEntityExtensionMedia.h:21:-413814359#9059#53#-0#-----2@48"In file included from ./sdEntityExtension.h:22:-413814359#9112#48#-0#-----2@39"In file included from ./sdEntity.h:23:-413814359#9160#39#-0#-----2@37"In file included from ./sdMain.h:22:-413814359#9199#37#-0#-----2@19"Expected class name-413814359#9236#51#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^29#26#29#26#18446744073709551615#0#29"Shell Script Invocation Error--2@35"class sdEventCore: public sdEvent{-413814359#9287#35#-0#-----2@28"                          ^-413814359#9322#28#-0#-----2@19"Expected class name-413814359#9350#51#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^84#27#84#27#18446744073709551615#0#29"Shell Script Invocation Error--2@37"class sdEntityCore: public sdEntity{-413814359#9401#37#-0#-----2@29"                           ^-413814359#9438#29#-0#-----2@37"Unknown type name 'sdEntityExtension'-413814359#9467#68#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^93#8#93#8#18446744073709551615#0#29"Shell Script Invocation Error--2@49"        sdEntityExtension* responsibleExtension;-413814359#9535#49#-0#-----2@10"        ^-413814359#9584#10#-0#-----2@48"Use of undeclared identifier 'sdEntityExtension'-413814359#9594#81#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^100#12#100#12#18446744073709551615#0#29"Shell Script Invocation Error--2@48"    vector <sdEntityExtension*>extensionVector;-413814359#9675#48#-0#-----2@14"            ^-413814359#9723#14#-0#-----2@19"Expected expression-413814359#9737#52#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^100#30#100#30#18446744073709551615#0#29"Shell Script Invocation Error--2@48"    vector <sdEntityExtension*>extensionVector;-413814359#9789#48#-0#-----2@32"                              ^-413814359#9837#32#-0#-----2@37"Unknown type name 'sdEntityExtension'-413814359#9869#69#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^120#4#120#4#18446744073709551615#0#29"Shell Script Invocation Error--2@59"    sdEntityExtension* addExtension(EExtension extension);-413814359#9938#59#-0#-----2@6"    ^-413814359#9997#6#-0#-----2@27"Unknown type name 'sdEvent'-413814359#10003#59#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^159#4#159#4#18446744073709551615#0#29"Shell Script Invocation Error--2@73"    sdEvent* addEvent(double time, EDescriptor descriptor, void* value);-413814359#10062#73#-0#-----2@6"    ^-413814359#10135#6#-0#-----2@27"Unknown type name 'sdEvent'-413814359#10141#59#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^162#4#162#4#18446744073709551615#0#29"Shell Script Invocation Error--2@69"    sdEvent* addEvent(string time, string descriptor, string value);-413814359#10200#69#-0#-----2@6"    ^-413814359#10269#6#-0#-----2@48"Use of undeclared identifier 'sdEntityExtension'-413814359#10275#81#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^176#12#176#12#18446744073709551615#0#29"Shell Script Invocation Error--2@57"    vector <sdEntityExtension*>getExtensionVector(void);-413814359#10356#57#-0#-----2@14"            ^-413814359#10413#14#-0#-----2@19"Expected expression-413814359#10427#52#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^176#30#176#30#18446744073709551615#0#29"Shell Script Invocation Error--2@57"    vector <sdEntityExtension*>getExtensionVector(void);-413814359#10479#57#-0#-----2@32"                              ^-413814359#10536#32#-0#-----2@37"Unknown type name 'sdEntityExtension'-413814359#10568#69#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^179#4#179#4#18446744073709551615#0#29"Shell Script Invocation Error--2@59"    sdEntityExtension* getExtension(EExtension extension);-413814359#10637#59#-0#-----2@6"    ^-413814359#10696#6#-0#-----2@37"Unknown type name 'sdEntityExtension'-413814359#10702#69#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^182#4#182#4#18446744073709551615#0#29"Shell Script Invocation Error--2@72"    sdEntityExtension* getResponsibleExtension(EDescriptor descriptor);-413814359#10771#72#-0#-----2@6"    ^-413814359#10843#6#-0#-----2@27"Unknown type name 'sdEvent'-413814359#10849#59#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^191#4#191#4#18446744073709551615#0#29"Shell Script Invocation Error--2@60"    sdEvent* getEvent(double time, EDescriptor descriptor);-413814359#10908#60#-0#-----2@6"    ^-413814359#10968#6#-0#-----2@27"Unknown type name 'sdEvent'-413814359#10974#59#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^198#4#198#4#18446744073709551615#0#29"Shell Script Invocation Error--2@64"    sdEvent* getNextEvent(double time, EDescriptor descriptor);-413814359#11033#64#-0#-----2@6"    ^-413814359#11097#6#-0#-----2@27"Unknown type name 'sdEvent'-413814359#11103#59#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^204#4#204#4#18446744073709551615#0#29"Shell Script Invocation Error--2@52"    sdEvent* getFirstEvent(EDescriptor descriptor);-413814359#11162#52#-0#-----2@6"    ^-413814359#11214#6#-0#-----2@27"Unknown type name 'sdEvent'-413814359#11220#59#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^210#4#210#4#18446744073709551615#0#29"Shell Script Invocation Error--2@51"    sdEvent* getLastEvent(EDescriptor descriptor);-413814359#11279#51#-0#-----2@6"    ^-413814359#11330#6#-0#-----2@48"Use of undeclared identifier 'sdEntityExtension'-413814359#11336#81#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^237#15#237#15#18446744073709551615#0#29"Shell Script Invocation Error--2@74"inline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){-413814359#11417#74#-0#-----2@17"               ^-413814359#11491#17#-0#-----2@19"Expected expression-413814359#11508#52#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^237#33#237#33#18446744073709551615#0#29"Shell Script Invocation Error--2@74"inline vector <sdEntityExtension*>sdEntityCore::getExtensionVector(void){-413814359#11560#74#-0#-----2@35"                                 ^-413814359#11634#35#-0#-----2@53"In file included from sdEntityExtensionMedia.cpp:16:-413814359#11669#53#-0#-----2@53"In file included from ./sdEntityExtensionMedia.h:21:-413814359#11722#53#-0#-----2@48"In file included from ./sdEntityExtension.h:22:-413814359#11775#48#-0#-----2@39"In file included from ./sdEntity.h:23:-413814359#11823#39#-0#-----2@37"In file included from ./sdMain.h:26:-413814359#11862#37#-0#-----2@39"In file included from ./sdLoader.h:20:-413814359#11899#39#-0#-----2@38"Use of undeclared identifier 'sdEvent'-413814359#11938#65#-2#-3@59"file:///Users/chikashi/Development/spatdiflib/src/sdScene.h0000000000000000^30#13#30#13#18446744073709551615#0#29"Shell Script Invocation Error--2@49"    multiset<sdEvent*, sdEventCompare> eventSet;-413814359#12003#49#-0#-----2@15"             ^-413814359#12052#15#-0#-----2@37"Too many errors emitted, stopping now-413814359#12067#68#-2#--29"Shell Script Invocation Error--2@21"20 errors generated.-413814359#12135#21#-0#-----2@39"In file included from sdLoader.cpp:19:-413814360#12156#39#-0#-----2@39"In file included from ./sdLoader.h:20:-413814360#12195#39#-0#-----2@38"In file included from ./sdScene.h:23:-413814360#12234#38#-0#-----2@43"In file included from ./sdEntityCore.h:22:-413814360#12272#43#-0#-----2@37"In file included from ./sdMain.h:27:-413814360#12315#37#-0#-----2@27"Unknown type name 'sdScene'-413814360#12352#60#-2#-3@66"file:///Users/chikashi/Development/spatdiflib/src/sdOSCResponder.h0000000000000000^27#4#27#4#18446744073709551615#0#29"Shell Script Invocation Error--2@20"    sdScene *scene;-413814360#12412#20#-0#-----2@6"    ^-413814360#12432#6#-0#-----2@27"Unknown type name 'sdScene'-413814360#12438#61#-2#-3@66"file:///Users/chikashi/Development/spatdiflib/src/sdOSCResponder.h0000000000000000^45#19#45#19#18446744073709551615#0#29"Shell Script Invocation Error--2@36"    sdOSCResponder(sdScene *scene);-413814360#12499#36#-0#-----2@21"                   ^-413814360#12535#21#-0#-----2@39"In file included from sdLoader.cpp:19:-413814360#12556#39#-0#-----2@39"In file included from ./sdLoader.h:20:-413814360#12595#39#-0#-----2@38"In file included from ./sdScene.h:23:-413814360#12634#38#-0#-----2@43"In file included from ./sdEntityCore.h:22:-413814360#12672#43#-0#-----2@37"In file included from ./sdMain.h:28:-413814360#12715#37#-0#-----2@27"Unknown type name 'sdScene'-413814360#12752#54#-2#-3@59"file:///Users/chikashi/Development/spatdiflib/src/sdSaver.h0000000000000000^35#31#35#31#18446744073709551615#0#29"Shell Script Invocation Error--2@48"    static string XMLFromScene(sdScene *scene);-413814360#12806#48#-0#-----2@33"                               ^-413814360#12854#33#-0#-----2@27"Unknown type name 'sdScene'-413814360#12887#54#-2#-3@59"file:///Users/chikashi/Development/spatdiflib/src/sdSaver.h0000000000000000^40#32#40#32#18446744073709551615#0#29"Shell Script Invocation Error--2@27"Unknown type name 'sdScene'-413814360#13024#54#-2#-3@59"file:///Users/chikashi/Development/spatdiflib/src/sdSaver.h0000000000000000^45#32#45#32#18446744073709551615#0#29"Shell Script Invocation Error--2@69"Use of undeclared identifier 'sdEntityCore'; did you mean 'sdEntity'?-413814360#13161#97#-2#-3@59"file:///Users/chikashi/Development/spatdiflib/src/sdSaver.h0000000000000000^129#34#129#34#18446744073709551615#0#29"Shell Script Invocation Error--2@48"No member named 'isCoreDescriptor' in 'sdEntity'-413814360#13666#76#-2#-3@59"file:///Users/chikashi/Development/spatdiflib/src/sdSaver.h0000000000000000^129#48#129#48#18446744073709551615#0#29"Shell Script Invocation Error--2@69"Use of undeclared identifier 'sdEntityCore'; did you mean 'sdEntity'?-413814360#13890#97#-2#-3@59"file:///Users/chikashi/Development/spatdiflib/src/sdSaver.h0000000000000000^130#34#130#34#18446744073709551615#0#29"Shell Script Invocation Error--2@48"No member named 'isCoreDescriptor' in 'sdEntity'-413814360#14395#76#-2#-3@59"file:///Users/chikashi/Development/spatdiflib/src/sdSaver.h0000000000000000^130#48#130#48#18446744073709551615#0#29"Shell Script Invocation Error--2@48", Release build of libjson, but NDEBUG is not on-413814360#14708#122#-1#-3@90"file:///Users/chikashi/Development/spatdiflib/src/libs/libjson/_internal/Source/JSONDefs.h0000000000000000^156#5#156#5#18446744073709551615#0#31"Shell Script Invocation Warning--2@27"Unknown type name 'sdScene'-413814361#15168#55#-2#-3@60"file:///Users/chikashi/Development/spatdiflib/src/sdLoader.h0000000000000000^33#11#33#11#18446744073709551615#0#29"Shell Script Invocation Error--2@27"Unknown type name 'sdScene'-413814361#15287#55#-2#-3@60"file:///Users/chikashi/Development/spatdiflib/src/sdLoader.h0000000000000000^38#11#38#11#18446744073709551615#0#29"Shell Script Invocation Error--2@27"Unknown type name 'sdScene'-413814361#15408#55#-2#-3@60"file:///Users/chikashi/Development/spatdiflib/src/sdLoader.h0000000000000000^43#11#43#11#18446744073709551615#0#29"Shell Script Invocation Error--2@27"Unknown type name 'sdScene'-413814361#15737#54#-2#-3@59"file:///Users/chikashi/Development/spatdiflib/src/sdSaver.h0000000000000000^35#31#35#31#18446744073709551615#0#29"Shell Script Invocation Error--2@27"Unknown type name 'sdScene'-413814361#15872#54#-2#-3@59"file:///Users/chikashi/Development/spatdiflib/src/sdSaver.h0000000000000000^40#32#40#32#18446744073709551615#0#29"Shell Script Invocation Error--2@27"Unknown type name 'sdScene'-413814361#16009#54#-2#-3@59"file:///Users/chikashi/Development/spatdiflib/src/sdSaver.h0000000000000000^45#32#45#32#18446744073709551615#0#29"Shell Script Invocation Error--2@69"Use of undeclared identifier 'sdEntityCore'; did you mean 'sdEntity'?-413814361#16146#97#-2#-3@59"file:///Users/chikashi/Development/spatdiflib/src/sdSaver.h0000000000000000^129#34#129#34#18446744073709551615#0#29"Shell Script Invocation Error--2@48"No member named 'isCoreDescriptor' in 'sdEntity'-413814361#16663#76#-2#-3@59"file:///Users/chikashi/Development/spatdiflib/src/sdSaver.h0000000000000000^129#48#129#48#18446744073709551615#0#29"Shell Script Invocation Error--2@69"Use of undeclared identifier 'sdEntityCore'; did you mean 'sdEntity'?-413814361#16887#97#-2#-3@59"file:///Users/chikashi/Development/spatdiflib/src/sdSaver.h0000000000000000^130#34#130#34#18446744073709551615#0#29"Shell Script Invocation Error--2@48"No member named 'isCoreDescriptor' in 'sdEntity'-413814361#17404#76#-2#-3@59"file:///Users/chikashi/Development/spatdiflib/src/sdSaver.h0000000000000000^130#48#130#48#18446744073709551615#0#29"Shell Script Invocation Error--2@37"Unknown type name 'sdEntityExtension'-413814361#17724#68#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^93#8#93#8#18446744073709551615#0#29"Shell Script Invocation Error--2@48"Use of undeclared identifier 'sdEntityExtension'-413814361#17851#81#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^100#12#100#12#18446744073709551615#0#29"Shell Script Invocation Error--2@19"Expected expression-413814361#17994#52#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^100#30#100#30#18446744073709551615#0#29"Shell Script Invocation Error--2@37"Unknown type name 'sdEntityExtension'-413814361#18126#69#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^120#4#120#4#18446744073709551615#0#29"Shell Script Invocation Error--2@48"Use of undeclared identifier 'sdEntityExtension'-413814361#18260#81#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^176#12#176#12#18446744073709551615#0#29"Shell Script Invocation Error--2@19"Expected expression-413814361#18412#52#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^176#30#176#30#18446744073709551615#0#29"Shell Script Invocation Error--2@37"Unknown type name 'sdEntityExtension'-413814361#18553#69#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^179#4#179#4#18446744073709551615#0#29"Shell Script Invocation Error--2@37"Unknown type name 'sdEntityExtension'-413814361#18687#69#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^182#4#182#4#18446744073709551615#0#29"Shell Script Invocation Error--2@48"Use of undeclared identifier 'sdEntityExtension'-413814361#18834#81#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^237#15#237#15#18446744073709551615#0#29"Shell Script Invocation Error--2@19"Expected expression-413814361#19006#52#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^237#33#237#33#18446744073709551615#0#29"Shell Script Invocation Error--2@48", Release build of libjson, but NDEBUG is not on-413814361#19342#122#-1#-3@90"file:///Users/chikashi/Development/spatdiflib/src/libs/libjson/_internal/Source/JSONDefs.h0000000000000000^156#5#156#5#18446744073709551615#0#31"Shell Script Invocation Warning--2@53"No matching member function for call to 'getEventSet'-413814361#19560#81#-2#-3@61"file:///Users/chikashi/Development/spatdiflib/src/sdSaver.cpp0000000000000000^124#66#124#66#18446744073709551615#0#29"Shell Script Invocation Error--2@53"No matching member function for call to 'getEventSet'-413814361#20267#81#-2#-3@61"file:///Users/chikashi/Development/spatdiflib/src/sdSaver.cpp0000000000000000^223#66#223#66#18446744073709551615#0#29"Shell Script Invocation Error--2@37"Unknown type name 'sdEntityExtension'-413814362#21084#68#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^93#8#93#8#18446744073709551615#0#29"Shell Script Invocation Error--2@48"Use of undeclared identifier 'sdEntityExtension'-413814362#21211#81#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^100#12#100#12#18446744073709551615#0#29"Shell Script Invocation Error--2@19"Expected expression-413814362#21354#52#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^100#30#100#30#18446744073709551615#0#29"Shell Script Invocation Error--2@37"Unknown type name 'sdEntityExtension'-413814362#21486#69#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^120#4#120#4#18446744073709551615#0#29"Shell Script Invocation Error--2@48"Use of undeclared identifier 'sdEntityExtension'-413814362#21620#81#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^176#12#176#12#18446744073709551615#0#29"Shell Script Invocation Error--2@19"Expected expression-413814362#21772#52#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^176#30#176#30#18446744073709551615#0#29"Shell Script Invocation Error--2@37"Unknown type name 'sdEntityExtension'-413814362#21913#69#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^179#4#179#4#18446744073709551615#0#29"Shell Script Invocation Error--2@37"Unknown type name 'sdEntityExtension'-413814362#22047#69#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^182#4#182#4#18446744073709551615#0#29"Shell Script Invocation Error--2@48"Use of undeclared identifier 'sdEntityExtension'-413814362#22194#81#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^237#15#237#15#18446744073709551615#0#29"Shell Script Invocation Error--2@19"Expected expression-413814362#22366#52#-2#-3@64"file:///Users/chikashi/Development/spatdiflib/src/sdEntityCore.h0000000000000000^237#33#237#33#18446744073709551615#0#29"Shell Script Invocation Error--2@95"Cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'-413814362#22527#123#-2#-3@61"file:///Users/chikashi/Development/spatdiflib/src/sdScene.cpp0000000000000000^196#25#196#25#18446744073709551615#0#29"Shell Script Invocation Error--2@95"Cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'-413814362#22746#123#-2#-3@61"file:///Users/chikashi/Development/spatdiflib/src/sdScene.cpp0000000000000000^214#25#214#25#18446744073709551615#0#29"Shell Script Invocation Error--2@53"No matching member function for call to 'getEventSet'-413814362#22969#81#-2#-3@61"file:///Users/chikashi/Development/spatdiflib/src/sdScene.cpp0000000000000000^277#37#277#37#18446744073709551615#0#29"Shell Script Invocation Error--2@53"No matching member function for call to 'getEventSet'-413814362#23622#81#-2#-3@61"file:///Users/chikashi/Development/spatdiflib/src/sdScene.cpp0000000000000000^293#37#293#37#18446744073709551615#0#29"Shell Script Invocation Error--2@95"Cannot initialize object parameter of type 'sdEntity' with an expression of type 'sdEntityCore'-413814362#24281#123#-2#-3@61"file:///Users/chikashi/Development/spatdiflib/src/sdScene.cpp0000000000000000^321#39#321#39#18446744073709551615#0#29"Shell Script Invocation Error--2@53"No matching member function for call to 'getEventSet'-413814362#24523#81#-2#-3@61"file:///Users/chikashi/Development/spatdiflib/src/sdScene.cpp0000000000000000^322#59#322#59#18446744073709551615#0#29"Shell Script Invocation Error--2@30"Showing first 200 notices only-413814363#18446744073709551615#0#-0#--21"Notice limit exceeded--2@95"Command /usr/bin/make emitted errors but did not return a nonzero exit code to indicate failure-413814363#18446744073709551615#0#-2#--29"Shell Script Invocation Error--0#0#1#--13535"ExternalBuildToolExecution libspatdif    cd /Users/chikashi/Development/spatdiflib/src    setenv ACTION     setenv ALTERNATE_GROUP staff    setenv ALTERNATE_MODE u+w,go-w,a+rX    setenv ALTERNATE_OWNER chikashi    setenv ALWAYS_SEARCH_USER_PATHS NO    setenv APPLE_INTERNAL_DEVELOPER_DIR /AppleInternal/Developer    setenv APPLE_INTERNAL_DIR /AppleInternal    setenv APPLE_INTERNAL_DOCUMENTATION_DIR /AppleInternal/Documentation    setenv APPLE_INTERNAL_LIBRARY_DIR /AppleInternal/Library    setenv APPLE_INTERNAL_TOOLS /AppleInternal/Developer/Tools    setenv APPLY_RULES_IN_COPY_FILES NO    setenv ARCHS x86_64    setenv AVAILABLE_PLATFORMS "iphonesimulator macosx iphoneos"    setenv BUILD_COMPONENTS "headers build"    setenv BUILD_DIR /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Products    setenv BUILD_ROOT /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Products    setenv BUILD_STYLE     setenv BUILD_VARIANTS normal    setenv BUILT_PRODUCTS_DIR /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Products/Debug    setenv CACHE_ROOT /var/folders/yy/2d7bhyx96l1bhfl6fcqqkgfh0000gn/C/com.apple.DeveloperTools/5.0.2-5A3005/Xcode    setenv CLANG_CXX_LANGUAGE_STANDARD gnu++0x    setenv CLANG_CXX_LIBRARY libc++    setenv CLANG_ENABLE_OBJC_ARC YES    setenv CLANG_WARN_BOOL_CONVERSION YES    setenv CLANG_WARN_CONSTANT_CONVERSION YES    setenv CLANG_WARN_DIRECT_OBJC_ISA_USAGE YES_ERROR    setenv CLANG_WARN_EMPTY_BODY YES    setenv CLANG_WARN_ENUM_CONVERSION YES    setenv CLANG_WARN_INT_CONVERSION YES    setenv CLANG_WARN_OBJC_ROOT_CLASS YES_ERROR    setenv CLANG_WARN__DUPLICATE_METHOD_MATCH YES    setenv CLASS_FILE_DIR /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Intermediates/libspatdif.build/Debug/libspatdif.build/JavaClasses    setenv CLONE_HEADERS NO    setenv CODE_SIGNING_ALLOWED NO    setenv COLOR_DIAGNOSTICS NO    setenv CONFIGURATION Debug    setenv CONFIGURATION_BUILD_DIR /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Products/Debug    setenv CONFIGURATION_TEMP_DIR /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Intermediates/libspatdif.build/Debug    setenv COPYING_PRESERVES_HFS_DATA NO    setenv COPY_PHASE_STRIP NO    setenv CREATE_INFOPLIST_SECTION_IN_BINARY NO    setenv DEAD_CODE_STRIPPING NO    setenv DEBUGGING_SYMBOLS YES    setenv DEFAULT_COMPILER com.apple.compilers.llvm.clang.1_0    setenv DEFAULT_KEXT_INSTALL_PATH /Library/Extensions    setenv DEPLOYMENT_LOCATION NO    setenv DEPLOYMENT_POSTPROCESSING NO    setenv DERIVED_FILES_DIR     setenv DERIVED_FILE_DIR /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Intermediates/libspatdif.build/Debug/libspatdif.build/DerivedSources    setenv DERIVED_SOURCES_DIR /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Intermediates/libspatdif.build/Debug/libspatdif.build/DerivedSources    setenv DEVELOPER_APPLICATIONS_DIR /Applications/Xcode.app/Contents/Developer/Applications    setenv DEVELOPER_BIN_DIR /Applications/Xcode.app/Contents/Developer/usr/bin    setenv DEVELOPER_DIR /Applications/Xcode.app/Contents/Developer    setenv DEVELOPER_FRAMEWORKS_DIR /Applications/Xcode.app/Contents/Developer/Library/Frameworks    setenv DEVELOPER_FRAMEWORKS_DIR_QUOTED /Applications/Xcode.app/Contents/Developer/Library/Frameworks    setenv DEVELOPER_LIBRARY_DIR /Applications/Xcode.app/Contents/Developer/Library    setenv DEVELOPER_SDK_DIR /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs    setenv DEVELOPER_TOOLS_DIR /Applications/Xcode.app/Contents/Developer/Tools    setenv DEVELOPER_USR_DIR /Applications/Xcode.app/Contents/Developer/usr    setenv DEVELOPMENT_LANGUAGE English    setenv DO_HEADER_SCANNING_IN_JAM NO    setenv DSTROOT /tmp/libspatdif.dst    setenv DT_TOOLCHAIN_DIR /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain    setenv DWARF_DSYM_FILE_NAME .dSYM    setenv DWARF_DSYM_FILE_SHOULD_ACCOMPANY_PRODUCT NO    setenv DWARF_DSYM_FOLDER_PATH /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Products/Debug    setenv EMBEDDED_PROFILE_NAME embedded.provisionprofile    setenv ENABLE_HEADER_DEPENDENCIES YES    setenv EXCLUDED_INSTALLSRC_SUBDIRECTORY_PATTERNS ".DS_Store .svn .git .hg CVS"    setenv EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES "*.nib *.lproj *.framework *.gch *.xcode* (*) .DS_Store CVS .svn .git .hg"    setenv FILE_LIST /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Intermediates/libspatdif.build/Debug/libspatdif.build/Objects/LinkFileList    setenv FRAMEWORK_VERSION A    setenv GCC3_VERSION 3.3    setenv GCC_C_LANGUAGE_STANDARD gnu99    setenv GCC_DYNAMIC_NO_PIC NO    setenv GCC_ENABLE_OBJC_EXCEPTIONS YES    setenv GCC_GENERATE_DEBUGGING_SYMBOLS YES    setenv GCC_OPTIMIZATION_LEVEL 0    setenv GCC_PREPROCESSOR_DEFINITIONS "DEBUG=1 "    setenv GCC_SYMBOLS_PRIVATE_EXTERN NO    setenv GCC_VERSION com.apple.compilers.llvm.clang.1_0    setenv GCC_WARN_64_TO_32_BIT_CONVERSION YES    setenv GCC_WARN_ABOUT_RETURN_TYPE YES_ERROR    setenv GCC_WARN_UNDECLARED_SELECTOR YES    setenv GCC_WARN_UNINITIALIZED_AUTOS YES    setenv GCC_WARN_UNUSED_FUNCTION YES    setenv GCC_WARN_UNUSED_VARIABLE YES    setenv GENERATE_MASTER_OBJECT_FILE NO    setenv GENERATE_PKGINFO_FILE NO    setenv GID 20    setenv GROUP staff    setenv HEADERMAP_INCLUDES_FLAT_ENTRIES_FOR_TARGET_BEING_BUILT YES    setenv HEADERMAP_INCLUDES_FRAMEWORK_ENTRIES_FOR_ALL_PRODUCT_TYPES YES    setenv HEADERMAP_INCLUDES_NONPUBLIC_NONPRIVATE_HEADERS YES    setenv HEADERMAP_INCLUDES_PROJECT_HEADERS YES    setenv HEADER_SEARCH_PATHS " /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"    setenv INFOPLIST_EXPAND_BUILD_SETTINGS YES    setenv INFOPLIST_OUTPUT_FORMAT same-as-input    setenv INFOPLIST_PREPROCESS NO    setenv INSTALL_DIR /tmp/libspatdif.dst    setenv INSTALL_GROUP staff    setenv INSTALL_MODE_FLAG u+w,go-w,a+rX    setenv INSTALL_OWNER chikashi    setenv INSTALL_ROOT /tmp/libspatdif.dst    setenv JAVA_APP_STUB /System/Library/Frameworks/JavaVM.framework/Resources/MacOS/JavaApplicationStub    setenv JAVA_ARCHIVE_CLASSES YES    setenv JAVA_ARCHIVE_TYPE JAR    setenv JAVA_COMPILER /usr/bin/javac    setenv JAVA_FRAMEWORK_RESOURCES_DIRS Resources    setenv JAVA_JAR_FLAGS cv    setenv JAVA_SOURCE_SUBDIR .    setenv JAVA_USE_DEPENDENCIES YES    setenv JAVA_ZIP_FLAGS -urg    setenv KEEP_PRIVATE_EXTERNS NO    setenv LD_DEPENDENCY_INFO_FILE //libspatdif_dependency_info.dat    setenv LD_GENERATE_MAP_FILE NO    setenv LD_MAP_FILE_PATH /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Intermediates/libspatdif.build/Debug/libspatdif.build/libspatdif-LinkMap--.txt    setenv LD_NO_PIE NO    setenv LD_QUOTE_LINKER_ARGUMENTS_FOR_COMPILER_DRIVER YES    setenv LEGACY_DEVELOPER_DIR /Applications/Xcode.app/Contents/PlugIns/Xcode3Core.ideplugin/Contents/SharedSupport/Developer    setenv LIBRARY_FLAG_NOSPACE YES    setenv LIBRARY_KEXT_INSTALL_PATH /Library/Extensions    setenv LINKER_DISPLAYS_MANGLED_NAMES NO    setenv LINK_WITH_STANDARD_LIBRARIES YES    setenv LOCAL_ADMIN_APPS_DIR /Applications/Utilities    setenv LOCAL_APPS_DIR /Applications    setenv LOCAL_DEVELOPER_DIR /Library/Developer    setenv LOCAL_LIBRARY_DIR /Library    setenv MACOSX_DEPLOYMENT_TARGET 10.9    setenv MAC_OS_X_PRODUCT_BUILD_VERSION 13B42    setenv MAC_OS_X_VERSION_ACTUAL 1091    setenv MAC_OS_X_VERSION_MAJOR 1090    setenv MAC_OS_X_VERSION_MINOR 0901    setenv MODULE_CACHE_DIR /Users/chikashi/Development/spatdiflib/src/bin/ModuleCache    setenv OBJECT_FILE_DIR /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Intermediates/libspatdif.build/Debug/libspatdif.build/Objects    setenv OBJROOT /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Intermediates    setenv ONLY_ACTIVE_ARCH YES    setenv OPTIMIZATION_LEVEL 0    setenv OS MACOS    setenv PATH_PREFIXES_EXCLUDED_FROM_HEADER_DEPENDENCIES "/usr/include /usr/local/include /System/Library/Frameworks /System/Library/PrivateFrameworks /Applications/Xcode.app/Contents/Developer/Headers /Applications/Xcode.app/Contents/Developer/SDKs /Applications/Xcode.app/Contents/Developer/Platforms"    setenv PLATFORM_NAME macosx    setenv PLIST_FILE_OUTPUT_FORMAT same-as-input    setenv PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR YES    setenv PRECOMP_DESTINATION_DIR /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Intermediates/libspatdif.build/Debug/libspatdif.build/PrefixHeaders    setenv PRESERVE_DEAD_CODE_INITS_AND_TERMS NO    setenv PRODUCT_NAME libspatdif    setenv PROFILING_CODE NO    setenv PROJECT libspatdif    setenv PROJECT_DERIVED_FILE_DIR /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Intermediates/libspatdif.build/DerivedSources    setenv PROJECT_DIR /Users/chikashi/Development/spatdiflib/src    setenv PROJECT_FILE_PATH /Users/chikashi/Development/spatdiflib/src/libspatdif.xcodeproj    setenv PROJECT_NAME libspatdif    setenv PROJECT_TEMP_DIR /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Intermediates/libspatdif.build    setenv PROJECT_TEMP_ROOT /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Intermediates    setenv REMOVE_CVS_FROM_RESOURCES YES    setenv REMOVE_GIT_FROM_RESOURCES YES    setenv REMOVE_HG_FROM_RESOURCES YES    setenv REMOVE_SVN_FROM_RESOURCES YES    setenv SCAN_ALL_SOURCE_FILES_FOR_INCLUDES NO    setenv SDKROOT /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk    setenv SEPARATE_STRIP NO    setenv SEPARATE_SYMBOL_EDIT NO    setenv SHARED_DERIVED_FILE_DIR /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Products/Debug/DerivedSources    setenv SHARED_PRECOMPS_DIR /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Intermediates/PrecompiledHeaders    setenv SKIP_INSTALL YES    setenv SOURCE_ROOT /Users/chikashi/Development/spatdiflib/src    setenv SRCROOT /Users/chikashi/Development/spatdiflib/src    setenv STRINGS_FILE_OUTPUT_ENCODING UTF-16    setenv STRIP_INSTALLED_PRODUCT YES    setenv STRIP_STYLE all    setenv SUPPORTED_PLATFORMS macosx    setenv SYMROOT /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Products    setenv SYSTEM_ADMIN_APPS_DIR /Applications/Utilities    setenv SYSTEM_APPS_DIR /Applications    setenv SYSTEM_CORE_SERVICES_DIR /System/Library/CoreServices    setenv SYSTEM_DEMOS_DIR /Applications/Extras    setenv SYSTEM_DEVELOPER_APPS_DIR /Applications/Xcode.app/Contents/Developer/Applications    setenv SYSTEM_DEVELOPER_BIN_DIR /Applications/Xcode.app/Contents/Developer/usr/bin    setenv SYSTEM_DEVELOPER_DEMOS_DIR "/Applications/Xcode.app/Contents/Developer/Applications/Utilities/Built Examples"    setenv SYSTEM_DEVELOPER_DIR /Applications/Xcode.app/Contents/Developer    setenv SYSTEM_DEVELOPER_DOC_DIR "/Applications/Xcode.app/Contents/Developer/ADC Reference Library"    setenv SYSTEM_DEVELOPER_GRAPHICS_TOOLS_DIR "/Applications/Xcode.app/Contents/Developer/Applications/Graphics Tools"    setenv SYSTEM_DEVELOPER_JAVA_TOOLS_DIR "/Applications/Xcode.app/Contents/Developer/Applications/Java Tools"    setenv SYSTEM_DEVELOPER_PERFORMANCE_TOOLS_DIR "/Applications/Xcode.app/Contents/Developer/Applications/Performance Tools"    setenv SYSTEM_DEVELOPER_RELEASENOTES_DIR "/Applications/Xcode.app/Contents/Developer/ADC Reference Library/releasenotes"    setenv SYSTEM_DEVELOPER_TOOLS /Applications/Xcode.app/Contents/Developer/Tools    setenv SYSTEM_DEVELOPER_TOOLS_DOC_DIR "/Applications/Xcode.app/Contents/Developer/ADC Reference Library/documentation/DeveloperTools"    setenv SYSTEM_DEVELOPER_TOOLS_RELEASENOTES_DIR "/Applications/Xcode.app/Contents/Developer/ADC Reference Library/releasenotes/DeveloperTools"    setenv SYSTEM_DEVELOPER_USR_DIR /Applications/Xcode.app/Contents/Developer/usr    setenv SYSTEM_DEVELOPER_UTILITIES_DIR /Applications/Xcode.app/Contents/Developer/Applications/Utilities    setenv SYSTEM_DOCUMENTATION_DIR /Library/Documentation    setenv SYSTEM_KEXT_INSTALL_PATH /System/Library/Extensions    setenv SYSTEM_LIBRARY_DIR /System/Library    setenv TARGETNAME libspatdif    setenv TARGET_BUILD_DIR /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Products/Debug    setenv TARGET_NAME libspatdif    setenv TARGET_TEMP_DIR /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Intermediates/libspatdif.build/Debug/libspatdif.build    setenv TEMP_DIR /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Intermediates/libspatdif.build/Debug/libspatdif.build    setenv TEMP_FILES_DIR     setenv TEMP_FILE_DIR /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Intermediates/libspatdif.build/Debug/libspatdif.build    setenv TEMP_ROOT /Users/chikashi/Development/spatdiflib/src/bin/libspatdif/Build/Intermediates    setenv UID 501    setenv USER chikashi    setenv USER_APPS_DIR /Users/chikashi/Applications    setenv USER_LIBRARY_DIR /Users/chikashi/Library    setenv XCODE_APP_SUPPORT_DIR /Applications/Xcode.app/Contents/Developer/Library/Xcode    setenv XCODE_PRODUCT_BUILD_VERSION 5A3005    setenv XCODE_VERSION_ACTUAL 0502    setenv XCODE_VERSION_MAJOR 0500    setenv XCODE_VERSION_MINOR 0500    setenv arch x86_64    setenv variant normal    /usr/bin/make36"8CF738DB-E629-4E82-AE39-503FC7161281-
+b9204A721-8C77-4EC0-9365-CE0EFF20A255
+
