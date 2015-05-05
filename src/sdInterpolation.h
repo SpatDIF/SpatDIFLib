@@ -100,7 +100,7 @@ inline T sdInterpolation::interpolate(T valueA, T valueB, double weight){
 
 
 
-bool sdInterpolation::activateInterpolation(const EDescriptor descriptor, const sdDescriptor* const descriptors, const int numberOfDescriptors){
+inline bool sdInterpolation::activateInterpolation(const EDescriptor descriptor, const sdDescriptor* const descriptors, const int numberOfDescriptors){
     
     for(int i = 0; i < numberOfDescriptors; i++){
         if(descriptors[i].getDescriptor() == descriptor){
@@ -115,7 +115,7 @@ bool sdInterpolation::activateInterpolation(const EDescriptor descriptor, const 
     return false;
 }
 
-bool sdInterpolation::deactivateInterpolation(const EDescriptor descriptor, const sdDescriptor* const descriptors, const int numberOfDescriptors){
+inline bool sdInterpolation::deactivateInterpolation(const EDescriptor descriptor, const sdDescriptor* const descriptors, const int numberOfDescriptors){
     for(int i = 0; i < numberOfDescriptors; i++){
         if(descriptors[i].getDescriptor() == descriptor){
             if(interpolationVector[i] == SD_ENTITY_INTERPOLATION_IMPOSSIBLE){
@@ -129,7 +129,7 @@ bool sdInterpolation::deactivateInterpolation(const EDescriptor descriptor, cons
     return false;
 }
 
-bool sdInterpolation::isInterpolationActivated(const EDescriptor descriptor, const sdDescriptor* const descriptors, const int numberOfDescriptors){
+inline bool sdInterpolation::isInterpolationActivated(const EDescriptor descriptor, const sdDescriptor* const descriptors, const int numberOfDescriptors){
     for(int i = 0; i < numberOfDescriptors; i++){
         if(descriptors[i].getDescriptor() == descriptor){
             switch(interpolationVector[i]){
