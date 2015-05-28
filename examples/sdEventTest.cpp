@@ -62,9 +62,7 @@ int main(void){
         cout << "descriptor:" << event.getDescriptor() << endl;
         double* dptr = static_cast<double*>(event.getValue());
         cout << "value:" << dptr[0] << ' ' << dptr[1] << ' ' << dptr[2] << endl;
-        
-        event.getTimeAsString();
-        event.getDescriptor();
+
         
     }
     return 0;

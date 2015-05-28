@@ -30,8 +30,23 @@ int main(void){
     double mypos[3] = {0.0, 1.0, 2.0};
     double mypos2[3] = {3.0, 2.0, 1.0};
     double myori[3] = {1.0, 2.0, 3.0};
+    
     myEntity->addEvent(5.0, SD_POSITION, mypos);
-    myEntity->addEvent(6.0, SD_POSITION, mypos2);
+    cout << "Time:5 Entity:myEntity Descriptor:position" << endl;
+    sdEvent *myEvent = myEntity->getEvent(5.0, SD_POSITION);
+    cout << "value: " << myEvent->getValueAsString() << endl;
+    cout << "=====" << endl;
+    mypos[0] = 3.0;
+    mypos[1] = 2.0;
+    mypos[2] = 1.0;
+    
+    myEntity->addEvent(6.0, SD_POSITION, mypos);
+    
+    cout << "Time:5 Entity:myEntity Descriptor:position" << endl;
+    myEvent = myEntity->getEvent(5.0, SD_POSITION);
+    cout << "value: " << myEvent->getValueAsString() << endl;
+    cout << "=====" << endl;
+    
     myEntity->addEvent(5.0, SD_ORIENTATION, myori);
 
     // yourEntity setup
@@ -52,6 +67,7 @@ int main(void){
         sdEvent *myEvent = myEntity->getEvent(5.0, SD_POSITION);
         cout << "value: " << myEvent->getValueAsString() << endl;
         cout << "=====" << endl;
+        
         
         // 2. specified entity
         cout << "Time:5 Entity:myEntity " << endl;

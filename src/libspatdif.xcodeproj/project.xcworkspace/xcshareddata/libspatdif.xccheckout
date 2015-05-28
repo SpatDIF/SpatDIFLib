@@ -10,29 +10,29 @@
 	<string>libspatdif</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>CF8CE92B-DFE7-4A33-A502-7DB576DD6B40</key>
-		<string>ssh://code.zhdk.ch/spatdiflib.git</string>
+		<key>F0AD3AAACC55ADBD659602B0415CEE35968E7605</key>
+		<string>code.zhdk.ch:spatdiflib.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>src/libspatdif.xcodeproj/project.xcworkspace</string>
+	<string>src/libspatdif.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>CF8CE92B-DFE7-4A33-A502-7DB576DD6B40</key>
+		<key>F0AD3AAACC55ADBD659602B0415CEE35968E7605</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://code.zhdk.ch/spatdiflib.git</string>
+	<string>code.zhdk.ch:spatdiflib.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>CF8CE92B-DFE7-4A33-A502-7DB576DD6B40</string>
+	<string>F0AD3AAACC55ADBD659602B0415CEE35968E7605</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>CF8CE92B-DFE7-4A33-A502-7DB576DD6B40</string>
+			<string>F0AD3AAACC55ADBD659602B0415CEE35968E7605</string>
 			<key>IDESourceControlWCCName</key>
 			<string>spatdiflib</string>
 		</dict>
