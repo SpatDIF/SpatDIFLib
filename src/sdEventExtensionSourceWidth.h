@@ -20,12 +20,12 @@
 #include "sdEvent.h"
 #include "sdDescriptor.h"
 /*!
- this class stores event info (i.e. time, descriptor and value) of sdEntityExtensionMedia.
+ this class stores event info (i.e. time, descriptor and value) of sdEntityExtensionSourceWidth.
  */
 
 class sdEventExtensionSourceWidth: public sdEvent{
     
-    /*! only sdEntityExtensionMedia can make an instance of this class */
+    /*! only sdEntityExtensionSourceWidth can make an instance of this class */
     friend class sdEntityCore;
     
 public:

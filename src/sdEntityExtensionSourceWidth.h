@@ -19,7 +19,7 @@
 #include <string>
 #include "sdConst.h"
 #include "sdEntityExtension.h"
-#include "sdEntityExtensionSourceWidth.h"
+#include "sdEventExtensionSourceWidth.h"
 #include "sdDescriptor.h"
 
 
@@ -37,8 +37,8 @@ private:
      this constructor should be invoked from an instance of sdEntityCore
      */
     sdEntityExtensionSourceWidth(){
-        for(int i = 0; i < sdEntityExtensionSourceWidth::numberOfDescriptors; i++){
-            if(sdEntityExtensionSourceWidth::descriptors[i].getInterpolability()){
+        for(int i = 0; i < sdEventExtensionSourceWidth::numberOfDescriptors; i++){
+            if(sdEventExtensionSourceWidth::descriptors[i].getInterpolability()){
                 interpolationVector.push_back(SD_ENTITY_INTERPOLATION_DEACTIVATED);
             }else{
                 interpolationVector.push_back(SD_ENTITY_INTERPOLATION_IMPOSSIBLE);

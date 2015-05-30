@@ -13,11 +13,11 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#include "sdEventExtensionMedia.h"
+#include "sdEventExtensionSourceWidth.h"
 
 
-const int sdEventExtensionMedia::numberOfDescriptors = 6;
-const sdDescriptor sdEventExtensionMedia::descriptors[sdEventExtensionMedia::numberOfDescriptors] = {
+const int sdEventExtensionSourceWidth::numberOfDescriptors = 6;
+const sdDescriptor sdEventExtensionSourceWidth::descriptors[sdEventExtensionSourceWidth::numberOfDescriptors] = {
     sdDescriptor(SD_MEDIA_ID, std::string("id"), false),
     sdDescriptor(SD_MEDIA_TYPE, std::string("type"), false),
     sdDescriptor(SD_MEDIA_LOCATION, std::string("location"), true),
@@ -78,9 +78,9 @@ sdEventExtensionSourceWidth::~sdEventExtensionSourceWidth(){
 
 // returns descriptor of the event as a string
 std::string sdEventExtensionSourceWidth::getDescriptorAsString(void) const{
-    for(int i = 0; i< sdEventExtensionMedia::numberOfDescriptors; i++){
-        if(sdEventExtensionMedia::descriptors[i].getDescriptor() == descriptor){
-            return sdEventExtensionMedia::descriptors[i].getDescriptorAsString();
+    for(int i = 0; i< sdEventExtensionSourceWidth::numberOfDescriptors; i++){
+        if(sdEventExtensionSourceWidth::descriptors[i].getDescriptor() == descriptor){
+            return sdEventExtensionSourceWidth::descriptors[i].getDescriptorAsString();
         }
     }
     return std::string("error");
@@ -113,13 +113,13 @@ std::string sdEventExtensionSourceWidth::getValueAsString(void) const{
 // set value with enum and pointer
 bool sdEventExtensionSourceWidth::setValue(const EDescriptor descriptor, void* const value){
     
-    sdEventExtensionMedia::descriptor = descriptor;
-    switch (sdEventExtensionMedia::descriptor) {
+    sdEventExtensionSourceWidth::descriptor = descriptor;
+    switch (sdEventExtensionSourceWidth::descriptor) {
         case SD_MEDIA_ID:
         case SD_MEDIA_TYPE:
         case SD_MEDIA_LOCATION:{
             std::string *valueString = new std::string(*static_cast<std::string*>(value));
-            sdEventExtensionMedia::value = static_cast<void*>(valueString);
+            sdEventExtensionSourceWidth::value = static_cast<void*>(valueString);
             break;
         }
         case SD_MEDIA_CHANNEL:{
@@ -144,27 +144,27 @@ bool sdEventExtensionSourceWidth::setValue(const EDescriptor descriptor, void* c
 // set value with strings
 bool sdEventExtensionSourceWidth::setValue(const std::string descriptor, const std::string value){
     
-    for(int i = 0; i < sdEventExtensionMedia::numberOfDescriptors; i++){
-        if(sdEventExtensionMedia::descriptors[i].getDescriptorAsString() == descriptor){
-            sdEventExtensionMedia::descriptor =
-            sdEventExtensionMedia::descriptors[i].getDescriptor();
+    for(int i = 0; i < sdEventExtensionSourceWidth::numberOfDescriptors; i++){
+        if(sdEventExtensionSourceWidth::descriptors[i].getDescriptorAsString() == descriptor){
+            sdEventExtensionSourceWidth::descriptor =
+            sdEventExtensionSourceWidth::descriptors[i].getDescriptor();
         }
     }
     
-    switch (sdEventExtensionMedia::descriptor) {
+    switch (sdEventExtensionSourceWidth::descriptor) {
         case SD_MEDIA_ID:
         case SD_MEDIA_TYPE:
         case SD_MEDIA_LOCATION:{
-            sdEventExtensionMedia::value = static_cast<void*>(new std::string(value));
+            sdEventExtensionSourceWidth::value = static_cast<void*>(new std::string(value));
             break;
         }
         case SD_MEDIA_CHANNEL:{
-            sdEventExtensionMedia::value = static_cast<void*>(new int(stringToInt(value)));
+            sdEventExtensionSourceWidth::value = static_cast<void*>(new int(stringToInt(value)));
             break;
         }
         case SD_MEDIA_TIME_OFFSET:
         case SD_MEDIA_GAIN:{
-            sdEventExtensionMedia::value = static_cast<void*>(new double(stringToDouble(value)));
+            sdEventExtensionSourceWidth::value = static_cast<void*>(new double(stringToDouble(value)));
             break;
         }
         default:{

@@ -37,6 +37,9 @@ typedef enum {
     SD_MEDIA_TIME_OFFSET,
     SD_MEDIA_GAIN,
     
+    // descriptor for source width extension
+    SD_SOURCE_WIDTH_WIDTH,
+    
     SD_ERROR,
     SD_ALL
 } EDescriptor;
@@ -73,6 +76,7 @@ typedef enum {
     SD_CORE,
     SD_MEDIA,
     SD_INTERPOLATION,
+    SD_SOURCE_WIDTH,
     SD_DIRECT_TO_ONE,
     SD_EXTENSION_ERROR
 } EExtension;

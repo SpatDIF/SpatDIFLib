@@ -23,7 +23,7 @@ sdEvent* sdEntityExtensionSourceWidth::addEvent(const double time, const EDescri
     
     sdEvent *event = NULL;
     sdEntity::removeEvent(time, descriptor);
-    event = static_cast<sdEvent*>(new sdEventExtensionMedia(time, descriptor, value));
+    event = static_cast<sdEvent*>(new sdEventExtensionSourceWidth(time, descriptor, value));
     eventSet.insert(event);
     return event;
     
@@ -33,16 +33,16 @@ sdEvent* sdEntityExtensionSourceWidth::addEvent(const std::string time, const st
 
     sdEvent *event = NULL;
     removeEvent(time, descriptor);
-    event = static_cast<sdEvent*>(new sdEventExtensionMedia(time, descriptor, value));
+    event = static_cast<sdEvent*>(new sdEventExtensionSourceWidth(time, descriptor, value));
     eventSet.insert(event);
     return event;
 }
 
 void sdEntityExtensionSourceWidth::removeEvent(const std::string time, const std::string descriptor){
     EDescriptor dc;
-    for(int i = 0; i < sdEventExtensionMedia::numberOfDescriptors; i++){
-        if(sdEventExtensionMedia::descriptors[i].getDescriptorAsString() == descriptor){
-            dc = sdEventExtensionMedia::descriptors[i].getDescriptor();
+    for(int i = 0; i < sdEventExtensionSourceWidth::numberOfDescriptors; i++){
+        if(sdEventExtensionSourceWidth::descriptors[i].getDescriptorAsString() == descriptor){
+            dc = sdEventExtensionSourceWidth::descriptors[i].getDescriptor();
         }
     }
 
@@ -56,13 +56,13 @@ std::string sdEntityExtensionSourceWidth::getValueAsString(double time, EDescrip
 
 
 bool sdEntityExtensionSourceWidth::activateInterpolation(const EDescriptor descriptor){
-    return sdInterpolation::activateInterpolation(descriptor, sdEventExtensionMedia::descriptors, sdEventExtensionMedia::numberOfDescriptors);
+    return sdInterpolation::activateInterpolation(descriptor, sdEventExtensionSourceWidth::descriptors, sdEventExtensionSourceWidth::numberOfDescriptors);
 }
 
 bool sdEntityExtensionSourceWidth::deactivateInterpolation(const EDescriptor descriptor){
-    return sdInterpolation::deactivateInterpolation(descriptor, sdEventExtensionMedia::descriptors, sdEventExtensionMedia::numberOfDescriptors);
+    return sdInterpolation::deactivateInterpolation(descriptor, sdEventExtensionSourceWidth::descriptors, sdEventExtensionSourceWidth::numberOfDescriptors);
 }
 
 bool sdEntityExtensionSourceWidth::isInterpolationActivated(const EDescriptor descriptor){
-    return sdInterpolation::isInterpolationActivated(descriptor, sdEventExtensionMedia::descriptors, sdEventExtensionMedia::numberOfDescriptors);
+    return sdInterpolation::isInterpolationActivated(descriptor, sdEventExtensionSourceWidth::descriptors, sdEventExtensionSourceWidth::numberOfDescriptors);
 }
