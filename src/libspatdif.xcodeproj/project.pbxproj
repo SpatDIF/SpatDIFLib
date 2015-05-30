@@ -31,6 +31,7 @@
 		624C61451B19BA5C00282438 /* sdEntityExtensionSourceWidth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdEntityExtensionSourceWidth.h; sourceTree = "<group>"; };
 		624C61461B19BAF800282438 /* sdEventExtensionSourceWidth.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdEventExtensionSourceWidth.cpp; sourceTree = "<group>"; };
 		624C61471B19BAF800282438 /* sdEventExtensionSourceWidth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdEventExtensionSourceWidth.h; sourceTree = "<group>"; };
+		624C61491B19D5FD00282438 /* sdSourceWidthTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdSourceWidthTest.cpp; path = ../examples/sdSourceWidthTest.cpp; sourceTree = "<group>"; };
 		6279340919A296AA002BF8EB /* sdEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdEvent.h; sourceTree = "<group>"; };
 		6279340C19A2A018002BF8EB /* sdDescriptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdDescriptor.h; sourceTree = "<group>"; };
 		627C6AD719A3B16A00D52E8F /* sdEventCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdEventCore.cpp; sourceTree = "<group>"; };
@@ -142,6 +143,7 @@
 				62087AB519A9FE5D00F8A3E6 /* sdOSCResponderTest.cpp */,
 				62087AB619A9FE5D00F8A3E6 /* sdSaverTest.cpp */,
 				62087AB719A9FE5D00F8A3E6 /* sdSceneTest.cpp */,
+				624C61491B19D5FD00282438 /* sdSourceWidthTest.cpp */,
 			);
 			name = Examples;
 			sourceTree = "<group>";

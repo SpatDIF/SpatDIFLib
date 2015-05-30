@@ -239,6 +239,8 @@ inline const std::string extensionToString(EExtension extension){
         extensionStr = "interpolation";
     }else if(extension == SD_DIRECT_TO_ONE){
         extensionStr = "directo-to-one";
+    }else if(extension == SD_SOURCE_WIDTH){
+        extensionStr = "source-width";
     }else if(extension == SD_CORE){
         extensionStr = "core";
     }else{
@@ -260,6 +262,8 @@ inline  EExtension stringToExtension(std::string extensionStr){
         ext = SD_INTERPOLATION;
     }else if(extensionStr == "direct-to-one"){
         ext = SD_DIRECT_TO_ONE;
+    }else if(extensionStr == "source-width"){
+        ext = SD_SOURCE_WIDTH;
     }else{
         ext = SD_EXTENSION_ERROR;
     }

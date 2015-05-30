@@ -24,7 +24,6 @@ const sdDescriptor sdEventCore::descriptors[sdEventCore::numberOfDescriptors] = 
     sdDescriptor(SD_ORIENTATION, std::string("orientation"), true)
 };
 
-
 #pragma mark constructor/destructor
 
 inline sdEventCore::~sdEventCore(){

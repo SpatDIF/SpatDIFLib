@@ -16,14 +16,9 @@
 #include "sdEventExtensionSourceWidth.h"
 
 
-const int sdEventExtensionSourceWidth::numberOfDescriptors = 6;
+const int sdEventExtensionSourceWidth::numberOfDescriptors = 1;
 const sdDescriptor sdEventExtensionSourceWidth::descriptors[sdEventExtensionSourceWidth::numberOfDescriptors] = {
-    sdDescriptor(SD_MEDIA_ID, std::string("id"), false),
-    sdDescriptor(SD_MEDIA_TYPE, std::string("type"), false),
-    sdDescriptor(SD_MEDIA_LOCATION, std::string("location"), true),
-    sdDescriptor(SD_MEDIA_CHANNEL, std::string("channel"), false),
-    sdDescriptor(SD_MEDIA_TIME_OFFSET, std::string("time-offset"), false),
-    sdDescriptor(SD_MEDIA_GAIN, std::string("gain"), true)
+    sdDescriptor(SD_SOURCE_WIDTH_WIDTH, std::string("width"), true)
 };
 
 // constructors
@@ -41,32 +36,7 @@ sdEventExtensionSourceWidth::sdEventExtensionSourceWidth(std::string time, std::
 sdEventExtensionSourceWidth::~sdEventExtensionSourceWidth(){
     
     switch (descriptor) {
-        case SD_MEDIA_ID:{
-            std::string* valuePointer = static_cast<std::string*>(value);
-            delete valuePointer;
-            break;
-        }
-        case SD_MEDIA_TYPE:{
-            std::string* valuePointer = static_cast<std::string*>(value);
-            delete valuePointer;
-            break;
-        }
-        case SD_MEDIA_LOCATION:{
-            std::string* valuePointer = static_cast<std::string*>(value);
-            delete valuePointer;
-            break;
-        }
-        case SD_MEDIA_CHANNEL:{
-            int *valuePointer = static_cast<int*>(value);
-            delete valuePointer;
-            break;
-        }
-        case SD_MEDIA_TIME_OFFSET:{
-            double *valuePointer = static_cast<double*>(value);
-            delete valuePointer;
-            break;
-        }
-        case SD_MEDIA_GAIN:{
+        case SD_SOURCE_WIDTH_WIDTH:{
             double *valuePointer = static_cast<double*>(value);
             delete valuePointer;
             break;
@@ -90,17 +60,8 @@ std::string sdEventExtensionSourceWidth::getDescriptorAsString(void) const{
 std::string sdEventExtensionSourceWidth::getValueAsString(void) const{
     std::string str;
     switch (descriptor) {
-        case SD_MEDIA_ID:
-        case SD_MEDIA_TYPE:
-        case SD_MEDIA_LOCATION:
-            str = *static_cast<std::string*>(value);
-            break;
-        case SD_MEDIA_CHANNEL:{
-            str = intToString(*static_cast<int *>(value));
-            break;
-        }
-        case SD_MEDIA_TIME_OFFSET:
-        case SD_MEDIA_GAIN:{
+  
+        case SD_SOURCE_WIDTH_WIDTH:{
             str = doubleToString(*static_cast<double *>(value));
             break;
         }
@@ -115,20 +76,8 @@ bool sdEventExtensionSourceWidth::setValue(const EDescriptor descriptor, void* c
     
     sdEventExtensionSourceWidth::descriptor = descriptor;
     switch (sdEventExtensionSourceWidth::descriptor) {
-        case SD_MEDIA_ID:
-        case SD_MEDIA_TYPE:
-        case SD_MEDIA_LOCATION:{
-            std::string *valueString = new std::string(*static_cast<std::string*>(value));
-            sdEventExtensionSourceWidth::value = static_cast<void*>(valueString);
-            break;
-        }
-        case SD_MEDIA_CHANNEL:{
-            int *channelValue = static_cast<int*>(value);
-            sdEvent::value = static_cast<int*>(new int(*channelValue));
-            break;
-        }
-        case SD_MEDIA_TIME_OFFSET:
-        case SD_MEDIA_GAIN:{
+
+        case SD_SOURCE_WIDTH_WIDTH:{
             double *doubleValue = static_cast<double*>(value);
             sdEvent::value = static_cast<double*>(new double(*doubleValue));
             break;
@@ -152,18 +101,7 @@ bool sdEventExtensionSourceWidth::setValue(const std::string descriptor, const s
     }
     
     switch (sdEventExtensionSourceWidth::descriptor) {
-        case SD_MEDIA_ID:
-        case SD_MEDIA_TYPE:
-        case SD_MEDIA_LOCATION:{
-            sdEventExtensionSourceWidth::value = static_cast<void*>(new std::string(value));
-            break;
-        }
-        case SD_MEDIA_CHANNEL:{
-            sdEventExtensionSourceWidth::value = static_cast<void*>(new int(stringToInt(value)));
-            break;
-        }
-        case SD_MEDIA_TIME_OFFSET:
-        case SD_MEDIA_GAIN:{
+        case SD_SOURCE_WIDTH_WIDTH:{
             sdEventExtensionSourceWidth::value = static_cast<void*>(new double(stringToDouble(value)));
             break;
         }

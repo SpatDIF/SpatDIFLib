@@ -16,8 +16,8 @@
 #include "sdEntityExtensionSourceWidth.h"
 
 
-const EExtension sdEntityExtensionSourceWidth::extensionName = SD_MEDIA;
-const std::string sdEntityExtensionSourceWidth::extensionNameAsString = std::string("media");
+const EExtension sdEntityExtensionSourceWidth::extensionName = SD_SOURCE_WIDTH;
+const std::string sdEntityExtensionSourceWidth::extensionNameAsString = std::string("source-width");
 
 sdEvent* sdEntityExtensionSourceWidth::addEvent(const double time, const EDescriptor descriptor, void* const value){
     

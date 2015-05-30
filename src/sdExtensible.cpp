@@ -15,7 +15,7 @@
 
 #include "sdExtensible.h"
 #include "sdEntityExtensionMedia.h"
-
+#include "sdEntityExtensionSourceWidth.h"
 
 sdEntityExtension* sdExtensible::addExtension(EExtension extension){
     sdEntityExtension *ext= getExtension(extension);
@@ -31,6 +31,19 @@ sdEntityExtension* sdExtensible::addExtension(EExtension extension){
                 redirectorVector.push_back(rd);
             }
             return mediaExtension;
+            break;
+        }
+        case SD_SOURCE_WIDTH:{
+            sdEntityExtensionSourceWidth* sourceWidthExtension = new sdEntityExtensionSourceWidth();
+            extensionVector.push_back(sourceWidthExtension);
+            for(int i = 0; i < sdEventExtensionSourceWidth::numberOfDescriptors; i++){
+                sdRedirector rd;
+                rd.descriptor = sdEventExtensionSourceWidth::descriptors[i].getDescriptor();
+                rd.descriptorString = sdEventExtensionSourceWidth::descriptors[i].getDescriptorAsString();
+                rd.responsibleExtension = static_cast<sdEntityExtension*>(sourceWidthExtension);
+                redirectorVector.push_back(rd);
+            }
+            return sourceWidthExtension;
             break;
         }
             
