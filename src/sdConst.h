@@ -40,6 +40,11 @@ typedef enum {
     // descriptor for source width extension
     SD_SOURCE_WIDTH_WIDTH,
     
+    // descriptor for point set extension
+    SD_POINT_SET_NAME,
+    
+    
+    
     SD_ERROR,
     SD_ALL
 } EDescriptor;
