@@ -13,8 +13,8 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef ____sdPointSet__
-#define ____sdPointSet__
+#ifndef ____sdTrajectory__
+#define ____sdTrajectory__
 
 #include <string>
 #include <vector>
@@ -33,14 +33,14 @@ public:
 inline sdPoint::sdPoint(double x, double y, double z, std::string tp):x(x),y(y),z(z),type(tp){};
 inline sdPoint::~sdPoint(){}
 
-class sdPointSet{
+class sdTrajectory{
 private:
     std::vector<sdPoint> pointArray;
     std::string type;
     
 public:
-    sdPointSet(std::string tp = "none");
-    ~sdPointSet();
+    sdTrajectory(std::string tp = "none");
+    ~sdTrajectory();
     
     void addPoint(sdPoint point);
     void addPoint(double x, double y, double z, std::string tp);
@@ -55,23 +55,23 @@ public:
 };
 
 #pragma mark implementations
-inline sdPointSet::sdPointSet(std::string tp):type(tp){};
-inline sdPointSet::~sdPointSet(){};
+inline sdTrajectory::sdTrajectory(std::string tp):type(tp){};
+inline sdTrajectory::~sdTrajectory(){};
 
-inline void sdPointSet::addPoint(sdPoint point){
+inline void sdTrajectory::addPoint(sdPoint point){
     pointArray.push_back(point);
 }
 
-inline void sdPointSet::addPoint(double x, double y, double z, std::string tp){
+inline void sdTrajectory::addPoint(double x, double y, double z, std::string tp){
     addPoint(sdPoint(x,y,z,tp));
 }
 
 
-inline std::string sdPointSet::getType(){
+inline std::string sdTrajectory::getType(){
     return type;
 }
 
-inline bool sdPointSet::getPointAt(sdPoint &p, int index){
+inline bool sdTrajectory::getPointAt(sdPoint &p, int index){
     
     if(pointArray.size() <= index)
         return false;
@@ -80,7 +80,7 @@ inline bool sdPointSet::getPointAt(sdPoint &p, int index){
     return true;
 }
 
-inline bool sdPointSet::removePointAt(int index){
+inline bool sdTrajectory::removePointAt(int index){
     if(pointArray.size() <= index)
         return false;
     
@@ -89,11 +89,11 @@ inline bool sdPointSet::removePointAt(int index){
 
 }
 
-inline void sdPointSet::clear(){
+inline void sdTrajectory::clear(){
     pointArray.clear();
 }
 
-inline const int sdPointSet::numberOfPoints() const{
+inline const int sdTrajectory::numberOfPoints() const{
     return pointArray.size();
 }
 
