@@ -33,7 +33,9 @@ public:
 inline sdPoint::sdPoint(double x, double y, double z, std::string tp):x(x),y(y),z(z),type(tp){};
 inline sdPoint::~sdPoint(){}
 
-class sdTrajectory{
+class sdTrajectory {
+    friend class sdScene; // only sdScene can instantiate this class. this guarantees that all trjaectory has affiliations.
+    
 private:
     std::vector<sdPoint> pointArray;
     std::string type;

@@ -23,8 +23,7 @@
 #include "sdInfo.h"
 #include "sdEntityCore.h"
 #include "sdEntityExtension.h"
-#include "sdTrajectory.h"
-
+#include "sdTrajectoryHandler.h"
 /*!
     a structure for associating an entity and multiple events
 */
@@ -39,7 +38,7 @@ public:
  - adding, removing, and maintaining sdEntityCores.
  - attaching and detaching extensions to the exisiting and newly instantiated cores
  */
-class sdScene {
+class sdScene : public sdTrajectoryHandler{
 
 private:
     /*! a vector of sdEntityCores */
@@ -47,9 +46,6 @@ private:
     
     /*! a vector of activated extensions. A sdScene automatically instantiates the descendants of sdEntityExtensions and attached to a sdEntityCore, when it is instantiated. */
     std::vector <EExtension> activatedExtensionVector;
-    
-    /*! a map of trajectories */
-    std::map <std::string, sdTrajectory*> trajectoryMap;
 
     /*! ordering flag */
     EOrdering ordering;
@@ -287,30 +283,7 @@ public:
      @}
      */
     
-    /*! @name Trajectory handling
-     @{
-     */
-
-    /**
-     * @brief retrieve trjectory by name 
-     * @return if correnspoinding trjectory exists, returns a pointer to the trajectory. if not nullptr.
-     */
-
-    sdTrajectory* getTrajectory(std::string name);
     
-    /**
-     * @brief set trajectory with a name. if the name is already take return false 
-     * @param name name for the trajectory
-     * @param trjectory pointer to an instance of sdTrajectory
-    */
-    void setTrajectory(std::string name, sdTrajectory *trajectory);
-
-    size_t getNumberOfTrajectories(void);
-
-    /*!
-     @}
-     */
-
     /*! @name Varification
      @{
      */
@@ -377,22 +350,6 @@ inline void sdScene::setOrdering(std::string ordering){
     }else{
         std::cout << "sdScene Error: Unknown Ordering" << std::endl;
     }
-}
-
-inline sdTrajectory* sdScene::getTrajectory(std::string name){
-    if(trajectoryMap.find(name) != trajectoryMap.end()){
-        return trajectoryMap[name];
-    }
-    return nullptr;
-}
-
-inline void sdScene::setTrajectory(std::string name, sdTrajectory *trajectory){
-    if(name == "")return;
-    trajectoryMap[name] = trajectory;
-}
-
-inline size_t sdScene::getNumberOfTrajectories(void){
-    return trajectoryMap.size();
 }
 
 
