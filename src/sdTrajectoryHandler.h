@@ -28,7 +28,7 @@ public:
      * @detail this is the only function that can instantiate sdTrajectory.
      */
     
-    sdTrajectory* addTrajectory(std::string name);
+    sdTrajectory* addTrajectory(std::string name, std::string type = "none");
     
     /**
      * @brief retrieve trjectory by name
@@ -64,12 +64,13 @@ public:
 
 };
 
-sdTrajectory* sdTrajectoryHandler::addTrajectory(std::string name){
+inline sdTrajectory* sdTrajectoryHandler::addTrajectory(std::string name, std::string type){
     if(trajectoryMap.find(name) != trajectoryMap.end()){
         // trajectory exists already
         return trajectoryMap[name];
     }
-    return nullptr;
+    trajectoryMap[name] = new sdTrajectory(type);
+    return trajectoryMap[name];
 }
 
 inline sdTrajectory* sdTrajectoryHandler::getTrajectory(std::string name){
@@ -96,7 +97,6 @@ inline void sdTrajectoryHandler::removeTrajectory(std::string name){
         trajectoryMap.erase(it);
     }
 }
-
 
 inline void sdTrajectoryHandler::removeAllTrajectories(void){
     trajectoryMap.clear();
