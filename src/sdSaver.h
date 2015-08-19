@@ -47,6 +47,8 @@ public:
 
 protected:
     static tinyxml2::XMLElement* XMLInfoSection(tinyxml2::XMLDocument &xml, sdScene *scene);
+    static tinyxml2::XMLElement* XMLOrderingSection(tinyxml2::XMLDocument &xml, sdScene *scene);
+    static tinyxml2::XMLElement* XMLMetaSection(tinyxml2::XMLDocument &xml, sdScene *scene);
 
 
 };

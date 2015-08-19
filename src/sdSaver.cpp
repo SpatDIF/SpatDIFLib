@@ -72,27 +72,22 @@ XMLElement* sdSaver::XMLInfoSection(XMLDocument &xml, sdScene *scene){
     return info;
 }
 
-std::string sdSaver::XMLFromScene(sdScene *scene){
-    
-    XMLDocument xml;
- 	XMLDeclaration* decl = xml.NewDeclaration();
-	decl->SetValue("xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"");
-	xml.InsertEndChild(decl);
-    
-    XMLElement* spatdif = xml.NewElement("spatdif");
-	xml.InsertEndChild(spatdif);
-    // meta section
-    
+XMLElement* sdSaver::XMLOrderingSection(XMLDocument &xml, sdScene *scene){
+    XMLElement* ordering = xml.NewElement("ordering");
+    XMLText* orderingText = xml.NewText(scene->getOrderingAsString().c_str());
+    ordering->InsertEndChild(orderingText);
+    return  ordering;
+}
+
+XMLElement* sdSaver::XMLMetaSection(XMLDocument &xml, sdScene *scene){
+
     XMLElement* meta = xml.NewElement("meta");
-    spatdif->SetAttribute("version", "0.3");
-    spatdif->InsertEndChild(meta);
-    
-    XMLElement* info = sdSaver::XMLInfoSection(xml, scene);
-    meta->InsertEndChild(info);
 
-    // check the number of extension
+    // add info section to meta
+    meta->InsertEndChild(sdSaver::XMLInfoSection(xml, scene));
+
+    // add extensions to meta
     int num = scene->getNumberOfActivatedExtensions();
-
     if(num > 0){
         XMLElement* extensions = xml.NewElement("extensions");
         std::string extString;
@@ -107,13 +102,25 @@ std::string sdSaver::XMLFromScene(sdScene *scene){
         meta->InsertEndChild(extensions);
     }
     
-    XMLElement* order = xml.NewElement("ordering");
-    XMLText* orderingText = xml.NewText(scene->getOrderingAsString().c_str());
-    order->InsertEndChild(orderingText);
-    meta->InsertEndChild(order);
+    // add ordering
+    meta->InsertEndChild(XMLOrderingSection(xml, scene));
+    return meta;
+}
+
+std::string sdSaver::XMLFromScene(sdScene *scene){
     
+    XMLDocument xml;
+ 	XMLDeclaration* decl = xml.NewDeclaration();
+	decl->SetValue("xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"");
+	xml.InsertEndChild(decl);
+    
+    XMLElement* spatdif = xml.NewElement("spatdif");
+	xml.InsertEndChild(spatdif);
+    spatdif->SetAttribute("version", "0.3");
+
+    spatdif->InsertEndChild(sdSaver::XMLMetaSection(xml, scene));
+
     // time section
-    
     std::vector<sdEntityCore*> entityVector = scene->getEntityVector();
 
     /* ordered by time */
