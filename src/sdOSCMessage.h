@@ -116,7 +116,7 @@ public:
     void appendStrings(std::vector<std::string> str);
     
     /*! returns the number of OSC arguments */
-    inline int getNumberOfArgument();
+    inline size_t getNumberOfArgument();
 
     /*! delete entire content. typeyag initialized */
     inline void clear();
@@ -178,7 +178,7 @@ std::string sdOSCMessage::getDelimitersAsString(void){
     return os.str();
 }
 
-int sdOSCMessage::getNumberOfArgument(){
+size_t sdOSCMessage::getNumberOfArgument(){
     return delimiters.size();
 }
 

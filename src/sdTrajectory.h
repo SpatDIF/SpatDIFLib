@@ -51,7 +51,7 @@ public:
     const std::string & getType();
     const sdPoint* getPointAt( int index);
     bool removePointAt(int index);
-    const int getNumberOfPoints() const;
+    const size_t getNumberOfPoints() const;
     void clear();
     
 };
@@ -94,7 +94,7 @@ inline void sdTrajectory::clear(){
     pointArray.clear();
 }
 
-inline const int sdTrajectory::getNumberOfPoints() const{
+inline const size_t sdTrajectory::getNumberOfPoints() const{
     return pointArray.size();
 }
 
