@@ -9,6 +9,9 @@
 #ifndef libspatdif_sdTrajectoryHandler_h
 #define libspatdif_sdTrajectoryHandler_h
 
+#include <vector>
+#include <map>
+
 #include "sdTrajectory.h"
 
 class sdTrajectoryHandler{
@@ -50,6 +53,11 @@ public:
     size_t getNumberOfTrajectories(void);
     
     /**
+     * @brief returns vector of all keys
+     */
+    std::vector<std::string> getAllKeys(void);
+
+    /**
      * @brief remove specified trjaectory
      */
     void removeTrajectory(std::string name);
@@ -61,6 +69,7 @@ public:
     /*!
      @}
      */
+
 
 };
 
@@ -90,6 +99,14 @@ inline size_t sdTrajectoryHandler::getNumberOfTrajectories(void){
     return trajectoryMap.size();
 }
 
+inline std::vector<std::string> sdTrajectoryHandler::getAllKeys(void){
+    std::vector<std::string> keys;
+    for(std::map<std::string, sdTrajectory*>::iterator it = trajectoryMap.begin(); it != trajectoryMap.end(); ++it) {
+        keys.push_back(it->first);
+    }
+    return keys;
+}
+
 inline void sdTrajectoryHandler::removeTrajectory(std::string name){
     std::map<std::string, sdTrajectory*>::iterator it;
     it = trajectoryMap.find(name);
@@ -101,5 +118,7 @@ inline void sdTrajectoryHandler::removeTrajectory(std::string name){
 inline void sdTrajectoryHandler::removeAllTrajectories(void){
     trajectoryMap.clear();
 }
+
+
 
 #endif
