@@ -19,6 +19,7 @@
 #include <string>
 #include "sdScene.h"
 
+#include "tinyxml2.h"
 
 /*!
  convert a sdScene to XML, JSON, or YAML strings
@@ -42,6 +43,10 @@ public:
      @param sdScene a sdScene
      */
     static std::string YAMLFromScene(sdScene *scene);
+
+
+protected:
+    static tinyxml2::XMLElement* XMLInfoSection(tinyxml2::XMLDocument &xml, sdScene *scene);
 
 
 };

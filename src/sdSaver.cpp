@@ -21,6 +21,7 @@
 #include "tinyxml2.h"
 #include "JSONNode.h"
 
+using namespace tinyxml2;
 
 std::string sdGlobalEvent::getKindAsString(void){
     std::string str;
@@ -37,25 +38,10 @@ std::string sdGlobalEvent::getKindAsString(void){
     return str;
 }
 
-std::string sdSaver::XMLFromScene(sdScene *scene){
-    using namespace tinyxml2;
-    
-    XMLDocument xml;
- 	XMLDeclaration* decl = xml.NewDeclaration();
-	decl->SetValue("xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"");
-	xml.InsertEndChild(decl);
-    
-    XMLElement* spatdif = xml.NewElement("spatdif");
-	xml.InsertEndChild(spatdif);
-    // meta section
-    
-    XMLElement* meta = xml.NewElement("meta");
-    spatdif->SetAttribute("version", "0.3");
-    spatdif->InsertEndChild(meta);
-    
+
+XMLElement* sdSaver::XMLInfoSection(XMLDocument &xml, sdScene *scene){
+
     XMLElement* info = xml.NewElement("info");
-    meta->InsertEndChild(info);
-    
     sdInfo information = scene->getInfo();
 
     std::string infoStrings[6];
@@ -83,7 +69,27 @@ std::string sdSaver::XMLFromScene(sdScene *scene){
             info->InsertEndChild(elem);
         }
     }
+    return info;
+}
+
+std::string sdSaver::XMLFromScene(sdScene *scene){
     
+    XMLDocument xml;
+ 	XMLDeclaration* decl = xml.NewDeclaration();
+	decl->SetValue("xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"");
+	xml.InsertEndChild(decl);
+    
+    XMLElement* spatdif = xml.NewElement("spatdif");
+	xml.InsertEndChild(spatdif);
+    // meta section
+    
+    XMLElement* meta = xml.NewElement("meta");
+    spatdif->SetAttribute("version", "0.3");
+    spatdif->InsertEndChild(meta);
+    
+    XMLElement* info = sdSaver::XMLInfoSection(xml, scene);
+    meta->InsertEndChild(info);
+
     // check the number of extension
     int num = scene->getNumberOfActivatedExtensions();
 
