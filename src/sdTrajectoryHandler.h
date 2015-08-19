@@ -26,6 +26,11 @@ public:
      */
     
     /**
+     * @brief returns a const reference to a map object. thus referable but immutable from other objects.
+     */
+    const std::map<std::string, sdTrajectory *> & getTrajectoryMap(void);
+
+    /**
      * @brief add trajectory and store it in the map.
      * @return a pointer to the newly instantiated trajectory
      * @detail this is the only function that can instantiate sdTrajectory.
@@ -66,12 +71,17 @@ public:
      * @brief discard all registerd trajectories
      */
     void removeAllTrajectories();
+
     /*!
      @}
      */
 
 
 };
+
+inline const std::map<std::string, sdTrajectory *> & sdTrajectoryHandler::getTrajectoryMap(void) {
+    return trajectoryMap;
+}
 
 inline sdTrajectory* sdTrajectoryHandler::addTrajectory(std::string name, std::string type){
     if(trajectoryMap.find(name) != trajectoryMap.end()){

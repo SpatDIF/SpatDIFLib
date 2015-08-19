@@ -18,12 +18,15 @@
 #include <set>
 
 #include "sdScene.h"
+#include "sdSaver.h"
 
 void dumpTrajectory(sdTrajectory * traj){
     std::cout << "type of trajectory:" << traj->getType() << std::endl;
-    std::cout << "number of points:" << traj->numberOfPoints() << std::endl;
-    for(int i = 0; i < traj->numberOfPoints(); i++){
+    std::cout << "number of points:" << traj->getNumberOfPoints() << std::endl;
+    for(int i = 0; i < traj->getNumberOfPoints(); i++){
         const sdPoint * p = traj->getPointAt(i);
+        if(!p)
+            continue;
         std::cout << "x:" << p->x << "  y:" << p->y << "  z: " << p->z <<std::endl;
     }
 }
@@ -32,7 +35,8 @@ int main(void){
 
     // check type
     sdScene scene;
-    scene.addTrajectory("myFirstTrajectory");
+
+    scene.addTrajectory("myFirstTrajectory" , "bezier");
     size_t numTraj = scene.getNumberOfTrajectories();
     std::cout << "number of trajectories:" << numTraj << std::endl;
 
@@ -42,6 +46,8 @@ int main(void){
     }
     
     sdTrajectory* myFirstTrajectory = scene.getTrajectory("myFirstTrajectory");
+
+
     // triangle
     myFirstTrajectory->addPoint(0, 1, 0 , "anchorPoint");
     myFirstTrajectory->addPoint(-1, 0, 0, "anchorPoint");
@@ -51,6 +57,10 @@ int main(void){
     std::cout << "------current content" << std::endl;
     dumpTrajectory(myFirstTrajectory);
     
+    std::cout << "------trajectory as XML" << std::endl;
+    std::string xmlString = sdSaver::XMLFromScene(&scene);
+    std::cout << xmlString << std::endl;
+
     // remove
     std::cout << "------one point removed" << std::endl;
     myFirstTrajectory->removePointAt(1);
@@ -60,6 +70,8 @@ int main(void){
     myFirstTrajectory->clear();
     dumpTrajectory(myFirstTrajectory);
     
+
+
 
     return 0;
 }

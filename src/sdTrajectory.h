@@ -48,10 +48,10 @@ public:
     void addPoint(double x, double y, double z, std::string tp = "none");
                   
     
-    std::string getType();
+    const std::string & getType();
     const sdPoint* getPointAt( int index);
     bool removePointAt(int index);
-    const int numberOfPoints() const;
+    const int getNumberOfPoints() const;
     void clear();
     
 };
@@ -69,7 +69,7 @@ inline void sdTrajectory::addPoint(double x, double y, double z, std::string tp)
 }
 
 
-inline std::string sdTrajectory::getType(){
+inline const std::string & sdTrajectory::getType(){
     return type;
 }
 
@@ -94,7 +94,7 @@ inline void sdTrajectory::clear(){
     pointArray.clear();
 }
 
-inline const int sdTrajectory::numberOfPoints() const{
+inline const int sdTrajectory::getNumberOfPoints() const{
     return pointArray.size();
 }
 

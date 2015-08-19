@@ -20,6 +20,8 @@
 #include "sdMain.h"
 #include "tinyxml2.h"
 #include "JSONNode.h"
+#include "sdSaver.h"
+#include "sdTrajectory.h"
 
 using namespace tinyxml2;
 
@@ -79,6 +81,47 @@ XMLElement* sdSaver::XMLOrderingSection(XMLDocument &xml, sdScene *scene){
     return  ordering;
 }
 
+XMLElement* sdSaver::XMLTrajectorySection(XMLDocument &xml, sdScene *scene){
+    XMLElement* trajectories = xml.NewElement("trajectories");
+    size_t size =  scene->getNumberOfTrajectories();
+    if(!size){
+        return nullptr;
+    }
+    const std::map < std::string, sdTrajectory*> & trajectoryMap = scene->getTrajectoryMap();
+
+
+    for( std::map<std::string, sdTrajectory* >::const_iterator it= trajectoryMap.begin(); it != trajectoryMap.end(); ++it){        
+
+        XMLElement* trajectoryElement = xml.NewElement("trajectory");
+
+        std::string name = (*it).first;
+        sdTrajectory * trajectory = (*it).second;
+
+        trajectoryElement->SetAttribute("name", name.c_str());
+        trajectoryElement->SetAttribute("type", trajectory->getType().c_str());
+        // points
+        {
+            XMLElement * pointsElement = xml.NewElement("points");
+            const size_t size = trajectory->getNumberOfPoints();
+            for(int i = 0; i < size ; i++ ){
+                const sdPoint * point = trajectory->getPointAt(i);
+                if(!point) continue;
+                
+                XMLElement * pointElement = xml.NewElement("point");
+                pointElement->SetAttribute("x", point->x);
+                pointElement->SetAttribute("y", point->y);
+                pointElement->SetAttribute("z", point->z);
+                pointElement->SetAttribute("type", point->type.c_str());
+                pointsElement->InsertEndChild(pointElement);
+            }
+            trajectoryElement->InsertEndChild(pointsElement);
+        }
+        
+        trajectories->InsertEndChild(trajectoryElement);
+    }
+    return trajectories;
+}
+
 XMLElement* sdSaver::XMLMetaSection(XMLDocument &xml, sdScene *scene){
 
     XMLElement* meta = xml.NewElement("meta");
@@ -104,6 +147,12 @@ XMLElement* sdSaver::XMLMetaSection(XMLDocument &xml, sdScene *scene){
     
     // add ordering
     meta->InsertEndChild(XMLOrderingSection(xml, scene));
+
+    // add trajectories
+    XMLElement* trajectorySection = XMLTrajectorySection(xml, scene);
+    if(trajectorySection){
+        meta->InsertEndChild(trajectorySection);
+    }
     return meta;
 }
 
@@ -176,6 +225,7 @@ std::string sdSaver::XMLFromScene(sdScene *scene){
                 name->InsertEndChild(nameText);
                 kind->InsertEndChild(name);
             }
+
             
             // packaging - combining element and text (value)
             XMLElement* element = xml.NewElement(event.getEvent()->getDescriptorAsString().c_str());
