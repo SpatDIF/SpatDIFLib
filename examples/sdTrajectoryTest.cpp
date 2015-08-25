@@ -21,22 +21,42 @@
 #include "sdSaver.h"
 
 void dumpTrajectory(sdTrajectory * traj){
-    std::cout << "type of trajectory:" << traj->getType() << std::endl;
-    std::cout << "number of points:" << traj->getNumberOfPoints() << std::endl;
-    for(int i = 0; i < traj->getNumberOfPoints(); i++){
-        const sdPoint * p = traj->getPointAt(i);
-        if(!p)
-            continue;
-        std::cout << "x:" << p->x << "  y:" << p->y << "  z: " << p->z <<std::endl;
+    std::string type = traj->getType();
+    std::cout << "type of trajectory:" << type << std::endl;
+    
+    if(!type.compare("bezier")){
+        sdTypedTrajectory<sdPoint2D> * trajectory = static_cast<sdTypedTrajectory<sdPoint2D> * >(traj);
+        std::cout << "number of point sets:" << trajectory->getNumberOfPointSets() << std::endl;
+        
+        for(int i = 0; i < trajectory->getNumberOfPointSets(); i++){
+            const std::map<std::string, sdPoint2D> * ps = trajectory->getPointSetAt(i);
+            sdPoint2D p = ps->at("anchor");
+            std::cout <<"anchor " << "x:" << p.x << "  y:" << p.y << std::endl;
+            p = ps->at("forwardHandle");
+            std::cout <<"forwardHandle " << "x:" << p.x << "  y:" << p.y << std::endl;
+            
+            p = ps->at("backwardHandle");
+            std::cout <<"backwardHandle " << "x:" << p.x << "  y:" << p.y << std::endl;
+        }
+    }else if(!type.compare("exponential"))
+    {
+        sdTypedTrajectory<sdPoint2DCurve> * trajectory = static_cast<sdTypedTrajectory<sdPoint2DCurve> * >(traj);
+
+        for(int i = 0; i < trajectory->getNumberOfPointSets(); i++){
+            const std::map<std::string, sdPoint2DCurve> * ps = trajectory->getPointSetAt(i);
+            sdPoint2DCurve p = ps->at("node");
+            std::cout << "x:" << p.x << "  y:" << p.y  <<" cf: " << p.curveFactor << std::endl;
+        }
     }
+    
 }
 
 int main(void){
 
-    // check type
     sdScene scene;
+    scene.addTrajectory<sdPoint2D>("bezierCurve", "bezier");
+    scene.addTrajectory<sdPoint2DCurve>("exponentialCurve", "exponential");
 
-    scene.addTrajectory("myFirstTrajectory" , "bezier");
     size_t numTraj = scene.getNumberOfTrajectories();
     std::cout << "number of trajectories:" << numTraj << std::endl;
 
@@ -45,17 +65,39 @@ int main(void){
         std::cout << "not found. trajectory undefined" << std::endl;
     }
     
-    sdTrajectory* myFirstTrajectory = scene.getTrajectory("myFirstTrajectory");
+    sdTypedTrajectory<sdPoint2D> * bezierCurve = static_cast<sdTypedTrajectory<sdPoint2D> *>(scene.getTrajectory("bezierCurve"));
+    sdTypedTrajectory<sdPoint2DCurve> * exponentialCurve = static_cast<sdTypedTrajectory<sdPoint2DCurve> *>(scene.getTrajectory("exponentialCurve"));
 
-
-    // triangle
-    myFirstTrajectory->addPoint(0, 1, 0 , "anchorPoint");
-    myFirstTrajectory->addPoint(-1, 0, 0, "anchorPoint");
-    sdPoint lastPoint = sdPoint(1,0,0, "anchorPoint");
-    myFirstTrajectory->addPoint(lastPoint);
+    // add two bezier points
+    {
+        std::map<std::string, sdPoint2D> pointSet;
+        pointSet["anchor"] = sdPoint2D(0 ,1);
+        pointSet["forwardHandle"] = sdPoint2D(1 ,1);
+        pointSet["backwardHandle"] = sdPoint2D(-1 ,-1);
+        bezierCurve->addPointSet(pointSet);
+    }
+    {
+        std::map<std::string, sdPoint2D> pointSet;
+        pointSet["anchor"] = sdPoint2D(5 ,5);
+        pointSet["forwardHandle"] = sdPoint2D(6 ,6);
+        pointSet["backwardHandle"] = sdPoint2D(-2 ,-3);
+        bezierCurve->addPointSet(pointSet);
+    }
+    
+    // add two exponential points
+    {
+        std::map<std::string, sdPoint2DCurve > pointSet;
+        pointSet["node"] = sdPoint2DCurve(0 ,0, 2);
+        exponentialCurve->addPointSet(pointSet);
+    }
+    {
+        std::map<std::string, sdPoint2DCurve > pointSet;
+        pointSet["node"] = sdPoint2DCurve(1 ,1, 4);
+        exponentialCurve->addPointSet(pointSet);
+    }
     
     std::cout << "------current content" << std::endl;
-    dumpTrajectory(myFirstTrajectory);
+    dumpTrajectory(bezierCurve);
     
     std::cout << "------trajectory as XML" << std::endl;
     std::string xmlString = sdSaver::XMLFromScene(&scene);
@@ -63,15 +105,12 @@ int main(void){
 
     // remove
     std::cout << "------one point removed" << std::endl;
-    myFirstTrajectory->removePointAt(1);
-    dumpTrajectory(myFirstTrajectory);
+    bezierCurve->removePointSetAt(1);
+    dumpTrajectory(bezierCurve);
     
     std::cout << "------clear all points" << std::endl;
-    myFirstTrajectory->clear();
-    dumpTrajectory(myFirstTrajectory);
-    
-
-
+    bezierCurve->clear();
+    dumpTrajectory(bezierCurve);
 
     return 0;
 }

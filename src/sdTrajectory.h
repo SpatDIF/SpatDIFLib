@@ -16,64 +16,81 @@
 #ifndef ____sdTrajectory__
 #define ____sdTrajectory__
 
+#include <map>
 #include <string>
 #include <vector>
 
-class sdPoint{
+class sdPoint2D{
 public:
-    sdPoint(double x = 0.0, double y = 0.0, double z = 0.0, std::string tp = "none");
-    ~sdPoint();
-    
+    sdPoint2D(double x = 0.0, double y = 0.0);
+    ~sdPoint2D();
     double x;
     double y;
-    double z;
-    std::string type;
 };
 
-inline sdPoint::sdPoint(double x, double y, double z, std::string tp):x(x),y(y),z(z),type(tp){};
-inline sdPoint::~sdPoint(){}
+class sdPoint2DCurve{
+public:
+    sdPoint2DCurve(double x = 0.0, double y = 0.0, double curveFactor = 0.0);
+    ~sdPoint2DCurve();
+    double x;
+    double y;
+    double curveFactor;
+};
 
-class sdTrajectory {
-    friend class sdScene; // only sdScene can instantiate this class. this guarantees that all trjaectory has affiliations.
-    
-private:
-    std::vector<sdPoint> pointArray;
-    std::string type;
-    
+
+inline sdPoint2D::sdPoint2D(double x, double y):x(x),y(y){};
+inline sdPoint2D::~sdPoint2D(){};
+
+inline sdPoint2DCurve::sdPoint2DCurve(double x, double y, double curveFactor):x(x),y(y),curveFactor(curveFactor){};
+inline sdPoint2DCurve::~sdPoint2DCurve(){};
+
+
+class sdTrajectory{
 public:
     sdTrajectory(std::string tp = "none");
-    ~sdTrajectory();
-    
-    void addPoint(sdPoint point);
-    void addPoint(double x, double y, double z, std::string tp = "none");
-                  
-    
     const std::string & getType();
-    const sdPoint* getPointAt( int index);
-    bool removePointAt(int index);
-    const size_t getNumberOfPoints() const;
+
+protected:
+    std::string type;
+    virtual void clear() = 0;
+};
+
+inline sdTrajectory::sdTrajectory(std::string tp):type(tp){};
+inline const std::string & sdTrajectory::getType(){
+    return type;
+}
+
+
+template <typename T>
+class sdTypedTrajectory : public sdTrajectory{
+    //friend class sdScene; // only sdScene can instantiate this class. this guarantees that all trjaectory has affiliations.
+    
+private:
+    std::vector< std::map< std::string, T> > pointArray;
+    
+public:
+    sdTypedTrajectory(std::string tp = "none");
+    void addPointSet(std::map<std::string, T> pointSet);
+    
+    const std::map<std::string, T>* getPointSetAt( int index);
+    bool removePointSetAt(int index);
+    const size_t getNumberOfPointSets() const;
     void clear();
     
 };
 
 #pragma mark implementations
-inline sdTrajectory::sdTrajectory(std::string tp):type(tp){};
-inline sdTrajectory::~sdTrajectory(){};
 
-inline void sdTrajectory::addPoint(sdPoint point){
-    pointArray.push_back(point);
+template <typename T>
+inline sdTypedTrajectory<T>::sdTypedTrajectory(std::string tp):sdTrajectory(tp){};
+
+template <typename T>
+inline void sdTypedTrajectory<T>::addPointSet(std::map<std::string, T> pointSet){
+    pointArray.push_back(pointSet);
 }
 
-inline void sdTrajectory::addPoint(double x, double y, double z, std::string tp){
-    addPoint(sdPoint(x,y,z,tp));
-}
-
-
-inline const std::string & sdTrajectory::getType(){
-    return type;
-}
-
-inline const sdPoint* sdTrajectory::getPointAt(int index){
+template <typename T>
+inline const std::map<std::string, T>* sdTypedTrajectory<T>::getPointSetAt(int index){
     
     if(pointArray.size() <= index)
         return nullptr;
@@ -81,7 +98,8 @@ inline const sdPoint* sdTrajectory::getPointAt(int index){
     return &pointArray[index];
 }
 
-inline bool sdTrajectory::removePointAt(int index){
+template <typename T>
+inline bool sdTypedTrajectory<T>::removePointSetAt(int index){
     if(pointArray.size() <= index)
         return false;
     
@@ -90,11 +108,13 @@ inline bool sdTrajectory::removePointAt(int index){
 
 }
 
-inline void sdTrajectory::clear(){
+template <typename T>
+inline void sdTypedTrajectory<T>::clear(){
     pointArray.clear();
 }
 
-inline const size_t sdTrajectory::getNumberOfPoints() const{
+template <typename T>
+inline const size_t sdTypedTrajectory<T>::getNumberOfPointSets() const{
     return pointArray.size();
 }
 

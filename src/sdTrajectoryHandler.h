@@ -36,7 +36,8 @@ public:
      * @detail this is the only function that can instantiate sdTrajectory.
      */
     
-    sdTrajectory* addTrajectory(std::string name, std::string type = "none");
+    template<typename T>
+    sdTypedTrajectory<T>* addTrajectory(std::string name, std::string type = "none");
     
     /**
      * @brief retrieve trjectory by name
@@ -83,13 +84,14 @@ inline const std::map<std::string, sdTrajectory *> & sdTrajectoryHandler::getTra
     return trajectoryMap;
 }
 
-inline sdTrajectory* sdTrajectoryHandler::addTrajectory(std::string name, std::string type){
+template <typename T>
+inline sdTypedTrajectory<T>* sdTrajectoryHandler::addTrajectory(std::string name, std::string type){
     if(trajectoryMap.find(name) != trajectoryMap.end()){
         // trajectory exists already
-        return trajectoryMap[name];
+        return static_cast< sdTypedTrajectory<T>* >(trajectoryMap[name]);
     }
-    trajectoryMap[name] = new sdTrajectory(type);
-    return trajectoryMap[name];
+    trajectoryMap[name] = static_cast<sdTrajectory* >(new sdTypedTrajectory<T>(type));
+    return static_cast< sdTypedTrajectory<T> *>(trajectoryMap[name]);
 }
 
 inline sdTrajectory* sdTrajectoryHandler::getTrajectory(std::string name){

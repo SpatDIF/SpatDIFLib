@@ -101,20 +101,57 @@ XMLElement* sdSaver::XMLTrajectorySection(XMLDocument &xml, sdScene *scene){
         trajectoryElement->SetAttribute("type", trajectory->getType().c_str());
         // points
         {
-            XMLElement * pointsElement = xml.NewElement("points");
-            const size_t size = trajectory->getNumberOfPoints();
-            for(int i = 0; i < size ; i++ ){
-                const sdPoint * point = trajectory->getPointAt(i);
-                if(!point) continue;
+            
+            if(!trajectory->getType().compare("bezier")){
+                sdTypedTrajectory<sdPoint2D> * bezierTrajectory = static_cast<sdTypedTrajectory<sdPoint2D> *>(trajectory);
+                const size_t size = bezierTrajectory->getNumberOfPointSets();
+                for(int i = 0; i < size ; i++ ){
+                    XMLElement * pointSetElement = xml.NewElement("pointset");
+
+                    const std::map<std::string, sdPoint2D> * pointSet = bezierTrajectory->getPointSetAt(i);
+                    std::map<std::string, sdPoint2D>::const_iterator it = pointSet->begin();
+                    while (it != pointSet->end()) {
+                        const std::string key = (*it).first;
+                        const sdPoint2D point = (*it).second;
+                        
+                        XMLElement * pointElement = xml.NewElement("point");
+                        pointElement->SetAttribute("type", key.c_str());
+                        pointElement->SetAttribute("x", point.x);
+                        pointElement->SetAttribute("y", point.y);
+                        pointSetElement->InsertEndChild(pointElement);
+                        it++;
+
+                    }
+                    trajectoryElement->InsertEndChild(pointSetElement);
+
+                }
                 
-                XMLElement * pointElement = xml.NewElement("point");
-                pointElement->SetAttribute("x", point->x);
-                pointElement->SetAttribute("y", point->y);
-                pointElement->SetAttribute("z", point->z);
-                pointElement->SetAttribute("type", point->type.c_str());
-                pointsElement->InsertEndChild(pointElement);
+            }else if(!trajectory->getType().compare("exponential")){
+                
+                sdTypedTrajectory<sdPoint2DCurve> * expTrajectory = static_cast<sdTypedTrajectory<sdPoint2DCurve> *>(trajectory);
+                const size_t size = expTrajectory->getNumberOfPointSets();
+                for(int i = 0; i < size ; i++ ){
+                    XMLElement * pointSetElement = xml.NewElement("pointset");
+
+                    const std::map<std::string, sdPoint2DCurve> * pointSet = expTrajectory->getPointSetAt(i);
+                    std::map<std::string, sdPoint2DCurve>::const_iterator it = pointSet->begin();
+                    while (it != pointSet->end()) {
+                        const std::string key = (*it).first;
+                        const sdPoint2DCurve point = (*it).second;
+                        
+                        XMLElement * pointElement = xml.NewElement("point");
+                        pointElement->SetAttribute("type", key.c_str());
+                        pointElement->SetAttribute("x", point.x);
+                        pointElement->SetAttribute("y", point.y);
+                        pointElement->SetAttribute("curve", point.curveFactor);
+                        
+                        pointSetElement->InsertEndChild(pointElement);
+                        it++;
+                    }
+                    trajectoryElement->InsertEndChild(pointSetElement);
+                }
             }
-            trajectoryElement->InsertEndChild(pointsElement);
+            
         }
         
         trajectories->InsertEndChild(trajectoryElement);
