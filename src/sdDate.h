@@ -56,7 +56,7 @@ public:
     sdDate(unsigned short year, unsigned short month, unsigned short day);
     
     
-    /*! constrcut with cstr
+    /*! construct with cstr
      @param cstr ISO 8601 string. must be YYYY-MM-DD format.
      */
     sdDate(const char* const cDateString);
@@ -163,8 +163,11 @@ inline void sdDate::setDate(const unsigned short year, const unsigned short mont
 
 inline void sdDate::setDate(const std::string &dateString){
     std::istringstream is(dateString);
-    char dummy;
-    is >> year >> dummy >> month >> dummy >> day;
+    char dummy1, dummy2;
+    is >> year >> dummy1 >> month >> dummy2 >> day;
+    if(!(dummy1 == '-' && dummy2 == '-')){
+        this->setCurrentDate();
+    }
 }
 
 inline void sdDate::setYear(const unsigned short year){
