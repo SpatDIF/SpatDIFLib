@@ -48,6 +48,33 @@ TEST_CASE("Test sdDate", "[sdInfo]"){
         
     }
     
+    SECTION("accessor check"){
+        sdInfo info = sdInfo();
+        sdDate date;
+        info.setAuthor("author");
+        REQUIRE(info.getAuthor() == "author");
+        
+        info.setHost("host");
+        REQUIRE(info.getHost() == "host");
+        
+        info.setSession("session");
+        REQUIRE(info.getSession() == "session");
 
-
+        REQUIRE(info.getDate().getDateAsString() == date.getDateAsString());
+        REQUIRE(info.getDateAsString() == date.getDateAsString());
+        
+        info.setLocation("location");
+        REQUIRE(info.getLocation() == "location");
+        
+        info.setAnnotation("this is test");
+        REQUIRE(info.getAnnotation() == "this is test");
+        
+        info.set("chikashi", "mac", "1979-12-4", "session1", "icst", "last test");
+        REQUIRE(info.getAuthor() == "chikashi");
+        REQUIRE(info.getHost() == "mac");
+        REQUIRE(info.getDate().getDateAsString() == "1979-12-4");
+        REQUIRE(info.getSession() == "session1");
+        REQUIRE(info.getLocation() == "icst");
+        REQUIRE(info.getAnnotation() == "last test");
+    }
 }
