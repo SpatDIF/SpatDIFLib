@@ -62,6 +62,7 @@ public:
     sdInfo(const std::string &author, const std::string &host, const std::string &date, const std::string &session, const std::string &location, const std::string &annotation);
     
     /*! construct with parameters (c-strings)
+     @deprecated use std::string version instead
      @param author creator of the scene
      @param host auhotring tool used for creating the scene
      @param date storing date
@@ -69,7 +70,7 @@ public:
      @param location studio or venue location
      @param annotation general comments about this scene
      */
-    sdInfo(const char* author, const char* host, const char* date, const char* session, const char* location, const char* annotation);
+    sdInfo(const char* author, const char* host, const char* date, const char* session, const char* location, const char* annotation) __attribute__((deprecated("use std::string version instead")));
     /*! @name Setters 
      @{ 
      */
