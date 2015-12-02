@@ -103,9 +103,16 @@ public:
      */
     
     /*! gets date as an array.
-     @date an allocated buffer of unsigned short. the size of unsighed short array must be exactly 3.
+     @deprecated use std::vector<unsigned short>getDate() instead
+     @param date an allocated buffer of unsigned short. the size of unsighed short array must be exactly 3.
      */
-    void getDate(unsigned short (&date)[3]) const;
+    void getDate(unsigned short (&date)[3]) const __attribute__((deprecated("use std::vector<unsigned int>getDate() instead")));
+    
+    /*! gets date as a vector.
+     @param date an allocated buffer of unsigned short. the size of unsighed short array must be exactly 3.
+     @return std::vector<unsinged short> that contains year, month, and day.
+     */
+    std::vector<unsigned short> getDate() const;
     
     /*! generates ISO 8601 string from the given data and return it*/
     std::string getDateAsString(void) const;
@@ -194,6 +201,10 @@ inline void sdDate::getDate(unsigned short (&date)[3]) const{
     date[0] = year;
     date[1] = month;
     date[2] = day;
+}
+
+inline std::vector<unsigned short> sdDate::getDate() const{
+    return std::move(std::vector<unsigned short>{year, month, day});
 }
 
 inline std::string sdDate::getDateAsString(void) const{

@@ -8,7 +8,6 @@ using namespace std;
 
 TEST_CASE("Test sdDate", "[sdDate]"){
     
-
     sdDate date = sdDate(1979,12,4);
     REQUIRE(date.getYear() == 1979);
     REQUIRE(date.getMonth() == 12);
@@ -20,6 +19,11 @@ TEST_CASE("Test sdDate", "[sdDate]"){
         REQUIRE(placeHolder[0] == 1979);
         REQUIRE(placeHolder[1] == 12);
         REQUIRE(placeHolder[2] == 4);
+        
+        std::vector<unsigned short> vector = date.getDate();
+        REQUIRE(vector[0] == 1979);
+        REQUIRE(vector[1] == 12);
+        REQUIRE(vector[2] == 4);
     }
     
     SECTION("setter test"){
