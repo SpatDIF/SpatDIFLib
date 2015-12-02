@@ -6,7 +6,7 @@
 #include <iostream>
 using namespace std;
 
-TEST_CASE("Test sdDate", "[sdDate]"){
+TEST_CASE("sdDate member function test", "[sdDate]"){
     
     sdDate date = sdDate(1979,12,4);
     REQUIRE(date.getYear() == 1979);
