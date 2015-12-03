@@ -3,9 +3,17 @@
 #include "catch.hpp"
 #include "sdScene.h"
 
-#include <iostream>
 using namespace std;
-TEST_CASE("Test sdScene", "[sdInfo]"){
+
+TEST_CASE("Test sdScene", "[sdScene]"){
+    sdScene scene;
+    REQUIRE(scene.getOrdering() == SD_TIME);
+    SECTION("entity control"){
+        scene.addEntity("first");
+        REQUIRE(scene.getNumberOfEntities() == 1);
+        
+        
+        
+    }
     
-    
-}
+} 
