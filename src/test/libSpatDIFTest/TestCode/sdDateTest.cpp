@@ -3,7 +3,6 @@
 #include "catch.hpp"
 #include "sdDate.h"
 
-#include <iostream>
 using namespace std;
 
 TEST_CASE("sdDate member function test", "[sdDate]"){

@@ -96,6 +96,39 @@ typedef enum {
 } EInterpolation;
 
 /*!
+ The Descriptor traits. implemented with template explicit specialization technique
+ */
+
+template <EDescriptor D>
+struct sdDescriptor{};
+
+template <>
+struct sdDescriptor<SD_TYPE>{
+    typedef double type;
+    const static bool interpolable = true;
+};
+
+template <>
+struct sdDescriptor<SD_PRESENT>{
+    typedef bool type;
+    const static bool interpolable = false;
+};
+
+template <>
+struct sdDescriptor<SD_POSITION>{
+    typedef std::array<double, 3> type;
+    const static bool interpolable = true;
+};
+
+template <>
+struct sdDescriptor<SD_ORIENTATION>{
+    typedef std::array<double, 3> type;
+    const static bool interpolable = true;
+};
+
+
+
+/*!
  utility function that convert ints to a string
  */
 inline std::string intsToString(const int *it, const int num){

@@ -3,9 +3,8 @@
 #include "catch.hpp"
 #include "sdInfo.h"
 
-#include <iostream>
 using namespace std;
-TEST_CASE("Test sdDate", "[sdInfo]"){
+TEST_CASE("Test sdInfo", "[sdInfo]"){
     SECTION("constructor check"){
         sdInfo info1 = sdInfo();
         sdDate date1;
