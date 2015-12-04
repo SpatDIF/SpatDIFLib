@@ -23,7 +23,6 @@
 */
 
 #include "sdConst.h"
-#include "sdDescriptor.h"
 
 class sdInterpolation{
 

@@ -86,50 +86,45 @@ public:
     /*!
      gets an enum  ordering
      */
-    EOrdering getOrdering(void);
+    const EOrdering &getOrdering(void) const;
 
     /*!
      gets ordering as String
      */
-    std::string getOrderingAsString(void);
+    std::string getOrderingAsString(void) const;
     
     /*! sets an enum of ordering
      @param ordering the ordering enum declared in sdConst.h
      */
-    void setOrdering(EOrdering ordering);
+    void setOrdering(const EOrdering &ordering);
     
     /*! sets an enum of ordering
      @param ordering the ordering enum declared in sdConst.h
      */
-    void setOrdering(std::string string);
+    bool setOrdering(const std::string &string);
 
     /*!
      @}
      */
     
-//    /*! @name Entity handling
-//     @{
-//     */
-//    
-//    /*! return name of the entity at the specified index
-//     @param index
-//     */
-//    std::string getEntityName(int index);
-//
+    /*! @name Entity handling
+     @{
+     */
+    
     /*! return the name of all entities in the scene as vector of string
     */
-    std::vector<std::string> getEntityNames();
+    std::vector<std::string> getEntityNames() const;
 
     /*! search an entity in the entity vector by its name and return the pointer. returns null if the entity can not be found.
      @param name the name of a designated entity
      */
-//    sdEntityCore* getEntity(std::string name);
+    const sdEntity *  getEntity(const std::string &name) const;
     
 //    /*! returns a pointer to the entityVector */
 //    std::vector <sdEntityCore*> getEntityVector(void);
-//    
+
     /*! returns the number of entity in the entityVector*/
-    size_t getNumberOfEntities(void);
+    size_t getNumberOfEntities(void) const;
     
     /*! add a sdEntityCore to this scene. this function is the only way to generate an instance of sdEntityCore because the
      constructor of sdEntityCore is intentionally declared as a private function. Thus, the constcutor can be called only by
@@ -143,7 +138,7 @@ public:
     /*! remove the sdEntityCore specified by name from the entityVector]
      @param name the name of a sdEntityCore to be removed from the entityVector
      */
-    void removeEntity(std::string name);
+    bool removeEntity(const std::string &name);
     
     /*! remove all entities from the entityVector*/
     void removeAllEntities(void);
@@ -292,7 +287,7 @@ public:
 //     */
 };
 
-#pragma inline implementations
+#pragma mark Constoructors
 
 inline sdScene::sdScene(void){
     sdInfo info("unknown", "unknown", sdDate(), "unknown", "unknown", "unknown");
@@ -309,6 +304,8 @@ inline sdScene::sdScene(sdInfo info, EOrdering ordering){
     sdScene::ordering = ordering;
 }
 
+#pragma mark Info
+
 inline void sdScene::setInfo(sdInfo info){
     sdScene::info = info;
 }
@@ -317,35 +314,64 @@ inline sdInfo sdScene::getInfo(void){
     return info;
 }
 
-inline EOrdering sdScene::getOrdering(void){
+#pragma mark Ordering handling
+
+inline const EOrdering &sdScene::getOrdering(void) const{
     return ordering;
 }
 
-inline std::string sdScene::getOrderingAsString(void){
-    return ordering == SD_TIME ? std::string("time") : std::string("track");
+inline std::string sdScene::getOrderingAsString(void) const{
+    return ordering == SD_TIME ? std::string("time") : std::string("track"); // invoke move semantics bacause of rvalue
 }
 
-inline void sdScene::setOrdering(EOrdering ordering ){
+inline void sdScene::setOrdering(const EOrdering &ordering ){
     sdScene::ordering = ordering;
 }
 
-inline void sdScene::setOrdering(std::string ordering){
+inline bool sdScene::setOrdering(const std::string &ordering){
     if(ordering == "time"){
         sdScene::ordering = SD_TIME;
+        return true;
     }else if(ordering == "track"){
         sdScene::ordering = SD_TRACK;
-    }else{
-        std::cout << "sdScene Error: Unknown Ordering" << std::endl;
+        return true;
     }
+    std::cout << "sdScene Error: Unknown Ordering. set to time" << std::endl;
+    return false;
 }
 
-sdEntity * const sdScene::addEntity(std::string name, EKind kind){
+#pragma mark Entity Handling
+
+inline sdEntity * const sdScene::addEntity(std::string name, EKind kind){
     auto ret = entities.insert(std::pair<std::string, sdEntity>(name ,sdEntity(this)));
     if(!ret.second) return nullptr;
     return &ret.first->second;
 }
 
-size_t sdScene::getNumberOfEntities(){
+inline bool sdScene::removeEntity(const std::string &name){
+    return entities.erase(name) != 0;
+}
+
+inline void sdScene::removeAllEntities(){
+    entities.clear();
+}
+
+inline std::vector<std::string> sdScene::getEntityNames() const{
+    std::vector<std::string> returnVector;
+    for_each(entities.begin(), entities.end(),[&returnVector](std::pair<std::string, sdEntity> pair){
+        returnVector.push_back(pair.first);
+    });
+    return std::move(returnVector);
+}
+
+inline const sdEntity * sdScene::getEntity(const std::string &name) const{
+    std::map<std::string, sdEntity>::const_iterator it = entities.find(name);
+    if(it == entities.end()){ return nullptr; }
+    return &((*it).second);
+}
+
+inline size_t sdScene::getNumberOfEntities() const{
     return entities.size();
 }
+
 #endif

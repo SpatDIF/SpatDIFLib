@@ -17,7 +17,6 @@
 #define ____sdEventCore__
 
 #include "sdEvent.h"
-#include "sdDescriptor.h"
 
 #pragma mark declarations
 
