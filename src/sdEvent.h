@@ -41,7 +41,7 @@ public:
     std::string getTimeAsString() const;
     EDescriptor getDescriptor() const;
     const sdEntity * const getParent() const;
-    virtual std::string getValueAsString() = 0;
+    //virtual const std::string getValueAsString() = 0;
 };
 
 inline sdProtoEvent::sdProtoEvent(const double time, const EDescriptor descriptor, const sdEntity * const parent):
@@ -69,7 +69,7 @@ inline const sdEntity * const sdProtoEvent::getParent() const{
  */
 
 template<typename T>
-class sdEvent: sdProtoEvent{
+class sdEvent: public sdProtoEvent{
     friend sdEntity;
     
 protected:
@@ -78,7 +78,7 @@ protected:
 public:
     
     /*! constructor with initialization. should be invoked by the subclass*/
-    sdEvent(const double time, const EDescriptor descriptor, const sdEntity * const parent, const T value):
+    sdEvent(const double time, const EDescriptor descriptor, const sdEntity * const parent, const T &value):
     sdProtoEvent(time, descriptor, parent), value(value){}
     
     /*! @name Value handling

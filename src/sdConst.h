@@ -23,8 +23,8 @@
 /*!
     enum for descriptor. internally all descriptors are handled with this Enum
  */
-typedef enum {
-    SD_TYPE ,
+enum class EDescriptor{
+    SD_TYPE,
     SD_PRESENT,
     SD_POSITION,
     SD_ORIENTATION,
@@ -47,7 +47,7 @@ typedef enum {
     
     SD_ERROR,
     SD_ALL
-} EDescriptor;
+} ;
 
 /*!
  enum for "type" descriptor.
@@ -103,25 +103,25 @@ template <EDescriptor D>
 struct sdDescriptor{};
 
 template <>
-struct sdDescriptor<SD_TYPE>{
-    typedef double type;
+struct sdDescriptor<EDescriptor::SD_TYPE>{
+    typedef bool type;
     const static bool interpolable = true;
 };
 
 template <>
-struct sdDescriptor<SD_PRESENT>{
+struct sdDescriptor<EDescriptor::SD_PRESENT>{
     typedef bool type;
     const static bool interpolable = false;
 };
 
 template <>
-struct sdDescriptor<SD_POSITION>{
+struct sdDescriptor<EDescriptor::SD_POSITION>{
     typedef std::array<double, 3> type;
     const static bool interpolable = true;
 };
 
 template <>
-struct sdDescriptor<SD_ORIENTATION>{
+struct sdDescriptor<EDescriptor::SD_ORIENTATION>{
     typedef std::array<double, 3> type;
     const static bool interpolable = true;
 };
@@ -314,9 +314,9 @@ inline  EExtension stringToExtension(std::string extensionStr){
  * @return extension associated to the given descriptor
  */
 inline EExtension getRelevantExtension(EDescriptor descriptor){
-    if(SD_TYPE <= descriptor && descriptor <= SD_ORIENTATION){
+    if(EDescriptor::SD_TYPE <= descriptor && descriptor <= EDescriptor::SD_ORIENTATION){
         return SD_CORE;
-    }else if(SD_MEDIA_ID <= descriptor && descriptor <= SD_MEDIA_GAIN){
+    }else if(EDescriptor::SD_MEDIA_ID <= descriptor && descriptor <= EDescriptor::SD_MEDIA_GAIN){
         return SD_MEDIA;
     }else{
         return SD_EXTENSION_ERROR;

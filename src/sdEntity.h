@@ -39,12 +39,9 @@ public:
     sdEntity(const sdScene * const parent):parent(parent){};
     
     template <EDescriptor D>
-    const std::shared_ptr<sdProtoEvent> addEvent(const double &time, typename sdDescriptor<D>::type value){
-        auto event = std::shared_ptr<sdProtoEvent>(
-                                                   new sdEvent<typename sdDescriptor<D>::type>(time,sdDescriptor<D>::type,this,value));
+    const std::shared_ptr<sdProtoEvent> addEvent(const double &time,  typename sdDescriptor<D>::type value){
+        auto event = std::shared_ptr<sdProtoEvent>(new sdEvent<typename sdDescriptor<D>::type>(time, D, this, value));
         events.push_back(event);
-        
-
         return event;
     }
     
