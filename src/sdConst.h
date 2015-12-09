@@ -23,7 +23,7 @@
 /*!
     enum for descriptor. internally all descriptors are handled with this Enum
  */
-enum class EDescriptor{
+typedef enum {
     SD_TYPE,
     SD_PRESENT,
     SD_POSITION,
@@ -47,7 +47,7 @@ enum class EDescriptor{
     
     SD_ERROR,
     SD_ALL
-} ;
+} EDescriptor;
 
 /*!
  enum for "type" descriptor.

@@ -161,9 +161,7 @@ double sdEntity::getLastEventTime() const{
 }
 
 // number of events
-int sdEntity::getNumberOfEvents() const{
-    return static_cast<int>(eventSet.size());
-}
+
 
 void sdEntity::removeEvent(double time, EDescriptor descriptor){
     std::multiset<sdEvent*, sdEventCompare>::iterator it = eventSet.begin();
@@ -177,9 +175,7 @@ void sdEntity::removeEvent(double time, EDescriptor descriptor){
     }
 }
 
-void sdEntity::removeAllEvents(){
-    eventSet.clear();
-}
+
 
 void* sdEntity::getValue(double time, EDescriptor descriptor){
     sdEvent *evt = getEvent(time, descriptor);

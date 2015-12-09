@@ -35,21 +35,22 @@ protected:
     const sdScene * const parent;
     void sort();
     
-public:
+    /*!
+     sdEntity can be invoked only by sdScene
+     */
     sdEntity(const sdScene * const parent):parent(parent){};
+
+public:
     
+    /*! this function is the only way to instantiate sdEvent.*/
     template <EDescriptor D>
-    const std::shared_ptr<sdProtoEvent> addEvent(const double &time,  typename sdDescriptor<D>::type value){
-        auto event = std::shared_ptr<sdProtoEvent>(new sdEvent<typename sdDescriptor<D>::type>(time, D, this, value));
-        events.push_back(event);
-        return event;
-    }
+    const std::shared_ptr<sdProtoEvent> addEvent(const double &time,  typename sdDescriptor<D>::type value);
     
-//    template <typename L>
-//    void iterate(L lambda) const{
-//        for_each(events.begin(), events.end(), lambda);
-//    }
-//    
+    /*! iterate with lambda */
+    template <typename L>
+    void iterate(L lambda) const;
+
+//
 //    template <typename T>
 //    vector<T> getValueVector(shared_ptr<_Event> &event) const{
 //        const DescriptorFormat *  format = fetchDescriptorFormat(event->getDescriptor());
@@ -64,16 +65,18 @@ public:
 //     Subsequently, all allocated buffers stored in the eventSet will be destroyed*/
 //    virtual ~sdEntity();
 //    
-//    /*! @name Event Handling @{ */
-//
-//    /*! return number of registerd events in the eventSet */
-//    virtual int getNumberOfEvents(void) const;
-//    
-//    /*! @name Getting  Event(s) in the specified Range @{ */
-//
-//    /*! return single event with specific time and descriptor*/
-//    virtual sdEvent* getEvent(const double time, const EDescriptor descriptor) const;
-//
+    /*! @name Event Handling @{ */
+
+    /*! return number of registerd events in the eventSet */
+    size_t getNumberOfEvents(void) const;
+
+    /*! @name Getting  Event(s) in the specified Range @{ */
+
+    /*! return single event with specific time and descriptor*/
+    
+    template <EDescriptor D>
+    inline const sdEvent< D > * const getEvent(const double time) const;
+
 //    /*! return a multiset of sdEvent pointers, depending on given filter arguments*/
 //    virtual std::multiset<sdEvent*, sdEventCompare> getEventSet(void) const;
 //    virtual std::multiset<sdEvent*, sdEventCompare> getEventSet(const double time) const;
@@ -187,7 +190,6 @@ public:
 //    /*!
 //     this function is the only way to instantiate sdEvent.
 //     */
-//    virtual sdEvent* addEvent(double time, EDescriptor descriptor, void* value) = 0;
 //    virtual sdEvent* addEvent(std::string time, std::string descriptor, std::string value) = 0;
 //    
 //    /*<
@@ -204,18 +206,18 @@ public:
 //    void removeEvent(double time, EDescriptor descriptor);
 //    virtual void removeEvent(std::string time, std::string descriptor) = 0;
 //    
-//    /*!
-//     remove all events in the eventSet
-//     */
-//    void removeAllEvents();
-//    
-//    /*!
-//     @}
-//     */
-//    
-//    /*! @name Getting value directly
-//     @{
-//     */
+    /*!
+     remove all events in the eventSet
+     */
+    void removeAllEvents();
+
+    /*!
+     @}
+     */
+
+    /*! @name Getting value directly
+     @{
+     */
 //
 //    /*!
 //     this function looks for an event at specified time and descriptor and returns a pointer to the data.
@@ -250,10 +252,44 @@ public:
 //    */
 };
 
-void sdEntity::sort(){
+template <typename L>
+inline void sdEntity::iterate(L lambda) const{
+    for_each(events.begin(), events.end(), lambda);
+}
+
+template <EDescriptor D>
+inline const std::shared_ptr<sdProtoEvent> sdEntity::addEvent(const double &time,  typename sdDescriptor<D>::type value){
+    auto event = std::shared_ptr<sdProtoEvent>(new sdEvent<D>(time, D, this, value));
+    events.push_back(event);
+    return event;
+}
+
+template <EDescriptor D>
+inline const sdEvent< D > * const sdEntity::getEvent(const double time) const{
+
+    std::vector< std::shared_ptr<sdProtoEvent> > ::const_iterator it = events.begin();
+    while (it != events.end()) {
+        std::shared_ptr<sdProtoEvent> ptr = *it;
+        if(ptr->getTime()){ break; }
+    }
+    sdProtoEvent * protoEvent = (*it).get();
+    const sdEvent<D> * const event = dynamic_cast<sdEvent<D> *>(protoEvent);
+    return event;
+}
+
+inline void sdEntity::sort(){
     std::sort(events.begin(), events.end(),
          [](std::shared_ptr<sdProtoEvent> eventA, std::shared_ptr<sdProtoEvent> eventB)->bool{
-             return eventA->getTime() < eventB->getTime();});
+             return eventA->getTime() < eventB->getTime();
+         });
+}
+
+inline void sdEntity::removeAllEvents(){
+    events.clear();
+}
+
+inline size_t sdEntity::getNumberOfEvents() const{
+    return events.size();
 }
 
 #endif

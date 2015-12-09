@@ -41,7 +41,7 @@ public:
     std::string getTimeAsString() const;
     EDescriptor getDescriptor() const;
     const sdEntity * const getParent() const;
-    //virtual const std::string getValueAsString() = 0;
+    virtual const std::string getValueAsString() = 0;
 };
 
 inline sdProtoEvent::sdProtoEvent(const double time, const EDescriptor descriptor, const sdEntity * const parent):
@@ -68,26 +68,35 @@ inline const sdEntity * const sdProtoEvent::getParent() const{
  * @detail the value type, that the event handles, is based on given descriptor D.
  */
 
-template<typename T>
+template<EDescriptor D>
 class sdEvent: public sdProtoEvent{
     friend sdEntity;
     
 protected:
-    const T value;
+    const typename sdDescriptor<D>::type  value;
     
 public:
     
     /*! constructor with initialization. should be invoked by the subclass*/
-    sdEvent(const double time, const EDescriptor descriptor, const sdEntity * const parent, const T &value):
+    sdEvent(const double time, const EDescriptor descriptor, const sdEntity * const parent, const typename sdDescriptor<D>::type &value):
     sdProtoEvent(time, descriptor, parent), value(value){}
     
     /*! @name Value handling
      @{ */
     
-    /*!returns value. */
-    const T &getValue(void) const{ return value; };
+    /*! returns value. */
+    const typename sdDescriptor<D>::type &getValue(void) const{ return value; };
     
+    /*! returns value as string */
+    const std::string getValueAsString();
     /*! @} */
+
 };
+
+template<EDescriptor D>
+inline const std::string sdEvent<D>::getValueAsString(){
+    std::string string;
+    return std::move(string);
+}
 
 #endif

@@ -1,13 +1,21 @@
 
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
-#include "sdEvent.h"
+#include "sdScene.h"
 
 using namespace std;
 
-TEST_CASE("sdDate member function test", "[sdDate]"){
+TEST_CASE("Test sdEvent", "[sdEvent]"){
+    
+    sdScene scene;
+    sdEntity * entity = scene.addEntity("MyEntity");
+    entity->addEvent<SD_PRESENT>(0.0, false);
+    REQUIRE(entity->getNumberOfEvents() == 1);
+    entity->removeAllEvents();
+    REQUIRE(entity->getNumberOfEvents() == 0);
+    
+    entity->addEvent<SD_PRESENT>(0.0, false);
+    auto * event =  entity->getEvent<SD_PRESENT>(0.0);
     
     
-
-
 }
