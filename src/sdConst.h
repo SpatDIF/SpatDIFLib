@@ -173,8 +173,11 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_GAIN>{
 /*!
  check almost equal for double precision
  */
-bool almostEqual(double x, double y){
-    return std::abs(x-y) < std::numeric_limits<double>::epsilon() * std::abs(x+y) * 2.0;
+inline bool almostEqual(double x, double y){
+    const double gap = std::abs(x-y);
+    const double epsilon = std::numeric_limits<double>::epsilon() * std::abs(x+y) * 2.0;
+    const double min = std::numeric_limits<double>::min();
+    return (gap < epsilon) || (gap < min);
 }
 
 

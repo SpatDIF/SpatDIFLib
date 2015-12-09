@@ -78,8 +78,8 @@ protected:
 public:
     
     /*! constructor with initialization. should be invoked by the subclass*/
-    sdEvent(const double time, const EDescriptor descriptor, const sdEntity * const parent, const typename sdDescriptor<D>::type &value):
-    sdProtoEvent(time, descriptor, parent), value(value){}
+    sdEvent(const double time, const sdEntity * const parent, const typename sdDescriptor<D>::type &value):
+    sdProtoEvent(time, D, parent), value(value){}
     
     /*! @name Value handling
      @{ */

@@ -261,7 +261,7 @@ inline void sdEntity::iterate(L lambda) const{
 
 template <EDescriptor D>
 inline const std::shared_ptr<sdProtoEvent> sdEntity::addEvent(const double &time,  typename sdDescriptor<D>::type value){
-    auto event = std::shared_ptr<sdProtoEvent>(new sdEvent<D>(time, D, this, value));
+    auto event = std::shared_ptr<sdProtoEvent>(new sdEvent<D>(time, this, value));
     events.push_back(event);
     return event;
 }
