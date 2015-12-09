@@ -43,36 +43,44 @@ typedef enum {
     // descriptor for point set extension
     SD_POINT_SET_NAME,
     
-    
-    
     SD_ERROR,
     SD_ALL
 } EDescriptor;
+
+
+/*!
+    enum for media type
+ */
+enum class EMedia_TYPE{
+    SD_STREAM,
+    SD_FILE,
+    SD_LIVE,
+    SD_NONE
+};
 
 /*!
  enum for "type" descriptor.
  Currently only "point" is declared in the specification.
  */
-typedef enum{
+enum class EType{
     SD_POINT
-} EType;
+};
 
 /*!
  enum for ordering
  */
-typedef enum {
+enum class EOrdering{
     SD_TIME,
     SD_TRACK
-} EOrdering;
+};
 
 /*!
  enum for kind. All sdEntityCore must define their kind when instantiated.
  */
-typedef enum {
+enum class EKind {
     SD_SOURCE,
     SD_SINK
-    
-} EKind;
+};
 
 /*!
  enum for extension. all sdEntityExtension must have one of these enum as a static variable in order to identify themselves
@@ -104,7 +112,7 @@ struct sdDescriptor{};
 
 template <>
 struct sdDescriptor<EDescriptor::SD_TYPE>{
-    typedef bool type;
+    typedef EType type;
     const static bool interpolable = true;
 };
 
@@ -126,6 +134,48 @@ struct sdDescriptor<EDescriptor::SD_ORIENTATION>{
     const static bool interpolable = true;
 };
 
+template <>
+struct sdDescriptor<EDescriptor::SD_MEDIA_ID>{
+    typedef std::string type;
+    const static bool interpolable = false;
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_MEDIA_TYPE>{
+    typedef EMedia_TYPE type;
+    const static bool interpolable = false;
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_MEDIA_LOCATION>{
+    typedef std::string type;
+    const static bool interpolable = false;
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_MEDIA_CHANNEL>{
+    typedef int type;
+    const static bool interpolable = false;
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_MEDIA_TIME_OFFSET>{
+    typedef double type;
+    const static bool interpolable = false;
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_MEDIA_GAIN>{
+    typedef double type;
+    const static bool interpolable = true;
+};
+
+/*!
+ check almost equal for double precision
+ */
+bool almostEqual(double x, double y){
+    return std::abs(x-y) < std::numeric_limits<double>::epsilon() * std::abs(x+y) * 2.0;
+}
 
 
 /*!

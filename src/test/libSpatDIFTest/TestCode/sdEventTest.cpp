@@ -14,8 +14,9 @@ TEST_CASE("Test sdEvent", "[sdEvent]"){
     entity->removeAllEvents();
     REQUIRE(entity->getNumberOfEvents() == 0);
     
-    entity->addEvent<SD_PRESENT>(0.0, false);
-    auto * event =  entity->getEvent<SD_PRESENT>(0.0);
-    
+    entity->addEvent<SD_PRESENT>(1.0, true);
+    auto * event =  entity->getEvent<SD_PRESENT>(1.0);
+    REQUIRE(event);
+    REQUIRE(event->getValue() == true);
     
 }

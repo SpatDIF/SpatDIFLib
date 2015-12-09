@@ -120,9 +120,6 @@ public:
      */
     const sdEntity *  getEntity(const std::string &name) const;
     
-//    /*! returns a pointer to the entityVector */
-//    std::vector <sdEntityCore*> getEntityVector(void);
-
     /*! returns the number of entity in the entityVector*/
     size_t getNumberOfEntities(void) const;
     
@@ -133,7 +130,7 @@ public:
       this function returns a pointer to the new instance of sdEntityCore.
         @param name the name of new sdEntityCore
      */
-    sdEntity * const addEntity(std::string name, EKind kind = SD_SOURCE);
+    sdEntity * const addEntity(std::string name, EKind kind = EKind::SD_SOURCE);
     
     /*! remove the sdEntityCore specified by name from the entityVector]
      @param name the name of a sdEntityCore to be removed from the entityVector
@@ -147,10 +144,10 @@ public:
      @}
      */
     
-//    /*! @name Value handling
-//     @{
-//     */
-//    
+    /*! @name Value handling
+     @{
+     */
+//
 //    /*! set timed data by specifying name of the target entity, descriptor, and time.
 //     sdScene forwards the request to a proper sdEntityCore. 
 //     a properly allocated void pointer should be provided as the fourth argument
@@ -169,15 +166,15 @@ public:
 //     @param value allocated void pointer containing value(s)
 //     */
 //    void* getValue(std::string name, double time, EDescriptor descriptor);
-//    
-//    /*!
-//     @}
-//     */
-//    
-//    /*! @name Extension handling
-//     @{
-//     */
-//    
+    
+    /*!
+     @}
+     */
+
+    /*! @name Extension handling
+     @{
+     */
+//
 //    /*! return an enum EExtension at the specified index */
 //    EExtension getActivatedExtension(int index);
 //    
@@ -291,12 +288,12 @@ public:
 
 inline sdScene::sdScene(void){
     sdInfo info("unknown", "unknown", sdDate(), "unknown", "unknown", "unknown");
-    ordering = SD_TIME;
+    ordering = EOrdering::SD_TIME;
 }
 
 inline sdScene::sdScene(sdInfo info){
     setInfo(info);
-    ordering = SD_TIME;
+    ordering = EOrdering::SD_TIME;
 }
 
 inline sdScene::sdScene(sdInfo info, EOrdering ordering){
@@ -321,7 +318,7 @@ inline const EOrdering &sdScene::getOrdering(void) const{
 }
 
 inline std::string sdScene::getOrderingAsString(void) const{
-    return ordering == SD_TIME ? std::string("time") : std::string("track"); // invoke move semantics bacause of rvalue
+    return ordering == EOrdering::SD_TIME ? std::string("time") : std::string("track"); // invoke move semantics bacause of rvalue
 }
 
 inline void sdScene::setOrdering(const EOrdering &ordering ){
@@ -330,10 +327,10 @@ inline void sdScene::setOrdering(const EOrdering &ordering ){
 
 inline bool sdScene::setOrdering(const std::string &ordering){
     if(ordering == "time"){
-        sdScene::ordering = SD_TIME;
+        sdScene::ordering = EOrdering::SD_TIME;
         return true;
     }else if(ordering == "track"){
-        sdScene::ordering = SD_TRACK;
+        sdScene::ordering = EOrdering::SD_TRACK;
         return true;
     }
     std::cout << "sdScene Error: Unknown Ordering. set to time" << std::endl;

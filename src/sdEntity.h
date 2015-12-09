@@ -40,6 +40,8 @@ protected:
      */
     sdEntity(const sdScene * const parent):parent(parent){};
 
+    std::vector<std::shared_ptr<sdProtoEvent>>::const_iterator findEvent(const double time, EDescriptor descriptor) const;
+
 public:
     
     /*! this function is the only way to instantiate sdEvent.*/
@@ -138,14 +140,14 @@ public:
 //     @}
 //     */
 //
-//    /*! @name Getting frist Event(s)
-//     @{
-//     */
-//    
-//    /*!
-//     return the very first event with the specified descriptor.
-//     @param descriptor the descriptor of the event declared in sdConst.h
-//     */
+    /*! @name Getting frist Event(s)
+     @{
+     */
+
+    /*!
+     return the very first event with the specified descriptor.
+     @param descriptor the descriptor of the event declared in sdConst.h
+     */
 //    sdEvent* getFirstEvent(const EDescriptor descriptor) const;
 //    
 //    /*!
@@ -182,33 +184,24 @@ public:
 //     */
 //    double getLastEventTime() const;
 //
-//    /*!
-//    }
-//     */
-//    
-//     
-//    /*!
-//     this function is the only way to instantiate sdEvent.
-//     */
-//    virtual sdEvent* addEvent(std::string time, std::string descriptor, std::string value) = 0;
-//    
+    /*!
+    }
+     */
+
+    
 //    /*<
 //     remove an event from the set
 //     @param event the event to be removed
 //     */
 //    void removeEvent(sdEvent *event);
 //    
-//    /*!
-//     remove an event at the specified time and descriptor
-//     @param time the time of sdEvent to be removed.
-//     @param descriptor the descriptor of sdEvent to be removed
-//     */
-//    void removeEvent(double time, EDescriptor descriptor);
-//    virtual void removeEvent(std::string time, std::string descriptor) = 0;
-//    
-    /*!
-     remove all events in the eventSet
-     */
+    /*! remove an event at the specified time and descriptor
+     @param time the time of sdEvent to be removed.
+     @param descriptor the descriptor of sdEvent to be removed */
+    bool removeEvent(double time, EDescriptor descriptor);
+    bool removeEvent(std::string time, std::string descriptor);
+    
+    /*! remove all events in the eventSet */
     void removeAllEvents();
 
     /*!
@@ -252,6 +245,15 @@ public:
 //    */
 };
 
+std::vector<std::shared_ptr<sdProtoEvent>>::const_iterator sdEntity::findEvent(const double time, EDescriptor descriptor) const{
+    std::vector< std::shared_ptr<sdProtoEvent> > ::const_iterator it = events.begin();
+    while (it != events.end()) {
+        if( (almostEqual(time, (*it)->getTime())) && (descriptor == (*it)->getDescriptor()) ){ return it; }
+        it++;
+    }
+    return it;
+}
+
 template <typename L>
 inline void sdEntity::iterate(L lambda) const{
     for_each(events.begin(), events.end(), lambda);
@@ -266,15 +268,9 @@ inline const std::shared_ptr<sdProtoEvent> sdEntity::addEvent(const double &time
 
 template <EDescriptor D>
 inline const sdEvent< D > * const sdEntity::getEvent(const double time) const{
-
-    std::vector< std::shared_ptr<sdProtoEvent> > ::const_iterator it = events.begin();
-    while (it != events.end()) {
-        std::shared_ptr<sdProtoEvent> ptr = *it;
-        if(ptr->getTime()){ break; }
-    }
-    sdProtoEvent * protoEvent = (*it).get();
-    const sdEvent<D> * const event = dynamic_cast<sdEvent<D> *>(protoEvent);
-    return event;
+    auto it = findEvent(time, D);
+    if(it == events.end()){return nullptr;}
+    return dynamic_cast<const sdEvent<D> *>((*it).get());
 }
 
 inline void sdEntity::sort(){
@@ -282,6 +278,17 @@ inline void sdEntity::sort(){
          [](std::shared_ptr<sdProtoEvent> eventA, std::shared_ptr<sdProtoEvent> eventB)->bool{
              return eventA->getTime() < eventB->getTime();
          });
+}
+
+inline bool sdEntity::removeEvent(double time, EDescriptor descriptor){
+    auto it = findEvent(time, descriptor);
+    if(it == events.end()) return false;
+    events.erase(it);
+    return true;
+}
+
+inline bool sdEntity::removeEvent(std::string time, std::string descriptor){
+    return false;
 }
 
 inline void sdEntity::removeAllEvents(){
