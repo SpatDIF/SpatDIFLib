@@ -19,6 +19,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <unordered_map>
 
 /*!
     enum for descriptor. internally all descriptors are handled with this Enum
@@ -317,27 +318,24 @@ inline int stringToInt(std::string str){
     return it;
 }
 
+
+
+const static std::map<EExtension, std::string> extensionDict = {
+    {SD_CORE, "core"},
+    {SD_MEDIA, "media"},
+    {SD_DIRECT_TO_ONE, "direct-to-one"},
+    {SD_SOURCE_WIDTH, "source-width"}
+};
+
 /**
  * @brief converts enum EExtension to string
  * @param extension [description]
  * @return [description]
  */
 inline const std::string extensionToString(EExtension extension){
-    std::string extensionStr;
-    if(extension == SD_MEDIA){
-        extensionStr = "media";
-    }else if(extension == SD_INTERPOLATION){
-        extensionStr = "interpolation";
-    }else if(extension == SD_DIRECT_TO_ONE){
-        extensionStr = "directo-to-one";
-    }else if(extension == SD_SOURCE_WIDTH){
-        extensionStr = "source-width";
-    }else if(extension == SD_CORE){
-        extensionStr = "core";
-    }else{
-        extensionStr = "error";
-    }
-    return extensionStr;
+    auto it = extensionDict.find(extension);
+    if(it == extensionDict.end()) return "";
+    return (*it).second;
 }
 
 /**
@@ -345,19 +343,13 @@ inline const std::string extensionToString(EExtension extension){
  * @param extensionStr the name of extension in string 
  * @return enum EExtension that represents the type of extension
  */
-inline  EExtension stringToExtension(std::string extensionStr){
-    EExtension ext;
-    if(extensionStr == "media"){
-        ext = SD_MEDIA;
-    }else if(extensionStr == "interpolation"){
-        ext = SD_INTERPOLATION;
-    }else if(extensionStr == "direct-to-one"){
-        ext = SD_DIRECT_TO_ONE;
-    }else if(extensionStr == "source-width"){
-        ext = SD_SOURCE_WIDTH;
-    }else{
-        ext = SD_EXTENSION_ERROR;
-    }
+inline EExtension stringToExtension(std::string extensionStr){
+    EExtension ext = SD_EXTENSION_ERROR;
+    for_each(extensionDict.begin(), extensionDict.end(), [&ext, &extensionStr](std::pair<EExtension, std::string> item){
+        if(item.second == extensionStr){
+            ext = item.first;
+        }
+    });
     return ext;
 }
 
