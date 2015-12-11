@@ -174,16 +174,13 @@ public:
     /*! @name Extension handling
      @{
      */
-//
-//    /*! return an enum EExtension at the specified index */
-//    EExtension getActivatedExtension(int index);
-//    
+  
     /*! returns number of activated Extensions*/
     size_t getNumberOfActivatedExtensions(void) const;
-//
-//    /*! returns enum EExtension as an Vector */
-//    std::vector<EExtension> getActivatedExtensions();
-//
+
+    /*! returns const reference of enum set */
+    const std::set<EExtension> &getActivatedExtensions() const;
+
 //    /*! returns names of  activated extensions as a vector*/
 //    std::vector<std::string> getActivatedExtensionsAsStrings();
 
@@ -192,16 +189,16 @@ public:
     in the scene. The added extensions will be also attached to all newly instantiated sdEntityCores.
      @param extension enum EExtension of extension to be added
      */
-    void addExtension(EExtension extension);
+    bool addExtension(EExtension extension);
 //
 //    /*! activate an extension specified by a string. 
 //     @param extension string of extension to be added
 //     */
 //    void addExtension(std::string extension);
-//
-//    /*! check if the specified extension is activated
-//     @param extension enum EExtension of extension to be checked
-//     */
+
+    /*! check if the specified extension is activated
+     @param extension enum EExtension of extension to be checked
+     */
     bool isExtensionActivated(EExtension extension);
 //    bool isExtensionActivated(std::string extensionString);
 
@@ -209,7 +206,7 @@ public:
         Thus, all events data stored in the extension will be lost.
      @param extension enum EExtension of extension to be removed
      */
-    void removeExtension(EExtension extension);
+    bool removeExtension(EExtension extension);
 //
 //    /*! deactivate an extension specified by a string
 //     @param extension string of extension to be removed
@@ -333,7 +330,6 @@ inline bool sdScene::setOrdering(const std::string &ordering){
         sdScene::ordering = EOrdering::SD_TRACK;
         return true;
     }
-    std::cout << "sdScene Error: Unknown Ordering. set to time" << std::endl;
     return false;
 }
 
@@ -371,12 +367,27 @@ inline size_t sdScene::getNumberOfEntities() const{
     return entities.size();
 }
 
+#pragma mark extension
+
 inline size_t sdScene::getNumberOfActivatedExtensions() const{
     return activatedExtensionSet.size();
 }
 
-inline void sdScene::addExtension(EExtension extension){
-    activatedExtensionSet.insert(extension);
+inline bool sdScene::addExtension(EExtension extension){
+    return activatedExtensionSet.insert(extension).second;
 }
+
+inline bool sdScene::isExtensionActivated(EExtension extension){
+    return activatedExtensionSet.find(extension) != activatedExtensionSet.end();
+}
+
+inline bool sdScene::removeExtension(EExtension extension){
+    return activatedExtensionSet.erase(extension);
+}
+
+inline void sdScene::removeAllExtensions(){
+    activatedExtensionSet.clear();
+}
+
 
 #endif

@@ -8,7 +8,6 @@ using namespace std;
 
 TEST_CASE("Test sdScene", "[sdScene]"){
     sdScene scene;
-    REQUIRE(scene.getOrdering() == SD_TIME);
     SECTION("entity control"){
         
         // add-remove
@@ -42,22 +41,36 @@ TEST_CASE("Test sdScene", "[sdScene]"){
     
     SECTION("ordering"){
         
-        REQUIRE(scene.getOrdering() == SD_TIME); // defualt should be time
+        REQUIRE(scene.getOrdering() == EOrdering::SD_TIME); // defualt should be time
         REQUIRE(scene.getOrderingAsString() == "time");
-
-        scene.setOrdering(SD_TRACK);
-        REQUIRE(scene.getOrdering() == SD_TRACK);
+        scene.setOrdering(EOrdering::SD_TRACK);
+        REQUIRE(scene.getOrdering() == EOrdering::SD_TRACK);
         REQUIRE(scene.getOrderingAsString() == "track");
-
-        scene.setOrdering("dummy");
-        
+        REQUIRE(!scene.setOrdering("dummy")); // unknown
     }
-    
 }
 
 TEST_CASE("Test extension", "[sdScene]"){
+    
     sdScene scene;
-    scene.addExtension(SD_MEDIA)
+    scene.addExtension(SD_SOURCE_WIDTH);
+    REQUIRE(scene.getNumberOfActivatedExtensions() == 1);
+    REQUIRE(scene.removeExtension(SD_SOURCE_WIDTH) == 1);
+    scene.addExtension(SD_SOURCE_WIDTH);
+    REQUIRE(!scene.addExtension(SD_SOURCE_WIDTH)); // already exists
+    scene.removeAllExtensions();
+    REQUIRE(scene.getNumberOfActivatedExtensions() == 0);
+    scene.addExtension(SD_SOURCE_WIDTH);
+    REQUIRE(scene.isExtensionActivated(SD_SOURCE_WIDTH));
+    REQUIRE(scene.removeExtension(SD_SOURCE_WIDTH) == 1);
+    REQUIRE(scene.removeExtension(SD_SOURCE_WIDTH) == 0);
+    REQUIRE(!scene.isExtensionActivated(SD_SOURCE_WIDTH));
 
+}
 
+TEST_CASE("Test extension descriptor", "[sdScene]"){
+    
+    
+    
+    
 }
