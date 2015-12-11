@@ -125,13 +125,13 @@ struct sdDescriptor<EDescriptor::SD_PRESENT>{
 
 template <>
 struct sdDescriptor<EDescriptor::SD_POSITION>{
-    typedef std::array<double, 3> type;
+    typedef std::vector<double> type;
     const static bool interpolable = true;
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_ORIENTATION>{
-    typedef std::array<double, 3> type;
+    typedef std::vector<double> type;
     const static bool interpolable = true;
 };
 

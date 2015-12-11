@@ -261,8 +261,21 @@ inline void sdEntity::iterate(L lambda) const{
 
 template <EDescriptor D>
 inline const std::shared_ptr<sdProtoEvent> sdEntity::addEvent(const double &time,  typename sdDescriptor<D>::type value){
+    
+    // extension activated?
+    
+    // remove if already exist
+    removeEvent(time, D);
+    
+    // add
     auto event = std::shared_ptr<sdProtoEvent>(new sdEvent<D>(time, this, value));
     events.push_back(event);
+    
+    // sort
+    std::sort(events.begin(), events.end(),
+              [](std::shared_ptr<sdProtoEvent> eventA, std::shared_ptr<sdProtoEvent> eventB)->bool{
+             return eventA->getTime() < eventB->getTime(); });
+    
     return event;
 }
 
