@@ -148,17 +148,18 @@ public:
      return the very first event with the specified descriptor.
      @param descriptor the descriptor of the event declared in sdConst.h
      */
-//    sdEvent* getFirstEvent(const EDescriptor descriptor) const;
-//    
-//    /*!
-//     return the very first events regardless of descriptors.
-//     */
-//    std::multiset<sdEvent*, sdEventCompare> getFirstEventSet() const;
-//
-//    /*!
-//     return the time tag of the first event
-//     */
-//    double getFirstEventTime() const;
+
+    inline const sdProtoEvent * const getFirstEvent(const EDescriptor descriptor) const;
+    
+    /*!
+     return the very first events regardless of descriptors.
+     */
+    std::set< std::shared_ptr<sdProtoEvent> > getFirstEventSet() const;
+
+    /*!
+     return the time tag of the first event
+     */
+    double getFirstEventTime() const;
 //    
 //    /*!
 //     @}
@@ -275,7 +276,6 @@ inline const std::shared_ptr<sdProtoEvent> sdEntity::addEvent(const double &time
     std::sort(events.begin(), events.end(),
               [](std::shared_ptr<sdProtoEvent> eventA, std::shared_ptr<sdProtoEvent> eventB)->bool{
              return eventA->getTime() < eventB->getTime(); });
-    
     return event;
 }
 
@@ -284,6 +284,16 @@ inline const sdEvent< D > * const sdEntity::getEvent(const double time) const{
     auto it = findEvent(time, D);
     if(it == events.end()){return nullptr;}
     return dynamic_cast<const sdEvent<D> *>((*it).get());
+}
+
+inline const sdProtoEvent * const sdEntity::getFirstEvent(const EDescriptor descriptor) const{
+    auto it = events.begin();
+    while (it != events.end()) {
+        if((*it)->getDescriptor() == descriptor)
+            return (*it).get();
+        it++;
+    }
+    return nullptr;
 }
 
 inline void sdEntity::sort(){

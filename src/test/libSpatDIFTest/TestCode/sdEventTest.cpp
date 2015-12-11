@@ -48,7 +48,8 @@ TEST_CASE("Test chronological sorting", "[sdEvent]"){
     auto c = entity->addEvent<SD_POSITION>(0.3, {0.1, 0.4, 0.6}); // chronologically second
 
     // the order should be b, c, and a
-    
+    auto firstEvent = entity->getFirstEvent(SD_POSITION);
+    REQUIRE(firstEvent == b.get());
     
     
 }
