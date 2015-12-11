@@ -12,5 +12,5 @@ TEST_CASE("Test sdEntity", "[sdEntity]"){
     REQUIRE(scene.removeEntity("FirstEntity"));
     REQUIRE(scene.getNumberOfEntities() == 1);
     scene.removeAllEntities();
-    
+
 }

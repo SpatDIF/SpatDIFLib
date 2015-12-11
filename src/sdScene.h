@@ -46,7 +46,7 @@ class sdScene{
 private:
     std::map <std::string, sdEntity> entities; //!< a map of sdEntities
     std::vector<std::shared_ptr<sdProtoEvent>> allEvents; //!< an alias pointer to all events
-    std::unordered_set<int> activatedExtensionSet; //!< a vector of activated
+    std::set <EExtension> activatedExtensionSet; //!< a vector of activated
     EOrdering ordering; //!< ordering flag
     sdInfo info; //!< contains "info" part of the meta section
 
@@ -178,22 +178,22 @@ public:
 //    /*! return an enum EExtension at the specified index */
 //    EExtension getActivatedExtension(int index);
 //    
-//    /*! returns number of activated Extensions*/
-//    int getNumberOfActivatedExtensions(void);
-//     
+    /*! returns number of activated Extensions*/
+    size_t getNumberOfActivatedExtensions(void) const;
+//
 //    /*! returns enum EExtension as an Vector */
 //    std::vector<EExtension> getActivatedExtensions();
 //
 //    /*! returns names of  activated extensions as a vector*/
 //    std::vector<std::string> getActivatedExtensionsAsStrings();
+
+    /*! activate an extension specified by enum EExtension. This function instantiates instances of the
+     designated extension (i.e. a subclass of sdEntityExtension ) and attached them to all existing sdEntityCores
+    in the scene. The added extensions will be also attached to all newly instantiated sdEntityCores.
+     @param extension enum EExtension of extension to be added
+     */
+    void addExtension(EExtension extension);
 //
-//    /*! activate an extension specified by enum EExtension. This function instantiates instances of the
-//     designated extension (i.e. a subclass of sdEntityExtension ) and attached them to all existing sdEntityCores
-//    in the scene. The added extensions will be also attached to all newly instantiated sdEntityCores.
-//     @param extension enum EExtension of extension to be added
-//     */
-//    void addExtension(EExtension extension);
-//    
 //    /*! activate an extension specified by a string. 
 //     @param extension string of extension to be added
 //     */
@@ -202,15 +202,15 @@ public:
 //    /*! check if the specified extension is activated
 //     @param extension enum EExtension of extension to be checked
 //     */
-//    bool isExtensionActivated(EExtension extension);
+    bool isExtensionActivated(EExtension extension);
 //    bool isExtensionActivated(std::string extensionString);
+
+    /*! deactivate an extension specified by enum EExtension. This function removes instances of the designated extension (i.e. a subclass of sdEntityExtension )  attached  to all existing sdEntityCores in the scene.
+        Thus, all events data stored in the extension will be lost.
+     @param extension enum EExtension of extension to be removed
+     */
+    void removeExtension(EExtension extension);
 //
-//    /*! deactivate an extension specified by enum EExtension. This function removes instances of the designated extension (i.e. a subclass of sdEntityExtension )  attached  to all existing sdEntityCores in the scene.
-//        Thus, all events data stored in the extension will be lost.
-//     @param extension enum EExtension of extension to be removed
-//     */
-//    void removeExtension(EExtension extension);
-//    
 //    /*! deactivate an extension specified by a string
 //     @param extension string of extension to be removed
 //     */
@@ -221,12 +221,12 @@ public:
 //     The data stored in the instances of sdEntityExtension will be lost.
 //     */
 //    
-//    void removeAllExtensions(void);
-//
-//    /*!
-//     @}
-//     */
-//    
+    void removeAllExtensions(void);
+
+    /*!
+     @}
+     */
+    
 //    /*! @name Utility function
 //     @{
 //     */
@@ -369,6 +369,14 @@ inline const sdEntity * sdScene::getEntity(const std::string &name) const{
 
 inline size_t sdScene::getNumberOfEntities() const{
     return entities.size();
+}
+
+inline size_t sdScene::getNumberOfActivatedExtensions() const{
+    return activatedExtensionSet.size();
+}
+
+inline void sdScene::addExtension(EExtension extension){
+    activatedExtensionSet.insert(extension);
 }
 
 #endif

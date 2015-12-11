@@ -53,4 +53,11 @@ TEST_CASE("Test sdScene", "[sdScene]"){
         
     }
     
-} 
+}
+
+TEST_CASE("Test extension", "[sdScene]"){
+    sdScene scene;
+    scene.addExtension(SD_MEDIA)
+
+
+}
