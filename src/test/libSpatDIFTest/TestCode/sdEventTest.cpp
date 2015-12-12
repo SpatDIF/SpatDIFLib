@@ -52,7 +52,12 @@ TEST_CASE("Test chronological sorting", "[sdEvent]"){
     REQUIRE(firstEvent == b);
     
     auto d = entity->addEvent<SD_PRESENT>(0.2, true);
-    auto firstEvents = entity->getFirstEventSet();
-    REQUIRE(firstEvents.size() == 2);
+    auto firstEvents1 = entity->getFirstEventSet();
+    REQUIRE(firstEvents1.size() == 2);
+    
+    entity->removeEvent(d);
+    auto firstEvents2 = entity->getFirstEventSet();
+    REQUIRE(firstEvents2.size() == 1);
+
     
 }

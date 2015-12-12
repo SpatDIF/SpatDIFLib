@@ -186,12 +186,12 @@ public:
      */
 
     
-//    /*<
-//     remove an event from the set
-//     @param event the event to be removed
-//     */
-//    void removeEvent(sdEvent *event);
-//    
+    /*<
+     remove an event from the set
+     @param event the event to be removed
+     */
+    bool removeEvent(const std::shared_ptr<sdProtoEvent> &event);
+    
     /*! remove an event at the specified time and descriptor
      @param time the time of sdEvent to be removed.
      @param descriptor the descriptor of sdEvent to be removed */
@@ -299,7 +299,7 @@ inline const std::set< std::shared_ptr<sdProtoEvent> > sdEntity::getFirstEventSe
     if(events.empty()) return firstEventSet; // no event in entity
     
     auto it = events.begin();
-    double time = (*events.begin())->getTime();
+    double time = (*it)->getTime();
     firstEventSet.insert(*it);
     while (it != events.end()){
         if( almostEqual(time, (*it)->getTime())){ firstEventSet.insert(*it);
@@ -315,6 +315,16 @@ inline void sdEntity::sort(){
          [](std::shared_ptr<sdProtoEvent> eventA, std::shared_ptr<sdProtoEvent> eventB)->bool{
              return eventA->getTime() < eventB->getTime();
          });
+}
+
+inline bool sdEntity::removeEvent(const std::shared_ptr<sdProtoEvent> &event){
+    for (auto it = events.begin(); it != events.end(); it++) {
+        if(*it == event){
+            events.erase(it);
+            return true;
+        }
+    }
+    return false;
 }
 
 inline bool sdEntity::removeEvent(double time, EDescriptor descriptor){
