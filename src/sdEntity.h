@@ -216,15 +216,16 @@ public:
     /*! @name Getting value directly
      @{
      */
-//
-//    /*!
-//     this function looks for an event at specified time and descriptor and returns a pointer to the data.
-//     @param time time of the event
-//     @param descriptor specify descriptor defined in sdConst.h
-//     */
-//    void* getValue(double time, EDescriptor descriptor);
-//    
-//    
+
+    /*!
+     this function looks for an event at specified time and descriptor and returns a pointer to the data.
+     @param time time of the event
+     @param descriptor specify descriptor defined in sdConst.h
+     */
+    template <EDescriptor D>
+    const typename sdDescriptor<D>::type * const getValue(double time) const;
+    
+    
 //    /*!
 //     this function search for an event at specified time and descriptor and return the data as a string.
 //     @param time time of the event
@@ -388,6 +389,13 @@ inline void sdEntity::removeAllEvents(){
 
 inline size_t sdEntity::getNumberOfEvents() const{
     return events.size();
+}
+
+template <EDescriptor D>
+inline const typename sdDescriptor<D>::type * const sdEntity::getValue(double time) const{
+    auto event = getEvent<D>(time);
+    if(!event) return  nullptr;
+    return &getEvent<D>(time)->getValue();
 }
 
 #endif

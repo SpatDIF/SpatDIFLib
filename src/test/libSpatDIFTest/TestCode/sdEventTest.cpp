@@ -29,7 +29,6 @@ TEST_CASE("Test sdEvent add get remove"){
     entity->removeEvent(1.234, SD_MEDIA_GAIN);
     REQUIRE(entity->getNumberOfEvents() == 1);
     
-    
     entity->removeAllEvents();
     REQUIRE(entity->getNumberOfEvents() == 0);
 
@@ -127,5 +126,20 @@ TEST_CASE("getFirstEventTime() getLastEventTime()"){
     entity->removeEvent(a);
     REQUIRE(entity->getFirstEventTime().first == c->getTime());
     REQUIRE(entity->getLastEventTime().first == c->getTime());
+    
+}
+
+TEST_CASE("getValue()"){
+    
+    sdScene scene;
+    sdEntity * entity = scene.addEntity("MyEntity");
+    std::array<double, 3> array = {0.5, 0.2, 0.3};
+    auto a = entity->addEvent<SD_POSITION>(0.4, array); // chronologically third
+    auto value = entity->getValue<SD_POSITION>(0.5); // cannot get value
+    REQUIRE(!value);
+    value = entity->getValue<SD_POSITION>(0.4);
+    REQUIRE(value);
+    REQUIRE(array == *value);
+    
     
 }
