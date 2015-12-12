@@ -23,7 +23,7 @@
 
 /**
  * @brief  An abstract class of event. This class maintains time, descriptor
- * @detail This class can only be used by sdEntity. all member variables are declared as conast. Thus, all parameter must be set by initializer list. Discard the instance, create new one, and move the unchanged data to new one, using move semantics, if modification of member data is required.
+ * @detail This class can only be used by sdEntity. All member variables are declared as const. Thus, all parameter must be set by initializer list. Modification of events are not possible in SpatDIF Library. Discard the instance, create new one, and move the unchanged data to new one, if modification of member data is required.
  */
 
 class sdEntity;
