@@ -19,8 +19,10 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include "sdException.h"
 #include "sdConst.h"
 #include "sdEvent.h"
+
 
 /*! sdEntity
  sdEntity is a pure abstract class. This class maintains and handles all events associated to relevant descriptors. This class is also responsible for answering queries about it's relevant descriptors.
@@ -258,6 +260,12 @@ inline void sdEntity::iterate(L lambda) const{
 
 template <EDescriptor D>
 inline const std::shared_ptr<sdProtoEvent> sdEntity::addEvent(const double &time,  typename sdDescriptor<D>::type value){
+    try{
+        if(time < 0.0){ throw  InvalidTimeException(time);}
+    }catch(const InvalidTimeException& exception){
+        std::cerr << exception.what() << std::endl;
+        return nullptr;
+    }
     
     // extension activated?
     

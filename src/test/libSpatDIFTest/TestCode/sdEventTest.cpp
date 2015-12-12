@@ -34,8 +34,16 @@ TEST_CASE("Test sdEvent add get remove", "[sdEvent]"){
 
 }
 
-TEST_CASE("Test all descriptors", "[sdEvent]"){
-    
+TEST_CASE("Test invalid time handling", "[sdEvent]"){
+    sdScene scene;
+    sdEntity * entity = scene.addEntity("MyEntity");
+    REQUIRE(!entity->addEvent<SD_PRESENT>(-10.0, false)); // invalid time, exception thrown and returns nullptr
+}
+
+TEST_CASE("Test all descriptors types", "[sdEvent]"){
+    sdScene scene;
+    sdEntity * entity = scene.addEntity("MyEntity");
+    entity->addEvent<SD_PRESENT>(0.0, false);
 }
 
 TEST_CASE("Test chronological sorting", "[sdEvent]"){
@@ -43,18 +51,29 @@ TEST_CASE("Test chronological sorting", "[sdEvent]"){
     sdScene scene;
     sdEntity * entity = scene.addEntity("MyEntity");
 
+    // no events in the entity, should return empty set
+    REQUIRE(entity->getFirstEventSet().empty());
+    
+    // three events added
     auto a = entity->addEvent<SD_POSITION>(0.4, {0.5, 0.2, 0.3}); // chronologically third
     auto b = entity->addEvent<SD_POSITION>(0.2, {0.3, 0.1, 0.2}); // chronologically first
     auto c = entity->addEvent<SD_POSITION>(0.3, {0.1, 0.4, 0.6}); // chronologically second
 
     // the order should be b, c, and a
+    
+    // looking for non-exisiting event
+    REQUIRE(!entity->getFirstEvent(SD_PRESENT));
+    
+    // get existing event
     auto firstEvent = entity->getFirstEvent(SD_POSITION);
     REQUIRE(firstEvent == b);
     
+    // one event added
     auto d = entity->addEvent<SD_PRESENT>(0.2, true);
     auto firstEvents1 = entity->getFirstEventSet();
     REQUIRE(firstEvents1.size() == 2);
     
+    // one event removed
     entity->removeEvent(d);
     auto firstEvents2 = entity->getFirstEventSet();
     REQUIRE(firstEvents2.size() == 1);
