@@ -146,43 +146,49 @@ public:
      return the very first event with the specified descriptor.
      @param descriptor the descriptor of the event declared in sdConst.h
      */
-
-    const std::shared_ptr<sdProtoEvent> getFirstEvent(const EDescriptor descriptor) const;
     
+    template <EDescriptor D>
+    const sdEvent< D > * const getFirstEvent() const;
+
     /*!
-     return the very first events regardless of descriptors.
+     return the very first events regardless of descriptors. 
+     @return the first events in the entity. if no events are assigned return nullptr.
      */
     const std::set< std::shared_ptr<sdProtoEvent> > getFirstEventSet() const;
 
     /*!
      return the time tag of the first event
+     @return pair of double and bool, if no events are registered in the entity the second element of the pair is false
      */
-    double getFirstEventTime() const;
-    
+    std::pair<double, bool> getFirstEventTime() const;
+
     /*!
      @}
      */
-//
-//    /*! @name Last Event(s)
-//     @{
-//     */
-//    
-//    /*!
-//     return the timeTag of the very last event with the specified descriptor.
-//     @param descriptor the descriptor of the event declared in sdConst.h
-//     */
-//    sdEvent* getLastEvent(const EDescriptor descriptor) const;
-//
-//    /*!
-//     return the very last events regardless of descriptors.
-//     */
-//    std::multiset<sdEvent*, sdEventCompare> getLastEventSet() const;
-//    
-//    /*!
-//     return the time tag of the last event
-//     */
-//    double getLastEventTime() const;
-//
+
+    /*! @name Last Event(s)
+     @{
+     */
+    
+    /*!
+     return the timeTag of the very last event with the specified descriptor.
+     @param descriptor the descriptor of the event declared in sdConst.h
+     @return a const pointer to an event
+     */
+    template <EDescriptor D>
+    const sdEvent< D > * const getLastEvent() const;
+
+    /*!
+     return the very last events regardless of descriptors.
+     @return the last events in the entity. if no events are assigned return nullptr.
+     */
+    const std::set< std::shared_ptr<sdProtoEvent> > getLastEventSet() const;
+
+    /*!
+     return the time tag of the last event
+     */
+    std::pair<double, bool>  getLastEventTime() const;
+
     /*!
     }
      */
@@ -260,13 +266,7 @@ inline void sdEntity::iterate(L lambda) const{
 
 template <EDescriptor D>
 inline const std::shared_ptr<sdProtoEvent> sdEntity::addEvent(const double &time,  typename sdDescriptor<D>::type value){
-    try{
-        if(time < 0.0){ throw  InvalidTimeException(time);}
-    }catch(const InvalidTimeException& exception){
-        std::cerr << exception.what() << std::endl;
-        return nullptr;
-    }
-    
+    if(time < 0.0){ throw  InvalidTimeException(time);}
     // extension activated?
     
     // remove if already exist
@@ -290,13 +290,12 @@ inline const sdEvent< D > * const sdEntity::getEvent(const double time) const{
     return dynamic_cast<const sdEvent<D> *>((*it).get());
 }
 
-
-
-inline const std::shared_ptr<sdProtoEvent> sdEntity::getFirstEvent(const EDescriptor descriptor) const{
+template <EDescriptor D>
+inline const sdEvent< D > * const sdEntity::getFirstEvent() const{
     auto it = events.begin();
     while (it != events.end()) {
-        if((*it)->getDescriptor() == descriptor)
-            return *it;
+        if((*it)->getDescriptor() == D)
+            return dynamic_cast< sdEvent<D> *>((*it).get());
         it++;
     }
     return nullptr;
@@ -317,6 +316,43 @@ inline const std::set< std::shared_ptr<sdProtoEvent> > sdEntity::getFirstEventSe
     return firstEventSet;
 }
 
+inline std::pair<double, bool> sdEntity::getFirstEventTime() const{
+    auto set = getFirstEventSet();
+    if(set.empty()) return std::pair<double, bool>{0.0,false};
+    return std::move( std::pair<double, bool>{(*(set.begin()))->getTime(), true});
+}
+
+template <EDescriptor D>
+inline const sdEvent< D > * const sdEntity::getLastEvent() const{
+    auto it = events.rbegin();
+    while (it != events.rend()) {
+        if((*it)->getDescriptor() == D)
+            return dynamic_cast< sdEvent<D> *>((*it).get());
+        it++;
+    }
+    return nullptr;
+}
+
+inline const std::set< std::shared_ptr<sdProtoEvent> > sdEntity::getLastEventSet() const{
+    std::set< std::shared_ptr<sdProtoEvent> > lastEventSet;
+    if(events.empty()) return lastEventSet; // no event in entity
+    
+    auto it = events.rbegin();
+    double time = (*it)->getTime();
+    lastEventSet.insert(*it);
+    while (it != events.rend()){
+        if( almostEqual(time, (*it)->getTime())){ lastEventSet.insert(*it);
+        }else{ break; }
+        it++;
+    }
+    return lastEventSet;
+}
+
+inline std::pair<double, bool> sdEntity::getLastEventTime() const{
+    auto set = getLastEventSet();
+    if(set.empty()) return std::pair<double, bool>{0.0,false};
+    return std::move( std::pair<double, bool>{(*(set.rbegin()))->getTime(), true});
+}
 
 inline void sdEntity::sort(){
     std::sort(events.begin(), events.end(),

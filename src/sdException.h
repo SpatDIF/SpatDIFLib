@@ -18,4 +18,6 @@ public:
     : std::range_error(std::string("Invalid Time Exception: ") + std::to_string(time) ) {}
 };
 
+
+
 #endif /* sdException_h */
