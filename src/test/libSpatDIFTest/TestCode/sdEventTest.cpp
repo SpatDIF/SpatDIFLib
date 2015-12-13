@@ -155,10 +155,7 @@ TEST_CASE("getNextEvent() getPreviousEvent()" ){
     
     REQUIRE(!entity->getNextEvent<SD_POSITION>(0.35));
     REQUIRE(!entity->getPreviousEvent<SD_POSITION>(0.35));
-
 }
-
-
 
 TEST_CASE("getValue()"){
     
@@ -170,7 +167,7 @@ TEST_CASE("getValue()"){
     REQUIRE(!value);
     value = entity->getValue<SD_POSITION>(0.4);
     REQUIRE(value);
-    REQUIRE(array == *  value);
+    REQUIRE(array == *value);
     
     
 }
