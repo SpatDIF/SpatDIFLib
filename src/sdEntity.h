@@ -102,19 +102,19 @@ public:
     
     std::set<std::shared_ptr<sdProtoEvent>> getNextEventSet(const double time) const;
 
-//    /*!
-//     return the time tag of the next event
-//     */
-//    double getNextEventTime(const double time) const;
-//
-//    /*!
-//     @}
-//     */
-//    
-//    /*! @name Previous Event(s)
-//     @{
-//     */
-//    
+    /*!
+     return the time tag of the next event
+     */
+    std::pair<double, bool>  getNextEventTime(const double time) const;
+
+    /*!
+     @}
+     */
+    
+    /*! @name Previous Event(s)
+     @{
+     */
+    
     /*!
      return previous event from the given time index that holds the specified descriptor.
      @param time index
@@ -130,15 +130,15 @@ public:
      */
     std::set<std::shared_ptr<sdProtoEvent>> getPreviousEventSet(const double time) const;
     
-//    /*!
-//     return the time tag of the next event
-//     */
-//    double getPreviousEventTime(const double time) const;
-//    
-//    /*!
-//     @}
-//     */
-//
+    /*!
+     return the time tag of the next event
+     */
+    std::pair<double, bool> getPreviousEventTime(const double time) const;
+    
+    /*!
+     @}
+     */
+
     /*! @name Getting frist Event(s)
      @{
      */
@@ -209,7 +209,7 @@ public:
      @param time the time of sdEvent to be removed.
      @param descriptor the descriptor of sdEvent to be removed */
     bool removeEvent(double time, EDescriptor descriptor);
-    bool removeEvent(std::string time, std::string descriptor);
+    //bool removeEvent(std::string time, std::string descriptor);
     
     /*! remove all events in the eventSet */
     void removeAllEvents();
@@ -364,8 +364,15 @@ std::set<std::shared_ptr<sdProtoEvent>> sdEntity::getNextEventSet(const double t
             return std::move(getEventSet((*it)->getTime()));
         }
     }
-    return std::move(std::set<std::shared_ptr<sdProtoEvent>>()); // empty set
+    return std::set<std::shared_ptr<sdProtoEvent>>(); // empty set
 }
+
+std::pair<double, bool> sdEntity::getNextEventTime(const double time) const{
+    auto set = getNextEventSet(time);
+    if(set.empty()) return std::make_pair(0.0, false);
+    return std::make_pair( (*(set.begin()))->getTime(), true);
+}
+
 
 template <EDescriptor D>
 inline sdEvent<D> * const sdEntity::getPreviousEvent(const double time) const{
@@ -385,6 +392,11 @@ std::set<std::shared_ptr<sdProtoEvent>> sdEntity::getPreviousEventSet(const doub
     return std::move(std::set<std::shared_ptr<sdProtoEvent>>()); // empty set
 }
 
+std::pair<double, bool> sdEntity::getPreviousEventTime(const double time) const{
+    auto set = getPreviousEventSet(time);
+    if(set.empty()) return std::make_pair(0.0, false);
+    return std::make_pair( (*(set.begin()))->getTime(), true);
+}
 
 inline void sdEntity::sort(){
     std::sort(events.begin(), events.end(),
@@ -420,9 +432,9 @@ inline bool sdEntity::removeEvent(double time, EDescriptor descriptor){
     return true;
 }
 
-inline bool sdEntity::removeEvent(std::string time, std::string descriptor){
-    return false;
-}
+//inline bool sdEntity::removeEvent(std::string time, std::string descriptor){
+//    return false;
+//}
 
 
 inline void sdEntity::removeAllEvents(){

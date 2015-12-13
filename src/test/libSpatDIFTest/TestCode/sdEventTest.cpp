@@ -47,11 +47,38 @@ TEST_CASE("Test exceptions", "[sdEvent]"){
    
 }
 
-TEST_CASE("Test all descriptors types", "[sdEvent]"){
+
+TEST_CASE("Test all descriptors types"){
     sdScene scene;
     sdEntity * entity = scene.addEntity("MyEntity");
     entity->addEvent<SD_PRESENT>(0.0, false);
 }
+
+TEST_CASE("getEvent() and getEvents()"){
+    
+    sdScene scene;
+    sdEntity * entity = scene.addEntity("MyEntity");
+    auto a = entity->addEvent<SD_POSITION>(0.2, {0.3, 0.1, 0.2});
+    auto b = entity->addEvent<SD_PRESENT>(0.2, true);
+    
+    REQUIRE(entity->getEvent<SD_PRESENT>(0.2));
+    REQUIRE(entity->getEvent<SD_POSITION>(0.2));
+    REQUIRE(!entity->getEvent<SD_ORIENTATION>(0.2));
+    
+    REQUIRE(!entity->getEvent<SD_PRESENT>(0.20000001)); // slightly after
+    REQUIRE(!entity->getEvent<SD_PRESENT>(0.19999999)); // slightly before
+
+    auto eventSet = entity->getEventSet(0.2);
+    REQUIRE(eventSet.size() == 2);
+    entity->removeEvent(a);
+    eventSet = entity->getEventSet(0.2);
+    REQUIRE(eventSet.size() == 1);
+    entity->removeEvent(b);
+    eventSet = entity->getEventSet(0.2);
+    REQUIRE(eventSet.size() == 0);
+}
+
+
 
 TEST_CASE("getFirstEvent() and getLastEvent()"){
     
@@ -157,6 +184,25 @@ TEST_CASE("getNextEvent() getPreviousEvent()" ){
     REQUIRE(!entity->getPreviousEvent<SD_POSITION>(0.35));
 }
 
+TEST_CASE("getNextEventTime() getPreviousEventTime()" ){
+    sdScene scene;
+    sdEntity * entity = scene.addEntity("MyEntity");
+
+    REQUIRE(!entity->getNextEventTime(0.0).second);
+    REQUIRE(!entity->getPreviousEventTime(10.0).second);
+    
+    auto a = entity->addEvent<SD_POSITION>(0.4, {0.5, 0.2, 0.3}); // chronologically third
+    auto b = entity->addEvent<SD_POSITION>(0.2, {0.3, 0.1, 0.2}); // chronologically first
+    auto c = entity->addEvent<SD_POSITION>(0.3, {0.1, 0.4, 0.6}); // chronologically second
+    auto d = entity->addEvent<SD_POSITION>(0.5, {0.2, 0.2, 0.2}); // chronologically fourth
+
+    REQUIRE(a->getTime() == entity->getNextEventTime(0.35).first);
+    REQUIRE(!entity->getNextEventTime(0.5).second);
+
+    REQUIRE(c->getTime() == entity->getPreviousEventTime(0.35).first);
+    REQUIRE(!entity->getPreviousEventTime(0.2).second);
+
+}
 TEST_CASE("getValue()"){
     
     sdScene scene;
