@@ -16,7 +16,7 @@ TEST_CASE("Test sdEvent add get remove"){
     auto addedEvent = entity->addEvent<SD_MEDIA_GAIN>(1.234, 0.8); // 2
     auto gotEvent =  entity->getEvent<SD_MEDIA_GAIN>(1.234);
     REQUIRE(gotEvent);
-    REQUIRE(gotEvent == addedEvent.get());
+    REQUIRE(gotEvent == addedEvent);
     REQUIRE(gotEvent->getValue() == 0.8);
     
     auto event =  entity->getEvent<SD_MEDIA_GAIN>(1.23400001); // a little bit different
@@ -73,8 +73,8 @@ TEST_CASE("getFirstEvent() and getLastEvent()"){
 
     auto firstEvent = entity->getFirstEvent<SD_POSITION>();
     auto lastEvent = entity->getLastEvent<SD_POSITION>();
-    REQUIRE(firstEvent == b.get());
-    REQUIRE(lastEvent == a.get());
+    REQUIRE(firstEvent == b);
+    REQUIRE(lastEvent == a);
 }
 
 TEST_CASE("getFirstEvents() and getLastEvents()"){
@@ -104,7 +104,7 @@ TEST_CASE("getFirstEvents() and getLastEvents()"){
     entity->removeEvent(e);
     REQUIRE(entity->getFirstEventSet().size() == 1);
     REQUIRE(entity->getLastEventSet().size() == 1);
-
+    REQUIRE(entity->getNumberOfEvents() == 3);
 }
 
 TEST_CASE("getFirstEventTime() getLastEventTime()"){
@@ -129,6 +129,37 @@ TEST_CASE("getFirstEventTime() getLastEventTime()"){
     
 }
 
+TEST_CASE("getNextEvent() getPreviousEvent()" ){
+    sdScene scene;
+    sdEntity * entity = scene.addEntity("MyEntity");
+
+    // should return nullptr
+    REQUIRE(!entity->getNextEvent<SD_POSITION>(0.35));
+    REQUIRE(!entity->getPreviousEvent<SD_POSITION>(0.35));
+
+    auto a = entity->addEvent<SD_POSITION>(0.4, {0.5, 0.2, 0.3}); // chronologically third
+    auto b = entity->addEvent<SD_POSITION>(0.2, {0.3, 0.1, 0.2}); // chronologically first
+    auto c = entity->addEvent<SD_POSITION>(0.3, {0.1, 0.4, 0.6}); // chronologically second
+    auto d = entity->addEvent<SD_POSITION>(0.5, {0.2, 0.2, 0.2}); // chronologically fourth
+    REQUIRE(entity->getNextEvent<SD_POSITION>(0.35) == a);
+    REQUIRE(entity->getPreviousEvent<SD_POSITION>(0.35) == c);
+    
+    entity->removeEvent(a);
+    entity->removeEvent(c);
+    
+    REQUIRE(entity->getNextEvent<SD_POSITION>(0.35) == d);
+    REQUIRE(entity->getPreviousEvent<SD_POSITION>(0.35) == b);
+    
+    entity->removeEvent(b);
+    entity->removeEvent(d);
+    
+    REQUIRE(!entity->getNextEvent<SD_POSITION>(0.35));
+    REQUIRE(!entity->getPreviousEvent<SD_POSITION>(0.35));
+
+}
+
+
+
 TEST_CASE("getValue()"){
     
     sdScene scene;
@@ -139,7 +170,7 @@ TEST_CASE("getValue()"){
     REQUIRE(!value);
     value = entity->getValue<SD_POSITION>(0.4);
     REQUIRE(value);
-    REQUIRE(array == *value);
+    REQUIRE(array == *  value);
     
     
 }

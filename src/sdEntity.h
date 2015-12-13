@@ -52,7 +52,7 @@ public:
     
     /*! this function is the only way to instantiate sdEvent.*/
     template <EDescriptor D>
-    const std::shared_ptr<sdProtoEvent> addEvent(const double &time,  typename sdDescriptor<D>::type value);
+    sdEvent<D> * const addEvent(const double &time,  typename sdDescriptor<D>::type value);
     
 //    template <typename T>
 //    vector<T> getValueVector(shared_ptr<_Event> &event) const{
@@ -97,11 +97,10 @@ public:
 //     * @return a multiset of next events
 //     */
 //    std::multiset<sdEvent*, sdEventCompare> getNextEventSet(const double time) const;
-//
-//      
-//    sdEvent* getNextEvent(const double time, const EDescriptor descriptor) const;
-//
-//
+
+    template <EDescriptor D>
+    sdEvent<D>  * const getNextEvent(const double time) const;
+
 //    /*!
 //     return the time tag of the next event
 //     */
@@ -115,14 +114,15 @@ public:
 //     @{
 //     */
 //    
-//    /*!
-//     return previous event from the given time index that holds the specified descriptor.
-//     @param time index
-//     @param descriptor the descriptor of the event declared in sdConst.h
-//     */
-//    
-//    sdEvent* getPreviousEvent(const double time, const EDescriptor descriptor) const;
-//    
+    /*!
+     return previous event from the given time index that holds the specified descriptor.
+     @param time index
+     @param descriptor the descriptor of the event declared in sdConst.h
+     */
+
+    template<EDescriptor D>
+    sdEvent<D> * const getPreviousEvent(const double time) const;
+    
 //    /*!
 //     return previous events from the given time index .
 //     @param time index
@@ -194,12 +194,16 @@ public:
      */
 
     
-    /*<
-     remove an event from the set
+    /*< remove an event from the events vector
      @param event the event to be removed
      */
     bool removeEvent(const std::shared_ptr<sdProtoEvent> &event);
     
+    /*< remove an event from the
+     @param a pointer to a raw proto event to be removed.
+     */
+    bool removeEvent(const sdProtoEvent * const event);
+
     /*! remove an event at the specified time and descriptor
      @param time the time of sdEvent to be removed.
      @param descriptor the descriptor of sdEvent to be removed */
@@ -266,7 +270,7 @@ inline void sdEntity::iterate(L lambda) const{
 }
 
 template <EDescriptor D>
-inline const std::shared_ptr<sdProtoEvent> sdEntity::addEvent(const double &time,  typename sdDescriptor<D>::type value){
+inline sdEvent<D> * const sdEntity::addEvent(const double &time,  typename sdDescriptor<D>::type value){
     if(time < 0.0){ throw  InvalidTimeException(time);}
     // extension activated?
     
@@ -281,7 +285,7 @@ inline const std::shared_ptr<sdProtoEvent> sdEntity::addEvent(const double &time
     std::sort(events.begin(), events.end(),
               [](std::shared_ptr<sdProtoEvent> eventA, std::shared_ptr<sdProtoEvent> eventB)->bool{
              return eventA->getTime() < eventB->getTime(); });
-    return event;
+    return dynamic_cast<sdEvent<D>*>(event.get());
 }
 
 template <EDescriptor D>
@@ -355,6 +359,24 @@ inline std::pair<double, bool> sdEntity::getLastEventTime() const{
     return std::move( std::pair<double, bool>{(*(set.rbegin()))->getTime(), true});
 }
 
+template <EDescriptor D>
+inline sdEvent<D> * const sdEntity::getNextEvent(const double time) const{
+    for(auto it = events.begin(); it != events.end(); it++){
+        if(((*it)->getTime() > time) && ((*it)->getDescriptor() == D))
+            return dynamic_cast<sdEvent<D> *>((*it).get());
+    }
+    return nullptr;
+}
+
+template <EDescriptor D>
+inline sdEvent<D> * const sdEntity::getPreviousEvent(const double time) const{
+    for(auto it = events.rbegin(); it != events.rend(); it++){
+        if(((*it)->getTime() < time) && ((*it)->getDescriptor() == D))
+            return dynamic_cast<sdEvent<D> *>((*it).get());
+    }
+    return nullptr;
+}
+
 inline void sdEntity::sort(){
     std::sort(events.begin(), events.end(),
          [](std::shared_ptr<sdProtoEvent> eventA, std::shared_ptr<sdProtoEvent> eventB)->bool{
@@ -372,6 +394,16 @@ inline bool sdEntity::removeEvent(const std::shared_ptr<sdProtoEvent> &event){
     return false;
 }
 
+inline bool sdEntity::removeEvent(const sdProtoEvent * const event){
+    for (auto it = events.begin(); it != events.end(); it++) {
+        if((*it).get() == event){
+            events.erase(it);
+            return true;
+        }
+    }
+    return false;
+}
+
 inline bool sdEntity::removeEvent(double time, EDescriptor descriptor){
     auto it = findEvent(time, descriptor);
     if(it == events.end()) return false;
@@ -382,6 +414,7 @@ inline bool sdEntity::removeEvent(double time, EDescriptor descriptor){
 inline bool sdEntity::removeEvent(std::string time, std::string descriptor){
     return false;
 }
+
 
 inline void sdEntity::removeAllEvents(){
     events.clear();
