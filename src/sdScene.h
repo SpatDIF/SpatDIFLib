@@ -181,8 +181,8 @@ public:
     /*! returns const reference of enum set */
     const std::set<EExtension> &getActivatedExtensions() const;
 
-//    /*! returns names of  activated extensions as a vector*/
-//    std::vector<std::string> getActivatedExtensionsAsStrings();
+    /*! returns names of  activated extensions as a set*/
+    std::set<std::string> getActivatedExtensionsAsStrings() const;
 
     /*! activate an extension specified by enum EExtension. This function instantiates instances of the
      designated extension (i.e. a subclass of sdEntityExtension ) and attached them to all existing sdEntityCores
@@ -190,34 +190,26 @@ public:
      @param extension enum EExtension of extension to be added
      */
     bool addExtension(EExtension extension);
-//
-//    /*! activate an extension specified by a string. 
-//     @param extension string of extension to be added
-//     */
-//    void addExtension(std::string extension);
+    bool addExtension(std::string extension);
 
     /*! check if the specified extension is activated
      @param extension enum EExtension of extension to be checked
      */
     bool isExtensionActivated(EExtension extension);
-//    bool isExtensionActivated(std::string extensionString);
+    bool isExtensionActivated(std::string extension);
 
     /*! deactivate an extension specified by enum EExtension. This function removes instances of the designated extension (i.e. a subclass of sdEntityExtension )  attached  to all existing sdEntityCores in the scene.
         Thus, all events data stored in the extension will be lost.
      @param extension enum EExtension of extension to be removed
      */
     bool removeExtension(EExtension extension);
-//
-//    /*! deactivate an extension specified by a string
-//     @param extension string of extension to be removed
-//     */
-//    void removeExtension(std::string extension);
-//
-//    /*! 
-//     remove all exntesions from the extensionVector and sdEntityCores in the scene.
-//     The data stored in the instances of sdEntityExtension will be lost.
-//     */
-//    
+    bool removeExtension(std::string extension);
+
+    /*!
+     remove all exntesions from the extensionVector and sdEntityCores in the scene.
+     The data stored in the instances of sdEntityExtension will be lost.
+     */
+    
     void removeAllExtensions(void);
 
     /*!
@@ -373,16 +365,42 @@ inline size_t sdScene::getNumberOfActivatedExtensions() const{
     return activatedExtensionSet.size();
 }
 
+inline std::set<std::string> sdScene::getActivatedExtensionsAsStrings() const{
+    std::set<std::string> set;
+    for(auto it = activatedExtensionSet.begin(); it != activatedExtensionSet.end(); it++){
+        set.insert(sdExtension::extensionToString(*it));
+    }
+    return std::move(set);
+}
+
 inline bool sdScene::addExtension(EExtension extension){
     return activatedExtensionSet.insert(extension).second;
+}
+
+inline bool sdScene::addExtension(std::string extension){
+    auto ext = sdExtension::stringToExtension(extension);
+    if(ext == EExtension::SD_EXTENSION_ERROR) return false;
+    return addExtension(ext);
 }
 
 inline bool sdScene::isExtensionActivated(EExtension extension){
     return activatedExtensionSet.find(extension) != activatedExtensionSet.end();
 }
 
+inline bool sdScene::isExtensionActivated(std::string extension){
+    auto ext = sdExtension::stringToExtension(extension);
+    if(ext == EExtension::SD_EXTENSION_ERROR) return false;
+    return isExtensionActivated(ext);
+}
+
 inline bool sdScene::removeExtension(EExtension extension){
     return activatedExtensionSet.erase(extension);
+}
+
+inline bool sdScene::removeExtension(std::string extension){
+    auto ext = sdExtension::stringToExtension(extension);
+    if(ext == EExtension::SD_EXTENSION_ERROR) return false;
+    return removeExtension(ext);
 }
 
 inline void sdScene::removeAllExtensions(){

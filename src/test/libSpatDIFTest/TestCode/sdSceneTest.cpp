@@ -50,7 +50,7 @@ TEST_CASE("Test sdScene", "[sdScene]"){
     }
 }
 
-TEST_CASE("Test extension", "[sdScene]"){
+TEST_CASE("addExtension() removeExtension() isExtensionActivated() getNumberOfActivatedExtensions() "){
     
     sdScene scene;
     scene.addExtension(EExtension::SD_SOURCE_WIDTH);
@@ -68,9 +68,12 @@ TEST_CASE("Test extension", "[sdScene]"){
 
 }
 
-TEST_CASE("Test extension descriptor", "[sdScene]"){
+TEST_CASE("Test enable descriptor", "[sdScene]"){
     
     
+    
+    
+
     
     
 }
