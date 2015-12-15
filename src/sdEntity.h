@@ -40,7 +40,7 @@ protected:
     sdEntity(const sdScene * const parent):parent(parent){};
 
     /* find event with the descriptor at time */
-    std::vector<std::shared_ptr<sdProtoEvent>>::const_iterator findEvent(const double time, EDescriptor descriptor) const;
+    std::vector<std::shared_ptr<sdProtoEvent>>::const_iterator findEvent(const double &time, const EDescriptor &descriptor) const;
 
     /*! iterate with lambda */
     template <typename L> void iterate(L lambda) const;
@@ -53,16 +53,6 @@ public:
     /*! this function is the only way to instantiate sdEvent.*/
     template <EDescriptor D>
     sdEvent<D> * const addEvent(const double &time,  typename sdDescriptor<D>::type value);
-    
-//    template <typename T>
-//    vector<T> getValueVector(shared_ptr<_Event> &event) const{
-//        const DescriptorFormat *  format = fetchDescriptorFormat(event->getDescriptor());
-//        if (format->type != typeid(T)) {
-//            return {}; // empty
-//        }
-//        return dynamic_cast<Event<T>*>(event.get())->getValues(); // downcast
-//    };
-
 
     /*! @name Event Handling @{ */
 
@@ -73,16 +63,16 @@ public:
 
     /*! return single event with specific time and descriptor*/
     template <EDescriptor D>
-    const sdEvent< D > * const getEvent(const double time) const;
+    const sdEvent< D > * const getEvent(const double &time) const;
 
     /*! returns a set of sdProtoEvents, depending on given filter arguments*/
-    std::set<std::shared_ptr<sdProtoEvent> > getEventSet(const double time) const;
+    std::set<std::shared_ptr<sdProtoEvent> > getEventSet(const double &time) const;
     
     /*! returns a vector of sdProtoEvents between start and end time */
-    std::vector<std::shared_ptr<sdProtoEvent>> getEvents(const double start, const double end) const;
+    std::vector<std::shared_ptr<sdProtoEvent>> getEvents(const double &start, const double &end) const;
     
     /*! return a vectir of sdProtoEvents with designated descriptor between start and end time */
-    std::vector<std::shared_ptr<sdProtoEvent>> getEvents(const double start, const double end, const EDescriptor descriptor) const;
+    std::vector<std::shared_ptr<sdProtoEvent>> getEvents(const double &start, const double &end, const EDescriptor &descriptor) const;
 
     /*! @} */
 
@@ -208,7 +198,7 @@ public:
     /*! remove an event at the specified time and descriptor
      @param time the time of sdEvent to be removed.
      @param descriptor the descriptor of sdEvent to be removed */
-    bool removeEvent(double time, EDescriptor descriptor);
+    bool removeEvent(const double &time, const EDescriptor &descriptor);
     //bool removeEvent(std::string time, std::string descriptor);
     
     /*! remove all events in the eventSet */
@@ -228,35 +218,38 @@ public:
      @param descriptor specify descriptor defined in sdConst.h
      */
     template <EDescriptor D>
-    const typename sdDescriptor<D>::type * const getValue(double time) const;
+    const typename sdDescriptor<D>::type * const getValue(const double &time) const;
     
     
-//    /*!
-//     this function search for an event at specified time and descriptor and return the data as a string.
-//     @param time time of the event
-//     @param descriptor specify descriptor defined in sdConst.h
-//     */
-//    virtual std::string getValueAsString(double time, EDescriptor descriptor) = 0;
-//    
-//    /*!
-//     this function looks for a next event from the specified time with the designated descriptor and returns a pointer to the data.
-//     @param time 
-//     @param descriptor specify descriptor defined in sdConst.h
-//     */
-//    void* getNextValue(double time, EDescriptor descriptor);
-//
-//    /*!
-//     this function looks for a next event from the specified time with the designated descriptor and returns a pointer to the data.
-//     @param time 
-//     @param descriptor specify descriptor defined in sdConst.h
-//     */
-//    void* getPreviousValue(double time, EDescriptor descriptor);
-//   /*!
-//     @} 
-//    */
+    /*!
+     this function search for an event at specified time and descriptor and return the data as a string.
+     @param time time of the event
+     @param descriptor specify descriptor defined in sdConst.h
+     */
+    template <EDescriptor D>
+    const std::string getValueAsString(const double &time) const;
+
+    /*!
+     this function looks for a next event from the specified time with the designated descriptor and returns a pointer to the data.
+     @param time 
+     @param descriptor specify descriptor defined in sdConst.h
+     */
+    template <EDescriptor D>
+    const typename sdDescriptor<D>::type * const getNextValue(const double &time) const;
+
+    /*!
+     this function looks for a next event from the specified time with the designated descriptor and returns a pointer to the data.
+     @param time 
+     @param descriptor specify descriptor defined in sdConst.h
+     */
+    template <EDescriptor D>
+    const typename sdDescriptor<D>::type * const getPreviousValue(const double &time) const;
+   /*!
+     @} 
+    */
 };
 
-std::vector<std::shared_ptr<sdProtoEvent>>::const_iterator sdEntity::findEvent(const double time, EDescriptor descriptor) const{
+std::vector<std::shared_ptr<sdProtoEvent>>::const_iterator sdEntity::findEvent(const double &time, const EDescriptor &descriptor) const{
     for (auto it = events.begin(); it != events.end(); it++) {
         if( (almostEqual(time, (*it)->getTime())) && (descriptor == (*it)->getDescriptor()) ){ return it; }
         if( (*it)->getTime() > time ){return events.end();}
@@ -289,13 +282,13 @@ inline sdEvent<D> * const sdEntity::addEvent(const double &time,  typename sdDes
 }
 
 template <EDescriptor D>
-inline const sdEvent< D > * const sdEntity::getEvent(const double time) const{
+inline const sdEvent< D > * const sdEntity::getEvent(const double &time) const{
     auto it = findEvent(time, D);
     if(it == events.end()){return nullptr;}
     return dynamic_cast<const sdEvent<D> *>((*it).get());
 }
 
-inline std::set<std::shared_ptr<sdProtoEvent>> sdEntity::getEventSet(const double time) const{
+inline std::set<std::shared_ptr<sdProtoEvent>> sdEntity::getEventSet(const double &time) const{
     std::set<std::shared_ptr<sdProtoEvent>> set;;
     for(auto it = events.begin(); it != events.end(); it++){
         if(almostEqual((*it)->getTime(), time)){set.insert(*it);}
@@ -425,7 +418,7 @@ inline bool sdEntity::removeEvent(const sdProtoEvent * const event){
     return false;
 }
 
-inline bool sdEntity::removeEvent(double time, EDescriptor descriptor){
+inline bool sdEntity::removeEvent(const double &time, const EDescriptor &descriptor){
     auto it = findEvent(time, descriptor);
     if(it == events.end()) return false;
     events.erase(it);
@@ -446,10 +439,33 @@ inline size_t sdEntity::getNumberOfEvents() const{
 }
 
 template <EDescriptor D>
-inline const typename sdDescriptor<D>::type * const sdEntity::getValue(double time) const{
+inline const typename sdDescriptor<D>::type * const sdEntity::getValue(const double &time) const{
     auto event = getEvent<D>(time);
     if(!event) return  nullptr;
     return &getEvent<D>(time)->getValue();
 }
+
+template <EDescriptor D>
+const std::string sdEntity::getValueAsString(const double &time) const{
+    auto event = getEvent<D>(time);
+    if(!event) return  std::string("");
+    return getEvent<D>(time)->getValueAsString();
+}
+
+
+template <EDescriptor D>
+const typename sdDescriptor<D>::type * const sdEntity::getNextValue(const double &time) const{
+    auto nextEvent = getNextEvent<D>(time);
+    if(!nextEvent) return nullptr;
+    return &nextEvent->getValue();
+}
+
+template <EDescriptor D>
+const typename sdDescriptor<D>::type * const sdEntity::getPreviousValue(const double &time) const{
+    auto previousEvent = getPreviousEvent<D>(time);
+    if(!previousEvent) return nullptr;
+    return &previousEvent ->getValue();
+}
+
 
 #endif

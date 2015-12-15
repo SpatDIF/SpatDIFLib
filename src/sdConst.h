@@ -20,6 +20,8 @@
 #include <iostream>
 #include <sstream>
 #include <unordered_map>
+#include <array>
+#include <algorithm>
 
 /*!
     enum for descriptor. internally all descriptors are handled with this Enum
@@ -52,7 +54,7 @@ typedef enum {
 /*!
     enum for media type
  */
-enum class EMedia_TYPE{
+enum class EMediaType{
     SD_STREAM,
     SD_FILE,
     SD_LIVE,
@@ -86,14 +88,14 @@ enum class EKind {
 /*!
  enum for extension. all sdEntityExtension must have one of these enum as a static variable in order to identify themselves
  */
-typedef enum {
+enum class EExtension {
     SD_CORE,
     SD_MEDIA,
     SD_INTERPOLATION,
     SD_SOURCE_WIDTH,
     SD_DIRECT_TO_ONE,
     SD_EXTENSION_ERROR
-} EExtension;
+};
 
 /*!
  enum for interpolation types
@@ -103,6 +105,99 @@ typedef enum {
     SD_LINEAR_INTERPOLATION,
     SD_CUBIC_INTERPOLATION
 } EInterpolation;
+
+
+
+class sdExtension {
+protected:
+    struct sdExtensionSpec{
+        sdExtensionSpec(const std::string &name, const std::map<EDescriptor, std::string> &members):
+        name(name), members(members){};
+        
+        std::string name;
+        const std::map<EDescriptor, std::string> members;
+    };
+    static const std::map<EExtension, sdExtensionSpec> extensionDict;
+public:
+    
+    static std::string extensionToString(const EExtension &descriptor){
+        auto pair = extensionDict.find(descriptor);
+        if (pair == extensionDict.end()) return std::string();
+        return pair->second.name;
+    }
+    
+    static std::string descriptorToString(const EDescriptor &descriptor) {
+        for(auto it = extensionDict.begin(); it != extensionDict.end();it++){
+            auto item =  it->second.members.find(descriptor);
+            if(item != it->second.members.end()) return item->second;
+        }
+        return std::string();
+    }
+
+    static EExtension stringToExtension(std::string string){
+        for(auto it = extensionDict.begin(); it != extensionDict.end();it++){
+            if((*it).second.name == string) return (*it).first;
+        }
+        return EExtension::SD_EXTENSION_ERROR;
+    }
+    
+    static EDescriptor stringToDescriptor(EExtension extension, std::string string){
+        auto ext = extensionDict.find(extension);
+        if(ext == extensionDict.end()) return EDescriptor::SD_ERROR;
+
+        auto map = ext->second.members;
+        for(auto jt = map.begin(); jt != map.end(); jt++){
+            if((*jt).second == string) return (*jt).first;
+        }
+        return EDescriptor::SD_ERROR;
+    }
+};
+
+const std::map<EExtension, sdExtension::sdExtensionSpec>  sdExtension::extensionDict = {
+    {EExtension::SD_CORE, sdExtensionSpec("core",
+            {{SD_TYPE, "type"},
+            {SD_PRESENT, "present"},
+            {SD_POSITION, "position"},
+            {SD_ORIENTATION, "orientation"}})},
+    {EExtension::SD_MEDIA, sdExtensionSpec("media",
+            {{SD_MEDIA_ID, "id"},
+            {SD_MEDIA_TYPE, "type"},
+            {SD_MEDIA_LOCATION, "location"},
+            {SD_MEDIA_CHANNEL, "channel"},
+            {SD_MEDIA_TIME_OFFSET, "time-offset"}})},
+    {EExtension::SD_SOURCE_WIDTH, sdExtensionSpec("source-width",
+            {{SD_SOURCE_WIDTH_WIDTH, "width"}})}
+};
+
+/*!
+ utility function that converts a single number of vector of number to a string
+ */
+template <typename T, size_t size>
+inline std::string toString(const std::array<T, size> &array){
+    
+    std::ostringstream os;
+    std:: for_each(array.begin(), array.end(), [&os](T item){
+        os << item << ' ';
+    });
+    std::string str = os.str();
+    str.erase(str.size()-1);
+    return std::move(str);
+}
+
+inline std::string toString(const bool &bl){
+    return bl ? std::string("true") : std::string("false");
+}
+
+inline std::string toString(const std::string &str){
+    return str;
+}
+
+template <typename T>
+inline std::string toString(const T &i){
+    return toString(std::array<T, 1>({{i}}));
+}
+
+
 
 /*!
  The Descriptor traits. implemented with template explicit specialization technique
@@ -121,54 +216,70 @@ template <>
 struct sdDescriptor<EDescriptor::SD_PRESENT>{
     typedef bool type;
     const static bool interpolable = false;
+    const static std::string getValueAsString(type &item){return getValueAsString(item);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_POSITION>{
     typedef std::array<double, 3> type;
     const static bool interpolable = true;
+    const static std::string getValueAsString(type &item){return getValueAsString(item);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_ORIENTATION>{
     typedef std::array<double, 3> type;
     const static bool interpolable = true;
+    const static std::string getValueAsString(type &item){return getValueAsString(item);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_MEDIA_ID>{
     typedef std::string type;
     const static bool interpolable = false;
+    const static std::string getValueAsString(type &item){return getValueAsString(item);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_MEDIA_TYPE>{
-    typedef EMedia_TYPE type;
+    typedef EMediaType type;
     const static bool interpolable = false;
+    const static std::string getValueAsString(type &item){return getValueAsString(item);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_MEDIA_LOCATION>{
     typedef std::string type;
     const static bool interpolable = false;
+    const static std::string getValueAsString(type &item){return getValueAsString(item);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_MEDIA_CHANNEL>{
     typedef int type;
     const static bool interpolable = false;
+    const static std::string getValueAsString(type &item){return getValueAsString(item);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_MEDIA_TIME_OFFSET>{
     typedef double type;
     const static bool interpolable = false;
+    const static std::string getValueAsString(type &item){return getValueAsString(item);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_MEDIA_GAIN>{
     typedef double type;
     const static bool interpolable = true;
+    const static std::string getValueAsString(type &item){return getValueAsString(item);}
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_SOURCE_WIDTH_WIDTH>{
+    typedef double type;
+    const static bool interpolable = true;
+    const static std::string getValueAsString(type &item){return getValueAsString(item);}
 };
 
 /*!
@@ -179,47 +290,6 @@ inline bool almostEqual(double x, double y){
     const double epsilon = std::numeric_limits<double>::epsilon() * std::abs(x+y) * 2.0;
     const double min = std::numeric_limits<double>::min();
     return (gap < epsilon) || (gap < min);
-}
-
-
-/*!
- utility function that convert ints to a string
- */
-inline std::string intsToString(const int *it, const int num){
-    std::ostringstream os;
-    for(int i=0;i<num;i++){
-        os << it[i];
-        if(i != (num-1))
-            os << ' ';
-    }
-    return os.str();
-}
-
-/*!
- utility function that convert a int to a string
- */
-inline std::string intToString(const int it){
-    return intsToString(&it, 1);
-}
-
-/*!
- utility function that convert ints to a string
- */
-inline std::string floatsToString(const float *ft, const int num){
-    std::ostringstream os;
-    for(int i=0;i<num;i++){
-        os << ft[i];
-        if(i != (num-1))
-            os << ' ';
-    }
-    return os.str();
-}
-
-/*!
- utility function that convert a int to a string
- */
-inline std::string floatToString(const float ft){
-    return floatsToString(&ft, 1);
 }
 
 /*!
@@ -242,36 +312,8 @@ inline float *doublesToFloats(const double *doubles, float *floats, const int nu
     return floats;
 }
 
-/*! 
- utility function that convert doubles to a string
- */
-inline std::string doublesToString(const double *db, const int num){
-    std::ostringstream os;
-    for(int i=0;i<num;i++){
-        os << db[i];
-        if(i != (num-1))
-            os << ' ';
-    }
-    return os.str();
-}
 
-/*!
- utility function that convert a double to a string
- */
-inline std::string doubleToString(const double db){
-    return doublesToString(&db, 1);
-}
 
-/*!
- utility function that convert a bool to a string
- */
-inline std::string boolToString(const bool bl){
-    return bl ? std::string("true") : std::string("false");
-}
-
-/*!
- utility function that convert a string to a bool
- */
 inline bool stringToBool(const std::string str){
     return str == "true" ? true : false;
 }
@@ -318,54 +360,5 @@ inline int stringToInt(std::string str){
     return it;
 }
 
-
-
-const static std::map<EExtension, std::string> extensionDict = {
-    {SD_CORE, "core"},
-    {SD_MEDIA, "media"},
-    {SD_DIRECT_TO_ONE, "direct-to-one"},
-    {SD_SOURCE_WIDTH, "source-width"}
-};
-
-/**
- * @brief converts enum EExtension to string
- * @param extension [description]
- * @return [description]
- */
-inline const std::string extensionToString(EExtension extension){
-    auto it = extensionDict.find(extension);
-    if(it == extensionDict.end()) return "";
-    return (*it).second;
-}
-
-/**
- * @brief converts string to enum EExtension
- * @param extensionStr the name of extension in string 
- * @return enum EExtension that represents the type of extension
- */
-inline EExtension stringToExtension(std::string extensionStr){
-    EExtension ext = SD_EXTENSION_ERROR;
-    for_each(extensionDict.begin(), extensionDict.end(), [&ext, &extensionStr](std::pair<EExtension, std::string> item){
-        if(item.second == extensionStr){
-            ext = item.first;
-        }
-    });
-    return ext;
-}
-
-/**
- * @brief returns type of extension associated to the given descriptor. if no extension found, returns SD_EXTENSION_ERROR.
- * @param descriptor an extension which includes this descriptor will be returned
- * @return extension associated to the given descriptor
- */
-inline EExtension getRelevantExtension(EDescriptor descriptor){
-    if(EDescriptor::SD_TYPE <= descriptor && descriptor <= EDescriptor::SD_ORIENTATION){
-        return SD_CORE;
-    }else if(EDescriptor::SD_MEDIA_ID <= descriptor && descriptor <= EDescriptor::SD_MEDIA_GAIN){
-        return SD_MEDIA;
-    }else{
-        return SD_EXTENSION_ERROR;
-    }
-}
 
 #endif

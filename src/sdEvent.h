@@ -41,7 +41,7 @@ public:
     std::string getTimeAsString() const;
     EDescriptor getDescriptor() const;
     const sdEntity * const getParent() const;
-    virtual const std::string getValueAsString() = 0;
+    virtual const std::string getValueAsString() const = 0;
 };
 
 inline sdProtoEvent::sdProtoEvent(const double time, const EDescriptor descriptor, const sdEntity * const parent):
@@ -56,7 +56,7 @@ inline EDescriptor sdProtoEvent::getDescriptor() const{
 }
 
 inline std::string sdProtoEvent::getTimeAsString() const {
-    return std::move(doubleToString(time));
+    return std::to_string(time);
 }
 
 inline const sdEntity * const sdProtoEvent::getParent() const{
@@ -88,15 +88,11 @@ public:
     const typename sdDescriptor<D>::type &getValue(void) const{ return value; };
     
     /*! returns value as string */
-    const std::string getValueAsString();
+    
+    const std::string getValueAsString() const{return toString(value);};
     /*! @} */
 
 };
 
-template<EDescriptor D>
-inline const std::string sdEvent<D>::getValueAsString(){
-    std::string string;
-    return std::move(string);
-}
 
 #endif

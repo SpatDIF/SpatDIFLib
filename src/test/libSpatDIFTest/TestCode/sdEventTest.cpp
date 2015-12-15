@@ -47,11 +47,54 @@ TEST_CASE("Test exceptions", "[sdEvent]"){
    
 }
 
-
 TEST_CASE("Test all descriptors types"){
     sdScene scene;
     sdEntity * entity = scene.addEntity("MyEntity");
+    
+    
+    // SD_TYPE
+
+    // SD_PRESET
     entity->addEvent<SD_PRESENT>(0.0, false);
+    REQUIRE(entity->getValueAsString<SD_PRESENT>(0.0) == "false");
+ 
+    // SD_POSITION
+    entity->addEvent<SD_POSITION>(0.0, {0.2,0.3,0.4});
+    REQUIRE( entity->getValueAsString<SD_POSITION>(0.0) == "0.2 0.3 0.4");
+
+    // SD_ORIENTATION
+    entity->addEvent<SD_ORIENTATION>(0.0, {0.5,0.6,0.7});
+    REQUIRE( entity->getValueAsString<SD_ORIENTATION>(0.0) == "0.5 0.6 0.7");
+    
+    // SD_MEDIA_ID
+    entity->addEvent<SD_MEDIA_ID>(0.0, "mymedia");
+    REQUIRE( entity->getValueAsString<SD_MEDIA_ID>(0.0) == "mymedia");
+//
+//    // SD_MEDIA_TYPE
+//    entity->addEvent<SD_MEDIA_TYPE>(0.0, EMediaType::SD_LIVE );
+//    REQUIRE( entity->getValueAsString<SD_MEDIA_TYPE>(0.0) == "live");
+//    
+//    // SD_MEDIA_LOCATION
+//    entity->addEvent<SD_MEDIA_LOCATION>(0.0, "/path/to/my/file");
+//    REQUIRE( entity->getValueAsString<SD_MEDIA_TYPE>(0.0) == "/path/to/my/file");
+//
+//    // SD_MEDIA_CHANNEL
+//    entity->addEvent<SD_MEDIA_CHANNEL>(0.0, 2);
+//    REQUIRE( entity->getValueAsString<SD_MEDIA_TYPE>(0.0) == "2");
+//
+//    // SD_MEDIA_TIME_OFFSET
+//    entity->addEvent<SD_MEDIA_TIME_OFFSET>(0.0, 20.0);
+//    REQUIRE( entity->getValueAsString<SD_MEDIA_TYPE>(0.0) == "20.0");
+//
+//    // SD_MEDIA_GAIN
+//    entity->addEvent<SD_MEDIA_GAIN>(0.0, 0.4);
+//    REQUIRE( entity->getValueAsString<SD_MEDIA_TYPE>(0.0) == "0.4");
+//
+//    // SD_SOURCE_WIDTH_WIDTH
+//    entity->addEvent<SD_SOURCE_WIDTH_WIDTH>(0.0, 0.5);
+//    REQUIRE( entity->getValueAsString<SD_MEDIA_TYPE>(0.0) == "0.5");
+
+
 }
 
 TEST_CASE("getEvent() and getEvents()"){
@@ -142,7 +185,7 @@ TEST_CASE("getFirstEventTime() getLastEventTime()"){
     REQUIRE(!entity->getFirstEventTime().second);
     REQUIRE(!entity->getLastEventTime().second);
     
-    // three events adde
+    // three events added
     auto a = entity->addEvent<SD_POSITION>(0.4, {0.5, 0.2, 0.3}); // chronologically third
     auto b = entity->addEvent<SD_POSITION>(0.2, {0.3, 0.1, 0.2}); // chronologically first
     auto c = entity->addEvent<SD_POSITION>(0.3, {0.1, 0.4, 0.6}); // chronologically second
@@ -215,5 +258,36 @@ TEST_CASE("getValue()"){
     REQUIRE(value);
     REQUIRE(array == *value);
     
+}
+
+TEST_CASE("getValueAsString()"){
+    
+    sdScene scene;
+    sdEntity * entity = scene.addEntity("MyEntity");
+    auto event = entity->addEvent<SD_POSITION>(5.0, {0.2, 0.3, 0.4});
+    REQUIRE(event->getValueAsString() == "0.2 0.3 0.4");
+    
+    
+}
+
+TEST_CASE("getNextValue() getPreviousValue()"){
+    sdScene scene;
+    sdEntity * entity = scene.addEntity("MyEntity");
+    
+    REQUIRE(!entity->getNextValue<SD_POSITION>(0.3));
+    REQUIRE(!entity->getPreviousValue<SD_POSITION>(0.7));
+
+    auto event = entity->addEvent<SD_POSITION>(0.5, {0.5, 0.2, 0.3});
+    REQUIRE(entity->getNextValue<SD_POSITION>(0.3) == &event->getValue() );
+    REQUIRE(entity->getPreviousValue<SD_POSITION>(0.7) == &event->getValue() );
+
+    auto eventB = entity->addEvent<SD_POSITION>(0.4, {0.0, 0.0, 0.0});
+    auto eventC = entity->addEvent<SD_POSITION>(0.6, {0.0, 0.0, 0.0});
+    REQUIRE(entity->getNextValue<SD_POSITION>(0.3) == &eventB->getValue() );
+    REQUIRE(entity->getPreviousValue<SD_POSITION>(0.7) == &eventC->getValue() );
+
+    REQUIRE(!entity->getNextValue<SD_POSITION>(0.7));
+    REQUIRE(!entity->getPreviousValue<SD_POSITION>(0.3));
+
     
 }
