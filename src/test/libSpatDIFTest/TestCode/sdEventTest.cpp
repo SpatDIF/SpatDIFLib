@@ -51,48 +51,63 @@ TEST_CASE("Test all descriptors types"){
     sdScene scene;
     sdEntity * entity = scene.addEntity("MyEntity");
     
-    
-    // SD_TYPE
-
-    // SD_PRESET
+    // SD_PRESENT
     entity->addEvent<SD_PRESENT>(0.0, false);
     REQUIRE(entity->getValueAsString<SD_PRESENT>(0.0) == "false");
- 
+    REQUIRE(*(entity->getValue<SD_PRESENT>(0.0)) == false);
+    
+    entity->addEvent<SD_PRESENT>(0.0, true);
+    REQUIRE(entity->getValueAsString<SD_PRESENT>(0.0) == "true");
+    REQUIRE(*(entity->getValue<SD_PRESENT>(0.0)) == true);
+
     // SD_POSITION
     entity->addEvent<SD_POSITION>(0.0, {0.2,0.3,0.4});
     REQUIRE( entity->getValueAsString<SD_POSITION>(0.0) == "0.2 0.3 0.4");
-
+    REQUIRE( entity->getValue<SD_POSITION>(0.0)->at(0) == 0.2);
+    REQUIRE( entity->getValue<SD_POSITION>(0.0)->at(1) == 0.3);
+    REQUIRE( entity->getValue<SD_POSITION>(0.0)->at(2) == 0.4);
+    
     // SD_ORIENTATION
     entity->addEvent<SD_ORIENTATION>(0.0, {0.5,0.6,0.7});
     REQUIRE( entity->getValueAsString<SD_ORIENTATION>(0.0) == "0.5 0.6 0.7");
-    
+    REQUIRE( entity->getValue<SD_ORIENTATION>(0.0)->at(0) == 0.5);
+    REQUIRE( entity->getValue<SD_ORIENTATION>(0.0)->at(1) == 0.6);
+    REQUIRE( entity->getValue<SD_ORIENTATION>(0.0)->at(2) == 0.7);
+
     // SD_MEDIA_ID
     entity->addEvent<SD_MEDIA_ID>(0.0, "mymedia");
     REQUIRE( entity->getValueAsString<SD_MEDIA_ID>(0.0) == "mymedia");
-//
-//    // SD_MEDIA_TYPE
-//    entity->addEvent<SD_MEDIA_TYPE>(0.0, EMediaType::SD_LIVE );
-//    REQUIRE( entity->getValueAsString<SD_MEDIA_TYPE>(0.0) == "live");
-//    
-//    // SD_MEDIA_LOCATION
-//    entity->addEvent<SD_MEDIA_LOCATION>(0.0, "/path/to/my/file");
-//    REQUIRE( entity->getValueAsString<SD_MEDIA_TYPE>(0.0) == "/path/to/my/file");
-//
-//    // SD_MEDIA_CHANNEL
-//    entity->addEvent<SD_MEDIA_CHANNEL>(0.0, 2);
-//    REQUIRE( entity->getValueAsString<SD_MEDIA_TYPE>(0.0) == "2");
-//
-//    // SD_MEDIA_TIME_OFFSET
-//    entity->addEvent<SD_MEDIA_TIME_OFFSET>(0.0, 20.0);
-//    REQUIRE( entity->getValueAsString<SD_MEDIA_TYPE>(0.0) == "20.0");
-//
-//    // SD_MEDIA_GAIN
-//    entity->addEvent<SD_MEDIA_GAIN>(0.0, 0.4);
-//    REQUIRE( entity->getValueAsString<SD_MEDIA_TYPE>(0.0) == "0.4");
-//
-//    // SD_SOURCE_WIDTH_WIDTH
-//    entity->addEvent<SD_SOURCE_WIDTH_WIDTH>(0.0, 0.5);
-//    REQUIRE( entity->getValueAsString<SD_MEDIA_TYPE>(0.0) == "0.5");
+    REQUIRE( *entity->getValue<SD_MEDIA_ID>(0.0) == "mymedia");
+
+    // SD_MEDIA_TYPE
+    entity->addEvent<SD_MEDIA_TYPE>(0.0, "live" );
+    REQUIRE( entity->getValueAsString<SD_MEDIA_TYPE>(0.0) == "live");
+    REQUIRE( *entity->getValue<SD_MEDIA_TYPE>(0.0) == "live");
+
+    // SD_MEDIA_LOCATION
+    entity->addEvent<SD_MEDIA_LOCATION>(0.0, "/path/to/my/file");
+    REQUIRE( entity->getValueAsString<SD_MEDIA_LOCATION>(0.0) == "/path/to/my/file");
+    REQUIRE( *entity->getValue<SD_MEDIA_LOCATION>(0.0) == "/path/to/my/file");
+
+    // SD_MEDIA_CHANNEL
+    entity->addEvent<SD_MEDIA_CHANNEL>(0.0, 2);
+    REQUIRE( entity->getValueAsString<SD_MEDIA_CHANNEL>(0.0) == "2");
+    REQUIRE( *entity->getValue<SD_MEDIA_CHANNEL>(0.0) == 2);
+
+    // SD_MEDIA_TIME_OFFSET
+    entity->addEvent<SD_MEDIA_TIME_OFFSET>(0.0, 20.2);
+    REQUIRE( entity->getValueAsString<SD_MEDIA_TIME_OFFSET>(0.0) == "20.2");
+    REQUIRE( *entity->getValue<SD_MEDIA_TIME_OFFSET>(0.0) == 20.2);
+
+    // SD_MEDIA_GAIN
+    entity->addEvent<SD_MEDIA_GAIN>(0.0, 0.4);
+    REQUIRE( entity->getValueAsString<SD_MEDIA_GAIN>(0.0) == "0.4");
+    REQUIRE( *entity->getValue<SD_MEDIA_GAIN>(0.0) == 0.4);
+
+    // SD_SOURCE_WIDTH_WIDTH
+    entity->addEvent<SD_SOURCE_WIDTH_WIDTH>(0.0, 0.5);
+    REQUIRE( entity->getValueAsString<SD_SOURCE_WIDTH_WIDTH>(0.0) == "0.5");
+    REQUIRE( *entity->getValue<SD_SOURCE_WIDTH_WIDTH>(0.0) == 0.5);
 
 
 }

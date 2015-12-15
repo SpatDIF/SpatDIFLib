@@ -442,13 +442,13 @@ template <EDescriptor D>
 inline const typename sdDescriptor<D>::type * const sdEntity::getValue(const double &time) const{
     auto event = getEvent<D>(time);
     if(!event) return  nullptr;
-    return &getEvent<D>(time)->getValue();
+    return &(event->getValue());
 }
 
 template <EDescriptor D>
 const std::string sdEntity::getValueAsString(const double &time) const{
     auto event = getEvent<D>(time);
-    if(!event) return  std::string("");
+    if(!event) return  std::string();
     return getEvent<D>(time)->getValueAsString();
 }
 

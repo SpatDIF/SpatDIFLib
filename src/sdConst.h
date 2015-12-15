@@ -50,17 +50,6 @@ typedef enum {
     SD_ALL
 } EDescriptor;
 
-
-/*!
-    enum for media type
- */
-enum class EMediaType{
-    SD_STREAM,
-    SD_FILE,
-    SD_LIVE,
-    SD_NONE
-};
-
 /*!
  enum for "type" descriptor.
  Currently only "point" is declared in the specification.
@@ -91,7 +80,6 @@ enum class EKind {
 enum class EExtension {
     SD_CORE,
     SD_MEDIA,
-    SD_INTERPOLATION,
     SD_SOURCE_WIDTH,
     SD_DIRECT_TO_ONE,
     SD_EXTENSION_ERROR
@@ -169,6 +157,8 @@ const std::map<EExtension, sdExtension::sdExtensionSpec>  sdExtension::extension
             {{SD_SOURCE_WIDTH_WIDTH, "width"}})}
 };
 
+
+
 /*!
  utility function that converts a single number of vector of number to a string
  */
@@ -203,8 +193,9 @@ inline std::string toString(const T &i){
  The Descriptor traits. implemented with template explicit specialization technique
  */
 
+
 template <EDescriptor D>
-struct sdDescriptor{};
+struct sdDescriptor {};
 
 template <>
 struct sdDescriptor<EDescriptor::SD_TYPE>{
@@ -216,70 +207,60 @@ template <>
 struct sdDescriptor<EDescriptor::SD_PRESENT>{
     typedef bool type;
     const static bool interpolable = false;
-    const static std::string getValueAsString(type &item){return getValueAsString(item);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_POSITION>{
     typedef std::array<double, 3> type;
     const static bool interpolable = true;
-    const static std::string getValueAsString(type &item){return getValueAsString(item);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_ORIENTATION>{
     typedef std::array<double, 3> type;
     const static bool interpolable = true;
-    const static std::string getValueAsString(type &item){return getValueAsString(item);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_MEDIA_ID>{
     typedef std::string type;
     const static bool interpolable = false;
-    const static std::string getValueAsString(type &item){return getValueAsString(item);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_MEDIA_TYPE>{
-    typedef EMediaType type;
+    typedef std::string type;
     const static bool interpolable = false;
-    const static std::string getValueAsString(type &item){return getValueAsString(item);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_MEDIA_LOCATION>{
     typedef std::string type;
     const static bool interpolable = false;
-    const static std::string getValueAsString(type &item){return getValueAsString(item);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_MEDIA_CHANNEL>{
     typedef int type;
     const static bool interpolable = false;
-    const static std::string getValueAsString(type &item){return getValueAsString(item);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_MEDIA_TIME_OFFSET>{
     typedef double type;
     const static bool interpolable = false;
-    const static std::string getValueAsString(type &item){return getValueAsString(item);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_MEDIA_GAIN>{
     typedef double type;
     const static bool interpolable = true;
-    const static std::string getValueAsString(type &item){return getValueAsString(item);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_SOURCE_WIDTH_WIDTH>{
     typedef double type;
     const static bool interpolable = true;
-    const static std::string getValueAsString(type &item){return getValueAsString(item);}
 };
 
 /*!
@@ -312,13 +293,9 @@ inline float *doublesToFloats(const double *doubles, float *floats, const int nu
     return floats;
 }
 
-
-
 inline bool stringToBool(const std::string str){
     return str == "true" ? true : false;
 }
-
-
 
 /*!
  utility function that convert a string to doubles

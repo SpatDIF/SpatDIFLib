@@ -53,18 +53,18 @@ TEST_CASE("Test sdScene", "[sdScene]"){
 TEST_CASE("Test extension", "[sdScene]"){
     
     sdScene scene;
-    scene.addExtension(SD_SOURCE_WIDTH);
+    scene.addExtension(EExtension::SD_SOURCE_WIDTH);
     REQUIRE(scene.getNumberOfActivatedExtensions() == 1);
-    REQUIRE(scene.removeExtension(SD_SOURCE_WIDTH) == 1);
-    scene.addExtension(SD_SOURCE_WIDTH);
-    REQUIRE(!scene.addExtension(SD_SOURCE_WIDTH)); // already exists
+    REQUIRE(scene.removeExtension(EExtension::SD_SOURCE_WIDTH) == 1);
+    scene.addExtension(EExtension::SD_SOURCE_WIDTH);
+    REQUIRE(!scene.addExtension(EExtension::SD_SOURCE_WIDTH)); // already exists
     scene.removeAllExtensions();
     REQUIRE(scene.getNumberOfActivatedExtensions() == 0);
-    scene.addExtension(SD_SOURCE_WIDTH);
-    REQUIRE(scene.isExtensionActivated(SD_SOURCE_WIDTH));
-    REQUIRE(scene.removeExtension(SD_SOURCE_WIDTH) == 1);
-    REQUIRE(scene.removeExtension(SD_SOURCE_WIDTH) == 0);
-    REQUIRE(!scene.isExtensionActivated(SD_SOURCE_WIDTH));
+    scene.addExtension(EExtension::SD_SOURCE_WIDTH);
+    REQUIRE(scene.isExtensionActivated(EExtension::SD_SOURCE_WIDTH));
+    REQUIRE(scene.removeExtension(EExtension::SD_SOURCE_WIDTH) == 1);
+    REQUIRE(scene.removeExtension(EExtension::SD_SOURCE_WIDTH) == 0);
+    REQUIRE(!scene.isExtensionActivated(EExtension::SD_SOURCE_WIDTH));
 
 }
 
