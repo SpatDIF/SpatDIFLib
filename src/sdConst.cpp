@@ -26,6 +26,7 @@ const std::map<EExtension, sdExtension::sdExtensionSpec>  sdExtension::extension
                                                {SD_MEDIA_TYPE, "type"},
                                                {SD_MEDIA_LOCATION, "location"},
                                                {SD_MEDIA_CHANNEL, "channel"},
+                                               {SD_MEDIA_GAIN, "gain"},
                                                {SD_MEDIA_TIME_OFFSET, "time-offset"}})},
     {EExtension::SD_SOURCE_WIDTH, sdExtensionSpec("source-width",
                                                   {{SD_SOURCE_WIDTH_WIDTH, "width"}})}

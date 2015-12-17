@@ -60,20 +60,22 @@ TEST_CASE("Test sdEvent add get remove"){
     entity->addEvent<SD_PRESENT>(0.0, false); // 1
     REQUIRE(entity->getNumberOfEvents() == 1);
     
-    auto addedEvent = entity->addEvent<SD_MEDIA_GAIN>(1.234, 0.8); // 2
-    auto gotEvent =  entity->getEvent<SD_MEDIA_GAIN>(1.234);
+    auto addedEvent = entity->addEvent<SD_ORIENTATION>(1.234, {0.3,0.4,0.5}); // 2
+    auto gotEvent =  entity->getEvent<SD_ORIENTATION>(1.234);
     REQUIRE(gotEvent);
     REQUIRE(gotEvent == addedEvent);
-    REQUIRE(gotEvent->getValue() == 0.8);
-    
-    auto event =  entity->getEvent<SD_MEDIA_GAIN>(1.23400001); // a little bit different
+    REQUIRE(gotEvent->getValue()[0] == 0.3);
+    REQUIRE(gotEvent->getValue()[1] == 0.4);
+    REQUIRE(gotEvent->getValue()[2] == 0.5);
+
+    auto event =  entity->getEvent<SD_ORIENTATION>(1.23400001); // a little bit different
     REQUIRE(!event );
     
     // overriding
     auto overridEvent = entity->addEvent<SD_PRESENT>(0.0, true); // 3 but override
     REQUIRE(entity->getNumberOfEvents() == 2);
     
-    entity->removeEvent(1.234, SD_MEDIA_GAIN);
+    entity->removeEvent(1.234, SD_ORIENTATION);
     REQUIRE(entity->getNumberOfEvents() == 1);
     
     entity->removeAllEvents();
@@ -96,6 +98,8 @@ TEST_CASE("Test exceptions", "[sdEvent]"){
 
 TEST_CASE("Test all descriptors types"){
     sdScene scene;
+    scene.addExtension(EExtension::SD_MEDIA);
+    scene.addExtension(EExtension::SD_SOURCE_WIDTH);
     sdEntity * entity = scene.addEntity("MyEntity");
     
     // SD_PRESENT
