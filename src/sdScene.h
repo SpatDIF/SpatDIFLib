@@ -43,27 +43,20 @@
 class sdScene{
     friend sdEntity;
     
-private:
+protected:
     std::map <std::string, sdEntity> entities; //!< a map of sdEntities
     std::vector<std::shared_ptr<sdProtoEvent>> allEvents; //!< an alias pointer to all events
-    std::set <EExtension> activatedExtensionSet; //!< a vector of activated
+    std::set <EExtension> activatedExtensionSet; //!< a set of activated extension
+    std::set <EDescriptor> validDescriptorSet; //!< a set of valid descriptor
     EOrdering ordering; //!< ordering flag
     sdInfo info; //!< contains "info" part of the meta section
 
 public:
     
-    /*! @name Constructors
-     @{
-     */
-    
-    /*! constructor */
-    sdScene(void);
-    
-    /*! constructor with sdInfo  */
-    sdScene(sdInfo info);
-    
     /*! constructor with sdInfo and ordering*/
-    sdScene(sdInfo info, EOrdering ordering);
+    sdScene(sdInfo info = sdInfo(), EOrdering ordering = EOrdering::SD_TIME ):info(info), ordering(ordering){
+        addExtension(EExtension::SD_CORE); // validate core descriptors
+    }
     
     /*!
      @}
@@ -102,7 +95,9 @@ public:
      @param ordering the ordering enum declared in sdConst.h
      */
     bool setOrdering(const std::string &string);
-
+    
+    const std::set<EDescriptor> &getValidDescriptorSet() const;
+    
     /*!
      @}
      */
@@ -182,7 +177,7 @@ public:
     const std::set<EExtension> &getActivatedExtensions() const;
 
     /*! returns names of  activated extensions as a set*/
-    std::set<std::string> getActivatedExtensionsAsStrings() const;
+    std::unordered_set<std::string> getActivatedExtensionsAsStrings() const;
 
     /*! activate an extension specified by enum EExtension. This function instantiates instances of the
      designated extension (i.e. a subclass of sdEntityExtension ) and attached them to all existing sdEntityCores
@@ -195,8 +190,8 @@ public:
     /*! check if the specified extension is activated
      @param extension enum EExtension of extension to be checked
      */
-    bool isExtensionActivated(EExtension extension);
-    bool isExtensionActivated(std::string extension);
+    bool isExtensionActivated(EExtension extension) const;
+    bool isExtensionActivated(std::string extension) const;
 
     /*! deactivate an extension specified by enum EExtension. This function removes instances of the designated extension (i.e. a subclass of sdEntityExtension )  attached  to all existing sdEntityCores in the scene.
         Thus, all events data stored in the extension will be lost.
@@ -213,13 +208,20 @@ public:
     void removeAllExtensions(void);
 
     /*!
+     check if the descriptor is vaild
+     */
+    bool isDescriptorValid(const EDescriptor &descriptor) const;
+    
+    /*!
      @}
      */
     
-//    /*! @name Utility function
-//     @{
-//     */
-//    
+    /*! @name Utility function
+     @{
+     */
+
+    void addEventAlias(std::shared_ptr<sdProtoEvent>);
+    
 //    /*!   collect next event(s) from all entities and report them  */
 //    std::vector<sdReport> getNextEventSetsFromAllEntities(double time);
 //    std::vector<sdReport> getPreviousEventSetsFromAllEntities(double time);
@@ -275,20 +277,6 @@ public:
 
 #pragma mark Constoructors
 
-inline sdScene::sdScene(void){
-    sdInfo info("unknown", "unknown", sdDate(), "unknown", "unknown", "unknown");
-    ordering = EOrdering::SD_TIME;
-}
-
-inline sdScene::sdScene(sdInfo info){
-    setInfo(info);
-    ordering = EOrdering::SD_TIME;
-}
-
-inline sdScene::sdScene(sdInfo info, EOrdering ordering){
-    setInfo(info);
-    sdScene::ordering = ordering;
-}
 
 #pragma mark Info
 
@@ -312,6 +300,10 @@ inline std::string sdScene::getOrderingAsString(void) const{
 
 inline void sdScene::setOrdering(const EOrdering &ordering ){
     sdScene::ordering = ordering;
+}
+
+inline const std::set<EDescriptor> &sdScene::getValidDescriptorSet() const{
+    return validDescriptorSet;
 }
 
 inline bool sdScene::setOrdering(const std::string &ordering){
@@ -341,6 +333,14 @@ inline void sdScene::removeAllEntities(){
     entities.clear();
 }
 
+inline bool sdScene::isDescriptorValid(const EDescriptor &descriptor) const{
+    return !(validDescriptorSet.find(descriptor) == validDescriptorSet.end());
+}
+
+inline void sdScene::addEventAlias(std::shared_ptr<sdProtoEvent> event){
+    allEvents.push_back(event);
+}
+
 inline std::vector<std::string> sdScene::getEntityNames() const{
     std::vector<std::string> returnVector;
     for_each(entities.begin(), entities.end(),[&returnVector](std::pair<std::string, sdEntity> pair){
@@ -362,11 +362,11 @@ inline size_t sdScene::getNumberOfEntities() const{
 #pragma mark extension
 
 inline size_t sdScene::getNumberOfActivatedExtensions() const{
-    return activatedExtensionSet.size();
+    return activatedExtensionSet.size() - 1; // because core is not a extension;
 }
 
-inline std::set<std::string> sdScene::getActivatedExtensionsAsStrings() const{
-    std::set<std::string> set;
+inline std::unordered_set<std::string> sdScene::getActivatedExtensionsAsStrings() const{
+    std::unordered_set<std::string> set;
     for(auto it = activatedExtensionSet.begin(); it != activatedExtensionSet.end(); it++){
         set.insert(sdExtension::extensionToString(*it));
     }
@@ -374,7 +374,14 @@ inline std::set<std::string> sdScene::getActivatedExtensionsAsStrings() const{
 }
 
 inline bool sdScene::addExtension(EExtension extension){
-    return activatedExtensionSet.insert(extension).second;
+    auto ret =  activatedExtensionSet.insert(extension).second;
+    if(ret){
+        auto descriptors = sdExtension::getDescriptorsForExtension(extension);
+        for(auto it = descriptors.begin(); descriptors.end() != it; it++) {
+            validDescriptorSet.insert((*it).first);
+        }
+    }
+    return ret;
 }
 
 inline bool sdScene::addExtension(std::string extension){
@@ -383,17 +390,22 @@ inline bool sdScene::addExtension(std::string extension){
     return addExtension(ext);
 }
 
-inline bool sdScene::isExtensionActivated(EExtension extension){
+inline bool sdScene::isExtensionActivated(EExtension extension) const{
     return activatedExtensionSet.find(extension) != activatedExtensionSet.end();
 }
 
-inline bool sdScene::isExtensionActivated(std::string extension){
+inline bool sdScene::isExtensionActivated(std::string extension) const{
     auto ext = sdExtension::stringToExtension(extension);
     if(ext == EExtension::SD_EXTENSION_ERROR) return false;
     return isExtensionActivated(ext);
 }
 
 inline bool sdScene::removeExtension(EExtension extension){
+    if (extension == EExtension::SD_CORE) return false;
+    auto descriptors = sdExtension::getDescriptorsForExtension(extension);
+    for(auto it = descriptors.begin(); it != descriptors.end(); it++) {
+        validDescriptorSet.erase((*it).first);
+    }
     return activatedExtensionSet.erase(extension);
 }
 
@@ -405,6 +417,8 @@ inline bool sdScene::removeExtension(std::string extension){
 
 inline void sdScene::removeAllExtensions(){
     activatedExtensionSet.clear();
+    validDescriptorSet.clear();
+    addExtension(EExtension::SD_CORE);
 }
 
 

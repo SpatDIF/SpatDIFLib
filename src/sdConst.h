@@ -19,10 +19,10 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-#include <unordered_map>
+#include <map>
 #include <array>
 #include <algorithm>
-
+#include <cmath>
 /*!
     enum for descriptor. internally all descriptors are handled with this Enum
  */
@@ -107,6 +107,9 @@ protected:
     };
     static const std::map<EExtension, sdExtensionSpec> extensionDict;
 public:
+    static const std::map<EDescriptor, std::string> &getDescriptorsForExtension(EExtension extension){
+        return extensionDict.at(extension).members;
+    }
     
     static std::string extensionToString(const EExtension &descriptor){
         auto pair = extensionDict.find(descriptor);
@@ -139,22 +142,6 @@ public:
         }
         return EDescriptor::SD_ERROR;
     }
-};
-
-const std::map<EExtension, sdExtension::sdExtensionSpec>  sdExtension::extensionDict = {
-    {EExtension::SD_CORE, sdExtensionSpec("core",
-            {{SD_TYPE, "type"},
-            {SD_PRESENT, "present"},
-            {SD_POSITION, "position"},
-            {SD_ORIENTATION, "orientation"}})},
-    {EExtension::SD_MEDIA, sdExtensionSpec("media",
-            {{SD_MEDIA_ID, "id"},
-            {SD_MEDIA_TYPE, "type"},
-            {SD_MEDIA_LOCATION, "location"},
-            {SD_MEDIA_CHANNEL, "channel"},
-            {SD_MEDIA_TIME_OFFSET, "time-offset"}})},
-    {EExtension::SD_SOURCE_WIDTH, sdExtensionSpec("source-width",
-            {{SD_SOURCE_WIDTH_WIDTH, "width"}})}
 };
 
 

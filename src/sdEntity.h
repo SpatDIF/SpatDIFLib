@@ -19,6 +19,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <set>
 #include "sdException.h"
 #include "sdConst.h"
 #include "sdEvent.h"
@@ -34,16 +35,21 @@ class sdEntity{
 protected:
     
     std::vector< std::shared_ptr<sdProtoEvent> > events; /*!< maintains pointers to all relevant sdEvents */
-    const sdScene * const parent;
+    sdScene * const parent;
     
     /*!sdEntity can be invoked only by sdScene*/
-    sdEntity(const sdScene * const parent):parent(parent){};
+    sdEntity(sdScene * const parent):parent(parent){};
 
-    /* find event with the descriptor at time */
+    /*! find event with the descriptor at time */
     std::vector<std::shared_ptr<sdProtoEvent>>::const_iterator findEvent(const double &time, const EDescriptor &descriptor) const;
+    
+    
+    /*! ask parent if the extension for the descriptor is activated */
+    bool isDescriptorValid(const EDescriptor &descriptor) const;
+    
+    /*! add a pointer an event to the global event vector */
+    void addGlobalEventAlias(std::shared_ptr<sdProtoEvent> event);
 
-    /*! iterate with lambda */
-    template <typename L> void iterate(L lambda) const;
     
     /*! sort utility function */
     void sort();
@@ -249,7 +255,7 @@ public:
     */
 };
 
-std::vector<std::shared_ptr<sdProtoEvent>>::const_iterator sdEntity::findEvent(const double &time, const EDescriptor &descriptor) const{
+inline std::vector<std::shared_ptr<sdProtoEvent>>::const_iterator sdEntity::findEvent(const double &time, const EDescriptor &descriptor) const{
     for (auto it = events.begin(); it != events.end(); it++) {
         if( (almostEqual(time, (*it)->getTime())) && (descriptor == (*it)->getDescriptor()) ){ return it; }
         if( (*it)->getTime() > time ){return events.end();}
@@ -257,15 +263,11 @@ std::vector<std::shared_ptr<sdProtoEvent>>::const_iterator sdEntity::findEvent(c
     return events.end();
 }
 
-template <typename L>
-inline void sdEntity::iterate(L lambda) const{
-    for_each(events.begin(), events.end(), lambda);
-}
-
 template <EDescriptor D>
 inline sdEvent<D> * const sdEntity::addEvent(const double &time,  typename sdDescriptor<D>::type value){
     if(time < 0.0){ throw  InvalidTimeException(time);}
     // extension activated?
+    if(!isDescriptorValid(D)) return nullptr;
     
     // remove if already exist
     removeEvent(time, D);
@@ -273,6 +275,7 @@ inline sdEvent<D> * const sdEntity::addEvent(const double &time,  typename sdDes
     // add
     auto event = std::shared_ptr<sdProtoEvent>(new sdEvent<D>(time, this, value));
     events.push_back(event);
+    addGlobalEventAlias(event);
     
     // sort
     std::sort(events.begin(), events.end(),
@@ -351,7 +354,7 @@ inline sdEvent<D> * const sdEntity::getNextEvent(const double time) const{
     return nullptr;
 }
 
-std::set<std::shared_ptr<sdProtoEvent>> sdEntity::getNextEventSet(const double time) const{
+inline std::set<std::shared_ptr<sdProtoEvent>> sdEntity::getNextEventSet(const double time) const{
     for(auto it = events.begin(); it != events.end(); it++){
         if((*it)->getTime() > time){
             return std::move(getEventSet((*it)->getTime()));
@@ -360,7 +363,7 @@ std::set<std::shared_ptr<sdProtoEvent>> sdEntity::getNextEventSet(const double t
     return std::set<std::shared_ptr<sdProtoEvent>>(); // empty set
 }
 
-std::pair<double, bool> sdEntity::getNextEventTime(const double time) const{
+inline std::pair<double, bool> sdEntity::getNextEventTime(const double time) const{
     auto set = getNextEventSet(time);
     if(set.empty()) return std::make_pair(0.0, false);
     return std::make_pair( (*(set.begin()))->getTime(), true);
@@ -376,7 +379,7 @@ inline sdEvent<D> * const sdEntity::getPreviousEvent(const double time) const{
     return nullptr;
 }
 
-std::set<std::shared_ptr<sdProtoEvent>> sdEntity::getPreviousEventSet(const double time) const{
+inline std::set<std::shared_ptr<sdProtoEvent>> sdEntity::getPreviousEventSet(const double time) const{
     for(auto it = events.rbegin(); it != events.rend(); it++){
         if((*it)->getTime() < time){
             return std::move(getEventSet((*it)->getTime()));
@@ -385,7 +388,7 @@ std::set<std::shared_ptr<sdProtoEvent>> sdEntity::getPreviousEventSet(const doub
     return std::move(std::set<std::shared_ptr<sdProtoEvent>>()); // empty set
 }
 
-std::pair<double, bool> sdEntity::getPreviousEventTime(const double time) const{
+inline std::pair<double, bool> sdEntity::getPreviousEventTime(const double time) const{
     auto set = getPreviousEventSet(time);
     if(set.empty()) return std::make_pair(0.0, false);
     return std::make_pair( (*(set.begin()))->getTime(), true);
@@ -398,16 +401,6 @@ inline void sdEntity::sort(){
          });
 }
 
-inline bool sdEntity::removeEvent(const std::shared_ptr<sdProtoEvent> &event){
-    for (auto it = events.begin(); it != events.end(); it++) {
-        if(*it == event){
-            events.erase(it);
-            return true;
-        }
-    }
-    return false;
-}
-
 inline bool sdEntity::removeEvent(const sdProtoEvent * const event){
     for (auto it = events.begin(); it != events.end(); it++) {
         if((*it).get() == event){
@@ -417,6 +410,12 @@ inline bool sdEntity::removeEvent(const sdProtoEvent * const event){
     }
     return false;
 }
+
+
+inline bool sdEntity::removeEvent(const std::shared_ptr<sdProtoEvent> &event){
+    return removeEvent(dynamic_cast<sdProtoEvent*>(event.get()));
+}
+
 
 inline bool sdEntity::removeEvent(const double &time, const EDescriptor &descriptor){
     auto it = findEvent(time, descriptor);

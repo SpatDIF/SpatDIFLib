@@ -68,12 +68,35 @@ TEST_CASE("addExtension() removeExtension() isExtensionActivated() getNumberOfAc
 
 }
 
-TEST_CASE("Test enable descriptor", "[sdScene]"){
+TEST_CASE("same as above but with strings"){
     
-    
-    
-    
+    sdScene scene;
+    scene.addExtension("source-width");
+    REQUIRE(scene.getNumberOfActivatedExtensions() == 1);
+    REQUIRE(scene.removeExtension("source-width") == 1);
+    REQUIRE(scene.getNumberOfActivatedExtensions() == 0);
+
+    REQUIRE(scene.addExtension("source-width"));
+    REQUIRE(!scene.addExtension("source-width")); // already exists
+    scene.removeAllExtensions();
+    REQUIRE(scene.getNumberOfActivatedExtensions() == 0);
+    scene.addExtension("source-width");
+    REQUIRE(scene.isExtensionActivated("source-width"));
+    REQUIRE(!scene.isExtensionActivated("source-height"));
+
+    REQUIRE(scene.removeExtension("source-width") == 1);
+    REQUIRE(scene.removeExtension("source-width") == 0);
+    REQUIRE(scene.removeExtension("source-height") == 0);
+
+    REQUIRE(!scene.isExtensionActivated("source-width"));
+}
+
+TEST_CASE("valid descriptor test"){
+    sdScene scene;
+    REQUIRE(scene.getValidDescriptorSet().size() == 4);
+    scene.addExtension(EExtension::SD_SOURCE_WIDTH);
+    REQUIRE(scene.getValidDescriptorSet().size() == 5);
 
     
-    
 }
+
