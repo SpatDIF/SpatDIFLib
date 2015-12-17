@@ -404,7 +404,7 @@ TEST_CASE("Test sdScene", "[sdScene]"){
         
     }
     
-    SECTION("ordering"){
+    SECTION("ordering", "[sdScene]"){
         
         REQUIRE(scene.getOrdering() == EOrdering::SD_TIME); // defualt should be time
         REQUIRE(scene.getOrderingAsString() == "time");
@@ -415,7 +415,19 @@ TEST_CASE("Test sdScene", "[sdScene]"){
     }
 }
 
-TEST_CASE("addExtension() removeExtension() isExtensionActivated() getNumberOfActivatedExtensions() "){
+TEST_CASE("addEvent() getEvent()"){
+    sdScene scene;
+    scene.addEntity("myEntity");
+    auto event = scene.addEvent<SD_POSITION>("myEntity", 1.0, {0.35, 0.1,0.2});
+    auto value = scene.getValue<SD_POSITION>("myEntity", 1.0);
+    REQUIRE(event->getValue()[0] == 0.35);
+    REQUIRE(event->getValue()[1] == 0.1);
+    REQUIRE(event->getValue()[2] == 0.2);
+
+    
+}
+
+TEST_CASE("addExtension() removeExtension() isExtensionActivated() getNumberOfActivatedExtensions()", "[sdScene]"){
     
     sdScene scene;
     scene.addExtension(EExtension::SD_SOURCE_WIDTH);

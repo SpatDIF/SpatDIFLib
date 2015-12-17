@@ -113,7 +113,7 @@ public:
     /*! search an entity in the entity vector by its name and return the pointer. returns null if the entity can not be found.
      @param name the name of a designated entity
      */
-    const sdEntity *  getEntity(const std::string &name) const;
+     sdEntity *  const getEntity(const std::string &name);
     
     /*! returns the number of entity in the entityVector*/
     size_t getNumberOfEntities(void) const;
@@ -142,26 +142,23 @@ public:
     /*! @name Value handling
      @{
      */
-//
-//    /*! set timed data by specifying name of the target entity, descriptor, and time.
-//     sdScene forwards the request to a proper sdEntityCore. 
-//     a properly allocated void pointer should be provided as the fourth argument
-//     @param name name of target eneity
-//     @param time time of the newly added event
-//     @param descriptor enum of target descriptor
-//     @param value allocated void pointer containing value(s)
-//     */
-//    void setValue(std::string name, double time, EDescriptor descriptor,  void* value);
-//    
-//    /*! query timed data by specifying name of the target entity, descriptor, and time.
-//     sdScene forwards the query to a proper sdEntityCore and return the answer.
-//     a properly allocated void pointer should be provided as the fourth argument
-//     @param name  name of target eneity
-//     @param descriptor enum of target descriptor
-//     @param value allocated void pointer containing value(s)
-//     */
-//    void* getValue(std::string name, double time, EDescriptor descriptor);
+
+    /*! add event by specifying name of the target entity, time, and values.
+     @param name name of target eneity
+     @param time time of the newly added event
+     @param values values for the event
+     */
     
+    template<EDescriptor D>
+    inline const sdEvent<D> * const addEvent(std::string name, const double &time, const typename sdDescriptor<D>::type &values);
+    
+    /*! query timed data by specifying name of the target entity and time.
+     @param name  name of target eneity
+     @param time time of the event
+     */
+    template<EDescriptor D>
+    const typename sdDescriptor<D>::type *  const getValue(std::string name, double time);
+
     /*!
      @}
      */
@@ -349,8 +346,8 @@ inline std::vector<std::string> sdScene::getEntityNames() const{
     return std::move(returnVector);
 }
 
-inline const sdEntity * sdScene::getEntity(const std::string &name) const{
-    std::map<std::string, sdEntity>::const_iterator it = entities.find(name);
+inline sdEntity * const sdScene::getEntity(const std::string &name){
+    std::map<std::string, sdEntity>::iterator it = entities.find(name);
     if(it == entities.end()){ return nullptr; }
     return &((*it).second);
 }
@@ -358,6 +355,23 @@ inline const sdEntity * sdScene::getEntity(const std::string &name) const{
 inline size_t sdScene::getNumberOfEntities() const{
     return entities.size();
 }
+
+#pragma direct event handling
+
+template<EDescriptor D>
+inline const sdEvent<D> * const sdScene::addEvent(std::string name, const double &time, const typename sdDescriptor<D>::type &values){
+    auto entity = getEntity(name);
+    if(!entity) return nullptr;
+    return entity->addEvent<D>(time, values);
+}
+
+template<EDescriptor D>
+inline const typename sdDescriptor<D>::type * const sdScene::getValue(std::string name, double time){
+    auto entity = getEntity(name);
+    if(!entity) return nullptr;
+    return entity->getValue<D>(time);
+}
+
 
 #pragma mark extension
 
