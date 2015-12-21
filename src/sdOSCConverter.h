@@ -21,7 +21,6 @@
 #include <iostream>
 #include <vector>
 
-
 /*!
  this class provides block (4 bytes block) to int, float, string converter and vice versa.
  if the length of given strings multiples of four, a block of \0 (null) will be added at the end automatically 
@@ -43,26 +42,6 @@ public:
     */
     template <typename T>
     static T blockTo(std::vector<unsigned char> block);
-//
-//    /*! convert a float value to a 4-bytes block 
-//    @param value the float value to be converted
-//    */
-//    static std::vector<unsigned char> floatToBlock(float value);
-//
-//    /*! convert a 4-bytes block to a float
-//    @param block the block to be converted
-//    */
-//    static float blockToFloat(std::vector<unsigned char> block);
-//
-//    /*! convert a string to 4-bytes blocks
-//    @param str the string to be converted
-//     */
-//    static std::vector<unsigned char> stringToBlocks(std::string str);
-//
-//    /*! convert 4-bytes blocks to a string
-//    @param blocks the blocks to be converted
-//    */
-//    static std::string blocksToString(std::vector<unsigned char> blocks);
 };
 
 template <typename T>
@@ -78,11 +57,10 @@ inline std::vector<unsigned char> sdOSCConverter::toBlock(T value){
 
 template <>
 inline std::vector<unsigned char> sdOSCConverter::toBlock(std::string value){
-    
-    int rest = value.size() % 4 ;
-    int numberOfNulls = 4-rest;
+    int rest = value.size() % 4;
+    int numberOfNulls = 4 - rest;
     std::vector<unsigned char> blocks;
-    for(int i = 0; i < static_cast<int>(value.size()); i++){
+    for(int i = 0; i < value.size(); i++){
         blocks.push_back(value[i]);
     }
     for (int i = 0; i < numberOfNulls; i++) {
@@ -105,7 +83,6 @@ inline  T sdOSCConverter::blockTo(std::vector<unsigned char> block){
 template <>
 inline std::string sdOSCConverter::blockTo(std::vector<unsigned char> block){
     std::string str;
-    
     for(int i = 0; i < static_cast<int>(block.size()); i++){
         if(block[i] == '\0'){
             break;
@@ -114,48 +91,5 @@ inline std::string sdOSCConverter::blockTo(std::vector<unsigned char> block){
     }
     return str;
 }
-
-
-//
-//inline std::vector<unsigned char> sdOSCConverter::intToBlock(int value){
-//    unsigned char *c = reinterpret_cast<unsigned char*>(&value);
-//    std::vector<unsigned char> block;
-//    block.push_back(c[3]);
-//    block.push_back(c[2]);
-//    block.push_back(c[1]);
-//    block.push_back(c[0]);
-//    return block;
-//}
-//
-//inline int sdOSCConverter::blockToInt(std::vector<unsigned char> block){
-//    unsigned char c[4];
-//    c[0] = block[3];
-//    c[1] = block[2];
-//    c[2] = block[1];
-//    c[3] = block[0];
-//    int *value = reinterpret_cast<int*>(&c);
-//    return *value;
-//}
-//
-//inline std::vector<unsigned char> sdOSCConverter::floatToBlock(float value){
-//    unsigned char *c = reinterpret_cast<unsigned char*>(&value);
-//    std::vector<unsigned char> block;
-//    block.push_back(c[3]);
-//    block.push_back(c[2]);
-//    block.push_back(c[1]);
-//    block.push_back(c[0]);
-//    return block;
-//}
-//
-//inline float sdOSCConverter::blockToFloat(std::vector<unsigned char> block){
-//    unsigned char c[4];
-//    c[0] = block[3];
-//    c[1] = block[2];
-//    c[2] = block[1];
-//    c[3] = block[0];
-//    float *value = reinterpret_cast<float*>(&c);
-//    return *value;
-//}
-
 
 #endif

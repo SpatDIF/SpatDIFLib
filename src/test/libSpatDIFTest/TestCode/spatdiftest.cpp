@@ -1,7 +1,9 @@
 
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
+#include "sdConst.h"
 #include "sdScene.h"
+#include "sdOSCMessage.h"
 using namespace std;
 
 #pragma mark sdDate
@@ -332,8 +334,6 @@ TEST_CASE("getValueAsString()"){
     sdEntity * entity = scene.addEntity("MyEntity");
     auto event = entity->addEvent<SD_POSITION>(5.0, {0.2, 0.3, 0.4});
     REQUIRE(event->getValueAsString() == "0.2 0.3 0.4");
-    
-    
 }
 
 TEST_CASE("getNextValue() getPreviousValue()"){
@@ -422,9 +422,38 @@ TEST_CASE("addEvent() getEvent()"){
     auto value = scene.getValue<SD_POSITION>("myEntity", 1.0);
     REQUIRE(event->getValue()[0] == 0.35);
     REQUIRE(event->getValue()[1] == 0.1);
-    REQUIRE(event->getValue()[2] == 0.2);
+    REQUIRE(event->getValue()[2] == 0.2 );
+}
 
+TEST_CASE("get exact first last next previous eventset" "[sdScene]"){
     
+    sdScene scene;
+    auto myEntity = scene.addEntity("myEntity");
+    auto yourEntity = scene.addEntity("yourEntity");
+    
+    myEntity->addEvent<SD_PRESENT>(1.0, true);
+    yourEntity->addEvent<SD_PRESENT>(1.0, true);
+    yourEntity->addEvent<SD_POSITION>(1.0, {2.0, 3.0, 0.0});
+    myEntity->addEvent<SD_POSITION>(1.3, {3.0, 4.0, 0.0});
+    
+    
+    myEntity->addEvent<SD_POSITION>(2.0, {2.0,3.0,4.0}); // first event
+    yourEntity->addEvent<SD_POSITION>(2.0, {3.0,4.0,5.0});
+    yourEntity->addEvent<SD_PRESENT>(2.0, false);
+    myEntity->addEvent<SD_PRESENT>(2.0, false);
+
+    REQUIRE(scene.getEventsFromAllEntities(2.0).size() == 4);
+    REQUIRE(scene.getEventsFromAllEntities(0.5, 1.5).size() == 4);
+    REQUIRE(scene.getFirstEventsFromAllEntities().size() == 3);
+    REQUIRE(scene.getLastEventsFromAllEntities().size() == 4);
+    REQUIRE(scene.getNextEventsFromAllEntities(1.5).size() == 4);
+    REQUIRE(scene.getPreviousEventsFromAllEntities(1.5).size()==1);
+    REQUIRE(scene.getNextEventTime(1.4).first == 2.0);
+    REQUIRE(almostEqual(scene.getDeltaTimeToNextEvent(1.4).first ,0.6));
+    REQUIRE(almostEqual(scene.getDeltaTimeFromPreviousEvent(1.4).first ,1.4-1.3 ));
+
+    REQUIRE(scene.getPreviousEventTime(1.4).first == 1.3);
+
 }
 
 TEST_CASE("addExtension() removeExtension() isExtensionActivated() getNumberOfActivatedExtensions()", "[sdScene]"){
@@ -477,6 +506,27 @@ TEST_CASE("valid descriptor test"){
     
 }
 
+#pragma mark sdOSCConverter
+TEST_CASE("sdOSCConverter", "[sdOSCConverter]"){
+    auto intArg = sdOSCConverter::toBlock(32);
+    auto floatArg = sdOSCConverter::toBlock(23.42f);
+    auto stringArg = sdOSCConverter::toBlock(std::string("chikashi"));
+    
+    REQUIRE(sdOSCConverter::blockTo<int>(intArg) == 32);
+    REQUIRE(sdOSCConverter::blockTo<float>(floatArg) == 23.42f);
+    REQUIRE(sdOSCConverter::blockTo<std::string>(stringArg) == std::string("chikashi"));
+    
+}
+
+
+#pragma mark sdOSCMessage
+TEST_CASE("sdOSCMessage", "[sdOSCMessage]"){
+    sdOSCMessage mes;
+    
+    
+    
+}
+
 #pragma mark sdUtility
 
 TEST_CASE("Test Utilities", "[sdConst]"){
@@ -513,9 +563,6 @@ TEST_CASE("Test Utilities", "[sdConst]"){
     REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_MEDIA, "time-offset") == SD_MEDIA_TIME_OFFSET);
     
     REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_SOURCE_WIDTH, "width") == SD_SOURCE_WIDTH_WIDTH);
-    
-    
-    
     
     // std::array to string
     REQUIRE( toString(std::array<int, 3>({{3,4,5}})) == "3 4 5");
