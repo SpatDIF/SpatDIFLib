@@ -40,6 +40,7 @@ public:
     double getTime() const;
     std::string getTimeAsString() const;
     EDescriptor getDescriptor() const;
+    std::string getDescriptorAsString() const;
     const sdEntity * const getParent() const;
     virtual const std::string getValueAsString() const = 0;
 };
@@ -53,6 +54,10 @@ inline double sdProtoEvent::getTime() const{
 
 inline EDescriptor sdProtoEvent::getDescriptor() const{
     return descriptor;
+}
+
+inline std::string sdProtoEvent::getDescriptorAsString() const{
+    return sdExtension::descriptorToString(descriptor);
 }
 
 inline std::string sdProtoEvent::getTimeAsString() const {
@@ -89,7 +94,7 @@ public:
     
     /*! returns value as string */
     
-    const std::string getValueAsString() const{return toString(value);};
+    const std::string getValueAsString() const override{return toString(value);};
     /*! @} */
 
 };

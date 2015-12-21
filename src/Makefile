@@ -1,10 +1,9 @@
 UNAME := $(shell uname -s)
-CC = g++
-CFLAGS =  -O0 -arch x86_64 -arch i386
+CC = clang++
+CFLAGS =  -std=c++11 -O0 -arch x86_64 -arch i386
 LIBS = -lstdc++
 OBJECTS = *.o *.a
 FILES = *.cpp
-EXAMPLE_DIR = ../examples
 
 TXML_PATH = ./libs/tinyxml2
 TXML_FILE = tinyxml2.cpp 

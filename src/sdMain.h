@@ -20,19 +20,11 @@
 #include "sdDate.h"
 
 #include "sdInterpolation.h"
-#include "sdEvent.h"
 #include "sdEntity.h"
-
-#include "sdEventCore.h"
-#include "sdEntityCore.h"
-
-#include "sdEntityExtension.h"
-#include "sdEntityExtensionMedia.h"
 #include "sdInfo.h"
 #include "sdLoader.h"
 #include "sdOSCResponder.h"
 #include "sdSaver.h"
 #include "sdScene.h"
-#include "sdDescriptor.h"
 
 #endif

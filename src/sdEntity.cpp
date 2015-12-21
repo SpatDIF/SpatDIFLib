@@ -22,5 +22,5 @@ bool sdEntity::isDescriptorValid(const EDescriptor &descriptor) const{
 }
 
 void sdEntity::addGlobalEventAlias(std::shared_ptr<sdProtoEvent> event) {
-    parent->addEventAlias(event);
+    parent->addEventAlias(this, event);
 }

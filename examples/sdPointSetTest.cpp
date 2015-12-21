@@ -12,7 +12,6 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#include "sdPointSet.h"
 #include <iostream>
 
 void dumpPointSet(sdPointSet &pSet) {

@@ -8,8 +8,6 @@
 
 /* Begin PBXFileReference section */
 		6202BE3919AB4F9C00D872DE /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		6202BE3A19AC774900D872DE /* sdExtensible.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdExtensible.cpp; sourceTree = "<group>"; };
-		6202BE3B19AC774900D872DE /* sdExtensible.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdExtensible.h; sourceTree = "<group>"; };
 		62087AAA19A9FE5D00F8A3E6 /* FileWithExtension.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FileWithExtension.cpp; path = ../examples/FileWithExtension.cpp; sourceTree = "<group>"; };
 		62087AAB19A9FE5D00F8A3E6 /* How_to_query.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = How_to_query.cpp; path = ../examples/How_to_query.cpp; sourceTree = "<group>"; };
 		62087AAC19A9FE5D00F8A3E6 /* sdConverter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdConverter.cpp; path = ../examples/sdConverter.cpp; sourceTree = "<group>"; };
@@ -25,117 +23,16 @@
 		62087AB619A9FE5D00F8A3E6 /* sdSaverTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdSaverTest.cpp; path = ../examples/sdSaverTest.cpp; sourceTree = "<group>"; };
 		62087AB719A9FE5D00F8A3E6 /* sdSceneTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdSceneTest.cpp; path = ../examples/sdSceneTest.cpp; sourceTree = "<group>"; };
 		62087AB819AA002300F8A3E6 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; name = Makefile; path = ../examples/Makefile; sourceTree = "<group>"; };
-		62087AB919AA07FB00F8A3E6 /* sdEventExtensionMedia.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdEventExtensionMedia.cpp; sourceTree = "<group>"; };
-		62087ABA19AA07FB00F8A3E6 /* sdEventExtensionMedia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdEventExtensionMedia.h; sourceTree = "<group>"; };
-		624C61441B19BA5C00282438 /* sdEntityExtensionSourceWidth.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdEntityExtensionSourceWidth.cpp; sourceTree = "<group>"; };
-		624C61451B19BA5C00282438 /* sdEntityExtensionSourceWidth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdEntityExtensionSourceWidth.h; sourceTree = "<group>"; };
-		624C61461B19BAF800282438 /* sdEventExtensionSourceWidth.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdEventExtensionSourceWidth.cpp; sourceTree = "<group>"; };
-		624C61471B19BAF800282438 /* sdEventExtensionSourceWidth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdEventExtensionSourceWidth.h; sourceTree = "<group>"; };
 		624C61491B19D5FD00282438 /* sdSourceWidthTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdSourceWidthTest.cpp; path = ../examples/sdSourceWidthTest.cpp; sourceTree = "<group>"; };
-		625A5BDD1B6239FC00223D5D /* sdEntityExtensionPointSet.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdEntityExtensionPointSet.cpp; sourceTree = "<group>"; };
-		625A5BDE1B6239FC00223D5D /* sdEntityExtensionPointSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdEntityExtensionPointSet.h; sourceTree = "<group>"; };
-		625A5BDF1B623AA500223D5D /* sdEventExtensionPointSet.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdEventExtensionPointSet.cpp; sourceTree = "<group>"; };
-		625A5BE01B623AA500223D5D /* sdEventExtensionPointSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdEventExtensionPointSet.h; sourceTree = "<group>"; };
 		625A5BE41B62490500223D5D /* sdPointSetTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdPointSetTest.cpp; path = ../examples/sdPointSetTest.cpp; sourceTree = "<group>"; };
-		6279340919A296AA002BF8EB /* sdEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdEvent.h; sourceTree = "<group>"; };
-		6279340C19A2A018002BF8EB /* sdDescriptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdDescriptor.h; sourceTree = "<group>"; };
-		627C6AD719A3B16A00D52E8F /* sdEventCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdEventCore.cpp; sourceTree = "<group>"; };
-		6282D5CA19A32FB8006446F2 /* sdEventCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdEventCore.h; sourceTree = "<group>"; };
-		6287481419AB357A00CD2245 /* sdInterpolation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdInterpolation.h; sourceTree = "<group>"; };
 		6287481519AB3CD000CD2245 /* sdInterpolationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdInterpolationTest.cpp; path = ../examples/sdInterpolationTest.cpp; sourceTree = "<group>"; };
-		62A2B3F918C3F49100BE6CF5 /* sdOSCMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdOSCMessage.cpp; sourceTree = "<group>"; };
-		62A2B3FA18C3F49100BE6CF5 /* sdOSCMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdOSCMessage.h; sourceTree = "<group>"; };
-		62CAB93B1B7A5685006423D7 /* sdTrajectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdTrajectory.h; sourceTree = "<group>"; };
-		62CAB93C1B7A5775006423D7 /* sdTrajectoryHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdTrajectoryHandler.h; sourceTree = "<group>"; };
-		62F932B518BDF377005A7D10 /* sdOSCConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdOSCConverter.h; sourceTree = "<group>"; };
-		A7E1E39B18A3B44F003BE78B /* sdConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdConst.h; sourceTree = "<group>"; };
-		A7E1E39C18A3B44F003BE78B /* sdDate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdDate.h; sourceTree = "<group>"; };
+		62E1B4341C27928000B120E5 /* sdConst.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdConst.cpp; sourceTree = "<group>"; };
 		A7E1E39D18A3B44F003BE78B /* sdEntity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdEntity.cpp; sourceTree = "<group>"; };
-		A7E1E39E18A3B44F003BE78B /* sdEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdEntity.h; sourceTree = "<group>"; };
-		A7E1E39F18A3B44F003BE78B /* sdEntityCore.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdEntityCore.cpp; sourceTree = "<group>"; };
-		A7E1E3A018A3B44F003BE78B /* sdEntityCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdEntityCore.h; sourceTree = "<group>"; };
-		A7E1E3A118A3B44F003BE78B /* sdEntityExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdEntityExtension.h; sourceTree = "<group>"; };
-		A7E1E3A218A3B44F003BE78B /* sdEntityExtensionMedia.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdEntityExtensionMedia.cpp; sourceTree = "<group>"; };
-		A7E1E3A318A3B44F003BE78B /* sdEntityExtensionMedia.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdEntityExtensionMedia.h; sourceTree = "<group>"; };
-		A7E1E3A418A3B44F003BE78B /* sdInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdInfo.h; sourceTree = "<group>"; };
 		A7E1E3A518A3B44F003BE78B /* sdLoader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdLoader.cpp; sourceTree = "<group>"; };
-		A7E1E3A618A3B44F003BE78B /* sdLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdLoader.h; sourceTree = "<group>"; };
-		A7E1E3A718A3B44F003BE78B /* sdMain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdMain.h; sourceTree = "<group>"; };
-		A7E1E3A818A3B44F003BE78B /* sdOSCResponder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdOSCResponder.cpp; sourceTree = "<group>"; };
-		A7E1E3A918A3B44F003BE78B /* sdOSCResponder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdOSCResponder.h; sourceTree = "<group>"; };
 		A7E1E3AA18A3B44F003BE78B /* sdSaver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdSaver.cpp; sourceTree = "<group>"; };
-		A7E1E3AB18A3B44F003BE78B /* sdSaver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdSaver.h; sourceTree = "<group>"; };
-		A7E1E3AC18A3B44F003BE78B /* sdScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdScene.cpp; sourceTree = "<group>"; };
-		A7E1E3AD18A3B44F003BE78B /* sdScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdScene.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
-		62087AA019A9F78D00F8A3E6 /* sdCore */ = {
-			isa = PBXGroup;
-			children = (
-				6282D5CA19A32FB8006446F2 /* sdEventCore.h */,
-				627C6AD719A3B16A00D52E8F /* sdEventCore.cpp */,
-				A7E1E3A018A3B44F003BE78B /* sdEntityCore.h */,
-				A7E1E39F18A3B44F003BE78B /* sdEntityCore.cpp */,
-			);
-			name = sdCore;
-			sourceTree = "<group>";
-		};
-		62087AA119A9F7D900F8A3E6 /* abstractClasses */ = {
-			isa = PBXGroup;
-			children = (
-				A7E1E3A118A3B44F003BE78B /* sdEntityExtension.h */,
-				6279340919A296AA002BF8EB /* sdEvent.h */,
-				6287481419AB357A00CD2245 /* sdInterpolation.h */,
-				A7E1E39E18A3B44F003BE78B /* sdEntity.h */,
-				A7E1E39D18A3B44F003BE78B /* sdEntity.cpp */,
-			);
-			name = abstractClasses;
-			sourceTree = "<group>";
-		};
-		62087AA219A9F80200F8A3E6 /* OSC */ = {
-			isa = PBXGroup;
-			children = (
-				A7E1E3A818A3B44F003BE78B /* sdOSCResponder.cpp */,
-				A7E1E3A918A3B44F003BE78B /* sdOSCResponder.h */,
-				62F932B518BDF377005A7D10 /* sdOSCConverter.h */,
-				62A2B3F918C3F49100BE6CF5 /* sdOSCMessage.cpp */,
-				62A2B3FA18C3F49100BE6CF5 /* sdOSCMessage.h */,
-			);
-			name = OSC;
-			sourceTree = "<group>";
-		};
-		62087AA319A9F81A00F8A3E6 /* Files */ = {
-			isa = PBXGroup;
-			children = (
-				A7E1E3A518A3B44F003BE78B /* sdLoader.cpp */,
-				A7E1E3A618A3B44F003BE78B /* sdLoader.h */,
-				A7E1E3AA18A3B44F003BE78B /* sdSaver.cpp */,
-				A7E1E3AB18A3B44F003BE78B /* sdSaver.h */,
-			);
-			name = Files;
-			sourceTree = "<group>";
-		};
-		62087AA419A9F83F00F8A3E6 /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-				62CAB93C1B7A5775006423D7 /* sdTrajectoryHandler.h */,
-				624C61471B19BAF800282438 /* sdEventExtensionSourceWidth.h */,
-				624C61461B19BAF800282438 /* sdEventExtensionSourceWidth.cpp */,
-				625A5BE01B623AA500223D5D /* sdEventExtensionPointSet.h */,
-				625A5BDF1B623AA500223D5D /* sdEventExtensionPointSet.cpp */,
-				625A5BDE1B6239FC00223D5D /* sdEntityExtensionPointSet.h */,
-				624C61451B19BA5C00282438 /* sdEntityExtensionSourceWidth.h */,
-				624C61441B19BA5C00282438 /* sdEntityExtensionSourceWidth.cpp */,
-				62087ABA19AA07FB00F8A3E6 /* sdEventExtensionMedia.h */,
-				62087AB919AA07FB00F8A3E6 /* sdEventExtensionMedia.cpp */,
-				625A5BDD1B6239FC00223D5D /* sdEntityExtensionPointSet.cpp */,
-				A7E1E3A318A3B44F003BE78B /* sdEntityExtensionMedia.h */,
-				A7E1E3A218A3B44F003BE78B /* sdEntityExtensionMedia.cpp */,
-			);
-			name = Extension;
-			sourceTree = "<group>";
-		};
 		62087AA919A9FE3C00F8A3E6 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
@@ -173,21 +70,10 @@
 			isa = PBXGroup;
 			children = (
 				6202BE3919AB4F9C00D872DE /* Makefile */,
-				A7E1E3A718A3B44F003BE78B /* sdMain.h */,
-				A7E1E39B18A3B44F003BE78B /* sdConst.h */,
-				6279340C19A2A018002BF8EB /* sdDescriptor.h */,
-				A7E1E39C18A3B44F003BE78B /* sdDate.h */,
-				A7E1E3A418A3B44F003BE78B /* sdInfo.h */,
-				6202BE3B19AC774900D872DE /* sdExtensible.h */,
-				6202BE3A19AC774900D872DE /* sdExtensible.cpp */,
-				62CAB93B1B7A5685006423D7 /* sdTrajectory.h */,
-				62087AA119A9F7D900F8A3E6 /* abstractClasses */,
-				62087AA019A9F78D00F8A3E6 /* sdCore */,
-				62087AA419A9F83F00F8A3E6 /* Extension */,
-				62087AA219A9F80200F8A3E6 /* OSC */,
-				62087AA319A9F81A00F8A3E6 /* Files */,
-				A7E1E3AC18A3B44F003BE78B /* sdScene.cpp */,
-				A7E1E3AD18A3B44F003BE78B /* sdScene.h */,
+				62E1B4341C27928000B120E5 /* sdConst.cpp */,
+				A7E1E39D18A3B44F003BE78B /* sdEntity.cpp */,
+				A7E1E3A518A3B44F003BE78B /* sdLoader.cpp */,
+				A7E1E3AA18A3B44F003BE78B /* sdSaver.cpp */,
 			);
 			name = Sources;
 			sourceTree = "<group>";

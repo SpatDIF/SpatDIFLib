@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		62D904D21C0E50320065D8A5 /* sdDateTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62D904D11C0E50320065D8A5 /* sdDateTest.cpp */; };
+		62AF37BA1C23739C009E9347 /* sdConst.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B61C23713A009E9347 /* sdConst.cpp */; };
+		62AF37BB1C2373A1009E9347 /* sdEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B31C236EDC009E9347 /* sdEntity.cpp */; };
+		62D904D21C0E50320065D8A5 /* spatdiftest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62D904D11C0E50320065D8A5 /* spatdiftest.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,8 +25,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		62D904C51C0E4E160065D8A5 /* sdDateTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sdDateTest; sourceTree = BUILT_PRODUCTS_DIR; };
-		62D904D11C0E50320065D8A5 /* sdDateTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdDateTest.cpp; path = TestCode/sdDateTest.cpp; sourceTree = SOURCE_ROOT; };
+		62AF37B31C236EDC009E9347 /* sdEntity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdEntity.cpp; path = ../../sdEntity.cpp; sourceTree = "<group>"; };
+		62AF37B61C23713A009E9347 /* sdConst.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdConst.cpp; path = ../../sdConst.cpp; sourceTree = "<group>"; };
+		62D904C51C0E4E160065D8A5 /* spatdiftest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = spatdiftest; sourceTree = BUILT_PRODUCTS_DIR; };
+		62D904D11C0E50320065D8A5 /* spatdiftest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = spatdiftest.cpp; path = TestCode/spatdiftest.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +45,8 @@
 		62D904AE1C0E4DBF0065D8A5 = {
 			isa = PBXGroup;
 			children = (
+				62AF37B61C23713A009E9347 /* sdConst.cpp */,
+				62AF37B31C236EDC009E9347 /* sdEntity.cpp */,
 				62D904B91C0E4DBF0065D8A5 /* libSpatDIFTest */,
 				62D904B81C0E4DBF0065D8A5 /* Products */,
 			);
@@ -49,7 +55,7 @@
 		62D904B81C0E4DBF0065D8A5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				62D904C51C0E4E160065D8A5 /* sdDateTest */,
+				62D904C51C0E4E160065D8A5 /* spatdiftest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -57,7 +63,7 @@
 		62D904B91C0E4DBF0065D8A5 /* libSpatDIFTest */ = {
 			isa = PBXGroup;
 			children = (
-				62D904D11C0E50320065D8A5 /* sdDateTest.cpp */,
+				62D904D11C0E50320065D8A5 /* spatdiftest.cpp */,
 			);
 			path = libSpatDIFTest;
 			sourceTree = "<group>";
@@ -65,9 +71,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		62D904C41C0E4E160065D8A5 /* sdDateTest */ = {
+		62D904C41C0E4E160065D8A5 /* spatdiftest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 62D904C91C0E4E160065D8A5 /* Build configuration list for PBXNativeTarget "sdDateTest" */;
+			buildConfigurationList = 62D904C91C0E4E160065D8A5 /* Build configuration list for PBXNativeTarget "spatdiftest" */;
 			buildPhases = (
 				62D904C11C0E4E160065D8A5 /* Sources */,
 				62D904C21C0E4E160065D8A5 /* Frameworks */,
@@ -77,9 +83,9 @@
 			);
 			dependencies = (
 			);
-			name = sdDateTest;
+			name = spatdiftest;
 			productName = sdDateTest;
-			productReference = 62D904C51C0E4E160065D8A5 /* sdDateTest */;
+			productReference = 62D904C51C0E4E160065D8A5 /* spatdiftest */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -108,7 +114,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				62D904C41C0E4E160065D8A5 /* sdDateTest */,
+				62D904C41C0E4E160065D8A5 /* spatdiftest */,
 			);
 		};
 /* End PBXProject section */
@@ -118,7 +124,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62D904D21C0E50320065D8A5 /* sdDateTest.cpp in Sources */,
+				62AF37BA1C23739C009E9347 /* sdConst.cpp in Sources */,
+				62D904D21C0E50320065D8A5 /* spatdiftest.cpp in Sources */,
+				62AF37BB1C2373A1009E9347 /* sdEntity.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,7 +242,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		62D904C91C0E4E160065D8A5 /* Build configuration list for PBXNativeTarget "sdDateTest" */ = {
+		62D904C91C0E4E160065D8A5 /* Build configuration list for PBXNativeTarget "spatdiftest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				62D904CA1C0E4E160065D8A5 /* Debug */,

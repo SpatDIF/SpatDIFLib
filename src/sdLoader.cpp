@@ -16,6 +16,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include "sdConst.h"
 #include "sdLoader.h"
 #include "tinyxml2.h"
 #include "libjson.h"
@@ -85,15 +86,15 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
         else if(tagType == "source" || tagType == "sink"){
             XMLElement *name = element->FirstChildElement("name");
             std::string entityName = std::string(name->GetText());
-            sdEntityCore* targetEntity;
+            sdEntity* targetEntity;
             
             // if target entity does not exist, create one
             targetEntity = scene.getEntity(entityName);
             if(!targetEntity){
                 if (tagType == "source") {
-                    targetEntity = scene.addEntity(entityName, SD_SOURCE);
+                    targetEntity = scene.addEntity(entityName, EKind::SD_SOURCE);
                 }else{
-                    targetEntity = scene.addEntity(entityName, SD_SINK);
+                    targetEntity = scene.addEntity(entityName, EKind::SD_SINK);
                 }
             }
             
@@ -104,6 +105,7 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
                 if(!childTag){ // tempTag is a descriptor
                     XMLElement *descriptor = tempTag;
                     targetEntity->addEvent(timeString, std::string(descriptor->Name()), std::string(descriptor->GetText()));
+
                 }else{ // tempTag is a exType
                     XMLElement *descriptor = childTag;
                     while (descriptor) {
@@ -177,7 +179,7 @@ sdScene sdLoader::sceneFromJSON(std::string jsonString){
             }else if(iit->name() == "source" || iit->name() == "sink" ){
                 JSONNode source = *iit;
                 JSONNode::iterator iiit = source.begin();
-                sdEntityCore* targetEntity;
+                sdEntity* targetEntity;
                 
                 while(iiit != source.end()){
                     if(iiit ->name() == "name"){
@@ -207,7 +209,7 @@ sdScene sdLoader::sceneFromJSON(std::string jsonString){
                                 break;
                             }
                             case JSON_BOOL:{
-                                std::string bl = boolToString(iiit->as_bool());
+                                std::string bl = toString(iiit->as_bool());
                                 targetEntity->addEvent(timeString, iiit->name(), bl);
                                 break;
                             }

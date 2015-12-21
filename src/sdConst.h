@@ -142,6 +142,14 @@ public:
         }
         return EDescriptor::SD_ERROR;
     }
+    
+    static EDescriptor stringToDescriptor(std::string string){
+        for(auto it = extensionDict.begin(); it != extensionDict.end(); it++){
+            auto desc = stringToDescriptor((*it).first , string);
+            if(desc != EDescriptor::SD_ERROR) return desc;
+        }
+        return EDescriptor::SD_ERROR;
+    }
 };
 
 

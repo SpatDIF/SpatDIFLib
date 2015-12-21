@@ -60,6 +60,8 @@ public:
     template <EDescriptor D>
     sdEvent<D> * const addEvent(const double &time,  typename sdDescriptor<D>::type value);
 
+    const std::shared_ptr<sdProtoEvent> addEvent(const std::string &time, const std::string &descriptor, const std::string &value);
+    
     /*! @name Event Handling @{ */
 
     /*! return number of registerd events in the eventSet */
@@ -284,6 +286,16 @@ inline sdEvent<D> * const sdEntity::addEvent(const double &time,  typename sdDes
     return dynamic_cast<sdEvent<D>*>(event.get());
 }
 
+inline const std::shared_ptr<sdProtoEvent> sdEntity::addEvent(const std::string &time, const std::string &descriptor, const std::string &value){
+    
+    EDescriptor dtr =  sdExtension::stringToDescriptor(descriptor);
+    if(dtr == EDescriptor::SD_ERROR) return nullptr;
+
+    return nullptr;
+    
+}
+
+
 template <EDescriptor D>
 inline const sdEvent< D > * const sdEntity::getEvent(const double &time) const{
     auto it = findEvent(time, D);
@@ -292,7 +304,7 @@ inline const sdEvent< D > * const sdEntity::getEvent(const double &time) const{
 }
 
 inline std::set<std::shared_ptr<sdProtoEvent>> sdEntity::getEventSet(const double &time) const{
-    std::set<std::shared_ptr<sdProtoEvent>> set;;
+    std::set<std::shared_ptr<sdProtoEvent>> set;
     for(auto it = events.begin(); it != events.end(); it++){
         if(almostEqual((*it)->getTime(), time)){set.insert(*it);}
         if((*it)->getTime() > time )break;
