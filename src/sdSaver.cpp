@@ -121,7 +121,7 @@ std::string sdSaver::XMLFromScene(sdScene *scene){
         XMLElement* extension;
         XMLElement* kind;
         auto allEvents = scene->getAllEvents();
-        std::for_each(allEvents.begin(), allEvents.end(), [&scene, &spatdif, &previousTime, &previousEntity, &xml](std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>> eventPair ) {
+        std::for_each(allEvents.begin(), allEvents.end(), [&scene, &kind, &extension, &spatdif, &previousTime, &previousEntity, &previousExtension, &xml](std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>> eventPair ) {
             auto entity = eventPair.first;
             auto event = eventPair.second;
             
@@ -137,7 +137,7 @@ std::string sdSaver::XMLFromScene(sdScene *scene){
             if((event->getTime() != previousTime) || (entity != previousEntity)){
                 // if name of entity or time tag changes we need to write many tags!
                 
-                kind = xml.NewElement(event.getKindAsString().c_str());
+                kind = xml.NewElement(entity->getKindAsString().c_str());
                 
                 // the name of entity always comes first
                 XMLElement* name = xml.NewElement("name"); // entity name
@@ -149,17 +149,17 @@ std::string sdSaver::XMLFromScene(sdScene *scene){
             
             // packaging - combining element and text (value)
             XMLElement* element = xml.NewElement(event->getDescriptorAsString().c_str());
-            XMLText* text = xml.NewText(event.getEvent()->getValueAsString().c_str());
+            XMLText* text = xml.NewText(event->getValueAsString().c_str());
             element->InsertEndChild(text);
             
-            std::string relevantExtension = extensionToString(getRelevantExtension(event.getEvent()->getDescriptor()));
+            std::string relevantExtension = sdExtension::extensionToString(sdExtension::getExtensionOfDescriptor(event->getDescriptor()));
             
             if(relevantExtension == "core"){
                 kind->InsertEndChild(element);
                 spatdif->InsertEndChild(kind);
             }else{
                 
-                if( (event.getEvent()->getTime() != previousTime) ||  (event.getEntityName() != previousName ) || (previousExtension != relevantExtension)){
+                if( (event->getTime() != previousTime) ||  (entity != previousEntity ) || (previousExtension != relevantExtension)){
                     // if different entity, time, or extension from the previous put extension tag
                     extension = xml.NewElement((relevantExtension).c_str());
                     std::cout << "extension " << std::endl;
@@ -169,33 +169,32 @@ std::string sdSaver::XMLFromScene(sdScene *scene){
                 spatdif->InsertEndChild(kind);
             }
             
-            previousEntity = entity; // store current name in order to avoid the dupplication.
+            previousEntity = const_cast<sdEntity*>(entity); // store current name in order to avoid the dupplication.
             previousExtension = relevantExtension;
-            previousTime = event.getEvent()->getTime();
+            previousTime = event->getTime();
         });
 
-    }else if(scene->getOrdering() == SD_TRACK){
+    }else if(scene->getOrdering() == EOrdering::SD_TRACK){
         // 1. Sort vector by name alphabetically
         
-        sort(entityVector.begin(), entityVector.end(), sdEntityCore::sortAlphabetically);
-        std::vector<sdEntityCore*>::iterator it = entityVector.begin();
+        auto entities = scene->getEntities();
+        for(auto it = entities.begin(); it != entities.end(); it++ ){
+            auto namedEntity = *it;
+            auto entityName = (*it).first;
+            auto entity = (*it).second;
+            auto events = entity.getEvents();
 
-        while(it != entityVector.end()){
-            sdEntityCore *entity = *it;
-            std::multiset<sdEvent*, sdEventCompare> eventSet = entity->getEventSet();
-            std::multiset<sdEvent*, sdEventCompare>::iterator iit = eventSet.begin();
-
-            while(iit != eventSet.end()){
-                sdEvent* event = *iit;
+            for(auto iit = events.begin(); iit != events.end(); iit++){
+                std::shared_ptr<sdProtoEvent> event = *iit;
                 XMLElement* time = xml.NewElement("time");
                 XMLText* timeText = xml.NewText(event->getTimeAsString().c_str());
                 time->InsertEndChild(timeText);
                 spatdif->InsertEndChild(time);
                 
                 XMLElement* kind;
-                kind = xml.NewElement(entity->getKindAsString().c_str());
+                kind = xml.NewElement(entity.getKindAsString().c_str());
                 XMLElement* name = xml.NewElement("name");
-                XMLText* nameText = xml.NewText(entity->getName().c_str());
+                XMLText* nameText = xml.NewText(entityName.c_str());
                 name->InsertEndChild(nameText);
                 kind->InsertEndChild(name);
                 
@@ -205,9 +204,7 @@ std::string sdSaver::XMLFromScene(sdScene *scene){
                 kind->InsertEndChild(element);
                 
                 spatdif->InsertEndChild(kind);
-                ++iit;
             }
-            ++it;
         }
     }
 

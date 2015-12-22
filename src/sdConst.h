@@ -97,6 +97,7 @@ typedef enum {
 
 class sdExtension {
 protected:
+    
     struct sdExtensionSpec{
         sdExtensionSpec(const std::string &name, const std::map<EDescriptor, std::string> &members):
         name(name), members(members){};
@@ -104,10 +105,22 @@ protected:
         std::string name;
         const std::map<EDescriptor, std::string> members;
     };
+    
     static const std::map<EExtension, sdExtensionSpec> extensionDict;
 public:
     static const std::map<EDescriptor, std::string> &getDescriptorsForExtension(EExtension extension){
         return extensionDict.at(extension).members;
+    }
+    static EExtension getExtensionOfDescriptor(EDescriptor descriptor){
+        for(auto it = extensionDict.begin(); it != extensionDict.end(); it++) {
+            auto members = (*it).second.members;
+            for (auto rit = members.begin(); rit != members.end(); rit++) {
+                if( (*rit).first == descriptor){
+                    return (*it).first;
+                }
+            };
+        }
+        return EExtension::SD_EXTENSION_ERROR;
     }
     
     static std::string extensionToString(const EExtension &descriptor){

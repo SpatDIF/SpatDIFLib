@@ -57,8 +57,11 @@ protected:
 
 public:
     
-    const EKind &getKind();
-    std::string getKindAsString();
+    const EKind &getKind() const;
+    std::string getKindAsString() const;
+    
+    /*! ask parent the name given to this entity */
+    std::string getName();
     
     /*! this function is the only way to instantiate sdEvent.*/
     template <EDescriptor D>
@@ -79,6 +82,9 @@ public:
 
     /*! returns a set of sdProtoEvents, depending on given filter arguments*/
     std::set<std::shared_ptr<sdProtoEvent> > getEventSet(const double &time) const;
+    
+    /*! returns all events as a vector of sdProtoEvents */
+    const std::vector<std::shared_ptr<sdProtoEvent>> &getEvents() const;
     
     /*! returns a vector of sdProtoEvents between start and end time */
     std::vector<std::shared_ptr<sdProtoEvent>> getEvents(const double &start, const double &end) const;
@@ -216,6 +222,8 @@ public:
     /*! remove all events in the eventSet */
     void removeAllEvents();
 
+    
+    
     /*!
      @}
      */
@@ -269,11 +277,11 @@ inline std::vector<std::shared_ptr<sdProtoEvent>>::const_iterator sdEntity::find
     return events.end();
 }
 
-inline const EKind &sdEntity::getKind(){
+inline const EKind &sdEntity::getKind() const{
     return kind;
 }
 
-inline std::string sdEntity::getKindAsString(){
+inline std::string sdEntity::getKindAsString() const{
     return kind == EKind::SD_SOURCE ? "source": "sink";
 }
 
@@ -323,6 +331,32 @@ inline std::set<std::shared_ptr<sdProtoEvent>> sdEntity::getEventSet(const doubl
     }
     return std::move(set);
 }
+
+inline const std::vector<std::shared_ptr<sdProtoEvent>> &sdEntity::getEvents() const{
+    return events;
+}
+
+inline std::vector<std::shared_ptr<sdProtoEvent>> sdEntity::getEvents(const double &start, const double &end) const{
+    std::vector<std::shared_ptr<sdProtoEvent>> returnVect;
+    for(auto it = events.begin(); it != events.end(); it++){
+        double time = (*it)->getTime();
+        if(start <= time)returnVect.push_back(*it);
+        if(time > end) return std::move(returnVect);
+    }
+    return std::move(returnVect);
+}
+
+inline std::vector<std::shared_ptr<sdProtoEvent>> sdEntity::getEvents(const double &start, const double &end, const EDescriptor &descriptor)const{
+    std::vector<std::shared_ptr<sdProtoEvent>> returnVect;
+    for(auto it = events.begin(); it != events.end(); it++){
+        double time = (*it)->getTime();
+        if(start <= time && (*it)->getDescriptor() == descriptor)returnVect.push_back(*it);
+        if(time > end) return std::move(returnVect);
+    }
+    return std::move(returnVect);
+}
+
+
 
 template <EDescriptor D>
 inline const sdEvent< D > * const sdEntity::getFirstEvent() const{

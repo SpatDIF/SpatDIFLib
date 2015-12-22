@@ -122,6 +122,9 @@ public:
     sdEntity *  const getEntity(const std::string &name);
     std::string getEntityName(const sdEntity * entity);
     
+    /*! return the entity set */
+    const std::map<std::string, sdEntity> &getEntities() const;
+    
     /*! returns the number of entity in the entityVector*/
     size_t getNumberOfEntities(void) const;
     
@@ -415,6 +418,19 @@ inline std::vector<std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>>> s
     return getEventsFromAllEntities(allEvents.back().second->getTime());
 }
 
+inline std::string sdScene::getEntityName(const sdEntity* entity){
+    for(auto it = entities.begin(); it != entities.end(); it++) {
+        if(&((*it).second) == entity){
+            return (*it).first;
+        }
+    }
+    return std::string();
+}
+
+inline const std::map<std::string, sdEntity> &sdScene::getEntities() const{
+    return entities;
+}
+
 inline std::vector<std::string> sdScene::getEntityNames() const{
     std::vector<std::string> returnVector;
     for_each(entities.begin(), entities.end(),[&returnVector](std::pair<std::string, sdEntity> pair){
@@ -429,14 +445,7 @@ inline sdEntity * const sdScene::getEntity(const std::string &name){
     return &((*it).second);
 }
 
-inline std::string sdScene::getEntityName(const sdEntity* entity){
-    for(auto it = entities.begin(); it != entities.end(); it++) {
-        if(&((*it).second) == entity){
-            return (*it).first;
-        }
-    }
-    return std::string();
-}
+
 
 inline size_t sdScene::getNumberOfEntities() const{
     return entities.size();

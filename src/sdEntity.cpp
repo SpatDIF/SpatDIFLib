@@ -16,6 +16,9 @@
 #include "sdScene.h"
 #include "sdEntity.h"
 
+std::string sdEntity::getName(){
+    return parent->getEntityName(this);
+}
 
 bool sdEntity::isDescriptorValid(const EDescriptor &descriptor) const{
     return parent->isDescriptorValid(descriptor);
