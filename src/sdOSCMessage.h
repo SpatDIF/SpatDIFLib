@@ -25,158 +25,133 @@ protected:
     std::vector<unsigned char> nullPadding(std::vector<unsigned char> string);
     
 public:
-#pragma mark get osc message parts
+#pragma mark constructors
     
-    /*! returns OSC address pattern in OSC-string format */
-    std::vector<unsigned char> getAddress(void);
-
-    /*! returns OSC typetags in OSC-string format */
-    std::vector<unsigned char> getTypetags(void);
-
-    /*! returns all Arguments in in 4-bytes-block sequence */
-    std::vector<unsigned char> getArguments(void);
-    
-    /*! returns delimiters as vector of int */
-    std::vector<size_t> getDelimiters(void);
-
-#pragma get message as strings
-    /*! returns OSC address pattern as a string */
-    std::string getAddressAsString(void);
-
-    /*! returns OSC address pattern as a string */
-    std::string getTypetagsAsString(void);
-
-    /*! returns delimiters as a string */
-    std::string getDelimitersAsString(void);
-
-    /*! @param index argument index
-     returns specified argument at index as int.*/
-    template <typename T>
-    T getArgument(int index);
-
-    /*! returns all arguments as a string*/
-    std::string getAllArgumentsAsString(void);
-
-    /*! returns the entire message as a string*/
-    std::string getMessageAsString(void);
-
-    /*! constructor. typeyags initialized. */
-    sdOSCMessage();
-
     /*! constructor. with initialization of typetags and address pattern. */
-    sdOSCMessage(std::string address);
-
+    sdOSCMessage(std::string address = "/spatdif");
+    
     /*! constructor. initialize message with OSC-conformed 4-bytes-block sequence */
     sdOSCMessage(std::vector<unsigned char> message);
     
-    /*! @param address new OSC address pattern
-    set address pattern*/
-    void setAddress(std::string address);
 
-    /*! output osc conformed message */
-    std::vector<unsigned char> getOSCMessage(void);
-    
-    /*! interpret raw OSC message and store it in the local buffer */
-    void setOSCMessage(std::vector<unsigned char> message);
+#pragma mark setter
+    /*! @param address new OSC address pattern
+     set address pattern*/
+    void setAddress(std::string address);
 
     /*! template function for appending arguments */
     template <typename T>
     void appendArgument(const T &args);
 
-    /*! returns the number of OSC arguments */
-    size_t getNumberOfArgument();
+    /*! interpret raw OSC message and store it in the local buffer */
+    void setOSCMessage(std::vector<unsigned char> message);
+    
+    
+#pragma mark getter
+    
+    /*! returns OSC address pattern in OSC-string format */
+    std::vector<unsigned char> getAddress(void);
+    /*! returns OSC address pattern as a string */
+    std::string getAddressAsString(void);
 
+    
+    /*! returns OSC typetags in OSC-string format */
+    std::vector<unsigned char> getTypetags(void);
+
+    /*! returns OSC address pattern as a string */
+    std::string getTypetagsAsString(void);
+
+    
+    /*! @param index argument index
+     returns specified argument at index as int.*/
+    template <typename T>
+    T getArgument(int index);
+    /*! returns all Arguments in in 4-bytes-block sequence */
+    std::vector<unsigned char> getArguments(void);
+    /*! returns all arguments as a string*/
+    std::string getAllArgumentsAsString(void);
+    /*! returns the number of OSC arguments */
+    size_t getNumberOfArguments();
+
+    
+    /*! returns delimiters as vector of int */
+    std::vector<size_t> getDelimiters(void);
+    /*! returns delimiters as a string */
+    std::string getDelimitersAsString(void);
+
+    /*! output osc conformed message */
+    std::vector<unsigned char> getOSCMessage(void);
+    /*! returns the entire message as a string*/
+    std::string getMessageAsString(void);
+
+
+#pragma mark deletion
     /*! delete entire content. typeyag initialized */
     void clear();
-
 };
 
-inline std::vector<unsigned char> sdOSCMessage::getAddress(void){
-    return address;
-}
+#pragma mark implementation
+#pragma mark protected functions
 
-inline std::vector<unsigned char> sdOSCMessage::getTypetags(void){
-    return nullPadding(typetags); // size must be multiple of 4 
-}
-
-inline std::vector<unsigned char> sdOSCMessage::getArguments(void){
-    return arguments;
-}
-
-inline std::vector<size_t> sdOSCMessage::getDelimiters(void){
-    return delimiters;
-}
-
-inline std::string sdOSCMessage::getAddressAsString(void){
-    std::vector<unsigned char>::iterator it = address.begin();
-    std::string str;
-    while(it != address.end()){
-        unsigned char c = *it;
-        if(!c){
+inline int sdOSCMessage::getLengthOfOSCString(std::vector<unsigned char> OSCString, size_t onset, bool includingNullPaddings){
+    
+    std::vector<unsigned char>::iterator it = OSCString.begin() + onset;
+    int count = 0;
+    while (it != arguments.end()) {
+        unsigned char byte = *it;
+        if(byte == '\0'){ // if null
             break;
         }
-        str += static_cast<char>(c);
+        count++; // number of bytes including null unsigned character
         it++;
     }
-    return str;
-}
-
-inline std::string sdOSCMessage::getTypetagsAsString(void){
-    std::vector<unsigned char>::iterator it = typetags.begin();
-    std::string str;
-    while(it != typetags.end()){
-        unsigned char c = *it;
-        if(!c){
-            break;
-        }
-        str += static_cast<char>(c);
-        it++;
+    if (includingNullPaddings){
+        count = count + ( 4 - (count % 4 ));
     }
-    return str;
+    return count;
 }
 
-inline std::string sdOSCMessage::getDelimitersAsString(void){
-    std::ostringstream os;
-    std::vector<size_t>::iterator it = delimiters.begin();
-    while(it != delimiters.end()){
-        size_t i = *it;
-        os << static_cast<int>(i) << ' ';
-        it++;
+inline std::vector<unsigned char> sdOSCMessage::nullPadding(std::vector<unsigned char> string){
+    size_t size = string.size();
+    int numNullsToBeAdded = 4 - (size % 4);
+    while(numNullsToBeAdded--){
+        string.push_back('\0');
     }
-    return os.str();
+    return string;
 }
 
-inline size_t sdOSCMessage::getNumberOfArgument(){
-    return delimiters.size();
-}
-
-
-inline sdOSCMessage::sdOSCMessage(){
-    typetags.push_back(','); // the length is unknown, conform later
-}
+#pragma mark public functions
+#pragma mark connstructor
 
 inline sdOSCMessage::sdOSCMessage(std::string address){
     sdOSCMessage::address = toBlock(address); // conform to blocks (4 byte block)
-    sdOSCMessage(); // call default constructor
+    typetags.push_back(','); // the length is unknown, conform later
 }
 
 inline sdOSCMessage::sdOSCMessage(std::vector<unsigned char> oscMessage){
     setOSCMessage(oscMessage);
 }
 
-inline std::vector<unsigned char> sdOSCMessage::getOSCMessage(){
-    std::vector<unsigned char> OSCMessage;
-    std::vector<unsigned char> conformedTypetags = getTypetags(); // with null padding
-    
-    OSCMessage.insert(OSCMessage.end(), address.begin(), address.end()); // concatenate address
-    OSCMessage.insert(OSCMessage.end(), conformedTypetags.begin(), conformedTypetags.end()); // concatenate conformed type tags
-    OSCMessage.insert(OSCMessage.end(), arguments.begin(), arguments.end()); // concatenate arguments
-    
-    return OSCMessage;
-}
-
+#pragma mark setters
 inline void sdOSCMessage::setAddress(std::string address){
     sdOSCMessage::address = toBlock(address);
+}
+
+template <typename T>
+inline void sdOSCMessage::appendArgument(const T &arg){
+    this->delimiters.push_back(arguments.size());
+    
+    if (typeid(T) == typeid(int)){
+        typetags.push_back('i');
+    }else if(typeid(T) == typeid(float)){
+        typetags.push_back('f');
+    }else if(typeid(T) == typeid(std::string)){
+        typetags.push_back('s');
+    }else{
+        
+    }
+    std::vector<unsigned char> block = toBlock(arg);
+    arguments.insert(arguments.end(), block.begin(), block.end());
 }
 
 inline void sdOSCMessage::setOSCMessage(std::vector<unsigned char> newMessage){
@@ -223,51 +198,46 @@ inline void sdOSCMessage::setOSCMessage(std::vector<unsigned char> newMessage){
     
 }
 
-inline std::vector<unsigned char> sdOSCMessage::nullPadding(std::vector<unsigned char> string){
-    size_t size = string.size();
-    int numNullsToBeAdded = 4 - (size % 4);
-    while(numNullsToBeAdded--){
-        string.push_back('\0');
-    }
-    return string;
+#pragma mark address
+inline std::vector<unsigned char> sdOSCMessage::getAddress(void){
+    return address;
 }
 
-inline int sdOSCMessage::getLengthOfOSCString(std::vector<unsigned char> OSCString, size_t onset, bool includingNullPaddings){
-    
-    std::vector<unsigned char>::iterator it = OSCString.begin() + onset;
-    int count = 0;
-    while (it != arguments.end()) {
-        unsigned char byte = *it;
-        if(byte == '\0'){ // if null
+inline std::string sdOSCMessage::getAddressAsString(void){
+    std::vector<unsigned char>::iterator it = address.begin();
+    std::string str;
+    while(it != address.end()){
+        unsigned char c = *it;
+        if(!c){
             break;
         }
-        count++; // number of bytes including null unsigned character
+        str += static_cast<char>(c);
         it++;
     }
-    if (includingNullPaddings)
-    {
-        count = count + ( 4 - (count % 4 ));
-    }
+    return str;
     
-    return count;
 }
 
-template <typename T>
-inline void sdOSCMessage::appendArgument(const T &arg){
-    this->delimiters.push_back(arguments.size());
-    
-    if (typeid(T) == typeid(int)){
-        this->typetags.push_back('i');
-    }else if(typeid(T) == typeid(float)){
-        this->typetags.push_back('f');
-    }else if(typeid(T) == typeid(std::string)){
-        this->typetags.push_back('s');
-    }
-
-
-    //this->arguments.insert(arguments.end(), block.begin(), block.end());
+#pragma mark typetags
+inline std::vector<unsigned char> sdOSCMessage::getTypetags(void){
+    return nullPadding(typetags); // size must be multiple of 4
 }
 
+inline std::string sdOSCMessage::getTypetagsAsString(void){
+    std::vector<unsigned char>::iterator it = typetags.begin();
+    std::string str;
+    while(it != typetags.end()){
+        unsigned char c = *it;
+        if(!c){
+            break;
+        }
+        str += static_cast<char>(c);
+        it++;
+    }
+    return str;
+}
+
+#pragma mark arguments
 template <typename T>
 inline T sdOSCMessage::getArgument(int index){
     size_t posDelimiter = delimiters[index];
@@ -283,6 +253,10 @@ inline std::string sdOSCMessage::getArgument(int index){
     int length = getLengthOfOSCString(arguments, posDelimiter, false);
     blocks.insert(blocks.end(), arguments.begin()+posDelimiter, arguments.begin()+posDelimiter+length);
     return blockTo<std::string>(blocks);
+}
+
+inline std::vector<unsigned char> sdOSCMessage::getArguments(void){
+    return arguments;
 }
 
 inline std::string sdOSCMessage::getAllArgumentsAsString(void){
@@ -305,6 +279,38 @@ inline std::string sdOSCMessage::getAllArgumentsAsString(void){
     return str;
 }
 
+inline size_t sdOSCMessage::getNumberOfArguments(){
+    return delimiters.size();
+}
+
+#pragma mark delimiters
+inline std::vector<size_t> sdOSCMessage::getDelimiters(void){
+    return delimiters;
+}
+
+inline std::string sdOSCMessage::getDelimitersAsString(void){
+    std::ostringstream os;
+    std::vector<size_t>::iterator it = delimiters.begin();
+    while(it != delimiters.end()){
+        size_t i = *it;
+        os << static_cast<int>(i) << ' ';
+        it++;
+    }
+    return os.str();
+}
+
+#pragma mark entire message
+inline std::vector<unsigned char> sdOSCMessage::getOSCMessage(){
+    std::vector<unsigned char> OSCMessage;
+    std::vector<unsigned char> conformedTypetags = getTypetags(); // with null padding
+    
+    OSCMessage.insert(OSCMessage.end(), address.begin(), address.end()); // concatenate address
+    OSCMessage.insert(OSCMessage.end(), conformedTypetags.begin(), conformedTypetags.end()); // concatenate conformed type tags
+    OSCMessage.insert(OSCMessage.end(), arguments.begin(), arguments.end()); // concatenate arguments
+    
+    return OSCMessage;
+}
+
 inline std::string sdOSCMessage::getMessageAsString(void){
     std::string str;
     str = getAddressAsString();
@@ -315,7 +321,7 @@ inline std::string sdOSCMessage::getMessageAsString(void){
     return str;
 }
 
-
+#pragma mark clear
 inline void sdOSCMessage::clear(void){
     address.clear();
     typetags.clear();

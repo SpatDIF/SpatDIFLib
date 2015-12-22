@@ -522,9 +522,36 @@ TEST_CASE("sdOSCConverter", "[sdOSCConverter]"){
 #pragma mark sdOSCMessage
 TEST_CASE("sdOSCMessage", "[sdOSCMessage]"){
     sdOSCMessage mes;
+    REQUIRE(mes.getAddressAsString() == "/spatdif");
+    
+    mes.setAddress("/spatdif/position");
+    REQUIRE(mes.getAddressAsString() == "/spatdif/position");
+
+    mes.appendArgument(9.1f);
+    mes.appendArgument(3);
+    mes.appendArgument(std::string("testing"));
     
     
     
+    REQUIRE(mes.getNumberOfArguments() == 3);
+    REQUIRE(mes.getTypetags()[0] == ',');
+    REQUIRE(mes.getTypetags()[1] == 'f');
+    REQUIRE(mes.getTypetags()[2] == 'i');
+    REQUIRE(mes.getTypetags()[3] == 's');
+
+    REQUIRE(mes.getArgument<float>(0) == 9.1f);
+    REQUIRE(mes.getArgument<int>(1) == 3);
+    REQUIRE(mes.getArgument<std::string>(2) == std::string("testing"));
+    REQUIRE(mes.getArguments().size() == 16);
+
+    REQUIRE(mes.getAllArgumentsAsString() == "9.1 3 testing ");
+    
+    REQUIRE(mes.getMessageAsString() == "/spatdif/position ,fis 9.1 3 testing ");
+
+    mes.clear();
+    REQUIRE(mes.getNumberOfArguments() == 0);
+    REQUIRE(mes.getAddressAsString() == "");
+    REQUIRE(mes.getTypetagsAsString() == ",");
 }
 
 #pragma mark sdUtility
