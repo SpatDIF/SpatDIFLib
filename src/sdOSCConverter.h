@@ -35,28 +35,28 @@ public:
     @param value the int value to be converted
     */
     template <typename T>
-    static std::vector<unsigned char> toBlock(T value);
+    static std::vector<unsigned char> toBlock(const T &value);
 
     /*! convert a 4-bytes block to an int
     @param block the block to be converted
     */
     template <typename T>
-    static T blockTo(std::vector<unsigned char> block);
+    static T blockTo(const std::vector<unsigned char> &block);
 };
 
 template <typename T>
-inline std::vector<unsigned char> sdOSCConverter::toBlock(T value){
+inline std::vector<unsigned char> sdOSCConverter::toBlock(const T &value){
     unsigned char *c = reinterpret_cast<unsigned char*>(&value);
     std::vector<unsigned char> block;
     block.push_back(c[3]);
     block.push_back(c[2]);
     block.push_back(c[1]);
     block.push_back(c[0]);
-    return block;
+    return std::move(block);
 }
 
 template <>
-inline std::vector<unsigned char> sdOSCConverter::toBlock(std::string value){
+inline std::vector<unsigned char> sdOSCConverter::toBlock(const std::string &value){
     int rest = value.size() % 4;
     int numberOfNulls = 4 - rest;
     std::vector<unsigned char> blocks;
@@ -66,11 +66,11 @@ inline std::vector<unsigned char> sdOSCConverter::toBlock(std::string value){
     for (int i = 0; i < numberOfNulls; i++) {
         blocks.push_back('\0');
     }
-    return blocks;
+    return std::move(blocks);
 }
 
 template <typename T>
-inline  T sdOSCConverter::blockTo(std::vector<unsigned char> block){
+inline  T sdOSCConverter::blockTo(const std::vector<unsigned char> &block){
     unsigned char c[4];
     c[0] = block[3];
     c[1] = block[2];
@@ -81,7 +81,7 @@ inline  T sdOSCConverter::blockTo(std::vector<unsigned char> block){
 }
 
 template <>
-inline std::string sdOSCConverter::blockTo(std::vector<unsigned char> block){
+inline std::string sdOSCConverter::blockTo(const std::vector<unsigned char> &block){
     std::string str;
     for(int i = 0; i < static_cast<int>(block.size()); i++){
         if(block[i] == '\0'){
@@ -89,7 +89,7 @@ inline std::string sdOSCConverter::blockTo(std::vector<unsigned char> block){
         }
         str += block[i];
     }
-    return str;
+    return std::move(str);
 }
 
 #endif

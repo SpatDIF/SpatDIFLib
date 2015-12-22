@@ -28,23 +28,23 @@ public:
 #pragma mark constructors
     
     /*! constructor. with initialization of typetags and address pattern. */
-    sdOSCMessage(std::string address = "/spatdif");
+    sdOSCMessage(const std::string &address = "/spatdif");
     
     /*! constructor. initialize message with OSC-conformed 4-bytes-block sequence */
-    sdOSCMessage(std::vector<unsigned char> message);
+    sdOSCMessage(const std::vector<unsigned char> &message);
     
 
 #pragma mark setter
     /*! @param address new OSC address pattern
      set address pattern*/
-    void setAddress(std::string address);
+    void setAddress(const std::string &address);
 
     /*! template function for appending arguments */
     template <typename T>
     void appendArgument(const T &args);
 
     /*! interpret raw OSC message and store it in the local buffer */
-    void setOSCMessage(std::vector<unsigned char> message);
+    void setOSCMessage(const std::vector<unsigned char> &message);
     
     
 #pragma mark getter
@@ -63,9 +63,12 @@ public:
 
     
     /*! @param index argument index
-     returns specified argument at index as int.*/
+     returns specified argument at index as T.*/
     template <typename T>
     T getArgument(int index);
+    /*! returns specified argument as a string*/
+    std::string getArgumentAsString(int index);
+
     /*! returns all Arguments in in 4-bytes-block sequence */
     std::vector<unsigned char> getArguments(void);
     /*! returns all arguments as a string*/
@@ -123,17 +126,17 @@ inline std::vector<unsigned char> sdOSCMessage::nullPadding(std::vector<unsigned
 #pragma mark public functions
 #pragma mark connstructor
 
-inline sdOSCMessage::sdOSCMessage(std::string address){
+inline sdOSCMessage::sdOSCMessage(const std::string &address){
     sdOSCMessage::address = toBlock(address); // conform to blocks (4 byte block)
     typetags.push_back(','); // the length is unknown, conform later
 }
 
-inline sdOSCMessage::sdOSCMessage(std::vector<unsigned char> oscMessage){
+inline sdOSCMessage::sdOSCMessage(const std::vector<unsigned char> &oscMessage){
     setOSCMessage(oscMessage);
 }
 
 #pragma mark setters
-inline void sdOSCMessage::setAddress(std::string address){
+inline void sdOSCMessage::setAddress(const std::string &address){
     sdOSCMessage::address = toBlock(address);
 }
 
@@ -154,7 +157,7 @@ inline void sdOSCMessage::appendArgument(const T &arg){
     arguments.insert(arguments.end(), block.begin(), block.end());
 }
 
-inline void sdOSCMessage::setOSCMessage(std::vector<unsigned char> newMessage){
+inline void sdOSCMessage::setOSCMessage(const std::vector<unsigned char> &newMessage){
     
     size_t cursor = 0, length = 0, lengthWithNullPaddings = 0;
     clear();
@@ -214,8 +217,7 @@ inline std::string sdOSCMessage::getAddressAsString(void){
         str += static_cast<char>(c);
         it++;
     }
-    return str;
-    
+    return std::move(str);
 }
 
 #pragma mark typetags
@@ -234,7 +236,7 @@ inline std::string sdOSCMessage::getTypetagsAsString(void){
         str += static_cast<char>(c);
         it++;
     }
-    return str;
+    return std::move(str);
 }
 
 #pragma mark arguments
@@ -255,6 +257,21 @@ inline std::string sdOSCMessage::getArgument(int index){
     return blockTo<std::string>(blocks);
 }
 
+inline std::string sdOSCMessage::getArgumentAsString(int index){
+    switch(typetags[index+1]){ // we need to skip ','
+        case 'i':
+            return (toString(getArgument<int>(index)));
+            break;
+        case 'f':
+            return (toString(getArgument<float>(index)));
+            break;
+        case 's':
+            return (toString(getArgument<std::string>(index)));
+            break;
+    }
+    return "";
+}
+
 inline std::vector<unsigned char> sdOSCMessage::getArguments(void){
     return arguments;
 }
@@ -263,20 +280,10 @@ inline std::string sdOSCMessage::getAllArgumentsAsString(void){
     size_t numArguments = typetags.size() -1;
     std::string str;
     for(int i = 0; i < numArguments; i++){
-        switch(typetags[i+1]){ // we need to skip ','
-            case 'i':
-                str += toString(getArgument<int>(i));
-                break;
-            case 'f':
-                str += toString(getArgument<float>(i));
-                break;
-            case 's':
-                str += getArgument<std::string>(i);
-                break;
-        }
-        str += " ";
+        str += getArgumentAsString(i);
+        if (i != numArguments -1) str += " ";
     }
-    return str;
+    return std::move(str);
 }
 
 inline size_t sdOSCMessage::getNumberOfArguments(){
@@ -308,7 +315,7 @@ inline std::vector<unsigned char> sdOSCMessage::getOSCMessage(){
     OSCMessage.insert(OSCMessage.end(), conformedTypetags.begin(), conformedTypetags.end()); // concatenate conformed type tags
     OSCMessage.insert(OSCMessage.end(), arguments.begin(), arguments.end()); // concatenate arguments
     
-    return OSCMessage;
+    return std::move(OSCMessage);
 }
 
 inline std::string sdOSCMessage::getMessageAsString(void){
@@ -318,7 +325,7 @@ inline std::string sdOSCMessage::getMessageAsString(void){
     str += getTypetagsAsString();
     str += ' ';
     str += getAllArgumentsAsString();
-    return str;
+    return std::move(str);
 }
 
 #pragma mark clear

@@ -1,9 +1,7 @@
 
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
-#include "sdConst.h"
-#include "sdScene.h"
-#include "sdOSCMessage.h"
+#include "sdMain.h"
 using namespace std;
 
 #pragma mark sdDate
@@ -522,30 +520,35 @@ TEST_CASE("sdOSCConverter", "[sdOSCConverter]"){
 #pragma mark sdOSCMessage
 TEST_CASE("sdOSCMessage", "[sdOSCMessage]"){
     sdOSCMessage mes;
+    // default value in constructor
     REQUIRE(mes.getAddressAsString() == "/spatdif");
     
+    // address
     mes.setAddress("/spatdif/position");
     REQUIRE(mes.getAddressAsString() == "/spatdif/position");
 
+    // append arguments
     mes.appendArgument(9.1f);
     mes.appendArgument(3);
     mes.appendArgument(std::string("testing"));
     
-    
-    
-    REQUIRE(mes.getNumberOfArguments() == 3);
+    //type tag check
     REQUIRE(mes.getTypetags()[0] == ',');
     REQUIRE(mes.getTypetags()[1] == 'f');
     REQUIRE(mes.getTypetags()[2] == 'i');
     REQUIRE(mes.getTypetags()[3] == 's');
-
+    REQUIRE(mes.getTypetagsAsString() == ",fis");
+    
+    // argument check
     REQUIRE(mes.getArgument<float>(0) == 9.1f);
     REQUIRE(mes.getArgument<int>(1) == 3);
     REQUIRE(mes.getArgument<std::string>(2) == std::string("testing"));
     REQUIRE(mes.getArguments().size() == 16);
-
-    REQUIRE(mes.getAllArgumentsAsString() == "9.1 3 testing ");
+    REQUIRE(mes.getNumberOfArguments() == 3);
     
+    // entire message
+    REQUIRE(mes.getAllArgumentsAsString() == "9.1 3 testing ");
+    REQUIRE(mes.getOSCMessage().size() == 44);
     REQUIRE(mes.getMessageAsString() == "/spatdif/position ,fis 9.1 3 testing ");
 
     mes.clear();

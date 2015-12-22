@@ -19,7 +19,6 @@
 #include "sdConst.h"
 #include "sdDate.h"
 
-#include "sdInterpolation.h"
 #include "sdEntity.h"
 #include "sdInfo.h"
 #include "sdLoader.h"
