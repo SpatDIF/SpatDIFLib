@@ -36,9 +36,10 @@ protected:
     
     std::vector< std::shared_ptr<sdProtoEvent> > events; /*!< maintains pointers to all relevant sdEvents */
     sdScene * const parent;
+    const EKind kind;
     
     /*!sdEntity can be invoked only by sdScene*/
-    sdEntity(sdScene * const parent):parent(parent){};
+    sdEntity(sdScene * const parent, EKind kind = EKind::SD_SOURCE):parent(parent), kind(kind){};
 
     /*! find event with the descriptor at time */
     std::vector<std::shared_ptr<sdProtoEvent>>::const_iterator findEvent(const double &time, const EDescriptor &descriptor) const;
@@ -55,6 +56,9 @@ protected:
     void sort();
 
 public:
+    
+    const EKind &getKind();
+    std::string getKindAsString();
     
     /*! this function is the only way to instantiate sdEvent.*/
     template <EDescriptor D>
@@ -263,6 +267,14 @@ inline std::vector<std::shared_ptr<sdProtoEvent>>::const_iterator sdEntity::find
         if( (*it)->getTime() > time ){return events.end();}
     }
     return events.end();
+}
+
+inline const EKind &sdEntity::getKind(){
+    return kind;
+}
+
+inline std::string sdEntity::getKindAsString(){
+    return kind == EKind::SD_SOURCE ? "source": "sink";
 }
 
 template <EDescriptor D>

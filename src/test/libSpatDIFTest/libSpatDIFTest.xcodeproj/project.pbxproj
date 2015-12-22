@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		629720C51C29966100135148 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720C41C29966100135148 /* tinyxml2.cpp */; };
 		62AF37BA1C23739C009E9347 /* sdConst.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B61C23713A009E9347 /* sdConst.cpp */; };
 		62AF37BB1C2373A1009E9347 /* sdEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B31C236EDC009E9347 /* sdEntity.cpp */; };
 		62D904D21C0E50320065D8A5 /* spatdiftest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62D904D11C0E50320065D8A5 /* spatdiftest.cpp */; };
@@ -25,6 +26,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		629720C41C29966100135148 /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxml2.cpp; path = ../../libs/tinyxml2/tinyxml2.cpp; sourceTree = "<group>"; };
 		62AF37B31C236EDC009E9347 /* sdEntity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdEntity.cpp; path = ../../sdEntity.cpp; sourceTree = "<group>"; };
 		62AF37B61C23713A009E9347 /* sdConst.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdConst.cpp; path = ../../sdConst.cpp; sourceTree = "<group>"; };
 		62D904C51C0E4E160065D8A5 /* spatdiftest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = spatdiftest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -45,6 +47,7 @@
 		62D904AE1C0E4DBF0065D8A5 = {
 			isa = PBXGroup;
 			children = (
+				629720C41C29966100135148 /* tinyxml2.cpp */,
 				62AF37B61C23713A009E9347 /* sdConst.cpp */,
 				62AF37B31C236EDC009E9347 /* sdEntity.cpp */,
 				62D904B91C0E4DBF0065D8A5 /* libSpatDIFTest */,
@@ -124,6 +127,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				629720C51C29966100135148 /* tinyxml2.cpp in Sources */,
 				62AF37BA1C23739C009E9347 /* sdConst.cpp in Sources */,
 				62D904D21C0E50320065D8A5 /* spatdiftest.cpp in Sources */,
 				62AF37BB1C2373A1009E9347 /* sdEntity.cpp in Sources */,
@@ -173,7 +177,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../ ${PROJECT_DIR}/../Catch/single_include/";
+				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../ ${PROJECT_DIR}/../Catch/single_include/ \"$(SRCROOT)/../../libs/tinyxml2\"";
 			};
 			name = Debug;
 		};
@@ -210,7 +214,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../ ${PROJECT_DIR}/../Catch/single_include/";
+				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../ ${PROJECT_DIR}/../Catch/single_include/ \"$(SRCROOT)/../../libs/tinyxml2\"";
 			};
 			name = Release;
 		};

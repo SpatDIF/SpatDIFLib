@@ -21,25 +21,8 @@
 #include "tinyxml2.h"
 #include "JSONNode.h"
 #include "sdSaver.h"
-#include "sdTrajectory.h"
 
 using namespace tinyxml2;
-
-std::string sdGlobalEvent::getKindAsString(void){
-    std::string str;
-    switch (kind) {
-        case SD_SOURCE:
-            str = std::string("source");
-            break;
-        case SD_SINK:
-            str = std::string("sink");
-            break;
-        default:
-            break;
-    }
-    return str;
-}
-
 
 XMLElement* sdSaver::XMLInfoSection(XMLDocument &xml, sdScene *scene){
 
@@ -81,83 +64,6 @@ XMLElement* sdSaver::XMLOrderingSection(XMLDocument &xml, sdScene *scene){
     return  ordering;
 }
 
-XMLElement* sdSaver::XMLTrajectorySection(XMLDocument &xml, sdScene *scene){
-    XMLElement* trajectories = xml.NewElement("trajectories");
-    size_t size =  scene->getNumberOfTrajectories();
-    if(!size){
-        return nullptr;
-    }
-    const std::map < std::string, sdTrajectory*> & trajectoryMap = scene->getTrajectoryMap();
-
-
-    for( std::map<std::string, sdTrajectory* >::const_iterator it= trajectoryMap.begin(); it != trajectoryMap.end(); ++it){        
-
-        XMLElement* trajectoryElement = xml.NewElement("trajectory");
-
-        std::string name = (*it).first;
-        sdTrajectory * trajectory = (*it).second;
-
-        trajectoryElement->SetAttribute("name", name.c_str());
-        trajectoryElement->SetAttribute("type", trajectory->getType().c_str());
-        // points
-        {
-            
-            if(!trajectory->getType().compare("bezier")){
-                sdTypedTrajectory<sdPoint2D> * bezierTrajectory = static_cast<sdTypedTrajectory<sdPoint2D> *>(trajectory);
-                const size_t size = bezierTrajectory->getNumberOfPointSets();
-                for(int i = 0; i < size ; i++ ){
-                    XMLElement * pointSetElement = xml.NewElement("pointset");
-
-                    const std::map<std::string, sdPoint2D> * pointSet = bezierTrajectory->getPointSetAt(i);
-                    std::map<std::string, sdPoint2D>::const_iterator it = pointSet->begin();
-                    while (it != pointSet->end()) {
-                        const std::string key = (*it).first;
-                        const sdPoint2D point = (*it).second;
-                        
-                        XMLElement * pointElement = xml.NewElement("point");
-                        pointElement->SetAttribute("type", key.c_str());
-                        pointElement->SetAttribute("x", point.x);
-                        pointElement->SetAttribute("y", point.y);
-                        pointSetElement->InsertEndChild(pointElement);
-                        it++;
-
-                    }
-                    trajectoryElement->InsertEndChild(pointSetElement);
-
-                }
-                
-            }else if(!trajectory->getType().compare("exponential")){
-                
-                sdTypedTrajectory<sdPoint2DCurve> * expTrajectory = static_cast<sdTypedTrajectory<sdPoint2DCurve> *>(trajectory);
-                const size_t size = expTrajectory->getNumberOfPointSets();
-                for(int i = 0; i < size ; i++ ){
-                    XMLElement * pointSetElement = xml.NewElement("pointset");
-
-                    const std::map<std::string, sdPoint2DCurve> * pointSet = expTrajectory->getPointSetAt(i);
-                    std::map<std::string, sdPoint2DCurve>::const_iterator it = pointSet->begin();
-                    while (it != pointSet->end()) {
-                        const std::string key = (*it).first;
-                        const sdPoint2DCurve point = (*it).second;
-                        
-                        XMLElement * pointElement = xml.NewElement("point");
-                        pointElement->SetAttribute("type", key.c_str());
-                        pointElement->SetAttribute("x", point.x);
-                        pointElement->SetAttribute("y", point.y);
-                        pointElement->SetAttribute("curve", point.curveFactor);
-                        
-                        pointSetElement->InsertEndChild(pointElement);
-                        it++;
-                    }
-                    trajectoryElement->InsertEndChild(pointSetElement);
-                }
-            }
-            
-        }
-        
-        trajectories->InsertEndChild(trajectoryElement);
-    }
-    return trajectories;
-}
 
 XMLElement* sdSaver::XMLMetaSection(XMLDocument &xml, sdScene *scene){
 
@@ -171,11 +77,8 @@ XMLElement* sdSaver::XMLMetaSection(XMLDocument &xml, sdScene *scene){
     if(num > 0){
         XMLElement* extensions = xml.NewElement("extensions");
         std::string extString;
-        for(int i = 0; i< num; i++){
-
-            EExtension ext = scene->getActivatedExtension(i);
-            extString = extString + extensionToString(ext);
-        }
+        auto extensionNames = scene->getActivatedExtensionsAsStrings();
+        std::for_each(extensionNames.begin(), extensionNames.end(),[&extString](std::string ext){extString += ext;});
         
         XMLText* extensionsText = xml.NewText(extString.c_str());
         extensions->InsertEndChild(extensionsText);
@@ -206,71 +109,51 @@ std::string sdSaver::XMLFromScene(sdScene *scene){
 
     spatdif->InsertEndChild(sdSaver::XMLMetaSection(xml, scene));
 
-    // time section
-    std::vector<sdEntityCore*> entityVector = scene->getEntityVector();
-
+    
     /* ordered by time */
-    if(scene->getOrdering() == SD_TIME){
+    if(scene->getOrdering() == EOrdering::SD_TIME){
         
-        // 1. pool all events in globalEvent Set
-        std::vector<sdEntityCore*>::iterator it = entityVector.begin();
-        std::multiset<sdGlobalEvent, sdGlobalEventCompare> allEventSet;
-        
-        while(it != entityVector.end()){
-            
-            // core event
-            sdEntityCore *entity = *it;
-            std::multiset<sdEvent*, sdEventCompare> eventSet = entity->getEventSet();
-            std::multiset<sdEvent*, sdEventCompare>::iterator iit =eventSet.begin();
-            while(iit != eventSet.end()){
-                sdEvent* event = *iit;
-                sdGlobalEvent globalEvent(event, entity->getName(), entity->getKind());                
-                allEventSet.insert(globalEvent); // gather pointer to all existing instances of sdEvent
-                ++iit;
-            }
-            ++it;
-        }
-
         // 2. create string
         double previousTime = -1.0;
         std::string previousName;
         std::string previousExtension;
+        sdEntity * previousEntity = nullptr;
         XMLElement* extension;
         XMLElement* kind;
-
-        std::multiset<sdGlobalEvent, sdGlobalEventCompare>::iterator eit = allEventSet.begin();
-        while(eit != allEventSet.end()){
-            sdGlobalEvent event = *eit;
-
+        auto allEvents = scene->getAllEvents();
+        std::for_each(allEvents.begin(), allEvents.end(), [&scene, &spatdif, &previousTime, &previousEntity, &xml](std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>> eventPair ) {
+            auto entity = eventPair.first;
+            auto event = eventPair.second;
+            
             //time tag
-            if(event.getEvent()->getTime() != previousTime){ // if not same as the previous time tag, make a new time tag
+            if(event->getTime() != previousTime){ // if not same as the previous time tag, make a new time tag
                 XMLElement* time = xml.NewElement("time");
-                XMLText* timeText = xml.NewText(event.getEvent()->getTimeAsString().c_str());
+                XMLText* timeText = xml.NewText(event->getTimeAsString().c_str());
                 time->InsertEndChild(timeText);
                 spatdif->InsertEndChild(time);
             }
             
             //event
-            if((event.getEvent()->getTime() != previousTime) || (event.getEntityName() != previousName)){
+            if((event->getTime() != previousTime) || (entity != previousEntity)){
                 // if name of entity or time tag changes we need to write many tags!
                 
                 kind = xml.NewElement(event.getKindAsString().c_str());
                 
                 // the name of entity always comes first
                 XMLElement* name = xml.NewElement("name"); // entity name
-                XMLText* nameText = xml.NewText(event.getEntityName().c_str());
+                auto entityName = scene->getEntityName(entity);
+                XMLText* nameText = xml.NewText(entityName.c_str());
                 name->InsertEndChild(nameText);
                 kind->InsertEndChild(name);
             }
-
             
             // packaging - combining element and text (value)
-            XMLElement* element = xml.NewElement(event.getEvent()->getDescriptorAsString().c_str());
+            XMLElement* element = xml.NewElement(event->getDescriptorAsString().c_str());
             XMLText* text = xml.NewText(event.getEvent()->getValueAsString().c_str());
             element->InsertEndChild(text);
-
+            
             std::string relevantExtension = extensionToString(getRelevantExtension(event.getEvent()->getDescriptor()));
-
+            
             if(relevantExtension == "core"){
                 kind->InsertEndChild(element);
                 spatdif->InsertEndChild(kind);
@@ -285,13 +168,11 @@ std::string sdSaver::XMLFromScene(sdScene *scene){
                 kind->InsertEndChild(extension);
                 spatdif->InsertEndChild(kind);
             }
-
-            previousName = event.getEntityName(); // store current name in order to avoid the dupplication.
-            previousExtension = relevantExtension;
-            ++eit;
             
+            previousEntity = entity; // store current name in order to avoid the dupplication.
+            previousExtension = relevantExtension;
             previousTime = event.getEvent()->getTime();
-        }
+        });
 
     }else if(scene->getOrdering() == SD_TRACK){
         // 1. Sort vector by name alphabetically

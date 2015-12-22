@@ -46,7 +46,7 @@ public:
 
 template <typename T>
 inline std::vector<unsigned char> sdOSCConverter::toBlock(const T &value){
-    unsigned char *c = reinterpret_cast<unsigned char*>(&value);
+    const unsigned char *c = reinterpret_cast<const unsigned char*>(&value);
     std::vector<unsigned char> block;
     block.push_back(c[3]);
     block.push_back(c[2]);

@@ -95,7 +95,6 @@ typedef enum {
 } EInterpolation;
 
 
-
 class sdExtension {
 protected:
     struct sdExtensionSpec{

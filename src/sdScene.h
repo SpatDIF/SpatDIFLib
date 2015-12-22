@@ -181,6 +181,8 @@ public:
     std::pair<double, bool> getNextEventTime(const double &time);
     std::pair<double, bool> getDeltaTimeToNextEvent(const double &time);
 
+    const std::vector<std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>>> &getAllEvents();
+
     /*!
      @}
      */
@@ -311,7 +313,7 @@ inline bool sdScene::setOrdering(const std::string &ordering){
 #pragma mark Entity Handling
 
 inline sdEntity * const sdScene::addEntity(std::string name, EKind kind){
-    auto ret = entities.insert(std::pair<std::string, sdEntity>(name ,sdEntity(this)));
+    auto ret = entities.insert(std::pair<std::string, sdEntity>(name ,sdEntity(this, kind)));
     if(!ret.second) return nullptr;
     return &ret.first->second;
 }
@@ -387,6 +389,9 @@ inline std::pair<double, bool> sdScene::getDeltaTimeToNextEvent(const double &ti
     return std::make_pair(nextEventTime.first - time, true);
 }
 
+inline const std::vector<std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>>> &sdScene::getAllEvents(){
+    return allEvents;
+}
 
 inline std::vector<std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>>> sdScene::getPreviousEventsFromAllEntities(const double &time) const{
     auto result = std::find_if(allEvents.rbegin(), allEvents.rend(), [&time](std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>> event){

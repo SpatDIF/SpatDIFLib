@@ -278,11 +278,13 @@ inline sdOSCMessage sdOSCResponder::getEventSetsFromAllEntities(const double &qu
             case SD_POSITION:
             case SD_ORIENTATION:{
                 auto values = dynamic_cast< sdEvent<SD_ORIENTATION> * >(event.get())->getValue();
-                std::for_each(values.begin(), values.end(), [&returnMessage](float value){returnMessage.appendArgument<float>(value);});
+                std::for_each(values.begin(), values.end(), [&returnMessage](float value){
+                    returnMessage.appendArgument<float>(value);});
                 break;
             }
             case SD_PRESENT:{
-                returnMessage.appendArgument(dynamic_cast< sdEvent<SD_PRESENT> * >(event.get())->getValue());
+                auto value = dynamic_cast< sdEvent<SD_PRESENT> * >(event.get())->getValue();
+                returnMessage.appendArgument<int>(static_cast<int>(value));
                 break;
             }
             case SD_MEDIA_TYPE:
@@ -328,7 +330,7 @@ inline std::vector<sdOSCMessage> sdOSCResponder::getAction(std::string command, 
         returnMessage.setAddress("/spatdif/deltaTime");
         auto deltatime = scene->getDeltaTimeToNextEvent(queryTime);
         if(deltatime.second) return std::vector<sdOSCMessage>();
-        returnMessage.appendArgument(deltatime);
+        returnMessage.appendArgument<float>(deltatime.first);
         
     }else if(command == "getQueryTime"){
         

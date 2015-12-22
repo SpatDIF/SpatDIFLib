@@ -47,13 +47,12 @@ TEST_CASE("sdDate member function test", "[sdDate]"){
     }
 }
 
-#pragma mark sdInfo
 
 
 #pragma mark sdEvent
 
 
-TEST_CASE("Test sdEvent add get remove"){
+TEST_CASE("Test sdEvent add get remove", "[sdEvent]"){
     
     sdScene scene;
     sdEntity * entity = scene.addEntity("MyEntity");
@@ -360,11 +359,16 @@ TEST_CASE("getNextValue() getPreviousValue()"){
 TEST_CASE("Test sdEntity", "[sdEntity]"){
     sdScene scene;
     sdEntity * firstEntity = scene.addEntity("FirstEntity");
-    sdEntity * secondEntity = scene.addEntity("SecondEntity");
+    sdEntity * secondEntity = scene.addEntity("SecondEntity", EKind::SD_SINK);
     REQUIRE(!scene.removeEntity("Nothing"));
     REQUIRE(scene.removeEntity("FirstEntity"));
     REQUIRE(scene.getNumberOfEntities() == 1);
     scene.removeAllEntities();
+    
+    REQUIRE(firstEntity->getKind() == EKind::SD_SOURCE);
+    REQUIRE(secondEntity->getKind() == EKind::SD_SINK);
+    REQUIRE(firstEntity->getKindAsString() == "source");
+    REQUIRE(secondEntity->getKindAsString() ==  "sink");
 }
 
 #pragma mark sdScene
@@ -547,9 +551,9 @@ TEST_CASE("sdOSCMessage", "[sdOSCMessage]"){
     REQUIRE(mes.getNumberOfArguments() == 3);
     
     // entire message
-    REQUIRE(mes.getAllArgumentsAsString() == "9.1 3 testing ");
+    REQUIRE(mes.getAllArgumentsAsString() == "9.1 3 testing");
     REQUIRE(mes.getOSCMessage().size() == 44);
-    REQUIRE(mes.getMessageAsString() == "/spatdif/position ,fis 9.1 3 testing ");
+    REQUIRE(mes.getMessageAsString() == "/spatdif/position ,fis 9.1 3 testing");
 
     mes.clear();
     REQUIRE(mes.getNumberOfArguments() == 0);
