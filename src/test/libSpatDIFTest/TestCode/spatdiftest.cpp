@@ -2,6 +2,7 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 #include "sdMain.h"
+#include <array>
 using namespace std;
 
 #pragma mark sdDate
@@ -610,9 +611,26 @@ TEST_CASE("Test Utilities", "[sdConst]"){
     REQUIRE( toString(42.31f) == "42.31");
     
     // bool to string
-    REQUIRE(toString(true) == "true");
-    REQUIRE(toString(false) == "false");
+    REQUIRE( toString(true) == "true");
+    REQUIRE( toString(false) == "false");
     
+    REQUIRE( stringTo<bool>("true") == true);
+    REQUIRE( stringTo<bool>("false") == false);
+    
+    REQUIRE( stringTo<int>("43") == 43);
+    REQUIRE( stringTo<double>("423.1") == 423.1);
+    SECTION("int array"){
+        auto array = stringToArray<int,3>("4 3 2");
+        REQUIRE(array.at(0) == 4);
+        REQUIRE(array.at(1) == 3);
+        REQUIRE(array.at(2) == 2);
+    }
+    
+    SECTION("double array"){
+        auto array = stringToArray<double,2>("4.2 3.2");
+        REQUIRE(array.at(0) == 4.2);
+        REQUIRE(array.at(1) == 3.2);
+    }
 }
 
 
@@ -638,6 +656,9 @@ TEST_CASE("source width test"){
     scene.removeExtension(EExtension::SD_SOURCE_WIDTH);
 }
 
+TEST_CASE("date test"){
+    
+}
 
 TEST_CASE("info test"){
     {

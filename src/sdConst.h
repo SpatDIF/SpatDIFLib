@@ -238,7 +238,12 @@ inline std::string toString(const T &i){
 
 template <typename T>
 inline T stringTo(const std::string &str){
-    
+    return std::stod(str);
+}
+
+template <>
+inline int stringTo(const std::string &str){
+    return std::stoi(str);
 }
 
 template <>
@@ -246,18 +251,20 @@ inline bool stringTo(const std::string &str){
     return str == "true";
 };
 
-template <>
-inline std::array<double, 3> stringTo(const std::string &str){
+template <typename T, size_t S>
+inline std::array<T, S> stringToArray(const std::string &str){
     std::istringstream iss(str);
-    std::vector<double> strVect;
-    do {std::string string;
+    std::vector<T> strVect;
+    for(int i = 0; i < S; i++){
+        std::string string;
         iss >> string;
         strVect.push_back(std::stod(string));
-    } while(iss);
-    std::array<double, 3> array;
-    std::copy_n(std::make_move_iterator(strVect.begin()), 3, array.begin());
+    }
+    std::array<T, S> array;
+    std::copy_n(std::make_move_iterator(strVect.begin()), S, array.begin());
     return std::move(array);
 }
+
 /*!
  The Descriptor traits. implemented with template explicit specialization technique
  */
