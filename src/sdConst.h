@@ -204,9 +204,8 @@ public:
 
 
 
-/*!
- utility function that converts a single number of vector of number to a string
- */
+#pragma mark toString
+
 template <typename T, size_t size>
 inline std::string toString(const std::array<T, size> &array){
     
@@ -235,6 +234,8 @@ template <typename T>
 inline std::string toString(const T &i){
     return toString(std::array<T, 1>({{i}}));
 }
+
+#pragma mark stringTo
 
 template <typename T>
 inline T stringTo(const std::string &str){
@@ -347,70 +348,6 @@ inline bool almostEqual(double x, double y){
     const double epsilon = std::numeric_limits<double>::epsilon() * std::abs(x+y) * 2.0;
     const double min = std::numeric_limits<double>::min();
     return (gap < epsilon) || (gap < min);
-}
-
-/*!
- utility function that convert floats to double. buffer must be allocated properly beforehand
- */
-inline double *floatsToDoubles(const float *floats, double *doubles, const int num){
-    for (int i = 0; i < num; i++){
-        doubles[i] = static_cast<double>(floats[i]);
-    }
-    return doubles;
-}
-
-/*!
- utility function that convert floats to double. buffer must be allocated properly beforehand
- */
-inline float *doublesToFloats(const double *doubles, float *floats, const int num){
-    for (int i = 0; i < num; i++){
-        floats[i] = static_cast<float>(doubles[i]);
-    }
-    return floats;
-}
-
-inline bool stringToBool(const std::string str){
-    return str == "true" ? true : false;
-}
-
-/*!
- utility function that convert a string to doubles
- */
-inline double *stringToDoubles(std::string str, double *db, int num){
-    std::istringstream is(str);
-    for(int i = 0; i < num; i++) {
-        is >> db[i];
-    }
-    return db;
-}
-
-/*!
- utility function that convert a string to a double
- */
-inline double stringToDouble(std::string str){
-    double db;
-    stringToDoubles(str, &db, 1);
-    return db;
-}
-
-/*!
- utility function that converts a string to a int
- */
-inline int *stringToInts(std::string str, int *it, int num){
-    std::istringstream is(str);
-    for(int i = 0; i < num; i++) {
-        is >> it[i];
-    }
-    return it;
-}
-
-/*!
- utility function that convert int to a string
- */
-inline int stringToInt(std::string str){
-    int it;
-    stringToInts(str, &it, 1);
-    return it;
 }
 
 
