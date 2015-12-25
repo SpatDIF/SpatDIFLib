@@ -65,8 +65,13 @@ public:
     
     /*! this function is the only way to instantiate sdEvent.*/
     template <EDescriptor D>
-    sdEvent<D> * const addEvent(const double &time,  typename sdDescriptor<D>::type value);
+    std::shared_ptr<sdProtoEvent> addProtoEvent(const double &time, typename sdDescriptor<D>::type value);
 
+    /*! return value cast to a specific subclass event.*/
+    template <EDescriptor D>
+    sdEvent<D> * const addEvent(const double &time, typename sdDescriptor<D>::type value);
+
+    /*! add event by string*/
     const std::shared_ptr<sdProtoEvent> addEvent(const std::string &time, const std::string &descriptor, const std::string &value);
     
     /*! @name Event Handling @{ */
@@ -286,7 +291,7 @@ inline std::string sdEntity::getKindAsString() const{
 }
 
 template <EDescriptor D>
-inline sdEvent<D> * const sdEntity::addEvent(const double &time,  typename sdDescriptor<D>::type value){
+inline std::shared_ptr<sdProtoEvent> sdEntity::addProtoEvent(const double &time,  typename sdDescriptor<D>::type value){
     if(time < 0.0){ throw  InvalidTimeException(time);}
     // extension activated?
     if(!isDescriptorValid(D)) return nullptr;
@@ -303,16 +308,21 @@ inline sdEvent<D> * const sdEntity::addEvent(const double &time,  typename sdDes
     std::sort(events.begin(), events.end(),
               [](std::shared_ptr<sdProtoEvent> eventA, std::shared_ptr<sdProtoEvent> eventB)->bool{
              return eventA->getTime() < eventB->getTime(); });
-    return dynamic_cast<sdEvent<D>*>(event.get());
+    return event;
+}
+
+template <EDescriptor D>
+inline sdEvent<D> * const sdEntity::addEvent(const double &time,  typename sdDescriptor<D>::type value){
+    return dynamic_cast<sdEvent<D>*>(addProtoEvent<D>(time,value).get());
 }
 
 inline const std::shared_ptr<sdProtoEvent> sdEntity::addEvent(const std::string &time, const std::string &descriptor, const std::string &value){
     
-    EDescriptor dtr =  sdExtension::stringToDescriptor(descriptor);
+    EDescriptor dtr = sdExtension::stringToDescriptor(descriptor);
     if(dtr == EDescriptor::SD_ERROR) return nullptr;
-
-    return nullptr;
-    
+    auto dtime = std::stod(time);
+    auto addEventFunc = sdExtension::getAddEventFunc(dtr);
+    return addEventFunc(this, dtime, value);
 }
 
 

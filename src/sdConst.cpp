@@ -14,20 +14,38 @@
  */
 
 #include "sdConst.h"
+#include "sdEntity.h"
 
-const std::map<EExtension, sdExtension::sdExtensionSpec>  sdExtension::extensionDict = {
-    {EExtension::SD_CORE, sdExtensionSpec("core",
-                                          {{SD_TYPE, "type"},
-                                              {SD_PRESENT, "present"},
-                                              {SD_POSITION, "position"},
-                                              {SD_ORIENTATION, "orientation"}})},
-    {EExtension::SD_MEDIA, sdExtensionSpec("media",
-                                           {{SD_MEDIA_ID, "id"},
-                                               {SD_MEDIA_TYPE, "type"},
-                                               {SD_MEDIA_LOCATION, "location"},
-                                               {SD_MEDIA_CHANNEL, "channel"},
-                                               {SD_MEDIA_GAIN, "gain"},
-                                               {SD_MEDIA_TIME_OFFSET, "time-offset"}})},
-    {EExtension::SD_SOURCE_WIDTH, sdExtensionSpec("source-width",
-                                                  {{SD_SOURCE_WIDTH_WIDTH, "width"}})}
+const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
+    sdESpec(EExtension::SD_CORE, "core", {
+        sdDSpec(SD_TYPE, "type", [](sdEntity * entity, double time, std::string value){
+            return entity->addProtoEvent<SD_TYPE>(time, EType::SD_POINT);}),
+        sdDSpec(SD_PRESENT, "present", [](sdEntity * entity, double time, std::string value){
+            return entity->addProtoEvent<SD_PRESENT>(time, stringTo<bool>(value));}),
+        sdDSpec(SD_POSITION, "position", [](sdEntity * entity, double time, std::string value){
+            return entity->addProtoEvent<SD_POSITION>(time,stringTo<std::array<double, 3 >>(value) );}),
+        sdDSpec(SD_ORIENTATION, "orientation", [](sdEntity * entity, double time, std::string value){
+            return entity->addProtoEvent<SD_ORIENTATION>(time, stringTo<std::array<double, 3>>(value) );})
+    }),
+    sdESpec(EExtension::SD_MEDIA, "media", {
+        sdDSpec(SD_MEDIA_ID, "id", [](sdEntity * entity, double time, std::string value){
+            return entity->addProtoEvent<SD_MEDIA_ID>(time, value);}),
+        sdDSpec(SD_MEDIA_TYPE, "type", [](sdEntity * entity, double time, std::string value){
+            return entity->addProtoEvent<SD_MEDIA_TYPE>(time, value);}),
+        sdDSpec(SD_MEDIA_LOCATION, "location", [](sdEntity * entity, double time, std::string value){
+            return entity->addProtoEvent<SD_MEDIA_LOCATION>(time, value);}),
+        sdDSpec(SD_MEDIA_CHANNEL, "channel", [](sdEntity * entity, double time, std::string value){
+            return entity->addProtoEvent<SD_MEDIA_CHANNEL>(time, std::stoi(value));}),
+        sdDSpec(SD_MEDIA_GAIN, "gain", [](sdEntity * entity, double time, std::string value){
+            return entity->addProtoEvent<SD_MEDIA_GAIN>(time, std::stod(value));}),
+        sdDSpec(SD_MEDIA_TIME_OFFSET, "time-offset", [](sdEntity* entity, double time, std::string value){
+            return entity->addProtoEvent<SD_MEDIA_TIME_OFFSET>(time, std::stod(value));})
+    }),
+    sdESpec((EExtension::SD_SOURCE_WIDTH), "source-width",{
+        sdDSpec(SD_SOURCE_WIDTH_WIDTH, "width", [](sdEntity* entity, double time, std::string value){
+            return entity->addProtoEvent<SD_SOURCE_WIDTH_WIDTH>(time, std::stod(value));
+        ;})
+    })
+
 };
+            

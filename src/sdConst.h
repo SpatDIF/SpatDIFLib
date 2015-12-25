@@ -23,6 +23,9 @@
 #include <array>
 #include <algorithm>
 #include <cmath>
+#include <vector>
+#include "sdException.h"
+
 /*!
     enum for descriptor. internally all descriptors are handled with this Enum
  */
@@ -95,73 +98,108 @@ typedef enum {
 } EInterpolation;
 
 
+class sdEntity;
+class sdProtoEvent;
 class sdExtension {
 protected:
-    
-    struct sdExtensionSpec{
-        sdExtensionSpec(const std::string &name, const std::map<EDescriptor, std::string> &members):
-        name(name), members(members){};
-        
-        std::string name;
-        const std::map<EDescriptor, std::string> members;
+    struct sdDSpec{
+        sdDSpec(EDescriptor descriptor, std::string descriptorString, std::function< std::shared_ptr<sdProtoEvent>(sdEntity* entity,double, std::string)> addEventFromStringFunc): descriptor(descriptor), descriptorString(descriptorString), addEventFromStringFunc(addEventFromStringFunc){};
+        EDescriptor descriptor;
+        std::string descriptorString;
+        std::function< std::shared_ptr<sdProtoEvent>(sdEntity * entity, double, std::string)> addEventFromStringFunc;
     };
-    
-    static const std::map<EExtension, sdExtensionSpec> extensionDict;
+
+    struct sdESpec{
+        sdESpec(EExtension extension, std::string extensionString, std::vector<sdDSpec> descriptorSpecs):extension(extension), extensionString(extensionString), descriptorSpecs(descriptorSpecs){};
+        EExtension extension;
+        std::string extensionString;
+        std::vector<sdDSpec> descriptorSpecs;
+    };
+
+
+    const static std::vector<sdESpec> spatDIFSpec;
+
 public:
-    static const std::map<EDescriptor, std::string> &getDescriptorsForExtension(EExtension extension){
-        return extensionDict.at(extension).members;
-    }
+    
+#pragma mark extension
     static EExtension getExtensionOfDescriptor(EDescriptor descriptor){
-        for(auto it = extensionDict.begin(); it != extensionDict.end(); it++) {
-            auto members = (*it).second.members;
-            for (auto rit = members.begin(); rit != members.end(); rit++) {
-                if( (*rit).first == descriptor){
-                    return (*it).first;
-                }
-            };
-        }
-        return EExtension::SD_EXTENSION_ERROR;
-    }
-    
-    static std::string extensionToString(const EExtension &descriptor){
-        auto pair = extensionDict.find(descriptor);
-        if (pair == extensionDict.end()) return std::string();
-        return pair->second.name;
-    }
-    
-    static std::string descriptorToString(const EDescriptor &descriptor) {
-        for(auto it = extensionDict.begin(); it != extensionDict.end();it++){
-            auto item =  it->second.members.find(descriptor);
-            if(item != it->second.members.end()) return item->second;
-        }
-        return std::string();
+        EExtension extension = EExtension::SD_EXTENSION_ERROR;
+        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&descriptor](sdESpec eSpec){
+            auto itr = std::find_if(eSpec.descriptorSpecs.begin(), eSpec.descriptorSpecs.end(), [&descriptor](sdDSpec dSpec){
+                return dSpec.descriptor == descriptor;
+            });
+            return itr != eSpec.descriptorSpecs.end();
+        });
+        if(it != spatDIFSpec.end()) extension = (*it).extension;
+        return extension;
     }
 
+    static std::string extensionToString(const EExtension &extension){
+        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extension](sdESpec eSpec){return eSpec.extension == extension;});
+        if (it == spatDIFSpec.end()) return std::string();
+        return (*it).extensionString;
+    }
+    
     static EExtension stringToExtension(std::string string){
-        for(auto it = extensionDict.begin(); it != extensionDict.end();it++){
-            if((*it).second.name == string) return (*it).first;
-        }
+        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(),[&string](sdESpec eSpec){return eSpec.extensionString == string;});
+        if(it != spatDIFSpec.end()) return (*it).extension;
         return EExtension::SD_EXTENSION_ERROR;
     }
-    
-    static EDescriptor stringToDescriptor(EExtension extension, std::string string){
-        auto ext = extensionDict.find(extension);
-        if(ext == extensionDict.end()) return EDescriptor::SD_ERROR;
 
-        auto map = ext->second.members;
-        for(auto jt = map.begin(); jt != map.end(); jt++){
-            if((*jt).second == string) return (*jt).first;
-        }
-        return EDescriptor::SD_ERROR;
+#pragma mark descriptor
+
+    static const std::vector<sdDSpec> &getDescriptorsForExtension(EExtension extension){
+        auto itr = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extension](sdESpec eSpec){return eSpec.extension == extension;});
+        if(itr == spatDIFSpec.end()){throw InvalidDescriptorException(); }
+        return (*itr).descriptorSpecs;
+    }
+
+    static std::string descriptorToString(const EDescriptor &descriptor) {
+        std::string str;
+        std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&descriptor, &str](sdESpec eSpec){
+            auto itr = std::find_if(eSpec.descriptorSpecs.begin(), eSpec.descriptorSpecs.end(), [&descriptor, &str](sdDSpec dSpec){
+                if(dSpec.descriptor == descriptor){
+                    str = dSpec.descriptorString;
+                    return true;
+                }else return false;
+            });
+            return itr != eSpec.descriptorSpecs.end();
+        });
+        return str;
+    }
+
+
+    static EDescriptor stringToDescriptor(EExtension extension, std::string string){
+        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(),[&extension](sdESpec eSpec){return eSpec.extension == extension;});
+        if(it == spatDIFSpec.end()) return SD_ERROR;
+        auto dSpecs = (*it).descriptorSpecs;
+        auto iit = std::find_if(dSpecs.begin(), dSpecs.end(), [&string](sdDSpec dSpec){return dSpec.descriptorString == string;});
+        if( iit == dSpecs.end()) return SD_ERROR;
+        return (*iit).descriptor;
+    }
+
+    static EDescriptor stringToDescriptor(std::string string){
+        EDescriptor descriptor = SD_ERROR;
+        std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&descriptor, &string](sdESpec eSpec){
+            auto itr = std::find_if(eSpec.descriptorSpecs.begin(), eSpec.descriptorSpecs.end(), [&descriptor, &string](sdDSpec dSpec){
+                if(dSpec.descriptorString == string){
+                    descriptor  = dSpec.descriptor;
+                    return true;
+                }else return false;
+            });
+            return itr != eSpec.descriptorSpecs.end();
+        });
+        return descriptor;
     }
     
-    static EDescriptor stringToDescriptor(std::string string){
-        for(auto it = extensionDict.begin(); it != extensionDict.end(); it++){
-            auto desc = stringToDescriptor((*it).first , string);
-            if(desc != EDescriptor::SD_ERROR) return desc;
-        }
-        return EDescriptor::SD_ERROR;
+    static std::function<std::shared_ptr<sdProtoEvent>(sdEntity* entity, double,std::string)> getAddEventFunc(EDescriptor descriptor){
+        auto ext = getExtensionOfDescriptor(descriptor);
+        auto descriptors = getDescriptorsForExtension(ext);
+        auto it = std::find_if(descriptors.begin(), descriptors.end(), [&descriptor](sdDSpec dSpec){ return dSpec.descriptor == descriptor;});
+        if(it == descriptors.end())return nullptr;
+        return (*it).addEventFromStringFunc;
     }
+    
 };
 
 
@@ -185,6 +223,10 @@ inline std::string toString(const bool &bl){
     return bl ? std::string("true") : std::string("false");
 }
 
+inline std::string toString(const EType &type){
+    return "point";
+}
+
 inline std::string toString(const std::string &str){
     return str;
 }
@@ -194,8 +236,28 @@ inline std::string toString(const T &i){
     return toString(std::array<T, 1>({{i}}));
 }
 
+template <typename T>
+inline T stringTo(const std::string &str){
+    
+}
 
+template <>
+inline bool stringTo(const std::string &str){
+    return str == "true";
+};
 
+template <>
+inline std::array<double, 3> stringTo(const std::string &str){
+    std::istringstream iss(str);
+    std::vector<double> strVect;
+    do {std::string string;
+        iss >> string;
+        strVect.push_back(std::stod(string));
+    } while(iss);
+    std::array<double, 3> array;
+    std::copy_n(std::make_move_iterator(strVect.begin()), 3, array.begin());
+    return std::move(array);
+}
 /*!
  The Descriptor traits. implemented with template explicit specialization technique
  */

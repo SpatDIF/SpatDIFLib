@@ -476,7 +476,7 @@ inline bool sdScene::addExtension(EExtension extension){
     if(ret){
         auto descriptors = sdExtension::getDescriptorsForExtension(extension);
         for(auto it = descriptors.begin(); descriptors.end() != it; it++) {
-            validDescriptorSet.insert((*it).first);
+            validDescriptorSet.insert((*it).descriptor);
         }
     }
     return ret;
@@ -515,7 +515,7 @@ inline bool sdScene::removeExtension(EExtension extension){
     if (extension == EExtension::SD_CORE) return false;
     auto descriptors = sdExtension::getDescriptorsForExtension(extension);
     for(auto it = descriptors.begin(); it != descriptors.end(); it++) {
-        validDescriptorSet.erase((*it).first);
+        validDescriptorSet.erase((*it).descriptor);
     }
     return activatedExtensionSet.erase(extension);
 }

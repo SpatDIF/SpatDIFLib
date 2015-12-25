@@ -14,9 +14,17 @@
 
 class InvalidTimeException : public std::range_error{
 public: 
-    InvalidTimeException(const double time )
+    InvalidTimeException(const double &time )
     : std::range_error(std::string("Invalid Time Exception: ") + std::to_string(time) ) {}
 };
+
+class InvalidDescriptorException : public std::range_error{
+public:
+    InvalidDescriptorException()
+    : std::range_error(std::string("Invalid Descriptor")){}
+};
+
+
 
 
 

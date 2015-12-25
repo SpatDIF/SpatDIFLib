@@ -361,14 +361,16 @@ TEST_CASE("Test sdEntity", "[sdEntity]"){
     sdEntity * firstEntity = scene.addEntity("FirstEntity");
     sdEntity * secondEntity = scene.addEntity("SecondEntity", EKind::SD_SINK);
     REQUIRE(!scene.removeEntity("Nothing"));
-    REQUIRE(scene.removeEntity("FirstEntity"));
-    REQUIRE(scene.getNumberOfEntities() == 1);
-    scene.removeAllEntities();
     
     REQUIRE(firstEntity->getKind() == EKind::SD_SOURCE);
     REQUIRE(secondEntity->getKind() == EKind::SD_SINK);
     REQUIRE(firstEntity->getKindAsString() == "source");
     REQUIRE(secondEntity->getKindAsString() ==  "sink");
+
+    REQUIRE(scene.removeEntity("FirstEntity"));
+    REQUIRE(scene.getNumberOfEntities() == 1);
+    scene.removeAllEntities();
+
 }
 
 #pragma mark sdScene
@@ -612,3 +614,69 @@ TEST_CASE("Test Utilities", "[sdConst]"){
     REQUIRE(toString(false) == "false");
     
 }
+
+
+// old tests from old API
+TEST_CASE("source width test"){
+    sdScene scene;
+    scene.addExtension(EExtension::SD_SOURCE_WIDTH);
+
+    REQUIRE(scene.getNumberOfActivatedExtensions() == 1);
+
+    auto extensionStringVector = scene.getActivatedExtensionsAsStrings();
+    
+
+    sdEntity* entityOne = scene.addEntity("voice1");
+
+
+    auto eventOne = entityOne->addEvent<SD_SOURCE_WIDTH_WIDTH>(5.0, 105.2);
+    auto eventTwo = entityOne->addEvent("10.0", "width", "99");
+
+    REQUIRE(eventOne == entityOne->getNextEvent<SD_SOURCE_WIDTH_WIDTH>(2.0));
+    REQUIRE(eventTwo.get() == entityOne->getPreviousEvent<SD_SOURCE_WIDTH_WIDTH>(12.0));
+
+    scene.removeExtension(EExtension::SD_SOURCE_WIDTH);
+}
+
+
+TEST_CASE("info test"){
+    {
+        sdInfo info; // empty
+        info.setAuthor(string("John"));
+        info.setHost(string("sdInfoTest"));
+        info.setDate(sdDate("2000-01-01"));
+        info.setSession(string("1.1"));
+        info.setLocation(string("ZHDK"));
+        info.setAnnotation(string("this is a test"));
+        
+        REQUIRE( info.getAuthor() == "John");
+        REQUIRE( info.getHost() == "sdInfoTest");
+        REQUIRE( info.getDateAsString() == "2000-1-1");
+        REQUIRE( info.getSession() == "1.1");
+        REQUIRE( info.getLocation() == "ZHDK");
+        REQUIRE( info.getAnnotation() == "this is a test");
+    }
+    {
+        // set at once with strings and sdDate
+        sdInfo info(string("Tom"), string("sdInfoTest"), sdDate(string("2012-04-03")), string("1.2"), string("ESB"), string("this is second test"));
+        
+        REQUIRE( info.getAuthor() == "Tom");
+        REQUIRE( info.getHost() == "sdInfoTest");
+        REQUIRE( info.getDateAsString() == "2012-4-3");
+        REQUIRE( info.getSession() == "1.2");
+        REQUIRE( info.getLocation() == "ESB");
+        REQUIRE( info.getAnnotation() == "this is second test");
+    }
+    {
+        // initialization also possible with c-strings
+        sdInfo info("Kevin", "sdInfoTest", "2012-05-01", "1.3", "SFEM", "this is third test");
+        
+        REQUIRE( info.getAuthor() == "Kevin");
+        REQUIRE( info.getHost() == "sdInfoTest");
+        REQUIRE( info.getDateAsString() == "2012-5-1");
+        REQUIRE( info.getSession() == "1.3");
+        REQUIRE( info.getLocation() == "SFEM");
+        REQUIRE( info.getAnnotation() == "this is third test");
+    }
+}
+
