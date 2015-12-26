@@ -273,7 +273,12 @@ inline sdOSCMessage sdOSCResponder::getEventSetsFromAllEntities(const double &qu
         returnMessage.setAddress("/spatdif/source/"+entityName+"/"+event->getDescriptorAsString());
         
         switch (event->getDescriptor()){
-            case SD_POSITION:
+            case SD_POSITION:{
+                auto values = dynamic_cast< sdEvent<SD_POSITION> * >(event.get())->getValue();
+                std::for_each(values.begin(), values.end(), [&returnMessage](float value){
+                    returnMessage.appendArgument<float>(value);});
+                break;
+            }
             case SD_ORIENTATION:{
                 auto values = dynamic_cast< sdEvent<SD_ORIENTATION> * >(event.get())->getValue();
                 std::for_each(values.begin(), values.end(), [&returnMessage](float value){
@@ -285,10 +290,18 @@ inline sdOSCMessage sdOSCResponder::getEventSetsFromAllEntities(const double &qu
                 returnMessage.appendArgument<int>(static_cast<int>(value));
                 break;
             }
-            case SD_MEDIA_TYPE:
-            case SD_MEDIA_LOCATION:
-            case SD_MEDIA_ID:{
+            case SD_MEDIA_TYPE:{
                 auto values = dynamic_cast< sdEvent<SD_MEDIA_TYPE> * >(event.get())->getValue();
+                returnMessage.appendArgument(event->getValueAsString());
+                break;
+            }
+            case SD_MEDIA_LOCATION:{
+                auto values = dynamic_cast< sdEvent<SD_MEDIA_LOCATION> * >(event.get())->getValue();
+                returnMessage.appendArgument(event->getValueAsString());
+                break;
+            }
+            case SD_MEDIA_ID:{
+                auto values = dynamic_cast< sdEvent<SD_MEDIA_ID> * >(event.get())->getValue();
                 returnMessage.appendArgument(event->getValueAsString());
                 break;
             }
@@ -296,7 +309,10 @@ inline sdOSCMessage sdOSCResponder::getEventSetsFromAllEntities(const double &qu
                 returnMessage.appendArgument<int>(dynamic_cast< sdEvent<SD_MEDIA_CHANNEL> *>(event.get())->getValue());
                 break;
             }
-            case SD_MEDIA_TIME_OFFSET:
+            case SD_MEDIA_TIME_OFFSET:{
+                returnMessage.appendArgument<float>(dynamic_cast< sdEvent<SD_MEDIA_TIME_OFFSET> *>(event.get())->getValue());
+                break;
+            }
             case SD_MEDIA_GAIN:{
                 returnMessage.appendArgument<float>(dynamic_cast< sdEvent<SD_MEDIA_GAIN> *>(event.get())->getValue());
                 break;
@@ -315,7 +331,11 @@ inline std::vector<sdOSCMessage> sdOSCResponder::getAction(std::string command, 
     bool singleMessage = true;
     // internal variable
     if(command == "getEventSetsFromAllEntities"){
-
+        auto events = getEventSetsFromAllEntities(queryTime);
+        std::for_each(events.begin(), events.end(0), [&returnMessageVector](event){
+            returnMessageVector.push_back(<#const_reference __x#>)
+        });
+        singleMessage = false;
     }else if(command == "getNextEventTime"){
         
         returnMessage.setAddress("/spatdif/nextEventTime");

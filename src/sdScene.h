@@ -20,7 +20,7 @@
 #include <vector>
 #include <map>
 #include <unordered_set>
-
+#include <set>
 #include "sdConst.h"
 #include "sdInfo.h"
 #include "sdEntity.h"
@@ -42,6 +42,8 @@ protected:
     EOrdering ordering; //!< ordering flag
     sdInfo info; //!< contains "info" part of the meta section
     void addEventAlias(const sdEntity * const entity, const std::shared_ptr<sdProtoEvent>);
+    bool removeEventAlias(const sdEntity* const entity, const double &time, const EDescriptor & descriptor);
+
     void sortAllEvents();
     
 public:
@@ -334,17 +336,29 @@ inline bool sdScene::isDescriptorValid(const EDescriptor &descriptor) const{
 }
 
 inline void sdScene::addEventAlias(const sdEntity * const entity, std::shared_ptr<sdProtoEvent> event){
+    removeEventAlias(entity, event->getTime(), event->getDescriptor());
     allEvents.push_back(std::make_pair(entity, event));
     sortAllEvents();
+    
+}
+
+inline bool sdScene::removeEventAlias(const sdEntity* const entity, const double &time, const EDescriptor & descriptor ){
+    auto it = std::find_if(allEvents.begin(), allEvents.end(), [&entity, &descriptor, &time]( std::pair<const sdEntity * ,std::shared_ptr<sdProtoEvent>> event){
+        return almostEqual(event.second->getTime(), time) && (event.second->getDescriptor() == descriptor) && (event.first == entity);
+    });
+    if(it == allEvents.end()) return false;
+    allEvents.erase(it);
+    return true;
 }
 
 /*!   collect next event(s) from all entities and report them  */
 inline std::vector<std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>>> sdScene::getEventsFromAllEntities(const double &time) const{
-    std::vector<std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>>> vector;
+    std::vector<std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>>> matchedEvents;
     for (auto it = allEvents.begin(); it != allEvents.end(); it++) {
-        if(almostEqual((*it).second->getTime(), time)){vector.push_back(*it);}
+        if(almostEqual((*it).second->getTime(), time)){matchedEvents.push_back(*it);}
     }
-    return std::move(vector);
+    
+    return std::move(matchedEvents);
 }
 
 

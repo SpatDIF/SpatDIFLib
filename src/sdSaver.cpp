@@ -117,7 +117,8 @@ std::string sdSaver::XMLFromScene(sdScene *scene){
         XMLElement* extension;
         XMLElement* kind;
         auto allEvents = scene->getAllEvents();
-        std::for_each(allEvents.begin(), allEvents.end(), [&scene, &kind, &extension, &spatdif, &previousTime, &previousEntity, &previousExtension, &xml](std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>> eventPair ) {
+        
+        std::for_each(allEvents.begin(), allEvents.end(), [&](std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>> eventPair ) {
             auto entity = eventPair.first;
             auto event = eventPair.second;
             
@@ -158,7 +159,6 @@ std::string sdSaver::XMLFromScene(sdScene *scene){
                 if( (event->getTime() != previousTime) ||  (entity != previousEntity ) || (previousExtension != relevantExtension)){
                     // if different entity, time, or extension from the previous put extension tag
                     extension = xml.NewElement((relevantExtension).c_str());
-                    std::cout << "extension " << std::endl;
                 }
                 extension->InsertEndChild(element);
                 kind->InsertEndChild(extension);

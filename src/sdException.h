@@ -30,7 +30,4 @@ public:
     : std::ios_base::failure(std::string("File parse failed")){}
 };
 
-
-
-
 #endif /* sdException_h */

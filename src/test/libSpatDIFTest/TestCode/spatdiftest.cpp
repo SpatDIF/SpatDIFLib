@@ -177,13 +177,13 @@ TEST_CASE("getEvent() and getEvents()"){
     REQUIRE(!entity->getEvent<SD_PRESENT>(0.20000001)); // slightly after
     REQUIRE(!entity->getEvent<SD_PRESENT>(0.19999999)); // slightly before
     
-    auto eventSet = entity->getEventSet(0.2);
+    auto eventSet = entity->getEvents(0.2);
     REQUIRE(eventSet.size() == 2);
     entity->removeEvent(a);
-    eventSet = entity->getEventSet(0.2);
+    eventSet = entity->getEvents(0.2);
     REQUIRE(eventSet.size() == 1);
     entity->removeEvent(b);
-    eventSet = entity->getEventSet(0.2);
+    eventSet = entity->getEvents(0.2);
     REQUIRE(eventSet.size() == 0);
 }
 
@@ -218,28 +218,28 @@ TEST_CASE("getFirstEvents() and getLastEvents()"){
     sdScene scene;
     sdEntity * entity = scene.addEntity("MyEntity");
     
-    REQUIRE(entity->getFirstEventSet().empty());
-    REQUIRE(entity->getLastEventSet().empty());
+    REQUIRE(entity->getFirstEvents().empty());
+    REQUIRE(entity->getLastEvents().empty());
     
     // three events added
     auto a = entity->addEvent<SD_POSITION>(0.4, {0.5, 0.2, 0.3}); // chronologically third
     auto b = entity->addEvent<SD_POSITION>(0.2, {0.3, 0.1, 0.2}); // chronologically first
     auto c = entity->addEvent<SD_POSITION>(0.3, {0.1, 0.4, 0.6}); // chronologically second
     ;
-    REQUIRE(entity->getFirstEventSet().size() == 1);
-    REQUIRE(entity->getLastEventSet().size() == 1);
+    REQUIRE(entity->getFirstEvents().size() == 1);
+    REQUIRE(entity->getLastEvents().size() == 1);
     
     // event added at first and last
     auto d = entity->addEvent<SD_PRESENT>(0.2, true);
     auto e = entity->addEvent<SD_PRESENT>(0.4, true);
-    REQUIRE(entity->getFirstEventSet().size() == 2);
-    REQUIRE(entity->getLastEventSet().size() == 2);
+    REQUIRE(entity->getFirstEvents().size() == 2);
+    REQUIRE(entity->getLastEvents().size() == 2);
     
     // two event removed
     entity->removeEvent(d);
     entity->removeEvent(e);
-    REQUIRE(entity->getFirstEventSet().size() == 1);
-    REQUIRE(entity->getLastEventSet().size() == 1);
+    REQUIRE(entity->getFirstEvents().size() == 1);
+    REQUIRE(entity->getLastEvents().size() == 1);
     REQUIRE(entity->getNumberOfEvents() == 3);
 }
 
@@ -792,25 +792,488 @@ TEST_CASE("sdOSCConverter Test"){
     sdOSCConverter converter;
     int ioriginal = 1000;
     vector<unsigned char> ic = converter.toBlock(ioriginal);
-    dumpBytes(ic);
+    //dumpBytes(ic);
     REQUIRE(ioriginal == converter.blockTo<int>(ic));
     
     float foriginal = 1.234;
     vector<unsigned char> fc = converter.toBlock(foriginal);
-    dumpBytes(fc);
+    //dumpBytes(fc);
     REQUIRE(foriginal == converter.blockTo<float>(fc));
 
     string soriginal = "hello";
     vector<unsigned char> sc = converter.toBlock(soriginal); // here call it directly
-    dumpBytes(sc);
+    //dumpBytes(sc);
     REQUIRE(soriginal == converter.blockTo<string>(sc));
 
 }
 
-TEST_CASE("sdSaverTest"){
+TEST_CASE("FileExtension"){
+    using namespace std;
+    ifstream ifsXML("/Users/chikashi/Development/spatdiflib/src/test/libSpatDIFTest/TestCode/turenas_insect.xml");
+    string xmlString;
     
+    if (ifsXML.is_open())
+    {
+        while ( ifsXML.good() )
+        {
+            string str;
+            getline(ifsXML,str);
+            xmlString.append(str);
+        }
+        ifsXML.close();
+    }
+    
+    sdScene scene = sdLoader::sceneFromXML(xmlString);
+    // here how you get a pointer to two source entities
+    auto insect = scene.getEntity("insect");
+    auto elephant = scene.getEntity("elephant");
+    
+    // now you can ask these entities about their attached extensions
+    auto insectMediaLocationEvent = insect->getFirstEvent<SD_MEDIA_LOCATION>();
+    auto elephantMediaLocationEvent = elephant->getFirstEvent<SD_MEDIA_LOCATION>();
+    
+    REQUIRE(insect->getName() == "insect");
+    REQUIRE(insectMediaLocationEvent->getValueAsString()  == "insect_simulated.aiff");
+    REQUIRE(insectMediaLocationEvent->getTime() == 0.0);
+    
+    REQUIRE(elephant->getName() == "elephant");
+    REQUIRE(elephantMediaLocationEvent->getValueAsString() == "elephant_simulated.aiff");
+    REQUIRE(elephantMediaLocationEvent->getTime() == 0.0);
+
 }
 
-TEST_CASE("sdOSCMessageTest"){
+TEST_CASE("sdSaverTest"){
+    sdInfo info(string("chikashi miyama"), string("sdSaverTest"), string("2013-08-04"), string("Cologne"), string("1.2"), string("this is a test"));
+    sdScene scene(info);
     
+    scene.addExtension(EExtension::SD_MEDIA);
+    //the scene has one entities
+    auto myEntity = scene.addEntity("myEntity", EKind::SD_SOURCE);
+    auto yourEntity = scene.addEntity("yourEntity", EKind::SD_SOURCE);
+    myEntity->addEvent<SD_POSITION>(9.15 , {1.0,2.0,3.0});
+    myEntity->addEvent<SD_ORIENTATION>(2.12 , {0.0,1.0,2.0});
+    yourEntity->addEvent<SD_POSITION>(4.2, {5.0,4.0,3.0});
+    yourEntity->addEvent<SD_MEDIA_LOCATION>(5.0, "/tmp/tmpaudio.wav");
+    string generatedString = sdSaver::XMLFromScene(&scene);
+    //cout << generatedString;
+    scene.setOrdering(EOrdering::SD_TRACK);
+    generatedString = sdSaver::XMLFromScene(&scene);
+    //cout << generatedString;
 }
+
+TEST_CASE("sdSceneTest"){
+    
+    sdInfo info(
+                string("Chikashi"),
+                string("sdSceneTest"),
+                string("2013-08-04"),
+                string("1.2"),
+                string("Cologne"),
+                string("this a scene test"));
+    
+    sdScene scene(info);
+    scene.addExtension(EExtension::SD_MEDIA);
+    REQUIRE(scene.getNumberOfActivatedExtensions()==1);
+    auto myEntity = scene.addEntity("myEntity");
+    myEntity->addEvent(string("1.0"), string("position"), string("0.0 0.1 0.2"));
+    myEntity->addEvent<SD_POSITION>(2.0, {0.0, 0.1, 0.2});
+    myEntity->addEvent<SD_MEDIA_GAIN>(2.0, 0.5523);
+    
+    auto yourEntity = scene.addEntity("yourEntity"); // spawn an entity
+    REQUIRE( scene.getNumberOfEntities() == 2);
+    auto providedEntity = scene.getEntity("myEntity");
+    REQUIRE(providedEntity->getNumberOfEvents() == 3);
+    auto positionEvent = providedEntity->getEvent<SD_POSITION>(0.2);
+    REQUIRE(!positionEvent);
+    auto events = scene.getNextEventsFromAllEntities(0.4);
+    
+    REQUIRE(events.size() == 1);
+    REQUIRE( scene.getNextEventTime(0.4).first == 1.0);
+    REQUIRE( scene.getDeltaTimeToNextEvent(0.4).first == (1.0-0.4));
+    
+    auto duplicated = scene.addEntity("myEntity"); //if the name of existing entity, returns pointer to existing one
+    REQUIRE( scene.getNumberOfEntities() == 2); // not increased
+
+}
+
+TEST_CASE( "sdEventTest"){
+    
+    sdScene scene;
+    auto  myEntity = scene.addEntity("myEntity");
+    auto  yourEntity = scene.addEntity("yourEntity");
+    
+    myEntity->addEvent<SD_POSITION>(5.0,{0.0, 1.0, 2.0});
+    auto myEvent = myEntity->getEvent<SD_POSITION>(5.0);
+    REQUIRE(myEvent->getValueAsString() == "0 1 2");
+    
+    myEntity->addEvent<SD_POSITION>(5.0,  {3.0, 2.0, 1.0}); // overwritten
+    
+    REQUIRE(myEntity->getEvent<SD_POSITION>(5.0)->getValueAsString() == "3 2 1");
+    myEntity->addEvent<SD_ORIENTATION>(5.0, {1.0, 2.0, 3.0});
+    
+    yourEntity->addEvent<SD_POSITION>(10.0, {5.0, 4.0, 3.0});
+    yourEntity->addEvent<SD_ORIENTATION>(5.0, {10.0, 9.0, 8.0});
+
+    {
+        REQUIRE(myEntity->getEvent<SD_POSITION>(5.0)->getValueAsString() == "3 2 1");
+        auto events = myEntity->getEvents(5.0);
+        REQUIRE(events.size() == 2);
+
+        auto allEvents = scene.getEventsFromAllEntities(5.0);
+        REQUIRE(allEvents.size() == 3);
+    }
+    {
+        auto nextEvent = myEntity->getNextEvent<SD_POSITION>(3.0);
+        auto nextEvents = myEntity->getNextEvents(3.0);
+        
+        REQUIRE(nextEvent->getValueAsString() == "3 2 1");
+        REQUIRE(nextEvents.size() == 2); // one orientation + one position
+        auto allEvents = scene.getNextEventsFromAllEntities(3.0);
+        REQUIRE(allEvents.size() == 3);
+        
+    }
+    {
+        auto prevEvent = myEntity->getPreviousEvent<SD_POSITION>(7.0);
+        auto prevEvents = myEntity->getPreviousEvents(7.0);
+
+        REQUIRE(prevEvent->getValueAsString() == "3 2 1");
+        REQUIRE(prevEvents.size() == 2);
+        auto allEvents = scene.getPreviousEventsFromAllEntities(7.0);
+        REQUIRE(allEvents.size() == 3);
+    }
+    {
+        auto firstEvent = myEntity->getFirstEvent<SD_POSITION>();
+        REQUIRE(firstEvent->getTime() == 5.0);
+        REQUIRE(firstEvent->getValueAsString() == "3 2 1");
+        auto firstEvents = myEntity->getFirstEvents();
+        REQUIRE(firstEvents.size() == 2);
+        auto allFirstEvents = scene.getFirstEventsFromAllEntities();
+        REQUIRE(allFirstEvents.size() == 3);
+    }
+    {
+        auto lastEvent = myEntity->getLastEvent<SD_POSITION>();
+        REQUIRE(lastEvent->getTime() == 5.0);
+        REQUIRE(lastEvent->getValueAsString() == "3 2 1");        
+        auto lastEvents = myEntity->getLastEvents();
+        REQUIRE(lastEvents.size() == 2);
+        auto allLastEvents  = scene.getLastEventsFromAllEntities();
+        REQUIRE(allLastEvents.size() == 1);
+    }
+    {
+        auto eventsInRangeWithDescriptor = myEntity->getEvents(3.0, 7.0, SD_POSITION);
+        REQUIRE(eventsInRangeWithDescriptor.size() == 1);
+        auto eventsInRange = myEntity->getEvents(3.0, 7.0);
+        REQUIRE(eventsInRange.size() == 2);
+        auto allEventsInRange = scene.getEventsFromAllEntities(3.0, 9.0);
+        REQUIRE(allEventsInRange.size() == 3);
+    }
+}
+
+TEST_CASE("sdOSCResponder"){
+    sdScene scene;
+    sdOSCResponder oscResponder(&scene);
+    vector<sdOSCMessage> returnedMessageVector;
+
+    {
+        sdOSCMessage setQueryTime("/spatdifcmd/setQueryTime");
+        setQueryTime.appendArgument(1.52f);
+        oscResponder.forwardOSCMessage(setQueryTime);
+        sdOSCMessage getQueryTime("/spatdifcmd/getQueryTime");
+        returnedMessageVector = oscResponder.forwardOSCMessage(getQueryTime);
+        REQUIRE(returnedMessageVector[0].getArgument<float>(0) == 1.52f);
+    }
+    {
+        sdOSCMessage setWriteTime("/spatdifcmd/setWriteTime");
+        setWriteTime.appendArgument(3.14f);
+        oscResponder.forwardOSCMessage(setWriteTime);
+        sdOSCMessage getWriteTime("/spatdifcmd/getWriteTime");
+        returnedMessageVector = oscResponder.forwardOSCMessage(getWriteTime);
+        REQUIRE(returnedMessageVector[0].getArgument<float>(0)  == 3.14f);
+    }
+
+    {
+        sdOSCMessage setInterval("/spatdifcmd/setInterval");
+        setInterval.appendArgument(2.25f);
+        oscResponder.forwardOSCMessage(setInterval);
+        sdOSCMessage getInterval("/spatdifcmd/getInterval");
+        returnedMessageVector = oscResponder.forwardOSCMessage(getInterval);
+        REQUIRE(returnedMessageVector[0].getArgument<float>(0) == 2.25f);
+    }
+    {
+        sdOSCMessage setOrderingToTrack("/spatdifcmd/setOrdering");
+        setOrderingToTrack.appendArgument(std::string("track"));
+        oscResponder.forwardOSCMessage(setOrderingToTrack);
+        
+        sdOSCMessage getOrdering("/spatdifcmd/getOrdering");
+        returnedMessageVector = oscResponder.forwardOSCMessage(getOrdering);
+        REQUIRE(returnedMessageVector[0].getArgument<std::string>(0) == "track");
+        
+        sdOSCMessage setOrderingToTime("/spatdifcmd/setOrdering");
+        setOrderingToTime.appendArgument(std::string("time"));
+        oscResponder.forwardOSCMessage(setOrderingToTime);
+        
+        returnedMessageVector = oscResponder.forwardOSCMessage(getOrdering);
+        REQUIRE(returnedMessageVector[0].getArgument<std::string>(0) == "time");
+        
+    }
+    {
+        sdOSCMessage addTest1Entity("/spatdifcmd/addEntity");
+        addTest1Entity.appendArgument(std::string("test1Entity"));
+        oscResponder.forwardOSCMessage(addTest1Entity);
+        
+        sdOSCMessage addTest2Entity("/spatdifcmd/addEntity");
+        addTest2Entity.appendArgument(std::string("test2Entity"));
+        oscResponder.forwardOSCMessage(addTest2Entity);
+        
+        sdOSCMessage getNumberOfEntities("/spatdifcmd/getNumberOfEntities");
+        returnedMessageVector = oscResponder.forwardOSCMessage(getNumberOfEntities);
+        REQUIRE(returnedMessageVector[0].getArgument<int>(0) == 2);
+        
+        sdOSCMessage getEntityNames("/spatdifcmd/getEntityNames");
+        returnedMessageVector = oscResponder.forwardOSCMessage(getEntityNames);
+        REQUIRE( returnedMessageVector[0].getArgument<std::string>(0) == "test1Entity");
+        REQUIRE( returnedMessageVector[0].getArgument<std::string>(1) == "test2Entity");
+
+        
+        sdOSCMessage removeTest1Entity("/spatdifcmd/removeEntity");
+        removeTest1Entity.appendArgument(std::string("test1Entity"));
+        returnedMessageVector = oscResponder.forwardOSCMessage(removeTest1Entity);
+        returnedMessageVector = oscResponder.forwardOSCMessage(getEntityNames);
+        REQUIRE(returnedMessageVector[0].getArgument<std::string>(0) == "test2Entity");
+        
+        sdOSCMessage removeAllEntities("/spatdifcmd/removeAllEntities");
+        oscResponder.forwardOSCMessage(removeAllEntities);
+        returnedMessageVector = oscResponder.forwardOSCMessage(getNumberOfEntities);
+        REQUIRE( returnedMessageVector[0].getArgument<int>(0) == 0);
+        
+    }
+    {
+        // both query and write at 10.0
+        sdOSCMessage setWriteTime("/spatdifcmd/setWriteTime");
+        setWriteTime.appendArgument(10.0f);
+        oscResponder.forwardOSCMessage(setWriteTime);
+        sdOSCMessage setQueryTime("/spatdifcmd/setQueryTime");
+        setQueryTime.appendArgument(10.0f);
+        oscResponder.forwardOSCMessage(setQueryTime);
+        
+        sdOSCMessage addEntity("/spatdifcmd/addEntity");
+        addEntity.appendArgument(std::string("myEntity"));
+        oscResponder.forwardOSCMessage(addEntity);
+
+        sdOSCMessage setPosition("/spatdifcmd/setPosition");
+        setPosition.appendArgument(std::string("myEntity"));
+        setPosition.appendArgument(1.0f);
+        setPosition.appendArgument(2.0f);
+        setPosition.appendArgument(3.0f);
+        oscResponder.forwardOSCMessage(setPosition);
+        
+        sdOSCMessage getPosition("/spatdifcmd/getPosition");
+        getPosition.appendArgument(std::string("myEntity"));
+        returnedMessageVector = oscResponder.forwardOSCMessage(getPosition);
+        REQUIRE(returnedMessageVector[0].getAllArgumentsAsString() == "myEntity 1 2 3");
+    }
+    {
+        sdOSCMessage setQueryTime("/spatdifcmd/setQueryTime");
+        setQueryTime.appendArgument(5.0f);
+        oscResponder.forwardOSCMessage(setQueryTime);
+        
+        sdOSCMessage getNextPosition("/spatdifcmd/getNextPosition");
+        getNextPosition.appendArgument(std::string("myEntity"));
+        returnedMessageVector = oscResponder.forwardOSCMessage(getNextPosition);
+        REQUIRE(returnedMessageVector[0].getAllArgumentsAsString() == "myEntity 1 2 3");
+
+    }
+    {
+        // search event with previous command
+        sdOSCMessage setQueryTime("/spatdifcmd/setQueryTime");
+        setQueryTime.appendArgument(15.0f);
+        oscResponder.forwardOSCMessage(setQueryTime);
+        
+        sdOSCMessage getPreviousPosition("/spatdifcmd/getPreviousPosition");
+        getPreviousPosition.appendArgument(std::string("myEntity"));
+        returnedMessageVector = oscResponder.forwardOSCMessage(getPreviousPosition);
+        REQUIRE(returnedMessageVector[0].getAllArgumentsAsString() == "myEntity 1 2 3");
+    }
+    cout << "----set/get Orientation----" << endl;
+    {
+        sdOSCMessage setOrientation("/spatdifcmd/setOrientation");
+        setOrientation.appendArgument(std::string("myEntity"));
+        
+        sdOSCMessage setWriteTime("/spatdifcmd/setWriteTime");
+        setWriteTime.appendArgument(10.0f);
+        oscResponder.forwardOSCMessage(setWriteTime);
+        sdOSCMessage setQueryTime("/spatdifcmd/setQueryTime");
+        setQueryTime.appendArgument(10.0f);
+        oscResponder.forwardOSCMessage(setQueryTime);
+        
+        setOrientation.appendArgument(1.0f);
+        setOrientation.appendArgument(2.0f);
+        setOrientation.appendArgument(3.0f);
+        oscResponder.forwardOSCMessage(setOrientation);
+        
+        sdOSCMessage getOrientation("/spatdifcmd/getOrientation");
+        getOrientation.appendArgument(std::string("myEntity"));
+        returnedMessageVector = oscResponder.forwardOSCMessage(getOrientation);
+        REQUIRE( returnedMessageVector[0].getAllArgumentsAsString() == "myEntity 1 2 3");
+    }
+    {
+        sdOSCMessage setPresent("/spatdifcmd/setPresent");
+        setPresent.appendArgument(std::string("myEntity"));
+        setPresent.appendArgument<int>(1);
+        oscResponder.forwardOSCMessage(setPresent);
+        
+        sdOSCMessage getPresent("/spatdifcmd/getPresent");
+        getPresent.appendArgument(std::string("myEntity"));
+        returnedMessageVector = oscResponder.forwardOSCMessage(getPresent);
+        REQUIRE( returnedMessageVector[0].getAllArgumentsAsString() == "myEntity 1");
+    }
+    {
+        sdOSCMessage setQueryTime("/spatdifcmd/setQueryTime");
+        setQueryTime.appendArgument(5.0f);
+        oscResponder.forwardOSCMessage(setQueryTime);
+        
+        sdOSCMessage setInterval("/spatdifcmd/setInterval");
+        setInterval.appendArgument(10.0f);
+        oscResponder.forwardOSCMessage(setInterval);
+        
+        sdOSCMessage getEventsSetsFromAllEntities("/spatdifcmd/getEventSetsFromAllEntities");
+        returnedMessageVector = oscResponder.forwardOSCMessage(getEventsSetsFromAllEntities);
+        cout << "number of events found:" << returnedMessageVector.size() << endl;
+        vector<sdOSCMessage>::iterator it = returnedMessageVector.begin();
+        
+        while(it != returnedMessageVector.end()){
+            sdOSCMessage mes = *it;
+            cout << mes.getMessageAsString() << endl;
+            it++;
+        }
+    }
+//    cout << "----set/get extentsion data " << endl;
+//    {
+//        
+//        //activate
+//        sdOSCMessage addExtension("/spatdifcmd/addExtension");
+//        addExtension.appendString("media");
+//        oscResponder.forwardOSCMessage(addExtension);
+//        
+//        sdOSCMessage getNumberOfActivatedExtensions("/spatdifcmd/getNumberOfActivatedExtensions");
+//        returnedMessageVector = oscResponder.forwardOSCMessage(getNumberOfActivatedExtensions);
+//        cout << returnedMessageVector[0].getMessageAsString() << endl;
+//        
+//        sdOSCMessage setWriteTime("/spatdifcmd/setWriteTime");
+//        setWriteTime.appendFloat(15.0);
+//        oscResponder.forwardOSCMessage(setWriteTime);
+//        
+//        sdOSCMessage setID("/spatdifcmd/media/setID");
+//        setID.appendString("myEntity");
+//        setID.appendString("piano");
+//        oscResponder.forwardOSCMessage(setID);
+//        
+//        sdOSCMessage setType("/spatdifcmd/media/setType");
+//        setType.appendString("myEntity");
+//        setType.appendString("file");
+//        oscResponder.forwardOSCMessage(setType);
+//        
+//        sdOSCMessage setLocation("/spatdifcmd/media/setLocation");
+//        setLocation.appendString("myEntity");
+//        setLocation.appendString("/Users/spat/Music/piano.aif");
+//        oscResponder.forwardOSCMessage(setLocation);
+//        
+//        sdOSCMessage setChannel("/spatdifcmd/media/setChannel");
+//        setChannel.appendString("myEntity");
+//        setChannel.appendInt(1);
+//        oscResponder.forwardOSCMessage(setChannel);
+//        
+//        sdOSCMessage setTimeOffset("/spatdifcmd/media/setTimeOffset");
+//        setTimeOffset.appendString("myEntity");
+//        setTimeOffset.appendFloat(12.4);
+//        oscResponder.forwardOSCMessage(setTimeOffset);
+//        
+//        sdOSCMessage setGain("/spatdifcmd/media/setGain");
+//        setGain.appendString("myEntity");
+//        setGain.appendFloat(0.5);
+//        oscResponder.forwardOSCMessage(setGain);
+//        
+//        cout << "set query time to 15.0." << endl;
+//        sdOSCMessage setQueryTime("/spatdifcmd/setQueryTime");
+//        setQueryTime.appendFloat(15.0);
+//        oscResponder.forwardOSCMessage(setQueryTime);
+//        
+//        sdOSCMessage getEventsSetsFromAllEntities("/spatdifcmd/getEventSetsFromAllEntities");
+//        returnedMessageVector = oscResponder.forwardOSCMessage(getEventsSetsFromAllEntities);
+//        cout << "number of events found:" << returnedMessageVector.size() << endl;
+//        vector<sdOSCMessage>::iterator it = returnedMessageVector.begin();
+//        
+//        while(it != returnedMessageVector.end()){
+//            sdOSCMessage mes = *it;
+//            cout << mes.getMessageAsString() << endl;
+//            it++;
+//        }
+//    }
+//    cout << "----set a value to an unknown entity-----" << endl;
+//    {
+//        sdOSCMessage setUnknown("/spatdifcmd/setPosition");
+//        setUnknown.appendString("unknownEntity");
+//        float pos[3] = {1.0, 2.0, 3.0};
+//        setUnknown.appendFloats(pos, 3);
+//        oscResponder.forwardOSCMessage(setUnknown);
+//        
+//        sdOSCMessage getEntityNames("/spatdifcmd/getEntityNames");
+//        returnedMessageVector = oscResponder.forwardOSCMessage(getEntityNames);
+//        cout << returnedMessageVector[0].getMessageAsString() << endl;
+//    }
+//    cout << "----set/get metadata " << endl;
+//    {
+//        sdOSCMessage returnedMessage;
+//        sdOSCMessage setAuthor("/spatdifcmd/setAuthor");
+//        setAuthor.appendString("Chikashi Miyama");
+//        oscResponder.forwardOSCMessage(setAuthor);
+//        
+//        sdOSCMessage setHost("/spatdifcmd/setHost");
+//        setHost.appendString("Some computer");
+//        oscResponder.forwardOSCMessage(setHost);
+//        
+//        sdOSCMessage setDate("/spatdifcmd/setDate");
+//        setDate.appendString("2014-3-7");
+//        oscResponder.forwardOSCMessage(setDate);
+//        
+//        sdOSCMessage setLocation("/spatdifcmd/setLocation");
+//        setLocation.appendString("ICST, Zürich, Switzerland");
+//        oscResponder.forwardOSCMessage(setLocation);
+//        
+//        sdOSCMessage setSession("/spatdifcmd/setSession");
+//        setSession.appendString("1.1");
+//        oscResponder.forwardOSCMessage(setSession);
+//        
+//        sdOSCMessage setAnnotation("/spatdifcmd/setAnnotation");
+//        setAnnotation.appendString("This is a test with OSC messages");
+//        oscResponder.forwardOSCMessage(setAnnotation);
+//        
+//        sdOSCMessage getAuthor("/spatdifcmd/getAuthor");
+//        returnedMessageVector = oscResponder.forwardOSCMessage(getAuthor);
+//        cout << returnedMessageVector[0].getMessageAsString() << endl;
+//        
+//        sdOSCMessage getHost("/spatdifcmd/getHost");
+//        returnedMessageVector = oscResponder.forwardOSCMessage(getHost);
+//        cout << returnedMessageVector[0].getMessageAsString() << endl;
+//        
+//        sdOSCMessage getDate("/spatdifcmd/getDate");
+//        returnedMessageVector = oscResponder.forwardOSCMessage(getDate);
+//        cout << returnedMessageVector[0].getMessageAsString() << endl;
+//        
+//        sdOSCMessage getLocation("/spatdifcmd/getLocation");
+//        returnedMessageVector = oscResponder.forwardOSCMessage(getLocation);
+//        cout << returnedMessageVector[0].getMessageAsString() << endl;
+//        
+//        sdOSCMessage getSession("/spatdifcmd/getSession");
+//        returnedMessageVector = oscResponder.forwardOSCMessage(getSession);
+//        cout << returnedMessageVector[0].getMessageAsString() << endl;
+//        
+//        sdOSCMessage getAnnotation("/spatdifcmd/getAnnotation");
+//        returnedMessageVector = oscResponder.forwardOSCMessage(getAnnotation);
+//        cout << returnedMessageVector[0].getMessageAsString() << endl;
+//    }
+//    
+}
+
+
+
