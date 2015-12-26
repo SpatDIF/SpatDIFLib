@@ -656,9 +656,7 @@ TEST_CASE("source width test"){
     scene.removeExtension(EExtension::SD_SOURCE_WIDTH);
 }
 
-TEST_CASE("date test"){
-    
-}
+
 
 TEST_CASE("info test"){
     {
@@ -773,3 +771,39 @@ TEST_CASE("How to Query loaded file"){
 }
 
 
+TEST_CASE("sdOSCConverter Test"){
+    auto dumpBytes = [](vector<unsigned char> bytes){
+        cout << "number of bytes:" << std::dec << bytes.size() << endl;
+        cout << "content:" << endl;
+        
+        vector<unsigned char>::iterator it = bytes.begin();
+        int count = 0;
+        while (it != bytes.end()) {
+            unsigned char c = *it;
+            cout << hex <<  setw(2) << setfill('0') << static_cast<int>(c) << ' ';
+            it++;
+            count++;
+            if(count % 4 == 0){
+                cout << endl;
+            }
+        }
+    };
+    
+    sdOSCConverter converter;
+    int ioriginal = 1000;
+    vector<unsigned char> ic = converter.toBlock(ioriginal);
+    dumpBytes(ic);
+    REQUIRE(ioriginal == converter.blockTo<int>(ic));
+    
+    float foriginal = 1.234;
+    vector<unsigned char> fc = converter.toBlock(foriginal);
+    dumpBytes(fc);
+    REQUIRE(foriginal == converter.blockTo<float>(fc));
+
+    string soriginal = "hello";
+    vector<unsigned char> sc = converter.toBlock(soriginal); // here call it directly
+    dumpBytes(sc);
+    REQUIRE(soriginal == converter.blockTo<string>(sc));
+    
+
+}
