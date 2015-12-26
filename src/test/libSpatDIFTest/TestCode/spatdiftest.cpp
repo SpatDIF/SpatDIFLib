@@ -804,6 +804,13 @@ TEST_CASE("sdOSCConverter Test"){
     vector<unsigned char> sc = converter.toBlock(soriginal); // here call it directly
     dumpBytes(sc);
     REQUIRE(soriginal == converter.blockTo<string>(sc));
-    
 
+}
+
+TEST_CASE("sdSaverTest"){
+    
+}
+
+TEST_CASE("sdOSCMessageTest"){
+    
 }
