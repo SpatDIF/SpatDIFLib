@@ -1094,7 +1094,6 @@ TEST_CASE("sdOSCResponder"){
         returnedMessageVector = oscResponder.forwardOSCMessage(getPreviousPosition);
         REQUIRE(returnedMessageVector[0].getAllArgumentsAsString() == "myEntity 1 2 3");
     }
-    cout << "----set/get Orientation----" << endl;
     {
         sdOSCMessage setOrientation("/spatdifcmd/setOrientation");
         setOrientation.appendArgument(std::string("myEntity"));
@@ -1138,141 +1137,126 @@ TEST_CASE("sdOSCResponder"){
         
         sdOSCMessage getEventsSetsFromAllEntities("/spatdifcmd/getEventSetsFromAllEntities");
         returnedMessageVector = oscResponder.forwardOSCMessage(getEventsSetsFromAllEntities);
-        cout << "number of events found:" << returnedMessageVector.size() << endl;
-        vector<sdOSCMessage>::iterator it = returnedMessageVector.begin();
-        
-        while(it != returnedMessageVector.end()){
-            sdOSCMessage mes = *it;
-            cout << mes.getMessageAsString() << endl;
-            it++;
-        }
+        REQUIRE( returnedMessageVector.size() == 3);
+
     }
-//    cout << "----set/get extentsion data " << endl;
-//    {
-//        
-//        //activate
-//        sdOSCMessage addExtension("/spatdifcmd/addExtension");
-//        addExtension.appendString("media");
-//        oscResponder.forwardOSCMessage(addExtension);
-//        
-//        sdOSCMessage getNumberOfActivatedExtensions("/spatdifcmd/getNumberOfActivatedExtensions");
-//        returnedMessageVector = oscResponder.forwardOSCMessage(getNumberOfActivatedExtensions);
-//        cout << returnedMessageVector[0].getMessageAsString() << endl;
-//        
-//        sdOSCMessage setWriteTime("/spatdifcmd/setWriteTime");
-//        setWriteTime.appendFloat(15.0);
-//        oscResponder.forwardOSCMessage(setWriteTime);
-//        
-//        sdOSCMessage setID("/spatdifcmd/media/setID");
-//        setID.appendString("myEntity");
-//        setID.appendString("piano");
-//        oscResponder.forwardOSCMessage(setID);
-//        
-//        sdOSCMessage setType("/spatdifcmd/media/setType");
-//        setType.appendString("myEntity");
-//        setType.appendString("file");
-//        oscResponder.forwardOSCMessage(setType);
-//        
-//        sdOSCMessage setLocation("/spatdifcmd/media/setLocation");
-//        setLocation.appendString("myEntity");
-//        setLocation.appendString("/Users/spat/Music/piano.aif");
-//        oscResponder.forwardOSCMessage(setLocation);
-//        
-//        sdOSCMessage setChannel("/spatdifcmd/media/setChannel");
-//        setChannel.appendString("myEntity");
-//        setChannel.appendInt(1);
-//        oscResponder.forwardOSCMessage(setChannel);
-//        
-//        sdOSCMessage setTimeOffset("/spatdifcmd/media/setTimeOffset");
-//        setTimeOffset.appendString("myEntity");
-//        setTimeOffset.appendFloat(12.4);
-//        oscResponder.forwardOSCMessage(setTimeOffset);
-//        
-//        sdOSCMessage setGain("/spatdifcmd/media/setGain");
-//        setGain.appendString("myEntity");
-//        setGain.appendFloat(0.5);
-//        oscResponder.forwardOSCMessage(setGain);
-//        
-//        cout << "set query time to 15.0." << endl;
-//        sdOSCMessage setQueryTime("/spatdifcmd/setQueryTime");
-//        setQueryTime.appendFloat(15.0);
-//        oscResponder.forwardOSCMessage(setQueryTime);
-//        
-//        sdOSCMessage getEventsSetsFromAllEntities("/spatdifcmd/getEventSetsFromAllEntities");
-//        returnedMessageVector = oscResponder.forwardOSCMessage(getEventsSetsFromAllEntities);
-//        cout << "number of events found:" << returnedMessageVector.size() << endl;
-//        vector<sdOSCMessage>::iterator it = returnedMessageVector.begin();
-//        
-//        while(it != returnedMessageVector.end()){
-//            sdOSCMessage mes = *it;
-//            cout << mes.getMessageAsString() << endl;
-//            it++;
-//        }
-//    }
-//    cout << "----set a value to an unknown entity-----" << endl;
-//    {
-//        sdOSCMessage setUnknown("/spatdifcmd/setPosition");
-//        setUnknown.appendString("unknownEntity");
-//        float pos[3] = {1.0, 2.0, 3.0};
-//        setUnknown.appendFloats(pos, 3);
-//        oscResponder.forwardOSCMessage(setUnknown);
-//        
-//        sdOSCMessage getEntityNames("/spatdifcmd/getEntityNames");
-//        returnedMessageVector = oscResponder.forwardOSCMessage(getEntityNames);
-//        cout << returnedMessageVector[0].getMessageAsString() << endl;
-//    }
-//    cout << "----set/get metadata " << endl;
-//    {
-//        sdOSCMessage returnedMessage;
-//        sdOSCMessage setAuthor("/spatdifcmd/setAuthor");
-//        setAuthor.appendString("Chikashi Miyama");
-//        oscResponder.forwardOSCMessage(setAuthor);
-//        
-//        sdOSCMessage setHost("/spatdifcmd/setHost");
-//        setHost.appendString("Some computer");
-//        oscResponder.forwardOSCMessage(setHost);
-//        
-//        sdOSCMessage setDate("/spatdifcmd/setDate");
-//        setDate.appendString("2014-3-7");
-//        oscResponder.forwardOSCMessage(setDate);
-//        
-//        sdOSCMessage setLocation("/spatdifcmd/setLocation");
-//        setLocation.appendString("ICST, Zürich, Switzerland");
-//        oscResponder.forwardOSCMessage(setLocation);
-//        
-//        sdOSCMessage setSession("/spatdifcmd/setSession");
-//        setSession.appendString("1.1");
-//        oscResponder.forwardOSCMessage(setSession);
-//        
-//        sdOSCMessage setAnnotation("/spatdifcmd/setAnnotation");
-//        setAnnotation.appendString("This is a test with OSC messages");
-//        oscResponder.forwardOSCMessage(setAnnotation);
-//        
-//        sdOSCMessage getAuthor("/spatdifcmd/getAuthor");
-//        returnedMessageVector = oscResponder.forwardOSCMessage(getAuthor);
-//        cout << returnedMessageVector[0].getMessageAsString() << endl;
-//        
-//        sdOSCMessage getHost("/spatdifcmd/getHost");
-//        returnedMessageVector = oscResponder.forwardOSCMessage(getHost);
-//        cout << returnedMessageVector[0].getMessageAsString() << endl;
-//        
-//        sdOSCMessage getDate("/spatdifcmd/getDate");
-//        returnedMessageVector = oscResponder.forwardOSCMessage(getDate);
-//        cout << returnedMessageVector[0].getMessageAsString() << endl;
-//        
-//        sdOSCMessage getLocation("/spatdifcmd/getLocation");
-//        returnedMessageVector = oscResponder.forwardOSCMessage(getLocation);
-//        cout << returnedMessageVector[0].getMessageAsString() << endl;
-//        
-//        sdOSCMessage getSession("/spatdifcmd/getSession");
-//        returnedMessageVector = oscResponder.forwardOSCMessage(getSession);
-//        cout << returnedMessageVector[0].getMessageAsString() << endl;
-//        
-//        sdOSCMessage getAnnotation("/spatdifcmd/getAnnotation");
-//        returnedMessageVector = oscResponder.forwardOSCMessage(getAnnotation);
-//        cout << returnedMessageVector[0].getMessageAsString() << endl;
-//    }
-//    
+    {
+        sdOSCMessage addExtension("/spatdifcmd/addExtension");
+        addExtension.appendArgument(std::string("media"));
+        oscResponder.forwardOSCMessage(addExtension);
+        
+        sdOSCMessage getNumberOfActivatedExtensions("/spatdifcmd/getNumberOfActivatedExtensions");
+        returnedMessageVector = oscResponder.forwardOSCMessage(getNumberOfActivatedExtensions);
+        REQUIRE(returnedMessageVector[0].getAllArgumentsAsString() == "1");
+        
+        sdOSCMessage setWriteTime("/spatdifcmd/setWriteTime");
+        setWriteTime.appendArgument(15.0f);
+        oscResponder.forwardOSCMessage(setWriteTime);
+        
+        sdOSCMessage setQueryTime("/spatdifcmd/setQueryTime");
+        setQueryTime.appendArgument(15.0f);
+        oscResponder.forwardOSCMessage(setQueryTime);
+        
+        sdOSCMessage setID("/spatdifcmd/media/setID");
+        setID.appendArgument(std::string("myEntity"));
+        setID.appendArgument(std::string("piano"));
+        oscResponder.forwardOSCMessage(setID);
+        
+        sdOSCMessage setType("/spatdifcmd/media/setType");
+        setType.appendArgument(std::string("myEntity"));
+        setType.appendArgument(std::string("file"));
+        oscResponder.forwardOSCMessage(setType);
+        
+        sdOSCMessage setLocation("/spatdifcmd/media/setLocation");
+        setLocation.appendArgument("myEntity");
+        setLocation.appendArgument("/Users/spat/Music/piano.aif");
+        oscResponder.forwardOSCMessage(setLocation);
+        
+        sdOSCMessage setChannel("/spatdifcmd/media/setChannel");
+        setChannel.appendArgument(std::string("myEntity"));
+        setChannel.appendArgument(1);
+        oscResponder.forwardOSCMessage(setChannel);
+        
+        sdOSCMessage setTimeOffset("/spatdifcmd/media/setTimeOffset");
+        setTimeOffset.appendArgument(std::string("myEntity"));
+        setTimeOffset.appendArgument(12.4f);
+        oscResponder.forwardOSCMessage(setTimeOffset);
+        
+        sdOSCMessage setGain("/spatdifcmd/media/setGain");
+        setGain.appendArgument(std::string("myEntity"));
+        setGain.appendArgument(0.5f);
+        oscResponder.forwardOSCMessage(setGain);
+        
+        sdOSCMessage getEventsSetsFromAllEntities("/spatdifcmd/getEventSetsFromAllEntities");
+        returnedMessageVector = oscResponder.forwardOSCMessage(getEventsSetsFromAllEntities);
+        REQUIRE(returnedMessageVector.size() == 5);
+
+    }
+    {
+        sdOSCMessage setUnknown("/spatdifcmd/setPosition");
+        setUnknown.appendArgument(std::string("unknownEntity"));
+        setUnknown.appendArgument(1.0);
+        setUnknown.appendArgument(2.0);
+        setUnknown.appendArgument(3.0);
+        oscResponder.forwardOSCMessage(setUnknown);
+        // ignored
+        
+        sdOSCMessage getEntityNames("/spatdifcmd/getNumberOfEntities");
+        returnedMessageVector = oscResponder.forwardOSCMessage(getEntityNames);
+        REQUIRE(returnedMessageVector[0].getArgument<int>(0) == 1);
+
+    }
+    {
+        sdOSCMessage returnedMessage;
+        sdOSCMessage setAuthor("/spatdifcmd/setAuthor");
+        setAuthor.appendArgument(std::string("Chikashi Miyama"));
+        oscResponder.forwardOSCMessage(setAuthor);
+        
+        sdOSCMessage setHost("/spatdifcmd/setHost");
+        setHost.appendArgument(std::string("Some computer"));
+        oscResponder.forwardOSCMessage(setHost);
+        
+        sdOSCMessage setDate("/spatdifcmd/setDate");
+        setDate.appendArgument(std::string("2014-3-7"));
+        oscResponder.forwardOSCMessage(setDate);
+        
+        sdOSCMessage setLocation("/spatdifcmd/setLocation");
+        setLocation.appendArgument(std::string("ICST, Zürich, Switzerland"));
+        oscResponder.forwardOSCMessage(setLocation);
+        
+        sdOSCMessage setSession("/spatdifcmd/setSession");
+        setSession.appendArgument(std::string("1.1"));
+        oscResponder.forwardOSCMessage(setSession);
+        
+        sdOSCMessage setAnnotation("/spatdifcmd/setAnnotation");
+        setAnnotation.appendArgument(std::string("This is a test with OSC messages"));
+        oscResponder.forwardOSCMessage(setAnnotation);
+        
+        sdOSCMessage getAuthor("/spatdifcmd/getAuthor");
+        returnedMessageVector = oscResponder.forwardOSCMessage(getAuthor);
+        REQUIRE(returnedMessageVector[0].getAllArgumentsAsString() == "Chikashi Miyama");
+        
+        sdOSCMessage getHost("/spatdifcmd/getHost");
+        returnedMessageVector = oscResponder.forwardOSCMessage(getHost);
+        REQUIRE(returnedMessageVector[0].getAllArgumentsAsString() == "Some computer");;
+        
+        sdOSCMessage getDate("/spatdifcmd/getDate");
+        returnedMessageVector = oscResponder.forwardOSCMessage(getDate);
+        REQUIRE(returnedMessageVector[0].getAllArgumentsAsString() == "2014-3-7");
+        
+        sdOSCMessage getLocation("/spatdifcmd/getLocation");
+        returnedMessageVector = oscResponder.forwardOSCMessage(getLocation);
+        REQUIRE(returnedMessageVector[0].getAllArgumentsAsString() == "ICST, Zürich, Switzerland");
+        
+        sdOSCMessage getSession("/spatdifcmd/getSession");
+        returnedMessageVector = oscResponder.forwardOSCMessage(getSession);
+        REQUIRE(returnedMessageVector[0].getAllArgumentsAsString() == "1.1");
+        
+        sdOSCMessage getAnnotation("/spatdifcmd/getAnnotation");
+        returnedMessageVector = oscResponder.forwardOSCMessage(getAnnotation);
+        REQUIRE(returnedMessageVector[0].getAllArgumentsAsString() == "This is a test with OSC messages");
+    }
+    
 }
 
 

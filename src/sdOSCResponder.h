@@ -47,10 +47,11 @@ private:
     
     /*! private utility function for spliting strings by slash */
     std::vector <std::string> splitString(const std::string &str);
+    std::pair<sdOSCMessage, bool> getSingleAction(std::string command, sdOSCMessage message);
     std::vector<sdOSCMessage> getAction(std::string command, sdOSCMessage message);
     void setAction(std::string command, sdOSCMessage message, EExtension extension);
 
-    sdOSCMessage getEventSetsFromAllEntities(const double &time) const;
+    std::vector<sdOSCMessage> getEventSetsFromAllEntities(const double &time) const;
 public:
     
     /*! constructor without assignment of a scene
@@ -254,23 +255,20 @@ inline std::vector<sdOSCMessage> sdOSCResponder::forwardOSCMessage(sdOSCMessage 
     return returnMessageVector;
 }
 
-inline sdOSCMessage sdOSCResponder::getEventSetsFromAllEntities(const double &queryTime) const{
-    sdOSCMessage returnMessage;
-    std::vector<std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>>> reports;
+inline std::vector<sdOSCMessage> sdOSCResponder::getEventSetsFromAllEntities(const double &queryTime) const{
+    std::vector<sdOSCMessage> returnMessages;
+    std::vector<std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>>> matchedEvents;
     if(interval != 0.0){
-        reports = scene->getEventsFromAllEntities(queryTime, queryTime+interval); // in the specified region
+        matchedEvents = scene->getEventsFromAllEntities(queryTime, queryTime+interval); // in the specified region
     }else{
-        reports = scene->getEventsFromAllEntities(queryTime);
+        matchedEvents = scene->getEventsFromAllEntities(queryTime);
     }
     
-    for(auto rit = reports.begin(); rit != reports.end(); rit++){
-        auto report = *rit;
-        auto entity = report.first;
-        auto event  = report.second;
-        auto entityName = scene->getEntityName(entity);
-        returnMessage.clear();
-        
-        returnMessage.setAddress("/spatdif/source/"+entityName+"/"+event->getDescriptorAsString());
+    std::for_each(matchedEvents.begin(), matchedEvents.end(), [this, &returnMessages](std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>> item){
+        auto entity = item.first;
+        auto event  = item.second;
+        auto entityName = this->scene->getEntityName(entity);
+        sdOSCMessage returnMessage("/spatdif/source/"+entityName+"/"+event->getDescriptorAsString());
         
         switch (event->getDescriptor()){
             case SD_POSITION:{
@@ -321,37 +319,25 @@ inline sdOSCMessage sdOSCResponder::getEventSetsFromAllEntities(const double &qu
                 break;
             }
         }
-    }
-    return std::move(returnMessage);
+        returnMessages.push_back(returnMessage);
+    });
+    return std::move(returnMessages);
 }
 
-inline std::vector<sdOSCMessage> sdOSCResponder::getAction(std::string command, sdOSCMessage message){
+inline std::pair<sdOSCMessage, bool> sdOSCResponder::getSingleAction(std::string  command, sdOSCMessage message){
     sdOSCMessage returnMessage;
-    std::vector<sdOSCMessage> returnMessageVector;
-    bool singleMessage = true;
-    // internal variable
-    if(command == "getEventSetsFromAllEntities"){
-        auto events = getEventSetsFromAllEntities(queryTime);
-        std::for_each(events.begin(), events.end(0), [&returnMessageVector](event){
-            returnMessageVector.push_back(<#const_reference __x#>)
-        });
-        singleMessage = false;
-    }else if(command == "getNextEventTime"){
-        
+    if(command == "getNextEventTime"){
         returnMessage.setAddress("/spatdif/nextEventTime");
         auto nextEvent = scene->getNextEventTime(queryTime);
-        if(nextEvent.second) return std::vector<sdOSCMessage>();
+        if(nextEvent.second) return std::make_pair( sdOSCMessage(), false);
         returnMessage.appendArgument(static_cast<float>(nextEvent.first));
-        
     }else if(command == "getDeltaTimeToNextEvent"){
-        
         returnMessage.setAddress("/spatdif/deltaTime");
         auto deltatime = scene->getDeltaTimeToNextEvent(queryTime);
-        if(deltatime.second) return std::vector<sdOSCMessage>();
+        if(deltatime.second) return std::make_pair( sdOSCMessage(), false);
         returnMessage.appendArgument<float>(deltatime.first);
-        
     }else if(command == "getQueryTime"){
-        
+
         returnMessage.setAddress("/spatdif/queryTime");
         returnMessage.appendArgument<float>(getQueryTime());
         
@@ -407,8 +393,7 @@ inline std::vector<sdOSCMessage> sdOSCResponder::getAction(std::string command, 
     else if(command.find("Position") != std::string::npos){ // contains keyword "Position"
         auto entityName = message.getArgumentAsString(0);
         sdEntity* entity = scene->getEntity(message.getArgumentAsString(0));
-        if(!entity)
-            return returnMessageVector;
+        if(!entity) return std::make_pair( sdOSCMessage(), false);;
         std::string address = "/spatdif/source/" + entityName + "/position";
         returnMessage.setAddress(address);
         returnMessage.appendArgument<std::string>(entityName);
@@ -423,12 +408,11 @@ inline std::vector<sdOSCMessage> sdOSCResponder::getAction(std::string command, 
         returnMessage.appendArgument(static_cast<float>(pos->at(0)));
         returnMessage.appendArgument(static_cast<float>(pos->at(1)));
         returnMessage.appendArgument(static_cast<float>(pos->at(2)));
-
+        
     }else if(command.find("Orientation") != std::string::npos){ // contains keyword "Position"
         auto entityName = message.getArgumentAsString(0);
         sdEntity* entity = scene->getEntity(message.getArgumentAsString(0));
-        if(!entity)
-            return returnMessageVector;
+        if(!entity) return std::make_pair( sdOSCMessage(), false);
         std::string address = "/spatdif/source/" + entityName + "/orientation";
         returnMessage.setAddress(address);
         returnMessage.appendArgument<std::string>(entityName);
@@ -446,8 +430,7 @@ inline std::vector<sdOSCMessage> sdOSCResponder::getAction(std::string command, 
     }else if(command.find("Present")){
         auto entityName = message.getArgumentAsString(0);
         sdEntity* entity = scene->getEntity(message.getArgumentAsString(0));
-        if(!entity)
-            return returnMessageVector;
+        if(!entity) return std::make_pair( sdOSCMessage(), false);
         bool flag;
         if(command == "getPresent"){
             flag = entity->getValue<SD_PRESENT>(queryTime);
@@ -463,11 +446,23 @@ inline std::vector<sdOSCMessage> sdOSCResponder::getAction(std::string command, 
     }else{
         returnMessage.setAddress("/spatdif/error");
         returnMessage.appendArgument<std::string>("invalid command");
-        returnMessageVector.push_back(returnMessage);
+        return std::make_pair( sdOSCMessage(), false);
+    }
+    return std::make_pair( returnMessage, true);
+}
+
+inline std::vector<sdOSCMessage> sdOSCResponder::getAction(std::string command, sdOSCMessage message){
+    std::vector<sdOSCMessage> returnMessageVector;
+    // internal variable
+    if(command == "getEventSetsFromAllEntities"){        
+        return getEventSetsFromAllEntities(queryTime);
+    }else{
+        auto returnedPair = getSingleAction(command, message);
+        if(returnedPair.second){
+            returnMessageVector.push_back(returnedPair.first);
+        }
         return returnMessageVector;
     }
-    if(singleMessage) returnMessageVector.push_back(returnMessage);
-    return returnMessageVector;
 }
 
 inline void sdOSCResponder::setAction(std::string command, sdOSCMessage message, EExtension extension){
