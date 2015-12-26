@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		629720C51C29966100135148 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720C41C29966100135148 /* tinyxml2.cpp */; };
+		629720D61C2D8C2600135148 /* sdLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720D51C2D8C2600135148 /* sdLoader.cpp */; };
+		629720D81C2D8CDD00135148 /* libjson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 629720D71C2D8CDD00135148 /* libjson.a */; };
+		629720DB1C2E1F0600135148 /* sdSaver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720DA1C2E1F0600135148 /* sdSaver.cpp */; };
 		62AF37BA1C23739C009E9347 /* sdConst.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B61C23713A009E9347 /* sdConst.cpp */; };
 		62AF37BB1C2373A1009E9347 /* sdEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B31C236EDC009E9347 /* sdEntity.cpp */; };
 		62D904D21C0E50320065D8A5 /* spatdiftest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62D904D11C0E50320065D8A5 /* spatdiftest.cpp */; };
@@ -27,6 +30,9 @@
 
 /* Begin PBXFileReference section */
 		629720C41C29966100135148 /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxml2.cpp; path = ../../libs/tinyxml2/tinyxml2.cpp; sourceTree = "<group>"; };
+		629720D51C2D8C2600135148 /* sdLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdLoader.cpp; path = ../../sdLoader.cpp; sourceTree = "<group>"; };
+		629720D71C2D8CDD00135148 /* libjson.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjson.a; path = /Users/chikashi/Development/spatdiflib/src/libs/libjson/libjson.a; sourceTree = "<absolute>"; };
+		629720DA1C2E1F0600135148 /* sdSaver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdSaver.cpp; path = ../../sdSaver.cpp; sourceTree = "<group>"; };
 		62AF37B31C236EDC009E9347 /* sdEntity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdEntity.cpp; path = ../../sdEntity.cpp; sourceTree = "<group>"; };
 		62AF37B61C23713A009E9347 /* sdConst.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdConst.cpp; path = ../../sdConst.cpp; sourceTree = "<group>"; };
 		62D904C51C0E4E160065D8A5 /* spatdiftest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = spatdiftest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -38,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				629720D81C2D8CDD00135148 /* libjson.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,6 +57,8 @@
 				629720C41C29966100135148 /* tinyxml2.cpp */,
 				62AF37B61C23713A009E9347 /* sdConst.cpp */,
 				62AF37B31C236EDC009E9347 /* sdEntity.cpp */,
+				629720D51C2D8C2600135148 /* sdLoader.cpp */,
+				629720DA1C2E1F0600135148 /* sdSaver.cpp */,
 				62D904B91C0E4DBF0065D8A5 /* libSpatDIFTest */,
 				62D904B81C0E4DBF0065D8A5 /* Products */,
 			);
@@ -129,7 +138,9 @@
 			files = (
 				629720C51C29966100135148 /* tinyxml2.cpp in Sources */,
 				62AF37BA1C23739C009E9347 /* sdConst.cpp in Sources */,
+				629720D61C2D8C2600135148 /* sdLoader.cpp in Sources */,
 				62D904D21C0E50320065D8A5 /* spatdiftest.cpp in Sources */,
+				629720DB1C2E1F0600135148 /* sdSaver.cpp in Sources */,
 				62AF37BB1C2373A1009E9347 /* sdEntity.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -173,11 +184,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../libs/libjson\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../ ${PROJECT_DIR}/../Catch/single_include/ \"$(SRCROOT)/../../libs/tinyxml2\"";
+				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../ ${PROJECT_DIR}/../Catch/single_include/ \"$(SRCROOT)/../../libs/tinyxml2\" \"$(SRCROOT)/../../libs/libjson/libjson.h\"";
+				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
@@ -211,10 +224,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../libs/libjson\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../ ${PROJECT_DIR}/../Catch/single_include/ \"$(SRCROOT)/../../libs/tinyxml2\"";
+				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../ ${PROJECT_DIR}/../Catch/single_include/ \"$(SRCROOT)/../../libs/tinyxml2\" \"$(SRCROOT)/../../libs/libjson";
+				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};
@@ -223,6 +239,7 @@
 			buildSettings = {
 				HEADER_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../ ${PROJECT_DIR}/../Catch/single_include/ \"$(SRCROOT)/../../libs/tinyxml2\" \"$(SRCROOT)/../../libs/libjson/**";
 			};
 			name = Debug;
 		};
@@ -231,6 +248,7 @@
 			buildSettings = {
 				HEADER_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../ ${PROJECT_DIR}/../Catch/single_include/ \"$(SRCROOT)/../../libs/tinyxml2\" \"$(SRCROOT)/../../libs/libjson/**";
 			};
 			name = Release;
 		};

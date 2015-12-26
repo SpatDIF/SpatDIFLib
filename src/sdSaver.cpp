@@ -73,7 +73,7 @@ XMLElement* sdSaver::XMLMetaSection(XMLDocument &xml, sdScene *scene){
     meta->InsertEndChild(sdSaver::XMLInfoSection(xml, scene));
 
     // add extensions to meta
-    int num = scene->getNumberOfActivatedExtensions();
+    size_t num = scene->getNumberOfActivatedExtensions();
     if(num > 0){
         XMLElement* extensions = xml.NewElement("extensions");
         std::string extString;
@@ -88,11 +88,7 @@ XMLElement* sdSaver::XMLMetaSection(XMLDocument &xml, sdScene *scene){
     // add ordering
     meta->InsertEndChild(XMLOrderingSection(xml, scene));
 
-    // add trajectories
-    XMLElement* trajectorySection = XMLTrajectorySection(xml, scene);
-    if(trajectorySection){
-        meta->InsertEndChild(trajectorySection);
-    }
+
     return meta;
 }
 

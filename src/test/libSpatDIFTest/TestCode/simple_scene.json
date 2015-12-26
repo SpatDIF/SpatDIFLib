@@ -1,0 +1,34 @@
+{
+    "spatdif": {
+        "version": 0.3,
+        "meta": {
+            "info": {
+                "annotation": "this is an example spatdif scene",
+                "date": "2013-08-13",
+                "author": "Chikashi Miyama"
+            },
+            "extensions": "media",
+            "ordering": "time"
+        },
+        "time": 0.0,
+        "source": {
+            "name": "voice1",
+            "position": [-1.41, 1.41, 0.0]
+        },
+        "time": 1.12,
+        "source":{
+            "name": "voice2",
+            "position": [1.41, 1.41, 0.0]
+        },
+        "time": 2.52,
+        "source":{
+            "name": "voice1",
+            "position": [0.0, 1.0, 0.0]
+        },
+        "time":3.331,
+        "source":{
+            "name": "voice2",
+            "present": false
+        }
+    }
+}

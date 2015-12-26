@@ -24,6 +24,11 @@ public:
     : std::range_error(std::string("Invalid Descriptor")){}
 };
 
+class FileErrorException : public std::ios_base::failure{
+public:
+    FileErrorException()
+    : std::ios_base::failure(std::string("File parse failed")){}
+};
 
 
 

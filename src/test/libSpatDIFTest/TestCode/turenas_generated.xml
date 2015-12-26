@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<spatdif version="0.3">
+    <meta>
+        <info>
+            <author>jasch</author>
+            <date>2013-10-17</date>
+            <annotation>the turenas insect trajectory</annotation>
+        </info>
+        <extensions>media</extensions>
+        <ordering>time</ordering>
+    </meta>
+    <time>0</time>
+    <source>
+        <name>elephant</name>
+        <position>0 1 0</position>
+        <media>
+            <channel>1</channel>
+            <channel>1</channel>
+            <id>sound_0002</id>
+            <id>sound_0002</id>
+            <location>elephant_simulated.aiff</location>
+            <location>elephant_simulated.aiff</location>
+            <type>file</type>
+            <type>file</type>
+        </media>
+    </source>
+    <source>
+        <name>insect</name>
+        <position>0 8 0</position>
+        <media>
+            <channel>1</channel>
+            <channel>1</channel>
+            <id>sound_0001</id>
+            <id>sound_0001</id>
+            <location>insect_simulated.aiff</location>
+            <location>insect_simulated.aiff</location>
+            <type>file</type>
+            <type>file</type>
+        </media>
+    </source>
+    <time>0.078</time>
+    <source>
+        <name>insect</name>
+        <position>1.35906 7.75752 0</position>
+    </source>
+    <time>0.156</time>
+    <source>
+        <name>insect</name>
+        <position>2.62731 7.05483 0</position>
+    </source>
+    <time>0.234</time>
+    <source>
+        <name>insect</name>
+        <position>3.72153 5.96332 0</position>
+    </source>
+    <time>0.312</time>
+    <source>
+        <name>insect</name>
+        <position>4.57297 4.59296 0</position>
+    </source>
+    <time>0.39</time>
+    <source>
+        <name>insect</name>
+        <position>5.13303 3.07977 0</position>
+    </source>
+    <time>0.468</time>
+    <source>
+        <name>insect</name>
+        <position>5.37724 1.57049 0</position>
+    </source>
+    <time>0.546</time>
+    <source>
+        <name>insect</name>
+        <position>5.3071 0.20603 0</position>
+    </source>
+    <time>0.625</time>
+    <source>
+        <name>insect</name>
+        <position>4.94975 -0.894186 0</position>
+    </source>
+    <time>0.703</time>
+    <source>
+        <name>insect</name>
+        <position>4.35543 -1.64535 0</position>
+    </source>
+    <time>0.781</time>
+    <source>
+        <name>insect</name>
+        <position>3.59296 -2.00623 0</position>
+    </source>
+    <time>0.859</time>
+    <source>
+        <name>insect</name>
+        <position>2.74366 -1.98296 0</position>
+    </source>
+    <time>0.937</time>
+    <source>
+        <name>insect</name>
+        <position>1.89419 -1.62731 0</position>
+    </source>
+    <time>1.015</time>
+    <source>
+        <name>insect</name>
+        <position>1.12891 -1.02954 0</position>
+    </source>
+    <time>1.093</time>
+    <source>
+        <name>insect</name>
+        <position>0.522605 -0.306828 0</position>
+    </source>
+    <time>1.171</time>
+    <source>
+        <name>insect</name>
+        <position>0.133855 0.411496 0</position>
+    </source>
+    <time>1.25</time>
+    <source>
+        <name>insect</name>
+        <position>0 1 0</position>
+    </source>
+    <time>1.328</time>
+    <source>
+        <name>insect</name>
+        <position>0.133855 1.35274 0</position>
+    </source>
+    <time>1.406</time>
+    <source>
+        <name>insect</name>
+        <position>0.522605 1.39642 0</position>
+    </source>
+    <time>1.484</time>
+    <source>
+        <name>insect</name>
+        <position>1.12891 1.0997 0</position>
+    </source>
+    <time>1.562</time>
+    <source>
+        <name>insect</name>
+        <position>1.89419 0.477394 0</position>
+    </source>
+    <time>1.64</time>
+    <source>
+        <name>insect</name>
+        <position>2.74366 -0.410838 0</position>
+    </source>
+    <time>1.718</time>
+    <source>
+        <name>insect</name>
+        <position>3.59296 -1.46715 0</position>
+    </source>
+    <time>1.796</time>
+    <source>
+        <name>insect</name>
+        <position>4.35543 -2.56685 0</position>
+    </source>
+    <time>1.875</time>
+    <source>
+        <name>insect</name>
+        <position>4.94975 -3.57297 0</position>
+    </source>
+    <time>1.953</time>
+    <source>
+        <name>insect</name>
+        <position>5.3071 -4.35251 0</position>
+    </source>
+    <time>2.031</time>
+    <source>
+        <name>insect</name>
+        <position>5.37724 -4.79226 0</position>
+    </source>
+    <time>2.109</time>
+    <source>
+        <name>insect</name>
+        <position>5.13303 -4.81257 0</position>
+    </source>
+    <time>2.187</time>
+    <source>
+        <name>insect</name>
+        <position>4.57297 -4.37724 0</position>
+    </source>
+    <time>2.265</time>
+    <source>
+        <name>insect</name>
+        <position>3.72153 -3.49849 0</position>
+    </source>
+    <time>2.343</time>
+    <source>
+        <name>insect</name>
+        <position>2.62731 -2.23637 0</position>
+    </source>
+    <time>2.421</time>
+    <source>
+        <name>insect</name>
+        <position>1.35906 -0.692669 0</position>
+    </source>
+    <time>2.5</time>
+    <source>
+        <name>insect</name>
+        <position>0 1 0</position>
+    </source>
+    <time>2.578</time>
+    <source>
+        <name>insect</name>
+        <position>-1.35906 2.69267 0</position>
+    </source>
+    <time>2.656</time>
+    <source>
+        <name>insect</name>
+        <position>-2.62731 4.23637 0</position>
+    </source>
+    <time>2.734</time>
+    <source>
+        <name>insect</name>
+        <position>-3.72153 5.49849 0</position>
+    </source>
+    <time>2.812</time>
+    <source>
+        <name>insect</name>
+        <position>-4.57297 6.37724 0</position>
+    </source>
+    <time>2.89</time>
+    <source>
+        <name>insect</name>
+        <position>-5.13304 6.81257 0</position>
+    </source>
+    <time>2.968</time>
+    <source>
+        <name>insect</name>
+        <position>-5.37724 6.79226 0</position>
+    </source>
+    <time>3.046</time>
+    <source>
+        <name>insect</name>
+        <position>-5.3071 6.3525 0</position>
+    </source>
+    <time>3.125</time>
+    <source>
+        <name>insect</name>
+        <position>-4.94975 5.57297 0</position>
+    </source>
+    <time>3.203</time>
+    <source>
+        <name>insect</name>
+        <position>-4.35543 4.56684 0</position>
+    </source>
+    <time>3.281</time>
+    <source>
+        <name>insect</name>
+        <position>-3.59296 3.46715 0</position>
+    </source>
+    <time>3.359</time>
+    <source>
+        <name>insect</name>
+        <position>-2.74367 2.41083 0</position>
+    </source>
+    <time>3.437</time>
+    <source>
+        <name>insect</name>
+        <position>-1.89419 1.5226 0</position>
+    </source>
+    <time>3.515</time>
+    <source>
+        <name>insect</name>
+        <position>-1.12891 0.900294 0</position>
+    </source>
+    <time>3.593</time>
+    <source>
+        <name>insect</name>
+        <position>-0.522604 0.603578 0</position>
+    </source>
+    <time>3.671</time>
+    <source>
+        <name>insect</name>
+        <position>-0.133855 0.647264 0</position>
+    </source>
+    <time>3.75</time>
+    <source>
+        <name>insect</name>
+        <position>0 1 0</position>
+    </source>
+    <time>3.828</time>
+    <source>
+        <name>insect</name>
+        <position>-0.133855 1.58851 0</position>
+    </source>
+    <time>3.906</time>
+    <source>
+        <name>insect</name>
+        <position>-0.522604 2.30683 0</position>
+    </source>
+    <time>3.984</time>
+    <source>
+        <name>insect</name>
+        <position>-1.12891 3.02955 0</position>
+    </source>
+    <time>4.062</time>
+    <source>
+        <name>insect</name>
+        <position>-1.89419 3.62732 0</position>
+    </source>
+    <time>4.14</time>
+    <source>
+        <name>insect</name>
+        <position>-2.74367 3.98297 0</position>
+    </source>
+    <time>4.218</time>
+    <source>
+        <name>insect</name>
+        <position>-3.59296 4.00623 0</position>
+    </source>
+    <time>4.296</time>
+    <source>
+        <name>insect</name>
+        <position>-4.35543 3.64535 0</position>
+    </source>
+    <time>4.375</time>
+    <source>
+        <name>insect</name>
+        <position>-4.94975 2.89418 0</position>
+    </source>
+    <time>4.453</time>
+    <source>
+        <name>insect</name>
+        <position>-5.3071 1.79397 0</position>
+    </source>
+    <time>4.531</time>
+    <source>
+        <name>insect</name>
+        <position>-5.37725 0.429507 0</position>
+    </source>
+    <time>4.609</time>
+    <source>
+        <name>insect</name>
+        <position>-5.13303 -1.07977 0</position>
+    </source>
+    <time>4.687</time>
+    <source>
+        <name>insect</name>
+        <position>-4.57297 -2.59296 0</position>
+    </source>
+    <time>4.765</time>
+    <source>
+        <name>insect</name>
+        <position>-3.72153 -3.96333 0</position>
+    </source>
+    <time>4.843</time>
+    <source>
+        <name>insect</name>
+        <position>-2.62731 -5.05483 0</position>
+    </source>
+    <time>4.921</time>
+    <source>
+        <name>insect</name>
+        <position>-1.35906 -5.75752 0</position>
+    </source>
+    <time>5</time>
+    <source>
+        <name>insect</name>
+        <position>0 -6 0</position>
+    </source>
+</spatdif>
+

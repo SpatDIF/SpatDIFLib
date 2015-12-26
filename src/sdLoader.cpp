@@ -26,9 +26,12 @@
 sdScene sdLoader::sceneFromXML(std::string xmlString){
     using namespace tinyxml2;
     XMLDocument xml;
-    xml.Parse(xmlString.c_str());
+    XMLError err = xml.Parse(xmlString.c_str());
+    if(err != XML_SUCCESS){throw FileErrorException();}
+    
     sdScene scene;
     sdInfo info;
+    
     
     XMLElement* spatdif = xml.FirstChildElement("spatdif");
     XMLElement* meta = spatdif->FirstChildElement("meta");
@@ -179,7 +182,7 @@ sdScene sdLoader::sceneFromJSON(std::string jsonString){
             }else if(iit->name() == "source" || iit->name() == "sink" ){
                 JSONNode source = *iit;
                 JSONNode::iterator iiit = source.begin();
-                sdEntity* targetEntity;
+                sdEntity* targetEntity = nullptr;
                 
                 while(iiit != source.end()){
                     if(iiit ->name() == "name"){
@@ -190,7 +193,6 @@ sdScene sdLoader::sceneFromJSON(std::string jsonString){
                     }
                     else{
                         switch(iiit -> type()){
-                        
                             case JSON_STRING:{
                                 targetEntity->addEvent(timeString, iiit->name(), iiit->as_string());
                                 break;

@@ -84,33 +84,33 @@ public:
     /*!
      @param time set queryTime to this value
      */
-    inline void setQueryTime(double time);
+    void setQueryTime(double time);
 
     /*!
      @param time set writeTime to this value
      */
-    inline void setWriteTime(double time);
+    void setWriteTime(double time);
 
     /*!
      @param time set interval to this value
      */
-    inline void setInterval(double time);
+    void setInterval(double time);
     
     
     /*!
      returns queryTime
      */
-    inline double getQueryTime(void);
+    double getQueryTime(void);
     
     /*!
      returns writeTime
      */
-    inline double getWriteTime(void);
+    double getWriteTime(void);
     
     /*!
      returns interval
      */
-    inline double getInterval(void);
+    double getInterval(void);
     
 };
 
@@ -148,19 +148,17 @@ inline double sdOSCResponder::getInterval(void){
     return interval;
 }
 
-
-
-sdOSCResponder::sdOSCResponder(void){
+inline sdOSCResponder::sdOSCResponder(void){
     queryTime = 0.0;
     writeTime = 0.0;
 }
 
-sdOSCResponder::sdOSCResponder(sdScene *scene){
+inline sdOSCResponder::sdOSCResponder(sdScene *scene){
     sdOSCResponder::scene = scene;
     sdOSCResponder();
 }
 
-std::vector<std::string> sdOSCResponder::splitString(const std::string &str){
+inline std::vector<std::string> sdOSCResponder::splitString(const std::string &str){
     std::vector<std::string> res;
     size_t current = 0, found;
     while((found = str.find_first_of('/', current)) != std::string::npos){
@@ -172,7 +170,7 @@ std::vector<std::string> sdOSCResponder::splitString(const std::string &str){
 }
 
 // low level interface
-std::vector<std::vector<unsigned char> > sdOSCResponder::forwardOSCMessage(std::vector<unsigned char> message){
+inline std::vector<std::vector<unsigned char> > sdOSCResponder::forwardOSCMessage(std::vector<unsigned char> message){
     sdOSCMessage mes(message);
     std::vector<sdOSCMessage> rMesVector = forwardOSCMessage(mes);
     std::vector<sdOSCMessage>::iterator it = rMesVector.begin();
@@ -186,7 +184,7 @@ std::vector<std::vector<unsigned char> > sdOSCResponder::forwardOSCMessage(std::
 }
 
 // high level interface
-std::vector<sdOSCMessage> sdOSCResponder::forwardOSCMessage(sdOSCMessage message){
+inline std::vector<sdOSCMessage> sdOSCResponder::forwardOSCMessage(sdOSCMessage message){
     std::vector<sdOSCMessage> returnMessageVector;
     
     std::string address = message.getAddressAsString();

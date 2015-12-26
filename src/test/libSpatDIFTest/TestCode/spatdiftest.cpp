@@ -701,3 +701,75 @@ TEST_CASE("info test"){
     }
 }
 
+
+TEST_CASE("How to Query loaded file"){
+    ifstream ifs("/Users/chikashi/Development/spatdiflib/src/test/libSpatDIFTest/TestCode/simple_scene.xml");
+    string xmlString;
+    if (ifs.is_open()){
+        while ( ifs.good() ){
+            string str;
+            getline(ifs,str);
+            xmlString.append(str);
+        }
+        ifs.close();
+    }
+    REQUIRE(xmlString != "");
+    
+    sdScene myScene = sdLoader::sceneFromXML(xmlString);
+    sdEntity *voice1 = myScene.getEntity("voice1");
+    if(!voice1) {abort();}
+        
+    REQUIRE(voice1->getName() == "voice1");
+    auto event = voice1->getEvent<SD_POSITION>(2.0);
+    auto position = event->getValue();
+    REQUIRE(position[0] == 0.0);
+    REQUIRE(position[1] == 1.0);
+    REQUIRE(position[2] == 0.0);
+    
+    
+    double currentTime = -1.0;
+    int count = 0;
+    double time[] = {0.0, 2.0, 3.0};
+    double value[][3] = {{0.0, 0.0, 0.0},{0.0,1.0,0.0},{1.0,1.0,2.0}};
+    std::string valueString[3] = {"0 0 0","0 1 0","1 1 2"};
+    while (true) {
+        auto sEvent = voice1->getNextEvent<SD_POSITION>(currentTime);
+        if(sEvent == NULL) break;
+        currentTime = sEvent->getTime();
+        auto val = sEvent->getValue();
+        auto valString = sEvent->getValueAsString();
+        REQUIRE(currentTime == time[count]);
+        REQUIRE(value[count][0] == val[0]);
+        REQUIRE(value[count][1] == val[1]);
+        REQUIRE(value[count][2] == val[2]);
+        REQUIRE(valString == valueString[count]);
+        count++;
+    }
+    
+    auto firstEvent = voice1->getFirstEvent<SD_POSITION>();
+    REQUIRE(firstEvent->getTime() == 0.0);
+    REQUIRE(firstEvent->getValueAsString() == "0 0 0");
+    
+    auto lastEvent = voice1->getLastEvent<SD_POSITION>();
+    REQUIRE(lastEvent->getTime() == 3.0);
+    REQUIRE(lastEvent->getValueAsString() == "1 1 2");
+    
+    // just get last and first time tag
+    REQUIRE(voice1->getFirstEventTime().first == 0.0);
+    REQUIRE(voice1->getLastEventTime().first == 3.0);
+
+    auto voice2 = myScene.getEntity(string("voice2"));
+    auto voice2Events = voice2->getEvents(0.0, 8.0);
+    REQUIRE(voice2->getName() == "voice2");
+    REQUIRE(voice2Events.size() == 1);
+    
+    auto voice2EventsEmpty = voice2->getEvents(8.0, 10.0);
+    REQUIRE(voice2EventsEmpty.empty());
+    
+    auto pos = myScene.getValue<SD_POSITION>("voice1", 3.0);
+    REQUIRE( (*pos)[0] == 1);
+    REQUIRE( (*pos)[1] == 1);
+    REQUIRE( (*pos)[2] == 2);
+}
+
+
