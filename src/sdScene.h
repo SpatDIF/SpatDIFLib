@@ -36,12 +36,12 @@ class sdScene{
     
 protected:
     std::map <std::string, sdEntity> entities; //!< a map of sdEntities
-    std::vector<std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>>> allEvents; //!< an alias pointer to all events
+    std::vector<std::pair<sdEntity*, std::shared_ptr<sdProtoEvent>>> allEvents; //!< an alias pointer to all events
     std::set <EExtension> activatedExtensionSet; //!< a set of activated extension
     std::set <EDescriptor> validDescriptorSet; //!< a set of valid descriptor
     EOrdering ordering; //!< ordering flag
     sdInfo info; //!< contains "info" part of the meta section
-    void addEventAlias(const sdEntity * const entity, const std::shared_ptr<sdProtoEvent>);
+    void addEventAlias(sdEntity * const entity, const std::shared_ptr<sdProtoEvent>);
     bool removeEventAlias(const sdEntity* const entity, const double &time, const EDescriptor & descriptor);
 
     void sortAllEvents();
@@ -186,7 +186,7 @@ public:
     std::pair<double, bool> getNextEventTime(const double &time);
     std::pair<double, bool> getDeltaTimeToNextEvent(const double &time);
 
-    const std::vector<std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>>> &getAllEvents();
+    const std::vector<std::pair<sdEntity*, std::shared_ptr<sdProtoEvent>>> &getAllEvents();
 
     /*!
      @}
@@ -335,7 +335,7 @@ inline bool sdScene::isDescriptorValid(const EDescriptor &descriptor) const{
     return !(validDescriptorSet.find(descriptor) == validDescriptorSet.end());
 }
 
-inline void sdScene::addEventAlias(const sdEntity * const entity, std::shared_ptr<sdProtoEvent> event){
+inline void sdScene::addEventAlias(sdEntity * const entity, std::shared_ptr<sdProtoEvent> event){
     removeEventAlias(entity, event->getTime(), event->getDescriptor());
     allEvents.push_back(std::make_pair(entity, event));
     sortAllEvents();
@@ -406,7 +406,7 @@ inline std::pair<double, bool> sdScene::getDeltaTimeToNextEvent(const double &ti
     return std::make_pair(nextEventTime.first - time, true);
 }
 
-inline const std::vector<std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>>> &sdScene::getAllEvents(){
+inline const std::vector<std::pair<sdEntity*, std::shared_ptr<sdProtoEvent>>> &sdScene::getAllEvents(){
     return allEvents;
 }
 

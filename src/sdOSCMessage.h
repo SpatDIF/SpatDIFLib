@@ -143,17 +143,19 @@ inline void sdOSCMessage::setAddress(const std::string &address){
 template <typename T>
 inline void sdOSCMessage::appendArgument(const T &arg){
     this->delimiters.push_back(arguments.size());
-    
     if (typeid(T) == typeid(int)){
         typetags.push_back('i');
     }else if(typeid(T) == typeid(float)){
         typetags.push_back('f');
+    }else if(typeid(T) == typeid(double)){
+        typetags.push_back('f');
     }else if(typeid(T) == typeid(std::string)){
         typetags.push_back('s');
-    }else{
-        
+    }else if(typeid(T) == typeid(char*)){
+        typetags.push_back('s');
     }
     std::vector<unsigned char> block = toBlock(arg);
+    
     arguments.insert(arguments.end(), block.begin(), block.end());
 }
 

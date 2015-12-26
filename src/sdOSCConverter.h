@@ -55,6 +55,8 @@ inline std::vector<unsigned char> sdOSCConverter::toBlock(const T &value){
     return std::move(block);
 }
 
+
+
 template <>
 inline std::vector<unsigned char> sdOSCConverter::toBlock(const std::string &value){
     int rest = value.size() % 4;
