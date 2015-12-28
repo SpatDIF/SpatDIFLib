@@ -20,6 +20,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <cstring>
 
 /*!
  this class provides block (4 bytes block) to int, float, string converter and vice versa.
@@ -30,6 +31,11 @@
 
 class sdOSCConverter{
     
+protected:
+    
+    template <typename T>
+    static std::vector<unsigned char>convertToBlock(const T &value);
+
 public:
     /*! convert an int value to a 4-bytes block
     @param value the int value to be converted
@@ -45,7 +51,7 @@ public:
 };
 
 template <typename T>
-inline std::vector<unsigned char> sdOSCConverter::toBlock(const T &value){
+inline std::vector<unsigned char>sdOSCConverter::convertToBlock(const T &value){
     const unsigned char *c = reinterpret_cast<const unsigned char*>(&value);
     std::vector<unsigned char> block;
     block.push_back(c[3]);
@@ -55,10 +61,34 @@ inline std::vector<unsigned char> sdOSCConverter::toBlock(const T &value){
     return std::move(block);
 }
 
+template <typename T>
+inline std::vector<unsigned char> sdOSCConverter::toBlock(const T &value){
+    return convertToBlock(value);
+}
 
+template <>
+inline std::vector<unsigned char> sdOSCConverter::toBlock(const double &value){
+    return convertToBlock(static_cast<float>(value));
+}
+
+template <>
+inline std::vector<unsigned char> sdOSCConverter::toBlock(const unsigned int &value){
+    return convertToBlock(static_cast<int>(value));
+}
+
+template <>
+inline std::vector<unsigned char> sdOSCConverter::toBlock(const long &value){
+    return convertToBlock(static_cast<int>(value));
+}
+
+template <>
+inline std::vector<unsigned char> sdOSCConverter::toBlock(const unsigned long &value){
+    return convertToBlock(static_cast<int>(value));
+}
 
 template <>
 inline std::vector<unsigned char> sdOSCConverter::toBlock(const std::string &value){
+
     int rest = value.size() % 4;
     int numberOfNulls = 4 - rest;
     std::vector<unsigned char> blocks;

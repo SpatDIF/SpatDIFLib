@@ -515,12 +515,16 @@ TEST_CASE("valid descriptor test"){
 TEST_CASE("sdOSCConverter", "[sdOSCConverter]"){
     auto intArg = sdOSCConverter::toBlock(32);
     auto floatArg = sdOSCConverter::toBlock(23.42f);
+    auto floatArg2 = sdOSCConverter::toBlock(29.42); // double to float
     auto stringArg = sdOSCConverter::toBlock(std::string("chikashi"));
+    auto stringArg2 =sdOSCConverter::toBlock<std::string>("miyama");
     
     REQUIRE(sdOSCConverter::blockTo<int>(intArg) == 32);
     REQUIRE(sdOSCConverter::blockTo<float>(floatArg) == 23.42f);
+    REQUIRE(sdOSCConverter::blockTo<float>(floatArg2) == 29.42f);
+
     REQUIRE(sdOSCConverter::blockTo<std::string>(stringArg) == std::string("chikashi"));
-    
+    REQUIRE(sdOSCConverter::blockTo<std::string>(stringArg2) == std::string("miyama"));
 }
 
 
