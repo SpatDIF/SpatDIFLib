@@ -40,6 +40,8 @@ TEST_CASE("info test"){
         info.setSession(string("1.1"));
         info.setLocation(string("ZHDK"));
         info.setAnnotation(string("this is a test"));
+        info.setTitle(string("My Wonderful Piece"));
+        info.setDuration(12.0);
         
         REQUIRE( info.getAuthor() == "John");
         REQUIRE( info.getHost() == "sdInfoTest");
@@ -47,10 +49,12 @@ TEST_CASE("info test"){
         REQUIRE( info.getSession() == "1.1");
         REQUIRE( info.getLocation() == "ZHDK");
         REQUIRE( info.getAnnotation() == "this is a test");
+        REQUIRE( info.getTitle() == "My Wonderful Piece");
+        REQUIRE( info.getDuration() == 12.0);
     }
     {
         // set at once with strings and sdDate
-        sdInfo info(string("Tom"), string("sdInfoTest"), sdDate(string("2012-04-03")), string("1.2"), string("ESB"), string("this is second test"));
+        sdInfo info(string("Tom"), string("sdInfoTest"), sdDate(string("2012-04-03")), string("1.2"), string("ESB"), string("this is second test"),string(""));
         
         REQUIRE( info.getAuthor() == "Tom");
         REQUIRE( info.getHost() == "sdInfoTest");
@@ -96,7 +100,6 @@ TEST_CASE("How to Query loaded file"){
     REQUIRE(position[0] == 0.0);
     REQUIRE(position[1] == 1.0);
     REQUIRE(position[2] == 0.0);
-    
     
     double currentTime = -1.0;
     int count = 0;
