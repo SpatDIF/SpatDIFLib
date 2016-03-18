@@ -2,7 +2,7 @@
  *
  * @ingroup spatdiflib
  *
- * @brief
+ * @brief an abstract class of spat DIF event and its template subclass
  *
  * @details
  *
@@ -37,11 +37,39 @@ protected:
     const EDescriptor descriptor /*< the descriptor type of event. unmutable */;
 
 public:
+    /*!
+     return event time 
+     @returns the time of event in second
+    */
     double getTime() const;
+    
+    /*!
+     returns event time as std::string
+     @returns the time of event as a std::string
+     */
     std::string getTimeAsString() const;
+    
+    /*! 
+     returns event descriptor 
+     @returns event descriptor ENUM
+     */
     EDescriptor getDescriptor() const;
+    
+    /*!
+     @returns descriptor as string
+     */
     std::string getDescriptorAsString() const;
+    
+    /*! 
+     returns an immutable pointer to its parent entity
+     @returns a pointer to its parent entity
+    */
     const sdEntity * const getParent() const;
+    
+    /*!
+     returns value of the event as a std::string
+     @returns a std::string that contains string
+     */
     virtual const std::string getValueAsString() const = 0;
 };
 
@@ -78,7 +106,7 @@ class sdEvent: public sdProtoEvent{
     friend sdEntity;
     
 protected:
-    const typename sdDescriptor<D>::type  value;
+    const typename sdDescriptor<D>::type  value; /*< the value of the event. the type of value is determined by EDescriptor D */
     
 public:
     
@@ -93,8 +121,7 @@ public:
     const typename sdDescriptor<D>::type &getValue(void) const{ return value; };
     
     /*! returns value as string */
-    
-    const std::string getValueAsString() const override{return toString(value);};
+    const std::string getValueAsString() const override{ return toString(value);};
     /*! @} */
 
 };

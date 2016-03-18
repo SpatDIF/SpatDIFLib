@@ -25,8 +25,6 @@
 #include "sdInfo.h"
 #include "sdEntity.h"
 
-
-
 /*! is responsible for 
  - adding, removing, and maintaining sdEntityCores.
  - attaching and detaching extensions to the exisiting and newly instantiated cores
@@ -81,16 +79,19 @@ public:
     
     /*! sets an enum of ordering
      @param ordering the ordering enum declared in sdConst.h
+     @returns returns true if the ordering successfully renewed
      */
     bool setOrdering(const std::string &string);
     
     /*!
      gets an enum ordering
+     @returns returns enum parameter for ordering
      */
     const EOrdering &getOrdering(void) const;
 
     /*!
      gets ordering as String
+     @returns returns ordering as std::string
      */
     std::string getOrderingAsString(void) const;
     

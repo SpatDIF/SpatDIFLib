@@ -203,9 +203,21 @@ public:
 };
 
 
+/*!
+ check almost equal for double precision
+ */
+inline bool almostEqual(double x, double y){
+    const double gap = std::abs(x-y);
+    const double epsilon = std::numeric_limits<double>::epsilon() * std::abs(x+y) * 2.0;
+    const double min = std::numeric_limits<double>::min();
+    return (gap < epsilon) || (gap < min);
+}
 
 #pragma mark toString
 
+/*! template function for to string conversion
+    this function reacts differently, when the argument type is bool, EType or string.
+ */
 template <typename T, size_t size>
 inline std::string toString(const std::array<T, size> &array){
     
@@ -236,6 +248,10 @@ inline std::string toString(const T &i){
 }
 
 #pragma mark stringTo
+
+/*! 
+ converstion from string to a specific type of data 
+ */
 
 template <typename T>
 inline T stringTo(const std::string &str){
@@ -269,7 +285,6 @@ inline std::array<T, S> stringToArray(const std::string &str){
 /*!
  The Descriptor traits. implemented with template explicit specialization technique
  */
-
 
 template <EDescriptor D>
 struct sdDescriptor {};
@@ -340,15 +355,7 @@ struct sdDescriptor<EDescriptor::SD_SOURCE_WIDTH_WIDTH>{
     const static bool interpolable = true;
 };
 
-/*!
- check almost equal for double precision
- */
-inline bool almostEqual(double x, double y){
-    const double gap = std::abs(x-y);
-    const double epsilon = std::numeric_limits<double>::epsilon() * std::abs(x+y) * 2.0;
-    const double min = std::numeric_limits<double>::min();
-    return (gap < epsilon) || (gap < min);
-}
+
 
 
 #endif

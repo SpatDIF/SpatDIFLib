@@ -13,10 +13,26 @@
 		629720DB1C2E1F0600135148 /* sdSaver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720DA1C2E1F0600135148 /* sdSaver.cpp */; };
 		62AF37BA1C23739C009E9347 /* sdConst.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B61C23713A009E9347 /* sdConst.cpp */; };
 		62AF37BB1C2373A1009E9347 /* sdEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B31C236EDC009E9347 /* sdEntity.cpp */; };
+		62D8B0311C37462900AC1D31 /* oldtest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62D8B0301C37462900AC1D31 /* oldtest.cpp */; };
+		62D8B0351C3746A500AC1D31 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720C41C29966100135148 /* tinyxml2.cpp */; };
+		62D8B0361C3746A500AC1D31 /* sdConst.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B61C23713A009E9347 /* sdConst.cpp */; };
+		62D8B0371C3746A500AC1D31 /* sdEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B31C236EDC009E9347 /* sdEntity.cpp */; };
+		62D8B0381C3746A500AC1D31 /* sdLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720D51C2D8C2600135148 /* sdLoader.cpp */; };
+		62D8B0391C3746A500AC1D31 /* sdSaver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720DA1C2E1F0600135148 /* sdSaver.cpp */; };
+		62D8B03B1C37472A00AC1D31 /* libjson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 62D8B03A1C37472A00AC1D31 /* libjson.a */; };
 		62D904D21C0E50320065D8A5 /* spatdiftest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62D904D11C0E50320065D8A5 /* spatdiftest.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		62D8B02C1C37462900AC1D31 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		62D904C31C0E4E160065D8A5 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -35,11 +51,34 @@
 		629720DA1C2E1F0600135148 /* sdSaver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdSaver.cpp; path = ../../sdSaver.cpp; sourceTree = "<group>"; };
 		62AF37B31C236EDC009E9347 /* sdEntity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdEntity.cpp; path = ../../sdEntity.cpp; sourceTree = "<group>"; };
 		62AF37B61C23713A009E9347 /* sdConst.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdConst.cpp; path = ../../sdConst.cpp; sourceTree = "<group>"; };
+		62BE10201C2F3C020033244E /* sdConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdConst.h; path = ../../sdConst.h; sourceTree = "<group>"; };
+		62BE10211C2F3C020033244E /* sdDate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdDate.h; path = ../../sdDate.h; sourceTree = "<group>"; };
+		62BE10221C2F3C020033244E /* sdEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdEntity.h; path = ../../sdEntity.h; sourceTree = "<group>"; };
+		62BE10231C2F3C020033244E /* sdEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdEvent.h; path = ../../sdEvent.h; sourceTree = "<group>"; };
+		62BE10241C2F3C020033244E /* sdException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdException.h; path = ../../sdException.h; sourceTree = "<group>"; };
+		62BE10251C2F3C020033244E /* sdInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdInfo.h; path = ../../sdInfo.h; sourceTree = "<group>"; };
+		62BE10261C2F3C020033244E /* sdLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdLoader.h; path = ../../sdLoader.h; sourceTree = "<group>"; };
+		62BE10271C2F3C020033244E /* sdOSCConverter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdOSCConverter.h; path = ../../sdOSCConverter.h; sourceTree = "<group>"; };
+		62BE10281C2F3C020033244E /* sdOSCMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdOSCMessage.h; path = ../../sdOSCMessage.h; sourceTree = "<group>"; };
+		62BE10291C2F3C020033244E /* sdOSCResponder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdOSCResponder.h; path = ../../sdOSCResponder.h; sourceTree = "<group>"; };
+		62BE102A1C2F3C020033244E /* sdSaver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdSaver.h; path = ../../sdSaver.h; sourceTree = "<group>"; };
+		62BE102B1C2F3C020033244E /* sdScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdScene.h; path = ../../sdScene.h; sourceTree = "<group>"; };
+		62D8B02E1C37462900AC1D31 /* oldtest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = oldtest; sourceTree = BUILT_PRODUCTS_DIR; };
+		62D8B0301C37462900AC1D31 /* oldtest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = oldtest.cpp; sourceTree = "<group>"; };
+		62D8B03A1C37472A00AC1D31 /* libjson.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjson.a; path = ../../libs/libjson/libjson.a; sourceTree = "<group>"; };
 		62D904C51C0E4E160065D8A5 /* spatdiftest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = spatdiftest; sourceTree = BUILT_PRODUCTS_DIR; };
 		62D904D11C0E50320065D8A5 /* spatdiftest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = spatdiftest.cpp; path = TestCode/spatdiftest.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		62D8B02B1C37462900AC1D31 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				62D8B03B1C37472A00AC1D31 /* libjson.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		62D904C21C0E4E160065D8A5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -51,15 +90,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		62D8B02F1C37462900AC1D31 /* oldtest */ = {
+			isa = PBXGroup;
+			children = (
+				62D8B0301C37462900AC1D31 /* oldtest.cpp */,
+			);
+			path = oldtest;
+			sourceTree = "<group>";
+		};
 		62D904AE1C0E4DBF0065D8A5 = {
 			isa = PBXGroup;
 			children = (
+				62D8B03A1C37472A00AC1D31 /* libjson.a */,
+				62BE10201C2F3C020033244E /* sdConst.h */,
+				62BE10211C2F3C020033244E /* sdDate.h */,
+				62BE10221C2F3C020033244E /* sdEntity.h */,
+				62BE10231C2F3C020033244E /* sdEvent.h */,
+				62BE10241C2F3C020033244E /* sdException.h */,
+				62BE10251C2F3C020033244E /* sdInfo.h */,
+				62BE10261C2F3C020033244E /* sdLoader.h */,
+				62BE10271C2F3C020033244E /* sdOSCConverter.h */,
+				62BE10281C2F3C020033244E /* sdOSCMessage.h */,
+				62BE10291C2F3C020033244E /* sdOSCResponder.h */,
+				62BE102A1C2F3C020033244E /* sdSaver.h */,
+				62BE102B1C2F3C020033244E /* sdScene.h */,
 				629720C41C29966100135148 /* tinyxml2.cpp */,
 				62AF37B61C23713A009E9347 /* sdConst.cpp */,
 				62AF37B31C236EDC009E9347 /* sdEntity.cpp */,
 				629720D51C2D8C2600135148 /* sdLoader.cpp */,
 				629720DA1C2E1F0600135148 /* sdSaver.cpp */,
 				62D904B91C0E4DBF0065D8A5 /* libSpatDIFTest */,
+				62D8B02F1C37462900AC1D31 /* oldtest */,
 				62D904B81C0E4DBF0065D8A5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -68,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				62D904C51C0E4E160065D8A5 /* spatdiftest */,
+				62D8B02E1C37462900AC1D31 /* oldtest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -83,6 +145,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		62D8B02D1C37462900AC1D31 /* oldtest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 62D8B0321C37462900AC1D31 /* Build configuration list for PBXNativeTarget "oldtest" */;
+			buildPhases = (
+				62D8B02A1C37462900AC1D31 /* Sources */,
+				62D8B02B1C37462900AC1D31 /* Frameworks */,
+				62D8B02C1C37462900AC1D31 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = oldtest;
+			productName = oldtest;
+			productReference = 62D8B02E1C37462900AC1D31 /* oldtest */;
+			productType = "com.apple.product-type.tool";
+		};
 		62D904C41C0E4E160065D8A5 /* spatdiftest */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 62D904C91C0E4E160065D8A5 /* Build configuration list for PBXNativeTarget "spatdiftest" */;
@@ -106,9 +185,13 @@
 		62D904AF1C0E4DBF0065D8A5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = ICST;
 				TargetAttributes = {
+					62D8B02D1C37462900AC1D31 = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
 					62D904C41C0E4E160065D8A5 = {
 						CreatedOnToolsVersion = 7.1.1;
 					};
@@ -127,11 +210,25 @@
 			projectRoot = "";
 			targets = (
 				62D904C41C0E4E160065D8A5 /* spatdiftest */,
+				62D8B02D1C37462900AC1D31 /* oldtest */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		62D8B02A1C37462900AC1D31 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				62D8B0311C37462900AC1D31 /* oldtest.cpp in Sources */,
+				62D8B0351C3746A500AC1D31 /* tinyxml2.cpp in Sources */,
+				62D8B0361C3746A500AC1D31 /* sdConst.cpp in Sources */,
+				62D8B0371C3746A500AC1D31 /* sdEntity.cpp in Sources */,
+				62D8B0381C3746A500AC1D31 /* sdLoader.cpp in Sources */,
+				62D8B0391C3746A500AC1D31 /* sdSaver.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		62D904C11C0E4E160065D8A5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -148,6 +245,23 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		62D8B0331C37462900AC1D31 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../ ${PROJECT_DIR}/../Catch/single_include/ $(SRCROOT)/../../libs/tinyxml2 $(SRCROOT)/../../libs/libjson/**";
+			};
+			name = Debug;
+		};
+		62D8B0341C37462900AC1D31 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../ ${PROJECT_DIR}/../Catch/single_include/ $(SRCROOT)/../../libs/tinyxml2 $(SRCROOT)/../../libs/libjson/**";
+			};
+			name = Release;
+		};
 		62D904BC1C0E4DBF0065D8A5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -239,7 +353,7 @@
 			buildSettings = {
 				HEADER_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../ ${PROJECT_DIR}/../Catch/single_include/ \"$(SRCROOT)/../../libs/tinyxml2\" \"$(SRCROOT)/../../libs/libjson/**";
+				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../ ${PROJECT_DIR}/../Catch/single_include/ $(SRCROOT)/../../libs/tinyxml2 $(SRCROOT)/../../libs/libjson/**";
 			};
 			name = Debug;
 		};
@@ -248,13 +362,21 @@
 			buildSettings = {
 				HEADER_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../ ${PROJECT_DIR}/../Catch/single_include/ \"$(SRCROOT)/../../libs/tinyxml2\" \"$(SRCROOT)/../../libs/libjson/**";
+				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../ ${PROJECT_DIR}/../Catch/single_include/ $(SRCROOT)/../../libs/tinyxml2 $(SRCROOT)/../../libs/libjson/**";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		62D8B0321C37462900AC1D31 /* Build configuration list for PBXNativeTarget "oldtest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				62D8B0331C37462900AC1D31 /* Debug */,
+				62D8B0341C37462900AC1D31 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		62D904B21C0E4DBF0065D8A5 /* Build configuration list for PBXProject "libSpatDIFTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

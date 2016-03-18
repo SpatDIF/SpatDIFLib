@@ -8,22 +8,9 @@
 
 /* Begin PBXFileReference section */
 		6202BE3919AB4F9C00D872DE /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		62087AAA19A9FE5D00F8A3E6 /* FileWithExtension.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FileWithExtension.cpp; path = ../examples/FileWithExtension.cpp; sourceTree = "<group>"; };
-		62087AAB19A9FE5D00F8A3E6 /* How_to_query.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = How_to_query.cpp; path = ../examples/How_to_query.cpp; sourceTree = "<group>"; };
-		62087AAC19A9FE5D00F8A3E6 /* sdConverter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdConverter.cpp; path = ../examples/sdConverter.cpp; sourceTree = "<group>"; };
-		62087AAD19A9FE5D00F8A3E6 /* sdCoreEventTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdCoreEventTest.cpp; path = ../examples/sdCoreEventTest.cpp; sourceTree = "<group>"; };
-		62087AAE19A9FE5D00F8A3E6 /* sdDateTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdDateTest.cpp; path = ../examples/sdDateTest.cpp; sourceTree = "<group>"; };
-		62087AAF19A9FE5D00F8A3E6 /* sdEventTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdEventTest.cpp; path = ../examples/sdEventTest.cpp; sourceTree = "<group>"; };
 		62087AB019A9FE5D00F8A3E6 /* sdExtensionTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdExtensionTest.cpp; path = ../examples/sdExtensionTest.cpp; sourceTree = "<group>"; };
-		62087AB119A9FE5D00F8A3E6 /* sdInfoTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdInfoTest.cpp; path = ../examples/sdInfoTest.cpp; sourceTree = "<group>"; };
-		62087AB219A9FE5D00F8A3E6 /* sdLoaderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdLoaderTest.cpp; path = ../examples/sdLoaderTest.cpp; sourceTree = "<group>"; };
-		62087AB319A9FE5D00F8A3E6 /* sdOSCConverterTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdOSCConverterTest.cpp; path = ../examples/sdOSCConverterTest.cpp; sourceTree = "<group>"; };
-		62087AB419A9FE5D00F8A3E6 /* sdOSCMessageTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdOSCMessageTest.cpp; path = ../examples/sdOSCMessageTest.cpp; sourceTree = "<group>"; };
 		62087AB519A9FE5D00F8A3E6 /* sdOSCResponderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdOSCResponderTest.cpp; path = ../examples/sdOSCResponderTest.cpp; sourceTree = "<group>"; };
-		62087AB619A9FE5D00F8A3E6 /* sdSaverTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdSaverTest.cpp; path = ../examples/sdSaverTest.cpp; sourceTree = "<group>"; };
-		62087AB719A9FE5D00F8A3E6 /* sdSceneTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdSceneTest.cpp; path = ../examples/sdSceneTest.cpp; sourceTree = "<group>"; };
 		62087AB819AA002300F8A3E6 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; name = Makefile; path = ../examples/Makefile; sourceTree = "<group>"; };
-		624C61491B19D5FD00282438 /* sdSourceWidthTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdSourceWidthTest.cpp; path = ../examples/sdSourceWidthTest.cpp; sourceTree = "<group>"; };
 		625A5BE41B62490500223D5D /* sdPointSetTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdPointSetTest.cpp; path = ../examples/sdPointSetTest.cpp; sourceTree = "<group>"; };
 		6287481519AB3CD000CD2245 /* sdInterpolationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdInterpolationTest.cpp; path = ../examples/sdInterpolationTest.cpp; sourceTree = "<group>"; };
 		62E1B4341C27928000B120E5 /* sdConst.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdConst.cpp; sourceTree = "<group>"; };
@@ -37,23 +24,10 @@
 			isa = PBXGroup;
 			children = (
 				62087AB819AA002300F8A3E6 /* Makefile */,
-				62087AAA19A9FE5D00F8A3E6 /* FileWithExtension.cpp */,
-				62087AAB19A9FE5D00F8A3E6 /* How_to_query.cpp */,
-				62087AAC19A9FE5D00F8A3E6 /* sdConverter.cpp */,
-				62087AAD19A9FE5D00F8A3E6 /* sdCoreEventTest.cpp */,
-				62087AAE19A9FE5D00F8A3E6 /* sdDateTest.cpp */,
-				62087AAF19A9FE5D00F8A3E6 /* sdEventTest.cpp */,
 				62087AB019A9FE5D00F8A3E6 /* sdExtensionTest.cpp */,
-				62087AB119A9FE5D00F8A3E6 /* sdInfoTest.cpp */,
 				6287481519AB3CD000CD2245 /* sdInterpolationTest.cpp */,
-				62087AB219A9FE5D00F8A3E6 /* sdLoaderTest.cpp */,
-				62087AB319A9FE5D00F8A3E6 /* sdOSCConverterTest.cpp */,
-				62087AB419A9FE5D00F8A3E6 /* sdOSCMessageTest.cpp */,
 				62087AB519A9FE5D00F8A3E6 /* sdOSCResponderTest.cpp */,
-				62087AB619A9FE5D00F8A3E6 /* sdSaverTest.cpp */,
-				62087AB719A9FE5D00F8A3E6 /* sdSceneTest.cpp */,
 				625A5BE41B62490500223D5D /* sdPointSetTest.cpp */,
-				624C61491B19D5FD00282438 /* sdSourceWidthTest.cpp */,
 			);
 			name = Examples;
 			sourceTree = "<group>";
@@ -115,7 +89,7 @@
 		A7E1E39018A3B3F8003BE78B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = org.spatdif;
 			};
 			buildConfigurationList = A7E1E39318A3B3F8003BE78B /* Build configuration list for PBXProject "libspatdif" */;
@@ -181,6 +155,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
