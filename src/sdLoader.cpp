@@ -43,26 +43,18 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
     XMLElement* session = information->FirstChildElement("session");
     XMLElement* location = information->FirstChildElement("location");
     XMLElement* annotation = information->FirstChildElement("annotation");
+    XMLElement* title = information->FirstChildElement("title");
+    XMLElement* duration = information->FirstChildElement("duration");
     XMLElement* extensions = meta->FirstChildElement("extensions");
     
-    if(author){
-        info.setAuthor(std::string(author->GetText()));
-    }
-    if(date){
-        info.setDate(std::string(date->GetText()));
-    }
-    if(host){
-        info.setHost(std::string(host->GetText()));
-    }
-    if(session){
-        info.setSession(std::string(session->GetText()));
-    }
-    if(location){
-        info.setLocation(std::string(location->GetText()));
-    }
-    if(annotation){
-        info.setAnnotation(std::string(annotation->GetText()));
-    }
+    if(author){info.setAuthor(std::string(author->GetText()));}
+    if(date){info.setDate(std::string(date->GetText()));}
+    if(host){info.setHost(std::string(host->GetText()));}
+    if(session){info.setSession(std::string(session->GetText()));}
+    if(location){info.setLocation(std::string(location->GetText()));}
+    if(annotation){info.setAnnotation(std::string(annotation->GetText()));}
+    if(title){info.setTitle(std::string(title->GetText()));}
+    if(duration){info.setDuration(std::stod(duration->GetText()));}
     scene.setInfo(info);
     
     

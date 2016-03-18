@@ -94,6 +94,11 @@ TEST_CASE("How to Query loaded file"){
     sdEntity *voice1 = myScene.getEntity("voice1");
     if(!voice1) {abort();}
     
+    
+    sdInfo info = myScene.getInfo();
+    REQUIRE(info.getDuration() == 650.3);
+    REQUIRE(info.getTitle() == "My Master Piece");
+    
     REQUIRE(voice1->getName() == "voice1");
     auto event = voice1->getEvent<SD_POSITION>(2.0);
     auto position = event->getValue();
@@ -219,7 +224,7 @@ TEST_CASE("FileExtension"){
 }
 
 TEST_CASE("sdSaverTest"){
-    sdInfo info(string("chikashi miyama"), string("sdSaverTest"), string("2013-08-04"), string("Cologne"), string("1.2"), string("this is a test"));
+    sdInfo info(string("chikashi miyama"), string("sdSaverTest"), string("2013-08-04"), string("Cologne"), string("1.2"), string("this is a test"), string("My Second Master Piece"), 645.32);
     sdScene scene(info);
     
     scene.addExtension(EExtension::SD_MEDIA);

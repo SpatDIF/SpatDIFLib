@@ -5,6 +5,8 @@
             <annotation>this is an example spatdif scene</annotation>
 			<date>2013-08-13</date>
 			<author>Chikashi Miyama</author>
+            <title>My Master Piece</title>
+            <duration>650.3</duration>
         </info>
         <ordering>time</ordering>
     </meta>

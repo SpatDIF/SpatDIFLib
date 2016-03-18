@@ -29,31 +29,26 @@ XMLElement* sdSaver::XMLInfoSection(XMLDocument &xml, sdScene *scene){
     XMLElement* info = xml.NewElement("info");
     sdInfo information = scene->getInfo();
 
-    std::string infoStrings[6];
-    std::string elementNameStrings[6];
+    std::vector<std::pair<std::string ,std::string>> infoStrings = {
+        {"author",information.getAuthor()},
+        {"host",information.getHost()},
+        {"date",information.getDateAsString()},
+        {"location",information.getLocation()},
+        {"session",information.getSession()},
+        {"annotation",information.getAnnotation()},
+        {"title",information.getTitle()},
+        {"duration",std::to_string(information.getDuration())}
+    };
     
-    infoStrings[0] = information.getAuthor();
-    infoStrings[1] = information.getHost();
-    infoStrings[2] = information.getDateAsString();
-    infoStrings[3] = information.getLocation();
-    infoStrings[4] = information.getSession();
-    infoStrings[5] = information.getAnnotation();
-
-    elementNameStrings[0] = "author";
-    elementNameStrings[1] = "host";
-    elementNameStrings[2] = "date";
-    elementNameStrings[3] = "location";
-    elementNameStrings[4] = "session";
-    elementNameStrings[5] = "annotation";
-    
-    for(int i = 0; i< 6; i++){
-        if(!infoStrings[i].empty()){
-            XMLElement* elem  = xml.NewElement(elementNameStrings[i].c_str());
-            XMLText* tex = xml.NewText(infoStrings[i].c_str());
+    std::for_each(infoStrings.begin(), infoStrings.end(), [&xml, &info](const std::pair<std::string ,std::string> &infoString){
+        if(!infoString.second.empty()){
+            XMLElement* elem  = xml.NewElement(infoString.first.c_str());
+            XMLText* tex = xml.NewText(infoString.second.c_str());
             elem->InsertEndChild(tex);
             info->InsertEndChild(elem);
         }
-    }
+    });
+
     return info;
 }
 
@@ -101,7 +96,7 @@ std::string sdSaver::XMLFromScene(sdScene *scene){
     
     XMLElement* spatdif = xml.NewElement("spatdif");
 	xml.InsertEndChild(spatdif);
-    spatdif->SetAttribute("version", "0.3");
+    spatdif->SetAttribute("version", "0.4");
 
     spatdif->InsertEndChild(sdSaver::XMLMetaSection(xml, scene));
 

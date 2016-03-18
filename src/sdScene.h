@@ -68,7 +68,7 @@ public:
     /*! gets an instance of sdInfo, which contains the "info" part of the meta section
      @param info a sdInfo
      */
-    sdInfo getInfo(void);
+    const sdInfo &getInfo(void) const;
 
 #pragma mark ordering
 
@@ -283,7 +283,7 @@ inline void sdScene::setInfo(sdInfo info){
     sdScene::info = info;
 }
 
-inline sdInfo sdScene::getInfo(void){
+inline const sdInfo &sdScene::getInfo(void) const{
     return info;
 }
 
