@@ -24,6 +24,10 @@ bool sdEntity::isDescriptorValid(const EDescriptor &descriptor) const{
     return parent->isDescriptorValid(descriptor);
 }
 
+void sdEntity::addGlobalMetaAlias(std::shared_ptr<sdProtoMeta> meta) {
+    parent->addMetaAlias(this, meta);
+}
+
 void sdEntity::addGlobalEventAlias(std::shared_ptr<sdProtoEvent> event) {
     parent->addEventAlias(this, event);
 }

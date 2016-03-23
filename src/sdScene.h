@@ -34,12 +34,15 @@ class sdScene{
     
 protected:
     std::map <std::string, sdEntity> entities; //!< a map of sdEntities
+    std::vector<std::pair<sdEntity*, std::shared_ptr<sdProtoMeta>>> allMetas; //!< an alias pointer to all metas
     std::vector<std::pair<sdEntity*, std::shared_ptr<sdProtoEvent>>> allEvents; //!< an alias pointer to all events
     std::set <EExtension> activatedExtensionSet; //!< a set of activated extension
     std::set <EDescriptor> validDescriptorSet; //!< a set of valid descriptor
     EOrdering ordering; //!< ordering flag
     sdInfo info; //!< contains "info" part of the meta section
+    void addMetaAlias(sdEntity * const entity, const std::shared_ptr<sdProtoMeta>);
     void addEventAlias(sdEntity * const entity, const std::shared_ptr<sdProtoEvent>);
+    bool removeMetaAlias(const sdEntity* const entity, const EDescriptor & descriptor);
     bool removeEventAlias(const sdEntity* const entity, const double &time, const EDescriptor & descriptor);
 
     void sortAllEvents();
@@ -336,11 +339,24 @@ inline bool sdScene::isDescriptorValid(const EDescriptor &descriptor) const{
     return !(validDescriptorSet.find(descriptor) == validDescriptorSet.end());
 }
 
+inline void sdScene::addMetaAlias(sdEntity * const entity, std::shared_ptr<sdProtoMeta> event){
+    removeMetaAlias(entity, event->getDescriptor());
+    allMetas.push_back(std::make_pair(entity, event));
+}
+
 inline void sdScene::addEventAlias(sdEntity * const entity, std::shared_ptr<sdProtoEvent> event){
     removeEventAlias(entity, event->getTime(), event->getDescriptor());
     allEvents.push_back(std::make_pair(entity, event));
     sortAllEvents();
-    
+}
+
+inline bool sdScene::removeMetaAlias(const sdEntity* const entity, const EDescriptor & descriptor ){
+    auto it = std::find_if(allMetas.begin(), allMetas.end(), [&entity, &descriptor]( std::pair<const sdEntity * ,std::shared_ptr<sdProtoMeta>> meta){
+        return (meta.second->getDescriptor() == descriptor) && (meta.first == entity);
+    });
+    if(it == allMetas.end()) return false;
+    allMetas.erase(it);
+    return true;
 }
 
 inline bool sdScene::removeEventAlias(const sdEntity* const entity, const double &time, const EDescriptor & descriptor ){

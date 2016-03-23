@@ -25,6 +25,7 @@
 		62401D3A1CA2A07F001179C5 /* sdOSCResponder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdOSCResponder.h; sourceTree = "<group>"; };
 		62401D3B1CA2A07F001179C5 /* sdSaver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdSaver.h; sourceTree = "<group>"; };
 		62401D3C1CA2A07F001179C5 /* sdScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdScene.h; sourceTree = "<group>"; };
+		62401D5C1CA2D88F001179C5 /* sdMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdMeta.h; sourceTree = "<group>"; };
 		625A5BE41B62490500223D5D /* sdPointSetTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdPointSetTest.cpp; path = ../examples/sdPointSetTest.cpp; sourceTree = "<group>"; };
 		6287481519AB3CD000CD2245 /* sdInterpolationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdInterpolationTest.cpp; path = ../examples/sdInterpolationTest.cpp; sourceTree = "<group>"; };
 		62E1B4341C27928000B120E5 /* sdConst.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdConst.cpp; sourceTree = "<group>"; };
@@ -61,6 +62,7 @@
 				62401D2F1CA2A07F001179C5 /* sdConst.h */,
 				62401D301CA2A07F001179C5 /* sdDate.h */,
 				62401D311CA2A07F001179C5 /* sdEntity.h */,
+				62401D5C1CA2D88F001179C5 /* sdMeta.h */,
 				62401D321CA2A07F001179C5 /* sdEvent.h */,
 				62401D331CA2A07F001179C5 /* sdException.h */,
 				62401D341CA2A07F001179C5 /* sdInfo.h */,

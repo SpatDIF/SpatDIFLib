@@ -21,6 +21,7 @@
 #include <memory>
 #include "sdException.h"
 #include "sdConst.h"
+#include "sdMeta.h"
 #include "sdEvent.h"
 
 
@@ -32,7 +33,7 @@ class sdEntity{
     friend sdScene;
     
 protected:
-    
+    std::vector< std::shared_ptr<sdProtoMeta> > metas; /*!< maintains pointers to all relevant sdMetas */
     std::vector< std::shared_ptr<sdProtoEvent> > events; /*!< maintains pointers to all relevant sdEvents */
     sdScene * const parent;
     const EKind kind;
@@ -40,13 +41,18 @@ protected:
     /*!sdEntity can be invoked only by sdScene*/
     sdEntity(sdScene * const parent, EKind kind = EKind::SD_SOURCE):parent(parent), kind(kind){};
 
+    /*! find meta with the descriptor */
+    std::vector<std::shared_ptr<sdProtoMeta>>::const_iterator findMeta(const EDescriptor &descriptor) const;
+    
     /*! find event with the descriptor at time */
     std::vector<std::shared_ptr<sdProtoEvent>>::const_iterator findEvent(const double &time, const EDescriptor &descriptor) const;
-    
     
     /*! ask parent if the extension for the descriptor is activated */
     bool isDescriptorValid(const EDescriptor &descriptor) const;
     
+    /*! add a pointer a meta to the global event vector */
+    void addGlobalMetaAlias(std::shared_ptr<sdProtoMeta> meta);
+
     /*! add a pointer an event to the global event vector */
     void addGlobalEventAlias(std::shared_ptr<sdProtoEvent> event);
 
@@ -62,17 +68,23 @@ public:
     /*! ask parent the name given to this entity */
     std::string getName();
     
+    /*! this function is the only way to instantiate sdMeta.*/
+    template <EDescriptor D>
+    std::shared_ptr<sdProtoMeta> addProtoMeta(typename sdDescriptor<D>::type value);
+        
     /*! this function is the only way to instantiate sdEvent.*/
     template <EDescriptor D>
     std::shared_ptr<sdProtoEvent> addProtoEvent(const double &time, typename sdDescriptor<D>::type value);
 
+    
+        
     /*! return value cast to a specific subclass event.*/
     template <EDescriptor D>
     sdEvent<D> * const addEvent(const double &time, typename sdDescriptor<D>::type value);
 
     /*! return value cast to a specific subclass event.*/
     template <EDescriptor D>
-    sdEvent<D> * const addMetaEvent(typename sdDescriptor<D>::type value);
+    sdMeta<D> * const addMeta(typename sdDescriptor<D>::type value);
 
     /*! add event by string*/
     const std::shared_ptr<sdProtoEvent> addEvent(const std::string &time, const std::string &descriptor, const std::string &value);
@@ -214,6 +226,25 @@ public:
     /*< remove an event from the events vector
      @param event the event to be removed
      */
+    bool removeMeta(const std::shared_ptr<sdProtoMeta> &meta);
+    
+    /*< remove an event from the
+     @param a pointer to a raw proto event to be removed.
+     */
+    bool removeMeta(const sdProtoMeta * const meta);
+    
+    /*! remove an event at the specified time and descriptor
+     @param descriptor the descriptor of sdEvent to be removed */
+    bool removeMeta(const EDescriptor &descriptor);
+    
+    /*! remove all events in the events */
+    void removeAllMetas();
+    
+    
+    
+    /*< remove an event from the events vector
+     @param event the event to be removed
+     */
     bool removeEvent(const std::shared_ptr<sdProtoEvent> &event);
     
     /*< remove an event from the
@@ -229,7 +260,6 @@ public:
     
     /*! remove all events in the events */
     void removeAllEvents();
-
     
     
     /*!
@@ -277,6 +307,13 @@ public:
     */
 };
 
+inline std::vector<std::shared_ptr<sdProtoMeta>>::const_iterator sdEntity::findMeta(const EDescriptor &descriptor) const{
+    for (auto it = metas.begin(); it != metas.end(); it++) {
+        if( (descriptor == (*it)->getDescriptor()) ){ return it; }
+    }
+    return metas.end();
+}
+
 inline std::vector<std::shared_ptr<sdProtoEvent>>::const_iterator sdEntity::findEvent(const double &time, const EDescriptor &descriptor) const{
     for (auto it = events.begin(); it != events.end(); it++) {
         if( (almostEqual(time, (*it)->getTime())) && (descriptor == (*it)->getDescriptor()) ){ return it; }
@@ -285,12 +322,32 @@ inline std::vector<std::shared_ptr<sdProtoEvent>>::const_iterator sdEntity::find
     return events.end();
 }
 
+
+
 inline const EKind &sdEntity::getKind() const{
     return kind;
 }
 
 inline std::string sdEntity::getKindAsString() const{
     return kind == EKind::SD_SOURCE ? "source": "sink";
+}
+
+template <EDescriptor D>
+inline std::shared_ptr<sdProtoMeta> sdEntity::addProtoMeta(typename sdDescriptor<D>::type value){
+    
+    // remove if already exist
+    removeMeta(D);
+    
+    // add
+    auto meta = std::shared_ptr<sdProtoMeta>(new sdMeta<D>(this, value));
+    metas.push_back(meta);
+    addGlobalMetaAlias(meta);
+    
+    // sort
+    std::sort(events.begin(), events.end(),
+              [](std::shared_ptr<sdProtoEvent> eventA, std::shared_ptr<sdProtoEvent> eventB)->bool{
+                  return eventA->getTime() < eventB->getTime(); });
+    return meta;
 }
 
 template <EDescriptor D>
@@ -314,17 +371,14 @@ inline std::shared_ptr<sdProtoEvent> sdEntity::addProtoEvent(const double &time,
     return event;
 }
 
-
+template <EDescriptor D>
+inline sdMeta<D> * const sdEntity::addMeta(typename sdDescriptor<D>::type value){
+    return dynamic_cast<sdMeta<D>*>(addProtoMeta<D>(value).get());
+}
 
 template <EDescriptor D>
 inline sdEvent<D> * const sdEntity::addEvent(const double &time,  typename sdDescriptor<D>::type value){
     return dynamic_cast<sdEvent<D>*>(addProtoEvent<D>(time,value).get());
-}
-
-template <EDescriptor D>
-inline sdEvent<D> * const sdEntity::addMetaEvent(typename sdDescriptor<D>::type value){
-    //return dynamic_cast<sdEvent<D>*>(addProtoEvent<D>(time,value).get());
-    return nullptr;
 }
 
 inline const std::shared_ptr<sdProtoEvent> sdEntity::addEvent(const std::string &time, const std::string &descriptor, const std::string &value){
@@ -335,7 +389,6 @@ inline const std::shared_ptr<sdProtoEvent> sdEntity::addEvent(const std::string 
     auto addEventFunc = sdExtension::getAddEventFunc(dtr);
     return addEventFunc(this, dtime, value);
 }
-
 
 template <EDescriptor D>
 inline const sdEvent< D > * const sdEntity::getEvent(const double &time) const{
@@ -480,6 +533,32 @@ inline void sdEntity::sort(){
          });
 }
 
+inline bool sdEntity::removeMeta(const sdProtoMeta * const meta){
+    for (auto it = metas.begin(); it != metas.end(); it++) {
+        if((*it).get() == meta){
+            metas.erase(it);
+            return true;
+        }
+    }
+    return false;
+}
+
+inline bool sdEntity::removeMeta(const std::shared_ptr<sdProtoMeta> &meta){
+    return removeMeta(dynamic_cast<sdProtoMeta*>(meta.get()));
+}
+
+inline bool sdEntity::removeMeta(const EDescriptor &descriptor){
+    auto it = findMeta(descriptor);
+    if(it == metas.end()) return false;
+    metas.erase(it);
+    return true;
+}
+
+inline void sdEntity::removeAllMetas(){
+    metas.clear();
+}
+
+#pragma mark removeEvent
 inline bool sdEntity::removeEvent(const sdProtoEvent * const event){
     for (auto it = events.begin(); it != events.end(); it++) {
         if((*it).get() == event){
@@ -490,11 +569,9 @@ inline bool sdEntity::removeEvent(const sdProtoEvent * const event){
     return false;
 }
 
-
 inline bool sdEntity::removeEvent(const std::shared_ptr<sdProtoEvent> &event){
     return removeEvent(dynamic_cast<sdProtoEvent*>(event.get()));
 }
-
 
 inline bool sdEntity::removeEvent(const double &time, const EDescriptor &descriptor){
     auto it = findEvent(time, descriptor);
@@ -502,6 +579,7 @@ inline bool sdEntity::removeEvent(const double &time, const EDescriptor &descrip
     events.erase(it);
     return true;
 }
+
 inline void sdEntity::removeAllEvents(){
     events.clear();
 }

@@ -70,9 +70,8 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
             sdEntity* targetEntity = scene.getEntity(entityName);
             if(!targetEntity){
                 targetEntity = scene.addEntity(entityName, EKind::SD_SINK);
-                if(position){
-                    targetEntity->addMetaEvent<SD_POSITION>(stringToArray<double, 3>(position->GetText()));
-                }
+                if(type)targetEntity->addMeta<SD_TYPE>(stringTo<EType>(type->GetText()));
+                if(position)targetEntity->addMeta<SD_POSITION>(stringToArray<double, 3>(position->GetText()));
             }
             sink = sink->NextSiblingElement("sink");
         }
