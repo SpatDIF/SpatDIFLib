@@ -38,7 +38,7 @@ public:
      return event time 
      @returns the time of event in second
     */
-    double getTime() const;
+    const double &getTime() const;
     
     /*!
      returns event time as std::string
@@ -53,7 +53,7 @@ time(time),
 sdProtoMeta(descriptor, parent)
 {}
 
-inline double sdProtoEvent::getTime() const{
+inline const double &sdProtoEvent::getTime() const{
     return time;
 }
 

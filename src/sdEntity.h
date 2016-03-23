@@ -59,13 +59,11 @@ public:
     std::string getName();
     
     /*! this function is the only way to instantiate sdMeta.*/
-    template <EDescriptor D>
-    std::shared_ptr<sdProtoMeta> addProtoMeta(typename sdDescriptor<D>::type value);
-
-    /*! return value cast to a specific subclass event.*/
+    using sdMetaHandler::addMeta;
     template <EDescriptor D>
     sdMeta<D> * const addMeta(typename sdDescriptor<D>::type value);
-
+    
+    
     /*! this function is the only way to instantiate sdEvent.*/
     template <EDescriptor D>
     std::shared_ptr<sdProtoEvent> addProtoEvent(const double &time, typename sdDescriptor<D>::type value);
@@ -93,7 +91,6 @@ public:
      */
     template <EDescriptor D>
     const typename sdDescriptor<D>::type * const getValue(const double &time) const;
-    
     
     /*!
      this function search for an event at specified time and descriptor and return the data as a string.
@@ -125,27 +122,8 @@ public:
 
 template <EDescriptor D>
 inline sdMeta<D> * const sdEntity::addMeta(typename sdDescriptor<D>::type value){
-    return dynamic_cast<sdMeta<D>*>(addProtoMeta<D>(value).get());
+    return sdMetaHandler::addMeta<D>(value, this);
 }
-
-template <EDescriptor D>
-inline std::shared_ptr<sdProtoMeta> sdEntity::addProtoMeta(typename sdDescriptor<D>::type value){
-    
-    // remove if already exist
-    removeMeta(D);
-    
-    // add
-    auto meta = std::shared_ptr<sdProtoMeta>(new sdMeta<D>(this, value));
-    metas.push_back(meta);
-    addGlobalMetaAlias(meta);
-    
-    return meta;
-}
-
-
-
-
-
 
 inline const EKind &sdEntity::getKind() const{
     return kind;

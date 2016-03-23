@@ -53,12 +53,30 @@ TEST_CASE("Test sdMeta add get remove", "[sdMeta]"){
     sdScene scene;
     sdEntity * entity = scene.addEntity("MyEntity");
     entity->addMeta<SD_PRESENT>(false);
-    auto addedMeta = entity->addMeta<SD_ORIENTATION>({0.3,0.4,0.5}); // 2
-//    auto gotMeta =  entity->getMeta<SD_ORIENTATION>();
-//    REQUIRE(gotEvent);
-//    REQUIRE(gotEvent == addedMeta);
+    REQUIRE(entity->getNumberOfMetas() == 1);
     
+    auto addedMeta = entity->addMeta<SD_ORIENTATION>({0.3,0.4,0.5});
+    REQUIRE(entity->getNumberOfMetas() == 2);
+    
+    auto gotValue =  entity->getMeta<SD_ORIENTATION>()->getValue();
+    REQUIRE(gotValue[0] == 0.3);
+    REQUIRE(gotValue[1] == 0.4);
+    REQUIRE(gotValue[2] == 0.5);
 
+    auto modifiedMeta = entity->addMeta<SD_ORIENTATION>({0.1,0.2,0.3});
+    REQUIRE(entity->getNumberOfMetas() == 2);
+
+    auto modifiedVal = modifiedMeta->getValue();
+    REQUIRE(modifiedVal[0] == 0.1);
+    REQUIRE(modifiedVal[1] == 0.2);
+    REQUIRE(modifiedVal[2] == 0.3);
+    
+    entity->removeMeta(modifiedMeta); 
+    REQUIRE(entity->getNumberOfMetas() == 1);
+    entity->addMeta<SD_POSITION>({2,3,4});
+    REQUIRE(entity->getNumberOfMetas() == 2);
+    entity->removeAllMetas();
+    REQUIRE(entity->getNumberOfMetas() == 0);
 }
 
 
