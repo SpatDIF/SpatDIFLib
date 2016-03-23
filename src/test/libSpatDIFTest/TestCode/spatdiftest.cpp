@@ -47,7 +47,19 @@ TEST_CASE("sdDate member function test", "[sdDate]"){
         REQUIRE(dateString == "1979-12-4");
     }
 }
+#pragma mark sdMeta
 
+TEST_CASE("Test sdMeta add get remove", "[sdMeta]"){
+    sdScene scene;
+    sdEntity * entity = scene.addEntity("MyEntity");
+    entity->addMeta<SD_PRESENT>(false);
+    auto addedMeta = entity->addMeta<SD_ORIENTATION>({0.3,0.4,0.5}); // 2
+//    auto gotMeta =  entity->getMeta<SD_ORIENTATION>();
+//    REQUIRE(gotEvent);
+//    REQUIRE(gotEvent == addedMeta);
+    
+
+}
 
 
 #pragma mark sdEvent
