@@ -35,29 +35,51 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
     
     XMLElement* spatdif = xml.FirstChildElement("spatdif");
     XMLElement* meta = spatdif->FirstChildElement("meta");
-    XMLElement* information = meta->FirstChildElement("info");
     
-    XMLElement* author = information->FirstChildElement("author");
-    XMLElement* host = information->FirstChildElement("host");
-    XMLElement* date = information->FirstChildElement("date");
-    XMLElement* session = information->FirstChildElement("session");
-    XMLElement* location = information->FirstChildElement("location");
-    XMLElement* annotation = information->FirstChildElement("annotation");
-    XMLElement* title = information->FirstChildElement("title");
-    XMLElement* duration = information->FirstChildElement("duration");
+    {
+        XMLElement* information = meta->FirstChildElement("info");
+        XMLElement* author = information->FirstChildElement("author");
+        XMLElement* host = information->FirstChildElement("host");
+        XMLElement* date = information->FirstChildElement("date");
+        XMLElement* session = information->FirstChildElement("session");
+        XMLElement* location = information->FirstChildElement("location");
+        XMLElement* annotation = information->FirstChildElement("annotation");
+        XMLElement* title = information->FirstChildElement("title");
+        XMLElement* duration = information->FirstChildElement("duration");
+        
+        if(author){info.setAuthor(std::string(author->GetText()));}
+        if(date){info.setDate(std::string(date->GetText()));}
+        if(host){info.setHost(std::string(host->GetText()));}
+        if(session){info.setSession(std::string(session->GetText()));}
+        if(location){info.setLocation(std::string(location->GetText()));}
+        if(annotation){info.setAnnotation(std::string(annotation->GetText()));}
+        if(title){info.setTitle(std::string(title->GetText()));}
+        if(duration){info.setDuration(std::stod(duration->GetText()));}
+        scene.setInfo(info);
+    }
+    
+    // create sink entities
+    {
+        XMLElement* sink = meta->FirstChildElement("sink");
+        while (sink) {
+            XMLElement *name = sink->FirstChildElement("name");
+            XMLElement *type = sink->FirstChildElement("type");
+            XMLElement *position = sink->FirstChildElement("position");
+
+            auto entityName = std::string(name->GetText());
+            sdEntity* targetEntity = scene.getEntity(entityName);
+            if(!targetEntity){
+                targetEntity = scene.addEntity(entityName, EKind::SD_SINK);
+                if(position){
+                    targetEntity->addMetaEvent<SD_POSITION>(stringToArray<double, 3>(position->GetText()));
+                }
+            }
+            sink = sink->NextSiblingElement("sink");
+        }
+    }
+    
+    
     XMLElement* extensions = meta->FirstChildElement("extensions");
-    
-    if(author){info.setAuthor(std::string(author->GetText()));}
-    if(date){info.setDate(std::string(date->GetText()));}
-    if(host){info.setHost(std::string(host->GetText()));}
-    if(session){info.setSession(std::string(session->GetText()));}
-    if(location){info.setLocation(std::string(location->GetText()));}
-    if(annotation){info.setAnnotation(std::string(annotation->GetText()));}
-    if(title){info.setTitle(std::string(title->GetText()));}
-    if(duration){info.setDuration(std::stod(duration->GetText()));}
-    scene.setInfo(info);
-    
-    
     if(extensions){
         std::string extensionsString = std::string(extensions->GetText());
         std::istringstream iss(extensionsString);

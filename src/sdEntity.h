@@ -70,6 +70,10 @@ public:
     template <EDescriptor D>
     sdEvent<D> * const addEvent(const double &time, typename sdDescriptor<D>::type value);
 
+    /*! return value cast to a specific subclass event.*/
+    template <EDescriptor D>
+    sdEvent<D> * const addMetaEvent(typename sdDescriptor<D>::type value);
+
     /*! add event by string*/
     const std::shared_ptr<sdProtoEvent> addEvent(const std::string &time, const std::string &descriptor, const std::string &value);
     
@@ -310,9 +314,17 @@ inline std::shared_ptr<sdProtoEvent> sdEntity::addProtoEvent(const double &time,
     return event;
 }
 
+
+
 template <EDescriptor D>
 inline sdEvent<D> * const sdEntity::addEvent(const double &time,  typename sdDescriptor<D>::type value){
     return dynamic_cast<sdEvent<D>*>(addProtoEvent<D>(time,value).get());
+}
+
+template <EDescriptor D>
+inline sdEvent<D> * const sdEntity::addMetaEvent(typename sdDescriptor<D>::type value){
+    //return dynamic_cast<sdEvent<D>*>(addProtoEvent<D>(time,value).get());
+    return nullptr;
 }
 
 inline const std::shared_ptr<sdProtoEvent> sdEntity::addEvent(const std::string &time, const std::string &descriptor, const std::string &value){

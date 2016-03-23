@@ -11,6 +11,20 @@
 		62087AB019A9FE5D00F8A3E6 /* sdExtensionTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdExtensionTest.cpp; path = ../examples/sdExtensionTest.cpp; sourceTree = "<group>"; };
 		62087AB519A9FE5D00F8A3E6 /* sdOSCResponderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdOSCResponderTest.cpp; path = ../examples/sdOSCResponderTest.cpp; sourceTree = "<group>"; };
 		62087AB819AA002300F8A3E6 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; name = Makefile; path = ../examples/Makefile; sourceTree = "<group>"; };
+		62401D2F1CA2A07F001179C5 /* sdConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdConst.h; sourceTree = "<group>"; };
+		62401D301CA2A07F001179C5 /* sdDate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdDate.h; sourceTree = "<group>"; };
+		62401D311CA2A07F001179C5 /* sdEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdEntity.h; sourceTree = "<group>"; };
+		62401D321CA2A07F001179C5 /* sdEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdEvent.h; sourceTree = "<group>"; };
+		62401D331CA2A07F001179C5 /* sdException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdException.h; sourceTree = "<group>"; };
+		62401D341CA2A07F001179C5 /* sdInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdInfo.h; sourceTree = "<group>"; };
+		62401D351CA2A07F001179C5 /* sdInterpolation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdInterpolation.h; sourceTree = "<group>"; };
+		62401D361CA2A07F001179C5 /* sdLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdLoader.h; sourceTree = "<group>"; };
+		62401D371CA2A07F001179C5 /* sdMain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdMain.h; sourceTree = "<group>"; };
+		62401D381CA2A07F001179C5 /* sdOSCConverter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdOSCConverter.h; sourceTree = "<group>"; };
+		62401D391CA2A07F001179C5 /* sdOSCMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdOSCMessage.h; sourceTree = "<group>"; };
+		62401D3A1CA2A07F001179C5 /* sdOSCResponder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdOSCResponder.h; sourceTree = "<group>"; };
+		62401D3B1CA2A07F001179C5 /* sdSaver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdSaver.h; sourceTree = "<group>"; };
+		62401D3C1CA2A07F001179C5 /* sdScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdScene.h; sourceTree = "<group>"; };
 		625A5BE41B62490500223D5D /* sdPointSetTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdPointSetTest.cpp; path = ../examples/sdPointSetTest.cpp; sourceTree = "<group>"; };
 		6287481519AB3CD000CD2245 /* sdInterpolationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdInterpolationTest.cpp; path = ../examples/sdInterpolationTest.cpp; sourceTree = "<group>"; };
 		62E1B4341C27928000B120E5 /* sdConst.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdConst.cpp; sourceTree = "<group>"; };
@@ -44,6 +58,20 @@
 			isa = PBXGroup;
 			children = (
 				6202BE3919AB4F9C00D872DE /* Makefile */,
+				62401D2F1CA2A07F001179C5 /* sdConst.h */,
+				62401D301CA2A07F001179C5 /* sdDate.h */,
+				62401D311CA2A07F001179C5 /* sdEntity.h */,
+				62401D321CA2A07F001179C5 /* sdEvent.h */,
+				62401D331CA2A07F001179C5 /* sdException.h */,
+				62401D341CA2A07F001179C5 /* sdInfo.h */,
+				62401D351CA2A07F001179C5 /* sdInterpolation.h */,
+				62401D361CA2A07F001179C5 /* sdLoader.h */,
+				62401D371CA2A07F001179C5 /* sdMain.h */,
+				62401D381CA2A07F001179C5 /* sdOSCConverter.h */,
+				62401D391CA2A07F001179C5 /* sdOSCMessage.h */,
+				62401D3A1CA2A07F001179C5 /* sdOSCResponder.h */,
+				62401D3B1CA2A07F001179C5 /* sdSaver.h */,
+				62401D3C1CA2A07F001179C5 /* sdScene.h */,
 				62E1B4341C27928000B120E5 /* sdConst.cpp */,
 				A7E1E39D18A3B44F003BE78B /* sdEntity.cpp */,
 				A7E1E3A518A3B44F003BE78B /* sdLoader.cpp */,

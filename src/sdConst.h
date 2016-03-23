@@ -27,6 +27,13 @@
 #include "sdException.h"
 
 /*!
+    static constants
+ */
+static const double kDegreeToRadian = M_PI/180.0;
+static const double kRadianToDegree = 180.0/M_PI;
+
+
+/*!
     enum for descriptor. internally all descriptors are handled with this Enum
  */
 typedef enum {
@@ -220,8 +227,6 @@ inline bool almostEqual(double x, double y){
 /*!
     convert azimuth, elevation, radius to xyz
  */
-static const double kDegreeToRadian = M_PI/180.0;
-static const double kRadianToDegree = 180.0/M_PI;
 
 inline std::array<double, 3> aedToXyz(const std::array<double,3> &aed){
     std::array<double, 3> xyz;

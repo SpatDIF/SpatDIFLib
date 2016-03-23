@@ -316,7 +316,9 @@ TEST_CASE("getValue()"){
     
     sdScene scene;
     sdEntity * entity = scene.addEntity("MyEntity");
+    std::array<double, 3> meta = {0.2,0.4,0.5};
     std::array<double, 3> array = {0.5, 0.2, 0.3};
+    auto m = entity->addMetaEvent<SD_POSITION>(meta);
     auto a = entity->addEvent<SD_POSITION>(0.4, array); // chronologically third
     auto value = entity->getValue<SD_POSITION>(0.5); // cannot get value
     REQUIRE(!value);
