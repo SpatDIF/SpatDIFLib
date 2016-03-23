@@ -58,7 +58,11 @@ typedef enum {
  Currently only "point" is declared in the specification.
  */
 enum class EType{
-    SD_POINT
+    SD_POINT,
+    SD_LOUDSPEAKER,
+    SD_LISTENER,
+    SD_MICROPHONE,
+    SD_UNDEFINED
 };
 
 /*!
@@ -201,7 +205,7 @@ public:
     }
     
 };
-
+#pragma mark methmatical conversion
 
 /*!
  check almost equal for double precision
@@ -211,6 +215,34 @@ inline bool almostEqual(double x, double y){
     const double epsilon = std::numeric_limits<double>::epsilon() * std::abs(x+y) * 2.0;
     const double min = std::numeric_limits<double>::min();
     return (gap < epsilon) || (gap < min);
+}
+
+/*!
+    convert azimuth, elevation, radius to xyz
+ */
+static const double kDegreeToRadian = M_PI/180.0;
+static const double kRadianToDegree = 180.0/M_PI;
+
+inline std::array<double, 3> aedToXyz(const std::array<double,3> &aed){
+    std::array<double, 3> xyz;
+    const double a = aed[0];
+    const double e = aed[1];
+    const double d = aed[2];
+    xyz[0] = sin(a*kDegreeToRadian) * cos(e*kDegreeToRadian) * d;
+    xyz[1] = cos(a*kDegreeToRadian) * cos(e*kDegreeToRadian) * d;
+    xyz[2] = sin(e*kDegreeToRadian) * d;
+    return std::move(xyz);
+}
+
+inline std::array<double, 3> xyzToAed(const std::array<double,3> &xyz){
+    std::array<double, 3> aed;
+    const double x = xyz[0];
+    const double y = xyz[1];
+    const double z = xyz[2];
+    aed[0] = atan2(x,y) * kRadianToDegree;
+    aed[1] = atan2(z,sqrt(x*x + y*y)) * kRadianToDegree;
+    aed[2] = sqrt(x*x+y*y+z*z);
+    return std::move(aed);
 }
 
 #pragma mark toString
@@ -267,6 +299,15 @@ template <>
 inline bool stringTo(const std::string &str){
     return str == "true";
 };
+
+template <>
+inline EType stringTo(const std::string &str){
+    if(str == "point")return EType::SD_POINT;
+    if(str == "loudspeaker") return EType::SD_LOUDSPEAKER;
+    if(str == "listner") return EType::SD_LISTENER;
+    if(str == "microphone") return EType::SD_MICROPHONE;
+    return EType::SD_UNDEFINED;
+}
 
 template <typename T, size_t S>
 inline std::array<T, S> stringToArray(const std::string &str){
@@ -354,6 +395,7 @@ struct sdDescriptor<EDescriptor::SD_SOURCE_WIDTH_WIDTH>{
     typedef double type;
     const static bool interpolable = true;
 };
+
 
 
 

@@ -19,7 +19,7 @@
 const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
     sdESpec(EExtension::SD_CORE, "core", {
         sdDSpec(SD_TYPE, "type", [](sdEntity * entity, double time, std::string value){
-            return entity->addProtoEvent<SD_TYPE>(time, EType::SD_POINT);}),
+            return entity->addProtoEvent<SD_TYPE>(time, stringTo<EType>(value));}),
         sdDSpec(SD_PRESENT, "present", [](sdEntity * entity, double time, std::string value){
             return entity->addProtoEvent<SD_PRESENT>(time, stringTo<bool>(value));}),
         sdDSpec(SD_POSITION, "position", [](sdEntity * entity, double time, std::string value){

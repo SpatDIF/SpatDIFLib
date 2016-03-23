@@ -571,6 +571,14 @@ TEST_CASE("sdOSCMessage", "[sdOSCMessage]"){
 #pragma mark sdUtility
 
 TEST_CASE("Test Utilities", "[sdConst]"){
+    std::array<double, 3> xyz{1,1,1};
+    auto aed = xyzToAed(xyz);
+    auto rXyz = aedToXyz(aed);
+    REQUIRE(almostEqual(rXyz[0], xyz[0]));
+    REQUIRE(almostEqual(rXyz[1], xyz[1]));
+    REQUIRE(almostEqual(rXyz[2], xyz[2]));
+
+    
     REQUIRE(sdExtension::extensionToString(EExtension::SD_CORE) == "core");
     REQUIRE(sdExtension::extensionToString(EExtension::SD_MEDIA) == "media");
     REQUIRE(sdExtension::extensionToString(EExtension::SD_SOURCE_WIDTH) == "source-width");
