@@ -76,6 +76,33 @@ TEST_CASE("info test"){
     }
 }
 
+TEST_CASE("Speaker Setup"){
+    ifstream ifs("/Users/chikashi/Development/spatdiflib/src/test/libSpatDIFTest/TestCode/stereo-playback.xml");
+    string xmlString;
+    if (ifs.is_open()){
+        while ( ifs.good() ){
+            string str;
+            getline(ifs,str);
+            xmlString.append(str);
+        }
+        ifs.close();
+    }
+    REQUIRE(xmlString != "");
+    sdScene myScene = sdLoader::sceneFromXML(xmlString);
+    sdEntity *leftSpeaker = myScene.getEntity("left");
+    sdEntity *rightSpeaker = myScene.getEntity("right");
+
+    auto positionXYZ = leftSpeaker->getMeta<SD_POSITION>()->getValue();
+    auto aed = xyzToAed(positionXYZ);
+    REQUIRE(almostEqual(aed[0], -30.0));
+    REQUIRE(almostEqual(aed[1] , 0.0));
+    REQUIRE(almostEqual(aed[2] , 2.0));
+    auto type = leftSpeaker->getMeta<SD_TYPE>()->getValue();
+    REQUIRE(type == EType::SD_LOUDSPEAKER);
+    auto right = rightSpeaker->getMeta<SD_POSITION>();
+    
+    
+}
 
 TEST_CASE("How to Query loaded file"){
     ifstream ifs("/Users/chikashi/Development/spatdiflib/src/test/libSpatDIFTest/TestCode/simple_scene.xml");

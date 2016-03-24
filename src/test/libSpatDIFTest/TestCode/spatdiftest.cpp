@@ -255,7 +255,6 @@ TEST_CASE("getFirstEvents() and getLastEvents()"){
     auto a = entity->addEvent<SD_POSITION>(0.4, {0.5, 0.2, 0.3}); // chronologically third
     auto b = entity->addEvent<SD_POSITION>(0.2, {0.3, 0.1, 0.2}); // chronologically first
     auto c = entity->addEvent<SD_POSITION>(0.3, {0.1, 0.4, 0.6}); // chronologically second
-    ;
     REQUIRE(entity->getFirstEvents().size() == 1);
     REQUIRE(entity->getLastEvents().size() == 1);
     

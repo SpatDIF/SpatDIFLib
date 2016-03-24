@@ -71,7 +71,15 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
             if(!targetEntity){
                 targetEntity = scene.addEntity(entityName, EKind::SD_SINK);
                 if(type)targetEntity->addMeta<SD_TYPE>(stringTo<EType>(type->GetText()));
-                if(position)targetEntity->addMeta<SD_POSITION>(stringToArray<double, 3>(position->GetText()));
+                if(position){
+                    std::string unit = position->Attribute("unit");
+                    if(unit == "aed"){
+                        auto aed = stringToArray<double, 3>(position->GetText());
+                        targetEntity->addMeta<SD_POSITION>(aedToXyz(aed));
+                    }else{
+                        targetEntity->addMeta<SD_POSITION>(stringToArray<double, 3>(position->GetText()));
+                    }
+                }
             }
             sink = sink->NextSiblingElement("sink");
         }

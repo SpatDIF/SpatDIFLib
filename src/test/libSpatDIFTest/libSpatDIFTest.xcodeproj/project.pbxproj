@@ -21,6 +21,20 @@
 		62401D581CA2AFBD001179C5 /* JSONWorker.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D4A1CA2AFBD001179C5 /* JSONWorker.o */; };
 		62401D591CA2AFBD001179C5 /* JSONWriter.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D4B1CA2AFBD001179C5 /* JSONWriter.o */; };
 		62401D5A1CA2AFBD001179C5 /* libjson.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D4C1CA2AFBD001179C5 /* libjson.o */; };
+		62401D5F1CA3E7C0001179C5 /* internalJSONNode.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D3F1CA2AFBD001179C5 /* internalJSONNode.o */; };
+		62401D601CA3E7C0001179C5 /* JSONAllocator.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D401CA2AFBD001179C5 /* JSONAllocator.o */; };
+		62401D611CA3E7C0001179C5 /* JSONChildren.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D411CA2AFBD001179C5 /* JSONChildren.o */; };
+		62401D621CA3E7C0001179C5 /* JSONDebug.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D421CA2AFBD001179C5 /* JSONDebug.o */; };
+		62401D631CA3E7C0001179C5 /* JSONIterators.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D431CA2AFBD001179C5 /* JSONIterators.o */; };
+		62401D641CA3E7C0001179C5 /* JSONMemory.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D441CA2AFBD001179C5 /* JSONMemory.o */; };
+		62401D651CA3E7C0001179C5 /* JSONNode_Mutex.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D451CA2AFBD001179C5 /* JSONNode_Mutex.o */; };
+		62401D661CA3E7C0001179C5 /* JSONNode.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D461CA2AFBD001179C5 /* JSONNode.o */; };
+		62401D671CA3E7C0001179C5 /* JSONPreparse.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D471CA2AFBD001179C5 /* JSONPreparse.o */; };
+		62401D681CA3E7C0001179C5 /* JSONStream.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D481CA2AFBD001179C5 /* JSONStream.o */; };
+		62401D691CA3E7C0001179C5 /* JSONValidator.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D491CA2AFBD001179C5 /* JSONValidator.o */; };
+		62401D6A1CA3E7C0001179C5 /* JSONWorker.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D4A1CA2AFBD001179C5 /* JSONWorker.o */; };
+		62401D6B1CA3E7C0001179C5 /* JSONWriter.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D4B1CA2AFBD001179C5 /* JSONWriter.o */; };
+		62401D6C1CA3E7C0001179C5 /* libjson.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D4C1CA2AFBD001179C5 /* libjson.o */; };
 		629720C51C29966100135148 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720C41C29966100135148 /* tinyxml2.cpp */; };
 		629720D61C2D8C2600135148 /* sdLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720D51C2D8C2600135148 /* sdLoader.cpp */; };
 		629720DB1C2E1F0600135148 /* sdSaver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720DA1C2E1F0600135148 /* sdSaver.cpp */; };
@@ -101,6 +115,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62401D5F1CA3E7C0001179C5 /* internalJSONNode.o in Frameworks */,
+				62401D601CA3E7C0001179C5 /* JSONAllocator.o in Frameworks */,
+				62401D611CA3E7C0001179C5 /* JSONChildren.o in Frameworks */,
+				62401D621CA3E7C0001179C5 /* JSONDebug.o in Frameworks */,
+				62401D631CA3E7C0001179C5 /* JSONIterators.o in Frameworks */,
+				62401D641CA3E7C0001179C5 /* JSONMemory.o in Frameworks */,
+				62401D651CA3E7C0001179C5 /* JSONNode_Mutex.o in Frameworks */,
+				62401D661CA3E7C0001179C5 /* JSONNode.o in Frameworks */,
+				62401D671CA3E7C0001179C5 /* JSONPreparse.o in Frameworks */,
+				62401D681CA3E7C0001179C5 /* JSONStream.o in Frameworks */,
+				62401D691CA3E7C0001179C5 /* JSONValidator.o in Frameworks */,
+				62401D6A1CA3E7C0001179C5 /* JSONWorker.o in Frameworks */,
+				62401D6B1CA3E7C0001179C5 /* JSONWriter.o in Frameworks */,
+				62401D6C1CA3E7C0001179C5 /* libjson.o in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<spatdif version="0.3">
+	<meta>
+		<info>
+			<annotation>This is a stereo playback SpatDIF scene</annotation>
+		</info>
+		<extensions>direct-to-one sink-entity</extensions>
+		<sink>
+			<type>loudspeaker</type>
+			<name>left</name>
+			<position unit="aed">-30.0 0. 2.0</position>
+		</sink>
+		<sink>
+			<type>loudspeaker</type>
+			<name>right</name>
+			<position unit="aed">30.0 0. 2.0</position>
+		</sink>
+	</meta>
+	<time>0.0</time>
+	<source>
+		<name>1</name>
+		<position unit="aed">-30.0 0. 2.0</position>
+		<direct-to-one>1</direct-to-one>
+		<media>
+		   <type>file</type>
+		   <location>../audio/stereo-hello.wav</location>
+		   <channel>1</channel> 
+		</media>
+	</source>
+	<source>
+		<name>2</name>
+		<position unit="aed">30.0 0. 2.0</position>
+		<direct-to-one>1</direct-to-one>
+		<media>
+		   <type>file</type>
+		   <location>../audio/stereo-hello.wav</location>
+		   <channel>2</channel> 
+		</media>
+	</source>	
+</spatdif>
