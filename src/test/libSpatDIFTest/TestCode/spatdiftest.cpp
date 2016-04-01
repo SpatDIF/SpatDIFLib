@@ -79,6 +79,24 @@ TEST_CASE("Test sdMeta add get remove", "[sdMeta]"){
     REQUIRE(entity->getNumberOfMetas() == 0);
 }
 
+TEST_CASE("Test sink entity", "[sdMeta]"){
+    sdScene scene;
+    sdEntity * speaker = scene.addEntity("mySpeaker");
+    speaker->addMeta<SD_POSITION>({0.3, 0.5, 0.1});
+    speaker->addMeta<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(1);
+    speaker->addMeta<SD_HARDWARE_OUT_GAIN>(0.65);
+    
+    auto position = speaker->getMeta<SD_POSITION>()->getValue();
+    REQUIRE(position[0] == 0.3);
+    REQUIRE(position[1] == 0.5);
+    REQUIRE(position[2] == 0.1);
+    
+    auto physicalout = speaker->getMeta<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>()->getValue();
+    auto gain = speaker->getMeta<SD_HARDWARE_OUT_GAIN>()->getValue();
+    
+    REQUIRE(physicalout == 1);
+    REQUIRE(gain == 0.65);
+}
 
 #pragma mark sdEvent
 
@@ -644,6 +662,9 @@ TEST_CASE("Test Utilities", "[sdConst]"){
     
     REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_SOURCE_WIDTH, "width") == SD_SOURCE_WIDTH_WIDTH);
     
+    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_HARDWARE_OUT, "physical-channel") == SD_HARDWARE_OUT_PHYSICAL_CHANNEL);
+    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_HARDWARE_OUT, "gain") == SD_HARDWARE_OUT_GAIN);
+
     // std::array to string
     REQUIRE( toString(std::array<int, 3>({{3,4,5}})) == "3 4 5");
     REQUIRE( toString(std::array<double, 2>({{3.3,4.4}})) == "3.3 4.4");
