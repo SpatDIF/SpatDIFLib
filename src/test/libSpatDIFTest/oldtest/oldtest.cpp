@@ -99,8 +99,9 @@ TEST_CASE("Speaker Setup"){
     REQUIRE(almostEqual(aed[2] , 2.0));
     auto type = leftSpeaker->getMeta<SD_TYPE>()->getValue();
     REQUIRE(type == EType::SD_LOUDSPEAKER);
-    auto right = rightSpeaker->getMeta<SD_POSITION>();
-    
+
+    auto physicalChannel = rightSpeaker->getMeta<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>()->getValue();
+    REQUIRE(physicalChannel == 2);
     
 }
 

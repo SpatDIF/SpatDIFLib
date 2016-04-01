@@ -65,7 +65,8 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
             XMLElement *name = sink->FirstChildElement("name");
             XMLElement *type = sink->FirstChildElement("type");
             XMLElement *position = sink->FirstChildElement("position");
-
+            XMLElement *hoPhysicalChannel = sink->FirstChildElement("physical-channel");
+            XMLElement *hoGain = sink->FirstChildElement("gain");
             auto entityName = std::string(name->GetText());
             sdEntity* targetEntity = scene.getEntity(entityName);
             if(!targetEntity){
@@ -80,8 +81,15 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
                         targetEntity->addMeta<SD_POSITION>(stringToArray<double, 3>(position->GetText()));
                     }
                 }
+                if(hoPhysicalChannel){
+                    targetEntity->addMeta<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(stringTo<int>(hoPhysicalChannel->GetText()));
+                }
+                if(hoGain) {
+                    targetEntity->addMeta<SD_HARDWARE_OUT_GAIN>(stringTo<double>(hoGain->GetText()));
+                }
+                
+                sink = sink->NextSiblingElement("sink");
             }
-            sink = sink->NextSiblingElement("sink");
         }
     }
     

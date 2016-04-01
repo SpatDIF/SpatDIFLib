@@ -9,11 +9,13 @@
 			<type>loudspeaker</type>
 			<name>left</name>
 			<position unit="aed">-30.0 0. 2.0</position>
+            <physical-channel>1</physical-channel>
 		</sink>
 		<sink>
 			<type>loudspeaker</type>
 			<name>right</name>
 			<position unit="aed">30.0 0. 2.0</position>
+            <physical-channel>2</physical-channel>
 		</sink>
 	</meta>
 	<time>0.0</time>
