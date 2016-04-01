@@ -322,6 +322,7 @@ inline bool sdScene::setOrdering(const std::string &ordering){
 #pragma mark Entity Handling
 
 inline sdEntity * const sdScene::addEntity(std::string name, EKind kind){
+    
     auto ret = entities.insert(std::pair<std::string, sdEntity>(name ,sdEntity(this, kind)));
     if(!ret.second) return nullptr;
     return &ret.first->second;

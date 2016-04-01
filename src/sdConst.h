@@ -56,6 +56,11 @@ typedef enum {
     // descriptor for point set extension
     SD_POINT_SET_NAME,
     
+    // descriptor for hardware out
+    SD_HARDWARE_OUT_PHYSICAL_CHANNEL,
+    SD_HARDWARE_OUT_GAIN,
+    
+    // misc
     SD_ERROR,
     SD_ALL
 } EDescriptor;
@@ -96,6 +101,8 @@ enum class EExtension {
     SD_MEDIA,
     SD_SOURCE_WIDTH,
     SD_DIRECT_TO_ONE,
+    SD_SINK_ENTITY,
+    SD_HARDWARE_OUT,
     SD_EXTENSION_ERROR
 };
 
@@ -401,7 +408,17 @@ struct sdDescriptor<EDescriptor::SD_SOURCE_WIDTH_WIDTH>{
     const static bool interpolable = true;
 };
 
+template <>
+struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_PHYSICAL_CHANNEL>{
+    typedef int type;
+    const static bool interpolable = false;
+};
 
+template <>
+struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_GAIN>{
+    typedef double type;
+    const static bool interpolable = false;
+};
 
 
 

@@ -43,9 +43,13 @@ const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
     }),
     sdESpec((EExtension::SD_SOURCE_WIDTH), "source-width",{
         sdDSpec(SD_SOURCE_WIDTH_WIDTH, "width", [](sdEntity* entity, double time, std::string value){
-            return entity->addProtoEvent<SD_SOURCE_WIDTH_WIDTH>(time, std::stod(value));
-        ;})
+            return entity->addProtoEvent<SD_SOURCE_WIDTH_WIDTH>(time, std::stod(value));})
+    }),
+    sdESpec((EExtension::SD_HARDWARE_OUT), "hardware-out",{
+        sdDSpec(SD_HARDWARE_OUT_PHYSICAL_CHANNEL, "physical-channel", [](sdEntity* entity, double time, std::string value){
+            return entity->addProtoEvent<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(time, std::stoi(value));}),
+        sdDSpec(SD_HARDWARE_OUT_GAIN, "gain", [](sdEntity* entity, double time, std::string value){
+            return entity->addProtoEvent<SD_HARDWARE_OUT_GAIN>(time, std::stod(value));}),
     })
-
 };
             
