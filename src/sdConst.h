@@ -118,6 +118,7 @@ typedef enum {
 
 class sdEntity;
 class sdProtoEvent;
+class sdProtoMeta;
 class sdExtension {
 protected:
     struct sdDSpec{
@@ -125,6 +126,7 @@ protected:
         EDescriptor descriptor;
         std::string descriptorString;
         std::function< std::shared_ptr<sdProtoEvent>(sdEntity * entity, double, std::string)> addEventFromStringFunc;
+        std::function< std::shared_ptr<sdProtoMeta>(sdEntity * entity, std::string)> addMetaFromStringFunc;
     };
 
     struct sdESpec{
@@ -218,6 +220,13 @@ public:
         return (*it).addEventFromStringFunc;
     }
     
+    static std::function<std::shared_ptr<sdProtoMeta>(sdEntity* entity, std::string)> getAddMetaFunc(EDescriptor descriptor){
+        auto ext = getExtensionOfDescriptor(descriptor);
+        auto descriptors = getDescriptorsForExtension(ext);
+        auto it = std::find_if(descriptors.begin(), descriptors.end(), [&descriptor](sdDSpec dSpec){ return dSpec.descriptor == descriptor;});
+        if(it == descriptors.end())return nullptr;
+        return (*it).addMetaFromStringFunc;
+    }
 };
 #pragma mark methmatical conversion
 

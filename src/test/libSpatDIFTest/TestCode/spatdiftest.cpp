@@ -77,10 +77,16 @@ TEST_CASE("Test sdMeta add get remove", "[sdMeta]"){
     REQUIRE(entity->getNumberOfMetas() == 2);
     entity->removeAllMetas();
     REQUIRE(entity->getNumberOfMetas() == 0);
+    
+    
+    auto shouldBeNull = entity->addMeta<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(10);
+    REQUIRE(shouldBeNull == nullptr);
+    
 }
 
 TEST_CASE("Test sink entity", "[sdMeta]"){
     sdScene scene;
+    scene.addExtension(EExtension::SD_HARDWARE_OUT);
     sdEntity * speaker = scene.addEntity("mySpeaker");
     speaker->addMeta<SD_POSITION>({0.3, 0.5, 0.1});
     speaker->addMeta<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(1);
@@ -208,6 +214,14 @@ TEST_CASE("Test all descriptors types"){
     REQUIRE( entity->getValueAsString<SD_SOURCE_WIDTH_WIDTH>(0.0) == "0.5");
     REQUIRE( *entity->getValue<SD_SOURCE_WIDTH_WIDTH>(0.0) == 0.5);
     
+    // SD_HARDWARE_OUT_PHYSICAL_CHANNEL
+    entity->addEvent<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(0.5,3);
+    REQUIRE(entity->getValue<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(0.5) == nullptr);
+    
+    scene.addExtension(EExtension::SD_HARDWARE_OUT);
+    entity->addEvent<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(0.5,3);
+    REQUIRE(*entity->getValue<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(0.5) == 3);
+
     
 }
 

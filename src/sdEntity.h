@@ -32,22 +32,6 @@
 class sdScene;
 class sdEntity : public sdMetaHandler, public sdEventHandler{
     friend sdScene;
-    
-protected:
-    sdScene * const parent;
-    const EKind kind;
-    
-    /*!sdEntity can be invoked only by sdScene*/
-    sdEntity(sdScene * const parent, EKind kind = EKind::SD_SOURCE):parent(parent), kind(kind){};
-
-    /*! ask parent if the extension for the descriptor is activated */
-    bool isDescriptorValid(const EDescriptor &descriptor) const;
-    
-    /*! add a pointer a meta to the global event vector. */
-    void addGlobalMetaAlias(std::shared_ptr<sdProtoMeta> meta) override;
-
-    /*! add a pointer an event to the global event vector */
-    void addGlobalEventAlias(std::shared_ptr<sdProtoEvent> event) override;
 
 public:
     
@@ -59,15 +43,12 @@ public:
     std::string getName();
     
     /*! this function is the only way to instantiate sdMeta.*/
-    using sdMetaHandler::addMeta;
     template <EDescriptor D>
     sdMeta<D> * const addMeta(typename sdDescriptor<D>::type value);
     
+    /*! add meta by string*/
+    const std::shared_ptr<sdProtoMeta> addMeta(const std::string &descriptor, const std::string &value);
     
-    /*! this function is the only way to instantiate sdEvent.*/
-    template <EDescriptor D>
-    std::shared_ptr<sdProtoEvent> addProtoEvent(const double &time, typename sdDescriptor<D>::type value);
-        
     /*! return value cast to a specific subclass event.*/
     template <EDescriptor D>
     sdEvent<D> * const addEvent(const double &time, typename sdDescriptor<D>::type value);
@@ -118,12 +99,25 @@ public:
    /*!
      @} 
     */
+    
+protected:
+    
+    /*!sdEntity can be invoked only by sdScene*/
+    sdEntity(sdScene * const parent, EKind kind = EKind::SD_SOURCE):parent(parent), kind(kind){};
+    
+    /*! ask parent if the extension for the descriptor is activated */
+    bool isDescriptorValid(const EDescriptor &descriptor) const;
+    
+    /*! add a pointer a meta to the global event vector. */
+    void addGlobalMetaAlias(std::shared_ptr<sdProtoMeta> meta) override;
+    
+    /*! add a pointer an event to the global event vector */
+    void addGlobalEventAlias(std::shared_ptr<sdProtoEvent> event) override;
+    
+    sdScene * const parent;
+    const EKind kind;
 };
 
-template <EDescriptor D>
-inline sdMeta<D> * const sdEntity::addMeta(typename sdDescriptor<D>::type value){
-    return sdMetaHandler::addMeta<D>(value, this);
-}
 
 inline const EKind &sdEntity::getKind() const{
     return kind;
@@ -133,41 +127,34 @@ inline std::string sdEntity::getKindAsString() const{
     return kind == EKind::SD_SOURCE ? "source": "sink";
 }
 
-
-
 template <EDescriptor D>
-inline std::shared_ptr<sdProtoEvent> sdEntity::addProtoEvent(const double &time,  typename sdDescriptor<D>::type value){
-    if(time < 0.0){ throw  InvalidTimeException(time);}
-    // extension activated?
-    if(!isDescriptorValid(D)) return nullptr;
-    
-    // remove if already exist
-    removeEvent(time, D);
-    
-    // add
-    auto event = std::shared_ptr<sdProtoEvent>(new sdEvent<D>(time, this, value));
-    events.push_back(event);
-    addGlobalEventAlias(event);
-    
-    // sort
-    std::sort(events.begin(), events.end(),
-              [](std::shared_ptr<sdProtoEvent> eventA, std::shared_ptr<sdProtoEvent> eventB)->bool{
-             return eventA->getTime() < eventB->getTime(); });
-    return event;
+inline sdMeta<D> * const sdEntity::addMeta(typename sdDescriptor<D>::type value){
+    if(!isDescriptorValid(D)) return nullptr; // invalid descriptor
+    return sdMetaHandler::addMeta<D>(value, this);
 }
 
+inline const std::shared_ptr<sdProtoMeta> sdEntity::addMeta(const std::string &descriptor, const std::string &value){
+    EDescriptor dtr = sdExtension::stringToDescriptor(descriptor);
+    if(dtr == EDescriptor::SD_ERROR) return nullptr; // undefined descriptor
+    if(!isDescriptorValid(dtr)) return nullptr; // invalid descriptor
+    
+    auto addMetaFunc = sdExtension::getAddMetaFunc(std::move(dtr));
+    return addMetaFunc(this, value);
+}
 
 template <EDescriptor D>
 inline sdEvent<D> * const sdEntity::addEvent(const double &time,  typename sdDescriptor<D>::type value){
-    return dynamic_cast<sdEvent<D>*>(addProtoEvent<D>(time,value).get());
+    if(!isDescriptorValid(D)) return nullptr; // invalid descriptor
+    return sdEventHandler::addEvent<D>(time, value, this);
 }
 
 inline const std::shared_ptr<sdProtoEvent> sdEntity::addEvent(const std::string &time, const std::string &descriptor, const std::string &value){
-    
     EDescriptor dtr = sdExtension::stringToDescriptor(descriptor);
-    if(dtr == EDescriptor::SD_ERROR) return nullptr;
+    if(dtr == EDescriptor::SD_ERROR) return nullptr; // undefined descriptor
+    if(!isDescriptorValid(dtr)) return nullptr; // invalid descriptor
+    
     auto dtime = std::stod(time);
-    auto addEventFunc = sdExtension::getAddEventFunc(dtr);
+    auto addEventFunc = sdExtension::getAddEventFunc(std::move(dtr));
     return addEventFunc(this, dtime, value);
 }
 
@@ -184,7 +171,6 @@ const std::string sdEntity::getValueAsString(const double &time) const{
     if(!event) return  std::string();
     return getEvent<D>(time)->getValueAsString();
 }
-
 
 template <EDescriptor D>
 const typename sdDescriptor<D>::type * const sdEntity::getNextValue(const double &time) const{

@@ -29,6 +29,19 @@ protected:
     virtual void addGlobalEventAlias(std::shared_ptr<sdProtoEvent> event) = 0;
 
 public:
+    
+    /*! @name Adding  Event(s) @{ */
+
+    /*! this function is the only way to instantiate sdEvent.*/
+    template <EDescriptor D>
+    std::shared_ptr<sdProtoEvent> addProtoEvent(const double &time, typename sdDescriptor<D>::type value, sdEntity * entity);
+    
+    /*! return value cast to a specific subclass event.*/
+    template <EDescriptor D>
+    sdEvent<D> * const addEvent(const double &time, typename sdDescriptor<D>::type value, sdEntity * entity);
+
+    /*! @} */
+    
     /*! return number of registerd events in the events */
     size_t getNumberOfEvents(void) const;
     
@@ -163,9 +176,6 @@ public:
     
     /*! find event with the descriptor at time */
     std::vector<std::shared_ptr<sdProtoEvent>>::const_iterator findEvent(const double &time, const EDescriptor &descriptor) const;
-
-    
-    
     
     /*< remove an event from the events vector
      @param event the event to be removed
@@ -189,6 +199,30 @@ public:
 
 };
 
+template <EDescriptor D>
+inline std::shared_ptr<sdProtoEvent> sdEventHandler::addProtoEvent(const double &time,  typename sdDescriptor<D>::type value, sdEntity * entity){
+    
+    if(time < 0.0){ throw  InvalidTimeException(time);}
+    
+    // remove if already exist
+    removeEvent(time, D);
+    
+    // add
+    auto event = std::shared_ptr<sdProtoEvent>(new sdEvent<D>(time, entity, value));
+    events.push_back(event);
+    addGlobalEventAlias(event);
+    
+    // sort
+    std::sort(events.begin(), events.end(),
+              [](std::shared_ptr<sdProtoEvent> eventA, std::shared_ptr<sdProtoEvent> eventB)->bool{
+                  return eventA->getTime() < eventB->getTime(); });
+    return event;
+}
+
+template <EDescriptor D>
+inline sdEvent<D> * const sdEventHandler::addEvent(const double &time, typename sdDescriptor<D>::type value, sdEntity * entity){
+    return dynamic_cast<sdEvent<D>*>(addProtoEvent<D>(time, value, entity).get());
+}
 
 template <EDescriptor D>
 inline const sdEvent< D > * const sdEventHandler::getEvent(const double &time) const{
