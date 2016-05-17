@@ -50,8 +50,8 @@ typedef enum {
     SD_MEDIA_TIME_OFFSET,
     SD_MEDIA_GAIN,
     
-    // descriptor for source width extension
-    SD_SOURCE_WIDTH_WIDTH,
+    // descriptor for source spread extension
+    SD_SOURCE_SPREAD_SPREAD,
     
     // descriptor for point set extension
     SD_POINT_SET_NAME,
@@ -99,7 +99,7 @@ enum class EKind {
 enum class EExtension {
     SD_CORE,
     SD_MEDIA,
-    SD_SOURCE_WIDTH,
+    SD_SOURCE_SPREAD,
     SD_DIRECT_TO_ONE,
     SD_SINK_ENTITY,
     SD_HARDWARE_OUT,
@@ -412,7 +412,7 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_GAIN>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_SOURCE_WIDTH_WIDTH>{
+struct sdDescriptor<EDescriptor::SD_SOURCE_SPREAD_SPREAD>{
     typedef double type;
     const static bool interpolable = true;
 };

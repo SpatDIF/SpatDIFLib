@@ -153,7 +153,7 @@ TEST_CASE("Test exceptions", "[sdEvent]"){
 TEST_CASE("Test all descriptors types"){
     sdScene scene;
     scene.addExtension(EExtension::SD_MEDIA);
-    scene.addExtension(EExtension::SD_SOURCE_WIDTH);
+    scene.addExtension(EExtension::SD_SOURCE_SPREAD);
     sdEntity * entity = scene.addEntity("MyEntity");
     
     // SD_PRESENT
@@ -209,10 +209,10 @@ TEST_CASE("Test all descriptors types"){
     REQUIRE( entity->getValueAsString<SD_MEDIA_GAIN>(0.0) == "0.4");
     REQUIRE( *entity->getValue<SD_MEDIA_GAIN>(0.0) == 0.4);
     
-    // SD_SOURCE_WIDTH_WIDTH
-    entity->addEvent<SD_SOURCE_WIDTH_WIDTH>(0.0, 0.5);
-    REQUIRE( entity->getValueAsString<SD_SOURCE_WIDTH_WIDTH>(0.0) == "0.5");
-    REQUIRE( *entity->getValue<SD_SOURCE_WIDTH_WIDTH>(0.0) == 0.5);
+    // SD_SOURCE_SPREAD_SPREAD
+    entity->addEvent<SD_SOURCE_SPREAD_SPREAD>(0.0, 0.5);
+    REQUIRE( entity->getValueAsString<SD_SOURCE_SPREAD_SPREAD>(0.0) == "0.5");
+    REQUIRE( *entity->getValue<SD_SOURCE_SPREAD_SPREAD>(0.0) == 0.5);
     
     // SD_HARDWARE_OUT_PHYSICAL_CHANNEL
     entity->addEvent<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(0.5,3);
@@ -527,48 +527,48 @@ TEST_CASE("get exact first last next previous eventset" "[sdScene]"){
 TEST_CASE("addExtension() removeExtension() isExtensionActivated() getNumberOfActivatedExtensions()", "[sdScene]"){
     
     sdScene scene;
-    scene.addExtension(EExtension::SD_SOURCE_WIDTH);
+    scene.addExtension(EExtension::SD_SOURCE_SPREAD);
     REQUIRE(scene.getNumberOfActivatedExtensions() == 1);
-    REQUIRE(scene.removeExtension(EExtension::SD_SOURCE_WIDTH) == 1);
-    scene.addExtension(EExtension::SD_SOURCE_WIDTH);
-    REQUIRE(!scene.addExtension(EExtension::SD_SOURCE_WIDTH)); // already exists
+    REQUIRE(scene.removeExtension(EExtension::SD_SOURCE_SPREAD) == 1);
+    scene.addExtension(EExtension::SD_SOURCE_SPREAD);
+    REQUIRE(!scene.addExtension(EExtension::SD_SOURCE_SPREAD)); // already exists
     scene.removeAllExtensions();
     REQUIRE(scene.getNumberOfActivatedExtensions() == 0);
-    scene.addExtension(EExtension::SD_SOURCE_WIDTH);
-    REQUIRE(scene.isExtensionActivated(EExtension::SD_SOURCE_WIDTH));
-    REQUIRE(scene.removeExtension(EExtension::SD_SOURCE_WIDTH) == 1);
-    REQUIRE(scene.removeExtension(EExtension::SD_SOURCE_WIDTH) == 0);
-    REQUIRE(!scene.isExtensionActivated(EExtension::SD_SOURCE_WIDTH));
+    scene.addExtension(EExtension::SD_SOURCE_SPREAD);
+    REQUIRE(scene.isExtensionActivated(EExtension::SD_SOURCE_SPREAD));
+    REQUIRE(scene.removeExtension(EExtension::SD_SOURCE_SPREAD) == 1);
+    REQUIRE(scene.removeExtension(EExtension::SD_SOURCE_SPREAD) == 0);
+    REQUIRE(!scene.isExtensionActivated(EExtension::SD_SOURCE_SPREAD));
     
 }
 
 TEST_CASE("same as above but with strings"){
     
     sdScene scene;
-    scene.addExtension("source-width");
+    scene.addExtension("source-spread");
     REQUIRE(scene.getNumberOfActivatedExtensions() == 1);
-    REQUIRE(scene.removeExtension("source-width") == 1);
+    REQUIRE(scene.removeExtension("source-spread") == 1);
     REQUIRE(scene.getNumberOfActivatedExtensions() == 0);
     
-    REQUIRE(scene.addExtension("source-width"));
-    REQUIRE(!scene.addExtension("source-width")); // already exists
+    REQUIRE(scene.addExtension("source-spread"));
+    REQUIRE(!scene.addExtension("source-spread")); // already exists
     scene.removeAllExtensions();
     REQUIRE(scene.getNumberOfActivatedExtensions() == 0);
-    scene.addExtension("source-width");
-    REQUIRE(scene.isExtensionActivated("source-width"));
+    scene.addExtension("source-spread");
+    REQUIRE(scene.isExtensionActivated("source-spread"));
     REQUIRE(!scene.isExtensionActivated("source-height"));
     
-    REQUIRE(scene.removeExtension("source-width") == 1);
-    REQUIRE(scene.removeExtension("source-width") == 0);
+    REQUIRE(scene.removeExtension("source-spread") == 1);
+    REQUIRE(scene.removeExtension("source-spread") == 0);
     REQUIRE(scene.removeExtension("source-height") == 0);
     
-    REQUIRE(!scene.isExtensionActivated("source-width"));
+    REQUIRE(!scene.isExtensionActivated("source-spread"));
 }
 
 TEST_CASE("valid descriptor test"){
     sdScene scene;
     REQUIRE(scene.getValidDescriptorSet().size() == 4);
-    scene.addExtension(EExtension::SD_SOURCE_WIDTH);
+    scene.addExtension(EExtension::SD_SOURCE_SPREAD);
     REQUIRE(scene.getValidDescriptorSet().size() == 5);
     
     
@@ -644,11 +644,11 @@ TEST_CASE("Test Utilities", "[sdConst]"){
     
     REQUIRE(sdExtension::extensionToString(EExtension::SD_CORE) == "core");
     REQUIRE(sdExtension::extensionToString(EExtension::SD_MEDIA) == "media");
-    REQUIRE(sdExtension::extensionToString(EExtension::SD_SOURCE_WIDTH) == "source-width");
+    REQUIRE(sdExtension::extensionToString(EExtension::SD_SOURCE_SPREAD) == "source-spread");
     
     REQUIRE(sdExtension::stringToExtension("core") == EExtension::SD_CORE);
     REQUIRE(sdExtension::stringToExtension("media") == EExtension::SD_MEDIA);
-    REQUIRE(sdExtension::stringToExtension("source-width") == EExtension::SD_SOURCE_WIDTH);
+    REQUIRE(sdExtension::stringToExtension("source-spread") == EExtension::SD_SOURCE_SPREAD);
     
     REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_TYPE) == "type");
     REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_PRESENT) == "present");
@@ -661,7 +661,7 @@ TEST_CASE("Test Utilities", "[sdConst]"){
     REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_MEDIA_CHANNEL) == "channel");
     REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_MEDIA_TIME_OFFSET) == "time-offset");
     
-    REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_SOURCE_WIDTH_WIDTH) == "width");
+    REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_SOURCE_SPREAD_SPREAD) == "spread");
     
     REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_CORE,"type") == EDescriptor::SD_TYPE);
     REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_CORE,"present") == EDescriptor::SD_PRESENT);
@@ -674,7 +674,7 @@ TEST_CASE("Test Utilities", "[sdConst]"){
     REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_MEDIA, "channel") == SD_MEDIA_CHANNEL);
     REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_MEDIA, "time-offset") == SD_MEDIA_TIME_OFFSET);
     
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_SOURCE_WIDTH, "width") == SD_SOURCE_WIDTH_WIDTH);
+    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_SOURCE_SPREAD, "spread") == SD_SOURCE_SPREAD_SPREAD);
     
     REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_HARDWARE_OUT, "physical-channel") == SD_HARDWARE_OUT_PHYSICAL_CHANNEL);
     REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_HARDWARE_OUT, "gain") == SD_HARDWARE_OUT_GAIN);

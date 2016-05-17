@@ -8,9 +8,9 @@ using namespace std;
 
 
 // old tests from old API
-TEST_CASE("source width test"){
+TEST_CASE("source spread test"){
     sdScene scene;
-    scene.addExtension(EExtension::SD_SOURCE_WIDTH);
+    scene.addExtension(EExtension::SD_SOURCE_SPREAD);
     
     REQUIRE(scene.getNumberOfActivatedExtensions() == 1);
     
@@ -20,13 +20,13 @@ TEST_CASE("source width test"){
     sdEntity* entityOne = scene.addEntity("voice1");
     
     
-    auto eventOne = entityOne->addEvent<SD_SOURCE_WIDTH_WIDTH>(5.0, 105.2);
-    auto eventTwo = entityOne->addEvent("10.0", "width", "99");
+    auto eventOne = entityOne->addEvent<SD_SOURCE_SPREAD_SPREAD>(5.0, 105.2);
+    auto eventTwo = entityOne->addEvent("10.0", "spread", "99");
     
-    REQUIRE(eventOne == entityOne->getNextEvent<SD_SOURCE_WIDTH_WIDTH>(2.0));
-    REQUIRE(eventTwo.get() == entityOne->getPreviousEvent<SD_SOURCE_WIDTH_WIDTH>(12.0));
+    REQUIRE(eventOne == entityOne->getNextEvent<SD_SOURCE_SPREAD_SPREAD>(2.0));
+    REQUIRE(eventTwo.get() == entityOne->getPreviousEvent<SD_SOURCE_SPREAD_SPREAD>(12.0));
     
-    scene.removeExtension(EExtension::SD_SOURCE_WIDTH);
+    scene.removeExtension(EExtension::SD_SOURCE_SPREAD);
 }
 
 

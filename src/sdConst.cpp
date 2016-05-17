@@ -41,9 +41,9 @@ const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
         sdDSpec(SD_MEDIA_TIME_OFFSET, "time-offset", [](sdEntity* entity, double time, std::string value){
             return entity->addProtoEvent<SD_MEDIA_TIME_OFFSET>(time, std::stod(value), entity);})
     }),
-    sdESpec((EExtension::SD_SOURCE_WIDTH), "source-width",{
-        sdDSpec(SD_SOURCE_WIDTH_WIDTH, "width", [](sdEntity* entity, double time, std::string value){
-            return entity->addProtoEvent<SD_SOURCE_WIDTH_WIDTH>(time, std::stod(value), entity);})
+    sdESpec((EExtension::SD_SOURCE_SPREAD), "source-spread",{
+        sdDSpec(SD_SOURCE_SPREAD_SPREAD, "spread", [](sdEntity* entity, double time, std::string value){
+            return entity->addProtoEvent<SD_SOURCE_SPREAD_SPREAD>(time, std::stod(value), entity);})
     }),
     sdESpec((EExtension::SD_HARDWARE_OUT), "hardware-out",{
         sdDSpec(SD_HARDWARE_OUT_PHYSICAL_CHANNEL, "physical-channel", [](sdEntity* entity, double time, std::string value){
