@@ -633,23 +633,29 @@ TEST_CASE("sdOSCMessage", "[sdOSCMessage]"){
 
 #pragma mark sdUtility
 
-TEST_CASE("Test Utilities", "[sdConst]"){
-    std::array<double, 3> xyz{1,1,1};
-    auto aed = xyzToAed(xyz);
-    auto rXyz = aedToXyz(aed);
-    REQUIRE(almostEqual(rXyz[0], xyz[0]));
-    REQUIRE(almostEqual(rXyz[1], xyz[1]));
-    REQUIRE(almostEqual(rXyz[2], xyz[2]));
-
+TEST_CASE("Test Extension enum to string conversion", "[sdConst]"){
     
+    //// extension
+    // enum to string
     REQUIRE(sdExtension::extensionToString(EExtension::SD_CORE) == "core");
     REQUIRE(sdExtension::extensionToString(EExtension::SD_MEDIA) == "media");
+    REQUIRE(sdExtension::extensionToString(EExtension::SD_INTERPOLATION) == "interpolation");
+    REQUIRE(sdExtension::extensionToString(EExtension::SD_POINTSET) == "pointset");
     REQUIRE(sdExtension::extensionToString(EExtension::SD_SOURCE_SPREAD) == "source-spread");
+    REQUIRE(sdExtension::extensionToString(EExtension::SD_HARDWARE_OUT) == "hardware-out");
+    REQUIRE(sdExtension::extensionToString(EExtension::SD_SINK_ENTITY) == "sink-entity");
     
+    // string to enum
     REQUIRE(sdExtension::stringToExtension("core") == EExtension::SD_CORE);
     REQUIRE(sdExtension::stringToExtension("media") == EExtension::SD_MEDIA);
+    REQUIRE(sdExtension::stringToExtension("interpolation") == EExtension::SD_INTERPOLATION);
+    REQUIRE(sdExtension::stringToExtension("pointset") == EExtension::SD_POINTSET);
     REQUIRE(sdExtension::stringToExtension("source-spread") == EExtension::SD_SOURCE_SPREAD);
+    REQUIRE(sdExtension::stringToExtension("hardware-out") == EExtension::SD_HARDWARE_OUT);
+    REQUIRE(sdExtension::stringToExtension("sink-entity") == EExtension::SD_SINK_ENTITY);
     
+    //// descriptor
+    // enum to string
     REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_TYPE) == "type");
     REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_PRESENT) == "present");
     REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_POSITION) == "position");
@@ -674,11 +680,31 @@ TEST_CASE("Test Utilities", "[sdConst]"){
     REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_MEDIA, "channel") == SD_MEDIA_CHANNEL);
     REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_MEDIA, "time-offset") == SD_MEDIA_TIME_OFFSET);
     
+    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_POINTSET, "id") == SD_POINTSET_ID);
+    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_POINTSET, "unit") == SD_POINTSET_UNIT);
+    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_POINTSET, "closed") == SD_POINTSET_CLOSED);
+    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_POINTSET, "size") == SD_POINTSET_SIZE);
+    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_POINTSET, "point") == SD_POINTSET_POINT);
+    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_POINTSET, "handle") == SD_POINTSET_HANDLE);
+
+    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_INTERPOLATION, "type") == SD_INTERPOLATION_TYPE);
+    
     REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_SOURCE_SPREAD, "spread") == SD_SOURCE_SPREAD_SPREAD);
     
     REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_HARDWARE_OUT, "physical-channel") == SD_HARDWARE_OUT_PHYSICAL_CHANNEL);
     REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_HARDWARE_OUT, "gain") == SD_HARDWARE_OUT_GAIN);
+    
 
+    
+}
+
+TEST_CASE("Test Utilities", "[sdConst]"){
+    std::array<double, 3> xyz{1,1,1};
+    auto aed = xyzToAed(xyz);
+    auto rXyz = aedToXyz(aed);
+    REQUIRE(almostEqual(rXyz[0], xyz[0]));
+    REQUIRE(almostEqual(rXyz[1], xyz[1]));
+    REQUIRE(almostEqual(rXyz[2], xyz[2]));
     // std::array to string
     REQUIRE( toString(std::array<int, 3>({{3,4,5}})) == "3 4 5");
     REQUIRE( toString(std::array<double, 2>({{3.3,4.4}})) == "3.3 4.4");

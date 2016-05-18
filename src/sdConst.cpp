@@ -45,10 +45,26 @@ const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
         sdDSpec(SD_INTERPOLATION_TYPE, "type", [](sdEntity* entity, double time, std::string value){
             return entity->addProtoEvent<SD_INTERPOLATION_TYPE>(time, value, entity);})
     }),
-    
+    sdESpec((EExtension::SD_POINTSET), "pointset",{
+        sdDSpec(SD_POINTSET_ID, "id", [](sdEntity* entity, double time, std::string value){
+            return entity->addProtoEvent<SD_POINTSET_ID>(time, value, entity);}),
+        sdDSpec(SD_POINTSET_UNIT, "unit", [](sdEntity* entity, double time, std::string value){
+            return entity->addProtoEvent<SD_POINTSET_UNIT>(time, value, entity);}),
+        sdDSpec(SD_POINTSET_CLOSED, "closed", [](sdEntity* entity, double time, std::string value){
+            return entity->addProtoEvent<SD_POINTSET_CLOSED>(time, stringTo<bool>(value) , entity);}),
+        sdDSpec(SD_POINTSET_SIZE, "size", [](sdEntity* entity, double time, std::string value){
+            return entity->addProtoEvent<SD_POINTSET_SIZE>(time, std::stoi(value), entity);}),
+        sdDSpec(SD_POINTSET_POINT, "point", [](sdEntity* entity, double time, std::string value){
+            return entity->addProtoEvent<SD_POINTSET_POINT>(time, stringToArray<double, 3>(value), entity);}),
+        sdDSpec(SD_POINTSET_HANDLE, "handle", [](sdEntity* entity, double time, std::string value){
+            return entity->addProtoEvent<SD_POINTSET_HANDLE>(time, stringToArray<double, 3>(value), entity);})
+    }),
     sdESpec((EExtension::SD_SOURCE_SPREAD), "source-spread",{
         sdDSpec(SD_SOURCE_SPREAD_SPREAD, "spread", [](sdEntity* entity, double time, std::string value){
             return entity->addProtoEvent<SD_SOURCE_SPREAD_SPREAD>(time, std::stod(value), entity);})
+    }),
+    sdESpec((EExtension::SD_SINK_ENTITY),"sink-entity",{
+       //descriptor is identical to source
     }),
     sdESpec((EExtension::SD_HARDWARE_OUT), "hardware-out",{
         sdDSpec(SD_HARDWARE_OUT_PHYSICAL_CHANNEL, "physical-channel", [](sdEntity* entity, double time, std::string value){

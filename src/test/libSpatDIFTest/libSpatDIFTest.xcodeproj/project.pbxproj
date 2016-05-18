@@ -71,6 +71,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		621B1D471CEC7A70005B98E0 /* sdTraits.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdTraits.h; path = ../../sdTraits.h; sourceTree = "<group>"; };
 		62401D3F1CA2AFBD001179C5 /* internalJSONNode.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = internalJSONNode.o; path = ../../libs/libjson/Objects_static/internalJSONNode.o; sourceTree = "<group>"; };
 		62401D401CA2AFBD001179C5 /* JSONAllocator.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = JSONAllocator.o; path = ../../libs/libjson/Objects_static/JSONAllocator.o; sourceTree = "<group>"; };
 		62401D411CA2AFBD001179C5 /* JSONChildren.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = JSONChildren.o; path = ../../libs/libjson/Objects_static/JSONChildren.o; sourceTree = "<group>"; };
@@ -190,6 +191,8 @@
 			children = (
 				62401D5B1CA2AFC5001179C5 /* JSON */,
 				62BE10201C2F3C020033244E /* sdConst.h */,
+				621B1D471CEC7A70005B98E0 /* sdTraits.h */,
+				62AF37B61C23713A009E9347 /* sdConst.cpp */,
 				62BE10211C2F3C020033244E /* sdDate.h */,
 				62BE10221C2F3C020033244E /* sdEntity.h */,
 				62401D5D1CA2E8E3001179C5 /* sdMetaHandler.h */,
@@ -204,7 +207,6 @@
 				62BE102A1C2F3C020033244E /* sdSaver.h */,
 				62BE102B1C2F3C020033244E /* sdScene.h */,
 				629720C41C29966100135148 /* tinyxml2.cpp */,
-				62AF37B61C23713A009E9347 /* sdConst.cpp */,
 				62AF37B31C236EDC009E9347 /* sdEntity.cpp */,
 				629720D51C2D8C2600135148 /* sdLoader.cpp */,
 				629720DA1C2E1F0600135148 /* sdSaver.cpp */,

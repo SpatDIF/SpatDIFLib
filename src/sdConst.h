@@ -165,9 +165,9 @@ enum class EExtension {
  enum for interpolation types
  */
 typedef enum {
-    SD_NO_INTERPOLATION,
-    SD_LINEAR_INTERPOLATION,
-    SD_CUBIC_INTERPOLATION
+    SD_NONE,
+    SD_LINEAR,
+    SD_CUBIC_BEZIER
 } EInterpolation;
 
 
@@ -383,6 +383,14 @@ inline EType stringTo(const std::string &str){
     if(str == "listner") return EType::SD_LISTENER;
     if(str == "microphone") return EType::SD_MICROPHONE;
     return EType::SD_UNDEFINED;
+}
+
+template <>
+inline EInterpolation stringTo(const std::string &str){
+    if(str == "none")return EInterpolation::SD_NONE;
+    if(str == "linear") return EInterpolation::SD_LINEAR;
+    if(str == "cubic_bezier") return EInterpolation::SD_CUBIC_BEZIER;
+    return EInterpolation::SD_LINEAR;
 }
 
 template <typename T, size_t S>
