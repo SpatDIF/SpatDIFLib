@@ -11,6 +11,7 @@
 		62087AB019A9FE5D00F8A3E6 /* sdExtensionTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdExtensionTest.cpp; path = ../examples/sdExtensionTest.cpp; sourceTree = "<group>"; };
 		62087AB519A9FE5D00F8A3E6 /* sdOSCResponderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdOSCResponderTest.cpp; path = ../examples/sdOSCResponderTest.cpp; sourceTree = "<group>"; };
 		62087AB819AA002300F8A3E6 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; name = Makefile; path = ../examples/Makefile; sourceTree = "<group>"; };
+		621B1D461CEC70A5005B98E0 /* sdTraits.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdTraits.h; sourceTree = "<group>"; };
 		62401D2F1CA2A07F001179C5 /* sdConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdConst.h; sourceTree = "<group>"; };
 		62401D301CA2A07F001179C5 /* sdDate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdDate.h; sourceTree = "<group>"; };
 		62401D311CA2A07F001179C5 /* sdEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sdEntity.h; sourceTree = "<group>"; };
@@ -59,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				6202BE3919AB4F9C00D872DE /* Makefile */,
+				621B1D461CEC70A5005B98E0 /* sdTraits.h */,
 				62401D2F1CA2A07F001179C5 /* sdConst.h */,
 				62401D301CA2A07F001179C5 /* sdDate.h */,
 				62401D311CA2A07F001179C5 /* sdEntity.h */,

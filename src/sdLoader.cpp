@@ -16,7 +16,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include "sdConst.h"
+#include "sdTraits.h"
 #include "sdLoader.h"
 #include "tinyxml2.h"
 #include "libjson.h"

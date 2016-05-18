@@ -37,12 +37,16 @@ static const double kRadianToDegree = 180.0/M_PI;
     enum for descriptor. internally all descriptors are handled with this Enum
  */
 typedef enum {
+    
+    /*** core ***/
+    // core
     SD_TYPE,
     SD_PRESENT,
     SD_POSITION,
     SD_ORIENTATION,
     
-    // descriptor for media extension
+    /** core functionalities **/
+    // media
     SD_MEDIA_ID,
     SD_MEDIA_TYPE,
     SD_MEDIA_LOCATION,
@@ -50,12 +54,50 @@ typedef enum {
     SD_MEDIA_TIME_OFFSET,
     SD_MEDIA_GAIN,
     
+    // loop
+    SD_LOOP_TYPE,
+    SD_LOOP_POINTS,
+    SD_LOOP_WAIT_TIME,
+    
+    // interpolation
+    SD_INTERPOLATION_TYPE,
+    
+    /*** extensions ***/
+    /** general extensions **/
+
+    // pointset
+    SD_POINTSET_ID,
+    SD_POINTSET_UNIT,
+    SD_POINTSET_CLOSED,
+    SD_POINTSET_SIZE,
+    SD_POINTSET_POINT,
+    SD_POINTSET_HANDLE,
+    
+    // geometry
+    SD_GEOMETRY_TRANSLATE,
+    SD_GEOMETRY_SCALE,
+    SD_GEOMETRY_ROTATE,
+    SD_GEOMETRY_SHEAR,
+    SD_GEOMETRY_REFLECT,
+    
+    // automation
+    SD_AUTOMATION_DURATION,
+    SD_AUTOMATION_DELAY,
+    SD_AUTOMATION_FUNCTION,
+    SD_AUTOMATION_POINTSET,
+    SD_AUTOMATION_LOOP,
+    
+    // shape
+    SD_SHAPE_DIRECTION,
+    SD_SHAPE_CLOSED,
+    SD_SHAPE_TYPE,
+    SD_SHAPE_ID,
+    
+    /** layer-related extensions **/
+
     // descriptor for source spread extension
     SD_SOURCE_SPREAD_SPREAD,
-    
-    // descriptor for point set extension
-    SD_POINT_SET_NAME,
-    
+
     // descriptor for hardware out
     SD_HARDWARE_OUT_PHYSICAL_CHANNEL,
     SD_HARDWARE_OUT_GAIN,
@@ -65,9 +107,9 @@ typedef enum {
     SD_ALL
 } EDescriptor;
 
+
 /*!
  enum for "type" descriptor.
- Currently only "point" is declared in the specification.
  */
 enum class EType{
     SD_POINT,
@@ -97,12 +139,25 @@ enum class EKind {
  enum for extension. all sdEntityExtension must have one of these enum as a static variable in order to identify themselves
  */
 enum class EExtension {
+    //core
     SD_CORE,
     SD_MEDIA,
+    SD_INTERPOLATION,
+
+    //general
+    SD_POINTSET,
+    SD_GEOMETRY,
+    SD_AUTTOMATION,
+    SD_SHAPE,
+    
+    //layer-related
+    SD_TRAJECTPRY_GENERATOR,
     SD_SOURCE_SPREAD,
-    SD_DIRECT_TO_ONE,
+    SD_DISTANCE_CUE,
     SD_SINK_ENTITY,
+    SD_DIRECT_TO_ONE,
     SD_HARDWARE_OUT,
+    
     SD_EXTENSION_ERROR
 };
 
@@ -344,90 +399,6 @@ inline std::array<T, S> stringToArray(const std::string &str){
     return std::move(array);
 }
 
-/*!
- The Descriptor traits. implemented with template explicit specialization technique
- */
-
-template <EDescriptor D>
-struct sdDescriptor {};
-
-template <>
-struct sdDescriptor<EDescriptor::SD_TYPE>{
-    typedef EType type;
-    const static bool interpolable = true;
-};
-
-template <>
-struct sdDescriptor<EDescriptor::SD_PRESENT>{
-    typedef bool type;
-    const static bool interpolable = false;
-};
-
-template <>
-struct sdDescriptor<EDescriptor::SD_POSITION>{
-    typedef std::array<double, 3> type;
-    const static bool interpolable = true;
-};
-
-template <>
-struct sdDescriptor<EDescriptor::SD_ORIENTATION>{
-    typedef std::array<double, 3> type;
-    const static bool interpolable = true;
-};
-
-template <>
-struct sdDescriptor<EDescriptor::SD_MEDIA_ID>{
-    typedef std::string type;
-    const static bool interpolable = false;
-};
-
-template <>
-struct sdDescriptor<EDescriptor::SD_MEDIA_TYPE>{
-    typedef std::string type;
-    const static bool interpolable = false;
-};
-
-template <>
-struct sdDescriptor<EDescriptor::SD_MEDIA_LOCATION>{
-    typedef std::string type;
-    const static bool interpolable = false;
-};
-
-template <>
-struct sdDescriptor<EDescriptor::SD_MEDIA_CHANNEL>{
-    typedef int type;
-    const static bool interpolable = false;
-};
-
-template <>
-struct sdDescriptor<EDescriptor::SD_MEDIA_TIME_OFFSET>{
-    typedef double type;
-    const static bool interpolable = false;
-};
-
-template <>
-struct sdDescriptor<EDescriptor::SD_MEDIA_GAIN>{
-    typedef double type;
-    const static bool interpolable = true;
-};
-
-template <>
-struct sdDescriptor<EDescriptor::SD_SOURCE_SPREAD_SPREAD>{
-    typedef double type;
-    const static bool interpolable = true;
-};
-
-template <>
-struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_PHYSICAL_CHANNEL>{
-    typedef int type;
-    const static bool interpolable = false;
-};
-
-template <>
-struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_GAIN>{
-    typedef double type;
-    const static bool interpolable = false;
-};
 
 
 

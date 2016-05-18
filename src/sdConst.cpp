@@ -13,7 +13,7 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#include "sdConst.h"
+#include "sdTraits.h"
 #include "sdEntity.h"
 
 const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
@@ -41,6 +41,11 @@ const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
         sdDSpec(SD_MEDIA_TIME_OFFSET, "time-offset", [](sdEntity* entity, double time, std::string value){
             return entity->addProtoEvent<SD_MEDIA_TIME_OFFSET>(time, std::stod(value), entity);})
     }),
+    sdESpec((EExtension::SD_INTERPOLATION), "interpolation",{
+        sdDSpec(SD_INTERPOLATION_TYPE, "type", [](sdEntity* entity, double time, std::string value){
+            return entity->addProtoEvent<SD_INTERPOLATION_TYPE>(time, value, entity);})
+    }),
+    
     sdESpec((EExtension::SD_SOURCE_SPREAD), "source-spread",{
         sdDSpec(SD_SOURCE_SPREAD_SPREAD, "spread", [](sdEntity* entity, double time, std::string value){
             return entity->addProtoEvent<SD_SOURCE_SPREAD_SPREAD>(time, std::stod(value), entity);})

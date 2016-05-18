@@ -17,7 +17,7 @@
 #define ____sdMeta__
 
 #include <string>
-#include "sdConst.h"
+#include "sdTraits.h"
 
 #pragma mark definitions
 class sdEntity;
