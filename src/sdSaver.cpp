@@ -62,10 +62,10 @@ XMLElement* sdSaver::XMLOrderingSection(XMLDocument &xml, sdScene *scene){
 
 XMLElement* sdSaver::XMLMetaSection(XMLDocument &xml, sdScene *scene){
 
-    XMLElement* meta = xml.NewElement("meta");
+    XMLElement* metaSection = xml.NewElement("meta");
 
     // add info section to meta
-    meta->InsertEndChild(sdSaver::XMLInfoSection(xml, scene));
+    metaSection->InsertEndChild(sdSaver::XMLInfoSection(xml, scene));
 
     // add extensions to meta
     size_t num = scene->getNumberOfActivatedExtensions();
@@ -73,18 +73,69 @@ XMLElement* sdSaver::XMLMetaSection(XMLDocument &xml, sdScene *scene){
         XMLElement* extensions = xml.NewElement("extensions");
         std::string extString;
         auto extensionNames = scene->getActivatedExtensionsAsStrings();
-        std::for_each(extensionNames.begin(), extensionNames.end(),[&extString](std::string ext){extString += ext;});
-        
+        std::for_each(extensionNames.begin(), extensionNames.end(),[&extString](std::string ext){
+            if(!(ext == "media" || ext == "core")){
+                extString += ext;
+                extString += " ";
+            }
+        });
+        extString.erase(extString.size()-1, extString.size()-1);
         XMLText* extensionsText = xml.NewText(extString.c_str());
         extensions->InsertEndChild(extensionsText);
-        meta->InsertEndChild(extensions);
+        metaSection->InsertEndChild(extensions);
     }
     
+    // add other meta infomation such as constant position or sound file definition
+    auto allMetas = scene->getAllMetas();
+    
+    std::for_each(allMetas.begin(), allMetas.end(), [&](std::pair<sdEntity*, std::shared_ptr<sdProtoMeta>> metaPair ) {
+        auto entity = metaPair.first;
+        auto meta = metaPair.second;
+        std::string previousName;
+        std::string previousExtension;
+        sdEntity * previousEntity = nullptr;
+        XMLElement* kind;
+        XMLElement* extension;
+
+        //event
+        kind = xml.NewElement(entity->getKindAsString().c_str());
+        
+        // the name of entity always comes first
+        XMLElement* name = xml.NewElement("name"); // entity name
+        auto entityName = scene->getEntityName(entity);
+        XMLText* nameText = xml.NewText(entityName.c_str());
+        name->InsertEndChild(nameText);
+        kind->InsertEndChild(name);
+    
+        // packaging - combining element and text (value)
+        XMLElement* element = xml.NewElement(meta->getDescriptorAsString().c_str());
+        XMLText* text = xml.NewText(meta->getValueAsString().c_str());
+        element->InsertEndChild(text);
+        
+        std::string relevantExtension = sdExtension::extensionToString(sdExtension::getExtensionOfDescriptor(meta->getDescriptor()));
+        
+        if(relevantExtension == "core"){
+            kind->InsertEndChild(element);
+            metaSection->InsertEndChild(kind);
+        }else{
+            
+            if( (entity != previousEntity ) || (previousExtension != relevantExtension)){
+                // if different entity, time, or extension from the previous put extension tag
+                extension = xml.NewElement((relevantExtension).c_str());
+            }
+            extension->InsertEndChild(element);
+            kind->InsertEndChild(extension);
+            metaSection->InsertEndChild(kind);
+        }
+        
+        previousEntity = entity; // store current name in order to avoid the dupplication.
+        previousExtension = relevantExtension;
+    });
+
+    
     // add ordering
-    meta->InsertEndChild(XMLOrderingSection(xml, scene));
-
-
-    return meta;
+    metaSection->InsertEndChild(XMLOrderingSection(xml, scene));
+    return metaSection;
 }
 
 std::string sdSaver::XMLFromScene(sdScene *scene){
@@ -98,77 +149,55 @@ std::string sdSaver::XMLFromScene(sdScene *scene){
 	xml.InsertEndChild(spatdif);
     spatdif->SetAttribute("version", "0.4");
 
+    
+    // META Section
     spatdif->InsertEndChild(sdSaver::XMLMetaSection(xml, scene));
 
+    std::map<std::string, sdEntity> entities = scene->getEntities();
     
+    // TIME Section
     /* ordered by time */
     if(scene->getOrdering() == EOrdering::SD_TIME){
-        
-        // 2. create string
-        double previousTime = -1.0;
-        std::string previousName;
-        std::string previousExtension;
-        sdEntity * previousEntity = nullptr;
-        XMLElement* extension;
-        XMLElement* kind;
-        auto allEvents = scene->getAllEvents();
-        
-        std::for_each(allEvents.begin(), allEvents.end(), [&](std::pair<sdEntity*, std::shared_ptr<sdProtoEvent>> eventPair ) {
-            auto entity = eventPair.first;
-            auto event = eventPair.second;
+        auto eventTime = scene->getNextEventTime(-1.0);
+        while(eventTime.second){
             
-            //time tag
-            if(event->getTime() != previousTime){ // if not same as the previous time tag, make a new time tag
-                XMLElement* time = xml.NewElement("time");
-                XMLText* timeText = xml.NewText(event->getTimeAsString().c_str());
-                time->InsertEndChild(timeText);
-                spatdif->InsertEndChild(time);
-            }
+            // add <time>
+            XMLElement* timeElement = xml.NewElement("time");
+            timeElement->InsertEndChild(xml.NewText(std::to_string(eventTime.first).c_str()));
+            spatdif->InsertEndChild(timeElement);
             
-            //event
-            if((event->getTime() != previousTime) || (entity != previousEntity)){
-                // if name of entity or time tag changes we need to write many tags!
+            for(auto entity : entities){
+                auto entityEventsAtTime = entity.second.getEvents(eventTime.first);
+                if(entityEventsAtTime.empty()) continue;
                 
-                kind = xml.NewElement(entity->getKindAsString().c_str());
-                
-                // the name of entity always comes first
-                XMLElement* name = xml.NewElement("name"); // entity name
-                auto entityName = scene->getEntityName(entity);
-                XMLText* nameText = xml.NewText(entityName.c_str());
-                name->InsertEndChild(nameText);
-                kind->InsertEndChild(name);
-            }
-            
-            // packaging - combining element and text (value)
-            XMLElement* element = xml.NewElement(event->getDescriptorAsString().c_str());
-            XMLText* text = xml.NewText(event->getValueAsString().c_str());
-            element->InsertEndChild(text);
-            
-            std::string relevantExtension = sdExtension::extensionToString(sdExtension::getExtensionOfDescriptor(event->getDescriptor()));
-            
-            if(relevantExtension == "core"){
-                kind->InsertEndChild(element);
-                spatdif->InsertEndChild(kind);
-            }else{
-                
-                if( (event->getTime() != previousTime) ||  (entity != previousEntity ) || (previousExtension != relevantExtension)){
-                    // if different entity, time, or extension from the previous put extension tag
-                    extension = xml.NewElement((relevantExtension).c_str());
-                }
-                extension->InsertEndChild(element);
-                kind->InsertEndChild(extension);
-                spatdif->InsertEndChild(kind);
-            }
-            
-            previousEntity = entity; // store current name in order to avoid the dupplication.
-            previousExtension = relevantExtension;
-            previousTime = event->getTime();
-        });
+                XMLElement * kindElement = xml.NewElement(entity.second.getKindAsString().c_str());
+                XMLElement * nameElement = xml.NewElement("name"); // entity name
 
+                XMLText* nameText = xml.NewText(entity.first.c_str());
+                nameElement->InsertEndChild(nameText);
+                kindElement->InsertEndChild(nameElement);
+
+                for(auto entityEvent : entityEventsAtTime){
+                    XMLElement* eventElement = xml.NewElement(entityEvent->getDescriptorAsString().c_str());
+                    eventElement->InsertEndChild(xml.NewText(entityEvent->getValueAsString().c_str()));
+                    std::string relevantExtension = sdExtension::extensionToString(sdExtension::getExtensionOfDescriptor(entityEvent->getDescriptor()));
+        
+                    if(relevantExtension == "core"){
+                        kindElement->InsertEndChild(eventElement);
+                    }else{// extension
+                        XMLElement* extensionElement = xml.NewElement((relevantExtension).c_str());
+                        extensionElement->InsertEndChild(eventElement);
+                        kindElement->InsertEndChild(extensionElement);
+                    }
+                }
+                spatdif->InsertEndChild(kindElement);
+            }
+            eventTime = scene->getNextEventTime(eventTime.first);
+        }
+ 
     }else if(scene->getOrdering() == EOrdering::SD_TRACK){
         // 1. Sort vector by name alphabetically
         
-        auto entities = scene->getEntities();
         for(auto it = entities.begin(); it != entities.end(); it++ ){
             auto namedEntity = *it;
             auto entityName = (*it).first;

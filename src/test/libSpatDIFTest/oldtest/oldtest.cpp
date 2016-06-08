@@ -255,19 +255,38 @@ TEST_CASE("sdSaverTest"){
     sdInfo info(string("chikashi miyama"), string("sdSaverTest"), string("2013-08-04"), string("Cologne"), string("1.2"), string("this is a test"), string("My Second Master Piece"), 645.32);
     sdScene scene(info);
     
-    scene.addExtension(EExtension::SD_MEDIA);
+    scene.addExtension(EExtension::SD_HARDWARE_OUT);
+    scene.addExtension(EExtension::SD_SINK_ENTITY);
+
+    
     //the scene has one entities
     auto myEntity = scene.addEntity("myEntity", EKind::SD_SOURCE);
     auto yourEntity = scene.addEntity("yourEntity", EKind::SD_SOURCE);
+    
+    myEntity->addMeta<SD_POSITION>({0,0,1}); // initial position
+    yourEntity->addMeta<SD_POSITION>({-1,1,1});
+    
     myEntity->addEvent<SD_POSITION>(9.15 , {1.0,2.0,3.0});
     myEntity->addEvent<SD_ORIENTATION>(2.12 , {0.0,1.0,2.0});
     yourEntity->addEvent<SD_POSITION>(4.2, {5.0,4.0,3.0});
     yourEntity->addEvent<SD_MEDIA_LOCATION>(5.0, "/tmp/tmpaudio.wav");
     string generatedString = sdSaver::XMLFromScene(&scene);
-    //cout << generatedString;
     scene.setOrdering(EOrdering::SD_TRACK);
     generatedString = sdSaver::XMLFromScene(&scene);
     //cout << generatedString;
+}
+
+TEST_CASE("sdSaverTest2"){
+    sdInfo info(string("chikashi miyama"), string("sdSaverTest"), string("2013-08-04"), string("Cologne"), string("1.2"), string("this is a test"), string("My Second Master Piece"), 645.32);
+    sdScene scene(info);
+    
+    scene.addExtension(EExtension::SD_SOURCE_SPREAD);
+    auto myEntity = scene.addEntity("myEntity", EKind::SD_SOURCE);
+    myEntity->addEvent<SD_POSITION>(1.0, {0.1,0.2,0.3});
+    myEntity->addEvent<SD_SOURCE_SPREAD_SPREAD>(1.0, 0.42);
+
+    cout << sdSaver::XMLFromScene(&scene);
+    
 }
 
 TEST_CASE("sdSceneTest"){

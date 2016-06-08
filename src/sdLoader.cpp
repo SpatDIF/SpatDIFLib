@@ -58,6 +58,18 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
         scene.setInfo(info);
     }
     
+    // activate extension
+    XMLElement* extensions = meta->FirstChildElement("extensions");
+    if(extensions){
+        std::string extensionsString = std::string(extensions->GetText());
+        std::istringstream iss(extensionsString);
+        while (iss.good()) { // add extensions one by one
+            std::string extensionString;
+            iss >> extensionString;
+            scene.addExtension(extensionString);
+        }
+    }
+    
     // create sink entities
     {
         XMLElement* sink = meta->FirstChildElement("sink");
@@ -82,7 +94,8 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
                     }
                 }
                 if(hoPhysicalChannel){
-                    targetEntity->addMeta<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(stringTo<int>(hoPhysicalChannel->GetText()));
+                    int channel = stringTo<int>(hoPhysicalChannel->GetText());
+                    targetEntity->addMeta<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(channel);
                 }
                 if(hoGain) {
                     targetEntity->addMeta<SD_HARDWARE_OUT_GAIN>(stringTo<double>(hoGain->GetText()));
@@ -92,19 +105,7 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
             }
         }
     }
-    
-    
-    XMLElement* extensions = meta->FirstChildElement("extensions");
-    if(extensions){
-        std::string extensionsString = std::string(extensions->GetText());
-        std::istringstream iss(extensionsString);
-        while (iss.good()) { // add extensions one by one
-            std::string extensionString;
-            iss >> extensionString;
-            scene.addExtension(extensionString);
-        }
-    }
-    
+
     //first time tag
     std::string timeString;
     XMLElement* element = meta->NextSiblingElement();

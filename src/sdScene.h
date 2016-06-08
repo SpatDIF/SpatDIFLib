@@ -191,6 +191,7 @@ public:
     std::pair<double, bool> getDeltaTimeToNextEvent(const double &time);
 
     const std::vector<std::pair<sdEntity*, std::shared_ptr<sdProtoEvent>>> &getAllEvents();
+    const std::vector<std::pair<sdEntity*, std::shared_ptr<sdProtoMeta>>> &getAllMetas();
 
     /*!
      @}
@@ -428,6 +429,10 @@ inline const std::vector<std::pair<sdEntity*, std::shared_ptr<sdProtoEvent>>> &s
     return allEvents;
 }
 
+inline const std::vector<std::pair<sdEntity*, std::shared_ptr<sdProtoMeta>>> &sdScene::getAllMetas(){
+    return allMetas;
+}
+
 inline std::vector<std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>>> sdScene::getPreviousEventsFromAllEntities(const double &time) const{
     auto result = std::find_if(allEvents.rbegin(), allEvents.rend(), [&time](std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>> event){
         if(event.second->getTime() < time){return true;}
@@ -516,7 +521,10 @@ inline bool sdScene::addExtension(EExtension extension){
 
 inline bool sdScene::addExtension(std::string extension){
     auto ext = sdExtension::stringToExtension(extension);
-    if(ext == EExtension::SD_EXTENSION_ERROR) return false;
+    if(ext == EExtension::SD_EXTENSION_ERROR){
+        std::cerr << extension << " no such extension" << std::endl;
+        return false;
+    }
     return addExtension(ext);
 }
 
