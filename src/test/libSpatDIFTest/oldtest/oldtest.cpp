@@ -276,7 +276,7 @@ TEST_CASE("sdSaverTest"){
     //cout << generatedString;
 }
 
-TEST_CASE("sdSaverTest2"){
+TEST_CASE("sdSaverTest_EXTNESION"){
     sdInfo info(string("chikashi miyama"), string("sdSaverTest"), string("2013-08-04"), string("Cologne"), string("1.2"), string("this is a test"), string("My Second Master Piece"), 645.32);
     sdScene scene(info);
     
@@ -285,6 +285,8 @@ TEST_CASE("sdSaverTest2"){
     myEntity->addEvent<SD_POSITION>(1.0, {0.1,0.2,0.3});
     myEntity->addEvent<SD_SOURCE_SPREAD_SPREAD>(1.0, 0.42);
     myEntity->addEvent<SD_MEDIA_LOCATION>(1.0, "/some/where/in/your/system");
+    myEntity->addEvent<SD_MEDIA_GAIN>(1.0, 1.0);
+    myEntity->addEvent<SD_MEDIA_CHANNEL>(1.0, 2);
     cout << sdSaver::XMLFromScene(&scene);
     
 }
@@ -646,7 +648,7 @@ TEST_CASE("sdOSCResponder"){
         sdOSCMessage setDate("/spatdifcmd/setDate");
         setDate.appendArgument(std::string("2014-3-7"));
         oscResponder.forwardOSCMessage(setDate);
-        
+                
         sdOSCMessage setLocation("/spatdifcmd/setLocation");
         setLocation.appendArgument(std::string("ICST, Zürich, Switzerland"));
         oscResponder.forwardOSCMessage(setLocation);

@@ -176,6 +176,8 @@ std::string sdSaver::XMLFromScene(sdScene *scene){
                 nameElement->InsertEndChild(nameText);
                 kindElement->InsertEndChild(nameElement);
 
+                XMLElement* extensionElement = nullptr;
+                std::string previousExtension = "";
                 for(auto entityEvent : entityEventsAtTime){
                     XMLElement* eventElement = xml.NewElement(entityEvent->getDescriptorAsString().c_str());
                     eventElement->InsertEndChild(xml.NewText(entityEvent->getValueAsString().c_str()));
@@ -184,10 +186,15 @@ std::string sdSaver::XMLFromScene(sdScene *scene){
                     if(relevantExtension == "core"){
                         kindElement->InsertEndChild(eventElement);
                     }else{// extension
-                        XMLElement* extensionElement = xml.NewElement((relevantExtension).c_str());
-                        extensionElement->InsertEndChild(eventElement);
-                        kindElement->InsertEndChild(extensionElement);
+                        if(previousExtension == relevantExtension){
+                            extensionElement->InsertEndChild(eventElement);
+                        }else{
+                            extensionElement = xml.NewElement((relevantExtension).c_str());
+                            extensionElement->InsertEndChild(eventElement);
+                            kindElement->InsertEndChild(extensionElement);
+                        }
                     }
+                    previousExtension = relevantExtension;
                 }
                 spatdif->InsertEndChild(kindElement);
             }

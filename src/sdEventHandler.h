@@ -54,15 +54,19 @@ public:
     /*! returns a vector of sdProtoEvents, depending on given filter arguments*/
     std::vector<std::shared_ptr<sdProtoEvent> > getEvents(const double &time) const;
     
+    /*! return a mapped vector of sdProtoEvents categorized by extension name */
+    std::map<EExtension, std::vector<std::shared_ptr<sdProtoEvent>>> getEventsCategorizedByExtension(const double &time) const;
+
     /*! returns all events as a vector of sdProtoEvents */
     const std::vector<std::shared_ptr<sdProtoEvent>> &getEvents() const;
     
     /*! returns a vector of sdProtoEvents between start and end time */
     std::vector<std::shared_ptr<sdProtoEvent>> getEvents(const double &start, const double &end) const;
     
-    /*! return a vectir of sdProtoEvents with designated descriptor between start and end time */
+    /*! return a vector of sdProtoEvents with designated descriptor between start and end time */
     std::vector<std::shared_ptr<sdProtoEvent>> getEvents(const double &start, const double &end, const EDescriptor &descriptor) const;
     
+
     /*! @} */
     
     /*! @name Next Event(s)
@@ -233,11 +237,25 @@ inline const sdEvent< D > * const sdEventHandler::getEvent(const double &time) c
 
 inline std::vector<std::shared_ptr<sdProtoEvent>> sdEventHandler::getEvents(const double &time) const{
     std::vector<std::shared_ptr<sdProtoEvent>> vector;
-    for(auto it = events.begin(); it != events.end(); it++){
-        if(almostEqual((*it)->getTime(), time)){vector.push_back(*it);}
-        if((*it)->getTime() > time )break;
+    for(auto event : events){
+        if(almostEqual(event->getTime(), time)){vector.push_back(event);}
+        if(event->getTime() > time )break;
     }
     return std::move(vector);
+}
+
+inline std::map<EExtension, std::vector<std::shared_ptr<sdProtoEvent>>> sdEventHandler::getEventsCategorizedByExtension(const double &time) const{
+    std::vector<std::shared_ptr<sdProtoEvent>> events = getEvents(time);
+    std::map<EExtension, std::vector<std::shared_ptr<sdProtoEvent>>> categorizedEvents;
+    for(auto event : events){
+        auto extension = sdExtension::getExtensionOfDescriptor(event->getDescriptor());
+        if(categorizedEvents.find(extension) == categorizedEvents.end()){ // previously unused extension
+            std::vector<std::shared_ptr<sdProtoEvent>> emptyVector;
+            categorizedEvents.insert(std::pair<EExtension, std::vector<std::shared_ptr<sdProtoEvent>>>(extension,emptyVector));
+        }
+        categorizedEvents[extension].push_back(event);
+    }
+    return std::move(categorizedEvents);
 }
 
 inline const std::vector<std::shared_ptr<sdProtoEvent>> &sdEventHandler::getEvents() const{
