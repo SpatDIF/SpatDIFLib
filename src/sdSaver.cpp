@@ -59,7 +59,6 @@ XMLElement* sdSaver::XMLOrderingSection(XMLDocument &xml, sdScene *scene){
     return  ordering;
 }
 
-
 XMLElement* sdSaver::XMLMetaSection(XMLDocument &xml, sdScene *scene){
 
     XMLElement* metaSection = xml.NewElement("meta");
@@ -132,9 +131,9 @@ XMLElement* sdSaver::XMLMetaSection(XMLDocument &xml, sdScene *scene){
         previousExtension = relevantExtension;
     });
 
-    
     // add ordering
     metaSection->InsertEndChild(XMLOrderingSection(xml, scene));
+
     return metaSection;
 }
 

@@ -4,7 +4,7 @@
 		<info>
 			<annotation>This is a stereo playback SpatDIF scene</annotation>
 		</info>
-		<extensions>direct-to-one sink-entity hardware-out</extensions>
+		<extensions>sink-entity hardware-out</extensions>
 		<sink>
 			<type>loudspeaker</type>
 			<name>left</name>

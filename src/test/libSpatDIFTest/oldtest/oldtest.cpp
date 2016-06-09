@@ -284,7 +284,7 @@ TEST_CASE("sdSaverTest2"){
     auto myEntity = scene.addEntity("myEntity", EKind::SD_SOURCE);
     myEntity->addEvent<SD_POSITION>(1.0, {0.1,0.2,0.3});
     myEntity->addEvent<SD_SOURCE_SPREAD_SPREAD>(1.0, 0.42);
-
+    myEntity->addEvent<SD_MEDIA_LOCATION>(1.0, "/some/where/in/your/system");
     cout << sdSaver::XMLFromScene(&scene);
     
 }
