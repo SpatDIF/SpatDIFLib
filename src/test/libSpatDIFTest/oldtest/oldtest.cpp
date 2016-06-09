@@ -300,8 +300,7 @@ TEST_CASE("sdSceneTest"){
                 string("this a scene test"));
     
     sdScene scene(info);
-    scene.addExtension(EExtension::SD_MEDIA);
-    REQUIRE(scene.getNumberOfActivatedExtensions()==1);
+    REQUIRE(scene.getNumberOfActivatedExtensions()==0);
     auto myEntity = scene.addEntity("myEntity");
     myEntity->addEvent(string("1.0"), string("position"), string("0.0 0.1 0.2"));
     myEntity->addEvent<SD_POSITION>(2.0, {0.0, 0.1, 0.2});
@@ -570,7 +569,7 @@ TEST_CASE("sdOSCResponder"){
     }
     {
         sdOSCMessage addExtension("/spatdifcmd/addExtension");
-        addExtension.appendArgument(std::string("media"));
+        addExtension.appendArgument(std::string("source-spread"));
         oscResponder.forwardOSCMessage(addExtension);
         
         sdOSCMessage getNumberOfActivatedExtensions("/spatdifcmd/getNumberOfActivatedExtensions");

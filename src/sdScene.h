@@ -539,7 +539,7 @@ inline std::unordered_set<std::string> sdScene::getActivatedExtensionsAsStrings(
 }
 
 inline size_t sdScene::getNumberOfActivatedExtensions() const{
-    return activatedExtensionSet.size() - 1; // because core is not a extension;
+    return activatedExtensionSet.size() - 2; // because core is not a extension;
 }
 
 inline bool sdScene::isExtensionActivated(EExtension extension) const{
