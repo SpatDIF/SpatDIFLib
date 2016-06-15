@@ -40,6 +40,7 @@ protected:
     std::set <EDescriptor> validDescriptorSet; //!< a set of valid descriptor
     EOrdering ordering; //!< ordering flag
     sdInfo info; //!< contains "info" part of the meta section
+    
     void addMetaAlias(sdEntity * const entity, const std::shared_ptr<sdProtoMeta>);
     void addEventAlias(sdEntity * const entity, const std::shared_ptr<sdProtoEvent>);
     bool removeMetaAlias(const sdEntity* const entity, const EDescriptor & descriptor);
@@ -55,6 +56,7 @@ public:
         addExtension(EExtension::SD_MEDIA); // media is now part of core
     }
     
+
     /*!
      @}
      */
@@ -571,6 +573,8 @@ inline void sdScene::removeAllExtensions(){
     activatedExtensionSet.clear();
     validDescriptorSet.clear();
     addExtension(EExtension::SD_CORE);
+    addExtension(EExtension::SD_MEDIA);
+
 }
 
 

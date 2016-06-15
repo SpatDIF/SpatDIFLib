@@ -104,7 +104,7 @@ protected:
     
     /*!sdEntity can be invoked only by sdScene*/
     sdEntity(sdScene * const parent, EKind kind = EKind::SD_SOURCE):parent(parent), kind(kind){};
-    
+        
     /*! ask parent if the extension for the descriptor is activated */
     bool isDescriptorValid(const EDescriptor &descriptor) const;
     
@@ -114,10 +114,9 @@ protected:
     /*! add a pointer an event to the global event vector */
     void addGlobalEventAlias(std::shared_ptr<sdProtoEvent> event) override;
     
-    sdScene * const parent;
-    const EKind kind;
+    sdScene * parent;
+    EKind kind;
 };
-
 
 inline const EKind &sdEntity::getKind() const{
     return kind;
