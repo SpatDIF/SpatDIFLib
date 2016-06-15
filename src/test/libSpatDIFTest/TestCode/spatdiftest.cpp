@@ -567,9 +567,9 @@ TEST_CASE("same as above but with strings"){
 
 TEST_CASE("valid descriptor test"){
     sdScene scene;
-    REQUIRE(scene.getValidDescriptorSet().size() == 4);
+    REQUIRE(scene.getValidDescriptorSet().size() == 10);
     scene.addExtension(EExtension::SD_SOURCE_SPREAD);
-    REQUIRE(scene.getValidDescriptorSet().size() == 5);
+    REQUIRE(scene.getValidDescriptorSet().size() == 11);
     
     
 }
@@ -738,5 +738,17 @@ TEST_CASE("Test Utilities", "[sdConst]"){
 }
 
 
+TEST_CASE("Copy sdScene", "[sdScene]"){
+    sdScene sceneA, sceneB;
+    sceneA.addEntity("myEntity");
+    sceneA.addEvent<SD_POSITION>("myEntity", 3.00, {10,20,30});
+    
+    sceneB = sceneA;
+    auto pos = sceneB.getEntity("myEntity")->getEvent<SD_POSITION>(3.00)->getValue();
+    REQUIRE(pos[0] == 10);
+    REQUIRE(pos[1] == 20);
+    REQUIRE(pos[2] == 30);
+    
+}
 
 
