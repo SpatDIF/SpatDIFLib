@@ -40,7 +40,7 @@ public:
     std::string getKindAsString() const;
     
     /*! ask parent the name given to this entity */
-    std::string getName();
+    std::string getName() const;
     
     /*! this function is the only way to instantiate sdMeta.*/
     template <EDescriptor D>

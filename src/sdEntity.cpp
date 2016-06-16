@@ -16,7 +16,7 @@
 #include "sdScene.h"
 #include "sdEntity.h"
 
-std::string sdEntity::getName(){
+std::string sdEntity::getName() const{
     if(!parent)return std::string("");
     return parent->getEntityName(this);
 }
