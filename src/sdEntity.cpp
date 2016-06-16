@@ -17,17 +17,21 @@
 #include "sdEntity.h"
 
 std::string sdEntity::getName(){
+    if(!parent)return std::string("");
     return parent->getEntityName(this);
 }
 
 bool sdEntity::isDescriptorValid(const EDescriptor &descriptor) const{
+    if(!parent)return false;
     return parent->isDescriptorValid(descriptor);
 }
 
 void sdEntity::addGlobalMetaAlias(std::shared_ptr<sdProtoMeta> meta) {
+    if(!parent)return;
     parent->addMetaAlias(this, meta);
 }
 
 void sdEntity::addGlobalEventAlias(std::shared_ptr<sdProtoEvent> event) {
+    if(!parent)return;
     parent->addEventAlias(this, event);
 }
