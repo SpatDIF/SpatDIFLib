@@ -153,7 +153,7 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
         element = element->NextSiblingElement();
     }
     
-    return scene;
+    return std::move(scene);
 }
 
 sdScene sdLoader::sceneFromJSON(std::string jsonString){

@@ -48,6 +48,7 @@ protected:
 
     void sortAllEvents();
     
+    
 public:
     
     /*! constructor with sdInfo and ordering*/
@@ -56,6 +57,33 @@ public:
         addExtension(EExtension::SD_MEDIA); // media is now part of core
     }
     
+    
+    sdScene (const sdScene& origin){
+        entities = origin.entities;
+        allMetas = origin.allMetas;
+        allEvents = origin.allEvents;
+        activatedExtensionSet = origin.activatedExtensionSet;
+        validDescriptorSet = origin.validDescriptorSet;
+        ordering = origin.ordering;
+        info = origin.info;
+        for(auto &entity:entities){ // parent is now me
+            entity.second.parent = this;
+        }
+    }
+    sdScene operator=(const sdScene& origin){
+        entities = origin.entities;
+        allMetas = origin.allMetas;
+        allEvents = origin.allEvents;
+        activatedExtensionSet = origin.activatedExtensionSet;
+        validDescriptorSet = origin.validDescriptorSet;
+        ordering = origin.ordering;
+        info = origin.info;
+        for(auto &entity:entities){ // parent is now me
+            entity.second.parent = this;
+        }
+        return (*this);
+    }
+
 
     /*!
      @}

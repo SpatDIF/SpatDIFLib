@@ -739,11 +739,20 @@ TEST_CASE("Test Utilities", "[sdConst]"){
 
 
 TEST_CASE("Copy sdScene", "[sdScene]"){
-    sdScene sceneA, sceneB;
-    sceneA.addEntity("myEntity");
-    sceneA.addEvent<SD_POSITION>("myEntity", 3.00, {10,20,30});
+    sdScene sceneB;
+    {
+        sdScene sceneA;
+        sceneA.addEntity("myEntity");
+        sceneA.addEvent<SD_POSITION>("myEntity", 3.00, {10,20,30});
     
-    sceneB = sceneA;
+        sceneB = sceneA;
+        //scene A deleted here
+    }
+
+    auto myEntity =  sceneB.getEntity("myEntity");
+    auto name = myEntity->getName();
+
+    
     auto pos = sceneB.getEntity("myEntity")->getEvent<SD_POSITION>(3.00)->getValue();
     REQUIRE(pos[0] == 10);
     REQUIRE(pos[1] == 20);
