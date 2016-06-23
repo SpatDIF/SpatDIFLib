@@ -48,6 +48,19 @@ protected:
 
     void sortAllEvents();
     
+private:
+    void copy(const sdScene& origin){
+        entities = origin.entities;
+        allMetas = origin.allMetas;
+        allEvents = origin.allEvents;
+        activatedExtensionSet = origin.activatedExtensionSet;
+        validDescriptorSet = origin.validDescriptorSet;
+        ordering = origin.ordering;
+        info = origin.info;
+        for(auto &entity:entities){ // parent is now me
+            entity.second.parent = this;
+        }
+    }
     
 public:
     
@@ -57,30 +70,18 @@ public:
         addExtension(EExtension::SD_MEDIA); // media is now part of core
     }
     
-    
     sdScene (const sdScene& origin){
-        entities = origin.entities;
-        allMetas = origin.allMetas;
-        allEvents = origin.allEvents;
-        activatedExtensionSet = origin.activatedExtensionSet;
-        validDescriptorSet = origin.validDescriptorSet;
-        ordering = origin.ordering;
-        info = origin.info;
-        for(auto &entity:entities){ // parent is now me
-            entity.second.parent = this;
-        }
+        copy(origin);
     }
     sdScene operator=(const sdScene& origin){
-        entities = origin.entities;
-        allMetas = origin.allMetas;
-        allEvents = origin.allEvents;
-        activatedExtensionSet = origin.activatedExtensionSet;
-        validDescriptorSet = origin.validDescriptorSet;
-        ordering = origin.ordering;
-        info = origin.info;
-        for(auto &entity:entities){ // parent is now me
-            entity.second.parent = this;
-        }
+        copy(origin);
+        return (*this);
+    }
+    sdScene(sdScene&& origin){
+        copy(origin);
+    }
+    sdScene& operator=(const sdScene&& origin){
+        copy(origin);
         return (*this);
     }
 
