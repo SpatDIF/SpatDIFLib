@@ -743,20 +743,31 @@ TEST_CASE("Copy sdScene", "[sdScene]"){
     {
         sdScene sceneA;
         sceneA.addEntity("myEntity");
+        sceneA.addEntity("yourEntity");
         sceneA.addEvent<SD_POSITION>("myEntity", 3.00, {10,20,30});
-    
-        sceneB = sceneA;
+        sceneA.addEvent<SD_POSITION>("yourEntity", 3.00, {30,20,10});
+        sceneB = std::move(sceneA);
         //scene A deleted here
     }
 
     auto myEntity =  sceneB.getEntity("myEntity");
     auto name = myEntity->getName();
-
+    REQUIRE(name == "myEntity");
     
-    auto pos = sceneB.getEntity("myEntity")->getEvent<SD_POSITION>(3.00)->getValue();
-    REQUIRE(pos[0] == 10);
-    REQUIRE(pos[1] == 20);
-    REQUIRE(pos[2] == 30);
+    auto youEntity = sceneB.getEntity("yourEntity");
+    auto entityName = youEntity->getName();
+    REQUIRE(entityName == "yourEntity");
+    
+    auto pos1 = sceneB.getEntity("myEntity")->getEvent<SD_POSITION>(3.00)->getValue();
+    auto pos2 = sceneB.getEntity("yourEntity")->getEvent<SD_POSITION>(3.00)->getValue();
+    
+    REQUIRE(pos1[0] == 10);
+    REQUIRE(pos1[1] == 20);
+    REQUIRE(pos1[2] == 30);
+    
+    REQUIRE(pos2[0] == 30);
+    REQUIRE(pos2[1] == 20);
+    REQUIRE(pos2[2] == 10);
     
 }
 
