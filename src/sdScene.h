@@ -57,9 +57,20 @@ private:
         validDescriptorSet = origin.validDescriptorSet;
         ordering = origin.ordering;
         info = origin.info;
+        
         for(auto &entity:entities){ // parent is now me
             entity.second.parent = this;
         }
+        // point new entities
+        for(auto &meta: allMetas){
+            std::string name = meta.first->getName();
+            meta.first = getEntity(name);
+        }
+        for(auto &event: allEvents){
+            std::string name = event.first->getName();
+            event.first = getEntity(name);
+        }
+    
     }
     
 public:
