@@ -104,12 +104,6 @@ struct sdDescriptor<EDescriptor::SD_INTERPOLATION_TYPE>{
 *********************************************************/
 
 
-// source-spread
-template <>
-struct sdDescriptor<EDescriptor::SD_SOURCE_SPREAD_SPREAD>{
-    typedef double type;
-    const static bool interpolable = true;
-};
 
 // hardware-out
 template <>
@@ -276,5 +270,46 @@ struct sdDescriptor<EDescriptor::SD_GROUP_ORIENTATION>{
     const static bool interpolable = true;
 };
 
-// 5.3.2
+/// 5.3.2 Extensions for Scene Description Layer
+// 5.3.2.1 Source Spread
+
+template <>
+struct sdDescriptor<EDescriptor::SD_SOURCE_SPREAD_SPREAD>{
+    typedef double type;
+    const static bool interpolable = true;
+};
+
+/// 5.3.3 Extension for Spatial Encoding Layer
+//5.3.3.1 Distance-cues
+
+template <>
+struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_REFERENCE_DISTANCE>{
+    typedef double type;
+    const static bool interpolable = true;
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_MAXIMUM_DISTANCE>{
+    typedef double type;
+    const static bool interpolable = true;
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_MAXIMUM_ATTENUATION>{
+    typedef double type;
+    const static bool interpolable = true;
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_ATTENUATION_MODEL>{
+    typedef int type;
+    const static bool interpolable = false;
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_ABSORPTION_MODEL>{
+    typedef int type;
+    const static bool interpolable = false;
+};
+
 #endif
