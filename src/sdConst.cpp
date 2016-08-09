@@ -72,5 +72,6 @@ const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
         sdDSpec(SD_HARDWARE_OUT_GAIN, "gain", [](sdEntity* entity, double time, std::string value){
             return entity->addProtoEvent<SD_HARDWARE_OUT_GAIN>(time, std::stod(value), entity);}),
     })
+
 };
             

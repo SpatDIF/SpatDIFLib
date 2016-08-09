@@ -93,8 +93,17 @@ typedef enum {
     SD_SHAPE_TYPE,
     SD_SHAPE_ID,
     
+    
+    
     /** layer-related extensions **/
 
+    
+    //group
+    SD_GROUP_NAME,
+    SD_GROUP_PRESENT,
+    SD_GROUP_POSITION,
+    SD_GROUP_ORIENTATION,
+    
     // descriptor for source spread extension
     SD_SOURCE_SPREAD_SPREAD,
 
@@ -157,6 +166,8 @@ enum class EExtension {
     SD_SINK_ENTITY,
     SD_DIRECT_TO_ONE,
     SD_HARDWARE_OUT,
+    
+    SD_GROUP,
     
     SD_EXTENSION_ERROR
 };

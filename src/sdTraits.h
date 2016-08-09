@@ -160,4 +160,35 @@ struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_GAIN>{
     const static bool interpolable = true;
 };
 
+// 5.3. Layer-Related Extensions
+
+// 5.3.1 Extensions for Spatial Authoring Layer
+// 5.3.1.1 Trajectory Generator
+
+// 5.3.1.2 Group
+template <>
+struct sdDescriptor<EDescriptor::SD_GROUP_NAME>{
+    typedef std::string type;
+    const static bool interpolable = false;
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_GROUP_PRESENT>{
+    typedef bool type;
+    const static bool interpolable = false;
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_GROUP_POSITION>{
+    typedef std::array<double , 3> type;
+    const static bool interpolable = true;
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_GROUP_ORIENTATION>{
+    typedef std::array<double, 3 > type;
+    const static bool interpolable = true;
+};
+
+// 5.3.2
 #endif
