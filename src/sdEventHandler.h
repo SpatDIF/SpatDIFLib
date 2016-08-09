@@ -17,6 +17,8 @@
 #ifndef sdEventHandler_h
 #define sdEventHandler_h
 
+#include "sdUtils.h"
+
 class sdEventHandler{
     /*! @name Event Handling @{ */
 protected:

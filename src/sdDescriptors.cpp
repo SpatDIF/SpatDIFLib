@@ -13,7 +13,7 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#include "sdTraits.h"
+#include "sdDescriptors.h"
 #include "sdEntity.h"
 
 const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {

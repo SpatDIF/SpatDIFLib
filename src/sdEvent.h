@@ -17,8 +17,9 @@
 #define ____sdEvent__
 
 #include <string>
-#include "sdConst.h"
+#include "sdDescriptors.h"
 #include "sdMeta.h"
+#include "sdUtils.h"
 
 #pragma mark definitions
 class sdEntity;

@@ -20,7 +20,7 @@
 #include <string>
 #include <memory>
 #include "sdException.h"
-#include "sdConst.h"
+#include "sdDescriptors.h"
 #include "sdMeta.h"
 #include "sdEvent.h"
 #include "sdMetaHandler.h"
@@ -68,7 +68,7 @@ public:
     /*!
      this function looks for an event at specified time and descriptor and returns a pointer to the data.
      @param time time of the event
-     @param descriptor specify descriptor defined in sdConst.h
+     @param descriptor specify descriptor defined in sdDescriptors.h
      */
     template <EDescriptor D>
     const typename sdDescriptor<D>::type * const getValue(const double &time) const;
@@ -76,7 +76,7 @@ public:
     /*!
      this function search for an event at specified time and descriptor and return the data as a string.
      @param time time of the event
-     @param descriptor specify descriptor defined in sdConst.h
+     @param descriptor specify descriptor defined in sdDescriptors.h
      */
     template <EDescriptor D>
     const std::string getValueAsString(const double &time) const;
@@ -84,7 +84,7 @@ public:
     /*!
      this function looks for a next event from the specified time with the designated descriptor and returns a pointer to the data.
      @param time 
-     @param descriptor specify descriptor defined in sdConst.h
+     @param descriptor specify descriptor defined in sdDescriptors.h
      */
     template <EDescriptor D>
     const typename sdDescriptor<D>::type * const getNextValue(const double &time) const;
@@ -92,7 +92,7 @@ public:
     /*!
      this function looks for a next event from the specified time with the designated descriptor and returns a pointer to the data.
      @param time 
-     @param descriptor specify descriptor defined in sdConst.h
+     @param descriptor specify descriptor defined in sdDescriptors.h
      */
     template <EDescriptor D>
     const typename sdDescriptor<D>::type * const getPreviousValue(const double &time) const;

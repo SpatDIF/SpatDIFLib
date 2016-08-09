@@ -21,7 +21,7 @@
 #include <map>
 #include <unordered_set>
 #include <set>
-#include "sdConst.h"
+#include "sdDescriptors.h"
 #include "sdInfo.h"
 #include "sdEntity.h"
 
@@ -119,12 +119,12 @@ public:
 #pragma mark ordering
 
     /*! sets an enum of ordering
-     @param ordering the ordering enum declared in sdConst.h
+     @param ordering the ordering enum declared in sdDescriptors.h
      */
     void setOrdering(const EOrdering &ordering);
     
     /*! sets an enum of ordering
-     @param ordering the ordering enum declared in sdConst.h
+     @param ordering the ordering enum declared in sdDescriptors.h
      @returns returns true if the ordering successfully renewed
      */
     bool setOrdering(const std::string &string);

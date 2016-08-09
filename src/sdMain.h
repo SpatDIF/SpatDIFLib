@@ -16,7 +16,7 @@
 #ifndef ____sdMain__
 #define ____sdMain__
 
-#include "sdConst.h"
+#include "sdDescriptors.h"
 #include "sdDate.h"
 
 #include "sdEntity.h"
