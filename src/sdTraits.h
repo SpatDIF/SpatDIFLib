@@ -202,25 +202,48 @@ template <>
 struct sdDescriptor<EDescriptor::SD_AUTOMATION_DURATION>{
     typedef double type;
     const static bool interpolable = false;
-}
+};
 
 template <>
 struct sdDescriptor<EDescriptor::SD_AUTOMATION_DELAY>{
     typedef double type;
     const static bool interpolable = false;
-}
+};
 
 template <>
-struct sdDescriptor<EDescriptor::SD_FUNCTION>{
+struct sdDescriptor<EDescriptor::SD_AUTOMATION_FUNCTION>{
     typedef std::string type;
     const static bool interpolable = false;
-}
+};
 
 /////// pointset -- extension
 /////// loop -- extension
 
 /// 5.2.4 Shape
 
+template <>
+struct sdDescriptor<EDescriptor::SD_SHAPE_DIRECTION>{
+    typedef bool type; // CCW, CW
+    const static bool interpolable = false;
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_SHAPE_CLOSED>{
+    typedef bool type;
+    const static bool interpolable = false;
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_SHAPE_TYPE>{
+    typedef std::string type;
+    const static bool interpolable = false;
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_SHAPE_ID>{
+    typedef std::string type;
+    const static bool interpolable = false;
+};
 
 //***** 5.3. Layer-Related Extensions *****//
 
