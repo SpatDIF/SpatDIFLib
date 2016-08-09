@@ -198,6 +198,26 @@ struct sdDescriptor<EDescriptor::SD_GEOMETRY_REFLECT>{
 
 /// 5.2.3 Automation
 
+template <>
+struct sdDescriptor<EDescriptor::SD_AUTOMATION_DURATION>{
+    typedef double type;
+    const static bool interpolable = false;
+}
+
+template <>
+struct sdDescriptor<EDescriptor::SD_AUTOMATION_DELAY>{
+    typedef double type;
+    const static bool interpolable = false;
+}
+
+template <>
+struct sdDescriptor<EDescriptor::SD_FUNCTION>{
+    typedef std::string type;
+    const static bool interpolable = false;
+}
+
+/////// pointset -- extension
+/////// loop -- extension
 
 /// 5.2.4 Shape
 
