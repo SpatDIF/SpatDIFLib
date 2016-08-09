@@ -99,10 +99,35 @@ struct sdDescriptor<EDescriptor::SD_INTERPOLATION_TYPE>{
 };
 
 
-/*** extensions ***/
-/// general extensions
+/********************************************************
+5. extensions
+*********************************************************/
 
-// pointset
+
+// source-spread
+template <>
+struct sdDescriptor<EDescriptor::SD_SOURCE_SPREAD_SPREAD>{
+    typedef double type;
+    const static bool interpolable = true;
+};
+
+// hardware-out
+template <>
+struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_PHYSICAL_CHANNEL>{
+    typedef int type;
+    const static bool interpolable = false;
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_GAIN>{
+    typedef double type;
+    const static bool interpolable = true;
+};
+
+//***** 5.2. General Extensions *****//
+
+/// 5.2.1 Pointset
+
 template <>
 struct sdDescriptor<EDescriptor::SD_POINTSET_ID>{
     typedef std::string type;
@@ -139,30 +164,48 @@ struct sdDescriptor<EDescriptor::SD_POINTSET_HANDLE>{
     const static bool interpolable = false;
 };
 
-
-// source-spread
+/// 5.2.2 Geometry
 template <>
-struct sdDescriptor<EDescriptor::SD_SOURCE_SPREAD_SPREAD>{
-    typedef double type;
+struct sdDescriptor<EDescriptor::SD_GEOMETRY_TRANSLATE>{
+    typedef std::array<double, 3> type;
     const static bool interpolable = true;
 };
 
-// hardware-out
 template <>
-struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_PHYSICAL_CHANNEL>{
-    typedef int type;
-    const static bool interpolable = false;
+struct sdDescriptor<EDescriptor::SD_GEOMETRY_SCALE>{
+    typedef std::array<double, 3> type;
+    const static bool interpolanle = true;
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_GAIN>{
-    typedef double type;
+struct sdDescriptor<EDescriptor::SD_GEOMETRY_ROTATE>{
+    typedef std::array<double, 3> type;
+    const static bool interpolanle = true;
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_GEOMETRY_SHEAR>{
+    typedef std::array<double, 3> type;
     const static bool interpolable = true;
 };
 
-// 5.3. Layer-Related Extensions
+template <>
+struct sdDescriptor<EDescriptor::SD_GEOMETRY_REFLECT>{
+    typedef std::array<int, 3> type;
+    const static bool interpolable = true;
+};
 
-// 5.3.1 Extensions for Spatial Authoring Layer
+
+/// 5.2.3 Automation
+
+
+/// 5.2.4 Shape
+
+
+//***** 5.3. Layer-Related Extensions *****//
+
+/// 5.3.1 Extensions for Spatial Authoring Layer
+
 // 5.3.1.1 Trajectory Generator
 
 // 5.3.1.2 Group

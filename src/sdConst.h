@@ -62,10 +62,10 @@ typedef enum {
     // interpolation
     SD_INTERPOLATION_TYPE,
     
-    /*** extensions ***/
-    /** general extensions **/
+    /*** 5 extensions ***/
+    /** 5.2 general extensions **/
 
-    // pointset
+    /// 5.2.1 pointset
     SD_POINTSET_ID,
     SD_POINTSET_UNIT,
     SD_POINTSET_CLOSED,
@@ -73,41 +73,45 @@ typedef enum {
     SD_POINTSET_POINT,
     SD_POINTSET_HANDLE,
     
-    // geometry
+    /// 5.2.2 geometry
     SD_GEOMETRY_TRANSLATE,
     SD_GEOMETRY_SCALE,
     SD_GEOMETRY_ROTATE,
     SD_GEOMETRY_SHEAR,
     SD_GEOMETRY_REFLECT,
     
-    // automation
+    /// 5.2.3 automation
     SD_AUTOMATION_DURATION,
     SD_AUTOMATION_DELAY,
     SD_AUTOMATION_FUNCTION,
     SD_AUTOMATION_POINTSET,
     SD_AUTOMATION_LOOP,
     
-    // shape
+    /// 5.2.4 shape
     SD_SHAPE_DIRECTION,
     SD_SHAPE_CLOSED,
     SD_SHAPE_TYPE,
     SD_SHAPE_ID,
     
-    
-    
-    /** layer-related extensions **/
+    /** 5.3 layer-related extensions **/
 
+    /// 5.3.1 trjactory generator
     
-    //group
+    // 5.3.1.2 group
     SD_GROUP_NAME,
     SD_GROUP_PRESENT,
     SD_GROUP_POSITION,
     SD_GROUP_ORIENTATION,
     
-    // descriptor for source spread extension
+    /// 5.3.2 Extensions for scene description layer
+    // 5.3.2.1 Source Spread
     SD_SOURCE_SPREAD_SPREAD,
 
-    // descriptor for hardware out
+    /// 5.3.3 Extensions for spatial encoding layer
+    // 5.3.3.1 descriptor for hardware out
+    
+    
+    
     SD_HARDWARE_OUT_PHYSICAL_CHANNEL,
     SD_HARDWARE_OUT_GAIN,
     
@@ -153,20 +157,19 @@ enum class EExtension {
     SD_MEDIA,
     SD_INTERPOLATION,
 
-    //general
+    //5.2 general
     SD_POINTSET,
     SD_GEOMETRY,
     SD_AUTTOMATION,
     SD_SHAPE,
     
-    //layer-related
+    //5.3 layer-related
     SD_TRAJECTPRY_GENERATOR,
     SD_SOURCE_SPREAD,
     SD_DISTANCE_CUE,
     SD_SINK_ENTITY,
     SD_DIRECT_TO_ONE,
     SD_HARDWARE_OUT,
-    
     SD_GROUP,
     
     SD_EXTENSION_ERROR
