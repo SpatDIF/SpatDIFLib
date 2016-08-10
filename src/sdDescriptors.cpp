@@ -16,6 +16,8 @@
 #include "sdDescriptors.h"
 #include "sdEntity.h"
 
+// the following table defines the relationship between extensions and descriptors 
+
 const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
     sdESpec(EExtension::SD_CORE, "core", {
         sdDSpec(SD_TYPE, "type", [](sdEntity * entity, double time, std::string value){

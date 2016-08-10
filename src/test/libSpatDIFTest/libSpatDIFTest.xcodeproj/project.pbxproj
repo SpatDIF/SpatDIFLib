@@ -7,6 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6217DDE71D5B20510048C466 /* sdDescriptors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6217DDE51D5B20510048C466 /* sdDescriptors.cpp */; };
+		6217DDFE1D5B218A0048C466 /* internalJSONNode.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D3F1CA2AFBD001179C5 /* internalJSONNode.o */; };
+		6217DDFF1D5B218A0048C466 /* JSONAllocator.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D401CA2AFBD001179C5 /* JSONAllocator.o */; };
+		6217DE001D5B218A0048C466 /* JSONChildren.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D411CA2AFBD001179C5 /* JSONChildren.o */; };
+		6217DE011D5B218A0048C466 /* JSONDebug.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D421CA2AFBD001179C5 /* JSONDebug.o */; };
+		6217DE021D5B218A0048C466 /* JSONIterators.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D431CA2AFBD001179C5 /* JSONIterators.o */; };
+		6217DE031D5B218A0048C466 /* JSONMemory.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D441CA2AFBD001179C5 /* JSONMemory.o */; };
+		6217DE041D5B218A0048C466 /* JSONNode_Mutex.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D451CA2AFBD001179C5 /* JSONNode_Mutex.o */; };
+		6217DE051D5B218A0048C466 /* JSONNode.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D461CA2AFBD001179C5 /* JSONNode.o */; };
+		6217DE061D5B218A0048C466 /* JSONPreparse.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D471CA2AFBD001179C5 /* JSONPreparse.o */; };
+		6217DE071D5B218A0048C466 /* JSONStream.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D481CA2AFBD001179C5 /* JSONStream.o */; };
+		6217DE081D5B218A0048C466 /* JSONValidator.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D491CA2AFBD001179C5 /* JSONValidator.o */; };
+		6217DE091D5B218A0048C466 /* JSONWorker.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D4A1CA2AFBD001179C5 /* JSONWorker.o */; };
+		6217DE0A1D5B218A0048C466 /* JSONWriter.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D4B1CA2AFBD001179C5 /* JSONWriter.o */; };
+		6217DE0B1D5B218A0048C466 /* libjson.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D4C1CA2AFBD001179C5 /* libjson.o */; };
+		6217DE0C1D5B21930048C466 /* descriptor_sanity_check.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6217DDEE1D5B20F10048C466 /* descriptor_sanity_check.cpp */; };
+		6217DE0D1D5B219E0048C466 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720C41C29966100135148 /* tinyxml2.cpp */; };
+		6217DE0E1D5B219E0048C466 /* sdEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B31C236EDC009E9347 /* sdEntity.cpp */; };
+		6217DE0F1D5B219E0048C466 /* sdLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720D51C2D8C2600135148 /* sdLoader.cpp */; };
+		6217DE101D5B219E0048C466 /* sdSaver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720DA1C2E1F0600135148 /* sdSaver.cpp */; };
+		6217DE121D5B23420048C466 /* sdDescriptors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6217DE111D5B23420048C466 /* sdDescriptors.cpp */; };
+		6217DE141D5B23590048C466 /* sdDescriptors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6217DE131D5B23590048C466 /* sdDescriptors.cpp */; };
 		62401D4D1CA2AFBD001179C5 /* internalJSONNode.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D3F1CA2AFBD001179C5 /* internalJSONNode.o */; };
 		62401D4E1CA2AFBD001179C5 /* JSONAllocator.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D401CA2AFBD001179C5 /* JSONAllocator.o */; };
 		62401D4F1CA2AFBD001179C5 /* JSONChildren.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D411CA2AFBD001179C5 /* JSONChildren.o */; };
@@ -38,11 +60,9 @@
 		629720C51C29966100135148 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720C41C29966100135148 /* tinyxml2.cpp */; };
 		629720D61C2D8C2600135148 /* sdLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720D51C2D8C2600135148 /* sdLoader.cpp */; };
 		629720DB1C2E1F0600135148 /* sdSaver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720DA1C2E1F0600135148 /* sdSaver.cpp */; };
-		62AF37BA1C23739C009E9347 /* sdConst.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B61C23713A009E9347 /* sdConst.cpp */; };
 		62AF37BB1C2373A1009E9347 /* sdEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B31C236EDC009E9347 /* sdEntity.cpp */; };
 		62D8B0311C37462900AC1D31 /* oldtest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62D8B0301C37462900AC1D31 /* oldtest.cpp */; };
 		62D8B0351C3746A500AC1D31 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720C41C29966100135148 /* tinyxml2.cpp */; };
-		62D8B0361C3746A500AC1D31 /* sdConst.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B61C23713A009E9347 /* sdConst.cpp */; };
 		62D8B0371C3746A500AC1D31 /* sdEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B31C236EDC009E9347 /* sdEntity.cpp */; };
 		62D8B0381C3746A500AC1D31 /* sdLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720D51C2D8C2600135148 /* sdLoader.cpp */; };
 		62D8B0391C3746A500AC1D31 /* sdSaver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720DA1C2E1F0600135148 /* sdSaver.cpp */; };
@@ -50,6 +70,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		6217DDF51D5B21080048C466 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		62D8B02C1C37462900AC1D31 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -71,7 +100,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		621B1D471CEC7A70005B98E0 /* sdTraits.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdTraits.h; path = ../../sdTraits.h; sourceTree = "<group>"; };
+		6217DDE51D5B20510048C466 /* sdDescriptors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdDescriptors.cpp; path = ../../sdDescriptors.cpp; sourceTree = "<group>"; };
+		6217DDE61D5B20510048C466 /* sdDescriptors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sdDescriptors.h; path = ../../sdDescriptors.h; sourceTree = "<group>"; };
+		6217DDEE1D5B20F10048C466 /* descriptor_sanity_check.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = descriptor_sanity_check.cpp; sourceTree = "<group>"; };
+		6217DDF71D5B21080048C466 /* descriptor_sanity_check */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = descriptor_sanity_check; sourceTree = BUILT_PRODUCTS_DIR; };
+		6217DDF91D5B21080048C466 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		6217DE111D5B23420048C466 /* sdDescriptors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdDescriptors.cpp; path = ../../sdDescriptors.cpp; sourceTree = "<group>"; };
+		6217DE131D5B23590048C466 /* sdDescriptors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdDescriptors.cpp; path = ../../sdDescriptors.cpp; sourceTree = "<group>"; };
+		6217DE151D5B23600048C466 /* sdDescriptors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdDescriptors.cpp; path = ../../sdDescriptors.cpp; sourceTree = "<group>"; };
 		62401D3F1CA2AFBD001179C5 /* internalJSONNode.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = internalJSONNode.o; path = ../../libs/libjson/Objects_static/internalJSONNode.o; sourceTree = "<group>"; };
 		62401D401CA2AFBD001179C5 /* JSONAllocator.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = JSONAllocator.o; path = ../../libs/libjson/Objects_static/JSONAllocator.o; sourceTree = "<group>"; };
 		62401D411CA2AFBD001179C5 /* JSONChildren.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = JSONChildren.o; path = ../../libs/libjson/Objects_static/JSONChildren.o; sourceTree = "<group>"; };
@@ -92,8 +128,6 @@
 		629720D51C2D8C2600135148 /* sdLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdLoader.cpp; path = ../../sdLoader.cpp; sourceTree = "<group>"; };
 		629720DA1C2E1F0600135148 /* sdSaver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdSaver.cpp; path = ../../sdSaver.cpp; sourceTree = "<group>"; };
 		62AF37B31C236EDC009E9347 /* sdEntity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdEntity.cpp; path = ../../sdEntity.cpp; sourceTree = "<group>"; };
-		62AF37B61C23713A009E9347 /* sdConst.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdConst.cpp; path = ../../sdConst.cpp; sourceTree = "<group>"; };
-		62BE10201C2F3C020033244E /* sdConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdConst.h; path = ../../sdConst.h; sourceTree = "<group>"; };
 		62BE10211C2F3C020033244E /* sdDate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdDate.h; path = ../../sdDate.h; sourceTree = "<group>"; };
 		62BE10221C2F3C020033244E /* sdEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdEntity.h; path = ../../sdEntity.h; sourceTree = "<group>"; };
 		62BE10231C2F3C020033244E /* sdEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdEvent.h; path = ../../sdEvent.h; sourceTree = "<group>"; };
@@ -112,6 +146,27 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		6217DDF41D5B21080048C466 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6217DDFE1D5B218A0048C466 /* internalJSONNode.o in Frameworks */,
+				6217DDFF1D5B218A0048C466 /* JSONAllocator.o in Frameworks */,
+				6217DE001D5B218A0048C466 /* JSONChildren.o in Frameworks */,
+				6217DE011D5B218A0048C466 /* JSONDebug.o in Frameworks */,
+				6217DE021D5B218A0048C466 /* JSONIterators.o in Frameworks */,
+				6217DE031D5B218A0048C466 /* JSONMemory.o in Frameworks */,
+				6217DE041D5B218A0048C466 /* JSONNode_Mutex.o in Frameworks */,
+				6217DE051D5B218A0048C466 /* JSONNode.o in Frameworks */,
+				6217DE061D5B218A0048C466 /* JSONPreparse.o in Frameworks */,
+				6217DE071D5B218A0048C466 /* JSONStream.o in Frameworks */,
+				6217DE081D5B218A0048C466 /* JSONValidator.o in Frameworks */,
+				6217DE091D5B218A0048C466 /* JSONWorker.o in Frameworks */,
+				6217DE0A1D5B218A0048C466 /* JSONWriter.o in Frameworks */,
+				6217DE0B1D5B218A0048C466 /* libjson.o in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		62D8B02B1C37462900AC1D31 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -157,6 +212,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6217DDED1D5B20F10048C466 /* DescriptorSanity */ = {
+			isa = PBXGroup;
+			children = (
+				6217DDEE1D5B20F10048C466 /* descriptor_sanity_check.cpp */,
+			);
+			path = DescriptorSanity;
+			sourceTree = "<group>";
+		};
+		6217DDF81D5B21080048C466 /* descriptor_sanity_check */ = {
+			isa = PBXGroup;
+			children = (
+				6217DDF91D5B21080048C466 /* main.cpp */,
+			);
+			path = descriptor_sanity_check;
+			sourceTree = "<group>";
+		};
 		62401D5B1CA2AFC5001179C5 /* JSON */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,12 +260,13 @@
 		62D904AE1C0E4DBF0065D8A5 = {
 			isa = PBXGroup;
 			children = (
+				6217DE151D5B23600048C466 /* sdDescriptors.cpp */,
+				6217DE131D5B23590048C466 /* sdDescriptors.cpp */,
+				6217DE111D5B23420048C466 /* sdDescriptors.cpp */,
 				62401D5B1CA2AFC5001179C5 /* JSON */,
-				62BE10201C2F3C020033244E /* sdConst.h */,
-				621B1D471CEC7A70005B98E0 /* sdTraits.h */,
-				62AF37B61C23713A009E9347 /* sdConst.cpp */,
 				62BE10211C2F3C020033244E /* sdDate.h */,
 				62BE10221C2F3C020033244E /* sdEntity.h */,
+				6217DDE61D5B20510048C466 /* sdDescriptors.h */,
 				62401D5D1CA2E8E3001179C5 /* sdMetaHandler.h */,
 				62401D5E1CA2E947001179C5 /* sdEventHandler.h */,
 				62BE10231C2F3C020033244E /* sdEvent.h */,
@@ -206,12 +278,15 @@
 				62BE10291C2F3C020033244E /* sdOSCResponder.h */,
 				62BE102A1C2F3C020033244E /* sdSaver.h */,
 				62BE102B1C2F3C020033244E /* sdScene.h */,
+				6217DDE51D5B20510048C466 /* sdDescriptors.cpp */,
 				629720C41C29966100135148 /* tinyxml2.cpp */,
 				62AF37B31C236EDC009E9347 /* sdEntity.cpp */,
 				629720D51C2D8C2600135148 /* sdLoader.cpp */,
 				629720DA1C2E1F0600135148 /* sdSaver.cpp */,
 				62D904B91C0E4DBF0065D8A5 /* libSpatDIFTest */,
 				62D8B02F1C37462900AC1D31 /* oldtest */,
+				6217DDED1D5B20F10048C466 /* DescriptorSanity */,
+				6217DDF81D5B21080048C466 /* descriptor_sanity_check */,
 				62D904B81C0E4DBF0065D8A5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -221,6 +296,7 @@
 			children = (
 				62D904C51C0E4E160065D8A5 /* spatdiftest */,
 				62D8B02E1C37462900AC1D31 /* oldtest */,
+				6217DDF71D5B21080048C466 /* descriptor_sanity_check */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -236,6 +312,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		6217DDF61D5B21080048C466 /* descriptor_sanity_check */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6217DDFB1D5B21080048C466 /* Build configuration list for PBXNativeTarget "descriptor_sanity_check" */;
+			buildPhases = (
+				6217DDF31D5B21080048C466 /* Sources */,
+				6217DDF41D5B21080048C466 /* Frameworks */,
+				6217DDF51D5B21080048C466 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = descriptor_sanity_check;
+			productName = descriptor_sanity_check;
+			productReference = 6217DDF71D5B21080048C466 /* descriptor_sanity_check */;
+			productType = "com.apple.product-type.tool";
+		};
 		62D8B02D1C37462900AC1D31 /* oldtest */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 62D8B0321C37462900AC1D31 /* Build configuration list for PBXNativeTarget "oldtest" */;
@@ -280,6 +373,9 @@
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = ICST;
 				TargetAttributes = {
+					6217DDF61D5B21080048C466 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
 					62D8B02D1C37462900AC1D31 = {
 						CreatedOnToolsVersion = 7.1.1;
 					};
@@ -302,21 +398,35 @@
 			targets = (
 				62D904C41C0E4E160065D8A5 /* spatdiftest */,
 				62D8B02D1C37462900AC1D31 /* oldtest */,
+				6217DDF61D5B21080048C466 /* descriptor_sanity_check */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		6217DDF31D5B21080048C466 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6217DE0C1D5B21930048C466 /* descriptor_sanity_check.cpp in Sources */,
+				6217DE0D1D5B219E0048C466 /* tinyxml2.cpp in Sources */,
+				6217DE0E1D5B219E0048C466 /* sdEntity.cpp in Sources */,
+				6217DE0F1D5B219E0048C466 /* sdLoader.cpp in Sources */,
+				6217DE101D5B219E0048C466 /* sdSaver.cpp in Sources */,
+				6217DE121D5B23420048C466 /* sdDescriptors.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		62D8B02A1C37462900AC1D31 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				62D8B0311C37462900AC1D31 /* oldtest.cpp in Sources */,
 				62D8B0351C3746A500AC1D31 /* tinyxml2.cpp in Sources */,
-				62D8B0361C3746A500AC1D31 /* sdConst.cpp in Sources */,
 				62D8B0371C3746A500AC1D31 /* sdEntity.cpp in Sources */,
 				62D8B0381C3746A500AC1D31 /* sdLoader.cpp in Sources */,
 				62D8B0391C3746A500AC1D31 /* sdSaver.cpp in Sources */,
+				6217DE141D5B23590048C466 /* sdDescriptors.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,17 +435,36 @@
 			buildActionMask = 2147483647;
 			files = (
 				629720C51C29966100135148 /* tinyxml2.cpp in Sources */,
-				62AF37BA1C23739C009E9347 /* sdConst.cpp in Sources */,
 				629720D61C2D8C2600135148 /* sdLoader.cpp in Sources */,
 				62D904D21C0E50320065D8A5 /* spatdiftest.cpp in Sources */,
 				629720DB1C2E1F0600135148 /* sdSaver.cpp in Sources */,
 				62AF37BB1C2373A1009E9347 /* sdEntity.cpp in Sources */,
+				6217DDE71D5B20510048C466 /* sdDescriptors.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		6217DDFC1D5B21080048C466 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../Catch/single_include\" \"$(SRCROOT)/../../libs/tinyxml2\" \"$(SRCROOT)/../../libs/libjson\"/** /Users/chikashi/Development/spatdiflib/src";
+			};
+			name = Debug;
+		};
+		6217DDFD1D5B21080048C466 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../Catch/single_include\" \"$(SRCROOT)/../../libs/tinyxml2\" \"$(SRCROOT)/../../libs/libjson\"/** /Users/chikashi/Development/spatdiflib/src";
+			};
+			name = Release;
+		};
 		62D8B0331C37462900AC1D31 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -462,6 +591,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		6217DDFB1D5B21080048C466 /* Build configuration list for PBXNativeTarget "descriptor_sanity_check" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6217DDFC1D5B21080048C466 /* Debug */,
+				6217DDFD1D5B21080048C466 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		62D8B0321C37462900AC1D31 /* Build configuration list for PBXNativeTarget "oldtest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
