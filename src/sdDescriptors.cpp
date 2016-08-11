@@ -21,7 +21,7 @@
 const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
     sdESpec(EExtension::SD_CORE, "core", {
         sdDSpec(SD_TYPE, "type", [](sdEntity * entity, double time, std::string value){
-            return entity->addProtoEvent<SD_TYPE>(time, stringTo<EType>(value), entity);}),
+            return entity->addProtoEvent<SD_TYPE>(time, stringTo<sdDescriptor<SD_TYPE>::EType>(value), entity);}),
         sdDSpec(SD_PRESENT, "present", [](sdEntity * entity, double time, std::string value){
             return entity->addProtoEvent<SD_PRESENT>(time, stringTo<bool>(value), entity);}),
         sdDSpec(SD_POSITION, "position", [](sdEntity * entity, double time, std::string value){
@@ -47,7 +47,7 @@ const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
     }),
     sdESpec((EExtension::SD_INTERPOLATION), "interpolation",{
         sdDSpec(SD_INTERPOLATION_TYPE, "type", [](sdEntity* entity, double time, std::string value){
-            return entity->addProtoEvent<SD_INTERPOLATION_TYPE>(time, value, entity);})
+            return entity->addProtoEvent<SD_INTERPOLATION_TYPE>(time, stringTo<sdDescriptor<SD_INTERPOLATION_TYPE>::EInterpolation>(value), entity);})
     }),
     sdESpec((EExtension::SD_POINTSET), "pointset",{
         sdDSpec(SD_POINTSET_ID, "id", [](sdEntity* entity, double time, std::string value){

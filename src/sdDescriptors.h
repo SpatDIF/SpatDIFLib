@@ -34,16 +34,6 @@ static const double kDegreeToRadian = M_PI/180.0;
 static const double kRadianToDegree = 180.0/M_PI;
 
 
-/*!
- enum for "type" descriptor.
- */
-enum class EType{
-    SD_POINT,
-    SD_LOUDSPEAKER,
-    SD_LISTENER,
-    SD_MICROPHONE,
-    SD_UNDEFINED
-};
 
 /*!
  enum for ordering
@@ -89,14 +79,6 @@ enum class EExtension {
     SD_EXTENSION_ERROR
 };
 
-/*!
- enum for interpolation types
- */
-typedef enum {
-    SD_NONE,
-    SD_LINEAR,
-    SD_CUBIC_BEZIER
-} EInterpolation;
 
 
 /*!
@@ -212,15 +194,25 @@ struct sdDescriptor {};
 
 /*** core ***/
 /// core
+
+
+
 template <>
 struct sdDescriptor<EDescriptor::SD_TYPE>{
+    enum class EType{
+        SD_POINT,
+        SD_LOUDSPEAKER,
+        SD_LISTENER,
+        SD_MICROPHONE,
+        SD_UNDEFINED
+    };
     typedef EType type;
     const static bool interpolable = false;
 
     // enum to string conversion and vice versa
     static std::array<std::pair<EType, std::string>,4> &table(){
         static std::array<std::pair<EType, std::string>,4> table=
-         {std::make_pair(EType::SD_POINT, std::string("point")) ,
+         {std::make_pair(EType::SD_POINT, "point") ,
             std::make_pair(EType::SD_LOUDSPEAKER, "loudspeaker"),
             std::make_pair(EType::SD_LISTENER, "listener"),
             std::make_pair(EType::SD_MICROPHONE, "microphone")};
@@ -302,10 +294,37 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_GAIN>{
 };
 
 // interpolation
+
+
 template <>
 struct sdDescriptor<EDescriptor::SD_INTERPOLATION_TYPE>{
-    typedef std::string type;
-    const static bool interpolable = true;
+    
+    typedef enum {
+        SD_NONE,
+        SD_LINEAR,
+        SD_CUBIC_BEZIER,
+        SD_UNDEFINED
+    } EInterpolation;
+    
+    typedef EInterpolation type;
+    const static bool interpolable = false;
+    static std::array<std::pair<EInterpolation, std::string>,3> &table(){
+        static std::array<std::pair<EInterpolation, std::string>,3> table={
+            std::make_pair(EInterpolation::SD_NONE, "none"),
+            std::make_pair(EInterpolation::SD_LINEAR, "linear"),
+            std::make_pair(EInterpolation::SD_CUBIC_BEZIER, "cubic_bezier")};
+        return table;
+    }
+    static EInterpolation stringTo(const std::string &str){
+        auto &tab = table();
+        auto type = std::find_if(tab.begin(), tab.end(), [&str](std::pair<EInterpolation, std::string> &typePair){return str == typePair.second;});
+        return type == tab.end() ? EInterpolation::SD_UNDEFINED : (*type).first;
+    }
+    static std::string toString(const EInterpolation &tp){
+        auto &tab = table();
+        auto type = std::find_if(tab.begin(), tab.end(), [&tp](std::pair<EInterpolation, std::string> &typePair){return tp == typePair.first;});
+        return type == tab.end() ? "undefined" : (*type).second;
+    }
 };
 
 
@@ -561,7 +580,7 @@ inline std::string toString(const std::string &str){
     return str;
 }
 
-inline std::string toString(const EType &type){
+inline std::string toString(const sdDescriptor<SD_TYPE>::EType &type){
     return sdDescriptor<SD_TYPE>::toString(type);
 }
 
@@ -592,16 +611,13 @@ inline bool stringTo(const std::string &str){
 };
 
 template <>
-inline EType stringTo(const std::string &str){
+inline sdDescriptor<SD_TYPE>::EType stringTo(const std::string &str){
     return sdDescriptor<SD_TYPE>::stringTo(str);
 }
 
 template <>
-inline EInterpolation stringTo(const std::string &str){
-    if(str == "none")return EInterpolation::SD_NONE;
-    if(str == "linear") return EInterpolation::SD_LINEAR;
-    if(str == "cubic_bezier") return EInterpolation::SD_CUBIC_BEZIER;
-    return EInterpolation::SD_LINEAR;
+inline sdDescriptor<SD_INTERPOLATION_TYPE>::EInterpolation stringTo(const std::string &str){
+    return stringTo<sdDescriptor<SD_INTERPOLATION_TYPE>::EInterpolation>(str);
 }
 
 template <typename T, size_t S>

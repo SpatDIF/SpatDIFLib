@@ -14,9 +14,9 @@ TEST_CASE("Test all descriptors types"){
     ///// CORE
     
     // SD_TYPE
-    entity->addEvent<SD_TYPE>(0.0, EType::SD_LISTENER);
+    entity->addEvent<SD_TYPE>(0.0, sdDescriptor<SD_TYPE>::EType::SD_LISTENER);
     REQUIRE(entity->getValueAsString<SD_TYPE>(0.0) == "listener");
-    REQUIRE(*(entity->getValue<SD_TYPE>(0.0)) == EType::SD_LISTENER);
+    REQUIRE(*(entity->getValue<SD_TYPE>(0.0)) == sdDescriptor<SD_TYPE>::EType::SD_LISTENER);
 
     // SD_PRESENT
     entity->addEvent<SD_PRESENT>(0.0, false);
