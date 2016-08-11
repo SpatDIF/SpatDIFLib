@@ -185,6 +185,22 @@ typedef enum {
 
 
 /*!
+ string to from conversion template utility
+ */
+
+template <typename T, int N>
+std::string toStringUtil(const T &value, std::array<std::pair<T, std::string>, N> &table){
+    auto type = std::find_if(table.begin(), table.end(), [&value](std::pair<T, std::string> &typePair){return value == typePair.first;});
+    return type == table.end() ? "undefined" : (*type).second;
+}
+
+template <typename T, int N>
+T stringToUtil(const std::string &str, std::array<std::pair<T, std::string>, N> &table){
+    auto type = std::find_if(table.begin(), table.end(), [&str](std::pair<T, std::string> &typePair){return str == typePair.second;});
+    return type == table.end() ? T::SD_UNDEFINED : (*type).first;
+}
+
+/*!
  The traits (properties or characters) of each descriptor.
  implemented with explicit specialization template technique
  */
@@ -194,9 +210,6 @@ struct sdDescriptor {};
 
 /*** core ***/
 /// core
-
-
-
 template <>
 struct sdDescriptor<EDescriptor::SD_TYPE>{
     enum class EType{
@@ -215,19 +228,11 @@ struct sdDescriptor<EDescriptor::SD_TYPE>{
          {std::make_pair(EType::SD_POINT, "point") ,
             std::make_pair(EType::SD_LOUDSPEAKER, "loudspeaker"),
             std::make_pair(EType::SD_LISTENER, "listener"),
-            std::make_pair(EType::SD_MICROPHONE, "microphone")};
+             std::make_pair(EType::SD_MICROPHONE, "microphone")};
         return table;
     }
-    static EType stringTo(const std::string &str){
-        auto &tab = table();
-        auto type = std::find_if(tab.begin(), tab.end(), [&str](std::pair<EType, std::string> &typePair){return str == typePair.second;});
-        return type == tab.end() ? EType::SD_UNDEFINED : (*type).first;
-    }
-    static std::string toString(const EType &tp){
-        auto &tab = table();
-        auto type = std::find_if(tab.begin(), tab.end(), [&tp](std::pair<EType, std::string> &typePair){return tp == typePair.first;});
-        return type == tab.end() ? "undefined" : (*type).second;
-    }
+    static EType stringTo(const std::string &str){return stringToUtil<EType,4>(str, table());}
+    static std::string toString(const EType &value){return toStringUtil<EType,4>(value, table());}
 };
 
 template <>
@@ -293,7 +298,6 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_GAIN>{
     const static bool interpolable = true;
 };
 
-// interpolation
 
 
 template <>
@@ -315,16 +319,8 @@ struct sdDescriptor<EDescriptor::SD_INTERPOLATION_TYPE>{
             std::make_pair(EInterpolation::SD_CUBIC_BEZIER, "cubic_bezier")};
         return table;
     }
-    static EInterpolation stringTo(const std::string &str){
-        auto &tab = table();
-        auto type = std::find_if(tab.begin(), tab.end(), [&str](std::pair<EInterpolation, std::string> &typePair){return str == typePair.second;});
-        return type == tab.end() ? EInterpolation::SD_UNDEFINED : (*type).first;
-    }
-    static std::string toString(const EInterpolation &tp){
-        auto &tab = table();
-        auto type = std::find_if(tab.begin(), tab.end(), [&tp](std::pair<EInterpolation, std::string> &typePair){return tp == typePair.first;});
-        return type == tab.end() ? "undefined" : (*type).second;
-    }
+    static EInterpolation stringTo(const std::string &str){return stringToUtil<EInterpolation,3>(str, table());}
+    static std::string toString(const EInterpolation &value){return toStringUtil<EInterpolation, 3>(value, table());}
 };
 
 
