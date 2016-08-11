@@ -27,8 +27,7 @@
 		6217DE0E1D5B219E0048C466 /* sdEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B31C236EDC009E9347 /* sdEntity.cpp */; };
 		6217DE0F1D5B219E0048C466 /* sdLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720D51C2D8C2600135148 /* sdLoader.cpp */; };
 		6217DE101D5B219E0048C466 /* sdSaver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720DA1C2E1F0600135148 /* sdSaver.cpp */; };
-		6217DE121D5B23420048C466 /* sdDescriptors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6217DE111D5B23420048C466 /* sdDescriptors.cpp */; };
-		6217DE141D5B23590048C466 /* sdDescriptors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6217DE131D5B23590048C466 /* sdDescriptors.cpp */; };
+		6217DE161D5B27770048C466 /* sdDescriptors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6217DDE51D5B20510048C466 /* sdDescriptors.cpp */; };
 		62401D4D1CA2AFBD001179C5 /* internalJSONNode.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D3F1CA2AFBD001179C5 /* internalJSONNode.o */; };
 		62401D4E1CA2AFBD001179C5 /* JSONAllocator.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D401CA2AFBD001179C5 /* JSONAllocator.o */; };
 		62401D4F1CA2AFBD001179C5 /* JSONChildren.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D411CA2AFBD001179C5 /* JSONChildren.o */; };
@@ -105,9 +104,7 @@
 		6217DDEE1D5B20F10048C466 /* descriptor_sanity_check.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = descriptor_sanity_check.cpp; sourceTree = "<group>"; };
 		6217DDF71D5B21080048C466 /* descriptor_sanity_check */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = descriptor_sanity_check; sourceTree = BUILT_PRODUCTS_DIR; };
 		6217DDF91D5B21080048C466 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		6217DE111D5B23420048C466 /* sdDescriptors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdDescriptors.cpp; path = ../../sdDescriptors.cpp; sourceTree = "<group>"; };
-		6217DE131D5B23590048C466 /* sdDescriptors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdDescriptors.cpp; path = ../../sdDescriptors.cpp; sourceTree = "<group>"; };
-		6217DE151D5B23600048C466 /* sdDescriptors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdDescriptors.cpp; path = ../../sdDescriptors.cpp; sourceTree = "<group>"; };
+		6217DE171D5B2B1D0048C466 /* sdUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdUtils.h; path = ../../sdUtils.h; sourceTree = "<group>"; };
 		62401D3F1CA2AFBD001179C5 /* internalJSONNode.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = internalJSONNode.o; path = ../../libs/libjson/Objects_static/internalJSONNode.o; sourceTree = "<group>"; };
 		62401D401CA2AFBD001179C5 /* JSONAllocator.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = JSONAllocator.o; path = ../../libs/libjson/Objects_static/JSONAllocator.o; sourceTree = "<group>"; };
 		62401D411CA2AFBD001179C5 /* JSONChildren.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = JSONChildren.o; path = ../../libs/libjson/Objects_static/JSONChildren.o; sourceTree = "<group>"; };
@@ -260,13 +257,12 @@
 		62D904AE1C0E4DBF0065D8A5 = {
 			isa = PBXGroup;
 			children = (
-				6217DE151D5B23600048C466 /* sdDescriptors.cpp */,
-				6217DE131D5B23590048C466 /* sdDescriptors.cpp */,
-				6217DE111D5B23420048C466 /* sdDescriptors.cpp */,
 				62401D5B1CA2AFC5001179C5 /* JSON */,
+				6217DDE61D5B20510048C466 /* sdDescriptors.h */,
+				6217DDE51D5B20510048C466 /* sdDescriptors.cpp */,
+				6217DE171D5B2B1D0048C466 /* sdUtils.h */,
 				62BE10211C2F3C020033244E /* sdDate.h */,
 				62BE10221C2F3C020033244E /* sdEntity.h */,
-				6217DDE61D5B20510048C466 /* sdDescriptors.h */,
 				62401D5D1CA2E8E3001179C5 /* sdMetaHandler.h */,
 				62401D5E1CA2E947001179C5 /* sdEventHandler.h */,
 				62BE10231C2F3C020033244E /* sdEvent.h */,
@@ -278,7 +274,6 @@
 				62BE10291C2F3C020033244E /* sdOSCResponder.h */,
 				62BE102A1C2F3C020033244E /* sdSaver.h */,
 				62BE102B1C2F3C020033244E /* sdScene.h */,
-				6217DDE51D5B20510048C466 /* sdDescriptors.cpp */,
 				629720C41C29966100135148 /* tinyxml2.cpp */,
 				62AF37B31C236EDC009E9347 /* sdEntity.cpp */,
 				629720D51C2D8C2600135148 /* sdLoader.cpp */,
@@ -413,7 +408,7 @@
 				6217DE0E1D5B219E0048C466 /* sdEntity.cpp in Sources */,
 				6217DE0F1D5B219E0048C466 /* sdLoader.cpp in Sources */,
 				6217DE101D5B219E0048C466 /* sdSaver.cpp in Sources */,
-				6217DE121D5B23420048C466 /* sdDescriptors.cpp in Sources */,
+				6217DE161D5B27770048C466 /* sdDescriptors.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,7 +421,6 @@
 				62D8B0371C3746A500AC1D31 /* sdEntity.cpp in Sources */,
 				62D8B0381C3746A500AC1D31 /* sdLoader.cpp in Sources */,
 				62D8B0391C3746A500AC1D31 /* sdSaver.cpp in Sources */,
-				6217DE141D5B23590048C466 /* sdDescriptors.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

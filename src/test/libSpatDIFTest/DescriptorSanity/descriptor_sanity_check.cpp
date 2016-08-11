@@ -5,22 +5,23 @@
 #include <array>
 using namespace std;
 
-
-
 TEST_CASE("Test all descriptors types"){
     sdScene scene;
     scene.addExtension(EExtension::SD_MEDIA);
     scene.addExtension(EExtension::SD_SOURCE_SPREAD);
     sdEntity * entity = scene.addEntity("MyEntity");
     
+    ///// CORE
+    
+    // SD_TYPE
+    entity->addEvent<SD_TYPE>(0.0, EType::SD_LISTENER);
+    REQUIRE(entity->getValueAsString<SD_TYPE>(0.0) == "listener");
+    REQUIRE(*(entity->getValue<SD_TYPE>(0.0)) == EType::SD_LISTENER);
+
     // SD_PRESENT
     entity->addEvent<SD_PRESENT>(0.0, false);
     REQUIRE(entity->getValueAsString<SD_PRESENT>(0.0) == "false");
     REQUIRE(*(entity->getValue<SD_PRESENT>(0.0)) == false);
-    
-    entity->addEvent<SD_PRESENT>(0.0, true);
-    REQUIRE(entity->getValueAsString<SD_PRESENT>(0.0) == "true");
-    REQUIRE(*(entity->getValue<SD_PRESENT>(0.0)) == true);
     
     // SD_POSITION
     entity->addEvent<SD_POSITION>(0.0, {0.2,0.3,0.4});
@@ -35,6 +36,11 @@ TEST_CASE("Test all descriptors types"){
     REQUIRE( entity->getValue<SD_ORIENTATION>(0.0)->at(0) == 0.5);
     REQUIRE( entity->getValue<SD_ORIENTATION>(0.0)->at(1) == 0.6);
     REQUIRE( entity->getValue<SD_ORIENTATION>(0.0)->at(2) == 0.7);
+    
+
+    
+    
+    
     
     // SD_MEDIA_ID
     entity->addEvent<SD_MEDIA_ID>(0.0, "mymedia");

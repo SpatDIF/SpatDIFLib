@@ -27,7 +27,9 @@ const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
         sdDSpec(SD_POSITION, "position", [](sdEntity * entity, double time, std::string value){
             return entity->addProtoEvent<SD_POSITION>(time,stringToArray<double, 3>(value), entity);}),
         sdDSpec(SD_ORIENTATION, "orientation", [](sdEntity * entity, double time, std::string value){
-            return entity->addProtoEvent<SD_ORIENTATION>(time, stringToArray<double, 3>(value), entity);})
+            return entity->addProtoEvent<SD_ORIENTATION>(time, stringToArray<double, 3>(value), entity);}),
+        sdDSpec(SD_GROUP_MEMBERSHIP, "group-membership", [](sdEntity * entity, double time, std::string value){
+            return entity->addProtoEvent<SD_GROUP_MEMBERSHIP>(time, value, entity);})
     }),
     sdESpec(EExtension::SD_MEDIA, "media", {
         sdDSpec(SD_MEDIA_ID, "id", [](sdEntity * entity, double time, std::string value){

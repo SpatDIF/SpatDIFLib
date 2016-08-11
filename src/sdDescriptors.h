@@ -24,6 +24,7 @@
 #include <algorithm>
 #include <cmath>
 #include <vector>
+#include <unordered_map>
 #include "sdException.h"
 
 /*!
@@ -168,6 +169,8 @@ typedef enum {
     SD_GROUP_POSITION,
     SD_GROUP_ORIENTATION,
     
+    SD_GROUP_MEMBERSHIP, // descriptor for source entity
+    
     /// 5.3.2 Extensions for scene description layer
     // 5.3.2.1 Source Spread
     SD_SOURCE_SPREAD_SPREAD,
@@ -213,6 +216,19 @@ template <>
 struct sdDescriptor<EDescriptor::SD_TYPE>{
     typedef EType type;
     const static bool interpolable = false;
+    static std::array<EDescriptor::SD_TYPE, std::string>table(){
+    
+        
+        return "point";
+        
+    }
+    EType stringTo(const std::string &str){
+        if(str == "point")return EType::SD_POINT;
+        if(str == "loudspeaker") return EType::SD_LOUDSPEAKER;
+        if(str == "listner") return EType::SD_LISTENER;
+        if(str == "microphone") return EType::SD_MICROPHONE;
+        return EType::SD_UNDEFINED;
+    }
 };
 
 template <>
@@ -231,6 +247,12 @@ template <>
 struct sdDescriptor<EDescriptor::SD_ORIENTATION>{
     typedef std::array<double, 3> type;
     const static bool interpolable = true;
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_GROUP_MEMBERSHIP>{
+    typedef std::string type;
+    const static bool interpolable = false;
 };
 
 /// core functionalities descriptors
@@ -504,6 +526,84 @@ struct sdDescriptor<EDescriptor::SD_DIRECT_TO_ONE_DIRECT_TO_ONE>{
     const static bool interpolable = false;
 };
 
+
+
+#pragma mark toString
+
+/*! template function for to string conversion
+ this function reacts differently, when the argument type is bool, EType or string.
+ */
+template <typename T, size_t size>
+inline std::string toString(const std::array<T, size> &array){
+    
+    std::ostringstream os;
+    std:: for_each(array.begin(), array.end(), [&os](T item){
+        os << item << ' ';
+    });
+    std::string str = os.str();
+    str.erase(str.size()-1);
+    return std::move(str);
+}
+
+inline std::string toString(const bool &bl){
+    return bl ? std::string("true") : std::string("false");
+}
+
+
+
+inline std::string toString(const std::string &str){
+    return str;
+}
+
+template <typename T>
+inline std::string toString(const T &i){
+    return toString(std::array<T, 1>({{i}}));
+}
+
+#pragma mark stringTo
+
+/*!
+ converstion from string to a specific type of data
+ */
+
+template <typename T>
+inline T stringTo(const std::string &str){
+    return std::stod(str);
+}
+
+template <>
+inline int stringTo(const std::string &str){
+    return std::stoi(str);
+}
+
+template <>
+inline bool stringTo(const std::string &str){
+    return str == "true";
+};
+
+
+
+template <>
+inline EInterpolation stringTo(const std::string &str){
+    if(str == "none")return EInterpolation::SD_NONE;
+    if(str == "linear") return EInterpolation::SD_LINEAR;
+    if(str == "cubic_bezier") return EInterpolation::SD_CUBIC_BEZIER;
+    return EInterpolation::SD_LINEAR;
+}
+
+template <typename T, size_t S>
+inline std::array<T, S> stringToArray(const std::string &str){
+    std::istringstream iss(str);
+    std::vector<T> strVect;
+    for(int i = 0; i < S; i++){
+        std::string string;
+        iss >> string;
+        strVect.push_back(std::stod(string));
+    }
+    std::array<T, S> array;
+    std::copy_n(std::make_move_iterator(strVect.begin()), S, array.begin());
+    return std::move(array);
+}
 
 
 
