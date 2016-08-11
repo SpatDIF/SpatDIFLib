@@ -216,18 +216,25 @@ template <>
 struct sdDescriptor<EDescriptor::SD_TYPE>{
     typedef EType type;
     const static bool interpolable = false;
-    static std::array<EDescriptor::SD_TYPE, std::string>table(){
-    
-        
-        return "point";
-        
+
+    // enum to string conversion and vice versa
+    static std::array<std::pair<EType, std::string>,4> &table(){
+        static std::array<std::pair<EType, std::string>,4> table=
+         {std::make_pair(EType::SD_POINT, std::string("point")) ,
+            std::make_pair(EType::SD_LOUDSPEAKER, "loudspeaker"),
+            std::make_pair(EType::SD_LISTENER, "listener"),
+            std::make_pair(EType::SD_MICROPHONE, "microphone")};
+        return table;
     }
-    EType stringTo(const std::string &str){
-        if(str == "point")return EType::SD_POINT;
-        if(str == "loudspeaker") return EType::SD_LOUDSPEAKER;
-        if(str == "listner") return EType::SD_LISTENER;
-        if(str == "microphone") return EType::SD_MICROPHONE;
-        return EType::SD_UNDEFINED;
+    static EType stringTo(const std::string &str){
+        auto &tab = table();
+        auto type = std::find_if(tab.begin(), tab.end(), [&str](std::pair<EType, std::string> &typePair){return str == typePair.second;});
+        return type == tab.end() ? EType::SD_UNDEFINED : (*type).first;
+    }
+    static std::string toString(const EType &tp){
+        auto &tab = table();
+        auto type = std::find_if(tab.begin(), tab.end(), [&tp](std::pair<EType, std::string> &typePair){return tp == typePair.first;});
+        return type == tab.end() ? "undefined" : (*type).second;
     }
 };
 
@@ -531,7 +538,8 @@ struct sdDescriptor<EDescriptor::SD_DIRECT_TO_ONE_DIRECT_TO_ONE>{
 #pragma mark toString
 
 /*! template function for to string conversion
- this function reacts differently, when the argument type is bool, EType or string.
+ this function reacts differently, when the argument type is bool, enum or string.
+ if the argument type is enum, it refers a specific template of the descriptor
  */
 template <typename T, size_t size>
 inline std::string toString(const std::array<T, size> &array){
@@ -549,10 +557,12 @@ inline std::string toString(const bool &bl){
     return bl ? std::string("true") : std::string("false");
 }
 
-
-
 inline std::string toString(const std::string &str){
     return str;
+}
+
+inline std::string toString(const EType &type){
+    return sdDescriptor<SD_TYPE>::toString(type);
 }
 
 template <typename T>
@@ -581,7 +591,10 @@ inline bool stringTo(const std::string &str){
     return str == "true";
 };
 
-
+template <>
+inline EType stringTo(const std::string &str){
+    return sdDescriptor<SD_TYPE>::stringTo(str);
+}
 
 template <>
 inline EInterpolation stringTo(const std::string &str){
