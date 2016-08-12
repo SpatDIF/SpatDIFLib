@@ -212,7 +212,7 @@ struct sdDescriptor {};
 /// core
 template <>
 struct sdDescriptor<EDescriptor::SD_TYPE>{
-    enum class EType{
+    enum EType{
         SD_POINT,
         SD_LOUDSPEAKER,
         SD_LISTENER,
