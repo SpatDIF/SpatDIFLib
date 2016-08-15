@@ -7,16 +7,16 @@ using namespace std;
 
 TEST_CASE("Test all descriptors types"){
     sdScene scene;
-    scene.addExtension(EExtension::SD_MEDIA);
     scene.addExtension(EExtension::SD_SOURCE_SPREAD);
     sdEntity * entity = scene.addEntity("MyEntity");
     
-    ///// CORE
+    /*** core ***/
+    /// 4.3 core
     
     // SD_TYPE
     entity->addEvent<SD_TYPE>(0.0, sdDescriptor<SD_TYPE>::EType::SD_LISTENER);
     REQUIRE(entity->getValueAsString<SD_TYPE>(0.0) == "listener");
-    REQUIRE(*(entity->getValue<SD_TYPE>(0.0)) == sdDescriptor<SD_TYPE>::EType::SD_LISTENER);
+    REQUIRE(*(entity->getValue<SD_TYPE>(0.0)) == sdDescriptor<SD_TYPE>::SD_LISTENER);
 
     // SD_PRESENT
     entity->addEvent<SD_PRESENT>(0.0, false);
@@ -37,11 +37,9 @@ TEST_CASE("Test all descriptors types"){
     REQUIRE( entity->getValue<SD_ORIENTATION>(0.0)->at(1) == 0.6);
     REQUIRE( entity->getValue<SD_ORIENTATION>(0.0)->at(2) == 0.7);
     
+    /** core functionalities **/
+    /// 4.4.1 media
 
-    
-    
-    
-    
     // SD_MEDIA_ID
     entity->addEvent<SD_MEDIA_ID>(0.0, "mymedia");
     REQUIRE( entity->getValueAsString<SD_MEDIA_ID>(0.0) == "mymedia");
@@ -72,6 +70,30 @@ TEST_CASE("Test all descriptors types"){
     REQUIRE( entity->getValueAsString<SD_MEDIA_GAIN>(0.0) == "0.4");
     REQUIRE( *entity->getValue<SD_MEDIA_GAIN>(0.0) == 0.4);
     
+    /// 4.4.2 loop
+    
+    // SD_LOOP_TYPE
+    entity->addEvent<SD_LOOP_TYPE>(0.0, std::make_pair(sdDescriptor<SD_LOOP_TYPE>::SD_REPEAT, 3));
+    REQUIRE( entity->getValueAsString<SD_LOOP_TYPE>(0.0) == "repeat 3");
+    REQUIRE( entity->getValue<SD_LOOP_TYPE>(0.0)->first == sdDescriptor<SD_LOOP_TYPE>::SD_REPEAT);
+    REQUIRE( entity->getValue<SD_LOOP_TYPE>(0.0)->second == 3);
+            
+    // SD_LOOP_POINTS
+    entity->addEvent<SD_LOOP_POINTS>(0.0, {3,5});
+    REQUIRE( entity->getValueAsString<SD_LOOP_POINTS>(0.0) == "3 5");
+    REQUIRE( entity->getValue<SD_LOOP_POINTS>(0.0)->at(0) == 3);
+    REQUIRE( entity->getValue<SD_LOOP_POINTS>(0.0)->at(1) == 5);
+    
+    // SD_LOOP_WAIT_TIME
+    entity->addEvent<SD_LOOP_WAIT_TIME>(0.0, 1.0);
+    REQUIRE( entity->getValueAsString<SD_LOOP_WAIT_TIME>(0.0) == "1");
+    REQUIRE( *entity->getValue<SD_LOOP_WAIT_TIME>(0.0) == 1);
+
+    /// 4.4.3 interpolation
+    entity->addEvent<SD_INTERPOLATION_TYPE>(0.0, sdDescriptor<SD_INTERPOLATION_TYPE>::SD_NONE);
+    REQUIRE( entity->getValueAsString<SD_INTERPOLATION_TYPE>(0.0) == "none");
+    REQUIRE( *entity->getValue<SD_INTERPOLATION_TYPE>(0.0) == sdDescriptor<SD_INTERPOLATION_TYPE>::SD_NONE);
+
     // SD_SOURCE_SPREAD_SPREAD
     entity->addEvent<SD_SOURCE_SPREAD_SPREAD>(0.0, 0.5);
     REQUIRE( entity->getValueAsString<SD_SOURCE_SPREAD_SPREAD>(0.0) == "0.5");

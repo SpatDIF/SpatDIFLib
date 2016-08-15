@@ -293,10 +293,6 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_GAIN>{
     const static bool interpolable = true;
 };
 
-
-
-
-
 /// 4.4.2 loop
 template <>
 struct sdDescriptor<EDescriptor::SD_LOOP_TYPE>{

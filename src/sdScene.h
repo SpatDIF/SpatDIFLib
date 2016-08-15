@@ -78,7 +78,9 @@ public:
     /*! constructor with sdInfo and ordering*/
     sdScene(sdInfo info = sdInfo(), EOrdering ordering = EOrdering::SD_TIME ):info(info), ordering(ordering){
         addExtension(EExtension::SD_CORE); // validate core descriptors
-        addExtension(EExtension::SD_MEDIA); // media is now part of core
+        addExtension(EExtension::SD_MEDIA); // core functionalities
+        addExtension(EExtension::SD_LOOP);
+        addExtension(EExtension::SD_INTERPOLATION);
     }
     
     sdScene (const sdScene& origin){
