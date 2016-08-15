@@ -83,22 +83,22 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
             sdEntity* targetEntity = scene.getEntity(entityName);
             if(!targetEntity){
                 targetEntity = scene.addEntity(entityName, EKind::SD_SINK);
-                if(type)targetEntity->addMeta<SD_TYPE>(stringTo<sdDescriptor<SD_TYPE>::EType>(type->GetText()));
+                if(type)targetEntity->addMeta<SD_TYPE>(sdDescriptor<SD_TYPE>::stringTo(type->GetText()));
                 if(position){
                     std::string unit = position->Attribute("unit");
                     if(unit == "aed"){
-                        auto aed = stringToArray<double, 3>(position->GetText());
-                        targetEntity->addMeta<SD_POSITION>(aedToXyz(aed));
+                        auto aed = sdUtils::stringToArray<double, 3>(position->GetText());
+                        targetEntity->addMeta<SD_POSITION>(sdUtils::aedToXyz(aed));
                     }else{
-                        targetEntity->addMeta<SD_POSITION>(stringToArray<double, 3>(position->GetText()));
+                        targetEntity->addMeta<SD_POSITION>(sdUtils::stringToArray<double, 3>(position->GetText()));
                     }
                 }
                 if(hoPhysicalChannel){
-                    int channel = stringTo<int>(hoPhysicalChannel->GetText());
+                    int channel = sdUtils::stringTo<int>(hoPhysicalChannel->GetText());
                     targetEntity->addMeta<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(channel);
                 }
                 if(hoGain) {
-                    targetEntity->addMeta<SD_HARDWARE_OUT_GAIN>(stringTo<double>(hoGain->GetText()));
+                    targetEntity->addMeta<SD_HARDWARE_OUT_GAIN>(sdUtils::stringTo<double>(hoGain->GetText()));
                 }
                 
                 sink = sink->NextSiblingElement("sink");
@@ -241,7 +241,7 @@ sdScene sdLoader::sceneFromJSON(std::string jsonString){
                                 break;
                             }
                             case JSON_BOOL:{
-                                std::string bl = toString(iiit->as_bool());
+                                std::string bl = sdUtils::toString(iiit->as_bool());
                                 targetEntity->addEvent(timeString, iiit->name(), bl);
                                 break;
                             }

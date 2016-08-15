@@ -73,14 +73,17 @@ private:
     
     }
     
-public:
-    
-    /*! constructor with sdInfo and ordering*/
-    sdScene(sdInfo info = sdInfo(), EOrdering ordering = EOrdering::SD_TIME ):info(info), ordering(ordering){
+    void addInitialDescriptors(){
         addExtension(EExtension::SD_CORE); // validate core descriptors
         addExtension(EExtension::SD_MEDIA); // core functionalities
         addExtension(EExtension::SD_LOOP);
         addExtension(EExtension::SD_INTERPOLATION);
+    }
+public:
+    
+    /*! constructor with sdInfo and ordering*/
+    sdScene(sdInfo info = sdInfo(), EOrdering ordering = EOrdering::SD_TIME ):info(info), ordering(ordering){
+        addInitialDescriptors();
     }
     
     sdScene (const sdScene& origin){
@@ -408,7 +411,7 @@ inline bool sdScene::removeMetaAlias(const sdEntity* const entity, const EDescri
 
 inline bool sdScene::removeEventAlias(const sdEntity* const entity, const double &time, const EDescriptor & descriptor ){
     auto it = std::find_if(allEvents.begin(), allEvents.end(), [&entity, &descriptor, &time]( std::pair<const sdEntity * ,std::shared_ptr<sdProtoEvent>> event){
-        return almostEqual(event.second->getTime(), time) && (event.second->getDescriptor() == descriptor) && (event.first == entity);
+        return sdUtils::almostEqual(event.second->getTime(), time) && (event.second->getDescriptor() == descriptor) && (event.first == entity);
     });
     if(it == allEvents.end()) return false;
     allEvents.erase(it);
@@ -419,7 +422,7 @@ inline bool sdScene::removeEventAlias(const sdEntity* const entity, const double
 inline std::vector<std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>>> sdScene::getEventsFromAllEntities(const double &time) const{
     std::vector<std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>>> matchedEvents;
     for (auto it = allEvents.begin(); it != allEvents.end(); it++) {
-        if(almostEqual((*it).second->getTime(), time)){matchedEvents.push_back(*it);}
+        if(sdUtils::almostEqual((*it).second->getTime(), time)){matchedEvents.push_back(*it);}
     }
     
     return std::move(matchedEvents);
@@ -583,7 +586,9 @@ inline std::unordered_set<std::string> sdScene::getActivatedExtensionsAsStrings(
 }
 
 inline size_t sdScene::getNumberOfActivatedExtensions() const{
-    return activatedExtensionSet.size() - 2; // because core is not a extension;
+    size_t size = activatedExtensionSet.size();
+    size -= 4;
+    return size ; // because core is not a extension;
 }
 
 inline bool sdScene::isExtensionActivated(EExtension extension) const{
@@ -614,9 +619,7 @@ inline bool sdScene::removeExtension(std::string extension){
 inline void sdScene::removeAllExtensions(){
     activatedExtensionSet.clear();
     validDescriptorSet.clear();
-    addExtension(EExtension::SD_CORE);
-    addExtension(EExtension::SD_MEDIA);
-
+    addInitialDescriptors();
 }
 
 

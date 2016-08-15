@@ -26,6 +26,7 @@
 #include <vector>
 #include <unordered_map>
 #include "sdException.h"
+#include "sdUtils.h"
 
 
 
@@ -179,21 +180,6 @@ typedef enum {
 
 
 
-/*!
- string to from conversion template utility
- */
-
-template <typename T, int N>
-std::string toStringUtil(const T &value, std::array<std::pair<T, std::string>, N> &table){
-    auto type = std::find_if(table.begin(), table.end(), [&value](std::pair<T, std::string> &typePair){return value == typePair.first;});
-    return type == table.end() ? "undefined" : (*type).second;
-}
-
-template <typename T, int N>
-T stringToUtil(const std::string &str, std::array<std::pair<T, std::string>, N> &table){
-    auto type = std::find_if(table.begin(), table.end(), [&str](std::pair<T, std::string> &typePair){return str == typePair.second;});
-    return type == table.end() ? T::SD_UNDEFINED : (*type).first;
-}
 
 /*!
  The traits (properties or characters) of each descriptor.
@@ -226,32 +212,47 @@ struct sdDescriptor<EDescriptor::SD_TYPE>{
              std::make_pair(EType::SD_MICROPHONE, "microphone")};
         return table;
     }
-    static EType stringTo(const std::string &str){return stringToUtil<EType,4>(str, table());}
-    static std::string toString(const EType &value){return toStringUtil<EType,4>(value, table());}
+    static type stringTo(const std::string &str){return sdUtils::stringToByTable<type,4>(str, table());}
+    static std::string toString(const type &value){return sdUtils::toStringByTable<type,4>(value, table());}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_PRESENT>{
     typedef bool type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
+
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_POSITION>{
     typedef std::array<double, 3> type;
     const static bool interpolable = true;
+    
+    static type stringToArray(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_ORIENTATION>{
     typedef std::array<double, 3> type;
     const static bool interpolable = true;
+    
+    static type stringToArray(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
+
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_GROUP_MEMBERSHIP>{
     typedef std::string type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
+
 };
 
 /** core functionalities **/
@@ -261,36 +262,54 @@ template <>
 struct sdDescriptor<EDescriptor::SD_MEDIA_ID>{
     typedef std::string type;
     const static bool interpolable = false;
+
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_MEDIA_TYPE>{
     typedef std::string type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_MEDIA_LOCATION>{
     typedef std::string type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_MEDIA_CHANNEL>{
     typedef int type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_MEDIA_TIME_OFFSET>{
     typedef double type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_MEDIA_GAIN>{
     typedef double type;
     const static bool interpolable = true;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 /// 4.4.2 loop
@@ -315,14 +334,14 @@ struct sdDescriptor<EDescriptor::SD_LOOP_TYPE>{
         std::istringstream iss(str);
         std::vector<std::string> items{std::istream_iterator<std::string>{iss}, std::istream_iterator<std::string>{}};
         if(items.size() > 2) return std::make_pair(EType::SD_UNDEFINED, 0);
-        EType tp =  stringToUtil<EType,2>(items[0], table());
+        EType tp =  sdUtils::stringToByTable<EType,2>(items[0], table());
         if(tp == SD_REPEAT){
             return std::make_pair(tp,std::stoi(items[1]));
         }
         return  std::make_pair(tp, 0);
     }
     static std::string toString(const std::pair<EType, int>  &value){
-        std::string tp = toStringUtil<EType, 2>(value.first, table());
+        std::string tp = sdUtils::toStringByTable<EType, 2>(value.first, table());
         tp += " " + std::to_string(value.second);
         return tp;
     }
@@ -333,12 +352,18 @@ template <>
 struct sdDescriptor<EDescriptor::SD_LOOP_POINTS>{
     typedef std::array<double, 2> type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 2>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_LOOP_WAIT_TIME>{
     typedef double type;
     const static bool interpolable = true;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 
@@ -363,8 +388,9 @@ struct sdDescriptor<EDescriptor::SD_INTERPOLATION_TYPE>{
             std::make_pair(EInterpolation::SD_CUBIC_BEZIER, "cubic_bezier")};
         return table;
     }
-    static EInterpolation stringTo(const std::string &str){return stringToUtil<EInterpolation,3>(str, table());}
-    static std::string toString(const EInterpolation &value){return toStringUtil<EInterpolation, 3>(value, table());}
+    
+    static type stringTo(const std::string &str){return sdUtils::stringToByTable<type,3>(str, table());}
+    static std::string toString(const type &value){return sdUtils::toStringByTable<type, 3>(value, table());}
 };
 
 
@@ -379,12 +405,18 @@ template <>
 struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_PHYSICAL_CHANNEL>{
     typedef int type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_GAIN>{
     typedef double type;
     const static bool interpolable = true;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 //***** 5.2. General Extensions *****//
@@ -395,36 +427,54 @@ template <>
 struct sdDescriptor<EDescriptor::SD_POINTSET_ID>{
     typedef std::string type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_POINTSET_UNIT>{
     typedef std::string type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_POINTSET_CLOSED>{
     typedef bool type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_POINTSET_SIZE>{
     typedef int type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_POINTSET_POINT>{
     typedef std::array<double, 3> type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_POINTSET_HANDLE>{
     typedef std::array<double, 3> type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 /// 5.2.2 Geometry
@@ -432,30 +482,45 @@ template <>
 struct sdDescriptor<EDescriptor::SD_GEOMETRY_TRANSLATE>{
     typedef std::array<double, 3> type;
     const static bool interpolable = true;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_GEOMETRY_SCALE>{
     typedef std::array<double, 3> type;
     const static bool interpolanle = true;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_GEOMETRY_ROTATE>{
     typedef std::array<double, 3> type;
     const static bool interpolanle = true;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_GEOMETRY_SHEAR>{
     typedef std::array<double, 3> type;
     const static bool interpolable = true;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_GEOMETRY_REFLECT>{
     typedef std::array<int, 3> type;
     const static bool interpolable = true;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<int, 3>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 
@@ -465,18 +530,29 @@ template <>
 struct sdDescriptor<EDescriptor::SD_AUTOMATION_DURATION>{
     typedef double type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
+
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_AUTOMATION_DELAY>{
     typedef double type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
+
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_AUTOMATION_FUNCTION>{
     typedef std::string type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
 };
 
 /////// pointset -- extension
@@ -488,24 +564,36 @@ template <>
 struct sdDescriptor<EDescriptor::SD_SHAPE_DIRECTION>{
     typedef bool type; // CCW, CW
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_SHAPE_CLOSED>{
     typedef bool type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_SHAPE_TYPE>{
     typedef std::string type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_SHAPE_ID>{
     typedef std::string type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
 };
 
 //***** 5.3. Layer-Related Extensions *****//
@@ -519,24 +607,37 @@ template <>
 struct sdDescriptor<EDescriptor::SD_GROUP_NAME>{
     typedef std::string type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_GROUP_PRESENT>{
     typedef bool type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_GROUP_POSITION>{
     typedef std::array<double , 3> type;
     const static bool interpolable = true;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_GROUP_ORIENTATION>{
     typedef std::array<double, 3 > type;
     const static bool interpolable = true;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
+
 };
 
 /// 5.3.2 Extensions for Scene Description Layer
@@ -546,6 +647,9 @@ template <>
 struct sdDescriptor<EDescriptor::SD_SOURCE_SPREAD_SPREAD>{
     typedef double type;
     const static bool interpolable = true;
+
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 /// 5.3.3 Extension for Spatial Encoding Layer
@@ -555,30 +659,47 @@ template <>
 struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_REFERENCE_DISTANCE>{
     typedef double type;
     const static bool interpolable = true;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_MAXIMUM_DISTANCE>{
     typedef double type;
     const static bool interpolable = true;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
+
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_MAXIMUM_ATTENUATION>{
     typedef double type;
     const static bool interpolable = true;
+
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_ATTENUATION_MODEL>{
     typedef int type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_ABSORPTION_MODEL>{
     typedef int type;
     const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
+
 };
 
 // 5.3.4 Extensions for Spatial Decoding Layer
@@ -590,94 +711,11 @@ template <>
 struct sdDescriptor<EDescriptor::SD_DIRECT_TO_ONE_DIRECT_TO_ONE>{
     typedef bool type;
     const static bool interpolable = false;
-};
-
-
-#pragma mark toString
-
-/*! template function for to string conversion
- this function reacts differently, when the argument type is bool, enum or string.
- if the argument type is enum, it refers a specific template of the descriptor
- */
-template <typename T, size_t size>
-inline std::string toString(const std::array<T, size> &array){
     
-    std::ostringstream os;
-    std:: for_each(array.begin(), array.end(), [&os](T item){
-        os << item << ' ';
-    });
-    std::string str = os.str();
-    str.erase(str.size()-1);
-    return std::move(str);
-}
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
 
-inline std::string toString(const bool &bl){
-    return bl ? std::string("true") : std::string("false");
-}
-
-inline std::string toString(const std::string &str){
-    return str;
-}
-
-// special type descriptors
-inline std::string toString(const sdDescriptor<SD_TYPE>::EType &type){
-    return sdDescriptor<SD_TYPE>::toString(type);
-}
-
-inline std::string toString(const std::pair<sdDescriptor<SD_LOOP_TYPE>::EType, int> &type){
-    return sdDescriptor<SD_LOOP_TYPE>::toString(type);
-}
-
-template <typename T>
-inline std::string toString(const T &i){
-    return toString(std::array<T, 1>({{i}}));
-}
-
-#pragma mark stringTo
-
-/*!
- converstion from string to a specific type of data
- */
-
-template <typename T>
-inline T stringTo(const std::string &str){
-    return std::stod(str);
-}
-
-template <>
-inline int stringTo(const std::string &str){
-    return std::stoi(str);
-}
-
-template <>
-inline bool stringTo(const std::string &str){
-    return str == "true";
 };
-
-template <>
-inline sdDescriptor<SD_TYPE>::EType stringTo(const std::string &str){
-    return sdDescriptor<SD_TYPE>::stringTo(str);
-}
-
-template <>
-inline sdDescriptor<SD_INTERPOLATION_TYPE>::EInterpolation stringTo(const std::string &str){
-    return stringTo<sdDescriptor<SD_INTERPOLATION_TYPE>::EInterpolation>(str);
-}
-
-template <typename T, size_t S>
-inline std::array<T, S> stringToArray(const std::string &str){
-    std::istringstream iss(str);
-    std::vector<T> strVect;
-    for(int i = 0; i < S; i++){
-        std::string string;
-        iss >> string;
-        strVect.push_back(std::stod(string));
-    }
-    std::array<T, S> array;
-    std::copy_n(std::make_move_iterator(strVect.begin()), S, array.begin());
-    return std::move(array);
-}
-
 
 
 

@@ -262,13 +262,13 @@ inline std::string sdOSCMessage::getArgument(int index){
 inline std::string sdOSCMessage::getArgumentAsString(int index){
     switch(typetags[index+1]){ // we need to skip ','
         case 'i':
-            return (toString(getArgument<int>(index)));
+            return (sdUtils::toString(getArgument<int>(index)));
             break;
         case 'f':
-            return (toString(getArgument<float>(index)));
+            return (sdUtils::toString(getArgument<float>(index)));
             break;
         case 's':
-            return (toString(getArgument<std::string>(index)));
+            return (sdUtils::toString(getArgument<std::string>(index)));
             break;
     }
     return "";

@@ -443,8 +443,8 @@ TEST_CASE("get exact first last next previous eventset" "[sdScene]"){
     REQUIRE(scene.getNextEventsFromAllEntities(1.5).size() == 4);
     REQUIRE(scene.getPreviousEventsFromAllEntities(1.5).size()==1);
     REQUIRE(scene.getNextEventTime(1.4).first == 2.0);
-    REQUIRE(almostEqual(scene.getDeltaTimeToNextEvent(1.4).first ,0.6));
-    REQUIRE(almostEqual(scene.getDeltaTimeFromPreviousEvent(1.4).first ,1.4-1.3 ));
+    REQUIRE(sdUtils::almostEqual(scene.getDeltaTimeToNextEvent(1.4).first ,0.6));
+    REQUIRE(sdUtils::almostEqual(scene.getDeltaTimeFromPreviousEvent(1.4).first ,1.4-1.3 ));
 
     REQUIRE(scene.getPreviousEventTime(1.4).first == 1.3);
 
@@ -493,9 +493,9 @@ TEST_CASE("same as above but with strings"){
 
 TEST_CASE("valid descriptor test"){
     sdScene scene;
-    REQUIRE(scene.getValidDescriptorSet().size() == 10);
+    REQUIRE(scene.getValidDescriptorSet().size() == 15);
     scene.addExtension(EExtension::SD_SOURCE_SPREAD);
-    REQUIRE(scene.getValidDescriptorSet().size() == 11);
+    REQUIRE(scene.getValidDescriptorSet().size() == 16);
     
     
 }
@@ -626,38 +626,38 @@ TEST_CASE("Test Extension enum to string conversion", "[sdConst]"){
 
 TEST_CASE("Test Utilities", "[sdConst]"){
     std::array<double, 3> xyz{1,1,1};
-    auto aed = xyzToAed(xyz);
-    auto rXyz = aedToXyz(aed);
-    REQUIRE(almostEqual(rXyz[0], xyz[0]));
-    REQUIRE(almostEqual(rXyz[1], xyz[1]));
-    REQUIRE(almostEqual(rXyz[2], xyz[2]));
+    auto aed = sdUtils::xyzToAed(xyz);
+    auto rXyz = sdUtils::aedToXyz(aed);
+    REQUIRE(sdUtils::almostEqual(rXyz[0], xyz[0]));
+    REQUIRE(sdUtils::almostEqual(rXyz[1], xyz[1]));
+    REQUIRE(sdUtils::almostEqual(rXyz[2], xyz[2]));
     // std::array to string
-    REQUIRE( toString(std::array<int, 3>({{3,4,5}})) == "3 4 5");
-    REQUIRE( toString(std::array<double, 2>({{3.3,4.4}})) == "3.3 4.4");
+    REQUIRE( sdUtils::toString(std::array<int, 3>({{3,4,5}})) == "3 4 5");
+    REQUIRE( sdUtils::toString(std::array<double, 2>({{3.3,4.4}})) == "3.3 4.4");
     
     // single arithmatic to string
-    REQUIRE( toString(32) == "32");
-    REQUIRE( toString(42.31) == "42.31");
-    REQUIRE( toString(42.31f) == "42.31");
+    REQUIRE( sdUtils::toString(32) == "32");
+    REQUIRE( sdUtils::toString(42.31) == "42.31");
+    REQUIRE( sdUtils::toString(42.31f) == "42.31");
     
     // bool to string
-    REQUIRE( toString(true) == "true");
-    REQUIRE( toString(false) == "false");
+    REQUIRE( sdUtils::toString(true) == "true");
+    REQUIRE( sdUtils::toString(false) == "false");
     
-    REQUIRE( stringTo<bool>("true") == true);
-    REQUIRE( stringTo<bool>("false") == false);
+    REQUIRE( sdUtils::stringTo<bool>("true") == true);
+    REQUIRE( sdUtils::stringTo<bool>("false") == false);
     
-    REQUIRE( stringTo<int>("43") == 43);
-    REQUIRE( stringTo<double>("423.1") == 423.1);
+    REQUIRE( sdUtils::stringTo<int>("43") == 43);
+    REQUIRE( sdUtils::stringTo<double>("423.1") == 423.1);
     SECTION("int array"){
-        auto array = stringToArray<int,3>("4 3 2");
+        auto array = sdUtils::stringToArray<int,3>("4 3 2");
         REQUIRE(array.at(0) == 4);
         REQUIRE(array.at(1) == 3);
         REQUIRE(array.at(2) == 2);
     }
     
     SECTION("double array"){
-        auto array = stringToArray<double,2>("4.2 3.2");
+        auto array = sdUtils::stringToArray<double,2>("4.2 3.2");
         REQUIRE(array.at(0) == 4.2);
         REQUIRE(array.at(1) == 3.2);
     }

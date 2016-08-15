@@ -240,7 +240,7 @@ inline const sdEvent< D > * const sdEventHandler::getEvent(const double &time) c
 inline std::vector<std::shared_ptr<sdProtoEvent>> sdEventHandler::getEvents(const double &time) const{
     std::vector<std::shared_ptr<sdProtoEvent>> vector;
     for(auto event : events){
-        if(almostEqual(event->getTime(), time)){vector.push_back(event);}
+        if(sdUtils::almostEqual(event->getTime(), time)){vector.push_back(event);}
         if(event->getTime() > time )break;
     }
     return std::move(vector);
@@ -411,7 +411,7 @@ inline size_t sdEventHandler::getNumberOfEvents() const{
 
 inline std::vector<std::shared_ptr<sdProtoEvent>>::const_iterator sdEventHandler::findEvent(const double &time, const EDescriptor &descriptor) const{
     for (auto it = events.begin(); it != events.end(); it++) {
-        if( (almostEqual(time, (*it)->getTime())) && (descriptor == (*it)->getDescriptor()) ){ return it; }
+        if( (sdUtils::almostEqual(time, (*it)->getTime())) && (descriptor == (*it)->getDescriptor()) ){ return it; }
         if( (*it)->getTime() > time ){return events.end();}
     }
     return events.end();

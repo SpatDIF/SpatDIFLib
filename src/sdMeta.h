@@ -101,7 +101,7 @@ public:
     const typename sdDescriptor<D>::type &getValue(void) const{ return value; };
     
     /*! returns value as string */
-    const std::string getValueAsString() const override{ return toString(value);};
+    const std::string getValueAsString() const override{ return sdDescriptor<D>::toString(value);};
     /*! @} */
     
 };
