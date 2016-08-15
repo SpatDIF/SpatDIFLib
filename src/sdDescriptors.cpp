@@ -45,6 +45,14 @@ const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
         sdDSpec(SD_MEDIA_TIME_OFFSET, "time-offset", [](sdEntity* entity, double time, std::string value){
             return entity->addProtoEvent<SD_MEDIA_TIME_OFFSET>(time, std::stod(value), entity);})
     }),
+    sdESpec(EExtension::SD_LOOP, "loop",{
+        sdDSpec(SD_LOOP_TYPE, "type", [](sdEntity * entity, double time, std::string value){
+            return entity->addProtoEvent<SD_LOOP_TYPE>(time, sdDescriptor<SD_LOOP_TYPE>::stringTo(value), entity);}),
+        sdDSpec(SD_LOOP_POINTS, "points", [](sdEntity * entity, double time, std::string value){
+            return entity->addProtoEvent<SD_LOOP_POINTS>(time, stringToArray<double, 2>(value), entity);}),
+        sdDSpec(SD_LOOP_WAIT_TIME, "wait-time", [](sdEntity * entity, double time, std::string value){
+            return entity->addProtoEvent<SD_LOOP_WAIT_TIME>(time, stringTo<double>(value), entity);})
+    }),
     sdESpec((EExtension::SD_INTERPOLATION), "interpolation",{
         sdDSpec(SD_INTERPOLATION_TYPE, "type", [](sdEntity* entity, double time, std::string value){
             return entity->addProtoEvent<SD_INTERPOLATION_TYPE>(time, stringTo<sdDescriptor<SD_INTERPOLATION_TYPE>::EInterpolation>(value), entity);})

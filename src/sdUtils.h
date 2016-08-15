@@ -19,6 +19,13 @@
 #pragma mark methmatical conversion
 
 /*!
+ static constants
+ */
+static const double kDegreeToRadian = M_PI/180.0;
+static const double kRadianToDegree = 180.0/M_PI;
+
+
+/*!
  check almost equal for double precision
  */
 inline bool almostEqual(double x, double y){

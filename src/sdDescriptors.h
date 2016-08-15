@@ -27,12 +27,6 @@
 #include <unordered_map>
 #include "sdException.h"
 
-/*!
-    static constants
- */
-static const double kDegreeToRadian = M_PI/180.0;
-static const double kRadianToDegree = 180.0/M_PI;
-
 
 
 /*!
@@ -58,6 +52,7 @@ enum class EExtension {
     //core
     SD_CORE,
     SD_MEDIA,
+    SD_LOOP,
     SD_INTERPOLATION,
 
     //5.2 general
@@ -94,7 +89,7 @@ typedef enum {
     SD_ORIENTATION,
     
     /** core functionalities **/
-    // media
+    /// 4.4.1 media
     SD_MEDIA_ID,
     SD_MEDIA_TYPE,
     SD_MEDIA_LOCATION,
@@ -102,12 +97,12 @@ typedef enum {
     SD_MEDIA_TIME_OFFSET,
     SD_MEDIA_GAIN,
     
-    // loop
+    /// 4.4.2 loop
     SD_LOOP_TYPE,
     SD_LOOP_POINTS,
     SD_LOOP_WAIT_TIME,
     
-    // interpolation
+    /// 4.4.3 interpolation
     SD_INTERPOLATION_TYPE,
     
     /*** 5 extensions ***/
@@ -209,7 +204,7 @@ template <EDescriptor D>
 struct sdDescriptor {};
 
 /*** core ***/
-/// core
+/// 4.3 core
 template <>
 struct sdDescriptor<EDescriptor::SD_TYPE>{
     enum EType{
@@ -259,8 +254,8 @@ struct sdDescriptor<EDescriptor::SD_GROUP_MEMBERSHIP>{
     const static bool interpolable = false;
 };
 
-/// core functionalities descriptors
-// media
+/** core functionalities **/
+/// 4.4.1 media
 
 template <>
 struct sdDescriptor<EDescriptor::SD_MEDIA_ID>{
@@ -300,6 +295,59 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_GAIN>{
 
 
 
+
+
+/// 4.4.2 loop
+template <>
+struct sdDescriptor<EDescriptor::SD_LOOP_TYPE>{
+    
+    typedef enum{
+        SD_NONE,
+        SD_REPEAT,
+        SD_UNDEFINED
+    } EType;
+    
+    typedef std::pair<EType, int> type;
+    const static bool interpolable = false;
+    static std::array<std::pair<EType, std::string>,2> &table(){
+        static std::array<std::pair<EType, std::string>,2> table={
+            std::make_pair(EType::SD_NONE, "none"),
+            std::make_pair(EType::SD_REPEAT, "repeat")};
+        return table;
+    }
+    static std::pair<EType, int>  stringTo(const std::string &str){
+        std::istringstream iss(str);
+        std::vector<std::string> items{std::istream_iterator<std::string>{iss}, std::istream_iterator<std::string>{}};
+        if(items.size() > 2) return std::make_pair(EType::SD_UNDEFINED, 0);
+        EType tp =  stringToUtil<EType,2>(items[0], table());
+        if(tp == SD_REPEAT){
+            return std::make_pair(tp,std::stoi(items[1]));
+        }
+        return  std::make_pair(tp, 0);
+    }
+    static std::string toString(const std::pair<EType, int>  &value){
+        std::string tp = toStringUtil<EType, 2>(value.first, table());
+        tp += " " + std::to_string(value.second);
+        return tp;
+    }
+    
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_LOOP_POINTS>{
+    typedef std::array<double, 2> type;
+    const static bool interpolable = false;
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_LOOP_WAIT_TIME>{
+    typedef double type;
+    const static bool interpolable = true;
+};
+
+
+
+/// 4.4.3 interpolation
 template <>
 struct sdDescriptor<EDescriptor::SD_INTERPOLATION_TYPE>{
     
@@ -549,7 +597,6 @@ struct sdDescriptor<EDescriptor::SD_DIRECT_TO_ONE_DIRECT_TO_ONE>{
 };
 
 
-
 #pragma mark toString
 
 /*! template function for to string conversion
@@ -576,8 +623,13 @@ inline std::string toString(const std::string &str){
     return str;
 }
 
+// special type descriptors
 inline std::string toString(const sdDescriptor<SD_TYPE>::EType &type){
     return sdDescriptor<SD_TYPE>::toString(type);
+}
+
+inline std::string toString(const std::pair<sdDescriptor<SD_LOOP_TYPE>::EType, int> &type){
+    return sdDescriptor<SD_LOOP_TYPE>::toString(type);
 }
 
 template <typename T>
@@ -629,6 +681,7 @@ inline std::array<T, S> stringToArray(const std::string &str){
     std::copy_n(std::make_move_iterator(strVect.begin()), S, array.begin());
     return std::move(array);
 }
+
 
 
 
