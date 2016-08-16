@@ -231,7 +231,7 @@ struct sdDescriptor<EDescriptor::SD_POSITION>{
     typedef std::array<double, 3> type;
     const static bool interpolable = true;
     
-    static type stringToArray(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
 };
 
@@ -240,7 +240,7 @@ struct sdDescriptor<EDescriptor::SD_ORIENTATION>{
     typedef std::array<double, 3> type;
     const static bool interpolable = true;
     
-    static type stringToArray(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
 
 };

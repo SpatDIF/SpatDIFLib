@@ -24,7 +24,11 @@ class sdProtoMeta;
 class sdExtension {
 protected:
     struct sdDSpec{
-        sdDSpec(EDescriptor descriptor, std::string descriptorString, std::function< std::shared_ptr<sdProtoEvent>(sdEntity* entity,double, std::string)> addEventFromStringFunc): descriptor(descriptor), descriptorString(descriptorString), addEventFromStringFunc(addEventFromStringFunc){};
+        sdDSpec(EDescriptor descriptor, std::string descriptorString, std::function< std::shared_ptr<sdProtoEvent>(sdEntity* entity,double, std::string)> addEventFromStringFunc):
+        descriptor(descriptor),
+        descriptorString(descriptorString),
+        addEventFromStringFunc(addEventFromStringFunc){};
+        
         EDescriptor descriptor;
         std::string descriptorString;
         std::function< std::shared_ptr<sdProtoEvent>(sdEntity * entity, double, std::string)> addEventFromStringFunc;
