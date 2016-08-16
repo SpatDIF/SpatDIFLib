@@ -31,9 +31,6 @@ protected:
     /*! add a pointer a meta to the global event vector */
     virtual void addGlobalMetaAlias(std::shared_ptr<sdProtoMeta> meta) = 0;
 
-    /*! this function is the only way to instantiate sdMeta.*/
-    template <EDescriptor D>
-    std::shared_ptr<sdProtoMeta> addProtoMeta(typename sdDescriptor<D>::type value, sdEntity *entity);
 
 public:
     /*! add meta data with the specified descriptor and value to the entity
@@ -43,6 +40,11 @@ public:
     template <EDescriptor D>
     sdMeta<D> * const addMeta(typename sdDescriptor<D>::type value, sdEntity *entity);
     
+    
+    /*! this function is the only way to instantiate sdMeta.*/
+    template <EDescriptor D>
+    std::shared_ptr<sdProtoMeta> addProtoMeta(typename sdDescriptor<D>::type value, sdEntity *entity);
+
     /*! return number of registerd events in the events
      @returns number of meta data defined for this entities
      */
