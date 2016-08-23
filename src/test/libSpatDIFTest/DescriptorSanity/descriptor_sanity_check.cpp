@@ -107,6 +107,36 @@ TEST_CASE("source spread"){
     
 }
 
+TEST_CASE("distance cues"){
+    sdScene scene;
+    scene.addExtension(EExtension::SD_DISTANCE_CUES);
+    
+    auto distantSource = scene.addEntity("distance");
+    distantSource->addMeta<SD_DISTANCE_CUES_MAXIMUM_DISTANCE>(10.0);
+    distantSource->addMeta<SD_DISTANCE_CUES_REFERENCE_DISTANCE>(5.0);
+    distantSource->addMeta<SD_DISTANCE_CUES_MAXIMUM_ATTENUATION>(5.0);
+    distantSource->addMeta<SD_DISTANCE_CUES_ATTENUATION_MODEL>(1);
+    distantSource->addMeta<SD_DISTANCE_CUES_ABSORPTION_MODEL>(1);
+
+    distantSource->addEvent("3.0", "distance-cues", "reference-distance", "2.0");
+    distantSource->addEvent("3.0", "distance-cues", "maximum-distance", "2.0");
+    distantSource->addEvent("3.0", "distance-cues", "maximum-attenuation", "2.0");
+    distantSource->addEvent("3.0", "distance-cues", "attenuation-model", "1");
+    distantSource->addEvent("3.0", "distance-cues", "absorption-model", "1");
+
+    REQUIRE(*distantSource->getValue<SD_DISTANCE_CUES_MAXIMUM_DISTANCE>() == 10.0);
+    REQUIRE(*distantSource->getValue<SD_DISTANCE_CUES_REFERENCE_DISTANCE>() == 5.0);
+    REQUIRE(*distantSource->getValue<SD_DISTANCE_CUES_MAXIMUM_ATTENUATION>() == 5.0);
+    REQUIRE(*distantSource->getValue<SD_DISTANCE_CUES_ATTENUATION_MODEL>() == 1);
+    REQUIRE(*distantSource->getValue<SD_DISTANCE_CUES_ABSORPTION_MODEL>() == 1);
+    
+    REQUIRE(*distantSource->getValue<SD_DISTANCE_CUES_REFERENCE_DISTANCE>(3.0) == 2);
+    REQUIRE(*distantSource->getValue<SD_DISTANCE_CUES_MAXIMUM_DISTANCE>(3.0) == 2);
+    REQUIRE(*distantSource->getValue<SD_DISTANCE_CUES_MAXIMUM_ATTENUATION>(3.0) == 2);
+    REQUIRE(*distantSource->getValue<SD_DISTANCE_CUES_ATTENUATION_MODEL>(3.0) == 1);
+    REQUIRE(*distantSource->getValue<SD_DISTANCE_CUES_ABSORPTION_MODEL>(3.0) == 1);
+}
+
 TEST_CASE("direct to one sink"){
     sdScene scene;
     scene.addExtension(EExtension::SD_DIRECT_TO_ONE);
@@ -114,8 +144,9 @@ TEST_CASE("direct to one sink"){
     auto stickySource = scene.addEntity("sticky");
     stickySource->addMeta<SD_DIRECT_TO_ONE_DIRECT_TO_ONE>(true);
     REQUIRE(stickySource->getValueAsString<SD_DIRECT_TO_ONE_DIRECT_TO_ONE>() == "true");
-    REQUIRE(*stickySource->getValue<SD_DIRECT_TO_ONE_DIRECT_TO_ONE>() == true);
 
+    stickySource->addEvent("4.0", "direct-to-one", "direct-to-one", "true");
+    REQUIRE(*stickySource->getValue<SD_DIRECT_TO_ONE_DIRECT_TO_ONE>(4.0) == true);
 }
 
 TEST_CASE("hardware out extension"){
@@ -144,5 +175,10 @@ TEST_CASE("hardware out extension"){
     REQUIRE(rightSpeaker->getValueAsString<SD_HARDWARE_OUT_GAIN>(1.0) == "0.6");
     REQUIRE(*rightSpeaker->getValue<SD_HARDWARE_OUT_GAIN>(1.0) == 0.6);
 
-    
+    // exception
+    try{
+        leftSpeaker->addEvent<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(20, 0);
+    }catch(InvalidValueDomainException &exception){
+        // catch
+    }
 }

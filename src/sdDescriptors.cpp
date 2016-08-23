@@ -76,11 +76,12 @@ const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
         DEFINE_DESCRIPTOR(SD_SOURCE_SPREAD_SPREAD, "spread"),
     }),
     // 5.3.3.1 Diestance cue
-    sdESpec((EExtension::SD_SOURCE_SPREAD), "distance-cues",{
+    sdESpec((EExtension::SD_DISTANCE_CUES), "distance-cues",{
         DEFINE_DESCRIPTOR(SD_DISTANCE_CUES_REFERENCE_DISTANCE, "reference-distance"),
         DEFINE_DESCRIPTOR(SD_DISTANCE_CUES_MAXIMUM_DISTANCE, "maximum-distance"),
+        DEFINE_DESCRIPTOR(SD_DISTANCE_CUES_MAXIMUM_ATTENUATION, "maximum-attenuation"),
         DEFINE_DESCRIPTOR(SD_DISTANCE_CUES_ATTENUATION_MODEL, "attenuation-model"),
-        DEFINE_DESCRIPTOR(SD_DISTANCE_CUES_ABSORPTION_MODEL, "absortion-model")
+        DEFINE_DESCRIPTOR(SD_DISTANCE_CUES_ABSORPTION_MODEL, "absorption-model")
     }),
     // 5.3.4.1 Sink Entity
     sdESpec((EExtension::SD_SINK_ENTITY),"sink-entity",{

@@ -209,7 +209,8 @@ template <EDescriptor D>
 inline std::shared_ptr<sdProtoEvent> sdEventHandler::addProtoEvent(const double &time,  typename sdDescriptor<D>::type value, sdEntity * entity){
     
     if(time < 0.0){ throw  InvalidTimeException(time);}
-    
+    sdDescriptor<D>::validateValue(value);
+
     // remove if already exist
     removeEvent(time, D);
     

@@ -18,10 +18,16 @@ public:
     : std::range_error(std::string("Invalid Time Exception: ") + std::to_string(time) ) {}
 };
 
-class InvalidDescriptorException : public std::range_error{
+class InvalidDescriptorException : public std::invalid_argument{
 public:
     InvalidDescriptorException()
-    : std::range_error(std::string("Invalid Descriptor")){}
+    : std::invalid_argument(std::string("Invalid Descriptor")){}
+};
+
+class InvalidValueDomainException : public std::domain_error{
+public:
+    InvalidValueDomainException(std::string message)
+    : std::domain_error(std::string("Invalid Value Domain: " + message)){}
 };
 
 class FileErrorException : public std::ios_base::failure{

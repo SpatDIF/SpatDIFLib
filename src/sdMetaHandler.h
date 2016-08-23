@@ -82,7 +82,8 @@ inline sdMeta<D> * const sdMetaHandler::addMeta(typename sdDescriptor<D>::type v
 
 template <EDescriptor D>
 inline std::shared_ptr<sdProtoMeta> sdMetaHandler::addProtoMeta(typename sdDescriptor<D>::type value, sdEntity *entity){
-    
+    sdDescriptor<D>::validateValue(value);
+
     // remove if already exist
     removeMeta(D);
     

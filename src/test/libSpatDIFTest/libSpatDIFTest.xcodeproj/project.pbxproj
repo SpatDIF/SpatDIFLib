@@ -218,13 +218,6 @@
 			path = DescriptorSanity;
 			sourceTree = "<group>";
 		};
-		6217DDF81D5B21080048C466 /* descriptor_sanity_check */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = descriptor_sanity_check;
-			sourceTree = "<group>";
-		};
 		62401D5B1CA2AFC5001179C5 /* JSON */ = {
 			isa = PBXGroup;
 			children = (
@@ -282,7 +275,6 @@
 				62D904B91C0E4DBF0065D8A5 /* libSpatDIFTest */,
 				62D8B02F1C37462900AC1D31 /* oldtest */,
 				6217DDED1D5B20F10048C466 /* DescriptorSanity */,
-				6217DDF81D5B21080048C466 /* descriptor_sanity_check */,
 				62D904B81C0E4DBF0065D8A5 /* Products */,
 			);
 			sourceTree = "<group>";

@@ -222,6 +222,7 @@ struct sdDescriptor<EDescriptor::SD_TYPE>{
     }
     static type stringTo(const std::string &str){return sdUtils::stringToByTable<type,4>(str, table());}
     static std::string toString(const type &value){return sdUtils::toStringByTable<type,4>(value, table());}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -231,7 +232,7 @@ struct sdDescriptor<EDescriptor::SD_PRESENT>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
-
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -241,6 +242,7 @@ struct sdDescriptor<EDescriptor::SD_POSITION>{
     
     static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -250,7 +252,7 @@ struct sdDescriptor<EDescriptor::SD_ORIENTATION>{
     
     static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
-
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -260,7 +262,7 @@ struct sdDescriptor<EDescriptor::SD_GROUP_MEMBERSHIP>{
     
     static type stringTo(const std::string &str){return str;}
     static std::string toString(const type &value){return value;}
-
+    static void validateValue(type &value){}
 };
 
 /** core functionalities **/
@@ -273,6 +275,7 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_ID>{
 
     static type stringTo(const std::string &str){return str;}
     static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -282,6 +285,7 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_TYPE>{
     
     static type stringTo(const std::string &str){return str;}
     static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -291,6 +295,7 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_LOCATION>{
     
     static type stringTo(const std::string &str){return str;}
     static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -300,6 +305,7 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_CHANNEL>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -309,6 +315,7 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_TIME_OFFSET>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -318,6 +325,7 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_GAIN>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 /// 4.4.2 loop
@@ -353,7 +361,7 @@ struct sdDescriptor<EDescriptor::SD_LOOP_TYPE>{
         tp += " " + std::to_string(value.second);
         return tp;
     }
-    
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -363,7 +371,7 @@ struct sdDescriptor<EDescriptor::SD_LOOP_POINTS>{
     
     static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 2>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
-};
+    static void validateValue(type &value){}};
 
 template <>
 struct sdDescriptor<EDescriptor::SD_LOOP_WAIT_TIME>{
@@ -372,6 +380,7 @@ struct sdDescriptor<EDescriptor::SD_LOOP_WAIT_TIME>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 
@@ -399,6 +408,7 @@ struct sdDescriptor<EDescriptor::SD_INTERPOLATION_TYPE>{
     
     static type stringTo(const std::string &str){return sdUtils::stringToByTable<type,3>(str, table());}
     static std::string toString(const type &value){return sdUtils::toStringByTable<type, 3>(value, table());}
+    static void validateValue(type &value){}
 };
 
 
@@ -419,6 +429,7 @@ struct sdDescriptor<EDescriptor::SD_POINTSET_ID>{
     
     static type stringTo(const std::string &str){return str;}
     static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -428,6 +439,7 @@ struct sdDescriptor<EDescriptor::SD_POINTSET_UNIT>{
     
     static type stringTo(const std::string &str){return str;}
     static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -437,6 +449,7 @@ struct sdDescriptor<EDescriptor::SD_POINTSET_CLOSED>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -446,6 +459,7 @@ struct sdDescriptor<EDescriptor::SD_POINTSET_SIZE>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -455,6 +469,7 @@ struct sdDescriptor<EDescriptor::SD_POINTSET_POINT>{
     
     static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -464,6 +479,7 @@ struct sdDescriptor<EDescriptor::SD_POINTSET_HANDLE>{
     
     static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 /// 5.2.2 Geometry
@@ -474,6 +490,7 @@ struct sdDescriptor<EDescriptor::SD_GEOMETRY_TRANSLATE>{
     
     static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -483,6 +500,7 @@ struct sdDescriptor<EDescriptor::SD_GEOMETRY_SCALE>{
     
     static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -492,6 +510,7 @@ struct sdDescriptor<EDescriptor::SD_GEOMETRY_ROTATE>{
     
     static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -501,6 +520,7 @@ struct sdDescriptor<EDescriptor::SD_GEOMETRY_SHEAR>{
     
     static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -510,6 +530,7 @@ struct sdDescriptor<EDescriptor::SD_GEOMETRY_REFLECT>{
     
     static type stringTo(const std::string &str){return sdUtils::stringToArray<int, 3>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 
@@ -522,7 +543,7 @@ struct sdDescriptor<EDescriptor::SD_AUTOMATION_DURATION>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
-
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -532,7 +553,7 @@ struct sdDescriptor<EDescriptor::SD_AUTOMATION_DELAY>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
-
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -542,6 +563,7 @@ struct sdDescriptor<EDescriptor::SD_AUTOMATION_FUNCTION>{
     
     static type stringTo(const std::string &str){return str;}
     static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
 };
 
 /////// pointset -- extension
@@ -556,6 +578,7 @@ struct sdDescriptor<EDescriptor::SD_SHAPE_DIRECTION>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -565,6 +588,7 @@ struct sdDescriptor<EDescriptor::SD_SHAPE_CLOSED>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -574,6 +598,7 @@ struct sdDescriptor<EDescriptor::SD_SHAPE_TYPE>{
     
     static type stringTo(const std::string &str){return str;}
     static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -583,6 +608,7 @@ struct sdDescriptor<EDescriptor::SD_SHAPE_ID>{
     
     static type stringTo(const std::string &str){return str;}
     static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
 };
 
 //***** 5.3. Layer-Related Extensions *****//
@@ -597,6 +623,7 @@ struct sdDescriptor<EDescriptor::SD_TRAJECTORY_POINTSET>{
     
     static type stringTo(const std::string &str){return str;}
     static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -605,7 +632,7 @@ struct sdDescriptor<EDescriptor::SD_TRAJECTORY_INTERPOLATION>{
     const static bool interpolable = false;
     static type stringTo(const std::string &str){return str;}
     static std::string toString(const type &value){return value;}
-
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -615,6 +642,7 @@ struct sdDescriptor<EDescriptor::SD_TRAJECTORY_GEOMETRY>{
     
     static type stringTo(const std::string &str){return str;}
     static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -624,6 +652,7 @@ struct sdDescriptor<EDescriptor::SD_TRAJECTORY_SHAPE>{
     
     static type stringTo(const std::string &str){return str;}
     static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -633,6 +662,7 @@ struct sdDescriptor<EDescriptor::SD_TRAJECTORY_AUTOMATION>{
     
     static type stringTo(const std::string &str){return str;}
     static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
 };
 
 // 5.3.1.2 Group
@@ -643,6 +673,7 @@ struct sdDescriptor<EDescriptor::SD_GROUP_ID>{
     
     static type stringTo(const std::string &str){return str;}
     static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -652,6 +683,7 @@ struct sdDescriptor<EDescriptor::SD_GROUP_PRESENT>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -661,6 +693,7 @@ struct sdDescriptor<EDescriptor::SD_GROUP_POSITION>{
     
     static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -670,7 +703,7 @@ struct sdDescriptor<EDescriptor::SD_GROUP_ORIENTATION>{
     
     static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
-
+    static void validateValue(type &value){}
 };
 
 /// 5.3.2 Extensions for Scene Description Layer
@@ -683,6 +716,7 @@ struct sdDescriptor<EDescriptor::SD_SOURCE_SPREAD_SPREAD>{
 
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 /// 5.3.3 Extension for Spatial Encoding Layer
@@ -695,6 +729,7 @@ struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_REFERENCE_DISTANCE>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -704,7 +739,7 @@ struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_MAXIMUM_DISTANCE>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
-
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -714,6 +749,7 @@ struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_MAXIMUM_ATTENUATION>{
 
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -723,6 +759,7 @@ struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_ATTENUATION_MODEL>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 template <>
@@ -732,7 +769,7 @@ struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_ABSORPTION_MODEL>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
-
+    static void validateValue(type &value){}
 };
 
 // 5.3.4 Extensions for Spatial Decoding Layer
@@ -747,7 +784,7 @@ struct sdDescriptor<EDescriptor::SD_DIRECT_TO_ONE_DIRECT_TO_ONE>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
-
+    static void validateValue(type &value){}
 };
 
 /// 5.3.5.1 Hardware-out
@@ -758,6 +795,11 @@ struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_PHYSICAL_CHANNEL>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){
+        if(value < 1){
+            throw InvalidValueDomainException("SD_HARDWARE_OUT_PHYSICAL_CHANNEL value must be > 0");
+        }
+    }
 };
 
 template <>
@@ -767,6 +809,7 @@ struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_GAIN>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){}
 };
 
 
