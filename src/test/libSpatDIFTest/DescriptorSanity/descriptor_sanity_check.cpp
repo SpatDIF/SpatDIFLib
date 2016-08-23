@@ -100,12 +100,35 @@ TEST_CASE("Test all descriptors types"){
     REQUIRE( *entity->getValue<SD_SOURCE_SPREAD_SPREAD>(0.0) == 0.5);
     
     // SD_HARDWARE_OUT_PHYSICAL_CHANNEL
-    entity->addEvent<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(0.5,3);
-    REQUIRE(entity->getValue<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(0.5) == nullptr);
     
+}
+
+
+TEST_CASE("hardware out extension"){
+    sdScene scene;
+    scene.addExtension(EExtension::SD_SINK_ENTITY);
     scene.addExtension(EExtension::SD_HARDWARE_OUT);
-    entity->addEvent<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(0.5,3);
-    REQUIRE(*entity->getValue<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(0.5) == 3);
     
+    auto leftSpeaker = scene.addEntity("JBL-Left", EKind::SD_SINK);
+    auto rightSpeaker = scene.addEntity("JBL-Right", EKind::SD_SINK);
+
+    // physical channel
+    leftSpeaker->addMeta<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(10);
+    REQUIRE(leftSpeaker->getValueAsString<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>() == "10");
+    REQUIRE(*leftSpeaker->getValue<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>() == 10);
+    
+    rightSpeaker->addEvent("1.0", "hardware-out", "physical-channel",  "11");
+    REQUIRE(rightSpeaker->getValueAsString<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(1.0) == "11");
+    REQUIRE(*rightSpeaker->getValue<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(1.0) == 11);
+
+    // gain
+    leftSpeaker->addMeta<SD_HARDWARE_OUT_GAIN>(0.5);
+    REQUIRE(leftSpeaker->getValueAsString<SD_HARDWARE_OUT_GAIN>() == "0.5");
+    REQUIRE(*leftSpeaker->getValue<SD_HARDWARE_OUT_GAIN>() == 0.5);
+
+    rightSpeaker->addEvent("1.0", "hardware-out", "gain",  "0.6");
+    REQUIRE(rightSpeaker->getValueAsString<SD_HARDWARE_OUT_GAIN>(1.0) == "0.6");
+    REQUIRE(*rightSpeaker->getValue<SD_HARDWARE_OUT_GAIN>(1.0) == 0.6);
+
     
 }
