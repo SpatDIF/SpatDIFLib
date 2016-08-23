@@ -21,7 +21,7 @@ TEST_CASE("source spread test"){
     
     
     auto eventOne = entityOne->addEvent<SD_SOURCE_SPREAD_SPREAD>(5.0, 105.2);
-    auto eventTwo = entityOne->addEvent("10.0", "spread", "99");
+    auto eventTwo = entityOne->addEvent("10.0", "source-spread", "spread", "99");
     
     REQUIRE(eventOne == entityOne->getNextEvent<SD_SOURCE_SPREAD_SPREAD>(2.0));
     REQUIRE(eventTwo.get() == entityOne->getPreviousEvent<SD_SOURCE_SPREAD_SPREAD>(12.0));
@@ -304,7 +304,7 @@ TEST_CASE("sdSceneTest"){
     sdScene scene(info);
     REQUIRE(scene.getNumberOfActivatedExtensions()==0);
     auto myEntity = scene.addEntity("myEntity");
-    myEntity->addEvent(string("1.0"), string("position"), string("0.0 0.1 0.2"));
+    myEntity->addEvent(string("1.0"), string("core"), string("position"), string("0.0 0.1 0.2"));
     myEntity->addEvent<SD_POSITION>(2.0, {0.0, 0.1, 0.2});
     myEntity->addEvent<SD_MEDIA_GAIN>(2.0, 0.5523);
     

@@ -137,12 +137,12 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
                 XMLElement *childTag = tempTag->FirstChildElement();
                 if(!childTag){ // tempTag is a descriptor
                     XMLElement *descriptor = tempTag;
-                    //targetEntity->addEvent(timeString, std::string(descriptor->Name()), std::string(descriptor->GetText()));
+                    targetEntity->addEvent(timeString, "core",std::string(descriptor->Name()), std::string(descriptor->GetText()));
 
                 }else{ // tempTag is a exType
                     XMLElement *descriptor = childTag;
                     while (descriptor) {
-                        //targetEntity->addEvent(timeString, std::string(descriptor->Name()), std::string(descriptor->GetText()));
+                        targetEntity->addEvent(timeString, tempTag->Name(), descriptor->Name(), descriptor->GetText());
                         descriptor = descriptor->NextSiblingElement();
                     }
                 }

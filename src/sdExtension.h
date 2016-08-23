@@ -109,7 +109,7 @@ public:
     }
     
     static EDescriptor stringToDescriptor(std::string extension, std::string string){
-        
+        if(extension.empty()) extension = "core"; // assuming core
         auto itr = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extension](sdESpec eSpec)->bool{return eSpec.extensionString == extension;});
         if(itr == spatDIFSpec.end()) return SD_ERROR;
         const std::vector<sdDSpec> &descroptorVector = itr->descriptorSpecs;
