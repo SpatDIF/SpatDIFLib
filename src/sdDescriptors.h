@@ -63,7 +63,7 @@ enum class EExtension {
     SD_SHAPE,
     
     //5.3 layer-related
-    SD_TRAJECTPRY_GENERATOR,
+    SD_TRAJECTORY,
     SD_SOURCE_SPREAD,
     SD_DISTANCE_CUES,
     SD_SINK_ENTITY,
@@ -71,6 +71,8 @@ enum class EExtension {
     SD_HARDWARE_OUT,
     SD_GROUP,
     
+    //5.4 private
+    SD_PRIVATE,
     
     SD_EXTENSION_ERROR
 };
@@ -139,10 +141,16 @@ typedef enum {
     
     /** 5.3 layer-related extensions **/
     
-    /// 5.3.1 trjactory generator
+    /// 5.3.1.1 trjactory generator
+    SD_TRAJECTORY_POINTSET,
+    SD_TRAJECTORY_INTERPOLATION,
+    SD_TRAJECTORY_GEOMETRY,
+    SD_TRAJECTORY_AUTOMATION,
+    SD_TRAJECTORY_SHAPE,
     
     // 5.3.1.2 group
-    SD_GROUP_NAME,
+    SD_GROUP_ID,
+    SD_GROUP_INTERPOLATION,
     SD_GROUP_PRESENT,
     SD_GROUP_POSITION,
     SD_GROUP_ORIENTATION,
@@ -400,25 +408,6 @@ struct sdDescriptor<EDescriptor::SD_INTERPOLATION_TYPE>{
 
 
 
-// hardware-out
-template <>
-struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_PHYSICAL_CHANNEL>{
-    typedef int type;
-    const static bool interpolable = false;
-    
-    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
-    static std::string toString(const type &value){return sdUtils::toString(value);}
-};
-
-template <>
-struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_GAIN>{
-    typedef double type;
-    const static bool interpolable = true;
-    
-    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
-    static std::string toString(const type &value){return sdUtils::toString(value);}
-};
-
 //***** 5.2. General Extensions *****//
 
 /// 5.2.1 Pointset
@@ -601,10 +590,54 @@ struct sdDescriptor<EDescriptor::SD_SHAPE_ID>{
 /// 5.3.1 Extensions for Spatial Authoring Layer
 
 // 5.3.1.1 Trajectory Generator
+template <>
+struct sdDescriptor<EDescriptor::SD_TRAJECTORY_POINTSET>{
+    typedef std::string type;
+    const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_TRAJECTORY_INTERPOLATION>{
+    typedef std::string type;
+    const static bool interpolable = false;
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
+
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_TRAJECTORY_GEOMETRY>{
+    typedef std::string type;
+    const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_TRAJECTORY_SHAPE>{
+    typedef std::string type;
+    const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_TRAJECTORY_AUTOMATION>{
+    typedef std::string type;
+    const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
+};
 
 // 5.3.1.2 Group
 template <>
-struct sdDescriptor<EDescriptor::SD_GROUP_NAME>{
+struct sdDescriptor<EDescriptor::SD_GROUP_ID>{
     typedef std::string type;
     const static bool interpolable = false;
     
@@ -717,7 +750,24 @@ struct sdDescriptor<EDescriptor::SD_DIRECT_TO_ONE_DIRECT_TO_ONE>{
 
 };
 
+/// 5.3.5.1 Hardware-out
+template <>
+struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_PHYSICAL_CHANNEL>{
+    typedef int type;
+    const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
+};
 
+template <>
+struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_GAIN>{
+    typedef double type;
+    const static bool interpolable = true;
+    
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
+};
 
 
 #endif

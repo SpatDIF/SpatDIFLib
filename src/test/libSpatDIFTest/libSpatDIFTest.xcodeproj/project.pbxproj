@@ -260,8 +260,6 @@
 			isa = PBXGroup;
 			children = (
 				62401D5B1CA2AFC5001179C5 /* JSON */,
-				6217DDE61D5B20510048C466 /* sdDescriptors.h */,
-				6217DDE51D5B20510048C466 /* sdDescriptors.cpp */,
 				6217DE171D5B2B1D0048C466 /* sdUtils.h */,
 				62BE10211C2F3C020033244E /* sdDate.h */,
 				62BE10221C2F3C020033244E /* sdEntity.h */,
@@ -277,6 +275,8 @@
 				62BE10291C2F3C020033244E /* sdOSCResponder.h */,
 				62BE102A1C2F3C020033244E /* sdSaver.h */,
 				62BE102B1C2F3C020033244E /* sdScene.h */,
+				6217DDE61D5B20510048C466 /* sdDescriptors.h */,
+				6217DDE51D5B20510048C466 /* sdDescriptors.cpp */,
 				629720C41C29966100135148 /* tinyxml2.cpp */,
 				62AF37B31C236EDC009E9347 /* sdEntity.cpp */,
 				629720D51C2D8C2600135148 /* sdLoader.cpp */,

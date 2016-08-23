@@ -47,14 +47,14 @@ public:
     sdMeta<D> * const addMeta(typename sdDescriptor<D>::type value);
     
     /*! add meta by string*/
-    const std::shared_ptr<sdProtoMeta> addMeta(const std::string &descriptor, const std::string &value);
+    const std::shared_ptr<sdProtoMeta> addMeta(const std::string &descriptor, const std::string &extension, const std::string &value);
     
     /*! return value cast to a specific subclass event.*/
     template <EDescriptor D>
     sdEvent<D> * const addEvent(const double &time, typename sdDescriptor<D>::type value);
 
     /*! add event by string*/
-    const std::shared_ptr<sdProtoEvent> addEvent(const std::string &time, const std::string &descriptor, const std::string &value);
+    const std::shared_ptr<sdProtoEvent> addEvent(const std::string &time, const std::string &extension, const std::string &descriptor, const std::string &value);
     
     
     /*!
@@ -66,12 +66,26 @@ public:
      */
 
     /*!
+     this function looks for a meta of the specified descriptor and returns a pointer to the data.
+     @param descriptor specify descriptor defined in sdDescriptors.h
+     */
+    template <EDescriptor D>
+    inline const typename sdDescriptor<D>::type * const getValue() const;
+
+    /*!
      this function looks for an event at specified time and descriptor and returns a pointer to the data.
      @param time time of the event
      @param descriptor specify descriptor defined in sdDescriptors.h
      */
     template <EDescriptor D>
     const typename sdDescriptor<D>::type * const getValue(const double &time) const;
+    
+    /*!
+     this function search for a meta of the specified  descriptor and return the data as a string.
+     @param descriptor specify descriptor defined in sdDescriptors.h
+     */
+    template <EDescriptor D>
+    const std::string getValueAsString() const;
     
     /*!
      this function search for an event at specified time and descriptor and return the data as a string.
@@ -132,8 +146,8 @@ inline sdMeta<D> * const sdEntity::addMeta(typename sdDescriptor<D>::type value)
     return sdMetaHandler::addMeta<D>(value, this);
 }
 
-inline const std::shared_ptr<sdProtoMeta> sdEntity::addMeta(const std::string &descriptor, const std::string &value){
-    EDescriptor dtr = sdExtension::stringToDescriptor(descriptor);
+inline const std::shared_ptr<sdProtoMeta> sdEntity::addMeta(const std::string &extension, const std::string &descriptor, const std::string &value){
+    EDescriptor dtr = sdExtension::stringToDescriptor(extension, descriptor);
     if(dtr == EDescriptor::SD_ERROR) return nullptr; // undefined descriptor
     if(!isDescriptorValid(dtr)) return nullptr; // invalid descriptor
     
@@ -141,20 +155,29 @@ inline const std::shared_ptr<sdProtoMeta> sdEntity::addMeta(const std::string &d
     return addMetaFunc(this, value);
 }
 
+
 template <EDescriptor D>
 inline sdEvent<D> * const sdEntity::addEvent(const double &time,  typename sdDescriptor<D>::type value){
     if(!isDescriptorValid(D)) return nullptr; // invalid descriptor
     return sdEventHandler::addEvent<D>(time, value, this);
 }
 
-inline const std::shared_ptr<sdProtoEvent> sdEntity::addEvent(const std::string &time, const std::string &descriptor, const std::string &value){
-    EDescriptor dtr = sdExtension::stringToDescriptor(descriptor);
+inline const std::shared_ptr<sdProtoEvent> sdEntity::addEvent(const std::string &time, const std::string &extension, const std::string &descriptor, const std::string &value){
+    EDescriptor dtr = sdExtension::stringToDescriptor(extension, descriptor);
     if(dtr == EDescriptor::SD_ERROR) return nullptr; // undefined descriptor
     if(!isDescriptorValid(dtr)) return nullptr; // invalid descriptor
     
     auto dtime = std::stod(time);
     auto addEventFunc = sdExtension::getAddEventFunc(std::move(dtr));
     return addEventFunc(this, dtime, value);
+}
+
+
+template <EDescriptor D>
+inline const typename sdDescriptor<D>::type * const sdEntity::getValue() const{
+    auto meta = getMeta<D>();
+    if(!meta)return nullptr;
+    return &(meta->getValue());
 }
 
 template <EDescriptor D>
@@ -165,21 +188,28 @@ inline const typename sdDescriptor<D>::type * const sdEntity::getValue(const dou
 }
 
 template <EDescriptor D>
-const std::string sdEntity::getValueAsString(const double &time) const{
-    auto event = getEvent<D>(time);
-    if(!event) return  std::string();
-    return getEvent<D>(time)->getValueAsString();
+inline const std::string sdEntity::getValueAsString() const{
+    auto meta = getMeta<D>();
+    if(!meta) return  std::string();
+    return meta->getValueAsString();
 }
 
 template <EDescriptor D>
-const typename sdDescriptor<D>::type * const sdEntity::getNextValue(const double &time) const{
+inline const std::string sdEntity::getValueAsString(const double &time) const{
+    auto event = getEvent<D>(time);
+    if(!event) return  std::string();
+    return event->getValueAsString();
+}
+
+template <EDescriptor D>
+inline const typename sdDescriptor<D>::type * const sdEntity::getNextValue(const double &time) const{
     auto nextEvent = getNextEvent<D>(time);
     if(!nextEvent) return nullptr;
     return &nextEvent->getValue();
 }
 
 template <EDescriptor D>
-const typename sdDescriptor<D>::type * const sdEntity::getPreviousValue(const double &time) const{
+inline const typename sdDescriptor<D>::type * const sdEntity::getPreviousValue(const double &time) const{
     auto previousEvent = getPreviousEvent<D>(time);
     if(!previousEvent) return nullptr;
     return &previousEvent ->getValue();

@@ -16,6 +16,10 @@
 #include "sdScene.h"
 #include "sdEntity.h"
 
+// all functions which need to access the parental sdScene instance
+
+
+
 std::string sdEntity::getName() const{
     if(!parent)return std::string("");
     return parent->getEntityName(this);

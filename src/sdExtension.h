@@ -108,18 +108,14 @@ public:
         return (*iit).descriptor;
     }
     
-    static EDescriptor stringToDescriptor(std::string string){
-        EDescriptor descriptor = SD_ERROR;
-        std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&descriptor, &string](sdESpec eSpec){
-            auto itr = std::find_if(eSpec.descriptorSpecs.begin(), eSpec.descriptorSpecs.end(), [&descriptor, &string](sdDSpec dSpec){
-                if(dSpec.descriptorString == string){
-                    descriptor  = dSpec.descriptor;
-                    return true;
-                }else return false;
-            });
-            return itr != eSpec.descriptorSpecs.end();
-        });
-        return descriptor;
+    static EDescriptor stringToDescriptor(std::string extension, std::string string){
+        
+        auto itr = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extension](sdESpec eSpec)->bool{return eSpec.extensionString == extension;});
+        if(itr == spatDIFSpec.end()) return SD_ERROR;
+        const std::vector<sdDSpec> &descroptorVector = itr->descriptorSpecs;
+        auto ditr = std::find_if(descroptorVector.begin(), descroptorVector.end(), [&string](sdDSpec dSpec)->bool{return dSpec.descriptorString == string;});
+        if(ditr == descroptorVector.end()) return SD_ERROR;
+        return ditr->descriptor;
     }
     
     static std::function<std::shared_ptr<sdProtoEvent>(sdEntity* entity, double,std::string)> getAddEventFunc(EDescriptor descriptor){

@@ -56,15 +56,46 @@ const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
         DEFINE_DESCRIPTOR(SD_POINTSET_POINT, "point"),
         DEFINE_DESCRIPTOR(SD_POINTSET_HANDLE, "handle")
     }),
-    sdESpec((EExtension::SD_SOURCE_SPREAD), "source-spread",{
-        DEFINE_DESCRIPTOR(SD_SOURCE_SPREAD_SPREAD, "spread")
+    // 5.3.1.1 Trajectory Generator
+    sdESpec((EExtension::SD_TRAJECTORY), "trajectory" , {
+        DEFINE_DESCRIPTOR(SD_TRAJECTORY_POINTSET, "pointset"),
+        DEFINE_DESCRIPTOR(SD_TRAJECTORY_INTERPOLATION, "interpolation"),
+        DEFINE_DESCRIPTOR(SD_TRAJECTORY_GEOMETRY, "geometry" ),
+        DEFINE_DESCRIPTOR(SD_TRAJECTORY_SHAPE, "shape"),
+        DEFINE_DESCRIPTOR(SD_TRAJECTORY_AUTOMATION, "automation")
     }),
+    // 5.3.1.2 Group
+    sdESpec((EExtension::SD_GROUP), "group",{
+        DEFINE_DESCRIPTOR(SD_GROUP_ID, "id"),
+        DEFINE_DESCRIPTOR(SD_GROUP_PRESENT, "present"),
+        DEFINE_DESCRIPTOR(SD_GROUP_POSITION, "position"),
+        DEFINE_DESCRIPTOR(SD_GROUP_ORIENTATION, "orientation")
+    }),
+    // 5.3.2.1 Source spread
+    sdESpec((EExtension::SD_SOURCE_SPREAD), "source-spread",{
+        DEFINE_DESCRIPTOR(SD_SOURCE_SPREAD_SPREAD, "spread"),
+    }),
+    // 5.3.3.1 Diestance cue
+    sdESpec((EExtension::SD_SOURCE_SPREAD), "distance-cues",{
+        DEFINE_DESCRIPTOR(SD_DISTANCE_CUES_REFERENCE_DISTANCE, "reference-distance"),
+        DEFINE_DESCRIPTOR(SD_DISTANCE_CUES_MAXIMUM_DISTANCE, "maximum-distance"),
+        DEFINE_DESCRIPTOR(SD_DISTANCE_CUES_ATTENUATION_MODEL, "attenuation-model"),
+        DEFINE_DESCRIPTOR(SD_DISTANCE_CUES_ABSORPTION_MODEL, "absortion-model")
+    }),
+    // 5.3.4.1 Sink Entity
     sdESpec((EExtension::SD_SINK_ENTITY),"sink-entity",{
        //descriptor is identical to source
     }),
+    // 5.3.4.2 Direct-to-One sink
+    sdESpec((EExtension::SD_DIRECT_TO_ONE), "direct-to-one",{
+        DEFINE_DESCRIPTOR(SD_DIRECT_TO_ONE_DIRECT_TO_ONE, "direct-to-one")
+    }),
+    // 5.3.5.1 Hardware-out
     sdESpec((EExtension::SD_HARDWARE_OUT), "hardware-out",{
         DEFINE_DESCRIPTOR(SD_HARDWARE_OUT_PHYSICAL_CHANNEL, "physical-channel"),
         DEFINE_DESCRIPTOR(SD_HARDWARE_OUT_GAIN, "gain")
-    })
+    }),
+    // 5.4 Private Extension
+    sdESpec((EExtension::SD_PRIVATE), "private", {}) // no descriptor defined
 };
             

@@ -137,12 +137,12 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
                 XMLElement *childTag = tempTag->FirstChildElement();
                 if(!childTag){ // tempTag is a descriptor
                     XMLElement *descriptor = tempTag;
-                    targetEntity->addEvent(timeString, std::string(descriptor->Name()), std::string(descriptor->GetText()));
+                    //targetEntity->addEvent(timeString, std::string(descriptor->Name()), std::string(descriptor->GetText()));
 
                 }else{ // tempTag is a exType
                     XMLElement *descriptor = childTag;
                     while (descriptor) {
-                        targetEntity->addEvent(timeString, std::string(descriptor->Name()), std::string(descriptor->GetText()));
+                        //targetEntity->addEvent(timeString, std::string(descriptor->Name()), std::string(descriptor->GetText()));
                         descriptor = descriptor->NextSiblingElement();
                     }
                 }
@@ -224,7 +224,7 @@ sdScene sdLoader::sceneFromJSON(std::string jsonString){
                     else{
                         switch(iiit -> type()){
                             case JSON_STRING:{
-                                targetEntity->addEvent(timeString, iiit->name(), iiit->as_string());
+                                //targetEntity->addEvent(timeString, iiit->name(), iiit->as_string());
                                 break;
                             }
                             case JSON_ARRAY:{
@@ -237,12 +237,12 @@ sdScene sdLoader::sceneFromJSON(std::string jsonString){
                                     ait++;
                                 }
                                 
-                                targetEntity->addEvent(timeString, iiit->name(),os.str());
+                                //targetEntity->addEvent(timeString, iiit->name(),os.str());
                                 break;
                             }
                             case JSON_BOOL:{
                                 std::string bl = sdUtils::toString(iiit->as_bool());
-                                targetEntity->addEvent(timeString, iiit->name(), bl);
+                                //targetEntity->addEvent(timeString, iiit->name(), bl);
                                 break;
                             }
                             case JSON_NUMBER:{
