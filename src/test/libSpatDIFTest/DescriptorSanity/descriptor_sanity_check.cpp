@@ -99,10 +99,20 @@ TEST_CASE("Test all descriptors types"){
     REQUIRE( entity->getValueAsString<SD_SOURCE_SPREAD_SPREAD>(0.0) == "0.5");
     REQUIRE( *entity->getValue<SD_SOURCE_SPREAD_SPREAD>(0.0) == 0.5);
     
-    // SD_HARDWARE_OUT_PHYSICAL_CHANNEL
     
 }
 
+
+TEST_CASE("direct to one sink"){
+    sdScene scene;
+    scene.addExtension(EExtension::SD_DIRECT_TO_ONE);
+    
+    auto stickySource = scene.addEntity("sticky");
+    stickySource->addMeta<SD_DIRECT_TO_ONE_DIRECT_TO_ONE>(true);
+    REQUIRE(stickySource->getValueAsString<SD_DIRECT_TO_ONE_DIRECT_TO_ONE>() == "true");
+    REQUIRE(*stickySource->getValue<SD_DIRECT_TO_ONE_DIRECT_TO_ONE>() == true);
+
+}
 
 TEST_CASE("hardware out extension"){
     sdScene scene;

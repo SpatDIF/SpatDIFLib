@@ -104,7 +104,6 @@
 		6217DDE61D5B20510048C466 /* sdDescriptors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sdDescriptors.h; path = ../../sdDescriptors.h; sourceTree = "<group>"; };
 		6217DDEE1D5B20F10048C466 /* descriptor_sanity_check.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = descriptor_sanity_check.cpp; sourceTree = "<group>"; };
 		6217DDF71D5B21080048C466 /* descriptor_sanity_check */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = descriptor_sanity_check; sourceTree = BUILT_PRODUCTS_DIR; };
-		6217DDF91D5B21080048C466 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		6217DE171D5B2B1D0048C466 /* sdUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdUtils.h; path = ../../sdUtils.h; sourceTree = "<group>"; };
 		62401D3F1CA2AFBD001179C5 /* internalJSONNode.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = internalJSONNode.o; path = ../../libs/libjson/Objects_static/internalJSONNode.o; sourceTree = "<group>"; };
 		62401D401CA2AFBD001179C5 /* JSONAllocator.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = JSONAllocator.o; path = ../../libs/libjson/Objects_static/JSONAllocator.o; sourceTree = "<group>"; };
@@ -222,7 +221,6 @@
 		6217DDF81D5B21080048C466 /* descriptor_sanity_check */ = {
 			isa = PBXGroup;
 			children = (
-				6217DDF91D5B21080048C466 /* main.cpp */,
 			);
 			path = descriptor_sanity_check;
 			sourceTree = "<group>";
