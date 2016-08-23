@@ -93,15 +93,19 @@ TEST_CASE("Test all descriptors types"){
     entity->addEvent<SD_INTERPOLATION_TYPE>(0.0, sdDescriptor<SD_INTERPOLATION_TYPE>::SD_NONE);
     REQUIRE( entity->getValueAsString<SD_INTERPOLATION_TYPE>(0.0) == "none");
     REQUIRE( *entity->getValue<SD_INTERPOLATION_TYPE>(0.0) == sdDescriptor<SD_INTERPOLATION_TYPE>::SD_NONE);
-
-    // SD_SOURCE_SPREAD_SPREAD
-    entity->addEvent<SD_SOURCE_SPREAD_SPREAD>(0.0, 0.5);
-    REQUIRE( entity->getValueAsString<SD_SOURCE_SPREAD_SPREAD>(0.0) == "0.5");
-    REQUIRE( *entity->getValue<SD_SOURCE_SPREAD_SPREAD>(0.0) == 0.5);
-    
-    
 }
 
+
+TEST_CASE("source spread"){
+    sdScene scene;
+    scene.addExtension(EExtension::SD_SOURCE_SPREAD);
+    
+    auto spreadSource = scene.addEntity("spread");
+    spreadSource->addEvent<SD_SOURCE_SPREAD_SPREAD>(1.0, 50.0);
+    REQUIRE(spreadSource->getValueAsString<SD_SOURCE_SPREAD_SPREAD>(1.0) == "50" );
+    REQUIRE(*spreadSource->getValue<SD_SOURCE_SPREAD_SPREAD>(1.0) == 50.0);
+    
+}
 
 TEST_CASE("direct to one sink"){
     sdScene scene;
