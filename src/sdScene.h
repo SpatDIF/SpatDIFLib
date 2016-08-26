@@ -560,7 +560,7 @@ inline const typename sdDescriptor<D>::type * const sdScene::getValue(std::strin
 
 inline bool sdScene::addExtension(EExtension extension){
     auto ret =  activatedExtensionSet.insert(extension).second;
-    addDescriptorSetForExtension(extension);
+    addDescriptorSetCollectionForExtension(extension);
     if(ret){
         auto descriptors = sdExtension::getDescriptorsForExtension(extension);
         for(auto it = descriptors.begin(); descriptors.end() != it; it++) {
@@ -611,7 +611,7 @@ inline bool sdScene::removeExtension(EExtension extension){
         validDescriptorSet.erase((*it).descriptor);
     }
     
-    removeDescriptorSetForExtension(extension);
+    removeDescriptorSetCollectionForExtension(extension);
     return activatedExtensionSet.erase(extension);
 }
 
