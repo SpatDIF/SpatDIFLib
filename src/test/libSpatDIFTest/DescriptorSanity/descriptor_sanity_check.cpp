@@ -37,6 +37,18 @@ TEST_CASE("core"){
     REQUIRE( entity->getValue<SD_ORIENTATION>(0.0)->at(1) == 0.6);
     REQUIRE( entity->getValue<SD_ORIENTATION>(0.0)->at(2) == 0.7);
     
+    // SD_GROUP_MEMBERSHIP
+    try{
+        entity->addEvent<SD_GROUP_MEMBERSHIP>(0.0, "alpha_group"); // we need to activate extension first
+        REQUIRE(false); // this line should not be reached
+    }catch(InvalidDescriptorException){}
+    
+    scene.addExtension(EExtension::SD_GROUP);
+    entity->addEvent<SD_GROUP_MEMBERSHIP>(3.0, "alpha_group");
+    
+    REQUIRE( entity->getValueAsString<SD_GROUP_MEMBERSHIP>(3.0) == "alpha_group");
+    REQUIRE( *entity->getValue<SD_GROUP_MEMBERSHIP>(3.0) == "alpha_group");
+    
 }
 
 TEST_CASE("core functionalities"){
@@ -75,18 +87,21 @@ TEST_CASE("core functionalities"){
     REQUIRE( entity->getValueAsString<SD_MEDIA_GAIN>(0.0) == "0.4");
     REQUIRE( *entity->getValue<SD_MEDIA_GAIN>(0.0) == 0.4);
     
-    // SD_GROUP_MEMBERSHIP
+    //exception
     try{
-        entity->addEvent<SD_GROUP_MEMBERSHIP>(0.0, "alpha_group"); // we need to activate extension first
-        REQUIRE(false); // this line should not be reached
-    }catch(InvalidDescriptorException){}
+        entity->addEvent<SD_MEDIA_CHANNEL>(3.0, 0);
+        REQUIRE(false);
+    }catch(InvalidValueDomainException){}
     
-    scene.addExtension(EExtension::SD_GROUP);
-    entity->addEvent<SD_GROUP_MEMBERSHIP>(3.0, "alpha_group");
+    try{
+        entity->addEvent<SD_MEDIA_TIME_OFFSET>(3.0, -1.0);
+        REQUIRE(false);
+    }catch(InvalidValueDomainException){}
     
-    REQUIRE( entity->getValueAsString<SD_GROUP_MEMBERSHIP>(3.0) == "alpha_group");
-    REQUIRE( *entity->getValue<SD_GROUP_MEMBERSHIP>(3.0) == "alpha_group");
-
+    try{
+        entity->addEvent<SD_MEDIA_GAIN>(3.0, -2.0);
+        REQUIRE(false);
+    }catch(InvalidValueDomainException){}
 }
 
 TEST_CASE("loop"){

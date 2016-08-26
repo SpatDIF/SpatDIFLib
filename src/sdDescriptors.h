@@ -315,7 +315,9 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_CHANNEL>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
-    static void validateValue(type &value){}
+    static void validateValue(type &value){
+        if (value <= 0) throw InvalidValueDomainException("media media-channel must be > 0");
+    }
 };
 
 template <>
@@ -325,7 +327,9 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_TIME_OFFSET>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
-    static void validateValue(type &value){}
+    static void validateValue(type &value){
+        if (value < 0.0) throw InvalidValueDomainException("media time-offset must be >= 0.0");
+    }
 };
 
 template <>
@@ -336,8 +340,7 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_GAIN>{
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
     static void validateValue(type &value){
-    
-        
+        if (value < 0.0) throw InvalidValueDomainException("media gain must be >= 0.0");
     }
 };
 
