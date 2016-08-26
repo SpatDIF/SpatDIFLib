@@ -152,7 +152,7 @@ std::string sdSaver::XMLFromScene(sdScene *scene){
     // META Section
     spatdif->InsertEndChild(sdSaver::XMLMetaSection(xml, scene));
 
-    std::map<std::string, sdEntity> entities = scene->getEntities();
+    std::unordered_map<std::string, sdEntity> entities = scene->getEntities();
     
     // TIME Section
     /* ordered by time */

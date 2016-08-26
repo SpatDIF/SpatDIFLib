@@ -18,12 +18,13 @@
 
 #include <string>
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include <unordered_set>
 #include <set>
 #include "sdDescriptors.h"
 #include "sdInfo.h"
 #include "sdEntity.h"
+
 
 /*! is responsible for 
  - adding, removing, and maintaining sdEntityCores.
@@ -33,7 +34,7 @@ class sdScene{
     friend sdEntity;
     
 protected:
-    std::map <std::string, sdEntity> entities; //!< a map of sdEntities
+    std::unordered_map <std::string, sdEntity> entities; //!< a map of sdEntities
     std::vector<std::pair<sdEntity*, std::shared_ptr<sdProtoMeta>>> allMetas; //!< an alias pointer to all metas
     std::vector<std::pair<sdEntity*, std::shared_ptr<sdProtoEvent>>> allEvents; //!< an alias pointer to all events
     std::set <EExtension> activatedExtensionSet; //!< a set of activated extension
@@ -177,7 +178,7 @@ public:
     std::string getEntityName(const sdEntity * entity);
     
     /*! return the entity set */
-    const std::map<std::string, sdEntity> &getEntities() const;
+    const std::unordered_map<std::string, sdEntity> &getEntities() const;
     
     /*! returns the number of entity in the entityVector*/
     size_t getNumberOfEntities(void) const;
@@ -512,7 +513,7 @@ inline std::string sdScene::getEntityName(const sdEntity* entity){
     return std::string();
 }
 
-inline const std::map<std::string, sdEntity> &sdScene::getEntities() const{
+inline const std::unordered_map<std::string, sdEntity> &sdScene::getEntities() const{
     return entities;
 }
 
@@ -525,7 +526,7 @@ inline std::vector<std::string> sdScene::getEntityNames() const{
 }
 
 inline sdEntity * const sdScene::getEntity(const std::string &name){
-    std::map<std::string, sdEntity>::iterator it = entities.find(name);
+    std::unordered_map<std::string, sdEntity>::iterator it = entities.find(name);
     if(it == entities.end()){ return nullptr; }
     return &((*it).second);
 }

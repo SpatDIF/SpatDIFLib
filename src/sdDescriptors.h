@@ -188,13 +188,6 @@ typedef enum {
 } EDescriptor;
 
 
-/*!
- The set of multiple descriptors.
- implemented with explicit specialization template technique
- */
-
-template <EExtension D>
-struct sdDescriptorSet {};
 
 /*!
  The traits (properties or characters) of each descriptor.
@@ -363,29 +356,6 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_GAIN>{
 };
 
 
-/// in order to define sets of values
-template <>
-struct sdDescriptorSet<EExtension::SD_MEDIA> {
-    sdDescriptorSet<EExtension::SD_MEDIA>(
-                                          sdDescriptor<EDescriptor::SD_MEDIA_TYPE>::type type,
-                                          sdDescriptor<EDescriptor::SD_MEDIA_LOCATION>::type location,
-                                          sdDescriptor<EDescriptor::SD_MEDIA_CHANNEL>::type channel,
-                                          sdDescriptor<EDescriptor::SD_MEDIA_TIME_OFFSET>::type offset,
-                                          sdDescriptor<EDescriptor::SD_MEDIA_GAIN>::type gain):
-    type(type),
-    location(location),
-    channel(channel),
-    offset(offset),
-    gain(gain)
-    {}
-    sdDescriptor<EDescriptor::SD_MEDIA_TYPE>::type type;
-    sdDescriptor<EDescriptor::SD_MEDIA_LOCATION>::type location;
-    sdDescriptor<EDescriptor::SD_MEDIA_CHANNEL>::type channel;
-    sdDescriptor<EDescriptor::SD_MEDIA_TIME_OFFSET>::type offset;
-    sdDescriptor<EDescriptor::SD_MEDIA_GAIN>::type gain;
-};
-
-
 /// 4.4.2 loop
 template <>
 struct sdDescriptor<EDescriptor::SD_LOOP_TYPE>{
@@ -549,26 +519,6 @@ struct sdDescriptor<EDescriptor::SD_POINTSET_HANDLE>{
     static type stringTo(const std::string &str){return sdUtils::stringToArray<double, NElements>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
     static void validateValue(type &value){}
-};
-
-
-/// in order to define sets of values
-template <>
-struct sdDescriptorSet<EExtension::SD_POINTSET> {
-    sdDescriptorSet<EExtension::SD_POINTSET>(
-                                             sdDescriptor<EDescriptor::SD_POINTSET_CLOSED>::type closed,
-                                             sdDescriptor<EDescriptor::SD_POINTSET_SIZE>::type size,
-                                             sdDescriptor<EDescriptor::SD_POINTSET_POINT>::type point,
-                                             sdDescriptor<EDescriptor::SD_POINTSET_HANDLE>::type handle):
-    closed(closed),
-    size(size),
-    point(point),
-    handle(handle){}
-    sdDescriptor<EDescriptor::SD_POINTSET_CLOSED>::type closed;
-    sdDescriptor<EDescriptor::SD_POINTSET_SIZE>::type size;
-    sdDescriptor<EDescriptor::SD_POINTSET_POINT>::type point;
-    sdDescriptor<EDescriptor::SD_POINTSET_HANDLE>::type handle;
-
 };
 
 
@@ -964,5 +914,60 @@ struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_GAIN>{
     static void validateValue(type &value){}
 };
 
+
+
+/*!
+ reusable set of multiple descriptors, which can be stored in std::unordered_map and refered by name. 
+  See sdDescriptorSetHandler.h sdScene inherits the functionality of sdDescriptorSetHandler and is able to handle sdDescriptorSets
+ */
+struct sdProtoDescriptorSet{};
+
+template <EExtension D>
+struct sdDescriptorSet: public sdProtoDescriptorSet {};
+
+/*!
+    media descriptor set
+ */
+template <>
+struct sdDescriptorSet<EExtension::SD_MEDIA> {
+    sdDescriptorSet<EExtension::SD_MEDIA>(
+                                          sdDescriptor<EDescriptor::SD_MEDIA_TYPE>::type type,
+                                          sdDescriptor<EDescriptor::SD_MEDIA_LOCATION>::type location,
+                                          sdDescriptor<EDescriptor::SD_MEDIA_CHANNEL>::type channel,
+                                          sdDescriptor<EDescriptor::SD_MEDIA_TIME_OFFSET>::type offset,
+                                          sdDescriptor<EDescriptor::SD_MEDIA_GAIN>::type gain):
+    type(type),
+    location(location),
+    channel(channel),
+    offset(offset),
+    gain(gain)
+    {}
+    sdDescriptor<EDescriptor::SD_MEDIA_TYPE>::type type;
+    sdDescriptor<EDescriptor::SD_MEDIA_LOCATION>::type location;
+    sdDescriptor<EDescriptor::SD_MEDIA_CHANNEL>::type channel;
+    sdDescriptor<EDescriptor::SD_MEDIA_TIME_OFFSET>::type offset;
+    sdDescriptor<EDescriptor::SD_MEDIA_GAIN>::type gain;
+};
+
+/*!
+ pointset descriptor set
+ */
+template <>
+struct sdDescriptorSet<EExtension::SD_POINTSET> {
+    sdDescriptorSet<EExtension::SD_POINTSET>(
+                                             sdDescriptor<EDescriptor::SD_POINTSET_CLOSED>::type closed,
+                                             sdDescriptor<EDescriptor::SD_POINTSET_SIZE>::type size,
+                                             sdDescriptor<EDescriptor::SD_POINTSET_POINT>::type point,
+                                             sdDescriptor<EDescriptor::SD_POINTSET_HANDLE>::type handle):
+    closed(closed),
+    size(size),
+    point(point),
+    handle(handle){}
+    sdDescriptor<EDescriptor::SD_POINTSET_CLOSED>::type closed;
+    sdDescriptor<EDescriptor::SD_POINTSET_SIZE>::type size;
+    sdDescriptor<EDescriptor::SD_POINTSET_POINT>::type point;
+    sdDescriptor<EDescriptor::SD_POINTSET_HANDLE>::type handle;
+    
+};
 
 #endif
