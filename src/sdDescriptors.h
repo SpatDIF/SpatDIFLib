@@ -216,20 +216,20 @@ struct sdDescriptor<EDescriptor::SD_TYPE>{
         SD_UNDEFINED
     };
     typedef EType type;
-    static constexpr int NUM_EType = 4;
+    static constexpr int NEType = 4;
     const static bool interpolable = false;
 
     // enum to string conversion and vice versa
-    static std::array<std::pair<EType, std::string>, NUM_EType> &table(){
-        static std::array<std::pair<EType, std::string>,NUM_EType> table=
+    static std::array<std::pair<EType, std::string>, NEType> &table(){
+        static std::array<std::pair<EType, std::string>,NEType> table=
          {std::make_pair(EType::SD_POINT, "point") ,
             std::make_pair(EType::SD_LOUDSPEAKER, "loudspeaker"),
             std::make_pair(EType::SD_LISTENER, "listener"),
              std::make_pair(EType::SD_MICROPHONE, "microphone")};
         return table;
     }
-    static type stringTo(const std::string &str){return sdUtils::stringToByTable<type, NUM_EType>(str, table());}
-    static std::string toString(const type &value){return sdUtils::toStringByTable<type, NUM_EType>(value, table());}
+    static type stringTo(const std::string &str){return sdUtils::stringToByTable<type, NEType>(str, table());}
+    static std::string toString(const type &value){return sdUtils::toStringByTable<type, NEType>(value, table());}
     static void validateValue(type &value){}
 };
 
@@ -245,20 +245,22 @@ struct sdDescriptor<EDescriptor::SD_PRESENT>{
 
 template <>
 struct sdDescriptor<EDescriptor::SD_POSITION>{
-    typedef std::array<double, 3> type;
+    static constexpr int NElements = 3;
+    typedef std::array<double, NElements> type;
     const static bool interpolable = true;
     
-    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, NElements>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
     static void validateValue(type &value){}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_ORIENTATION>{
-    typedef std::array<double, 3> type;
+    static constexpr int NElements = 3;
+    typedef std::array<double, NElements> type;
     const static bool interpolable = true;
     
-    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, NElements>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
     static void validateValue(type &value){}
 };
@@ -373,12 +375,12 @@ struct sdDescriptor<EDescriptor::SD_LOOP_TYPE>{
         SD_PALINDROME,
         SD_UNDEFINED
     } EType;
-    static constexpr int NUM_EType = 3;
+    static constexpr int NEType = 3;
     
     typedef std::pair<EType, int> type;
     const static bool interpolable = false;
-    static std::array<std::pair<EType, std::string>, NUM_EType> &table(){
-        static std::array<std::pair<EType, std::string>, NUM_EType> table={
+    static std::array<std::pair<EType, std::string>, NEType> &table(){
+        static std::array<std::pair<EType, std::string>, NEType> table={
             std::make_pair(EType::SD_NONE, "none"),
             std::make_pair(EType::SD_REPEAT, "repeat"),
             std::make_pair(EType::SD_PALINDROME, "palindrome")
@@ -389,14 +391,14 @@ struct sdDescriptor<EDescriptor::SD_LOOP_TYPE>{
         std::istringstream iss(str);
         std::vector<std::string> items{std::istream_iterator<std::string>{iss}, std::istream_iterator<std::string>{}};
         if(items.size() > 2) return std::make_pair(EType::SD_UNDEFINED, 0);
-        EType tp =  sdUtils::stringToByTable<EType,NUM_EType>(items[0], table());
+        EType tp =  sdUtils::stringToByTable<EType,NEType>(items[0], table());
         if(tp == SD_REPEAT){
             return std::make_pair(tp,std::stoi(items[1]));
         }
         return  std::make_pair(tp, 0);
     }
     static std::string toString(const std::pair<EType, int>  &value){
-        std::string tp = sdUtils::toStringByTable<EType, NUM_EType>(value.first, table());
+        std::string tp = sdUtils::toStringByTable<EType, NEType>(value.first, table());
         tp += " " + std::to_string(value.second);
         return tp;
     }
@@ -405,12 +407,16 @@ struct sdDescriptor<EDescriptor::SD_LOOP_TYPE>{
 
 template <>
 struct sdDescriptor<EDescriptor::SD_LOOP_POINTS>{
-    typedef std::array<double, 2> type;
+    static constexpr int NElements = 2;
+    typedef std::array<double, NElements> type;
     const static bool interpolable = false;
     
-    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 2>(str);}
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, NElements>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
-    static void validateValue(type &value){}};
+    static void validateValue(type &value){
+        
+    
+    }};
 
 template <>
 struct sdDescriptor<EDescriptor::SD_LOOP_WAIT_TIME>{
@@ -434,20 +440,20 @@ struct sdDescriptor<EDescriptor::SD_INTERPOLATION_TYPE>{
         SD_CUBIC_BEZIER,
         SD_UNDEFINED
     } EInterpolation;
-    static constexpr int NUM_EInterpolation = 3;
+    static constexpr int NEInterpolation = 3;
     
     typedef EInterpolation type;
     const static bool interpolable = false;
-    static std::array<std::pair<EInterpolation, std::string>,NUM_EInterpolation> &table(){
-        static std::array<std::pair<EInterpolation, std::string>,NUM_EInterpolation> table={
+    static std::array<std::pair<EInterpolation, std::string>,NEInterpolation> &table(){
+        static std::array<std::pair<EInterpolation, std::string>,NEInterpolation> table={
             std::make_pair(EInterpolation::SD_NONE, "none"),
             std::make_pair(EInterpolation::SD_LINEAR, "linear"),
             std::make_pair(EInterpolation::SD_CUBIC_BEZIER, "cubic_bezier")};
         return table;
     }
     
-    static type stringTo(const std::string &str){return sdUtils::stringToByTable<type,NUM_EInterpolation>(str, table());}
-    static std::string toString(const type &value){return sdUtils::toStringByTable<type, NUM_EInterpolation>(value, table());}
+    static type stringTo(const std::string &str){return sdUtils::stringToByTable<type,NEInterpolation>(str, table());}
+    static std::string toString(const type &value){return sdUtils::toStringByTable<type, NEInterpolation>(value, table());}
     static void validateValue(type &value){}
 };
 
@@ -504,20 +510,22 @@ struct sdDescriptor<EDescriptor::SD_POINTSET_SIZE>{
 
 template <>
 struct sdDescriptor<EDescriptor::SD_POINTSET_POINT>{
-    typedef std::array<double, 3> type;
+    static constexpr int NElements = 3;
+    typedef std::array<double, NElements> type;
     const static bool interpolable = false;
     
-    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, NElements>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
     static void validateValue(type &value){}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_POINTSET_HANDLE>{
-    typedef std::array<double, 3> type;
+    static constexpr int NElements = 3;
+    typedef std::array<double, NElements> type;
     const static bool interpolable = false;
     
-    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, NElements>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
     static void validateValue(type &value){}
 };
@@ -546,50 +554,55 @@ struct sdDescriptorSet<EExtension::SD_POINTSET> {
 /// 5.2.2 Geometry
 template <>
 struct sdDescriptor<EDescriptor::SD_GEOMETRY_TRANSLATE>{
-    typedef std::array<double, 3> type;
+    static constexpr int NElements = 3;
+    typedef std::array<double, NElements> type;
     const static bool interpolable = true;
     
-    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, NElements>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
     static void validateValue(type &value){}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_GEOMETRY_SCALE>{
-    typedef std::array<double, 3> type;
+    static constexpr int NElements = 3;
+    typedef std::array<double, NElements> type;
     const static bool interpolanle = true;
     
-    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, NElements>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
     static void validateValue(type &value){}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_GEOMETRY_ROTATE>{
-    typedef std::array<double, 3> type;
+    static constexpr int NElements = 3;
+    typedef std::array<double, NElements> type;
     const static bool interpolanle = true;
     
-    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, NElements>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
     static void validateValue(type &value){}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_GEOMETRY_SHEAR>{
-    typedef std::array<double, 3> type;
+    static constexpr int NElements = 3;
+    typedef std::array<double, NElements> type;
     const static bool interpolable = true;
     
-    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, NElements>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
     static void validateValue(type &value){}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_GEOMETRY_REFLECT>{
-    typedef std::array<int, 3> type;
+    static constexpr int NElements = 3;
+    typedef std::array<int, NElements> type;
     const static bool interpolable = true;
     
-    static type stringTo(const std::string &str){return sdUtils::stringToArray<int, 3>(str);}
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<int, NElements>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
     static void validateValue(type &value){}
 };
@@ -638,10 +651,10 @@ struct sdDescriptor<EDescriptor::SD_AUTOMATION_FUNCTION>{
     } EFunction;
     
     typedef EFunction type;
-    static constexpr int NUM_EFunction = 10;
+    static constexpr int NEFunction = 10;
     const static bool interpolable = false;
-    static std::array<std::pair<EFunction, std::string>, NUM_EFunction> &table(){
-        static std::array<std::pair<EFunction, std::string>,NUM_EFunction> table={
+    static std::array<std::pair<EFunction, std::string>, NEFunction> &table(){
+        static std::array<std::pair<EFunction, std::string>,NEFunction> table={
             std::make_pair(EFunction::SD_NONE, "none"),
             std::make_pair(EFunction::SD_LINEAR, "linear"),
             std::make_pair(EFunction::SD_EASE, "ease"),
@@ -656,8 +669,8 @@ struct sdDescriptor<EDescriptor::SD_AUTOMATION_FUNCTION>{
         return table;
     }
     
-    static type stringTo(const std::string &str){return sdUtils::stringToByTable<type,NUM_EFunction>(str, table());}
-    static std::string toString(const type &value){return sdUtils::toStringByTable<type, NUM_EFunction>(value, table());}
+    static type stringTo(const std::string &str){return sdUtils::stringToByTable<type,NEFunction>(str, table());}
+    static std::string toString(const type &value){return sdUtils::toStringByTable<type, NEFunction>(value, table());}
     static void validateValue(type &value){} // conversion checks the validity
 };
 
@@ -789,20 +802,22 @@ struct sdDescriptor<EDescriptor::SD_GROUP_PRESENT>{
 
 template <>
 struct sdDescriptor<EDescriptor::SD_GROUP_POSITION>{
-    typedef std::array<double , 3> type;
+    static constexpr int NElements = 3;
+    typedef std::array<double , NElements> type;
     const static bool interpolable = true;
     
-    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, NElements>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
     static void validateValue(type &value){}
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_GROUP_ORIENTATION>{
-    typedef std::array<double, 3 > type;
+    static constexpr int NElements = 3;
+    typedef std::array<double, NElements > type;
     const static bool interpolable = true;
     
-    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, 3>(str);}
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, NElements>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
     static void validateValue(type &value){}
 };
