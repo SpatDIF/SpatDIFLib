@@ -59,7 +59,7 @@ enum class EExtension {
     //5.2 general
     SD_POINTSET,
     SD_GEOMETRY,
-    SD_AUTTOMATION,
+    SD_AUTOMATION,
     SD_SHAPE,
     
     //5.3 layer-related
@@ -99,6 +99,7 @@ typedef enum {
     SD_MEDIA_CHANNEL,
     SD_MEDIA_TIME_OFFSET,
     SD_MEDIA_GAIN,
+    
     
     /// 4.4.2 loop
     SD_LOOP_TYPE,
@@ -187,7 +188,13 @@ typedef enum {
 } EDescriptor;
 
 
+/*!
+ The set of multiple descriptors.
+ implemented with explicit specialization template technique
+ */
 
+template <EExtension D>
+struct sdDescriptorSet {};
 
 /*!
  The traits (properties or characters) of each descriptor.
@@ -268,6 +275,9 @@ struct sdDescriptor<EDescriptor::SD_GROUP_MEMBERSHIP>{
 /** core functionalities **/
 /// 4.4.1 media
 
+
+
+
 template <>
 struct sdDescriptor<EDescriptor::SD_MEDIA_ID>{
     typedef std::string type;
@@ -327,6 +337,30 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_GAIN>{
     static std::string toString(const type &value){return sdUtils::toString(value);}
     static void validateValue(type &value){}
 };
+
+
+/// in order to define sets of values
+template <>
+struct sdDescriptorSet<EExtension::SD_MEDIA> {
+    sdDescriptorSet<EExtension::SD_MEDIA>(
+                                          sdDescriptor<EDescriptor::SD_MEDIA_TYPE>::type type,
+                                          sdDescriptor<EDescriptor::SD_MEDIA_LOCATION>::type location,
+                                          sdDescriptor<EDescriptor::SD_MEDIA_CHANNEL>::type channel,
+                                          sdDescriptor<EDescriptor::SD_MEDIA_TIME_OFFSET>::type offset,
+                                          sdDescriptor<EDescriptor::SD_MEDIA_GAIN>::type gain):
+    type(type),
+    location(location),
+    channel(channel),
+    offset(offset),
+    gain(gain)
+    {}
+    sdDescriptor<EDescriptor::SD_MEDIA_TYPE>::type type;
+    sdDescriptor<EDescriptor::SD_MEDIA_LOCATION>::type location;
+    sdDescriptor<EDescriptor::SD_MEDIA_CHANNEL>::type channel;
+    sdDescriptor<EDescriptor::SD_MEDIA_TIME_OFFSET>::type offset;
+    sdDescriptor<EDescriptor::SD_MEDIA_GAIN>::type gain;
+};
+
 
 /// 4.4.2 loop
 template <>
@@ -482,6 +516,27 @@ struct sdDescriptor<EDescriptor::SD_POINTSET_HANDLE>{
     static void validateValue(type &value){}
 };
 
+
+/// in order to define sets of values
+template <>
+struct sdDescriptorSet<EExtension::SD_POINTSET> {
+    sdDescriptorSet<EExtension::SD_POINTSET>(
+                                             sdDescriptor<EDescriptor::SD_POINTSET_CLOSED>::type closed,
+                                             sdDescriptor<EDescriptor::SD_POINTSET_SIZE>::type size,
+                                             sdDescriptor<EDescriptor::SD_POINTSET_POINT>::type point,
+                                             sdDescriptor<EDescriptor::SD_POINTSET_HANDLE>::type handle):
+    closed(closed),
+    size(size),
+    point(point),
+    handle(handle){}
+    sdDescriptor<EDescriptor::SD_POINTSET_CLOSED>::type closed;
+    sdDescriptor<EDescriptor::SD_POINTSET_SIZE>::type size;
+    sdDescriptor<EDescriptor::SD_POINTSET_POINT>::type point;
+    sdDescriptor<EDescriptor::SD_POINTSET_HANDLE>::type handle;
+
+};
+
+
 /// 5.2.2 Geometry
 template <>
 struct sdDescriptor<EDescriptor::SD_GEOMETRY_TRANSLATE>{
@@ -540,10 +595,11 @@ template <>
 struct sdDescriptor<EDescriptor::SD_AUTOMATION_DURATION>{
     typedef double type;
     const static bool interpolable = false;
-    
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
-    static void validateValue(type &value){}
+    static void validateValue(type &value){
+        if( value <= 0.0 ) throw InvalidValueDomainException("automation duration must be > 0");
+    }
 };
 
 template <>
@@ -553,21 +609,58 @@ struct sdDescriptor<EDescriptor::SD_AUTOMATION_DELAY>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
-    static void validateValue(type &value){}
+    static void validateValue(type &value){
+        if( value < 0.0 ) throw InvalidValueDomainException("automation delay must be >= 0");
+    }
 };
 
 template <>
 struct sdDescriptor<EDescriptor::SD_AUTOMATION_FUNCTION>{
-    typedef std::string type;
-    const static bool interpolable = false;
     
-    static type stringTo(const std::string &str){return str;}
-    static std::string toString(const type &value){return value;}
-    static void validateValue(type &value){}
+    typedef enum {
+        SD_NONE,
+        SD_LINEAR,
+        SD_EASE,
+        SD_EASE_IN,
+        SD_EASE_IN_OUT,
+        SD_EASE_OUT,
+        SD_STEP_START,
+        SD_STEP_END,
+        SD_STEPS,
+        SD_CUBIC_BEZIER
+    } EFunction;
+    
+    typedef EFunction type;
+    const static bool interpolable = false;
+    static std::array<std::pair<EFunction, std::string>, 10> &table(){
+        static std::array<std::pair<EFunction, std::string>,10> table={
+            std::make_pair(EFunction::SD_NONE, "none"),
+            std::make_pair(EFunction::SD_LINEAR, "linear"),
+            std::make_pair(EFunction::SD_EASE, "ease"),
+            std::make_pair(EFunction::SD_EASE_IN, "ease-in"),
+            std::make_pair(EFunction::SD_EASE_IN_OUT, "ease-in-out"),
+            std::make_pair(EFunction::SD_EASE_OUT, "ease-out"),
+            std::make_pair(EFunction::SD_STEP_START, "step-start"),
+            std::make_pair(EFunction::SD_STEP_END, "step-end"),
+            std::make_pair(EFunction::SD_STEPS, "steps"),
+            std::make_pair(EFunction::SD_CUBIC_BEZIER, "cubic-bezier")
+        };
+        return table;
+    }
+    
+    static type stringTo(const std::string &str){return sdUtils::stringToByTable<type,10>(str, table());}
+    static std::string toString(const type &value){return sdUtils::toStringByTable<type, 10>(value, table());}
+    static void validateValue(type &value){} // conversion checks the validity
 };
 
-/////// pointset -- extension
-/////// loop -- extension
+
+//template <>
+//struct sdDescriptor<EDescriptor::SD_AUTOMATION_POINTSET>{
+//};
+//
+//template <>
+//struct sdDescriptor<EDescriptor::SD_AUTOMATION_LOOP>{
+//};
 
 /// 5.2.4 Shape
 
@@ -716,7 +809,10 @@ struct sdDescriptor<EDescriptor::SD_SOURCE_SPREAD_SPREAD>{
 
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
-    static void validateValue(type &value){}
+    static void validateValue(type &value){
+        if (value < 0.0 || value > 100.0)
+            throw InvalidValueDomainException("source-spread spread: the value should be between 0 and 100");
+    }
 };
 
 /// 5.3.3 Extension for Spatial Encoding Layer
@@ -729,7 +825,10 @@ struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_REFERENCE_DISTANCE>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
-    static void validateValue(type &value){}
+    static void validateValue(type &value){
+        if (value < 0.0)
+            throw InvalidValueDomainException("distance-cues reference-distance: the value should be > 0");
+    }
 };
 
 template <>
@@ -739,7 +838,10 @@ struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_MAXIMUM_DISTANCE>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
-    static void validateValue(type &value){}
+    static void validateValue(type &value){
+        if (value < 0.0)
+            throw InvalidValueDomainException("distance-cues maximum-distance: the value should be > 0");
+    }
 };
 
 template <>
@@ -759,7 +861,10 @@ struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_ATTENUATION_MODEL>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
-    static void validateValue(type &value){}
+    static void validateValue(type &value){
+        if(value < 0 || value > 2)
+            throw InvalidValueDomainException("distance-cues attenuation-model value must be 0, 1, or 2");
+    }
 };
 
 template <>
@@ -769,7 +874,10 @@ struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_ABSORPTION_MODEL>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
-    static void validateValue(type &value){}
+    static void validateValue(type &value){
+        if(value < 0 || value > 1)
+            throw InvalidValueDomainException("distance-cues absorption-model value must be 0 or 1");
+    }
 };
 
 // 5.3.4 Extensions for Spatial Decoding Layer
@@ -784,7 +892,7 @@ struct sdDescriptor<EDescriptor::SD_DIRECT_TO_ONE_DIRECT_TO_ONE>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
-    static void validateValue(type &value){}
+    static void validateValue(type &value){} // the incoming value should be always bool because of toString
 };
 
 /// 5.3.5.1 Hardware-out
@@ -797,7 +905,7 @@ struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_PHYSICAL_CHANNEL>{
     static std::string toString(const type &value){return sdUtils::toString(value);}
     static void validateValue(type &value){
         if(value < 1){
-            throw InvalidValueDomainException("SD_HARDWARE_OUT_PHYSICAL_CHANNEL value must be > 0");
+            throw InvalidValueDomainException("hardware-out physical-channel value must be > 0");
         }
     }
 };

@@ -30,7 +30,6 @@ const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
         DEFINE_DESCRIPTOR(SD_PRESENT,"present"),
         DEFINE_DESCRIPTOR(SD_POSITION, "position"),
         DEFINE_DESCRIPTOR(SD_ORIENTATION, "orientation"),
-        DEFINE_DESCRIPTOR(SD_GROUP_MEMBERSHIP, "group-membership")
     }),
     sdESpec(EExtension::SD_MEDIA, "media", {
         DEFINE_DESCRIPTOR(SD_MEDIA_ID, "id"),
@@ -56,6 +55,14 @@ const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
         DEFINE_DESCRIPTOR(SD_POINTSET_POINT, "point"),
         DEFINE_DESCRIPTOR(SD_POINTSET_HANDLE, "handle")
     }),
+    // 5.2.3 Automation
+    sdESpec((EExtension::SD_AUTOMATION), "automation", {
+        DEFINE_DESCRIPTOR(SD_AUTOMATION_DURATION, "duration"),
+        DEFINE_DESCRIPTOR(SD_AUTOMATION_DELAY, "delay"),
+        DEFINE_DESCRIPTOR(SD_AUTOMATION_FUNCTION, "function")
+        //DEFINE_DESCRIPTOR(SD_AUTOMATION_POINTSET, "pointset"),
+        //DEFINE_DESCRIPTOR(SD_AUTOMATION_LOOP, "loop")
+    }),
     // 5.3.1.1 Trajectory Generator
     sdESpec((EExtension::SD_TRAJECTORY), "trajectory" , {
         DEFINE_DESCRIPTOR(SD_TRAJECTORY_POINTSET, "pointset"),
@@ -69,7 +76,8 @@ const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
         DEFINE_DESCRIPTOR(SD_GROUP_ID, "id"),
         DEFINE_DESCRIPTOR(SD_GROUP_PRESENT, "present"),
         DEFINE_DESCRIPTOR(SD_GROUP_POSITION, "position"),
-        DEFINE_DESCRIPTOR(SD_GROUP_ORIENTATION, "orientation")
+        DEFINE_DESCRIPTOR(SD_GROUP_ORIENTATION, "orientation"),
+        DEFINE_DESCRIPTOR(SD_GROUP_MEMBERSHIP, "group-membership")
     }),
     // 5.3.2.1 Source spread
     sdESpec((EExtension::SD_SOURCE_SPREAD), "source-spread",{
@@ -99,4 +107,3 @@ const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
     // 5.4 Private Extension
     sdESpec((EExtension::SD_PRIVATE), "private", {}) // no descriptor defined
 };
-            

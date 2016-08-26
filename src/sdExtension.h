@@ -80,7 +80,7 @@ public:
     
     static const std::vector<sdDSpec> &getDescriptorsForExtension(EExtension extension){
         auto itr = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extension](sdESpec eSpec){return eSpec.extension == extension;});
-        if(itr == spatDIFSpec.end()){throw InvalidDescriptorException(); }
+        if(itr == spatDIFSpec.end()){throw InvalidDescriptorException("no matching string for EExtension"); }
         return (*itr).descriptorSpecs;
     }
     
@@ -101,21 +101,19 @@ public:
     
     static EDescriptor stringToDescriptor(EExtension extension, std::string string){
         auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(),[&extension](sdESpec eSpec){return eSpec.extension == extension;});
-        if(it == spatDIFSpec.end()) return SD_ERROR;
         auto dSpecs = (*it).descriptorSpecs;
         auto iit = std::find_if(dSpecs.begin(), dSpecs.end(), [&string](sdDSpec dSpec){return dSpec.descriptorString == string;});
-        if( iit == dSpecs.end()) return SD_ERROR;
+        if( iit == dSpecs.end()){throw InvalidDescriptorException(std::string("no matching descriptor for string:") + string );}
         return (*iit).descriptor;
     }
     
-    static EDescriptor stringToDescriptor(std::string extension, std::string string){
-        if(extension.empty()) extension = "core"; // assuming core
-        auto itr = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extension](sdESpec eSpec)->bool{return eSpec.extensionString == extension;});
-        if(itr == spatDIFSpec.end()) return SD_ERROR;
-        const std::vector<sdDSpec> &descroptorVector = itr->descriptorSpecs;
-        auto ditr = std::find_if(descroptorVector.begin(), descroptorVector.end(), [&string](sdDSpec dSpec)->bool{return dSpec.descriptorString == string;});
-        if(ditr == descroptorVector.end()) return SD_ERROR;
-        return ditr->descriptor;
+    static EDescriptor stringToDescriptor(std::string extensionString, std::string descriptorString){
+        if(extensionString.empty()) extensionString = "core"; // assuming core
+        auto itr = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extensionString](sdESpec eSpec)->bool{return eSpec.extensionString == extensionString;});
+        if(itr == spatDIFSpec.end()) {throw InvalidExtensionException(std::string("no matching EEXtension for string: ") + extensionString);}
+        
+        EExtension extension = itr->extension;
+        return stringToDescriptor(extension, descriptorString);
     }
     
     static std::function<std::shared_ptr<sdProtoEvent>(sdEntity* entity, double,std::string)> getAddEventFunc(EDescriptor descriptor){

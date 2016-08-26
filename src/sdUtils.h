@@ -75,7 +75,8 @@ public:
     template <typename T, int N>
     static T stringToByTable(const std::string &str, std::array<std::pair<T, std::string>, N> &table){
         auto type = std::find_if(table.begin(), table.end(), [&str](std::pair<T, std::string> &typePair){return str == typePair.second;});
-        return type == table.end() ? T::SD_UNDEFINED : (*type).first;
+        if(type == table.end()) throw CanNotConvertStringException("cannot convert " + str);
+        return  (*type).first;
     }
     
     
@@ -147,6 +148,7 @@ inline int sdUtils::stringTo(const std::string &str){
 
 template <>
 inline bool sdUtils::stringTo(const std::string &str){
+    if(str != "true" && str != "false"){ throw CanNotConvertStringException(str);}
     return str == "true";
 };
 
