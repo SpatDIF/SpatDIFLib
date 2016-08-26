@@ -216,19 +216,20 @@ struct sdDescriptor<EDescriptor::SD_TYPE>{
         SD_UNDEFINED
     };
     typedef EType type;
+    static constexpr int NUM_EType = 4;
     const static bool interpolable = false;
 
     // enum to string conversion and vice versa
-    static std::array<std::pair<EType, std::string>,4> &table(){
-        static std::array<std::pair<EType, std::string>,4> table=
+    static std::array<std::pair<EType, std::string>, NUM_EType> &table(){
+        static std::array<std::pair<EType, std::string>,NUM_EType> table=
          {std::make_pair(EType::SD_POINT, "point") ,
             std::make_pair(EType::SD_LOUDSPEAKER, "loudspeaker"),
             std::make_pair(EType::SD_LISTENER, "listener"),
              std::make_pair(EType::SD_MICROPHONE, "microphone")};
         return table;
     }
-    static type stringTo(const std::string &str){return sdUtils::stringToByTable<type,4>(str, table());}
-    static std::string toString(const type &value){return sdUtils::toStringByTable<type,4>(value, table());}
+    static type stringTo(const std::string &str){return sdUtils::stringToByTable<type, NUM_EType>(str, table());}
+    static std::string toString(const type &value){return sdUtils::toStringByTable<type, NUM_EType>(value, table());}
     static void validateValue(type &value){}
 };
 
@@ -274,9 +275,6 @@ struct sdDescriptor<EDescriptor::SD_GROUP_MEMBERSHIP>{
 
 /** core functionalities **/
 /// 4.4.1 media
-
-
-
 
 template <>
 struct sdDescriptor<EDescriptor::SD_MEDIA_ID>{
@@ -335,7 +333,10 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_GAIN>{
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
-    static void validateValue(type &value){}
+    static void validateValue(type &value){
+    
+        
+    }
 };
 
 
@@ -365,33 +366,37 @@ struct sdDescriptorSet<EExtension::SD_MEDIA> {
 /// 4.4.2 loop
 template <>
 struct sdDescriptor<EDescriptor::SD_LOOP_TYPE>{
-    
+
     typedef enum{
         SD_NONE,
         SD_REPEAT,
+        SD_PALINDROME,
         SD_UNDEFINED
     } EType;
+    static constexpr int NUM_EType = 3;
     
     typedef std::pair<EType, int> type;
     const static bool interpolable = false;
-    static std::array<std::pair<EType, std::string>,2> &table(){
-        static std::array<std::pair<EType, std::string>,2> table={
+    static std::array<std::pair<EType, std::string>, NUM_EType> &table(){
+        static std::array<std::pair<EType, std::string>, NUM_EType> table={
             std::make_pair(EType::SD_NONE, "none"),
-            std::make_pair(EType::SD_REPEAT, "repeat")};
+            std::make_pair(EType::SD_REPEAT, "repeat"),
+            std::make_pair(EType::SD_PALINDROME, "palindrome")
+        };
         return table;
     }
     static std::pair<EType, int>  stringTo(const std::string &str){
         std::istringstream iss(str);
         std::vector<std::string> items{std::istream_iterator<std::string>{iss}, std::istream_iterator<std::string>{}};
         if(items.size() > 2) return std::make_pair(EType::SD_UNDEFINED, 0);
-        EType tp =  sdUtils::stringToByTable<EType,2>(items[0], table());
+        EType tp =  sdUtils::stringToByTable<EType,NUM_EType>(items[0], table());
         if(tp == SD_REPEAT){
             return std::make_pair(tp,std::stoi(items[1]));
         }
         return  std::make_pair(tp, 0);
     }
     static std::string toString(const std::pair<EType, int>  &value){
-        std::string tp = sdUtils::toStringByTable<EType, 2>(value.first, table());
+        std::string tp = sdUtils::toStringByTable<EType, NUM_EType>(value.first, table());
         tp += " " + std::to_string(value.second);
         return tp;
     }
@@ -429,19 +434,20 @@ struct sdDescriptor<EDescriptor::SD_INTERPOLATION_TYPE>{
         SD_CUBIC_BEZIER,
         SD_UNDEFINED
     } EInterpolation;
+    static constexpr int NUM_EInterpolation = 3;
     
     typedef EInterpolation type;
     const static bool interpolable = false;
-    static std::array<std::pair<EInterpolation, std::string>,3> &table(){
-        static std::array<std::pair<EInterpolation, std::string>,3> table={
+    static std::array<std::pair<EInterpolation, std::string>,NUM_EInterpolation> &table(){
+        static std::array<std::pair<EInterpolation, std::string>,NUM_EInterpolation> table={
             std::make_pair(EInterpolation::SD_NONE, "none"),
             std::make_pair(EInterpolation::SD_LINEAR, "linear"),
             std::make_pair(EInterpolation::SD_CUBIC_BEZIER, "cubic_bezier")};
         return table;
     }
     
-    static type stringTo(const std::string &str){return sdUtils::stringToByTable<type,3>(str, table());}
-    static std::string toString(const type &value){return sdUtils::toStringByTable<type, 3>(value, table());}
+    static type stringTo(const std::string &str){return sdUtils::stringToByTable<type,NUM_EInterpolation>(str, table());}
+    static std::string toString(const type &value){return sdUtils::toStringByTable<type, NUM_EInterpolation>(value, table());}
     static void validateValue(type &value){}
 };
 
@@ -627,13 +633,15 @@ struct sdDescriptor<EDescriptor::SD_AUTOMATION_FUNCTION>{
         SD_STEP_START,
         SD_STEP_END,
         SD_STEPS,
-        SD_CUBIC_BEZIER
+        SD_CUBIC_BEZIER,
+        SD_UNDEFINED
     } EFunction;
     
     typedef EFunction type;
+    static constexpr int NUM_EFunction = 10;
     const static bool interpolable = false;
-    static std::array<std::pair<EFunction, std::string>, 10> &table(){
-        static std::array<std::pair<EFunction, std::string>,10> table={
+    static std::array<std::pair<EFunction, std::string>, NUM_EFunction> &table(){
+        static std::array<std::pair<EFunction, std::string>,NUM_EFunction> table={
             std::make_pair(EFunction::SD_NONE, "none"),
             std::make_pair(EFunction::SD_LINEAR, "linear"),
             std::make_pair(EFunction::SD_EASE, "ease"),
@@ -648,8 +656,8 @@ struct sdDescriptor<EDescriptor::SD_AUTOMATION_FUNCTION>{
         return table;
     }
     
-    static type stringTo(const std::string &str){return sdUtils::stringToByTable<type,10>(str, table());}
-    static std::string toString(const type &value){return sdUtils::toStringByTable<type, 10>(value, table());}
+    static type stringTo(const std::string &str){return sdUtils::stringToByTable<type,NUM_EFunction>(str, table());}
+    static std::string toString(const type &value){return sdUtils::toStringByTable<type, NUM_EFunction>(value, table());}
     static void validateValue(type &value){} // conversion checks the validity
 };
 

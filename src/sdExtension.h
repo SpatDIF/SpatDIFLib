@@ -40,7 +40,10 @@ protected:
     };
     
     struct sdESpec{
-        sdESpec(EExtension extension, std::string extensionString, std::vector<sdDSpec> descriptorSpecs):extension(extension), extensionString(extensionString), descriptorSpecs(descriptorSpecs){};
+        sdESpec(EExtension extension, std::string extensionString, std::vector<sdDSpec> descriptorSpecs):
+        extension(extension),
+        extensionString(extensionString),
+        descriptorSpecs(descriptorSpecs){};
         EExtension extension;
         std::string extensionString;
         std::vector<sdDSpec> descriptorSpecs;
