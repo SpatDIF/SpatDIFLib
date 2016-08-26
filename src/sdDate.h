@@ -12,9 +12,7 @@
  * This code is licensed under the terms of the "New BSD License" @n
  * http://creativecommons.org/licenses/BSD/
  */
-
-#ifndef ____sdDate__
-#define ____sdDate__
+#pragma once
 
 #include <vector>
 #include <ctime>
@@ -225,4 +223,3 @@ inline unsigned short sdDate::getDay(void) const{
     return day;
 }
 
-#endif /* defined(____sdDate__) */

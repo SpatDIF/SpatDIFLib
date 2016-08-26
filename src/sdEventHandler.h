@@ -14,8 +14,7 @@
  */
 
 
-#ifndef sdEventHandler_h
-#define sdEventHandler_h
+#pragma once
 
 #include "sdUtils.h"
 
@@ -425,4 +424,3 @@ inline void sdEventHandler::sort(){
               });
 }
 
-#endif /* sdEventHandler_h */

@@ -13,8 +13,7 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef ____sdEvent__
-#define ____sdEvent__
+#pragma once
 
 #include <string>
 #include "sdDescriptors.h"
@@ -92,5 +91,3 @@ public:
 
 };
 
-
-#endif

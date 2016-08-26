@@ -14,8 +14,7 @@
  */
 
 
-#ifndef ____sdExtension__
-#define ____sdExtension__
+#pragma once
 
 
 class sdEntity;
@@ -136,4 +135,3 @@ public:
     }
 };
 
-#endif

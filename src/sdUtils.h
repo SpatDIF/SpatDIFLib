@@ -13,8 +13,7 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef ____sdUtils__
-#define ____sdUtils__
+#pragma once
 
 #pragma mark methmatical conversion
 /*!
@@ -152,4 +151,3 @@ inline bool sdUtils::stringTo(const std::string &str){
     return str == "true";
 };
 
-#endif

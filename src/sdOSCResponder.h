@@ -14,8 +14,7 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef ____sdOSCResponder__
-#define ____sdOSCResponder__
+#pragma once
 
 #include "sdScene.h"
 #include "sdOSCMessage.h"
@@ -720,4 +719,3 @@ Add and Remove
     activate @extension
 */
 
-#endif /* defined(____sdOSCResponder__) */

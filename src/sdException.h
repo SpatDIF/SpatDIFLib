@@ -6,8 +6,7 @@
 //  Copyright © 2015 ICST. All rights reserved.
 //
 
-#ifndef sdException_h
-#define sdException_h
+#pragma once
 
 #include <exception>
 
@@ -51,4 +50,3 @@ public:
     : std::ios_base::failure(std::string("File parse failed")){}
 };
 
-#endif /* sdException_h */

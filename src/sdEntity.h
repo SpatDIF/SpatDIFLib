@@ -13,9 +13,7 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef ____sdEntity__
-#define ____sdEntity__
-
+#pragma once
 #include <vector>
 #include <string>
 #include <memory>
@@ -216,4 +214,3 @@ inline const typename sdDescriptor<D>::type * const sdEntity::getPreviousValue(c
 }
 
 
-#endif

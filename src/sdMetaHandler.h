@@ -14,8 +14,7 @@
  */
 
 
-#ifndef ____sdMetaHandler__
-#define ____sdMetaHandler__
+#pragma once
 
 
 /*!
@@ -137,4 +136,3 @@ inline void sdMetaHandler::removeAllMetas(){
     metas.clear();
 }
 
-#endif 

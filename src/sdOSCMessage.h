@@ -1,5 +1,5 @@
-#ifndef ____sdOSCMessage__
-#define ____sdOSCMessage__
+
+#pragma once
 
 #include "sdOSCConverter.h"
 #include <sstream>
@@ -336,4 +336,3 @@ inline void sdOSCMessage::clear(void){
     typetags.push_back(',');
 }
 
-#endif

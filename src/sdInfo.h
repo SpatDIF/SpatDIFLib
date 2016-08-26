@@ -13,9 +13,7 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef ____sdInfo__
-#define ____sdInfo__
-
+#pragma once
 #include <string>
 #include <vector>
 
@@ -258,5 +256,3 @@ inline const std::string &sdInfo::getTitle() const{
 inline const double &sdInfo::getDuration() const{
     return duration;
 }
-
-#endif

@@ -13,8 +13,7 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef ____sdConst__
-#define ____sdConst__
+#pragma once
 
 #include <string>
 #include <iostream>
@@ -27,6 +26,7 @@
 #include <unordered_map>
 #include "sdException.h"
 #include "sdUtils.h"
+
 
 
 
@@ -51,7 +51,7 @@ enum class EKind {
  */
 enum class EExtension {
     //core
-    SD_CORE,
+    SD_CORE ,
     SD_MEDIA,
     SD_LOOP,
     SD_INTERPOLATION,
@@ -970,4 +970,3 @@ struct sdDescriptorSet<EExtension::SD_POINTSET> {
     
 };
 
-#endif

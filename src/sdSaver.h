@@ -13,8 +13,7 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef ____sdSaver__
-#define ____sdSaver__
+#pragma once
 
 #include <string>
 #include "sdScene.h"
@@ -55,4 +54,3 @@ protected:
 
 };
 
-#endif /* defined(____sdSaver__) */

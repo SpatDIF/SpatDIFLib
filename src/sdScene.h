@@ -13,8 +13,7 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef ____sdScene__
-#define ____sdScene__
+#pragma once
 
 #include <string>
 #include <vector>
@@ -22,15 +21,17 @@
 #include <unordered_set>
 #include <set>
 #include "sdDescriptors.h"
+#include "sdDescriptorSetHandler.h"
 #include "sdInfo.h"
 #include "sdEntity.h"
+
 
 
 /*! is responsible for 
  - adding, removing, and maintaining sdEntityCores.
  - attaching and detaching extensions to the exisiting and newly instantiated cores
  */
-class sdScene{
+class sdScene : public sdDescriptorSetHandler{
     friend sdEntity;
     
 protected:
@@ -559,6 +560,7 @@ inline const typename sdDescriptor<D>::type * const sdScene::getValue(std::strin
 
 inline bool sdScene::addExtension(EExtension extension){
     auto ret =  activatedExtensionSet.insert(extension).second;
+    addDescriptorSetForExtension(extension);
     if(ret){
         auto descriptors = sdExtension::getDescriptorsForExtension(extension);
         for(auto it = descriptors.begin(); descriptors.end() != it; it++) {
@@ -608,6 +610,8 @@ inline bool sdScene::removeExtension(EExtension extension){
     for(auto it = descriptors.begin(); it != descriptors.end(); it++) {
         validDescriptorSet.erase((*it).descriptor);
     }
+    
+    removeDescriptorSetForExtension(extension);
     return activatedExtensionSet.erase(extension);
 }
 
@@ -629,4 +633,3 @@ inline std::string sdScene::dump(bool consoleOut){
     return std::string();
 }
 
-#endif
