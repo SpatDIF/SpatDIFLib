@@ -53,7 +53,6 @@ public:
     std::vector<unsigned char> getAddress(void);
     /*! returns OSC address pattern as a string */
     std::string getAddressAsString(void);
-
     
     /*! returns OSC typetags in OSC-string format */
     std::vector<unsigned char> getTypetags(void);
@@ -61,7 +60,6 @@ public:
     /*! returns OSC address pattern as a string */
     std::string getTypetagsAsString(void);
 
-    
     /*! @param index argument index
      returns specified argument at index as T.*/
     template <typename T>
@@ -76,7 +74,6 @@ public:
     /*! returns the number of OSC arguments */
     size_t getNumberOfArguments();
 
-    
     /*! returns delimiters as vector of int */
     std::vector<size_t> getDelimiters(void);
     /*! returns delimiters as a string */

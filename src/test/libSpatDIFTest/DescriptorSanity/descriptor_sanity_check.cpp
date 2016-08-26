@@ -75,6 +75,18 @@ TEST_CASE("core functionalities"){
     REQUIRE( entity->getValueAsString<SD_MEDIA_GAIN>(0.0) == "0.4");
     REQUIRE( *entity->getValue<SD_MEDIA_GAIN>(0.0) == 0.4);
     
+    // SD_GROUP_MEMBERSHIP
+    try{
+        entity->addEvent<SD_GROUP_MEMBERSHIP>(0.0, "alpha_group"); // we need to activate extension first
+        REQUIRE(false); // this line should not be reached
+    }catch(InvalidDescriptorException){}
+    
+    scene.addExtension(EExtension::SD_GROUP);
+    entity->addEvent<SD_GROUP_MEMBERSHIP>(3.0, "alpha_group");
+    
+    REQUIRE( entity->getValueAsString<SD_GROUP_MEMBERSHIP>(3.0) == "alpha_group");
+    REQUIRE( *entity->getValue<SD_GROUP_MEMBERSHIP>(3.0) == "alpha_group");
+
 }
 
 TEST_CASE("loop"){
@@ -116,7 +128,7 @@ TEST_CASE("pointset"){
 }
 
 TEST_CASE("geometry"){
-    
+
 }
 
 TEST_CASE("automation"){
