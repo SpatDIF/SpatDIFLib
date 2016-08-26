@@ -290,11 +290,29 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_ID>{
 
 template <>
 struct sdDescriptor<EDescriptor::SD_MEDIA_TYPE>{
-    typedef std::string type;
-    const static bool interpolable = false;
     
-    static type stringTo(const std::string &str){return str;}
-    static std::string toString(const type &value){return value;}
+    typedef enum {
+        SD_STREAM,
+        SD_FILE,
+        SD_LIVE,
+        SD_NONE,
+        SD_UNDEFINED
+    } EType;
+    static constexpr int NEType = 4;
+    
+    typedef EType type;
+    const static bool interpolable = false;
+    static std::array<std::pair<EType, std::string>,NEType> &table(){
+        static std::array<std::pair<EType, std::string>,NEType> table={
+            std::make_pair(EType::SD_STREAM, "stream"),
+            std::make_pair(EType::SD_FILE, "file"),
+            std::make_pair(EType::SD_LIVE, "live"),
+            std::make_pair(EType::SD_NONE, "none")};
+        return table;
+    }
+    
+    static type stringTo(const std::string &str){return sdUtils::stringToByTable<type,NEType>(str, table());}
+    static std::string toString(const type &value){return sdUtils::toStringByTable<type, NEType>(value, table());}
     static void validateValue(type &value){}
 };
 

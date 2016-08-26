@@ -63,9 +63,9 @@ TEST_CASE("core functionalities"){
     REQUIRE( *entity->getValue<SD_MEDIA_ID>(0.0) == "mymedia");
     
     // SD_MEDIA_TYPE
-    entity->addEvent<SD_MEDIA_TYPE>(0.0, "live" );
+    entity->addEvent<SD_MEDIA_TYPE>(0.0, sdDescriptor<SD_MEDIA_TYPE>::SD_LIVE );
     REQUIRE( entity->getValueAsString<SD_MEDIA_TYPE>(0.0) == "live");
-    REQUIRE( *entity->getValue<SD_MEDIA_TYPE>(0.0) == "live");
+    REQUIRE( *entity->getValue<SD_MEDIA_TYPE>(0.0) == sdDescriptor<SD_MEDIA_TYPE>::SD_LIVE);
     
     // SD_MEDIA_LOCATION
     entity->addEvent<SD_MEDIA_LOCATION>(0.0, "/path/to/my/file");
@@ -88,6 +88,11 @@ TEST_CASE("core functionalities"){
     REQUIRE( *entity->getValue<SD_MEDIA_GAIN>(0.0) == 0.4);
     
     //exception
+    try{
+        entity->addEvent("9.0", "media", "type", "not defined");
+        REQUIRE(false);
+    }catch(CanNotConvertStringException){}
+    
     try{
         entity->addEvent<SD_MEDIA_CHANNEL>(3.0, 0);
         REQUIRE(false);
