@@ -24,6 +24,7 @@
 
 // the following table defines the relationship between extensions and descriptors 
 
+
 const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
     sdESpec(EExtension::SD_CORE, "core", {
         DEFINE_DESCRIPTOR(SD_TYPE,"type"),
@@ -38,7 +39,7 @@ const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
         DEFINE_DESCRIPTOR(SD_MEDIA_CHANNEL, "channel"),
         DEFINE_DESCRIPTOR(SD_MEDIA_GAIN, "gain"),
         DEFINE_DESCRIPTOR(SD_MEDIA_TIME_OFFSET, "time-offset")
-    }),
+    },SD_MEDIA_ID),
     sdESpec(EExtension::SD_LOOP, "loop",{
         DEFINE_DESCRIPTOR(SD_LOOP_TYPE, "type"),
         DEFINE_DESCRIPTOR(SD_LOOP_POINTS, "points"),
@@ -54,7 +55,7 @@ const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
         DEFINE_DESCRIPTOR(SD_POINTSET_SIZE, "size"),
         DEFINE_DESCRIPTOR(SD_POINTSET_POINT, "point"),
         DEFINE_DESCRIPTOR(SD_POINTSET_HANDLE, "handle")
-    }),
+    },SD_POINTSET_ID),
     // 5.2.3 Automation
     sdESpec((EExtension::SD_AUTOMATION), "automation", {
         DEFINE_DESCRIPTOR(SD_AUTOMATION_DURATION, "duration"),
@@ -107,3 +108,4 @@ const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
     // 5.4 Private Extension
     sdESpec((EExtension::SD_PRIVATE), "private", {}) // no descriptor defined
 };
+

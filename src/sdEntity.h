@@ -128,6 +128,12 @@ protected:
     
     sdScene * parent;
     EKind kind;
+    
+private:
+    
+    
+    std::shared_ptr<sdProtoDescriptorSet> getProtoDescriptorSetPtr(EExtension extension, std::string identifier) const;
+    
 };
 
 inline const EKind &sdEntity::getKind() const{
@@ -181,7 +187,21 @@ inline const typename sdDescriptor<D>::type * const sdEntity::getValue() const{
 template <EDescriptor D>
 inline const typename sdDescriptor<D>::type * const sdEntity::getValue(const double &time) const{
     auto event = getEvent<D>(time);
-    if(!event) return  nullptr;
+    if(!event){
+        try{
+            EExtension targetExtension = sdExtension::getExtensionOfDescriptor(D);
+            EDescriptor idDescriptor = sdExtension::getIDDescriptorOfExtension(targetExtension);
+            std::vector<std::shared_ptr<sdProtoEvent>>  eventsAtTime = getEvents(time);
+            auto it = std::find_if(eventsAtTime.begin(), eventsAtTime.end(), [&idDescriptor](std::shared_ptr<sdProtoEvent> &event)->bool{
+                return event->getDescriptor() == idDescriptor;
+            });
+            if(it == eventsAtTime.end()) return nullptr;
+            sdProtoEvent* idDescriptorEvent = (*it).get();
+            std::string identifier = idDescriptorEvent->getValueAsString();
+            std::shared_ptr<sdProtoDescriptorSet> descriptorSetPtr = getProtoDescriptorSetPtr(targetExtension, identifier);
+            return &descriptorSetPtr->getValue<D>();
+        }catch(std::exception){return nullptr;}
+    }
     return &(event->getValue());
 }
 

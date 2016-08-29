@@ -21,17 +21,14 @@
 #include <unordered_set>
 #include <set>
 #include "sdDescriptors.h"
-#include "sdDescriptorSetHandler.h"
 #include "sdInfo.h"
 #include "sdEntity.h"
-
-
 
 /*! is responsible for 
  - adding, removing, and maintaining sdEntityCores.
  - attaching and detaching extensions to the exisiting and newly instantiated cores
  */
-class sdScene : public sdDescriptorSetHandler{
+class sdScene : public sdDescriptorCollectionHandler{
     friend sdEntity;
     
 protected:
@@ -40,6 +37,7 @@ protected:
     std::vector<std::pair<sdEntity*, std::shared_ptr<sdProtoEvent>>> allEvents; //!< an alias pointer to all events
     std::set <EExtension> activatedExtensionSet; //!< a set of activated extension
     std::set <EDescriptor> validDescriptorSet; //!< a set of valid descriptor
+    
     EOrdering ordering; //!< ordering flag
     sdInfo info; //!< contains "info" part of the meta section
     
@@ -47,7 +45,6 @@ protected:
     void addEventAlias(sdEntity * const entity, const std::shared_ptr<sdProtoEvent>);
     bool removeMetaAlias(const sdEntity* const entity, const EDescriptor & descriptor);
     bool removeEventAlias(const sdEntity* const entity, const double &time, const EDescriptor & descriptor);
-
     void sortAllEvents();
     
 private:
@@ -59,6 +56,7 @@ private:
         validDescriptorSet = origin.validDescriptorSet;
         ordering = origin.ordering;
         info = origin.info;
+        sdDescriptorCollectionHandler::copy(origin);
         
         for(auto &entity:entities){ // parent is now me
             entity.second.parent = this;
@@ -554,18 +552,16 @@ inline const typename sdDescriptor<D>::type * const sdScene::getValue(std::strin
     return entity->getValue<D>(time);
 }
 
-
-
 #pragma mark extension
 
 inline bool sdScene::addExtension(EExtension extension){
     auto ret =  activatedExtensionSet.insert(extension).second;
-    addDescriptorSetCollectionForExtension(extension);
     if(ret){
         auto descriptors = sdExtension::getDescriptorsForExtension(extension);
         for(auto it = descriptors.begin(); descriptors.end() != it; it++) {
             validDescriptorSet.insert((*it).descriptor);
         }
+        addDescriptorSetCollection(extension);
     }
     return ret;
 }
@@ -578,7 +574,6 @@ inline bool sdScene::addExtension(std::string extension){
     }
     return addExtension(ext);
 }
-
 
 inline std::unordered_set<std::string> sdScene::getActivatedExtensionsAsStrings() const{
     std::unordered_set<std::string> set;
@@ -611,7 +606,6 @@ inline bool sdScene::removeExtension(EExtension extension){
         validDescriptorSet.erase((*it).descriptor);
     }
     
-    removeDescriptorSetCollectionForExtension(extension);
     return activatedExtensionSet.erase(extension);
 }
 

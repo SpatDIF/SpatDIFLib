@@ -79,15 +79,9 @@ public:
     sdEvent(const double time, const sdEntity * const parent, const typename sdDescriptor<D>::type &value):
     sdProtoEvent(time, D, parent), value(value){}
     
-    /*! @name Value handling
-     @{ */
+    const typename sdDescriptor<D>::type &getValue(void) const{return value;};
     
-    /*! returns value. */
-    const typename sdDescriptor<D>::type &getValue(void) const{ return value; };
-    
-    /*! returns value as string */
     const std::string getValueAsString() const override{ return sdDescriptor<D>::toString(value);};
-    /*! @} */
 
 };
 

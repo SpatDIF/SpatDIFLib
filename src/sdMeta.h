@@ -29,10 +29,6 @@ class sdEntity;
  */
 
 class sdProtoMeta{
-protected:
-    const sdEntity * const parent;/*!< a pointer to the belonging entity. unmutable */
-    const EDescriptor descriptor /*< the descriptor type of event. unmutable */;
-    sdProtoMeta(const EDescriptor descriptor, const sdEntity * const parent);
 
 public:
     /*!
@@ -57,6 +53,11 @@ public:
      @returns a std::string that contains string
      */
     virtual const std::string getValueAsString() const = 0;
+
+protected:
+    const sdEntity * const parent;/*!< a pointer to the belonging entity. unmutable */
+    const EDescriptor descriptor /*< the descriptor type of event. unmutable */;
+    sdProtoMeta(const EDescriptor descriptor, const sdEntity * const parent);
 
 };
 

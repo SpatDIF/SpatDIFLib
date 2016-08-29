@@ -39,15 +39,17 @@ protected:
     };
     
     struct sdESpec{
-        sdESpec(EExtension extension, std::string extensionString, std::vector<sdDSpec> descriptorSpecs):
+        sdESpec(EExtension extension, std::string extensionString, std::vector<sdDSpec> descriptorSpecs, EDescriptor idDescriptor = SD_ERROR):
         extension(extension),
         extensionString(extensionString),
-        descriptorSpecs(descriptorSpecs){};
+        descriptorSpecs(descriptorSpecs),
+        idDescriptor(idDescriptor){};
+        
         EExtension extension;
+        EDescriptor idDescriptor;
         std::string extensionString;
         std::vector<sdDSpec> descriptorSpecs;
     };
-    
     
     const static std::vector<sdESpec> spatDIFSpec;
     
@@ -56,7 +58,7 @@ public:
 #pragma mark extension
     static EExtension getExtensionOfDescriptor(EDescriptor descriptor){
         EExtension extension = EExtension::SD_EXTENSION_ERROR;
-        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&descriptor](sdESpec eSpec){
+        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&descriptor](const sdESpec &eSpec){
             auto itr = std::find_if(eSpec.descriptorSpecs.begin(), eSpec.descriptorSpecs.end(), [&descriptor](sdDSpec dSpec){
                 return dSpec.descriptor == descriptor;
             });
@@ -64,6 +66,22 @@ public:
         });
         if(it != spatDIFSpec.end()) extension = (*it).extension;
         return extension;
+    }
+    
+    static EDescriptor getIDDescriptorOfExtension(EExtension extension){
+        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extension](const sdESpec &eSpec){
+            return eSpec.extension == extension;
+        });
+        
+        if(it == spatDIFSpec.end()) throw InvalidExtensionException("No such extension");
+        if(it->idDescriptor == SD_ERROR) throw InvalidDescriptorException("Extension has no ID descriptor");
+        
+        return it->idDescriptor;
+    }
+    
+    static EDescriptor getIDDescriptorFromMemberDescriptorInExtension(EDescriptor descriptor){
+        EExtension extension = getExtensionOfDescriptor(descriptor);
+        return getIDDescriptorOfExtension(extension);
     }
     
     static std::string extensionToString(const EExtension &extension){

@@ -27,9 +27,6 @@
 #include "sdException.h"
 #include "sdUtils.h"
 
-
-
-
 /*!
  enum for ordering
  */
@@ -76,7 +73,6 @@ enum class EExtension {
     
     SD_EXTENSION_ERROR
 };
-
 
 
 /*!
@@ -187,6 +183,24 @@ typedef enum {
     SD_ALL
 } EDescriptor;
 
+
+namespace std{
+    
+    // explicit instantiation for EExtension, cast to size_t
+    template<>
+    struct hash<EExtension> {
+        size_t operator()(const EExtension &ext) const {
+            return static_cast<size_t>(ext);
+        }
+    };
+    
+    template<>
+    struct hash<EDescriptor>{
+        size_t operator()(const EDescriptor &desc) const {
+            return static_cast<size_t>(desc);
+        }
+    };
+}
 
 
 /*!
@@ -920,40 +934,57 @@ struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_GAIN>{
  reusable set of multiple descriptors, which can be stored in std::unordered_map and refered by name. 
   See sdDescriptorSetHandler.h sdScene inherits the functionality of sdDescriptorSetHandler and is able to handle sdDescriptorSets
  */
-struct sdProtoDescriptorSet{};
 
-template <EExtension D>
-struct sdDescriptorSet: public sdProtoDescriptorSet {};
+class sdProtoDescriptorSet{
+public:
+    template<EDescriptor D>
+    typename sdDescriptor<D>::type &getValue(){
+        std::shared_ptr<sdProtoHolder> holder = descriptorSetHolders.at(D);
+        sdHolder<typename sdDescriptor<D>::type> *holderPtr =static_cast<sdHolder<typename sdDescriptor<D>::type> *>(holder.get());
+        return holderPtr->item;
+    };
+    
+protected:
+    struct sdProtoHolder{
+    };
+    
+    template<typename T>
+    struct sdHolder : public sdProtoHolder {
+        sdHolder(const T& item) : item(item) {}
+        
+        T item;
+    };
+    std::unordered_map<EDescriptor, std::shared_ptr<sdProtoHolder>> descriptorSetHolders;
+};
 
-/*!
-    media descriptor set
- */
+template <EExtension E>
+class sdDescriptorSet{};
+
 template <>
-struct sdDescriptorSet<EExtension::SD_MEDIA> {
+class sdDescriptorSet<EExtension::SD_MEDIA>: public sdProtoDescriptorSet{
+public:
     sdDescriptorSet<EExtension::SD_MEDIA>(
-                                          sdDescriptor<EDescriptor::SD_MEDIA_TYPE>::type type,
-                                          sdDescriptor<EDescriptor::SD_MEDIA_LOCATION>::type location,
-                                          sdDescriptor<EDescriptor::SD_MEDIA_CHANNEL>::type channel,
-                                          sdDescriptor<EDescriptor::SD_MEDIA_TIME_OFFSET>::type offset,
-                                          sdDescriptor<EDescriptor::SD_MEDIA_GAIN>::type gain):
-    type(type),
-    location(location),
-    channel(channel),
-    offset(offset),
-    gain(gain)
-    {}
-    sdDescriptor<EDescriptor::SD_MEDIA_TYPE>::type type;
-    sdDescriptor<EDescriptor::SD_MEDIA_LOCATION>::type location;
-    sdDescriptor<EDescriptor::SD_MEDIA_CHANNEL>::type channel;
-    sdDescriptor<EDescriptor::SD_MEDIA_TIME_OFFSET>::type offset;
-    sdDescriptor<EDescriptor::SD_MEDIA_GAIN>::type gain;
+        sdDescriptor<SD_MEDIA_TYPE>::type type = sdDescriptor<SD_MEDIA_TYPE>::SD_FILE,
+        sdDescriptor<SD_MEDIA_LOCATION>::type location = "",
+        sdDescriptor<SD_MEDIA_CHANNEL>::type channel = 1,
+        sdDescriptor<SD_MEDIA_TIME_OFFSET>::type time_offset = 0,
+        sdDescriptor<SD_MEDIA_GAIN>::type gain = 1.0){
+
+        descriptorSetHolders.emplace(SD_MEDIA_TYPE, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_MEDIA_TYPE>::type>(type)));
+        descriptorSetHolders.emplace(SD_MEDIA_LOCATION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_MEDIA_LOCATION>::type>(location)));
+        descriptorSetHolders.emplace(SD_MEDIA_CHANNEL, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_MEDIA_CHANNEL>::type>(channel)));
+        descriptorSetHolders.emplace(SD_MEDIA_TIME_OFFSET, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_MEDIA_TIME_OFFSET>::type>(time_offset)));
+        descriptorSetHolders.emplace(SD_MEDIA_GAIN, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_MEDIA_GAIN>::type>(gain)));
+    }
+    
 };
 
 /*!
  pointset descriptor set
  */
 template <>
-struct sdDescriptorSet<EExtension::SD_POINTSET> {
+class sdDescriptorSet<EExtension::SD_POINTSET>: public sdProtoDescriptorSet {
+public:
     sdDescriptorSet<EExtension::SD_POINTSET>(
                                              sdDescriptor<EDescriptor::SD_POINTSET_CLOSED>::type closed,
                                              sdDescriptor<EDescriptor::SD_POINTSET_SIZE>::type size,
@@ -963,6 +994,8 @@ struct sdDescriptorSet<EExtension::SD_POINTSET> {
     size(size),
     point(point),
     handle(handle){}
+
+protected:
     sdDescriptor<EDescriptor::SD_POINTSET_CLOSED>::type closed;
     sdDescriptor<EDescriptor::SD_POINTSET_SIZE>::type size;
     sdDescriptor<EDescriptor::SD_POINTSET_POINT>::type point;
@@ -970,3 +1003,53 @@ struct sdDescriptorSet<EExtension::SD_POINTSET> {
     
 };
 
+/*!
+ This class handles different types of descriptor set
+ */
+
+class sdDescriptorCollectionHandler{
+public:
+    using sdDescriptorSetCollection = std::unordered_map<std::string, std::shared_ptr<sdProtoDescriptorSet>>;
+    
+    template<EExtension Extension>
+    void addDescriptorSet(EExtension extension, std::string identifier, sdDescriptorSet<Extension> set){
+        auto targetCollection = descriptorSetCollections.find(extension);
+        if(targetCollection == descriptorSetCollections.end()) throw InvalidExtensionException("extension not activated");
+        std::shared_ptr<sdProtoDescriptorSet> setPtr(new sdProtoDescriptorSet(set));
+        addDescriptorSet(extension, identifier, setPtr);
+    }
+    
+    void addDescriptorSet(EExtension extension, std::string identifier, std::shared_ptr<sdProtoDescriptorSet> set){
+        auto targetCollection = descriptorSetCollections.find(extension);
+        if(targetCollection == descriptorSetCollections.end()) throw InvalidExtensionException("extension not activated");
+        (*targetCollection).second.emplace(identifier, set);
+    }
+    
+    void removeDescriptorSet(EExtension extension, std::string identifier){
+        auto targetCollection = descriptorSetCollections.find(extension);
+        if(targetCollection == descriptorSetCollections.end()) throw InvalidExtensionException("extension not activated");
+        (*targetCollection).second.erase(identifier);
+    }
+    
+    std::shared_ptr<sdProtoDescriptorSet> getProtoDescriptorSet(EExtension extension, std::string identifier){
+        auto targetCollection = descriptorSetCollections.find(extension);
+        if(targetCollection == descriptorSetCollections.end()) throw InvalidExtensionException("extension not activated");
+        return (*targetCollection).second.at(identifier);
+    }
+    
+protected:
+    void addDescriptorSetCollection(EExtension extension){
+        descriptorSetCollections.emplace(extension, sdDescriptorSetCollection());
+    }
+    
+    void removeDescriptorSetCollection(EExtension extension){
+        descriptorSetCollections.erase(extension);
+    }
+    
+    void copy(const sdDescriptorCollectionHandler &origin){
+        descriptorSetCollections = origin.descriptorSetCollections;
+    }
+
+    std::unordered_map<EExtension, sdDescriptorSetCollection> descriptorSetCollections;
+
+};

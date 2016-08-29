@@ -36,22 +36,9 @@ TEST_CASE("core"){
     REQUIRE( entity->getValue<SD_ORIENTATION>(0.0)->at(0) == 0.5);
     REQUIRE( entity->getValue<SD_ORIENTATION>(0.0)->at(1) == 0.6);
     REQUIRE( entity->getValue<SD_ORIENTATION>(0.0)->at(2) == 0.7);
-    
-    // SD_GROUP_MEMBERSHIP
-    try{
-        entity->addEvent<SD_GROUP_MEMBERSHIP>(0.0, "alpha_group"); // we need to activate extension first
-        REQUIRE(false); // this line should not be reached
-    }catch(InvalidDescriptorException){}
-    
-    scene.addExtension(EExtension::SD_GROUP);
-    entity->addEvent<SD_GROUP_MEMBERSHIP>(3.0, "alpha_group");
-    
-    REQUIRE( entity->getValueAsString<SD_GROUP_MEMBERSHIP>(3.0) == "alpha_group");
-    REQUIRE( *entity->getValue<SD_GROUP_MEMBERSHIP>(3.0) == "alpha_group");
-    
 }
 
-TEST_CASE("core functionalities"){
+TEST_CASE("media"){
 
     /// 4.4.1 media
     sdScene scene;
@@ -107,6 +94,15 @@ TEST_CASE("core functionalities"){
         entity->addEvent<SD_MEDIA_GAIN>(3.0, -2.0);
         REQUIRE(false);
     }catch(InvalidValueDomainException){}
+    
+    // descriptor set
+    auto mySong = sdDescriptorSet<EExtension::SD_MEDIA>(sdDescriptor<SD_MEDIA_TYPE>::SD_FILE,"/tmp/file.wav", 2, 0, 1.0);
+    scene.addDescriptorSet(EExtension::SD_MEDIA, "mySong", mySong);
+
+    entity->addEvent<SD_MEDIA_ID>(3.0, "mySong"); // adding id means adding descriptor set
+    REQUIRE(*entity->getValue<SD_MEDIA_ID>(3.0) == "mySong");
+    REQUIRE(*entity->getValue<SD_MEDIA_LOCATION>(3.0) == "/tmp/file.wav");
+
 }
 
 TEST_CASE("loop"){
@@ -192,7 +188,19 @@ TEST_CASE("shape"){
 
 TEST_CASE("group"){
     sdScene scene;
+    sdEntity* entity = scene.addEntity("group-member");
+    
+    // SD_GROUP_MEMBERSHIP
+    try{
+        entity->addEvent<SD_GROUP_MEMBERSHIP>(0.0, "alpha_group"); // we need to activate extension first
+        REQUIRE(false); // this line should not be reached
+    }catch(InvalidDescriptorException){}
+    
     scene.addExtension(EExtension::SD_GROUP);
+    entity->addEvent<SD_GROUP_MEMBERSHIP>(3.0, "alpha_group");
+    
+    REQUIRE( entity->getValueAsString<SD_GROUP_MEMBERSHIP>(3.0) == "alpha_group");
+    REQUIRE( *entity->getValue<SD_GROUP_MEMBERSHIP>(3.0) == "alpha_group");
 }
 
 TEST_CASE("source spread"){
