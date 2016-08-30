@@ -127,7 +127,7 @@
 		629720C41C29966100135148 /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxml2.cpp; path = ../../libs/tinyxml2/tinyxml2.cpp; sourceTree = "<group>"; };
 		629720D51C2D8C2600135148 /* sdLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdLoader.cpp; path = ../../sdLoader.cpp; sourceTree = "<group>"; };
 		629720DA1C2E1F0600135148 /* sdSaver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdSaver.cpp; path = ../../sdSaver.cpp; sourceTree = "<group>"; };
-		62A24D0F1D6322300019F04F /* sdExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sdExtension.h; path = ../../sdExtension.h; sourceTree = "<group>"; };
+		62A24D0F1D6322300019F04F /* sdSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sdSpec.h; path = ../../sdSpec.h; sourceTree = "<group>"; };
 		62AF37B31C236EDC009E9347 /* sdEntity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdEntity.cpp; path = ../../sdEntity.cpp; sourceTree = "<group>"; };
 		62BE10211C2F3C020033244E /* sdDate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdDate.h; path = ../../sdDate.h; sourceTree = "<group>"; };
 		62BE10221C2F3C020033244E /* sdEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = sdEntity.h; path = ../../sdEntity.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -248,7 +248,7 @@
 				6217DDE61D5B20510048C466 /* sdDescriptor.h */,
 				6217DDE51D5B20510048C466 /* sdDescriptor.cpp */,
 				627FA4C91D75698D007C0C8A /* sdDataSet.h */,
-				62A24D0F1D6322300019F04F /* sdExtension.h */,
+				62A24D0F1D6322300019F04F /* sdSpec.h */,
 			);
 			name = Specifications;
 			sourceTree = "<group>";

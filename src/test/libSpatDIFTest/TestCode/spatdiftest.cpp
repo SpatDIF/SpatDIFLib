@@ -563,62 +563,62 @@ TEST_CASE("Test Extension enum to string conversion", "[sdConst]"){
     
     //// extension
     // enum to string
-    REQUIRE(sdExtension::extensionToString(EExtension::SD_CORE) == "core");
-    REQUIRE(sdExtension::extensionToString(EExtension::SD_MEDIA) == "media");
-    REQUIRE(sdExtension::extensionToString(EExtension::SD_INTERPOLATION) == "interpolation");
-    REQUIRE(sdExtension::extensionToString(EExtension::SD_POINTSET) == "pointset");
-    REQUIRE(sdExtension::extensionToString(EExtension::SD_SOURCE_SPREAD) == "source-spread");
-    REQUIRE(sdExtension::extensionToString(EExtension::SD_HARDWARE_OUT) == "hardware-out");
-    REQUIRE(sdExtension::extensionToString(EExtension::SD_SINK_ENTITY) == "sink-entity");
+    REQUIRE(sdSpec::extensionToString(EExtension::SD_CORE) == "core");
+    REQUIRE(sdSpec::extensionToString(EExtension::SD_MEDIA) == "media");
+    REQUIRE(sdSpec::extensionToString(EExtension::SD_INTERPOLATION) == "interpolation");
+    REQUIRE(sdSpec::extensionToString(EExtension::SD_POINTSET) == "pointset");
+    REQUIRE(sdSpec::extensionToString(EExtension::SD_SOURCE_SPREAD) == "source-spread");
+    REQUIRE(sdSpec::extensionToString(EExtension::SD_HARDWARE_OUT) == "hardware-out");
+    REQUIRE(sdSpec::extensionToString(EExtension::SD_SINK_ENTITY) == "sink-entity");
     
     // string to enum
-    REQUIRE(sdExtension::stringToExtension("core") == EExtension::SD_CORE);
-    REQUIRE(sdExtension::stringToExtension("media") == EExtension::SD_MEDIA);
-    REQUIRE(sdExtension::stringToExtension("interpolation") == EExtension::SD_INTERPOLATION);
-    REQUIRE(sdExtension::stringToExtension("pointset") == EExtension::SD_POINTSET);
-    REQUIRE(sdExtension::stringToExtension("source-spread") == EExtension::SD_SOURCE_SPREAD);
-    REQUIRE(sdExtension::stringToExtension("hardware-out") == EExtension::SD_HARDWARE_OUT);
-    REQUIRE(sdExtension::stringToExtension("sink-entity") == EExtension::SD_SINK_ENTITY);
+    REQUIRE(sdSpec::stringToExtension("core") == EExtension::SD_CORE);
+    REQUIRE(sdSpec::stringToExtension("media") == EExtension::SD_MEDIA);
+    REQUIRE(sdSpec::stringToExtension("interpolation") == EExtension::SD_INTERPOLATION);
+    REQUIRE(sdSpec::stringToExtension("pointset") == EExtension::SD_POINTSET);
+    REQUIRE(sdSpec::stringToExtension("source-spread") == EExtension::SD_SOURCE_SPREAD);
+    REQUIRE(sdSpec::stringToExtension("hardware-out") == EExtension::SD_HARDWARE_OUT);
+    REQUIRE(sdSpec::stringToExtension("sink-entity") == EExtension::SD_SINK_ENTITY);
     
     //// descriptor
     // enum to string
-    REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_TYPE) == "type");
-    REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_PRESENT) == "present");
-    REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_POSITION) == "position");
-    REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_ORIENTATION) == "orientation");
+    REQUIRE(sdSpec::descriptorToString(EDescriptor::SD_TYPE) == "type");
+    REQUIRE(sdSpec::descriptorToString(EDescriptor::SD_PRESENT) == "present");
+    REQUIRE(sdSpec::descriptorToString(EDescriptor::SD_POSITION) == "position");
+    REQUIRE(sdSpec::descriptorToString(EDescriptor::SD_ORIENTATION) == "orientation");
     
-    REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_MEDIA_ID) == "id");
-    REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_MEDIA_TYPE) == "type");
-    REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_MEDIA_LOCATION) == "location");
-    REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_MEDIA_CHANNEL) == "channel");
-    REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_MEDIA_TIME_OFFSET) == "time-offset");
+    REQUIRE(sdSpec::descriptorToString(EDescriptor::SD_MEDIA_ID) == "id");
+    REQUIRE(sdSpec::descriptorToString(EDescriptor::SD_MEDIA_TYPE) == "type");
+    REQUIRE(sdSpec::descriptorToString(EDescriptor::SD_MEDIA_LOCATION) == "location");
+    REQUIRE(sdSpec::descriptorToString(EDescriptor::SD_MEDIA_CHANNEL) == "channel");
+    REQUIRE(sdSpec::descriptorToString(EDescriptor::SD_MEDIA_TIME_OFFSET) == "time-offset");
     
-    REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_SOURCE_SPREAD_SPREAD) == "spread");
+    REQUIRE(sdSpec::descriptorToString(EDescriptor::SD_SOURCE_SPREAD_SPREAD) == "spread");
     
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_CORE,"type") == EDescriptor::SD_TYPE);
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_CORE,"present") == EDescriptor::SD_PRESENT);
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_CORE,"position") == EDescriptor::SD_POSITION);
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_CORE,"orientation") == EDescriptor::SD_ORIENTATION);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_CORE,"type") == EDescriptor::SD_TYPE);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_CORE,"present") == EDescriptor::SD_PRESENT);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_CORE,"position") == EDescriptor::SD_POSITION);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_CORE,"orientation") == EDescriptor::SD_ORIENTATION);
     
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_MEDIA, "id") == SD_MEDIA_ID);
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_MEDIA, "type") == SD_MEDIA_TYPE);
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_MEDIA, "location") == SD_MEDIA_LOCATION);
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_MEDIA, "channel") == SD_MEDIA_CHANNEL);
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_MEDIA, "time-offset") == SD_MEDIA_TIME_OFFSET);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_MEDIA, "id") == SD_MEDIA_ID);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_MEDIA, "type") == SD_MEDIA_TYPE);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_MEDIA, "location") == SD_MEDIA_LOCATION);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_MEDIA, "channel") == SD_MEDIA_CHANNEL);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_MEDIA, "time-offset") == SD_MEDIA_TIME_OFFSET);
     
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_POINTSET, "id") == SD_POINTSET_ID);
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_POINTSET, "unit") == SD_POINTSET_UNIT);
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_POINTSET, "closed") == SD_POINTSET_CLOSED);
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_POINTSET, "size") == SD_POINTSET_SIZE);
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_POINTSET, "point") == SD_POINTSET_POINT);
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_POINTSET, "handle") == SD_POINTSET_HANDLE);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_POINTSET, "id") == SD_POINTSET_ID);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_POINTSET, "unit") == SD_POINTSET_UNIT);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_POINTSET, "closed") == SD_POINTSET_CLOSED);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_POINTSET, "size") == SD_POINTSET_SIZE);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_POINTSET, "point") == SD_POINTSET_POINT);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_POINTSET, "handle") == SD_POINTSET_HANDLE);
 
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_INTERPOLATION, "type") == SD_INTERPOLATION_TYPE);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_INTERPOLATION, "type") == SD_INTERPOLATION_TYPE);
     
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_SOURCE_SPREAD, "spread") == SD_SOURCE_SPREAD_SPREAD);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_SOURCE_SPREAD, "spread") == SD_SOURCE_SPREAD_SPREAD);
     
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_HARDWARE_OUT, "physical-channel") == SD_HARDWARE_OUT_PHYSICAL_CHANNEL);
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_HARDWARE_OUT, "gain") == SD_HARDWARE_OUT_GAIN);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_HARDWARE_OUT, "physical-channel") == SD_HARDWARE_OUT_PHYSICAL_CHANNEL);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_HARDWARE_OUT, "gain") == SD_HARDWARE_OUT_GAIN);
     
 
     

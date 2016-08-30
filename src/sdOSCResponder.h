@@ -217,7 +217,7 @@ inline std::vector<sdOSCMessage> sdOSCResponder::forwardOSCMessage(sdOSCMessage 
         command = ads[1]; // get the element right after /spatdifcmd
     }else if(ads.size() == 3){  // extension
         std::string extensionName = ads[1];
-        extension = sdExtension::stringToExtension(extensionName);
+        extension = sdSpec::stringToExtension(extensionName);
         if(extension == EExtension::SD_EXTENSION_ERROR){
             sdOSCMessage errorMessage("/spatdif/error");
             errorMessage.appendArgument<std::string>("No such extension: " + extensionName);

@@ -17,7 +17,7 @@
 
 #include <string>
 #include "sdDescriptor.h"
-#include "sdExtension.h"
+#include "sdSpec.h"
 #include "sdUtils.h"
 
 #pragma mark definitions
@@ -70,7 +70,7 @@ inline EDescriptor sdProtoMeta::getDescriptor() const{
 }
 
 inline std::string sdProtoMeta::getDescriptorAsString() const{
-    return sdExtension::descriptorToString(descriptor);
+    return sdSpec::descriptorToString(descriptor);
 }
 
 inline const sdEntity * const sdProtoMeta::getParent() const{

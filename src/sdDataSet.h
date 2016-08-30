@@ -10,15 +10,14 @@
 
 #include "sdDescriptor.h"
 /*!
- reusable set of multiple descriptors, which can be stored in std::unordered_map and refered by name.
- See sdDataSetHandler.h sdScene inherits the functionality of sdDataSetHandler and is able to handle sdDataSets
+ reusable set of multiple data in an extension, which can be stored in std::unordered_map and referred by name.
  */
 
 class sdProtoDataSet{
 public:
     template<EDescriptor D>
     typename sdDescriptor<D>::type &getValue(){
-        std::shared_ptr<sdProtoHolder> holder = descriptorSetHolders.at(D);
+        std::shared_ptr<sdProtoHolder> holder = dataSetHolders.at(D);
         sdHolder<typename sdDescriptor<D>::type> *holderPtr =static_cast<sdHolder<typename sdDescriptor<D>::type> *>(holder.get());
         return holderPtr->item;
     };
@@ -33,11 +32,12 @@ protected:
         
         T item;
     };
-    std::unordered_map<EDescriptor, std::shared_ptr<sdProtoHolder>> descriptorSetHolders;
+    
+    std::unordered_map<EDescriptor, std::shared_ptr<sdProtoHolder>> dataSetHolders;
 };
 
 
-#pragma specifications
+#pragma specifications of dataset
 
 template <EExtension E>
 class sdDataSet{};
@@ -52,34 +52,38 @@ public:
                                           sdDescriptor<SD_MEDIA_TIME_OFFSET>::type time_offset = 0,
                                           sdDescriptor<SD_MEDIA_GAIN>::type gain = 1.0){
         
-        descriptorSetHolders.emplace(SD_MEDIA_TYPE, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_MEDIA_TYPE>::type>(type)));
-        descriptorSetHolders.emplace(SD_MEDIA_LOCATION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_MEDIA_LOCATION>::type>(location)));
-        descriptorSetHolders.emplace(SD_MEDIA_CHANNEL, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_MEDIA_CHANNEL>::type>(channel)));
-        descriptorSetHolders.emplace(SD_MEDIA_TIME_OFFSET, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_MEDIA_TIME_OFFSET>::type>(time_offset)));
-        descriptorSetHolders.emplace(SD_MEDIA_GAIN, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_MEDIA_GAIN>::type>(gain)));
+        dataSetHolders.emplace(SD_MEDIA_TYPE, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_MEDIA_TYPE>::type>(type)));
+        dataSetHolders.emplace(SD_MEDIA_LOCATION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_MEDIA_LOCATION>::type>(location)));
+        dataSetHolders.emplace(SD_MEDIA_CHANNEL, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_MEDIA_CHANNEL>::type>(channel)));
+        dataSetHolders.emplace(SD_MEDIA_TIME_OFFSET, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_MEDIA_TIME_OFFSET>::type>(time_offset)));
+        dataSetHolders.emplace(SD_MEDIA_GAIN, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_MEDIA_GAIN>::type>(gain)));
     }
-    
 };
-
 
 template <>
-class sdDataSet<EExtension::SD_POINTSET>: public sdProtoDataSet {
+class sdDataSet<EExtension::SD_GROUP>: public sdProtoDataSet{
 public:
-    sdDataSet<EExtension::SD_POINTSET>(
-                                             sdDescriptor<EDescriptor::SD_POINTSET_CLOSED>::type closed,
-                                             sdDescriptor<EDescriptor::SD_POINTSET_SIZE>::type size,
-                                             sdDescriptor<EDescriptor::SD_POINTSET_POINT>::type point,
-                                             sdDescriptor<EDescriptor::SD_POINTSET_HANDLE>::type handle):
-    closed(closed),
-    size(size),
-    point(point),
-    handle(handle){}
-    
-protected:
-    sdDescriptor<EDescriptor::SD_POINTSET_CLOSED>::type closed;
-    sdDescriptor<EDescriptor::SD_POINTSET_SIZE>::type size;
-    sdDescriptor<EDescriptor::SD_POINTSET_POINT>::type point;
-    sdDescriptor<EDescriptor::SD_POINTSET_HANDLE>::type handle;
+    sdDataSet<EExtension::SD_GROUP>(
+                                    sdDescriptor<SD_GROUP_PRESENT>::type present = true,
+                                    sdDescriptor<SD_GROUP_POSITION>::type position = std::array<double, 3>{0,0,0},
+                                    sdDescriptor<SD_GROUP_ORIENTATION>::type orientation = std::array<double, 3>{0,0,0}){
+        dataSetHolders.emplace(SD_GROUP_PRESENT, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_GROUP_PRESENT>::type>(present)));
+        dataSetHolders.emplace(SD_GROUP_POSITION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_GROUP_POSITION>::type>(position)));
+        dataSetHolders.emplace(SD_GROUP_ORIENTATION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_GROUP_ORIENTATION>::type>(orientation)));
+    }
 };
 
+template <>
+class sdDataSet<EExtension::SD_POINTSET>: public sdProtoDataSet{
+public:
+    sdDataSet<EExtension::SD_POINTSET>(
+                                    sdDescriptor<SD_POINTSET_CLOSED>::type present = true,
+                                    sdDescriptor<SD_POINTSET_SIZE>::type size =  1,
+                                    sdDescriptor<SD_POINTSET_POINT>::type position = std::array<double, 3>{0,0,0}){
+        dataSetHolders.emplace(SD_POINTSET_CLOSED, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_POINTSET_CLOSED>::type>(present)));
+        dataSetHolders.emplace(SD_POINTSET_SIZE, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_POINTSET_SIZE>::type>(size)));
+        dataSetHolders.emplace(SD_POINTSET_POINT, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_POINTSET_POINT>::type>(position)));
+    }
+    
 
+};

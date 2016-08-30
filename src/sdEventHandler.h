@@ -250,7 +250,7 @@ inline std::map<EExtension, std::vector<std::shared_ptr<sdProtoEvent>>> sdEventH
     std::vector<std::shared_ptr<sdProtoEvent>> events = getEvents(time);
     std::map<EExtension, std::vector<std::shared_ptr<sdProtoEvent>>> categorizedEvents;
     for(auto event : events){
-        auto extension = sdExtension::getExtensionOfDescriptor(event->getDescriptor());
+        auto extension = sdSpec::getExtensionOfDescriptor(event->getDescriptor());
         if(categorizedEvents.find(extension) == categorizedEvents.end()){ // previously unused extension
             std::vector<std::shared_ptr<sdProtoEvent>> emptyVector;
             categorizedEvents.insert(std::pair<EExtension, std::vector<std::shared_ptr<sdProtoEvent>>>(extension,emptyVector));

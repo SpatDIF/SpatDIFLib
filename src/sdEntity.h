@@ -152,28 +152,28 @@ inline sdMeta<D> * const sdEntity::addMeta(typename sdDescriptor<D>::type value)
 }
 
 inline const std::shared_ptr<sdProtoMeta> sdEntity::addMeta(const std::string &extension, const std::string &descriptor, const std::string &value){
-    EDescriptor dtr = sdExtension::stringToDescriptor(extension, descriptor);
+    EDescriptor dtr = sdSpec::stringToDescriptor(extension, descriptor);
     if(dtr == EDescriptor::SD_ERROR) return nullptr; // undefined descriptor
     if(!isDescriptorValid(dtr)) return nullptr; // invalid descriptor
     
-    auto addMetaFunc = sdExtension::getAddMetaFunc(std::move(dtr));
+    auto addMetaFunc = sdSpec::getAddMetaFunc(std::move(dtr));
     return addMetaFunc(this, value);
 }
 
 
 template <EDescriptor D>
 inline sdEvent<D> * const sdEntity::addEvent(const double &time,  typename sdDescriptor<D>::type value){
-    if(!isDescriptorValid(D)) throw InvalidDescriptorException(sdExtension::descriptorToString(D) + " is not valid. Activate corresponding extension before using it."); // invalid descriptor
+    if(!isDescriptorValid(D)) throw InvalidDescriptorException(sdSpec::descriptorToString(D) + " is not valid. Activate corresponding extension before using it."); // invalid descriptor
     return sdEventHandler::addEvent<D>(time, value, this);
 }
 
 inline const std::shared_ptr<sdProtoEvent> sdEntity::addEvent(const std::string &time, const std::string &extension, const std::string &descriptor, const std::string &value){
-    EDescriptor dtr = sdExtension::stringToDescriptor(extension, descriptor);
+    EDescriptor dtr = sdSpec::stringToDescriptor(extension, descriptor);
     if(dtr == EDescriptor::SD_ERROR) return nullptr; // undefined descriptor
     if(!isDescriptorValid(dtr)) return nullptr; // invalid descriptor
     
     auto dtime = std::stod(time);
-    auto addEventFunc = sdExtension::getAddEventFunc(std::move(dtr));
+    auto addEventFunc = sdSpec::getAddEventFunc(std::move(dtr));
     return addEventFunc(this, dtime, value);
 }
 
@@ -190,8 +190,8 @@ inline const typename sdDescriptor<D>::type * const sdEntity::getValue(const dou
     auto event = getEvent<D>(time);
     if(!event){
         try{
-            EExtension targetExtension = sdExtension::getExtensionOfDescriptor(D);
-            EDescriptor idDescriptor = sdExtension::getIDDescriptorOfExtension(targetExtension);
+            EExtension targetExtension = sdSpec::getExtensionOfDescriptor(D);
+            EDescriptor idDescriptor = sdSpec::getIDDescriptorOfExtension(targetExtension);
             std::vector<std::shared_ptr<sdProtoEvent>>  eventsAtTime = getEvents(time);
             auto it = std::find_if(eventsAtTime.begin(), eventsAtTime.end(), [&idDescriptor](std::shared_ptr<sdProtoEvent> &event)->bool{
                 return event->getDescriptor() == idDescriptor;

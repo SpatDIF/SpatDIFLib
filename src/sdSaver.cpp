@@ -111,7 +111,7 @@ XMLElement* sdSaver::XMLMetaSection(XMLDocument &xml, sdScene *scene){
         XMLText* text = xml.NewText(meta->getValueAsString().c_str());
         element->InsertEndChild(text);
         
-        std::string relevantExtension = sdExtension::extensionToString(sdExtension::getExtensionOfDescriptor(meta->getDescriptor()));
+        std::string relevantExtension = sdSpec::extensionToString(sdSpec::getExtensionOfDescriptor(meta->getDescriptor()));
         
         if(relevantExtension == "core"){
             kind->InsertEndChild(element);
@@ -181,7 +181,7 @@ std::string sdSaver::XMLFromScene(sdScene *scene){
                 for(auto entityEvent : entityEventsAtTime){
                     XMLElement* eventElement = xml.NewElement(entityEvent->getDescriptorAsString().c_str());
                     eventElement->InsertEndChild(xml.NewText(entityEvent->getValueAsString().c_str()));
-                    std::string relevantExtension = sdExtension::extensionToString(sdExtension::getExtensionOfDescriptor(entityEvent->getDescriptor()));
+                    std::string relevantExtension = sdSpec::extensionToString(sdSpec::getExtensionOfDescriptor(entityEvent->getDescriptor()));
         
                     if(relevantExtension == "core"){
                         kindElement->InsertEndChild(eventElement);

@@ -16,11 +16,15 @@
 
 #pragma once
 
+/*!
+ This class is responsible for answering questions about specifications defined in sdDescriptor.h and .cpp from other classes.
+
+ */
 
 class sdEntity;
 class sdProtoEvent;
 class sdProtoMeta;
-class sdExtension {
+class sdSpec {
 protected:
     struct sdDSpec{
         sdDSpec(EDescriptor descriptor,

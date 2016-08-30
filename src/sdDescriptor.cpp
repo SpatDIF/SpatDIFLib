@@ -24,7 +24,7 @@
 
 // the following table defines the relationship between extensions and descriptors, descriptor enum and string
 
-const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
+const std::vector<sdSpec::sdESpec> sdSpec::spatDIFSpec= {
     sdESpec(EExtension::SD_CORE, "core", {
         DEFINE_DESCRIPTOR(SD_TYPE,"type"),
         DEFINE_DESCRIPTOR(SD_PRESENT,"present"),

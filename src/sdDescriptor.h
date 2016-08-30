@@ -524,6 +524,7 @@ struct sdDescriptor<EDescriptor::SD_POINTSET_POINT>{
     static void validateValue(type &value){}
 };
 
+
 template <>
 struct sdDescriptor<EDescriptor::SD_POINTSET_HANDLE>{
     static constexpr int NElements = 3;

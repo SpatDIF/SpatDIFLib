@@ -558,7 +558,7 @@ inline const typename sdDescriptor<D>::type * const sdScene::getValue(std::strin
 inline bool sdScene::addExtension(EExtension extension){
     auto ret =  activatedExtensionSet.insert(extension).second;
     if(ret){
-        auto descriptors = sdExtension::getDescriptorsForExtension(extension);
+        auto descriptors = sdSpec::getDescriptorsForExtension(extension);
         for(auto it = descriptors.begin(); descriptors.end() != it; it++) {
             validDescriptorSet.insert((*it).descriptor);
         }
@@ -568,7 +568,7 @@ inline bool sdScene::addExtension(EExtension extension){
 }
 
 inline bool sdScene::addExtension(std::string extension){
-    auto ext = sdExtension::stringToExtension(extension);
+    auto ext = sdSpec::stringToExtension(extension);
     if(ext == EExtension::SD_EXTENSION_ERROR){
         std::cerr << extension << " no such extension" << std::endl;
         return false;
@@ -579,7 +579,7 @@ inline bool sdScene::addExtension(std::string extension){
 inline std::unordered_set<std::string> sdScene::getActivatedExtensionsAsStrings() const{
     std::unordered_set<std::string> set;
     for(auto it = activatedExtensionSet.begin(); it != activatedExtensionSet.end(); it++){
-        set.insert(sdExtension::extensionToString(*it));
+        set.insert(sdSpec::extensionToString(*it));
     }
     return std::move(set);
 }
@@ -595,14 +595,14 @@ inline bool sdScene::isExtensionActivated(EExtension extension) const{
 }
 
 inline bool sdScene::isExtensionActivated(std::string extension) const{
-    auto ext = sdExtension::stringToExtension(extension);
+    auto ext = sdSpec::stringToExtension(extension);
     if(ext == EExtension::SD_EXTENSION_ERROR) return false;
     return isExtensionActivated(ext);
 }
 
 inline bool sdScene::removeExtension(EExtension extension){
     if (extension == EExtension::SD_CORE) return false;
-    auto descriptors = sdExtension::getDescriptorsForExtension(extension);
+    auto descriptors = sdSpec::getDescriptorsForExtension(extension);
     for(auto it = descriptors.begin(); it != descriptors.end(); it++) {
         validDescriptorSet.erase((*it).descriptor);
     }
@@ -611,7 +611,7 @@ inline bool sdScene::removeExtension(EExtension extension){
 }
 
 inline bool sdScene::removeExtension(std::string extension){
-    auto ext = sdExtension::stringToExtension(extension);
+    auto ext = sdSpec::stringToExtension(extension);
     if(ext == EExtension::SD_EXTENSION_ERROR) return false;
     return removeExtension(ext);
 }
