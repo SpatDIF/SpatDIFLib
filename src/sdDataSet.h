@@ -73,19 +73,6 @@ public:
     }
 };
 
-template <>
-class sdDataSet<EExtension::SD_GROUP>: public sdProtoDataSet{
-public:
-    sdDataSet<EExtension::SD_GROUP>(
-                                    sdDescriptor<SD_GROUP_PRESENT>::type present = true,
-                                    sdDescriptor<SD_GROUP_POSITION>::type position = std::array<double, 3>{0,0,0},
-                                    sdDescriptor<SD_GROUP_ORIENTATION>::type orientation = std::array<double, 3>{0,0,0}){
-        dataSetHolders.emplace(SD_GROUP_PRESENT, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_GROUP_PRESENT>::type>(present)));
-        dataSetHolders.emplace(SD_GROUP_POSITION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_GROUP_POSITION>::type>(position)));
-        dataSetHolders.emplace(SD_GROUP_ORIENTATION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_GROUP_ORIENTATION>::type>(orientation)));
-    }
-};
-
 
 template <>
 class sdDataSet<EExtension::SD_SHAPE>: public sdProtoDataSet{

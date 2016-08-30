@@ -241,6 +241,8 @@ TEST_CASE("group"){
     
     REQUIRE( entity->getValueAsString<SD_GROUP_MEMBERSHIP>(3.0) == "alpha_group");
     REQUIRE( *entity->getValue<SD_GROUP_MEMBERSHIP>(3.0) == "alpha_group");
+    
+
 }
 
 TEST_CASE("source spread"){
