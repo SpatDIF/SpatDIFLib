@@ -13,9 +13,9 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#define ADD_EVENT( descriptor ) [](sdEntity * entity, double time, std::string value){ return entity->addProtoEvent<descriptor>(time, sdDescriptor<descriptor>::stringTo(value), entity);}
+#define ADD_EVENT( descriptor ) [](sdProtoEntity * entity, double time, std::string value){ return entity->addProtoEvent<descriptor>(time, sdDescriptor<descriptor>::stringTo(value), entity);}
 
-#define ADD_META( descriptor ) [](sdEntity * entity, std::string value){ return entity->addProtoMeta<descriptor>(sdDescriptor<descriptor>::stringTo(value), entity);}
+#define ADD_META( descriptor ) [](sdProtoEntity * entity, std::string value){ return entity->addProtoMeta<descriptor>(sdDescriptor<descriptor>::stringTo(value), entity);}
 
 #define DEFINE_DESCRIPTOR( descriptor, string ) sdDSpec(descriptor, string, ADD_EVENT(descriptor), ADD_META(descriptor))
 

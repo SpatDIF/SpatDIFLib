@@ -35,11 +35,11 @@ public:
 
     /*! this function is the only way to instantiate sdEvent.*/
     template <EDescriptor D>
-    std::shared_ptr<sdProtoEvent> addProtoEvent(const double &time, typename sdDescriptor<D>::type value, sdEntity * entity);
+    std::shared_ptr<sdProtoEvent> addProtoEvent(const double &time, typename sdDescriptor<D>::type value, sdProtoEntity * entity);
     
     /*! return value cast to a specific subclass event.*/
     template <EDescriptor D>
-    sdEvent<D> * const addEvent(const double &time, typename sdDescriptor<D>::type value, sdEntity * entity);
+    sdEvent<D> * const addEvent(const double &time, typename sdDescriptor<D>::type value, sdProtoEntity * entity);
 
     /*! @} */
     
@@ -205,7 +205,7 @@ public:
 };
 
 template <EDescriptor D>
-inline std::shared_ptr<sdProtoEvent> sdEventHandler::addProtoEvent(const double &time,  typename sdDescriptor<D>::type value, sdEntity * entity){
+inline std::shared_ptr<sdProtoEvent> sdEventHandler::addProtoEvent(const double &time,  typename sdDescriptor<D>::type value, sdProtoEntity * entity){
     
     if(time < 0.0){ throw  InvalidTimeException(time);}
     sdDescriptor<D>::validateValue(value);
@@ -226,7 +226,7 @@ inline std::shared_ptr<sdProtoEvent> sdEventHandler::addProtoEvent(const double 
 }
 
 template <EDescriptor D>
-inline sdEvent<D> * const sdEventHandler::addEvent(const double &time, typename sdDescriptor<D>::type value, sdEntity * entity){
+inline sdEvent<D> * const sdEventHandler::addEvent(const double &time, typename sdDescriptor<D>::type value, sdProtoEntity * entity){
     return dynamic_cast<sdEvent<D>*>(addProtoEvent<D>(time, value, entity).get());
 }
 

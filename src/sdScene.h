@@ -23,6 +23,7 @@
 #include "sdDescriptor.h"
 #include "sdInfo.h"
 #include "sdEntity.h"
+#include "sdGroup.h"
 #include "sdDataSetHandler.h"
 
 /*! is responsible for 
@@ -31,21 +32,22 @@
  */
 class sdScene : public sdDataSetHandler{
     friend sdEntity;
+    friend sdProtoEntity;
     
 protected:
     std::unordered_map <std::string, sdEntity> entities; //!< a map of sdEntities
-    std::vector<std::pair<sdEntity*, std::shared_ptr<sdProtoMeta>>> allMetas; //!< an alias pointer to all metas
-    std::vector<std::pair<sdEntity*, std::shared_ptr<sdProtoEvent>>> allEvents; //!< an alias pointer to all events
+    std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoMeta>>> allMetas; //!< an alias pointer to all metas
+    std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> allEvents; //!< an alias pointer to all events
     std::set <EExtension> activatedExtensionSet; //!< a set of activated extension
     std::set <EDescriptor> validDescriptorSet; //!< a set of valid descriptor
     
     EOrdering ordering; //!< ordering flag
     sdInfo info; //!< contains "info" part of the meta section
     
-    void addMetaAlias(sdEntity * const entity, const std::shared_ptr<sdProtoMeta>);
-    void addEventAlias(sdEntity * const entity, const std::shared_ptr<sdProtoEvent>);
-    bool removeMetaAlias(const sdEntity* const entity, const EDescriptor & descriptor);
-    bool removeEventAlias(const sdEntity* const entity, const double &time, const EDescriptor & descriptor);
+    void addMetaAlias(sdProtoEntity * const entity, const std::shared_ptr<sdProtoMeta>);
+    void addEventAlias(sdProtoEntity * const entity, const std::shared_ptr<sdProtoEvent>);
+    bool removeMetaAlias(const sdProtoEntity* const entity, const EDescriptor & descriptor);
+    bool removeEventAlias(const sdProtoEntity* const entity, const double &time, const EDescriptor & descriptor);
     void sortAllEvents();
     
 private:
@@ -175,7 +177,7 @@ public:
      @param name the name of a designated entity
      */
     sdEntity *  const getEntity(const std::string &name);
-    std::string getEntityName(const sdEntity * entity);
+    std::string getEntityName(const sdProtoEntity * entity);
     
     /*! return the entity set */
     const std::unordered_map<std::string, sdEntity> &getEntities() const;
@@ -218,16 +220,16 @@ public:
     const typename sdDescriptor<D>::type *  const getValue(std::string name, double time);
     
     /*!   collect next event(s) from all entities and report them  */
-    std::vector<std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>>> getNextEventsFromAllEntities(const double &time) const;
-    std::vector<std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>>> getPreviousEventsFromAllEntities(const double &time) const;
+    std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>> getNextEventsFromAllEntities(const double &time) const;
+    std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>> getPreviousEventsFromAllEntities(const double &time) const;
     
     /*!   collect first event(s) from all entities and report them  */
-    std::vector<std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>>>  getFirstEventsFromAllEntities() const;
-    std::vector<std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>>>  getLastEventsFromAllEntities() const;
+    std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>>  getFirstEventsFromAllEntities() const;
+    std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>>  getLastEventsFromAllEntities() const;
     
     /*!   collect  event(s) of all entities at a specific time */
-    std::vector<std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>>> getEventsFromAllEntities(const double &time) const;
-    std::vector<std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>>> getEventsFromAllEntities(const double &start, const double &end) const;
+    std::vector<std::pair<const sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> getEventsFromAllEntities(const double &time) const;
+    std::vector<std::pair<const sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> getEventsFromAllEntities(const double &start, const double &end) const;
     
     /*!
      asks all existing entities in the scene the time of next event and returns the soonest event from @ptime
@@ -239,8 +241,8 @@ public:
     std::pair<double, bool> getNextEventTime(const double &time);
     std::pair<double, bool> getDeltaTimeToNextEvent(const double &time);
 
-    const std::vector<std::pair<sdEntity*, std::shared_ptr<sdProtoEvent>>> &getAllEvents();
-    const std::vector<std::pair<sdEntity*, std::shared_ptr<sdProtoMeta>>> &getAllMetas();
+    const std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> &getAllEvents();
+    const std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoMeta>>> &getAllMetas();
 
     /*!
      @}
@@ -322,8 +324,8 @@ public:
 #pragma mark protected functions
 inline void sdScene::sortAllEvents(){
     std::sort(allEvents.begin(), allEvents.end(),
-              [](std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>> eventA,
-                 std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>> eventB)->bool{
+              [](std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>> eventA,
+                 std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>> eventB)->bool{
                   return eventA.second->getTime() < eventB.second->getTime();
               });
 }
@@ -390,19 +392,19 @@ inline bool sdScene::isDescriptorValid(const EDescriptor &descriptor) const{
     return !(validDescriptorSet.find(descriptor) == validDescriptorSet.end());
 }
 
-inline void sdScene::addMetaAlias(sdEntity * const entity, std::shared_ptr<sdProtoMeta> event){
+inline void sdScene::addMetaAlias(sdProtoEntity * const entity, std::shared_ptr<sdProtoMeta> event){
     removeMetaAlias(entity, event->getDescriptor());
     allMetas.push_back(std::make_pair(entity, event));
 }
 
-inline void sdScene::addEventAlias(sdEntity * const entity, std::shared_ptr<sdProtoEvent> event){
+inline void sdScene::addEventAlias(sdProtoEntity * const entity, std::shared_ptr<sdProtoEvent> event){
     removeEventAlias(entity, event->getTime(), event->getDescriptor());
     allEvents.push_back(std::make_pair(entity, event));
     sortAllEvents();
 }
 
-inline bool sdScene::removeMetaAlias(const sdEntity* const entity, const EDescriptor & descriptor ){
-    auto it = std::find_if(allMetas.begin(), allMetas.end(), [&entity, &descriptor]( std::pair<const sdEntity * ,std::shared_ptr<sdProtoMeta>> meta){
+inline bool sdScene::removeMetaAlias(const sdProtoEntity* const entity, const EDescriptor & descriptor ){
+    auto it = std::find_if(allMetas.begin(), allMetas.end(), [&entity, &descriptor]( std::pair<const sdProtoEntity * ,std::shared_ptr<sdProtoMeta>> meta){
         return (meta.second->getDescriptor() == descriptor) && (meta.first == entity);
     });
     if(it == allMetas.end()) return false;
@@ -410,8 +412,8 @@ inline bool sdScene::removeMetaAlias(const sdEntity* const entity, const EDescri
     return true;
 }
 
-inline bool sdScene::removeEventAlias(const sdEntity* const entity, const double &time, const EDescriptor & descriptor ){
-    auto it = std::find_if(allEvents.begin(), allEvents.end(), [&entity, &descriptor, &time]( std::pair<const sdEntity * ,std::shared_ptr<sdProtoEvent>> event){
+inline bool sdScene::removeEventAlias(const sdProtoEntity* const entity, const double &time, const EDescriptor & descriptor ){
+    auto it = std::find_if(allEvents.begin(), allEvents.end(), [&entity, &descriptor, &time]( std::pair<const sdProtoEntity * ,std::shared_ptr<sdProtoEvent>> event){
         return sdUtils::almostEqual(event.second->getTime(), time) && (event.second->getDescriptor() == descriptor) && (event.first == entity);
     });
     if(it == allEvents.end()) return false;
@@ -420,8 +422,8 @@ inline bool sdScene::removeEventAlias(const sdEntity* const entity, const double
 }
 
 /*!   collect next event(s) from all entities and report them  */
-inline std::vector<std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>>> sdScene::getEventsFromAllEntities(const double &time) const{
-    std::vector<std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>>> matchedEvents;
+inline std::vector<std::pair<const sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> sdScene::getEventsFromAllEntities(const double &time) const{
+    std::vector<std::pair<const sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> matchedEvents;
     for (auto it = allEvents.begin(); it != allEvents.end(); it++) {
         if(sdUtils::almostEqual((*it).second->getTime(), time)){matchedEvents.push_back(*it);}
     }
@@ -430,22 +432,22 @@ inline std::vector<std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>>> sd
 }
 
 
-inline std::vector<std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>>> sdScene::getEventsFromAllEntities(const double &start, const double &end) const{
-    std::vector<std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>>> vector;
-    for_each(allEvents.begin(), allEvents.end(), [&vector, &start, &end]( std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>> event ){
+inline std::vector<std::pair<const sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> sdScene::getEventsFromAllEntities(const double &start, const double &end) const{
+    std::vector<std::pair<const sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> vector;
+    for_each(allEvents.begin(), allEvents.end(), [&vector, &start, &end]( std::pair<const sdProtoEntity*, std::shared_ptr<sdProtoEvent>> event ){
         if( start <= event.second->getTime() && event.second->getTime() <= end){ vector.push_back(event);}
     });
     return std::move(vector);
 }
 
 
-inline std::vector<std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>>> sdScene::getNextEventsFromAllEntities(const double &time) const{
-    auto result = std::find_if(allEvents.begin(), allEvents.end(), [&time](std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>> event){
+inline std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>> sdScene::getNextEventsFromAllEntities(const double &time) const{
+    auto result = std::find_if(allEvents.begin(), allEvents.end(), [&time](std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>> event){
         if(event.second->getTime() > time){return true;}
         else return false;
     });
     
-    if(result == allEvents.end()){return std::vector<std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>>>();}
+    if(result == allEvents.end()){return std::vector<std::pair<const sdProtoEntity*, std::shared_ptr<sdProtoEvent>>>();}
     return getEventsFromAllEntities((*result).second->getTime());
 }
 
@@ -474,37 +476,37 @@ inline std::pair<double, bool> sdScene::getDeltaTimeToNextEvent(const double &ti
     return std::make_pair(nextEventTime.first - time, true);
 }
 
-inline const std::vector<std::pair<sdEntity*, std::shared_ptr<sdProtoEvent>>> &sdScene::getAllEvents(){
+inline const std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> &sdScene::getAllEvents(){
     return allEvents;
 }
 
-inline const std::vector<std::pair<sdEntity*, std::shared_ptr<sdProtoMeta>>> &sdScene::getAllMetas(){
+inline const std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoMeta>>> &sdScene::getAllMetas(){
     return allMetas;
 }
 
-inline std::vector<std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>>> sdScene::getPreviousEventsFromAllEntities(const double &time) const{
-    auto result = std::find_if(allEvents.rbegin(), allEvents.rend(), [&time](std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>> event){
+inline std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>> sdScene::getPreviousEventsFromAllEntities(const double &time) const{
+    auto result = std::find_if(allEvents.rbegin(), allEvents.rend(), [&time](std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>> event){
         if(event.second->getTime() < time){return true;}
         else return false;
     });
     
-    if(result == allEvents.rend()){return std::vector<std::pair<const sdEntity*, std::shared_ptr<sdProtoEvent>>>();}
+    if(result == allEvents.rend()){return std::vector<std::pair<const sdProtoEntity*, std::shared_ptr<sdProtoEvent>>>();}
     return getEventsFromAllEntities((*result).second->getTime());
  
 }
 
 /*!   collect first event(s) from all entities and report them  */
-inline std::vector<std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>>>  sdScene::getFirstEventsFromAllEntities() const{
-    if(allEvents.empty()) return std::vector<std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>>> ();
+inline std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>>  sdScene::getFirstEventsFromAllEntities() const{
+    if(allEvents.empty()) return std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>> ();
     return getEventsFromAllEntities(allEvents.front().second->getTime());
 }
 
-inline std::vector<std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>>> sdScene::getLastEventsFromAllEntities() const{
-    if(allEvents.empty()) return std::vector<std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>>> ();
+inline std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>> sdScene::getLastEventsFromAllEntities() const{
+    if(allEvents.empty()) return std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>> ();
     return getEventsFromAllEntities(allEvents.back().second->getTime());
 }
 
-inline std::string sdScene::getEntityName(const sdEntity* entity){
+inline std::string sdScene::getEntityName(const sdProtoEntity* entity){
     for(auto it = entities.begin(); it != entities.end(); it++) {
         if(&((*it).second) == entity){
             return (*it).first;

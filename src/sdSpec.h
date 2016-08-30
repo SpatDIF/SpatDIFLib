@@ -21,7 +21,7 @@
 
  */
 
-class sdEntity;
+class sdProtoEntity;
 class sdProtoEvent;
 class sdProtoMeta;
 class sdSpec {
@@ -29,8 +29,8 @@ protected:
     struct sdDSpec{
         sdDSpec(EDescriptor descriptor,
                 std::string descriptorString,
-                std::function< std::shared_ptr<sdProtoEvent>(sdEntity*, double, std::string)> addEventFromStringFunc,
-                std::function< std::shared_ptr<sdProtoMeta>(sdEntity*, std::string)> addMetaFromStringFunc):
+                std::function< std::shared_ptr<sdProtoEvent>(sdProtoEntity*, double, std::string)> addEventFromStringFunc,
+                std::function< std::shared_ptr<sdProtoMeta>(sdProtoEntity*, std::string)> addMetaFromStringFunc):
         descriptor(descriptor),
         descriptorString(descriptorString),
         addEventFromStringFunc(addEventFromStringFunc),
@@ -38,8 +38,8 @@ protected:
 
         EDescriptor descriptor;
         std::string descriptorString;
-        std::function< std::shared_ptr<sdProtoEvent>(sdEntity * entity, double, std::string)> addEventFromStringFunc;
-        std::function< std::shared_ptr<sdProtoMeta>(sdEntity * entity, std::string)> addMetaFromStringFunc;
+        std::function< std::shared_ptr<sdProtoEvent>(sdProtoEntity * entity, double, std::string)> addEventFromStringFunc;
+        std::function< std::shared_ptr<sdProtoMeta>(sdProtoEntity * entity, std::string)> addMetaFromStringFunc;
     };
     
     struct sdESpec{
@@ -140,7 +140,7 @@ public:
         return stringToDescriptor(extension, descriptorString);
     }
     
-    static std::function<std::shared_ptr<sdProtoEvent>(sdEntity* entity, double,std::string)> getAddEventFunc(EDescriptor descriptor){
+    static std::function<std::shared_ptr<sdProtoEvent>(sdProtoEntity* entity, double,std::string)> getAddEventFunc(EDescriptor descriptor){
         auto ext = getExtensionOfDescriptor(descriptor);
         auto descriptors = getDescriptorsForExtension(ext);
         auto it = std::find_if(descriptors.begin(), descriptors.end(), [&descriptor](sdDSpec dSpec){ return dSpec.descriptor == descriptor;});
@@ -148,7 +148,7 @@ public:
         return (*it).addEventFromStringFunc;
     }
     
-    static std::function<std::shared_ptr<sdProtoMeta>(sdEntity* entity, std::string)> getAddMetaFunc(EDescriptor descriptor){
+    static std::function<std::shared_ptr<sdProtoMeta>(sdProtoEntity* entity, std::string)> getAddMetaFunc(EDescriptor descriptor){
         auto ext = getExtensionOfDescriptor(descriptor);
         auto descriptors = getDescriptorsForExtension(ext);
         auto it = std::find_if(descriptors.begin(), descriptors.end(), [&descriptor](sdDSpec dSpec){ return dSpec.descriptor == descriptor;});

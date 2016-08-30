@@ -45,7 +45,7 @@ public:
      returns an immutable pointer to its parent entity
      @returns a pointer to its parent entity
      */
-    const sdEntity * const getParent() const;
+    const sdProtoEntity * const getParent() const;
     
     /*!
      returns value of the event as a std::string
@@ -54,13 +54,13 @@ public:
     virtual const std::string getValueAsString() const = 0;
 
 protected:
-    const sdEntity * const parent;/*!< a pointer to the belonging entity. unmutable */
+    const sdProtoEntity * const parent;/*!< a pointer to the belonging entity. unmutable */
     const EDescriptor descriptor /*< the descriptor type of event. unmutable */;
-    sdProtoMeta(const EDescriptor descriptor, const sdEntity * const parent);
+    sdProtoMeta(const EDescriptor descriptor, const sdProtoEntity * const parent);
 
 };
 
-inline sdProtoMeta::sdProtoMeta(const EDescriptor descriptor, const sdEntity * const parent):
+inline sdProtoMeta::sdProtoMeta(const EDescriptor descriptor, const sdProtoEntity * const parent):
 descriptor(descriptor),
 parent(parent)
 {}
@@ -73,7 +73,7 @@ inline std::string sdProtoMeta::getDescriptorAsString() const{
     return sdSpec::descriptorToString(descriptor);
 }
 
-inline const sdEntity * const sdProtoMeta::getParent() const{
+inline const sdProtoEntity * const sdProtoMeta::getParent() const{
     return parent;
 }
 
@@ -91,7 +91,7 @@ protected:
 public:
     
     /*! constructor with initialization. should be invoked by the subclass*/
-    sdMeta(const sdEntity * const parent, const typename sdDescriptor<D>::type &value):
+    sdMeta(const sdProtoEntity * const parent, const typename sdDescriptor<D>::type &value):
     sdProtoMeta(D, parent), value(value){}
     
     /*! @name Value handling
