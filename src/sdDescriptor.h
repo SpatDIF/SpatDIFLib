@@ -131,10 +131,10 @@ typedef enum {
     SD_AUTOMATION_LOOP,
     
     /// 5.2.4 shape
+    SD_SHAPE_ID,
     SD_SHAPE_DIRECTION,
     SD_SHAPE_CLOSED,
     SD_SHAPE_TYPE,
-    SD_SHAPE_ID,
     
     /** 5.3 layer-related extensions **/
     
@@ -672,6 +672,16 @@ struct sdDescriptor<EDescriptor::SD_AUTOMATION_FUNCTION>{
 /// 5.2.4 Shape
 
 template <>
+struct sdDescriptor<EDescriptor::SD_SHAPE_ID>{
+    typedef std::string type;
+    const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
+};
+
+template <>
 struct sdDescriptor<EDescriptor::SD_SHAPE_DIRECTION>{
     typedef bool type; // CCW, CW
     const static bool interpolable = false;
@@ -693,23 +703,35 @@ struct sdDescriptor<EDescriptor::SD_SHAPE_CLOSED>{
 
 template <>
 struct sdDescriptor<EDescriptor::SD_SHAPE_TYPE>{
-    typedef std::string type;
-    const static bool interpolable = false;
+    typedef enum{
+        SD_POINT,
+        SD_LINE,
+        SD_TRIANGLE,
+        SD_RECTANGLE,
+        SD_CIRCLE,
+        SD_POINTSET
+    } EType;
     
-    static type stringTo(const std::string &str){return str;}
-    static std::string toString(const type &value){return value;}
+    typedef EType type;
+    const static bool interpolable = false;
+    static constexpr int NEType = 6;
+    static std::array<std::pair<EType, std::string>, NEType> &table(){
+        static std::array<std::pair<EType, std::string>,NEType> table={
+            std::make_pair(EType::SD_POINT, "point"),
+            std::make_pair(EType::SD_LINE, "line"),
+            std::make_pair(EType::SD_TRIANGLE, "triangle"),
+            std::make_pair(EType::SD_RECTANGLE, "rectangle"),
+            std::make_pair(EType::SD_CIRCLE, "circle"),
+            std::make_pair(EType::SD_POINTSET, "pointset")
+        };
+        return table;
+    }
+    
+    static type stringTo(const std::string &str){return sdUtils::stringToByTable<type, NEType>(str,table());}
+    static std::string toString(const type &value){return sdUtils::toStringByTable<type, NEType>(value, table());}
     static void validateValue(type &value){}
 };
 
-template <>
-struct sdDescriptor<EDescriptor::SD_SHAPE_ID>{
-    typedef std::string type;
-    const static bool interpolable = false;
-    
-    static type stringTo(const std::string &str){return str;}
-    static std::string toString(const type &value){return value;}
-    static void validateValue(type &value){}
-};
 
 //***** 5.3. Layer-Related Extensions *****//
 

@@ -1,5 +1,5 @@
 //
-//  sdDescriptorCollectionHandler.h
+//  sdDataSetHandler.h
 //  libSpatDIFTest
 //
 //  Created by Chikashi Miyama on 30/08/16.
@@ -8,46 +8,46 @@
 
 #pragma once
 
-class sdDescriptorCollectionHandler{
+class sdDataSetHandler{
 public:
     using sdDataSetCollection = std::unordered_map<std::string, std::shared_ptr<sdProtoDataSet>>;
     
     template<EExtension Extension>
-    void addDescriptorSet(EExtension extension, std::string identifier, sdDataSet<Extension> set){
+    void addDataSet(EExtension extension, std::string identifier, sdDataSet<Extension> set){
         auto targetCollection = descriptorSetCollections.find(extension);
         if(targetCollection == descriptorSetCollections.end()) throw InvalidExtensionException("extension not activated");
         std::shared_ptr<sdProtoDataSet> setPtr(new sdProtoDataSet(set));
-        addDescriptorSet(extension, identifier, setPtr);
+        addDataSet(extension, identifier, setPtr);
     }
     
-    void addDescriptorSet(EExtension extension, std::string identifier, std::shared_ptr<sdProtoDataSet> set){
+    void addDataSet(EExtension extension, std::string identifier, std::shared_ptr<sdProtoDataSet> set){
         auto targetCollection = descriptorSetCollections.find(extension);
         if(targetCollection == descriptorSetCollections.end()) throw InvalidExtensionException("extension not activated");
         (*targetCollection).second.emplace(identifier, set);
     }
     
-    void removeDescriptorSet(EExtension extension, std::string identifier){
+    void removeDataSet(EExtension extension, std::string identifier){
         auto targetCollection = descriptorSetCollections.find(extension);
         if(targetCollection == descriptorSetCollections.end()) throw InvalidExtensionException("extension not activated");
         (*targetCollection).second.erase(identifier);
     }
     
-    std::shared_ptr<sdProtoDataSet> getProtoDescriptorSet(EExtension extension, std::string identifier){
+    std::shared_ptr<sdProtoDataSet> getProtoDataSet(EExtension extension, std::string identifier){
         auto targetCollection = descriptorSetCollections.find(extension);
         if(targetCollection == descriptorSetCollections.end()) throw InvalidExtensionException("extension not activated");
         return (*targetCollection).second.at(identifier);
     }
     
 protected:
-    void addDescriptorSetCollection(EExtension extension){
+    void addDataSetCollection(EExtension extension){
         descriptorSetCollections.emplace(extension, sdDataSetCollection());
     }
     
-    void removeDescriptorSetCollection(EExtension extension){
+    void removeDataSetCollection(EExtension extension){
         descriptorSetCollections.erase(extension);
     }
     
-    void copy(const sdDescriptorCollectionHandler &origin){
+    void copy(const sdDataSetHandler &origin){
         descriptorSetCollections = origin.descriptorSetCollections;
     }
     

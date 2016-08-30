@@ -22,7 +22,6 @@
 		6217DE091D5B218A0048C466 /* JSONWorker.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D4A1CA2AFBD001179C5 /* JSONWorker.o */; };
 		6217DE0A1D5B218A0048C466 /* JSONWriter.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D4B1CA2AFBD001179C5 /* JSONWriter.o */; };
 		6217DE0B1D5B218A0048C466 /* libjson.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D4C1CA2AFBD001179C5 /* libjson.o */; };
-		6217DE0C1D5B21930048C466 /* descriptor_sanity_check.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6217DDEE1D5B20F10048C466 /* descriptor_sanity_check.cpp */; };
 		6217DE0D1D5B219E0048C466 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720C41C29966100135148 /* tinyxml2.cpp */; };
 		6217DE0E1D5B219E0048C466 /* sdEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B31C236EDC009E9347 /* sdEntity.cpp */; };
 		6217DE0F1D5B219E0048C466 /* sdLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720D51C2D8C2600135148 /* sdLoader.cpp */; };
@@ -61,6 +60,8 @@
 		629720DB1C2E1F0600135148 /* sdSaver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720DA1C2E1F0600135148 /* sdSaver.cpp */; };
 		62A24D101D6343B20019F04F /* sdDescriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6217DDE51D5B20510048C466 /* sdDescriptor.cpp */; };
 		62AF37BB1C2373A1009E9347 /* sdEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B31C236EDC009E9347 /* sdEntity.cpp */; };
+		62CBD7A11D757EBC008F00CC /* descriptor_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62CBD7A01D757EBC008F00CC /* descriptor_test.cpp */; };
+		62CBD7A21D757F00008F00CC /* descriptor_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62CBD7A01D757EBC008F00CC /* descriptor_test.cpp */; };
 		62D8B0311C37462900AC1D31 /* oldtest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62D8B0301C37462900AC1D31 /* oldtest.cpp */; };
 		62D8B0351C3746A500AC1D31 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720C41C29966100135148 /* tinyxml2.cpp */; };
 		62D8B0371C3746A500AC1D31 /* sdEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B31C236EDC009E9347 /* sdEntity.cpp */; };
@@ -102,8 +103,7 @@
 /* Begin PBXFileReference section */
 		6217DDE51D5B20510048C466 /* sdDescriptor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdDescriptor.cpp; path = ../../sdDescriptor.cpp; sourceTree = "<group>"; };
 		6217DDE61D5B20510048C466 /* sdDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sdDescriptor.h; path = ../../sdDescriptor.h; sourceTree = "<group>"; };
-		6217DDEE1D5B20F10048C466 /* descriptor_sanity_check.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = descriptor_sanity_check.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		6217DDF71D5B21080048C466 /* descriptor_sanity_check */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = descriptor_sanity_check; sourceTree = BUILT_PRODUCTS_DIR; };
+		6217DDF71D5B21080048C466 /* descriptortest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = descriptortest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6217DE171D5B2B1D0048C466 /* sdUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdUtils.h; path = ../../sdUtils.h; sourceTree = "<group>"; };
 		62401D3F1CA2AFBD001179C5 /* internalJSONNode.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = internalJSONNode.o; path = ../../libs/libjson/Objects_static/internalJSONNode.o; sourceTree = "<group>"; };
 		62401D401CA2AFBD001179C5 /* JSONAllocator.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = JSONAllocator.o; path = ../../libs/libjson/Objects_static/JSONAllocator.o; sourceTree = "<group>"; };
@@ -123,7 +123,7 @@
 		62401D5E1CA2E947001179C5 /* sdEventHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdEventHandler.h; path = ../../sdEventHandler.h; sourceTree = "<group>"; };
 		627FA4C81D74916D007C0C8A /* sdMeta.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdMeta.h; path = ../../sdMeta.h; sourceTree = "<group>"; };
 		627FA4C91D75698D007C0C8A /* sdDataSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = sdDataSet.h; path = ../../sdDataSet.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		627FA4CA1D756B68007C0C8A /* sdDescriptorCollectionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = sdDescriptorCollectionHandler.h; path = ../../sdDescriptorCollectionHandler.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		627FA4CA1D756B68007C0C8A /* sdDataSetHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = sdDataSetHandler.h; path = ../../sdDataSetHandler.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		629720C41C29966100135148 /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxml2.cpp; path = ../../libs/tinyxml2/tinyxml2.cpp; sourceTree = "<group>"; };
 		629720D51C2D8C2600135148 /* sdLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdLoader.cpp; path = ../../sdLoader.cpp; sourceTree = "<group>"; };
 		629720DA1C2E1F0600135148 /* sdSaver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdSaver.cpp; path = ../../sdSaver.cpp; sourceTree = "<group>"; };
@@ -140,6 +140,7 @@
 		62BE10291C2F3C020033244E /* sdOSCResponder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdOSCResponder.h; path = ../../sdOSCResponder.h; sourceTree = "<group>"; };
 		62BE102A1C2F3C020033244E /* sdSaver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdSaver.h; path = ../../sdSaver.h; sourceTree = "<group>"; };
 		62BE102B1C2F3C020033244E /* sdScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdScene.h; path = ../../sdScene.h; sourceTree = "<group>"; };
+		62CBD7A01D757EBC008F00CC /* descriptor_test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = descriptor_test.cpp; path = TestCode/descriptor_test.cpp; sourceTree = SOURCE_ROOT; };
 		62D8B02E1C37462900AC1D31 /* oldtest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = oldtest; sourceTree = BUILT_PRODUCTS_DIR; };
 		62D8B0301C37462900AC1D31 /* oldtest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = oldtest.cpp; sourceTree = "<group>"; };
 		62D904C51C0E4E160065D8A5 /* spatdiftest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = spatdiftest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -213,14 +214,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6217DDED1D5B20F10048C466 /* DescriptorSanity */ = {
-			isa = PBXGroup;
-			children = (
-				6217DDEE1D5B20F10048C466 /* descriptor_sanity_check.cpp */,
-			);
-			path = DescriptorSanity;
-			sourceTree = "<group>";
-		};
 		62401D5B1CA2AFC5001179C5 /* JSON */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,7 +265,7 @@
 			children = (
 				62401D5D1CA2E8E3001179C5 /* sdMetaHandler.h */,
 				62401D5E1CA2E947001179C5 /* sdEventHandler.h */,
-				627FA4CA1D756B68007C0C8A /* sdDescriptorCollectionHandler.h */,
+				627FA4CA1D756B68007C0C8A /* sdDataSetHandler.h */,
 			);
 			name = StorageHandlers;
 			sourceTree = "<group>";
@@ -344,7 +337,6 @@
 				627FA4D21D756C91007C0C8A /* Library */,
 				62D904B91C0E4DBF0065D8A5 /* libSpatDIFTest */,
 				62D8B02F1C37462900AC1D31 /* oldtest */,
-				6217DDED1D5B20F10048C466 /* DescriptorSanity */,
 				62D904B81C0E4DBF0065D8A5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -354,7 +346,7 @@
 			children = (
 				62D904C51C0E4E160065D8A5 /* spatdiftest */,
 				62D8B02E1C37462900AC1D31 /* oldtest */,
-				6217DDF71D5B21080048C466 /* descriptor_sanity_check */,
+				6217DDF71D5B21080048C466 /* descriptortest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -362,6 +354,7 @@
 		62D904B91C0E4DBF0065D8A5 /* libSpatDIFTest */ = {
 			isa = PBXGroup;
 			children = (
+				62CBD7A01D757EBC008F00CC /* descriptor_test.cpp */,
 				62D904D11C0E50320065D8A5 /* spatdiftest.cpp */,
 			);
 			path = libSpatDIFTest;
@@ -370,9 +363,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6217DDF61D5B21080048C466 /* descriptor_sanity_check */ = {
+		6217DDF61D5B21080048C466 /* descriptortest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6217DDFB1D5B21080048C466 /* Build configuration list for PBXNativeTarget "descriptor_sanity_check" */;
+			buildConfigurationList = 6217DDFB1D5B21080048C466 /* Build configuration list for PBXNativeTarget "descriptortest" */;
 			buildPhases = (
 				6217DDF31D5B21080048C466 /* Sources */,
 				6217DDF41D5B21080048C466 /* Frameworks */,
@@ -382,9 +375,9 @@
 			);
 			dependencies = (
 			);
-			name = descriptor_sanity_check;
+			name = descriptortest;
 			productName = descriptor_sanity_check;
-			productReference = 6217DDF71D5B21080048C466 /* descriptor_sanity_check */;
+			productReference = 6217DDF71D5B21080048C466 /* descriptortest */;
 			productType = "com.apple.product-type.tool";
 		};
 		62D8B02D1C37462900AC1D31 /* oldtest */ = {
@@ -456,7 +449,7 @@
 			targets = (
 				62D904C41C0E4E160065D8A5 /* spatdiftest */,
 				62D8B02D1C37462900AC1D31 /* oldtest */,
-				6217DDF61D5B21080048C466 /* descriptor_sanity_check */,
+				6217DDF61D5B21080048C466 /* descriptortest */,
 			);
 		};
 /* End PBXProject section */
@@ -466,7 +459,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6217DE0C1D5B21930048C466 /* descriptor_sanity_check.cpp in Sources */,
+				62CBD7A21D757F00008F00CC /* descriptor_test.cpp in Sources */,
 				6217DE0D1D5B219E0048C466 /* tinyxml2.cpp in Sources */,
 				6217DE0E1D5B219E0048C466 /* sdEntity.cpp in Sources */,
 				6217DE0F1D5B219E0048C466 /* sdLoader.cpp in Sources */,
@@ -496,6 +489,7 @@
 				629720D61C2D8C2600135148 /* sdLoader.cpp in Sources */,
 				62D904D21C0E50320065D8A5 /* spatdiftest.cpp in Sources */,
 				629720DB1C2E1F0600135148 /* sdSaver.cpp in Sources */,
+				62CBD7A11D757EBC008F00CC /* descriptor_test.cpp in Sources */,
 				62AF37BB1C2373A1009E9347 /* sdEntity.cpp in Sources */,
 				6217DDE71D5B20510048C466 /* sdDescriptor.cpp in Sources */,
 			);
@@ -649,7 +643,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6217DDFB1D5B21080048C466 /* Build configuration list for PBXNativeTarget "descriptor_sanity_check" */ = {
+		6217DDFB1D5B21080048C466 /* Build configuration list for PBXNativeTarget "descriptortest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6217DDFC1D5B21080048C466 /* Debug */,

@@ -176,7 +176,6 @@ TEST_CASE("getEvent() and getEvents()"){
 }
 
 
-
 TEST_CASE("getFirstEvent() and getLastEvent()"){
     
     sdScene scene;

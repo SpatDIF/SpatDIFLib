@@ -63,6 +63,13 @@ const std::vector<sdSpec::sdESpec> sdSpec::spatDIFSpec= {
         //DEFINE_DESCRIPTOR(SD_AUTOMATION_POINTSET, "pointset"),
         //DEFINE_DESCRIPTOR(SD_AUTOMATION_LOOP, "loop")
     }),
+    // 5.2.4 Shape
+    sdESpec((EExtension::SD_SHAPE), "shape", {
+        DEFINE_DESCRIPTOR(SD_SHAPE_ID, "id"),
+        DEFINE_DESCRIPTOR(SD_SHAPE_DIRECTION, "direction"),
+        DEFINE_DESCRIPTOR(SD_SHAPE_CLOSED, "closed"),
+        DEFINE_DESCRIPTOR(SD_SHAPE_TYPE, "type")
+    },SD_SHAPE_ID),
     // 5.3.1.1 Trajectory Generator
     sdESpec((EExtension::SD_TRAJECTORY), "trajectory" , {
         DEFINE_DESCRIPTOR(SD_TRAJECTORY_POINTSET, "pointset"),
@@ -78,7 +85,7 @@ const std::vector<sdSpec::sdESpec> sdSpec::spatDIFSpec= {
         DEFINE_DESCRIPTOR(SD_GROUP_POSITION, "position"),
         DEFINE_DESCRIPTOR(SD_GROUP_ORIENTATION, "orientation"),
         DEFINE_DESCRIPTOR(SD_GROUP_MEMBERSHIP, "group-membership")
-    }),
+    },SD_GROUP_ID),
     // 5.3.2.1 Source spread
     sdESpec((EExtension::SD_SOURCE_SPREAD), "source-spread",{
         DEFINE_DESCRIPTOR(SD_SOURCE_SPREAD_SPREAD, "spread"),

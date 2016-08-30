@@ -40,7 +40,7 @@ void sdEntity::addGlobalEventAlias(std::shared_ptr<sdProtoEvent> event) {
     parent->addEventAlias(this, event);
 }
 
-std::shared_ptr<sdProtoDataSet> sdEntity::getProtoDescriptorSetPtr(EExtension extension, std::string identifier) const{
+std::shared_ptr<sdProtoDataSet> sdEntity::getProtoDataSetPtr(EExtension extension, std::string identifier) const{
     if(!parent)return nullptr;
-    return parent->getProtoDescriptorSet(extension,identifier);
+    return parent->getProtoDataSet(extension,identifier);
 }

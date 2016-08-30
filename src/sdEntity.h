@@ -133,7 +133,7 @@ protected:
 private:
     
     
-    std::shared_ptr<sdProtoDataSet> getProtoDescriptorSetPtr(EExtension extension, std::string identifier) const;
+    std::shared_ptr<sdProtoDataSet> getProtoDataSetPtr(EExtension extension, std::string identifier) const;
     
 };
 
@@ -199,7 +199,7 @@ inline const typename sdDescriptor<D>::type * const sdEntity::getValue(const dou
             if(it == eventsAtTime.end()) return nullptr;
             sdProtoEvent* idDescriptorEvent = (*it).get();
             std::string identifier = idDescriptorEvent->getValueAsString();
-            std::shared_ptr<sdProtoDataSet> descriptorSetPtr = getProtoDescriptorSetPtr(targetExtension, identifier);
+            std::shared_ptr<sdProtoDataSet> descriptorSetPtr = getProtoDataSetPtr(targetExtension, identifier);
             return &descriptorSetPtr->getValue<D>();
         }catch(std::exception){return nullptr;}
     }

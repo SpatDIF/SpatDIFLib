@@ -23,13 +23,13 @@
 #include "sdDescriptor.h"
 #include "sdInfo.h"
 #include "sdEntity.h"
-#include "sdDescriptorCollectionHandler.h"
+#include "sdDataSetHandler.h"
 
 /*! is responsible for 
  - adding, removing, and maintaining sdEntityCores.
  - attaching and detaching extensions to the exisiting and newly instantiated cores
  */
-class sdScene : public sdDescriptorCollectionHandler{
+class sdScene : public sdDataSetHandler{
     friend sdEntity;
     
 protected:
@@ -57,7 +57,7 @@ private:
         validDescriptorSet = origin.validDescriptorSet;
         ordering = origin.ordering;
         info = origin.info;
-        sdDescriptorCollectionHandler::copy(origin);
+        sdDataSetHandler::copy(origin);
         
         for(auto &entity:entities){ // parent is now me
             entity.second.parent = this;
@@ -562,7 +562,7 @@ inline bool sdScene::addExtension(EExtension extension){
         for(auto it = descriptors.begin(); descriptors.end() != it; it++) {
             validDescriptorSet.insert((*it).descriptor);
         }
-        addDescriptorSetCollection(extension);
+        addDataSetCollection(extension);
     }
     return ret;
 }

@@ -42,6 +42,7 @@ TEST_CASE("media"){
 
     /// 4.4.1 media
     sdScene scene;
+    
     sdEntity * entity = scene.addEntity("core_function");
     
     // SD_MEDIA_ID
@@ -97,7 +98,7 @@ TEST_CASE("media"){
     
     // descriptor set
     auto mySong = sdDataSet<EExtension::SD_MEDIA>(sdDescriptor<SD_MEDIA_TYPE>::SD_FILE,"/tmp/file.wav", 2, 0, 1.0);
-    scene.addDescriptorSet(EExtension::SD_MEDIA, "mySong", mySong);
+    scene.addDataSet(EExtension::SD_MEDIA, "mySong", mySong);
 
     entity->addEvent<SD_MEDIA_ID>(3.0, "mySong"); // adding id means adding descriptor set
     REQUIRE(*entity->getValue<SD_MEDIA_LOCATION>(3.0) == "/tmp/file.wav");
@@ -182,7 +183,47 @@ TEST_CASE("automation"){
 }
 
 TEST_CASE("shape"){
+    sdScene scene;
+    sdEntity * entity = scene.addEntity("shape");
     
+    scene.addExtension(EExtension::SD_SHAPE);
+    
+    entity->addEvent<SD_SHAPE_DIRECTION>(3.0, false);
+    REQUIRE(entity->getValueAsString<SD_SHAPE_DIRECTION>(3.0) == "false" );
+    REQUIRE(*entity->getValue<SD_SHAPE_DIRECTION>(3.0) == false);
+
+    entity->addEvent<SD_SHAPE_CLOSED>(3.0, true);
+    REQUIRE(entity->getValueAsString<SD_SHAPE_CLOSED>(3.0) == "true" );
+    REQUIRE(*entity->getValue<SD_SHAPE_CLOSED>(3.0) == true);
+    
+    entity->addEvent<SD_SHAPE_TYPE>(3.0, sdDescriptor<SD_SHAPE_TYPE>::SD_CIRCLE);
+    REQUIRE(entity->getValueAsString<SD_SHAPE_TYPE>(3.0) == "circle" );
+    REQUIRE(*entity->getValue<SD_SHAPE_TYPE>(3.0) == sdDescriptor<SD_SHAPE_TYPE>::SD_CIRCLE);
+    
+    // exception
+    try{
+        entity->addEvent("5.0", "shape", "direction", "dummy"); // should be true or false
+        REQUIRE(false);
+    }catch(CanNotConvertStringException){}
+
+    try{
+        entity->addEvent("5.0", "shape", "closed", "dummy"); // should be true or false
+        REQUIRE(false);
+    }catch(CanNotConvertStringException){}
+
+    try{
+        entity->addEvent("5.0", "shape", "type", "oval"); // should be true or false
+        REQUIRE(false);
+    }catch(CanNotConvertStringException){}
+    
+    
+    // descriptor set
+    auto myShape = sdDataSet<EExtension::SD_SHAPE>(true,true, sdDescriptor<SD_SHAPE_TYPE>::SD_TRIANGLE);
+    scene.addDataSet(EExtension::SD_SHAPE, "myShape", myShape);
+    
+    entity->addEvent<SD_SHAPE_ID>(5.0, "myShape"); // adding id means adding descriptor set
+    REQUIRE(*entity->getValue<SD_SHAPE_CLOSED>(5.0) == true);
+
 }
 
 TEST_CASE("group"){
