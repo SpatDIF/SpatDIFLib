@@ -18,7 +18,8 @@
 #include <string>
 #include <memory>
 #include "sdException.h"
-#include "sdDescriptors.h"
+#include "sdDescriptor.h"
+#include "sdDataSet.h"
 #include "sdMeta.h"
 #include "sdEvent.h"
 #include "sdMetaHandler.h"
@@ -132,7 +133,7 @@ protected:
 private:
     
     
-    std::shared_ptr<sdProtoDescriptorSet> getProtoDescriptorSetPtr(EExtension extension, std::string identifier) const;
+    std::shared_ptr<sdProtoDataSet> getProtoDescriptorSetPtr(EExtension extension, std::string identifier) const;
     
 };
 
@@ -198,7 +199,7 @@ inline const typename sdDescriptor<D>::type * const sdEntity::getValue(const dou
             if(it == eventsAtTime.end()) return nullptr;
             sdProtoEvent* idDescriptorEvent = (*it).get();
             std::string identifier = idDescriptorEvent->getValueAsString();
-            std::shared_ptr<sdProtoDescriptorSet> descriptorSetPtr = getProtoDescriptorSetPtr(targetExtension, identifier);
+            std::shared_ptr<sdProtoDataSet> descriptorSetPtr = getProtoDescriptorSetPtr(targetExtension, identifier);
             return &descriptorSetPtr->getValue<D>();
         }catch(std::exception){return nullptr;}
     }

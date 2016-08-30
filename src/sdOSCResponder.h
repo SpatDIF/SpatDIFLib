@@ -20,7 +20,6 @@
 #include "sdOSCMessage.h"
 #include <string>
 
-
 /*!
     This class interprets incoming OSC messages and forward it to a specified instance of sdScene.
     The response from sdScene will be formatted in OSC format and returned to the client.

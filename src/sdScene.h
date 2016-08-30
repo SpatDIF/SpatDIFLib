@@ -20,9 +20,10 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <set>
-#include "sdDescriptors.h"
+#include "sdDescriptor.h"
 #include "sdInfo.h"
 #include "sdEntity.h"
+#include "sdDescriptorCollectionHandler.h"
 
 /*! is responsible for 
  - adding, removing, and maintaining sdEntityCores.

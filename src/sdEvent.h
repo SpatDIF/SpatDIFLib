@@ -16,7 +16,7 @@
 #pragma once
 
 #include <string>
-#include "sdDescriptors.h"
+#include "sdDescriptor.h"
 #include "sdMeta.h"
 #include "sdUtils.h"
 

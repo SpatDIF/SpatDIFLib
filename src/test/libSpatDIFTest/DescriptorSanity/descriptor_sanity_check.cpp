@@ -96,11 +96,10 @@ TEST_CASE("media"){
     }catch(InvalidValueDomainException){}
     
     // descriptor set
-    auto mySong = sdDescriptorSet<EExtension::SD_MEDIA>(sdDescriptor<SD_MEDIA_TYPE>::SD_FILE,"/tmp/file.wav", 2, 0, 1.0);
+    auto mySong = sdDataSet<EExtension::SD_MEDIA>(sdDescriptor<SD_MEDIA_TYPE>::SD_FILE,"/tmp/file.wav", 2, 0, 1.0);
     scene.addDescriptorSet(EExtension::SD_MEDIA, "mySong", mySong);
 
     entity->addEvent<SD_MEDIA_ID>(3.0, "mySong"); // adding id means adding descriptor set
-    REQUIRE(*entity->getValue<SD_MEDIA_ID>(3.0) == "mySong");
     REQUIRE(*entity->getValue<SD_MEDIA_LOCATION>(3.0) == "/tmp/file.wav");
 
 }

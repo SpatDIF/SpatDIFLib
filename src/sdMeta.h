@@ -13,11 +13,10 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef ____sdMeta__
-#define ____sdMeta__
+#pragma once
 
 #include <string>
-#include "sdDescriptors.h"
+#include "sdDescriptor.h"
 #include "sdExtension.h"
 #include "sdUtils.h"
 
@@ -106,4 +105,3 @@ public:
     /*! @} */
     
 };
-#endif

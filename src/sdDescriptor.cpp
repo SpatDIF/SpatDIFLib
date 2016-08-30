@@ -19,11 +19,10 @@
 
 #define DEFINE_DESCRIPTOR( descriptor, string ) sdDSpec(descriptor, string, ADD_EVENT(descriptor), ADD_META(descriptor))
 
-#include "sdDescriptors.h"
+#include "sdDescriptor.h"
 #include "sdEntity.h"
 
-// the following table defines the relationship between extensions and descriptors 
-
+// the following table defines the relationship between extensions and descriptors, descriptor enum and string
 
 const std::vector<sdExtension::sdESpec> sdExtension::spatDIFSpec= {
     sdESpec(EExtension::SD_CORE, "core", {

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6217DDE71D5B20510048C466 /* sdDescriptors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6217DDE51D5B20510048C466 /* sdDescriptors.cpp */; };
+		6217DDE71D5B20510048C466 /* sdDescriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6217DDE51D5B20510048C466 /* sdDescriptor.cpp */; };
 		6217DDFE1D5B218A0048C466 /* internalJSONNode.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D3F1CA2AFBD001179C5 /* internalJSONNode.o */; };
 		6217DDFF1D5B218A0048C466 /* JSONAllocator.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D401CA2AFBD001179C5 /* JSONAllocator.o */; };
 		6217DE001D5B218A0048C466 /* JSONChildren.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D411CA2AFBD001179C5 /* JSONChildren.o */; };
@@ -27,7 +27,7 @@
 		6217DE0E1D5B219E0048C466 /* sdEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B31C236EDC009E9347 /* sdEntity.cpp */; };
 		6217DE0F1D5B219E0048C466 /* sdLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720D51C2D8C2600135148 /* sdLoader.cpp */; };
 		6217DE101D5B219E0048C466 /* sdSaver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720DA1C2E1F0600135148 /* sdSaver.cpp */; };
-		6217DE161D5B27770048C466 /* sdDescriptors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6217DDE51D5B20510048C466 /* sdDescriptors.cpp */; };
+		6217DE161D5B27770048C466 /* sdDescriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6217DDE51D5B20510048C466 /* sdDescriptor.cpp */; };
 		62401D4D1CA2AFBD001179C5 /* internalJSONNode.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D3F1CA2AFBD001179C5 /* internalJSONNode.o */; };
 		62401D4E1CA2AFBD001179C5 /* JSONAllocator.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D401CA2AFBD001179C5 /* JSONAllocator.o */; };
 		62401D4F1CA2AFBD001179C5 /* JSONChildren.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D411CA2AFBD001179C5 /* JSONChildren.o */; };
@@ -59,7 +59,7 @@
 		629720C51C29966100135148 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720C41C29966100135148 /* tinyxml2.cpp */; };
 		629720D61C2D8C2600135148 /* sdLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720D51C2D8C2600135148 /* sdLoader.cpp */; };
 		629720DB1C2E1F0600135148 /* sdSaver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720DA1C2E1F0600135148 /* sdSaver.cpp */; };
-		62A24D101D6343B20019F04F /* sdDescriptors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6217DDE51D5B20510048C466 /* sdDescriptors.cpp */; };
+		62A24D101D6343B20019F04F /* sdDescriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6217DDE51D5B20510048C466 /* sdDescriptor.cpp */; };
 		62AF37BB1C2373A1009E9347 /* sdEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B31C236EDC009E9347 /* sdEntity.cpp */; };
 		62D8B0311C37462900AC1D31 /* oldtest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62D8B0301C37462900AC1D31 /* oldtest.cpp */; };
 		62D8B0351C3746A500AC1D31 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720C41C29966100135148 /* tinyxml2.cpp */; };
@@ -100,9 +100,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		6217DDE51D5B20510048C466 /* sdDescriptors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdDescriptors.cpp; path = ../../sdDescriptors.cpp; sourceTree = "<group>"; };
-		6217DDE61D5B20510048C466 /* sdDescriptors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sdDescriptors.h; path = ../../sdDescriptors.h; sourceTree = "<group>"; };
-		6217DDEE1D5B20F10048C466 /* descriptor_sanity_check.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = descriptor_sanity_check.cpp; sourceTree = "<group>"; };
+		6217DDE51D5B20510048C466 /* sdDescriptor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdDescriptor.cpp; path = ../../sdDescriptor.cpp; sourceTree = "<group>"; };
+		6217DDE61D5B20510048C466 /* sdDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sdDescriptor.h; path = ../../sdDescriptor.h; sourceTree = "<group>"; };
+		6217DDEE1D5B20F10048C466 /* descriptor_sanity_check.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = descriptor_sanity_check.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		6217DDF71D5B21080048C466 /* descriptor_sanity_check */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = descriptor_sanity_check; sourceTree = BUILT_PRODUCTS_DIR; };
 		6217DE171D5B2B1D0048C466 /* sdUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdUtils.h; path = ../../sdUtils.h; sourceTree = "<group>"; };
 		62401D3F1CA2AFBD001179C5 /* internalJSONNode.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = internalJSONNode.o; path = ../../libs/libjson/Objects_static/internalJSONNode.o; sourceTree = "<group>"; };
@@ -122,13 +122,15 @@
 		62401D5D1CA2E8E3001179C5 /* sdMetaHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdMetaHandler.h; path = ../../sdMetaHandler.h; sourceTree = "<group>"; };
 		62401D5E1CA2E947001179C5 /* sdEventHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdEventHandler.h; path = ../../sdEventHandler.h; sourceTree = "<group>"; };
 		627FA4C81D74916D007C0C8A /* sdMeta.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdMeta.h; path = ../../sdMeta.h; sourceTree = "<group>"; };
+		627FA4C91D75698D007C0C8A /* sdDataSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = sdDataSet.h; path = ../../sdDataSet.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		627FA4CA1D756B68007C0C8A /* sdDescriptorCollectionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = sdDescriptorCollectionHandler.h; path = ../../sdDescriptorCollectionHandler.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		629720C41C29966100135148 /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxml2.cpp; path = ../../libs/tinyxml2/tinyxml2.cpp; sourceTree = "<group>"; };
 		629720D51C2D8C2600135148 /* sdLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdLoader.cpp; path = ../../sdLoader.cpp; sourceTree = "<group>"; };
 		629720DA1C2E1F0600135148 /* sdSaver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdSaver.cpp; path = ../../sdSaver.cpp; sourceTree = "<group>"; };
 		62A24D0F1D6322300019F04F /* sdExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sdExtension.h; path = ../../sdExtension.h; sourceTree = "<group>"; };
 		62AF37B31C236EDC009E9347 /* sdEntity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdEntity.cpp; path = ../../sdEntity.cpp; sourceTree = "<group>"; };
 		62BE10211C2F3C020033244E /* sdDate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdDate.h; path = ../../sdDate.h; sourceTree = "<group>"; };
-		62BE10221C2F3C020033244E /* sdEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdEntity.h; path = ../../sdEntity.h; sourceTree = "<group>"; };
+		62BE10221C2F3C020033244E /* sdEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = sdEntity.h; path = ../../sdEntity.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		62BE10231C2F3C020033244E /* sdEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdEvent.h; path = ../../sdEvent.h; sourceTree = "<group>"; };
 		62BE10241C2F3C020033244E /* sdException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdException.h; path = ../../sdException.h; sourceTree = "<group>"; };
 		62BE10251C2F3C020033244E /* sdInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdInfo.h; path = ../../sdInfo.h; sourceTree = "<group>"; };
@@ -240,6 +242,87 @@
 			name = JSON;
 			sourceTree = "<group>";
 		};
+		627FA4CB1D756BC6007C0C8A /* Specifications */ = {
+			isa = PBXGroup;
+			children = (
+				6217DDE61D5B20510048C466 /* sdDescriptor.h */,
+				6217DDE51D5B20510048C466 /* sdDescriptor.cpp */,
+				627FA4C91D75698D007C0C8A /* sdDataSet.h */,
+				62A24D0F1D6322300019F04F /* sdExtension.h */,
+			);
+			name = Specifications;
+			sourceTree = "<group>";
+		};
+		627FA4CC1D756BCF007C0C8A /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				62BE102B1C2F3C020033244E /* sdScene.h */,
+				62BE10221C2F3C020033244E /* sdEntity.h */,
+				62AF37B31C236EDC009E9347 /* sdEntity.cpp */,
+				62BE10211C2F3C020033244E /* sdDate.h */,
+				62BE10251C2F3C020033244E /* sdInfo.h */,
+				627FA4C81D74916D007C0C8A /* sdMeta.h */,
+				62BE10231C2F3C020033244E /* sdEvent.h */,
+			);
+			name = DataModel;
+			sourceTree = "<group>";
+		};
+		627FA4CD1D756BEB007C0C8A /* StorageHandlers */ = {
+			isa = PBXGroup;
+			children = (
+				62401D5D1CA2E8E3001179C5 /* sdMetaHandler.h */,
+				62401D5E1CA2E947001179C5 /* sdEventHandler.h */,
+				627FA4CA1D756B68007C0C8A /* sdDescriptorCollectionHandler.h */,
+			);
+			name = StorageHandlers;
+			sourceTree = "<group>";
+		};
+		627FA4CE1D756C11007C0C8A /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				6217DE171D5B2B1D0048C466 /* sdUtils.h */,
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
+		627FA4CF1D756C28007C0C8A /* IO */ = {
+			isa = PBXGroup;
+			children = (
+				62BE10261C2F3C020033244E /* sdLoader.h */,
+				629720D51C2D8C2600135148 /* sdLoader.cpp */,
+				62BE102A1C2F3C020033244E /* sdSaver.h */,
+				629720DA1C2E1F0600135148 /* sdSaver.cpp */,
+			);
+			name = IO;
+			sourceTree = "<group>";
+		};
+		627FA4D01D756C5C007C0C8A /* ErrorHandling */ = {
+			isa = PBXGroup;
+			children = (
+				62BE10241C2F3C020033244E /* sdException.h */,
+			);
+			name = ErrorHandling;
+			sourceTree = "<group>";
+		};
+		627FA4D11D756C77007C0C8A /* OSC */ = {
+			isa = PBXGroup;
+			children = (
+				62BE10271C2F3C020033244E /* sdOSCConverter.h */,
+				62BE10281C2F3C020033244E /* sdOSCMessage.h */,
+				62BE10291C2F3C020033244E /* sdOSCResponder.h */,
+			);
+			name = OSC;
+			sourceTree = "<group>";
+		};
+		627FA4D21D756C91007C0C8A /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				62401D5B1CA2AFC5001179C5 /* JSON */,
+				629720C41C29966100135148 /* tinyxml2.cpp */,
+			);
+			name = Library;
+			sourceTree = "<group>";
+		};
 		62D8B02F1C37462900AC1D31 /* oldtest */ = {
 			isa = PBXGroup;
 			children = (
@@ -251,29 +334,14 @@
 		62D904AE1C0E4DBF0065D8A5 = {
 			isa = PBXGroup;
 			children = (
-				62401D5B1CA2AFC5001179C5 /* JSON */,
-				627FA4C81D74916D007C0C8A /* sdMeta.h */,
-				6217DE171D5B2B1D0048C466 /* sdUtils.h */,
-				62BE10211C2F3C020033244E /* sdDate.h */,
-				62BE10221C2F3C020033244E /* sdEntity.h */,
-				62401D5D1CA2E8E3001179C5 /* sdMetaHandler.h */,
-				62401D5E1CA2E947001179C5 /* sdEventHandler.h */,
-				62BE10231C2F3C020033244E /* sdEvent.h */,
-				62BE10241C2F3C020033244E /* sdException.h */,
-				62A24D0F1D6322300019F04F /* sdExtension.h */,
-				62BE10251C2F3C020033244E /* sdInfo.h */,
-				62BE10261C2F3C020033244E /* sdLoader.h */,
-				62BE10271C2F3C020033244E /* sdOSCConverter.h */,
-				62BE10281C2F3C020033244E /* sdOSCMessage.h */,
-				62BE10291C2F3C020033244E /* sdOSCResponder.h */,
-				62BE102A1C2F3C020033244E /* sdSaver.h */,
-				62BE102B1C2F3C020033244E /* sdScene.h */,
-				6217DDE61D5B20510048C466 /* sdDescriptors.h */,
-				6217DDE51D5B20510048C466 /* sdDescriptors.cpp */,
-				629720C41C29966100135148 /* tinyxml2.cpp */,
-				62AF37B31C236EDC009E9347 /* sdEntity.cpp */,
-				629720D51C2D8C2600135148 /* sdLoader.cpp */,
-				629720DA1C2E1F0600135148 /* sdSaver.cpp */,
+				627FA4CB1D756BC6007C0C8A /* Specifications */,
+				627FA4CC1D756BCF007C0C8A /* DataModel */,
+				627FA4CD1D756BEB007C0C8A /* StorageHandlers */,
+				627FA4D01D756C5C007C0C8A /* ErrorHandling */,
+				627FA4CF1D756C28007C0C8A /* IO */,
+				627FA4D11D756C77007C0C8A /* OSC */,
+				627FA4CE1D756C11007C0C8A /* Utility */,
+				627FA4D21D756C91007C0C8A /* Library */,
 				62D904B91C0E4DBF0065D8A5 /* libSpatDIFTest */,
 				62D8B02F1C37462900AC1D31 /* oldtest */,
 				6217DDED1D5B20F10048C466 /* DescriptorSanity */,
@@ -403,7 +471,7 @@
 				6217DE0E1D5B219E0048C466 /* sdEntity.cpp in Sources */,
 				6217DE0F1D5B219E0048C466 /* sdLoader.cpp in Sources */,
 				6217DE101D5B219E0048C466 /* sdSaver.cpp in Sources */,
-				6217DE161D5B27770048C466 /* sdDescriptors.cpp in Sources */,
+				6217DE161D5B27770048C466 /* sdDescriptor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,7 +483,7 @@
 				62D8B0351C3746A500AC1D31 /* tinyxml2.cpp in Sources */,
 				62D8B0371C3746A500AC1D31 /* sdEntity.cpp in Sources */,
 				62D8B0381C3746A500AC1D31 /* sdLoader.cpp in Sources */,
-				62A24D101D6343B20019F04F /* sdDescriptors.cpp in Sources */,
+				62A24D101D6343B20019F04F /* sdDescriptor.cpp in Sources */,
 				62D8B0391C3746A500AC1D31 /* sdSaver.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -429,7 +497,7 @@
 				62D904D21C0E50320065D8A5 /* spatdiftest.cpp in Sources */,
 				629720DB1C2E1F0600135148 /* sdSaver.cpp in Sources */,
 				62AF37BB1C2373A1009E9347 /* sdEntity.cpp in Sources */,
-				6217DDE71D5B20510048C466 /* sdDescriptors.cpp in Sources */,
+				6217DDE71D5B20510048C466 /* sdDescriptor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
