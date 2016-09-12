@@ -26,8 +26,8 @@ class sdProtoEvent;
 class sdProtoMeta;
 class sdSpec {
 protected:
-    struct sdDSpec{
-        sdDSpec(EDescriptor descriptor,
+    struct sdDescriptorSpec{
+        sdDescriptorSpec(EDescriptor descriptor,
                 std::string descriptorString,
                 std::function< std::shared_ptr<sdProtoEvent>(sdProtoEntity*, double, std::string)> addEventFromStringFunc,
                 std::function< std::shared_ptr<sdProtoMeta>(sdProtoEntity*, std::string)> addMetaFromStringFunc):
@@ -42,8 +42,8 @@ protected:
         std::function< std::shared_ptr<sdProtoMeta>(sdProtoEntity * entity, std::string)> addMetaFromStringFunc;
     };
     
-    struct sdESpec{
-        sdESpec(EExtension extension, std::string extensionString, std::vector<sdDSpec> descriptorSpecs, EDescriptor idDescriptor = SD_ERROR):
+    struct sdExtensionSpec{
+        sdExtensionSpec(EExtension extension, std::string extensionString, std::vector<sdDescriptorSpec> descriptorSpecs, EDescriptor idDescriptor = SD_ERROR):
         extension(extension),
         extensionString(extensionString),
         descriptorSpecs(descriptorSpecs),
@@ -52,18 +52,18 @@ protected:
         EExtension extension;
         EDescriptor idDescriptor;
         std::string extensionString;
-        std::vector<sdDSpec> descriptorSpecs;
+        std::vector<sdDescriptorSpec> descriptorSpecs;
     };
     
-    const static std::vector<sdESpec> spatDIFSpec;
+    const static std::vector<sdExtensionSpec> spatDIFSpec;
     
 public:
     
 #pragma mark extension
     static EExtension getExtensionOfDescriptor(EDescriptor descriptor){
         EExtension extension = EExtension::SD_EXTENSION_ERROR;
-        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&descriptor](const sdESpec &eSpec){
-            auto itr = std::find_if(eSpec.descriptorSpecs.begin(), eSpec.descriptorSpecs.end(), [&descriptor](sdDSpec dSpec){
+        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&descriptor](const sdExtensionSpec &eSpec){
+            auto itr = std::find_if(eSpec.descriptorSpecs.begin(), eSpec.descriptorSpecs.end(), [&descriptor](sdDescriptorSpec dSpec){
                 return dSpec.descriptor == descriptor;
             });
             return itr != eSpec.descriptorSpecs.end();
@@ -73,7 +73,7 @@ public:
     }
     
     static EDescriptor getIDDescriptorOfExtension(EExtension extension){
-        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extension](const sdESpec &eSpec){
+        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extension](const sdExtensionSpec &eSpec){
             return eSpec.extension == extension;
         });
         
@@ -89,29 +89,29 @@ public:
     }
     
     static std::string extensionToString(const EExtension &extension){
-        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extension](sdESpec eSpec){return eSpec.extension == extension;});
+        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extension](sdExtensionSpec eSpec){return eSpec.extension == extension;});
         if (it == spatDIFSpec.end()) return std::string();
         return (*it).extensionString;
     }
     
     static EExtension stringToExtension(std::string string){
-        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(),[&string](sdESpec eSpec){return eSpec.extensionString == string;});
+        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(),[&string](sdExtensionSpec eSpec){return eSpec.extensionString == string;});
         if(it != spatDIFSpec.end()) return (*it).extension;
         return EExtension::SD_EXTENSION_ERROR;
     }
     
 #pragma mark descriptor
     
-    static const std::vector<sdDSpec> &getDescriptorsForExtension(EExtension extension){
-        auto itr = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extension](sdESpec eSpec){return eSpec.extension == extension;});
+    static const std::vector<sdDescriptorSpec> &getDescriptorsForExtension(EExtension extension){
+        auto itr = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extension](sdExtensionSpec eSpec){return eSpec.extension == extension;});
         if(itr == spatDIFSpec.end()){throw InvalidDescriptorException("no matching string for EExtension"); }
         return (*itr).descriptorSpecs;
     }
     
     static std::string descriptorToString(const EDescriptor &descriptor) {
         std::string str;
-        std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&descriptor, &str](sdESpec eSpec){
-            auto itr = std::find_if(eSpec.descriptorSpecs.begin(), eSpec.descriptorSpecs.end(), [&descriptor, &str](sdDSpec dSpec){
+        std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&descriptor, &str](sdExtensionSpec eSpec){
+            auto itr = std::find_if(eSpec.descriptorSpecs.begin(), eSpec.descriptorSpecs.end(), [&descriptor, &str](sdDescriptorSpec dSpec){
                 if(dSpec.descriptor == descriptor){
                     str = dSpec.descriptorString;
                     return true;
@@ -123,17 +123,17 @@ public:
     }
     
     
-    static EDescriptor stringToDescriptor(EExtension extension, std::string string){
-        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(),[&extension](sdESpec eSpec){return eSpec.extension == extension;});
+    static EDescriptor stringToDescriptor(EExtension extensionString, std::string descriptorString){
+        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(),[&extensionString](sdExtensionSpec eSpec){return eSpec.extension == extensionString;});
         auto dSpecs = (*it).descriptorSpecs;
-        auto iit = std::find_if(dSpecs.begin(), dSpecs.end(), [&string](sdDSpec dSpec){return dSpec.descriptorString == string;});
-        if( iit == dSpecs.end()){throw InvalidDescriptorException(std::string("no matching descriptor for string:") + string );}
+        auto iit = std::find_if(dSpecs.begin(), dSpecs.end(), [&descriptorString](sdDescriptorSpec dSpec){return dSpec.descriptorString == descriptorString;});
+        if( iit == dSpecs.end()){throw InvalidDescriptorException(std::string("no matching descriptor for string:") + descriptorString );}
         return (*iit).descriptor;
     }
     
     static EDescriptor stringToDescriptor(std::string extensionString, std::string descriptorString){
         if(extensionString.empty()) extensionString = "core"; // assuming core
-        auto itr = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extensionString](sdESpec eSpec)->bool{return eSpec.extensionString == extensionString;});
+        auto itr = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extensionString](sdExtensionSpec eSpec)->bool{return eSpec.extensionString == extensionString;});
         if(itr == spatDIFSpec.end()) {throw InvalidExtensionException(std::string("no matching EEXtension for string: ") + extensionString);}
         
         EExtension extension = itr->extension;
@@ -143,7 +143,7 @@ public:
     static std::function<std::shared_ptr<sdProtoEvent>(sdProtoEntity* entity, double,std::string)> getAddEventFunc(EDescriptor descriptor){
         auto ext = getExtensionOfDescriptor(descriptor);
         auto descriptors = getDescriptorsForExtension(ext);
-        auto it = std::find_if(descriptors.begin(), descriptors.end(), [&descriptor](sdDSpec dSpec){ return dSpec.descriptor == descriptor;});
+        auto it = std::find_if(descriptors.begin(), descriptors.end(), [&descriptor](sdDescriptorSpec dSpec){ return dSpec.descriptor == descriptor;});
         if(it == descriptors.end())return nullptr;
         return (*it).addEventFromStringFunc;
     }
@@ -151,7 +151,7 @@ public:
     static std::function<std::shared_ptr<sdProtoMeta>(sdProtoEntity* entity, std::string)> getAddMetaFunc(EDescriptor descriptor){
         auto ext = getExtensionOfDescriptor(descriptor);
         auto descriptors = getDescriptorsForExtension(ext);
-        auto it = std::find_if(descriptors.begin(), descriptors.end(), [&descriptor](sdDSpec dSpec){ return dSpec.descriptor == descriptor;});
+        auto it = std::find_if(descriptors.begin(), descriptors.end(), [&descriptor](sdDescriptorSpec dSpec){ return dSpec.descriptor == descriptor;});
         if(it == descriptors.end())return nullptr;
         return (*it).addMetaFromStringFunc;
     }

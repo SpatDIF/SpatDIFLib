@@ -30,6 +30,12 @@ public:
     : std::invalid_argument(std::string("Invalid Descriptor ") + descriptorName){}
 };
 
+class MetaOnlyDescriptorException : public std::logic_error{
+public:
+    MetaOnlyDescriptorException(std::string descriptorName)
+    : std::logic_error(descriptorName + " can be only used in meta section"){};
+};
+
 class CanNotConvertStringException : public std::invalid_argument{
 public:
     CanNotConvertStringException(std::string message)

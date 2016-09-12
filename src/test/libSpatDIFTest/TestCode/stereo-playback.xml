@@ -4,7 +4,7 @@
 		<info>
 			<annotation>This is a stereo playback SpatDIF scene</annotation>
 		</info>
-		<extensions>sink-entity hardware-out</extensions>
+		<extensions>sink-entity hardware-out direct-to-one</extensions>
 		<sink>
 			<type>loudspeaker</type>
 			<name>left</name>
@@ -22,7 +22,9 @@
 	<source>
 		<name>1</name>
 		<position unit="aed">-30.0 0. 2.0</position>
-		<direct-to-one>1</direct-to-one>
+		<direct-to-one>
+            <direct-to-one>true</direct-to-one>
+        </direct-to-one>
 		<media>
 		   <type>file</type>
 		   <location>../audio/stereo-hello.wav</location>
@@ -32,7 +34,9 @@
 	<source>
 		<name>2</name>
 		<position unit="aed">30.0 0. 2.0</position>
-		<direct-to-one>1</direct-to-one>
+		<direct-to-one>
+            <direct-to-one>true</direct-to-one>
+        </direct-to-one>
 		<media>
 		   <type>file</type>
 		   <location>../audio/stereo-hello.wav</location>

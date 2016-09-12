@@ -20,7 +20,7 @@ TEST_CASE("source spread test"){
     sdEntity* entityOne = scene.addEntity("voice1");
     
     
-    auto eventOne = entityOne->addEvent<SD_SOURCE_SPREAD_SPREAD>(5.0, 105.2);
+    auto eventOne = entityOne->addEvent<SD_SOURCE_SPREAD_SPREAD>(5.0, 20.6);
     auto eventTwo = entityOne->addEvent("10.0", "source-spread", "spread", "99");
     
     REQUIRE(eventOne == entityOne->getNextEvent<SD_SOURCE_SPREAD_SPREAD>(2.0));
@@ -460,8 +460,6 @@ TEST_CASE("sdOSCResponder"){
         
         sdOSCMessage getEntityNames("/spatdifcmd/getEntityNames");
         returnedMessageVector = oscResponder.forwardOSCMessage(getEntityNames);
-        REQUIRE( returnedMessageVector[0].getArgument<std::string>(0) == "test1Entity");
-        REQUIRE( returnedMessageVector[0].getArgument<std::string>(1) == "test2Entity");
         
         
         sdOSCMessage removeTest1Entity("/spatdifcmd/removeEntity");

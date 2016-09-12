@@ -31,8 +31,7 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
     
     sdScene scene;
     sdInfo info;
-    
-    
+
     XMLElement* spatdif = xml.FirstChildElement("spatdif");
     XMLElement* meta = spatdif->FirstChildElement("meta");
     

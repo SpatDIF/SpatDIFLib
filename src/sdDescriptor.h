@@ -47,6 +47,8 @@ enum class EKind {
  enum for extension. all sdEntityExtension must have one of these enum as a static variable in order to identify themselves
  */
 enum class EExtension {
+    //meta
+    SD_INFO,
     //core
     SD_CORE ,
     SD_MEDIA,
@@ -79,6 +81,16 @@ enum class EExtension {
  enum for descriptor. internally all descriptors are handled with this Enum
  */
 typedef enum {
+    /*** meta ***/
+    /// 3.3.1 info
+    SD_INFO_AUTHOR,
+    SD_INFO_ANNOTATION,
+    SD_INFO_DATE,
+    SD_INFO_DURATION,
+    SD_INFO_HOST,
+    SD_INFO_LOCATION,
+    SD_INFO_TITLE,
+    SD_INFO_SESSION,
     
     /*** core ***/
     // core
@@ -210,6 +222,80 @@ namespace std{
 
 template <EDescriptor D>
 struct sdDescriptor {};
+
+/*** info ***/
+/// 3.3.1 info
+template <>
+struct sdDescriptor<EDescriptor::SD_INFO_AUTHOR>{
+    typedef std::string type;
+    const static bool interpolable = false;
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_INFO_ANNOTATION>{
+    typedef std::string type;
+    const static bool interpolable = false;
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_INFO_DATE>{
+    typedef std::string type;
+    const static bool interpolable = false;
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_INFO_DURATION>{
+    typedef std::string type;
+    const static bool interpolable = false;
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_INFO_HOST>{
+    typedef std::string type;
+    const static bool interpolable = false;
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_INFO_LOCATION>{
+    typedef std::string type;
+    const static bool interpolable = false;
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_INFO_TITLE>{
+    typedef std::string type;
+    const static bool interpolable = false;
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
+};
+
+template <>
+struct sdDescriptor<EDescriptor::SD_INFO_SESSION>{
+    typedef std::string type;
+    const static bool interpolable = false;
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
+};
 
 /*** core ***/
 /// 4.3 core
@@ -841,7 +927,7 @@ struct sdDescriptor<EDescriptor::SD_SOURCE_SPREAD_SPREAD>{
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
     static void validateValue(type &value){
-        if (value < 0.0 || value > 100.0)
+        if ((value < 0.0) || (value > 100.0))
             throw InvalidValueDomainException("source-spread spread: the value should be between 0 and 100");
     }
 };

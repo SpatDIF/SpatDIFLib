@@ -43,6 +43,30 @@ template <EExtension E>
 class sdDataSet{};
 
 template <>
+class sdDataSet<EExtension::SD_INFO>: public sdProtoDataSet{
+public:
+    sdDataSet<EExtension::SD_INFO>(
+                                   sdDescriptor<SD_INFO_AUTHOR>::type author = "unknown",
+                                   sdDescriptor<SD_INFO_HOST>::type host = "",
+                                   sdDescriptor<SD_INFO_DATE>::type date = "",
+                                   sdDescriptor<SD_INFO_SESSION>::type session = "",
+                                   sdDescriptor<SD_INFO_LOCATION>::type location = "",
+                                   sdDescriptor<SD_INFO_ANNOTATION>::type annotation = "",
+                                   sdDescriptor<SD_INFO_TITLE>::type title = "unknwon",
+                                   sdDescriptor<SD_INFO_DURATION>::type duration = 0){
+        
+        dataSetHolders.emplace(SD_INFO_AUTHOR, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_AUTHOR>::type>(author)));
+        dataSetHolders.emplace(SD_INFO_HOST, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_HOST>::type>(host)));
+        dataSetHolders.emplace(SD_INFO_DATE, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_HOST>::type>(date)));
+        dataSetHolders.emplace(SD_INFO_SESSION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_HOST>::type>(session)));
+        dataSetHolders.emplace(SD_INFO_LOCATION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_HOST>::type>(location)));
+        dataSetHolders.emplace(SD_INFO_ANNOTATION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_HOST>::type>(annotation)));
+        dataSetHolders.emplace(SD_INFO_TITLE, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_HOST>::type>(title)));
+        dataSetHolders.emplace(SD_INFO_DURATION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_HOST>::type>(duration)));
+    }
+};
+
+template <>
 class sdDataSet<EExtension::SD_MEDIA>: public sdProtoDataSet{
 public:
     sdDataSet<EExtension::SD_MEDIA>(

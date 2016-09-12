@@ -144,7 +144,12 @@ TEST_CASE("pointset"){
 }
 
 TEST_CASE("geometry"){
-
+    sdScene scene;
+    scene.addExtension(EExtension::SD_GEOMETRY);
+    sdEntity * entity = scene.addEntity("geometry");
+    entity->addEvent<SD_GEOMETRY_TRANSLATE>(3.0, {0.3,0.4,0.2});
+    entity->addEvent<SD_GEOMETRY_ROTATE>(3.0, {1.0, 0.2, 0.4});
+    entity->addEvent<SD_GEOMETRY_SCALE>(3.0, {1.0, 0.2, 0.4});
 }
 
 TEST_CASE("automation"){
