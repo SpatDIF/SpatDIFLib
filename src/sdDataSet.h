@@ -16,7 +16,7 @@
 class sdProtoDataSet{
 public:
     template<EDescriptor D>
-    typename sdDescriptor<D>::type &getValue(){
+    typename sdDescriptor<D>::type &getValue() const{
         std::shared_ptr<sdProtoHolder> holder = dataSetHolders.at(D);
         sdHolder<typename sdDescriptor<D>::type> *holderPtr =static_cast<sdHolder<typename sdDescriptor<D>::type> *>(holder.get());
         return holderPtr->item;
@@ -38,6 +38,7 @@ protected:
 
 
 #pragma specifications of dataset
+
 
 template <EExtension E>
 class sdDataSet{};
@@ -65,6 +66,8 @@ public:
         dataSetHolders.emplace(SD_INFO_DURATION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_HOST>::type>(duration)));
     }
 };
+
+using sdInfo = sdDataSet<EExtension::SD_INFO>;
 
 template <>
 class sdDataSet<EExtension::SD_MEDIA>: public sdProtoDataSet{

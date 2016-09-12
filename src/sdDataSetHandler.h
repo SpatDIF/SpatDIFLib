@@ -32,7 +32,7 @@ public:
         (*targetCollection).second.erase(identifier);
     }
     
-    std::shared_ptr<sdProtoDataSet> getProtoDataSet(EExtension extension, std::string identifier){
+    std::shared_ptr<sdProtoDataSet> getProtoDataSet(EExtension extension, std::string identifier) {
         auto targetCollection = descriptorSetCollections.find(extension);
         if(targetCollection == descriptorSetCollections.end()) throw InvalidExtensionException("extension not activated");
         return (*targetCollection).second.at(identifier);

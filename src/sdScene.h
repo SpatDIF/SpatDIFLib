@@ -21,7 +21,6 @@
 #include <unordered_set>
 #include <set>
 #include "sdDescriptor.h"
-#include "sdInfo.h"
 #include "sdEntity.h"
 #include "sdGroup.h"
 #include "sdDataSetHandler.h"
@@ -42,7 +41,6 @@ protected:
     std::set <EDescriptor> validDescriptorSet; //!< a set of valid descriptor
     
     EOrdering ordering; //!< ordering flag
-    sdInfo info; //!< contains "info" part of the meta section
     
     void addMetaAlias(sdProtoEntity * const entity, const std::shared_ptr<sdProtoMeta>);
     void addEventAlias(sdProtoEntity * const entity, const std::shared_ptr<sdProtoEvent>);
@@ -58,7 +56,6 @@ private:
         activatedExtensionSet = origin.activatedExtensionSet;
         validDescriptorSet = origin.validDescriptorSet;
         ordering = origin.ordering;
-        info = origin.info;
         sdDataSetHandler::copy(origin);
         
         for(auto &entity:entities){ // parent is now me
@@ -85,8 +82,9 @@ private:
 public:
     
     /*! constructor with sdInfo and ordering*/
-    sdScene(sdInfo info = sdInfo(), EOrdering ordering = EOrdering::SD_TIME ):info(info), ordering(ordering){
+    sdScene(sdDataSet<EExtension::SD_INFO> info = sdDataSet<EExtension::SD_INFO>(), EOrdering ordering = EOrdering::SD_TIME ):ordering(ordering){
         addInitialDescriptors();
+        addDataSet(EExtension::SD_INFO, "info", info);
     }
     
     sdScene (const sdScene& origin){
@@ -122,7 +120,7 @@ public:
     /*! gets an instance of sdInfo, which contains the "info" part of the meta section
      @param info a sdInfo
      */
-    const sdInfo &getInfo(void) const;
+    const sdInfo &getInfo(void) ;
 
 #pragma mark ordering
 
@@ -335,11 +333,12 @@ inline void sdScene::sortAllEvents(){
 #pragma mark Info
 
 inline void sdScene::setInfo(sdInfo info){
-    sdScene::info = info;
+    info = info;
 }
 
-inline const sdInfo &sdScene::getInfo(void) const{
-    return info;
+inline const sdInfo &sdScene::getInfo(void) {
+
+    return *(static_cast<sdDataSet<EExtension::SD_INFO>*>(getProtoDataSet(EExtension::SD_INFO, "info").get()));
 }
 
 #pragma mark Ordering handling

@@ -364,22 +364,22 @@ inline std::pair<sdOSCMessage, bool> sdOSCResponder::getSingleAction(std::string
         returnMessage.appendArgument<std::string>(scene->getOrderingAsString());
     }else if(command == "getAuthor"){
         returnMessage.setAddress("/spatdif/author");
-        returnMessage.appendArgument<std::string>(scene->getInfo().getAuthor());
+        returnMessage.appendArgument<std::string>(scene->getInfo().getValue<SD_INFO_AUTHOR>());
     }else if(command == "getHost"){
         returnMessage.setAddress("/spatdif/host");
-        returnMessage.appendArgument<std::string>(scene->getInfo().getHost());
+        returnMessage.appendArgument<std::string>(scene->getInfo().getValue<SD_INFO_HOST>());
     }else if(command == "getDate"){
         returnMessage.setAddress("/spatdif/date");
-        returnMessage.appendArgument<std::string>(scene->getInfo().getDateAsString());
+        returnMessage.appendArgument<std::string>(scene->getInfo().getValue<SD_INFO_DATE>());
     }else if(command == "getLocation"){
         returnMessage.setAddress("/spatdif/location");
-        returnMessage.appendArgument<std::string>(scene->getInfo().getLocation());
+        returnMessage.appendArgument<std::string>(scene->getInfo().getValue<SD_INFO_LOCATION>());
     }else if(command == "getSession"){
         returnMessage.setAddress("/spatdif/session");
-        returnMessage.appendArgument<std::string>(scene->getInfo().getSession());
+        returnMessage.appendArgument<std::string>(scene->getInfo().getValue<SD_INFO_SESSION>());
     }else if(command == "getAnnotation"){
         returnMessage.setAddress("/spatdif/annotation");
-        returnMessage.appendArgument<std::string>(scene->getInfo().getAnnotation());
+        returnMessage.appendArgument<std::string>(scene->getInfo().getValue<SD_INFO_ANNOTATION>());
     }else if(command == "getNumberOfActivatedExtensions"){
         returnMessage.setAddress("/spatdif/numberOfActivatedExtensions");
         returnMessage.appendArgument<int>(static_cast<int>(scene->getNumberOfActivatedExtensions()));

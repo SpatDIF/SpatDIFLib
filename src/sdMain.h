@@ -18,7 +18,6 @@
 #include "sdDate.h"
 
 #include "sdEntity.h"
-#include "sdInfo.h"
 #include "sdLoader.h"
 #include "sdOSCResponder.h"
 #include "sdSaver.h"

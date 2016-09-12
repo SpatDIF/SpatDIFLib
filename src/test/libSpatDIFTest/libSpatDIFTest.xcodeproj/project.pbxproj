@@ -133,7 +133,6 @@
 		62BE10221C2F3C020033244E /* sdEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = sdEntity.h; path = ../../sdEntity.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		62BE10231C2F3C020033244E /* sdEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdEvent.h; path = ../../sdEvent.h; sourceTree = "<group>"; };
 		62BE10241C2F3C020033244E /* sdException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdException.h; path = ../../sdException.h; sourceTree = "<group>"; };
-		62BE10251C2F3C020033244E /* sdInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdInfo.h; path = ../../sdInfo.h; sourceTree = "<group>"; };
 		62BE10261C2F3C020033244E /* sdLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdLoader.h; path = ../../sdLoader.h; sourceTree = "<group>"; };
 		62BE10271C2F3C020033244E /* sdOSCConverter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdOSCConverter.h; path = ../../sdOSCConverter.h; sourceTree = "<group>"; };
 		62BE10281C2F3C020033244E /* sdOSCMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdOSCMessage.h; path = ../../sdOSCMessage.h; sourceTree = "<group>"; };
@@ -255,7 +254,6 @@
 				62CBD7A31D758E54008F00CC /* sdGroup.h */,
 				62AF37B31C236EDC009E9347 /* sdEntity.cpp */,
 				62BE10211C2F3C020033244E /* sdDate.h */,
-				62BE10251C2F3C020033244E /* sdInfo.h */,
 				627FA4C81D74916D007C0C8A /* sdMeta.h */,
 				62BE10231C2F3C020033244E /* sdEvent.h */,
 			);
