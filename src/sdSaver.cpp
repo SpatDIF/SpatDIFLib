@@ -30,14 +30,14 @@ XMLElement* sdSaver::XMLInfoSection(XMLDocument &xml, sdScene *scene){
     sdInfo information = scene->getInfo();
 
     std::vector<std::pair<std::string ,std::string>> infoStrings = {
-        {"author",information.getAuthor()},
-        {"host",information.getHost()},
-        {"date",information.getDateAsString()},
-        {"location",information.getLocation()},
-        {"session",information.getSession()},
-        {"annotation",information.getAnnotation()},
-        {"title",information.getTitle()},
-        {"duration",std::to_string(information.getDuration())}
+        {"author",information.getValueAsString<SD_INFO_AUTHOR>()},
+        {"host",information.getValueAsString<SD_INFO_ANNOTATION>()},
+        {"date",information.getValueAsString<SD_INFO_DATE>()},
+        {"location",information.getValueAsString<SD_INFO_LOCATION>()},
+        {"session",information.getValueAsString<SD_INFO_SESSION>()},
+        {"annotation",information.getValueAsString<SD_INFO_ANNOTATION>()},
+        {"title",information.getValueAsString<SD_INFO_TITLE>()},
+        {"duration",information.getValueAsString<SD_INFO_DURATION>()}
     };
     
     std::for_each(infoStrings.begin(), infoStrings.end(), [&xml, &info](const std::pair<std::string ,std::string> &infoString){

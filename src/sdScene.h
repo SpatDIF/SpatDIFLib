@@ -74,6 +74,7 @@ private:
     }
     
     void addInitialDescriptors(){
+        addExtension(EExtension::SD_INFO);
         addExtension(EExtension::SD_CORE); // validate core descriptors
         addExtension(EExtension::SD_MEDIA); // core functionalities
         addExtension(EExtension::SD_LOOP);
@@ -559,7 +560,7 @@ inline const typename sdDescriptor<D>::type * const sdScene::getValue(std::strin
 inline bool sdScene::addExtension(EExtension extension){
     auto ret =  activatedExtensionSet.insert(extension).second;
     if(ret){
-        auto descriptors = sdSpec::getDescriptorsForExtension(extension);
+        auto descriptors = sdSpec::getDescriptorsOfExtension(extension);
         for(auto it = descriptors.begin(); descriptors.end() != it; it++) {
             validDescriptorSet.insert((*it).descriptor);
         }
@@ -587,7 +588,7 @@ inline std::unordered_set<std::string> sdScene::getActivatedExtensionsAsStrings(
 
 inline size_t sdScene::getNumberOfActivatedExtensions() const{
     size_t size = activatedExtensionSet.size();
-    size -= 4;
+    size -= 5;
     return size ; // because core is not a extension;
 }
 
@@ -603,7 +604,7 @@ inline bool sdScene::isExtensionActivated(std::string extension) const{
 
 inline bool sdScene::removeExtension(EExtension extension){
     if (extension == EExtension::SD_CORE) return false;
-    auto descriptors = sdSpec::getDescriptorsForExtension(extension);
+    auto descriptors = sdSpec::getDescriptorsOfExtension(extension);
     for(auto it = descriptors.begin(); it != descriptors.end(); it++) {
         validDescriptorSet.erase((*it).descriptor);
     }

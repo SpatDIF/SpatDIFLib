@@ -43,7 +43,7 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
         DEFINE_DESCRIPTOR_NO_EVENT(SD_INFO_LOCATION, "location"),
         DEFINE_DESCRIPTOR_NO_EVENT(SD_INFO_TITLE, "title"),
         DEFINE_DESCRIPTOR_NO_EVENT(SD_INFO_SESSION, "session")
-    }),
+    }, SD_INFO_TITLE),
     sdExtensionSpec(EExtension::SD_CORE, "core", {
         DEFINE_DESCRIPTOR(SD_TYPE,"type"),
         DEFINE_DESCRIPTOR(SD_PRESENT,"present"),
@@ -57,7 +57,7 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
         DEFINE_DESCRIPTOR(SD_MEDIA_CHANNEL, "channel"),
         DEFINE_DESCRIPTOR(SD_MEDIA_GAIN, "gain"),
         DEFINE_DESCRIPTOR(SD_MEDIA_TIME_OFFSET, "time-offset")
-    },SD_MEDIA_ID),
+    }, SD_MEDIA_ID),
     sdExtensionSpec(EExtension::SD_LOOP, "loop",{
         DEFINE_DESCRIPTOR(SD_LOOP_TYPE, "type"),
         DEFINE_DESCRIPTOR(SD_LOOP_POINTS, "points"),
@@ -74,7 +74,7 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
         DEFINE_DESCRIPTOR(SD_POINTSET_SIZE, "size"),
         DEFINE_DESCRIPTOR(SD_POINTSET_POINT, "point"),
         DEFINE_DESCRIPTOR(SD_POINTSET_HANDLE, "handle")
-    },SD_POINTSET_ID),
+    }, SD_POINTSET_ID),
     // 5.2.2 Geometry
     sdExtensionSpec((EExtension::SD_GEOMETRY), "geometry",{
         DEFINE_DESCRIPTOR(SD_GEOMETRY_TRANSLATE, "translate"),
@@ -98,7 +98,7 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
         DEFINE_DESCRIPTOR(SD_SHAPE_DIRECTION, "direction"),
         DEFINE_DESCRIPTOR(SD_SHAPE_CLOSED, "closed"),
         DEFINE_DESCRIPTOR(SD_SHAPE_TYPE, "type")
-    },SD_SHAPE_ID),
+    }, SD_SHAPE_ID),
     // 5.3.1.1 Trajectory Generator
     sdExtensionSpec((EExtension::SD_TRAJECTORY), "trajectory" , {
         DEFINE_DESCRIPTOR(SD_TRAJECTORY_POINTSET, "pointset"),
@@ -114,7 +114,7 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
         DEFINE_DESCRIPTOR(SD_GROUP_POSITION, "position"),
         DEFINE_DESCRIPTOR(SD_GROUP_ORIENTATION, "orientation"),
         DEFINE_DESCRIPTOR(SD_GROUP_MEMBERSHIP, "group-membership")
-    },SD_GROUP_ID),
+    }, SD_GROUP_ID),
     // 5.3.2.1 Source spread
     sdExtensionSpec((EExtension::SD_SOURCE_SPREAD), "source-spread",{
         DEFINE_DESCRIPTOR(SD_SOURCE_SPREAD_SPREAD, "spread"),

@@ -514,28 +514,23 @@ inline void sdOSCResponder::setAction(std::string command, sdOSCMessage message,
                 scene->setOrdering(message.getArgumentAsString(0));
             }else if(command == "setAuthor"){
                 sdInfo info = scene->getInfo();
-                info.setAuthor(message.getArgumentAsString(0));
-                scene->setInfo(info);
+                info.setValue<SD_INFO_AUTHOR>(message.getArgumentAsString(0));
             }else if(command == "setHost"){
                 sdInfo info = scene->getInfo();
-                info.setHost(message.getArgumentAsString(0));
-                scene->setInfo(info);
+                info.setValue<SD_INFO_HOST>(message.getArgumentAsString(0));
             }else if(command == "setDate"){
                 sdInfo info = scene->getInfo();
-                info.setDate(message.getArgumentAsString(0));
+                info.setValue<SD_INFO_DATE>(message.getArgumentAsString(0));
                 scene->setInfo(info);
             }else if(command == "setLocation"){
                 sdInfo info = scene->getInfo();
-                info.setLocation(message.getArgumentAsString(0));
-                scene->setInfo(info);
+                info.setValue<SD_INFO_LOCATION>(message.getArgumentAsString(0));
             }else if(command == "setSession"){
                 sdInfo info = scene->getInfo();
-                info.setSession(message.getArgumentAsString(0));
-                scene->setInfo(info);
+                info.setValue<SD_INFO_SESSION>(message.getArgumentAsString(0));
             }else if(command == "setAnnotation"){
                 sdInfo info = scene->getInfo();
-                info.setAnnotation(message.getArgumentAsString(0));
-                scene->setInfo(info);
+                info.setValue<SD_INFO_ANNOTATION>(message.getArgumentAsString(0));
             }
             break;
         }

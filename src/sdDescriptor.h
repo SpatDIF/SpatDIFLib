@@ -254,11 +254,13 @@ struct sdDescriptor<EDescriptor::SD_INFO_DATE>{
 
 template <>
 struct sdDescriptor<EDescriptor::SD_INFO_DURATION>{
-    typedef std::string type;
+    typedef double type;
     const static bool interpolable = false;
-    static type stringTo(const std::string &str){return str;}
-    static std::string toString(const type &value){return value;}
-    static void validateValue(type &value){}
+    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
+    static std::string toString(const type &value){return sdUtils::toString(value);}
+    static void validateValue(type &value){
+        if (value < 0.0) throw InvalidValueDomainException("info duration must be >= 0.0");
+    }
 };
 
 template <>

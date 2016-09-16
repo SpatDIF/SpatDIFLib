@@ -33,46 +33,48 @@ TEST_CASE("source spread test"){
 
 TEST_CASE("info test"){
     {
-        sdInfo info; // empty
-        info.setAuthor(string("John"));
-        info.setHost(string("sdInfoTest"));
-        info.setDate(sdDate("2000-01-01"));
-        info.setSession(string("1.1"));
-        info.setLocation(string("ZHDK"));
-        info.setAnnotation(string("this is a test"));
-        info.setTitle(string("My Wonderful Piece"));
-        info.setDuration(12.0);
+        sdInfo info("John", "sdInfoTest", "2000-1-1", "1.1", "ZHDK", "this is a test", "My Wonderful Piece", 12.0);
+//        info.setValue<SD_INFO_HOST>(string("sdInfoTest"));
+//        info.setValue<SD_INFO_AUTHOR>(string("John"));
+//        info.setValue<SD_INFO_DATE>(sdDate("2000-01-01"));
+//        info.setValue<SD_INFO_SESSION>(string("1.1"));
+//        info.setValue<SD_INFO_LOCATION>(string("ZHDK"));
+//        info.setValue<SD_INFO_ANNOTATION>(string("this is a test"));
+//        info.setValue<SD_INFO_TITLE>(string("My Wonderful Piece"));
+//        info.setValue<SD_INFO_DURATION>(12.0);
         
-        REQUIRE( info.getAuthor() == "John");
-        REQUIRE( info.getHost() == "sdInfoTest");
-        REQUIRE( info.getDateAsString() == "2000-1-1");
-        REQUIRE( info.getSession() == "1.1");
-        REQUIRE( info.getLocation() == "ZHDK");
-        REQUIRE( info.getAnnotation() == "this is a test");
-        REQUIRE( info.getTitle() == "My Wonderful Piece");
-        REQUIRE( info.getDuration() == 12.0);
+        
+        
+        REQUIRE( info.getValue<SD_INFO_HOST>() == "sdInfoTest");
+        REQUIRE( info.getValue<SD_INFO_AUTHOR>() == "John");
+        REQUIRE( info.getValue<SD_INFO_DATE>() == "2000-1-1");
+        REQUIRE( info.getValue<SD_INFO_SESSION>() == "1.1");
+        REQUIRE( info.getValue<SD_INFO_LOCATION>() == "ZHDK");
+        REQUIRE( info.getValue<SD_INFO_ANNOTATION>() == "this is a test");
+        REQUIRE( info.getValue<SD_INFO_TITLE>() == "My Wonderful Piece");
+        REQUIRE( info.getValue<SD_INFO_DURATION>() == 12.0);
     }
     {
         // set at once with strings and sdDate
         sdInfo info(string("Tom"), string("sdInfoTest"), sdDate(string("2012-04-03")), string("1.2"), string("ESB"), string("this is second test"),string(""));
         
-        REQUIRE( info.getAuthor() == "Tom");
-        REQUIRE( info.getHost() == "sdInfoTest");
-        REQUIRE( info.getDateAsString() == "2012-4-3");
-        REQUIRE( info.getSession() == "1.2");
-        REQUIRE( info.getLocation() == "ESB");
-        REQUIRE( info.getAnnotation() == "this is second test");
+        REQUIRE( info.getValue<SD_INFO_AUTHOR>() == "Tom");
+        REQUIRE( info.getValue<SD_INFO_HOST>() == "sdInfoTest");
+        REQUIRE( info.getValue<SD_INFO_DATE>() == "2012-4-3");
+        REQUIRE( info.getValue<SD_INFO_SESSION>() == "1.2");
+        REQUIRE( info.getValue<SD_INFO_LOCATION>() == "ESB");
+        REQUIRE( info.getValue<SD_INFO_ANNOTATION>() == "this is second test");
     }
     {
         // initialization also possible with c-strings
-        sdInfo info("Kevin", "sdInfoTest", "2012-05-01", "1.3", "SFEM", "this is third test");
+        sdInfo info("Kevin", "sdInfoTest", "2012-5-1", "1.3", "SFEM", "this is third test");
         
-        REQUIRE( info.getAuthor() == "Kevin");
-        REQUIRE( info.getHost() == "sdInfoTest");
-        REQUIRE( info.getDateAsString() == "2012-5-1");
-        REQUIRE( info.getSession() == "1.3");
-        REQUIRE( info.getLocation() == "SFEM");
-        REQUIRE( info.getAnnotation() == "this is third test");
+        REQUIRE( info.getValue<SD_INFO_AUTHOR>() == "Kevin");
+        REQUIRE( info.getValue<SD_INFO_HOST>() == "sdInfoTest");
+        REQUIRE( info.getValue<SD_INFO_DATE>() == "2012-5-1");
+        REQUIRE( info.getValue<SD_INFO_SESSION>() == "1.3");
+        REQUIRE( info.getValue<SD_INFO_LOCATION>() == "SFEM");
+        REQUIRE( info.getValue<SD_INFO_ANNOTATION>() == "this is third test");
     }
 }
 
@@ -122,10 +124,9 @@ TEST_CASE("How to Query loaded file"){
     sdEntity *voice1 = myScene.getEntity("voice1");
     if(!voice1) {abort();}
     
-    
     sdInfo info = myScene.getInfo();
-    REQUIRE(info.getDuration() == 650.3);
-    REQUIRE(info.getTitle() == "My Master Piece");
+    REQUIRE(info.getValue<SD_INFO_TITLE>() == "My Master Piece");
+    REQUIRE(info.getValue<SD_INFO_DURATION>() == 650.3);
     
     REQUIRE(voice1->getName() == "voice1");
     auto event = voice1->getEvent<SD_POSITION>(2.0);
@@ -287,7 +288,7 @@ TEST_CASE("sdSaverTest_EXTNESION"){
     myEntity->addEvent<SD_MEDIA_LOCATION>(1.0, "/some/where/in/your/system");
     myEntity->addEvent<SD_MEDIA_GAIN>(1.0, 1.0);
     myEntity->addEvent<SD_MEDIA_CHANNEL>(1.0, 2);
-    cout << sdSaver::XMLFromScene(&scene);
+    //cout << sdSaver::XMLFromScene(&scene);
     
 }
 

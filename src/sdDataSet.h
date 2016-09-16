@@ -7,7 +7,8 @@
 //
 
 #pragma once
-
+#include <unordered_map>
+#include "sdSpec.h"
 #include "sdDescriptor.h"
 /*!
  reusable set of multiple data in an extension, which can be stored in std::unordered_map and referred by name.
@@ -15,21 +16,50 @@
 
 class sdProtoDataSet{
 public:
+    std::unordered_map<std::string ,std::string> getDataSetAsStrings(){
+        std::unordered_map<std::string ,std::string> map;
+        for(auto &dataSetHolder : dataSetHolders ){
+            std::string descriptor = sdSpec::descriptorToString(dataSetHolder.first);
+            std::shared_ptr<sdProtoHolder> holder = dataSetHolder.second;
+        
+        }
+        return map;
+    }
+    
     template<EDescriptor D>
     typename sdDescriptor<D>::type &getValue() const{
         std::shared_ptr<sdProtoHolder> holder = dataSetHolders.at(D);
-        sdHolder<typename sdDescriptor<D>::type> *holderPtr =static_cast<sdHolder<typename sdDescriptor<D>::type> *>(holder.get());
+        sdHolder<typename sdDescriptor<D>::type> *holderPtr = static_cast<sdHolder<typename sdDescriptor<D>::type> *>(holder.get());
         return holderPtr->item;
-    };
+    }
+    
+    template<EDescriptor D>
+    std::string getValueAsString() const{
+        return sdDescriptor<D>::toString(getValue<D>());
+    }
+    
+    
+    template<EDescriptor D>
+    void setValue(typename sdDescriptor<D>::type value) {
+        std::shared_ptr<sdProtoHolder> holder = dataSetHolders.at(D);
+        sdHolder<typename sdDescriptor<D>::type> *holderPtr = static_cast<sdHolder<typename sdDescriptor<D>::type> *>(holder.get());
+        holderPtr->item = value;
+    }
+    
+    template<EDescriptor D>
+    void setValue(std::string &string){
+        typename sdDescriptor<D>::type value = sdDescriptor<D>::stringTo(string);
+        dataSetHolders.emplace(D, std::shared_ptr<sdProtoHolder>(new sdHolder<typename sdDescriptor<D>::type>(value)));
+    }
+    
     
 protected:
-    struct sdProtoHolder{
-    };
+    
+    struct sdProtoHolder{};
     
     template<typename T>
     struct sdHolder : public sdProtoHolder {
         sdHolder(const T& item) : item(item) {}
-        
         T item;
     };
     
@@ -58,12 +88,14 @@ public:
         
         dataSetHolders.emplace(SD_INFO_AUTHOR, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_AUTHOR>::type>(author)));
         dataSetHolders.emplace(SD_INFO_HOST, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_HOST>::type>(host)));
-        dataSetHolders.emplace(SD_INFO_DATE, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_HOST>::type>(date)));
-        dataSetHolders.emplace(SD_INFO_SESSION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_HOST>::type>(session)));
-        dataSetHolders.emplace(SD_INFO_LOCATION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_HOST>::type>(location)));
-        dataSetHolders.emplace(SD_INFO_ANNOTATION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_HOST>::type>(annotation)));
-        dataSetHolders.emplace(SD_INFO_TITLE, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_HOST>::type>(title)));
-        dataSetHolders.emplace(SD_INFO_DURATION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_HOST>::type>(duration)));
+        dataSetHolders.emplace(SD_INFO_DATE, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_DATE>::type>(date)));
+        dataSetHolders.emplace(SD_INFO_SESSION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_SESSION>::type>(session)));
+        dataSetHolders.emplace(SD_INFO_LOCATION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_LOCATION>::type>(location)));
+        dataSetHolders.emplace(SD_INFO_ANNOTATION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_ANNOTATION>::type>(annotation)));
+        dataSetHolders.emplace(SD_INFO_TITLE, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_TITLE>::type>(title)));
+        dataSetHolders.emplace(SD_INFO_DURATION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_DURATION>::type>(duration)));
+        
+        
     }
 };
 
