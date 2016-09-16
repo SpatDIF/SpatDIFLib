@@ -141,6 +141,7 @@
 		62BE102B1C2F3C020033244E /* sdScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdScene.h; path = ../../sdScene.h; sourceTree = "<group>"; };
 		62CBD7A01D757EBC008F00CC /* descriptor_test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = descriptor_test.cpp; path = TestCode/descriptor_test.cpp; sourceTree = SOURCE_ROOT; };
 		62CBD7A31D758E54008F00CC /* sdGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdGroup.h; path = ../../sdGroup.h; sourceTree = "<group>"; };
+		62D646701D8C5AAF00FCF13D /* sdData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdData.h; path = ../../sdData.h; sourceTree = "<group>"; };
 		62D8B02E1C37462900AC1D31 /* oldtest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = oldtest; sourceTree = BUILT_PRODUCTS_DIR; };
 		62D8B0301C37462900AC1D31 /* oldtest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = oldtest.cpp; sourceTree = "<group>"; };
 		62D904C51C0E4E160065D8A5 /* spatdiftest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = spatdiftest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -254,6 +255,7 @@
 				62CBD7A31D758E54008F00CC /* sdGroup.h */,
 				62AF37B31C236EDC009E9347 /* sdEntity.cpp */,
 				62BE10211C2F3C020033244E /* sdDate.h */,
+				62D646701D8C5AAF00FCF13D /* sdData.h */,
 				627FA4C81D74916D007C0C8A /* sdMeta.h */,
 				62BE10231C2F3C020033244E /* sdEvent.h */,
 			);

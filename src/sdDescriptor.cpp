@@ -13,23 +13,31 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#define ADD_EVENT( descriptor ) [](sdProtoEntity * entity, double time, std::string value){ return entity->addProtoEvent<descriptor>(time, sdDescriptor<descriptor>::stringTo(value), entity);}
+#include "sdDescriptor.h"
+#include "sdEntity.h"
+#include "sdScene.h"
 
-#define ADD_META( descriptor ) [](sdProtoEntity * entity, std::string value){ return entity->addProtoMeta<descriptor>(sdDescriptor<descriptor>::stringTo(value), entity);}
+#define ADD_DATA( descriptor ) [](sdScene * scene, std::string identifier, std::string valueString){ \
+    EExtension ext = sdSpec::getExtensionOfDescriptor(descriptor); \
+    std::shared_ptr<sdProtoDataSet> dataset = scene->getProtoDataSet(ext, identifier);\
+    dataset->setValue<descriptor>(sdDescriptor<descriptor>::stringTo(valueString));\
+}
 
-#define DEFINE_DESCRIPTOR( descriptor, string ) sdDescriptorSpec(descriptor, string, ADD_EVENT(descriptor), ADD_META(descriptor))
+#define ADD_META( descriptor ) [](sdProtoEntity * entity, std::string value)->std::shared_ptr<sdProtoMeta>{ return entity->addProtoMeta<descriptor>(sdDescriptor<descriptor>::stringTo(value), entity);}
 
+#define ADD_EVENT( descriptor ) [](sdProtoEntity * entity, double time, std::string value)->std::shared_ptr<sdProtoEvent>{ return entity->addProtoEvent<descriptor>(time, sdDescriptor<descriptor>::stringTo(value), entity);}
+
+
+#define DEFINE_DESCRIPTOR( descriptor, string ) sdDescriptorSpec(descriptor, string, ADD_DATA(descriptor), ADD_META(descriptor), ADD_EVENT(descriptor))
 
 #define ADD_NO_EVENT( descriptor ) [](sdProtoEntity * entity, double time, std::string value){ \
     throw MetaOnlyDescriptorException(" "); \
     return entity->addProtoEvent<descriptor>(time, sdDescriptor<descriptor>::stringTo(value), entity);\
 }
 
-#define DEFINE_DESCRIPTOR_NO_EVENT( descriptor, string ) sdDescriptorSpec(descriptor, string, ADD_NO_EVENT(descriptor), ADD_META(descriptor))
+#define DEFINE_DESCRIPTOR_NO_EVENT( descriptor, string ) sdDescriptorSpec(descriptor, string, ADD_DATA(descriptor), ADD_META(descriptor), ADD_NO_EVENT(descriptor))
 
 
-#include "sdDescriptor.h"
-#include "sdEntity.h"
 
 // the following table defines the relationship between extensions and descriptors, descriptor enum and string
 
@@ -48,7 +56,7 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
         DEFINE_DESCRIPTOR(SD_TYPE,"type"),
         DEFINE_DESCRIPTOR(SD_PRESENT,"present"),
         DEFINE_DESCRIPTOR(SD_POSITION, "position"),
-        DEFINE_DESCRIPTOR(SD_ORIENTATION, "orientation"),
+        DEFINE_DESCRIPTOR(SD_ORIENTATION, "orientation")
     }),
     sdExtensionSpec(EExtension::SD_MEDIA, "media", {
         DEFINE_DESCRIPTOR(SD_MEDIA_ID, "id"),

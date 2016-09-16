@@ -21,26 +21,32 @@
 
  */
 
+class sdScene;
 class sdProtoEntity;
 class sdProtoEvent;
 class sdProtoMeta;
 class sdSpec {
 protected:
+    
+    // a holder of descriptor in enum, string, utility func to make pair, meta, event
     struct sdDescriptorSpec{
         sdDescriptorSpec(EDescriptor descriptor,
                 std::string descriptorString,
-                std::function< std::shared_ptr<sdProtoEvent>(sdProtoEntity*, double, std::string)> addEventFromStringFunc,
-                std::function< std::shared_ptr<sdProtoMeta>(sdProtoEntity*, std::string)> addMetaFromStringFunc):
+                std::function< void(sdScene * scene, std::string, std::string)> addDataFromStringFunc,
+                std::function< std::shared_ptr<sdProtoMeta>(sdProtoEntity*, std::string)> addMetaFromStringFunc,
+                std::function< std::shared_ptr<sdProtoEvent>(sdProtoEntity*, double, std::string)> addEventFromStringFunc):
         descriptor(descriptor),
         descriptorString(descriptorString),
+        addDataFromStringFunc(addDataFromStringFunc),
         addEventFromStringFunc(addEventFromStringFunc),
         addMetaFromStringFunc(addMetaFromStringFunc){};
 
         EDescriptor descriptor;
         std::string descriptorString;
-        std::function< std::shared_ptr<sdProtoEvent>(sdProtoEntity * entity, double, std::string)> addEventFromStringFunc;
+        std::function< void(sdScene * scene, std::string, std::string)> addDataFromStringFunc;
         std::function< std::shared_ptr<sdProtoMeta>(sdProtoEntity * entity, std::string)> addMetaFromStringFunc;
-        std:
+        std::function< std::shared_ptr<sdProtoEvent>(sdProtoEntity * entity, double, std::string)> addEventFromStringFunc;
+
     };
     
     struct sdExtensionSpec{

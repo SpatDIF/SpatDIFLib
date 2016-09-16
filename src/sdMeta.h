@@ -19,59 +19,37 @@
 #include "sdDescriptor.h"
 #include "sdSpec.h"
 #include "sdUtils.h"
+#include "sdData.h"
 
 #pragma mark definitions
 class sdEntity;
+
 /**
  * @brief  An abstract class that connect an sdEntity and descriptor.
  * @detail This class holds a descriptor and a pointer to the parent Entity
  */
 
-class sdProtoMeta{
+class sdProtoMeta : public sdProtoData{
 
 public:
-    /*!
-     returns event descriptor
-     @returns event descriptor ENUM
-     */
-    EDescriptor getDescriptor() const;
-    
-    /*!
-     @returns descriptor as string
-     */
-    std::string getDescriptorAsString() const;
-    
+
     /*!
      returns an immutable pointer to its parent entity
      @returns a pointer to its parent entity
      */
     const sdProtoEntity * const getParent() const;
-    
-    /*!
-     returns value of the event as a std::string
-     @returns a std::string that contains string
-     */
-    virtual const std::string getValueAsString() const = 0;
 
 protected:
     const sdProtoEntity * const parent;/*!< a pointer to the belonging entity. unmutable */
-    const EDescriptor descriptor /*< the descriptor type of event. unmutable */;
     sdProtoMeta(const EDescriptor descriptor, const sdProtoEntity * const parent);
 
 };
 
 inline sdProtoMeta::sdProtoMeta(const EDescriptor descriptor, const sdProtoEntity * const parent):
-descriptor(descriptor),
+sdProtoData(descriptor),
 parent(parent)
 {}
 
-inline EDescriptor sdProtoMeta::getDescriptor() const{
-    return descriptor;
-}
-
-inline std::string sdProtoMeta::getDescriptorAsString() const{
-    return sdSpec::descriptorToString(descriptor);
-}
 
 inline const sdProtoEntity * const sdProtoMeta::getParent() const{
     return parent;
@@ -86,7 +64,7 @@ class sdMeta: public sdProtoMeta{
     friend sdEntity;
     
 protected:
-    const typename sdDescriptor<D>::type  value; /*< the value of the event. the type of value is determined by EDescriptor D */
+    const typename sdDescriptor<D>::type value; /*< the value of the event. the type of value is determined by EDescriptor D */
     
 public:
     

@@ -45,13 +45,7 @@ public:
         sdHolder<typename sdDescriptor<D>::type> *holderPtr = static_cast<sdHolder<typename sdDescriptor<D>::type> *>(holder.get());
         holderPtr->item = value;
     }
-    
-    template<EDescriptor D>
-    void setValue(std::string &string){
-        typename sdDescriptor<D>::type value = sdDescriptor<D>::stringTo(string);
-        dataSetHolders.emplace(D, std::shared_ptr<sdProtoHolder>(new sdHolder<typename sdDescriptor<D>::type>(value)));
-    }
-    
+        
     
 protected:
     
