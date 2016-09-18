@@ -15,11 +15,11 @@
 
 #include "sdDescriptor.h"
 #include "sdEntity.h"
-#include "sdScene.h"
+#include "sdDataSetHandler.h"
 
-#define ADD_DATA( descriptor ) [](sdScene * scene, std::string identifier, std::string valueString){ \
+#define ADD_DATA( descriptor ) [](sdDataSetHandler * handler, std::string identifier, std::string valueString){ \
     EExtension ext = sdSpec::getExtensionOfDescriptor(descriptor); \
-    std::shared_ptr<sdProtoDataSet> dataset = scene->getProtoDataSet(ext, identifier);\
+    std::shared_ptr<sdProtoDataSet> dataset = handler->getProtoDataSet(ext, identifier);\
     dataset->setValue<descriptor>(sdDescriptor<descriptor>::stringTo(valueString));\
 }
 

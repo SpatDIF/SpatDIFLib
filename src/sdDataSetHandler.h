@@ -35,7 +35,12 @@ public:
     std::shared_ptr<sdProtoDataSet> getProtoDataSet(EExtension extension, std::string identifier) {
         auto targetCollection = descriptorSetCollections.find(extension);
         if(targetCollection == descriptorSetCollections.end()) throw InvalidExtensionException("extension not activated");
-        return (*targetCollection).second.at(identifier);
+        auto dataset = (*targetCollection).second;
+        return dataset.at(identifier);
+    }
+    
+    void setData(std::string identifier, EDescriptor descriptor, std::string valueString){
+        sdSpec::getAddDataFunc(descriptor)(this, identifier, valueString);
     }
     
 protected:

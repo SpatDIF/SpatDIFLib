@@ -21,7 +21,7 @@
 
  */
 
-class sdScene;
+class sdDataSetHandler;
 class sdProtoEntity;
 class sdProtoEvent;
 class sdProtoMeta;
@@ -32,7 +32,7 @@ protected:
     struct sdDescriptorSpec{
         sdDescriptorSpec(EDescriptor descriptor,
                 std::string descriptorString,
-                std::function< void(sdScene * scene, std::string, std::string)> addDataFromStringFunc,
+                std::function< void(sdDataSetHandler*, std::string, std::string)> addDataFromStringFunc,
                 std::function< std::shared_ptr<sdProtoMeta>(sdProtoEntity*, std::string)> addMetaFromStringFunc,
                 std::function< std::shared_ptr<sdProtoEvent>(sdProtoEntity*, double, std::string)> addEventFromStringFunc):
         descriptor(descriptor),
@@ -43,7 +43,7 @@ protected:
 
         EDescriptor descriptor;
         std::string descriptorString;
-        std::function< void(sdScene * scene, std::string, std::string)> addDataFromStringFunc;
+        std::function< void(sdDataSetHandler*, std::string, std::string)> addDataFromStringFunc;
         std::function< std::shared_ptr<sdProtoMeta>(sdProtoEntity * entity, std::string)> addMetaFromStringFunc;
         std::function< std::shared_ptr<sdProtoEvent>(sdProtoEntity * entity, double, std::string)> addEventFromStringFunc;
 
@@ -76,6 +76,10 @@ public:
             return itr != eSpec.descriptorSpecs.end();
         });
         if(it != spatDIFSpec.end()) extension = (*it).extension;
+        if(extension == EExtension::SD_EXTENSION_ERROR){
+            std::string message = std::string("cannot find extension for descriptor ") + sdSpec::descriptorToString(descriptor);
+            throw InvalidExtensionException(message);
+        }
         return extension;
     }
     
@@ -156,21 +160,30 @@ public:
         return extensionList;
     }
     
-#pragma functor for addting meta and event
-    static std::function<std::shared_ptr<sdProtoEvent>(sdProtoEntity* entity, double,std::string)> getAddEventFunc(EDescriptor descriptor){
-        auto ext = getExtensionOfDescriptor(descriptor);
-        auto descriptors = getDescriptorsOfExtension(ext);
-        auto it = std::find_if(descriptors.begin(), descriptors.end(), [&descriptor](sdDescriptorSpec dSpec){ return dSpec.descriptor == descriptor;});
-        if(it == descriptors.end())return nullptr;
-        return (*it).addEventFromStringFunc;
+#pragma getters for functor for addting data meta and event
+    
+    static std::function<void(sdDataSetHandler*, std::string, std::string)> getAddDataFunc(EDescriptor descriptor){
+        return getDescriptorSpec(descriptor).addDataFromStringFunc;
     }
     
     static std::function<std::shared_ptr<sdProtoMeta>(sdProtoEntity* entity, std::string)> getAddMetaFunc(EDescriptor descriptor){
+        return getDescriptorSpec(descriptor).addMetaFromStringFunc;
+    }
+    
+    static std::function<std::shared_ptr<sdProtoEvent>(sdProtoEntity* entity, double,std::string)> getAddEventFunc(EDescriptor descriptor){
+        return getDescriptorSpec(descriptor).addEventFromStringFunc;
+    }
+    
+    static sdDescriptorSpec &getDescriptorSpec(EDescriptor descriptor){
         auto ext = getExtensionOfDescriptor(descriptor);
         auto descriptors = getDescriptorsOfExtension(ext);
         auto it = std::find_if(descriptors.begin(), descriptors.end(), [&descriptor](sdDescriptorSpec dSpec){ return dSpec.descriptor == descriptor;});
-        if(it == descriptors.end())return nullptr;
-        return (*it).addMetaFromStringFunc;
+        if(it == descriptors.end()){
+            std::string msg = "invalid descriptor: ";
+            msg += descriptorToString(descriptor);
+            throw InvalidDescriptorException(msg);
+        }
+        return *it;
     }
     
 };

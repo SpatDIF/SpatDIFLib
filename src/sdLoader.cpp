@@ -47,16 +47,14 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
             
             auto descriptorSpecs = sdSpec::getDescriptorsOfExtension(extension);
             for(auto descriptorSpec : descriptorSpecs){
-                std::string descriptorString = descriptorSpec.descriptorString;
-                XMLElement * metaElement = datasetElement->FirstChildElement(descriptorString.c_str());
-                if(!metaElement) continue;
+                XMLElement * metaElement = datasetElement->FirstChildElement(descriptorSpec.descriptorString.c_str());
+                if(!metaElement){
+                    //std::cout << "destcriptor : " << descriptorSpec.descriptorString << "not found." << std::endl;
+                    continue;
+                }
                 
-                
-                std::string value = metaElement->GetText();
-                
-                // now you get logical problem hier
-                
-                
+                std::string valueString = metaElement->GetText();
+                scene.setData("info", descriptorSpec.descriptor, valueString);
                 metaElement = metaElement->NextSiblingElement();
             }
         }
