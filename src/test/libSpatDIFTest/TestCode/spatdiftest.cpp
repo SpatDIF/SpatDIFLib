@@ -1,9 +1,9 @@
 
-#define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 #include "sdMain.h"
 #include <array>
 using namespace std;
+#define CATCH_CONFIG_MAIN
 
 #pragma mark sdDate
 
@@ -387,9 +387,10 @@ TEST_CASE("Test sdScene", "[sdScene]"){
         // get keys
         scene.addEntity("first");
         scene.addEntity("second");
-        auto nameVector = scene.getEntityNames();
-        REQUIRE(nameVector[0] == "first");
-        REQUIRE(nameVector[1] == "second");
+        auto set = scene.getEntityNames();
+        REQUIRE(set.find("first") != set.end());
+        REQUIRE(set.find("second") != set.end());
+        REQUIRE(set.find("third") == set.end());
         
         // get entity by key
         REQUIRE(scene.getEntity("first"));
@@ -492,9 +493,9 @@ TEST_CASE("same as above but with strings"){
 
 TEST_CASE("valid descriptor test"){
     sdScene scene;
-    REQUIRE(scene.getValidDescriptorSet().size() == 15);
+    REQUIRE(scene.getValidDescriptorSet().size() == 22);
     scene.addExtension(EExtension::SD_SOURCE_SPREAD);
-    REQUIRE(scene.getValidDescriptorSet().size() == 16);
+    REQUIRE(scene.getValidDescriptorSet().size() == 23);
     
     
 }

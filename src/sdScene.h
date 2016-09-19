@@ -22,7 +22,6 @@
 #include <set>
 #include "sdDescriptor.h"
 #include "sdEntity.h"
-#include "sdGroup.h"
 #include "sdDataSetHandler.h"
 
 /*! is responsible for 
@@ -166,11 +165,10 @@ public:
      @param name the name of new sdEntityCore
      */
     sdEntity * const addEntity(std::string name, EKind kind = EKind::SD_SOURCE);
-
     
     /*! return the name of all entities in the scene as vector of string
     */
-    std::vector<std::string> getEntityNames() const;
+    std::unordered_set<std::string> getEntityNames() const noexcept;
 
     /*! search an entity in the entity vector by its name and return the pointer. returns null if the entity can not be found.
      @param name the name of a designated entity
@@ -519,12 +517,10 @@ inline const std::unordered_map<std::string, sdEntity> &sdScene::getEntities() c
     return entities;
 }
 
-inline std::vector<std::string> sdScene::getEntityNames() const{
-    std::vector<std::string> returnVector;
-    for_each(entities.begin(), entities.end(),[&returnVector](std::pair<std::string, sdEntity> pair){
-        returnVector.push_back(pair.first);
-    });
-    return std::move(returnVector);
+inline std::unordered_set<std::string> sdScene::getEntityNames() const noexcept{
+    std::unordered_set<std::string> returnSet;
+    for(auto &entity:entities){ returnSet.emplace(entity.first);}
+    return std::move(returnSet);
 }
 
 inline sdEntity * const sdScene::getEntity(const std::string &name){

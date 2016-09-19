@@ -49,7 +49,7 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
             for(auto descriptorSpec : descriptorSpecs){
                 XMLElement * metaElement = datasetElement->FirstChildElement(descriptorSpec.descriptorString.c_str());
                 if(!metaElement){
-                    //std::cout << "destcriptor : " << descriptorSpec.descriptorString << "not found." << std::endl;
+                    //std::cout << "destcriptor : " << descriptorSpec.descriptorString << " not found." << std::endl;
                     continue;
                 }
                 
@@ -155,7 +155,6 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
 
         element = element->NextSiblingElement();
     }
-    
     return std::move(scene);
 }
 

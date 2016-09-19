@@ -26,7 +26,7 @@ class sdProtoEntity;
 class sdProtoEvent;
 class sdProtoMeta;
 class sdSpec {
-protected:
+public:
     
     // a holder of descriptor in enum, string, utility func to make pair, meta, event
     struct sdDescriptorSpec{
@@ -64,7 +64,6 @@ protected:
     
     const static std::vector<sdExtensionSpec> spatDIFSpec;
     
-public:
     
 #pragma mark extension
     static EExtension getExtensionOfDescriptor(EDescriptor descriptor){
