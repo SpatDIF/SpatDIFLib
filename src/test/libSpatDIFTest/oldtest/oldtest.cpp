@@ -274,7 +274,7 @@ TEST_CASE("sdSaverTest"){
     string generatedString = sdSaver::XMLFromScene(&scene);
     scene.setOrdering(EOrdering::SD_TRACK);
     generatedString = sdSaver::XMLFromScene(&scene);
-    //cout << generatedString;
+    cout << generatedString;
 }
 
 TEST_CASE("sdSaverTest_EXTNESION"){

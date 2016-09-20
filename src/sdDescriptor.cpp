@@ -17,25 +17,10 @@
 #include "sdEntity.h"
 #include "sdDataSetHandler.h"
 
-#define ADD_DATA( descriptor ) [](sdDataSetHandler * handler, std::string identifier, std::string valueString){ \
-    EExtension ext = sdSpec::getExtensionOfDescriptor(descriptor); \
-    std::shared_ptr<sdProtoDataSet> dataset = handler->getProtoDataSet(ext, identifier);\
-    dataset->setValue<descriptor>(sdDescriptor<descriptor>::stringTo(valueString));\
-}
 
-#define ADD_META( descriptor ) [](sdProtoEntity * entity, std::string value)->std::shared_ptr<sdProtoMeta>{ return entity->addProtoMeta<descriptor>(sdDescriptor<descriptor>::stringTo(value), entity);}
+#pragma mark functor against runtime query and manipulation using string
 
-#define ADD_EVENT( descriptor ) [](sdProtoEntity * entity, double time, std::string value)->std::shared_ptr<sdProtoEvent>{ return entity->addProtoEvent<descriptor>(time, sdDescriptor<descriptor>::stringTo(value), entity);}
-
-#define DEFINE_DESCRIPTOR( descriptor, string ) sdDescriptorSpec(descriptor, string, ADD_DATA(descriptor), ADD_META(descriptor), ADD_EVENT(descriptor))
-
-#define ADD_NO_EVENT( descriptor ) [](sdProtoEntity * entity, double time, std::string value){ \
-throw MetaOnlyDescriptorException(" "); \
-return entity->addProtoEvent<descriptor>(time, sdDescriptor<descriptor>::stringTo(value), entity);\
-}
-#define DEFINE_DESCRIPTOR_NO_EVENT( descriptor, string ) sdDescriptorSpec(descriptor, string, ADD_DATA(descriptor), ADD_META(descriptor), ADD_NO_EVENT(descriptor))
-
-
+/// returns std::function that takes scene and identifier as inputs and returns value
 
 template<EDescriptor D>
 inline std::function<void(sdDataSetHandler*, std::string, std::string)> addData(){
@@ -61,8 +46,17 @@ inline std::function<std::shared_ptr<sdProtoEvent> (sdProtoEntity * , double , s
 }
 
 template<EDescriptor D>
+inline std::function<std::string(std::shared_ptr<sdProtoHolder>)> getDataAsString(){
+    return [](std::shared_ptr<sdProtoHolder> protoHolder)->std::string{
+        auto holder = static_cast<sdHolder<typename sdDescriptor<D>::type> *>(protoHolder.get());
+        typename sdDescriptor<D>::type value = (*holder).item;
+        return sdDescriptor<D>::toString(value);
+    };
+}
+
+template<EDescriptor D>
 inline sdSpec::sdDescriptorSpec defineDescriptor(const std::string &string){
-    return sdSpec:: sdDescriptorSpec(D, string, addData<D>(), addMeta<D>(), addEvent<D>());
+    return sdSpec:: sdDescriptorSpec(D, string, addData<D>(), addMeta<D>(), addEvent<D>(), getDataAsString<D>());
 }
 
 template<EDescriptor D>
@@ -75,7 +69,7 @@ inline std::function<std::shared_ptr<sdProtoEvent> (sdProtoEntity * , double , s
 
 template<EDescriptor D>
 inline sdSpec::sdDescriptorSpec defineDescriptorNoEvent(const std::string &string){
-    return sdSpec::sdDescriptorSpec(D, string, addData<D>(), addMeta<D>(), addNoEvent<D>());
+    return sdSpec::sdDescriptorSpec(D, string, addData<D>(), addMeta<D>(), addNoEvent<D>(), getDataAsString<D>());
 }
 
 // the following table defines the relationship between extensions and descriptors, descriptor enum and string
@@ -94,42 +88,42 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
     sdExtensionSpec(EExtension::SD_CORE, "core", {
         defineDescriptor<SD_TYPE>("type"),
         defineDescriptor<SD_PRESENT>("present"),
-        defineDescriptor<SD_POSITION>( "position"),
-        defineDescriptor<SD_ORIENTATION>( "orientation")
+        defineDescriptor<SD_POSITION>("position"),
+        defineDescriptor<SD_ORIENTATION>("orientation")
     }),
     sdExtensionSpec(EExtension::SD_MEDIA, "media", {
-        defineDescriptor<SD_MEDIA_ID>( "id"),
-        defineDescriptor<SD_MEDIA_TYPE>( "type"),
+        defineDescriptor<SD_MEDIA_ID>("id"),
+        defineDescriptor<SD_MEDIA_TYPE>("type"),
         defineDescriptor<SD_MEDIA_LOCATION>( "location"),
         defineDescriptor<SD_MEDIA_CHANNEL>( "channel"),
         defineDescriptor<SD_MEDIA_GAIN>( "gain"),
         defineDescriptor<SD_MEDIA_TIME_OFFSET>( "time-offset")
     }, SD_MEDIA_ID),
     sdExtensionSpec(EExtension::SD_LOOP, "loop",{
-        defineDescriptor<SD_LOOP_TYPE>( "type"),
-        defineDescriptor<SD_LOOP_POINTS>( "points"),
-        defineDescriptor<SD_LOOP_WAIT_TIME>( "wait-time")
+        defineDescriptor<SD_LOOP_TYPE>("type"),
+        defineDescriptor<SD_LOOP_POINTS>("points"),
+        defineDescriptor<SD_LOOP_WAIT_TIME>("wait-time")
     }),
     sdExtensionSpec((EExtension::SD_INTERPOLATION), "interpolation",{
-        defineDescriptor<SD_INTERPOLATION_TYPE>( "type")
+        defineDescriptor<SD_INTERPOLATION_TYPE>("type")
     }),
     // 5.2.1 Pointset
     sdExtensionSpec((EExtension::SD_POINTSET), "pointset",{
         defineDescriptor<SD_POINTSET_ID> ("id"),
         defineDescriptor<SD_POINTSET_UNIT> ("unit"),
-        defineDescriptor<SD_POINTSET_CLOSED>( "closed"),
+        defineDescriptor<SD_POINTSET_CLOSED>("closed"),
         defineDescriptor<SD_POINTSET_SIZE> ("size"),
-        defineDescriptor<SD_POINTSET_POINT>( "point"),
-        defineDescriptor<SD_POINTSET_HANDLE>( "handle")
+        defineDescriptor<SD_POINTSET_POINT>("point"),
+        defineDescriptor<SD_POINTSET_HANDLE>("handle")
     }, SD_POINTSET_ID),
     // 5.2.2 Geometry
     sdExtensionSpec((EExtension::SD_GEOMETRY), "geometry",{
-        defineDescriptor<SD_GEOMETRY_TRANSLATE> ("translate"),
-        defineDescriptor<SD_GEOMETRY_ROTATE>( "rotate"),
-        defineDescriptor<SD_GEOMETRY_SCALE>( "scale"),
-        defineDescriptor<SD_POINTSET_SIZE>( "size"),
-        defineDescriptor<SD_GEOMETRY_SHEAR> ("shear"),
-        defineDescriptor<SD_GEOMETRY_REFLECT >( "reflect")
+        defineDescriptor<SD_GEOMETRY_TRANSLATE>("translate"),
+        defineDescriptor<SD_GEOMETRY_ROTATE>("rotate"),
+        defineDescriptor<SD_GEOMETRY_SCALE>("scale"),
+        defineDescriptor<SD_POINTSET_SIZE>("size"),
+        defineDescriptor<SD_GEOMETRY_SHEAR>("shear"),
+        defineDescriptor<SD_GEOMETRY_REFLECT>("reflect")
     }),
     // 5.2.3 Automation
     sdExtensionSpec((EExtension::SD_AUTOMATION), "automation", {
@@ -141,26 +135,26 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
     }),
     // 5.2.4 Shape
     sdExtensionSpec((EExtension::SD_SHAPE), "shape", {
-        defineDescriptor<SD_SHAPE_ID>( "id"),
-        defineDescriptor<SD_SHAPE_DIRECTION>( "direction"),
-        defineDescriptor<SD_SHAPE_CLOSED>( "closed"),
-        defineDescriptor<SD_SHAPE_TYPE>( "type")
+        defineDescriptor<SD_SHAPE_ID>("id"),
+        defineDescriptor<SD_SHAPE_DIRECTION>("direction"),
+        defineDescriptor<SD_SHAPE_CLOSED>("closed"),
+        defineDescriptor<SD_SHAPE_TYPE>("type")
     }, SD_SHAPE_ID),
     // 5.3.1.1 Trajectory Generator
     sdExtensionSpec((EExtension::SD_TRAJECTORY), "trajectory" , {
-        defineDescriptor<SD_TRAJECTORY_POINTSET>( "pointset"),
-        defineDescriptor<SD_TRAJECTORY_INTERPOLATION>( "interpolation"),
-        defineDescriptor<SD_TRAJECTORY_GEOMETRY>( "geometry" ),
-        defineDescriptor<SD_TRAJECTORY_SHAPE>( "shape"),
-        defineDescriptor<SD_TRAJECTORY_AUTOMATION>( "automation")
+        defineDescriptor<SD_TRAJECTORY_POINTSET>("pointset"),
+        defineDescriptor<SD_TRAJECTORY_INTERPOLATION>("interpolation"),
+        defineDescriptor<SD_TRAJECTORY_GEOMETRY>("geometry" ),
+        defineDescriptor<SD_TRAJECTORY_SHAPE>("shape"),
+        defineDescriptor<SD_TRAJECTORY_AUTOMATION>("automation")
     }),
     // 5.3.1.2 Group
     sdExtensionSpec((EExtension::SD_GROUP), "group",{
-        defineDescriptor<SD_GROUP_ID>( "id"),
-        defineDescriptor<SD_GROUP_PRESENT>( "present"),
-        defineDescriptor<SD_GROUP_POSITION>( "position"),
-        defineDescriptor<SD_GROUP_ORIENTATION>( "orientation"),
-        defineDescriptor<SD_GROUP_MEMBERSHIP>( "group-membership")
+        defineDescriptor<SD_GROUP_ID>("id"),
+        defineDescriptor<SD_GROUP_PRESENT>("present"),
+        defineDescriptor<SD_GROUP_POSITION>("position"),
+        defineDescriptor<SD_GROUP_ORIENTATION>("orientation"),
+        defineDescriptor<SD_GROUP_MEMBERSHIP>("group-membership")
     }, SD_GROUP_ID),
     // 5.3.2.1 Source spread
     sdExtensionSpec((EExtension::SD_SOURCE_SPREAD), "source-spread",{
@@ -169,10 +163,10 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
     // 5.3.3.1 Diestance cue
     sdExtensionSpec((EExtension::SD_DISTANCE_CUES), "distance-cues",{
         defineDescriptor<SD_DISTANCE_CUES_REFERENCE_DISTANCE>("reference-distance"),
-        defineDescriptor<SD_DISTANCE_CUES_MAXIMUM_DISTANCE>( "maximum-distance"),
-        defineDescriptor<SD_DISTANCE_CUES_MAXIMUM_ATTENUATION>( "maximum-attenuation"),
-        defineDescriptor<SD_DISTANCE_CUES_ATTENUATION_MODEL>( "attenuation-model"),
-        defineDescriptor<SD_DISTANCE_CUES_ABSORPTION_MODEL>( "absorption-model")
+        defineDescriptor<SD_DISTANCE_CUES_MAXIMUM_DISTANCE>("maximum-distance"),
+        defineDescriptor<SD_DISTANCE_CUES_MAXIMUM_ATTENUATION>("maximum-attenuation"),
+        defineDescriptor<SD_DISTANCE_CUES_ATTENUATION_MODEL>("attenuation-model"),
+        defineDescriptor<SD_DISTANCE_CUES_ABSORPTION_MODEL>("absorption-model")
     }),
     // 5.3.4.1 Sink Entity
     sdExtensionSpec((EExtension::SD_SINK_ENTITY),"sink-entity",{
@@ -185,7 +179,7 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
     // 5.3.5.1 Hardware-out
     sdExtensionSpec((EExtension::SD_HARDWARE_OUT), "hardware-out",{
         defineDescriptor<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>( "physical-channel"),
-        defineDescriptor<SD_HARDWARE_OUT_GAIN>( "gain")
+        defineDescriptor<SD_HARDWARE_OUT_GAIN>("gain")
     }),
     // 5.4 Private Extension
     sdExtensionSpec((EExtension::SD_PRIVATE), "private", {}) // no descriptor defined

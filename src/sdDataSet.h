@@ -7,6 +7,7 @@
 //
 
 #pragma once
+#include <unordered_set>
 #include <unordered_map>
 #include "sdSpec.h"
 #include "sdDescriptor.h"
@@ -14,17 +15,17 @@
  reusable set of multiple data in an extension, which can be stored in std::unordered_map and referred by name.
  */
 
+struct sdProtoHolder{};
+
+template<typename T>
+struct sdHolder : public sdProtoHolder {
+    sdHolder(const T& item) : item(item) {}
+    T item;
+};
+
+
 class sdProtoDataSet{
 public:
-    std::unordered_map<std::string ,std::string> getDataSetAsStrings(){
-        std::unordered_map<std::string ,std::string> map;
-        for(auto &dataSetHolder : dataSetHolders ){
-            std::string descriptor = sdSpec::descriptorToString(dataSetHolder.first);
-            std::shared_ptr<sdProtoHolder> holder = dataSetHolder.second;
-        
-        }
-        return map;
-    }
     
     template<EDescriptor D>
     typename sdDescriptor<D>::type &getValue() const{
@@ -38,6 +39,12 @@ public:
         return sdDescriptor<D>::toString(getValue<D>());
     }
     
+    std::string getValueAsString(EDescriptor descriptor) const{
+        std::shared_ptr<sdProtoHolder> protoHolder = dataSetHolders.at(descriptor);
+        auto getDataAsStringFunc = sdSpec::getDataAsStringFunc(descriptor);
+        return getDataAsStringFunc(protoHolder);
+        
+    }
     
     template<EDescriptor D>
     void setValue(typename sdDescriptor<D>::type value) {
@@ -46,16 +53,15 @@ public:
         holderPtr->item = value;
     }
         
+    std::unordered_set<EDescriptor> getKeys() const{
+        std::unordered_set<EDescriptor> set;
+        for(auto &dataSetHolder:dataSetHolders){ set.insert(dataSetHolder.first);}
+        return set;
+    }
     
 protected:
     
-    struct sdProtoHolder{};
-    
-    template<typename T>
-    struct sdHolder : public sdProtoHolder {
-        sdHolder(const T& item) : item(item) {}
-        T item;
-    };
+    /// this holder is used for type
     
     std::unordered_map<EDescriptor, std::shared_ptr<sdProtoHolder>> dataSetHolders;
 };
@@ -77,8 +83,8 @@ public:
                                    sdDescriptor<SD_INFO_SESSION>::type session = "",
                                    sdDescriptor<SD_INFO_LOCATION>::type location = "",
                                    sdDescriptor<SD_INFO_ANNOTATION>::type annotation = "",
-                                   sdDescriptor<SD_INFO_TITLE>::type title = "unknwon",
-                                   sdDescriptor<SD_INFO_DURATION>::type duration = 0){
+                                   sdDescriptor<SD_INFO_TITLE>::type title = "unknown",
+                                   sdDescriptor<SD_INFO_DURATION>::type duration = 0.0){
         
         dataSetHolders.emplace(SD_INFO_AUTHOR, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_AUTHOR>::type>(author)));
         dataSetHolders.emplace(SD_INFO_HOST, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_HOST>::type>(host)));
@@ -88,9 +94,9 @@ public:
         dataSetHolders.emplace(SD_INFO_ANNOTATION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_ANNOTATION>::type>(annotation)));
         dataSetHolders.emplace(SD_INFO_TITLE, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_TITLE>::type>(title)));
         dataSetHolders.emplace(SD_INFO_DURATION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_INFO_DURATION>::type>(duration)));
-        
-        
     }
+    
+
 };
 
 using sdInfo = sdDataSet<EExtension::SD_INFO>;

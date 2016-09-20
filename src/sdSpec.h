@@ -25,6 +25,7 @@ class sdDataSetHandler;
 class sdProtoEntity;
 class sdProtoEvent;
 class sdProtoMeta;
+class sdProtoHolder;
 class sdSpec {
 public:
     
@@ -34,18 +35,23 @@ public:
                 std::string descriptorString,
                 std::function< void(sdDataSetHandler*, std::string, std::string)> addDataFromStringFunc,
                 std::function< std::shared_ptr<sdProtoMeta>(sdProtoEntity*, std::string)> addMetaFromStringFunc,
-                std::function< std::shared_ptr<sdProtoEvent>(sdProtoEntity*, double, std::string)> addEventFromStringFunc):
+                std::function< std::shared_ptr<sdProtoEvent>(sdProtoEntity*, double, std::string)> addEventFromStringFunc,
+                std::function< std::string(std::shared_ptr<sdProtoHolder>)> getDataAsStringFunc ):
         descriptor(descriptor),
         descriptorString(descriptorString),
         addDataFromStringFunc(addDataFromStringFunc),
         addEventFromStringFunc(addEventFromStringFunc),
-        addMetaFromStringFunc(addMetaFromStringFunc){};
+        addMetaFromStringFunc(addMetaFromStringFunc),
+        getDataAsStringFunc(getDataAsStringFunc){};
 
         EDescriptor descriptor;
         std::string descriptorString;
+        
+        
         std::function< void(sdDataSetHandler*, std::string, std::string)> addDataFromStringFunc;
         std::function< std::shared_ptr<sdProtoMeta>(sdProtoEntity * entity, std::string)> addMetaFromStringFunc;
         std::function< std::shared_ptr<sdProtoEvent>(sdProtoEntity * entity, double, std::string)> addEventFromStringFunc;
+        std::function< std::string(std::shared_ptr<sdProtoHolder>)> getDataAsStringFunc;
 
     };
     
@@ -171,6 +177,10 @@ public:
     
     static std::function<std::shared_ptr<sdProtoEvent>(sdProtoEntity* entity, double,std::string)> getAddEventFunc(EDescriptor descriptor){
         return getDescriptorSpec(descriptor).addEventFromStringFunc;
+    }
+    
+    static std::function< std::string(std::shared_ptr<sdProtoHolder>)> getDataAsStringFunc(EDescriptor desctriptor){
+        return getDescriptorSpec(desctriptor).getDataAsStringFunc;
     }
     
     static sdDescriptorSpec &getDescriptorSpec(EDescriptor descriptor){

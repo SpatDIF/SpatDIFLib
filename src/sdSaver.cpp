@@ -17,6 +17,7 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include <unordered_set>
 #include "sdMain.h"
 #include "tinyxml2.h"
 #include "JSONNode.h"
@@ -27,28 +28,17 @@ using namespace tinyxml2;
 XMLElement* sdSaver::XMLInfoSection(XMLDocument &xml, sdScene *scene){
 
     XMLElement* info = xml.NewElement("info");
-    sdInfo information = scene->getInfo();
-
-    std::vector<std::pair<std::string ,std::string>> infoStrings = {
-        {"author",information.getValueAsString<SD_INFO_AUTHOR>()},
-        {"host",information.getValueAsString<SD_INFO_ANNOTATION>()},
-        {"date",information.getValueAsString<SD_INFO_DATE>()},
-        {"location",information.getValueAsString<SD_INFO_LOCATION>()},
-        {"session",information.getValueAsString<SD_INFO_SESSION>()},
-        {"annotation",information.getValueAsString<SD_INFO_ANNOTATION>()},
-        {"title",information.getValueAsString<SD_INFO_TITLE>()},
-        {"duration",information.getValueAsString<SD_INFO_DURATION>()}
-    };
+    sdDataSet<EExtension::SD_INFO> dataset = scene->getInfo();
+    std::unordered_set<EDescriptor> keys = dataset.getKeys();
     
-    std::for_each(infoStrings.begin(), infoStrings.end(), [&xml, &info](const std::pair<std::string ,std::string> &infoString){
-        if(!infoString.second.empty()){
-            XMLElement* elem  = xml.NewElement(infoString.first.c_str());
-            XMLText* tex = xml.NewText(infoString.second.c_str());
-            elem->InsertEndChild(tex);
-            info->InsertEndChild(elem);
-        }
-    });
-
+    for(auto &key : keys){
+        std::string descriptorString = sdSpec::descriptorToString(key);
+        std::string value = dataset.getValueAsString(key);
+        XMLElement * element = xml.NewElement(descriptorString.c_str());
+        XMLText * text = xml.NewText(value.c_str());
+        element->InsertEndChild(text);
+        info->InsertEndChild(element);
+    }
     return info;
 }
 

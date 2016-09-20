@@ -31,7 +31,6 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
     if(err != XML_SUCCESS){throw FileErrorException();}
     
     sdScene scene;
-    sdInfo infoDataSet;
 
     XMLElement* spatdif = xml.FirstChildElement("spatdif");
     XMLElement* meta = spatdif->FirstChildElement("meta");
@@ -39,6 +38,8 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
         
         // dataset items
         std::vector<EExtension> enabledExtension = sdSpec::getDataSetEnabledExtensions();
+        sdInfo infoDataSet;
+
         for(EExtension extension : enabledExtension){
             std::string extensionString = sdSpec::extensionToString(extension);
             XMLElement* datasetElement = meta->FirstChildElement(extensionString.c_str());
