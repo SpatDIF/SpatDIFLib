@@ -352,7 +352,6 @@ TEST_CASE("hardware out extension"){
     rightSpeaker->addEvent("1.0", "hardware-out", "gain",  "0.6");
     REQUIRE(rightSpeaker->getValueAsString<SD_HARDWARE_OUT_GAIN>(1.0) == "0.6");
     REQUIRE(*rightSpeaker->getValue<SD_HARDWARE_OUT_GAIN>(1.0) == 0.6);
-
 }
 
 
@@ -361,6 +360,21 @@ TEST_CASE("Dataset"){
     sdScene scene;
     sdInfo info("Max Musterman", "testapp", "2016-9-12",  "testses", "chengdu", "this is test", "dataset test", 22);
     scene.setInfo(info);
+    sdDataSet<EExtension::SD_MEDIA> mediadata = sdDataSet<EExtension::SD_MEDIA>(
+                                                                                "mymedia",sdDescriptor<SD_MEDIA_TYPE>::SD_FILE,"/tmp/test.wav", 1, 0, 1.0 );
+    scene.addDataSet(EExtension::SD_MEDIA, mediadata);
+    auto dataset = scene.getDataSet<EExtension::SD_MEDIA>("mymedia");
+    REQUIRE(dataset.getValue<SD_MEDIA_TYPE>() == sdDescriptor<SD_MEDIA_TYPE>::SD_FILE);
+    REQUIRE(dataset.getValue<SD_MEDIA_ID>() == "mymedia");
+    REQUIRE(dataset.getValue<SD_MEDIA_LOCATION>() == "/tmp/test.wav");
+    REQUIRE(dataset.getValue<SD_MEDIA_CHANNEL>() == 1);
+    REQUIRE(dataset.getValue<SD_MEDIA_GAIN>() == 1.0);
+    REQUIRE(dataset.getValue<SD_MEDIA_TIME_OFFSET>() == 0);
+    
+    scene.setData("mymedia", SD_MEDIA_CHANNEL, "3");
+    int numChannels = scene.getDataSet<EExtension::SD_MEDIA>("mymedia").sdProtoDataSet::getValue<SD_MEDIA_CHANNEL>();
+    
+    REQUIRE(numChannels == 3);
     
 }
 

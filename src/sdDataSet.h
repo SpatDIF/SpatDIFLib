@@ -71,7 +71,7 @@ protected:
 
 
 template <EExtension E>
-class sdDataSet{};
+class sdDataSet : public sdProtoDataSet{} ;
 
 template <>
 class sdDataSet<EExtension::SD_INFO>: public sdProtoDataSet{

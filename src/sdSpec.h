@@ -85,6 +85,8 @@ public:
         return coreSpec.size();
     }
     
+    
+    
     static EExtension getExtensionOfDescriptor(EDescriptor descriptor){
         EExtension extension = EExtension::SD_EXTENSION_ERROR;
         auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&descriptor](const sdExtensionSpec &eSpec){

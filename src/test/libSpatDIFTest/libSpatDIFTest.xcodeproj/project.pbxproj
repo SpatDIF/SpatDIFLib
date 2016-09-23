@@ -58,11 +58,11 @@
 		629720C51C29966100135148 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720C41C29966100135148 /* tinyxml2.cpp */; };
 		629720D61C2D8C2600135148 /* sdLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720D51C2D8C2600135148 /* sdLoader.cpp */; };
 		629720DB1C2E1F0600135148 /* sdSaver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720DA1C2E1F0600135148 /* sdSaver.cpp */; };
+		629B8D511D956E4000036706 /* oldtest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629B8D501D956E4000036706 /* oldtest.cpp */; };
 		62A24D101D6343B20019F04F /* sdSpec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6217DDE51D5B20510048C466 /* sdSpec.cpp */; };
 		62AF37BB1C2373A1009E9347 /* sdEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B31C236EDC009E9347 /* sdEntity.cpp */; };
 		62CBD7A11D757EBC008F00CC /* descriptor_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62CBD7A01D757EBC008F00CC /* descriptor_test.cpp */; };
 		62CBD7A21D757F00008F00CC /* descriptor_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62CBD7A01D757EBC008F00CC /* descriptor_test.cpp */; };
-		62D8B0311C37462900AC1D31 /* oldtest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62D8B0301C37462900AC1D31 /* oldtest.cpp */; };
 		62D8B0351C3746A500AC1D31 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720C41C29966100135148 /* tinyxml2.cpp */; };
 		62D8B0371C3746A500AC1D31 /* sdEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B31C236EDC009E9347 /* sdEntity.cpp */; };
 		62D8B0381C3746A500AC1D31 /* sdLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720D51C2D8C2600135148 /* sdLoader.cpp */; };
@@ -132,6 +132,7 @@
 		629B8D4D1D955A6300036706 /* sdEntityHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdEntityHandler.h; path = ../../sdEntityHandler.h; sourceTree = "<group>"; };
 		629B8D4E1D9561E200036706 /* sdGlobalEventHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdGlobalEventHandler.h; path = ../../sdGlobalEventHandler.h; sourceTree = "<group>"; };
 		629B8D4F1D956AA800036706 /* sdGlobalMetaHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdGlobalMetaHandler.h; path = ../../sdGlobalMetaHandler.h; sourceTree = "<group>"; };
+		629B8D501D956E4000036706 /* oldtest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = oldtest.cpp; path = oldtest/oldtest.cpp; sourceTree = SOURCE_ROOT; };
 		62A24D0F1D6322300019F04F /* sdSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sdSpec.h; path = ../../sdSpec.h; sourceTree = "<group>"; };
 		62AF37B31C236EDC009E9347 /* sdEntity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdEntity.cpp; path = ../../sdEntity.cpp; sourceTree = "<group>"; };
 		62BE10211C2F3C020033244E /* sdDate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdDate.h; path = ../../sdDate.h; sourceTree = "<group>"; };
@@ -147,7 +148,6 @@
 		62CBD7A01D757EBC008F00CC /* descriptor_test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = descriptor_test.cpp; path = TestCode/descriptor_test.cpp; sourceTree = SOURCE_ROOT; };
 		62D646701D8C5AAF00FCF13D /* sdData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdData.h; path = ../../sdData.h; sourceTree = "<group>"; };
 		62D8B02E1C37462900AC1D31 /* oldtest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = oldtest; sourceTree = BUILT_PRODUCTS_DIR; };
-		62D8B0301C37462900AC1D31 /* oldtest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = oldtest.cpp; sourceTree = "<group>"; };
 		62D904C51C0E4E160065D8A5 /* spatdiftest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = spatdiftest; sourceTree = BUILT_PRODUCTS_DIR; };
 		62D904D11C0E50320065D8A5 /* spatdiftest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = spatdiftest.cpp; path = TestCode/spatdiftest.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -326,14 +326,6 @@
 			name = Library;
 			sourceTree = "<group>";
 		};
-		62D8B02F1C37462900AC1D31 /* oldtest */ = {
-			isa = PBXGroup;
-			children = (
-				62D8B0301C37462900AC1D31 /* oldtest.cpp */,
-			);
-			path = oldtest;
-			sourceTree = "<group>";
-		};
 		62D904AE1C0E4DBF0065D8A5 = {
 			isa = PBXGroup;
 			children = (
@@ -346,7 +338,6 @@
 				627FA4CE1D756C11007C0C8A /* Utility */,
 				627FA4D21D756C91007C0C8A /* Library */,
 				62D904B91C0E4DBF0065D8A5 /* libSpatDIFTest */,
-				62D8B02F1C37462900AC1D31 /* oldtest */,
 				62D904B81C0E4DBF0065D8A5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -366,6 +357,7 @@
 			children = (
 				62CBD7A01D757EBC008F00CC /* descriptor_test.cpp */,
 				62D904D11C0E50320065D8A5 /* spatdiftest.cpp */,
+				629B8D501D956E4000036706 /* oldtest.cpp */,
 			);
 			path = libSpatDIFTest;
 			sourceTree = "<group>";
@@ -482,12 +474,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62D8B0311C37462900AC1D31 /* oldtest.cpp in Sources */,
 				62D8B0351C3746A500AC1D31 /* tinyxml2.cpp in Sources */,
 				62D8B0371C3746A500AC1D31 /* sdEntity.cpp in Sources */,
 				62D8B0381C3746A500AC1D31 /* sdLoader.cpp in Sources */,
 				62A24D101D6343B20019F04F /* sdSpec.cpp in Sources */,
 				62D8B0391C3746A500AC1D31 /* sdSaver.cpp in Sources */,
+				629B8D511D956E4000036706 /* oldtest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
