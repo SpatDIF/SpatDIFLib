@@ -270,9 +270,9 @@ TEST_CASE("sdSaverTest"){
     myEntity->addEvent<SD_ORIENTATION>(2.12 , {0.0,1.0,2.0});
     yourEntity->addEvent<SD_POSITION>(4.2, {5.0,4.0,3.0});
     yourEntity->addEvent<SD_MEDIA_LOCATION>(5.0, "/tmp/tmpaudio.wav");
-    string generatedString = sdSaver::XMLFromScene(&scene);
+    string generatedString = sdSaver::XMLFromScene(scene);
     scene.setOrdering(EOrdering::SD_TRACK);
-    generatedString = sdSaver::XMLFromScene(&scene);
+    generatedString = sdSaver::XMLFromScene(scene);
     cout << generatedString;
 }
 

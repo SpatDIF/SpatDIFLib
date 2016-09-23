@@ -360,6 +360,8 @@ TEST_CASE("Dataset"){
     sdScene scene;
     sdInfo info("Max Musterman", "testapp", "2016-9-12",  "testses", "chengdu", "this is test", "dataset test", 22);
     scene.setInfo(info);
+    
+    
     sdDataSet<EExtension::SD_MEDIA> mediadata = sdDataSet<EExtension::SD_MEDIA>(
                                                                                 "mymedia",sdDescriptor<SD_MEDIA_TYPE>::SD_FILE,"/tmp/test.wav", 1, 0, 1.0 );
     scene.addDataSet(EExtension::SD_MEDIA, mediadata);
@@ -372,9 +374,8 @@ TEST_CASE("Dataset"){
     REQUIRE(dataset.getValue<SD_MEDIA_TIME_OFFSET>() == 0);
     
     scene.setData("mymedia", SD_MEDIA_CHANNEL, "3");
-    int numChannels = scene.getDataSet<EExtension::SD_MEDIA>("mymedia").sdProtoDataSet::getValue<SD_MEDIA_CHANNEL>();
     
-    REQUIRE(numChannels == 3);
-    
+    REQUIRE(scene.getDataSet<EExtension::SD_MEDIA>("mymedia").getValue<SD_MEDIA_CHANNEL>() == 3);
+    std::cout << sdSaver::XMLFromScene(scene);
 }
 

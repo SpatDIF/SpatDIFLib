@@ -52,7 +52,7 @@ public:
     size_t getNumberOfActivatedExtensions() const{
         size_t size = activatedExtensionSet.size();
         size -= sdSpec::getNumberOfCoreSpecs();
-        return size ; // because core is not a extension;
+        return size ; // because core is not an extension;
     }
 
     bool isExtensionActivated(EExtension extension) const{

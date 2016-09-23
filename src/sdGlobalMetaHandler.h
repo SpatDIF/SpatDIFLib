@@ -12,7 +12,7 @@ class sdProtoEntity;
 class sdGlobalMetaHandler{
 public:
     bool removeMetaAlias(const sdProtoEntity* const entity, const EDescriptor & descriptor );
-    std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoMeta>>> &getAllMetas();
+    const std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoMeta>>> &getAllMetas() const;
     void addMetaAlias(sdProtoEntity * const entity, std::shared_ptr<sdProtoMeta> event);
     
 protected:
@@ -28,7 +28,7 @@ inline bool sdGlobalMetaHandler::removeMetaAlias(const sdProtoEntity* const enti
     return true;
 }
 
-inline std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoMeta>>> &sdGlobalMetaHandler::getAllMetas(){
+inline const std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoMeta>>> &sdGlobalMetaHandler::getAllMetas() const{
     return allMetas;
 }
 

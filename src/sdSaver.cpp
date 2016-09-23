@@ -25,10 +25,10 @@
 
 using namespace tinyxml2;
 
-XMLElement* sdSaver::XMLInfoSection(XMLDocument &xml, sdScene *scene){
+XMLElement* sdSaver::XMLInfoSection(XMLDocument &xml, const sdScene &scene){
 
     XMLElement* info = xml.NewElement("info");
-    sdDataSet<EExtension::SD_INFO> dataset = scene->getInfo();
+    sdDataSet<EExtension::SD_INFO> dataset = scene.getInfo();
     std::unordered_set<EDescriptor> keys = dataset.getKeys();
     
     for(auto &key : keys){
@@ -42,14 +42,14 @@ XMLElement* sdSaver::XMLInfoSection(XMLDocument &xml, sdScene *scene){
     return info;
 }
 
-XMLElement* sdSaver::XMLOrderingSection(XMLDocument &xml, sdScene *scene){
+XMLElement* sdSaver::XMLOrderingSection(XMLDocument &xml, const sdScene &scene){
     XMLElement* ordering = xml.NewElement("ordering");
-    XMLText* orderingText = xml.NewText(scene->getOrderingAsString().c_str());
+    XMLText* orderingText = xml.NewText(scene.getOrderingAsString().c_str());
     ordering->InsertEndChild(orderingText);
     return  ordering;
 }
 
-XMLElement* sdSaver::XMLMetaSection(XMLDocument &xml, sdScene *scene){
+XMLElement* sdSaver::XMLMetaSection(XMLDocument &xml, const sdScene &scene){
 
     XMLElement* metaSection = xml.NewElement("meta");
 
@@ -57,11 +57,11 @@ XMLElement* sdSaver::XMLMetaSection(XMLDocument &xml, sdScene *scene){
     metaSection->InsertEndChild(sdSaver::XMLInfoSection(xml, scene));
 
     // add extensions to meta
-    size_t num = scene->getNumberOfActivatedExtensions();
+    size_t num = scene.getNumberOfActivatedExtensions();
     if(num > 0){
         XMLElement* extensions = xml.NewElement("extensions");
         std::string extString;
-        auto extensionNames = scene->getActivatedExtensionsAsStrings();
+        auto extensionNames = scene.getActivatedExtensionsAsStrings();
         std::for_each(extensionNames.begin(), extensionNames.end(),[&extString](std::string ext){
             if(!(ext == "media" || ext == "core")){
                 extString += ext;
@@ -75,7 +75,7 @@ XMLElement* sdSaver::XMLMetaSection(XMLDocument &xml, sdScene *scene){
     }
     
     // add other meta infomation such as constant position or sound file definition
-    auto allMetas = scene->getAllMetas();
+    auto allMetas = scene.getAllMetas();
     
     std::for_each(allMetas.begin(), allMetas.end(), [&](std::pair<sdProtoEntity*, std::shared_ptr<sdProtoMeta>> metaPair ) {
         auto entity = metaPair.first;
@@ -92,7 +92,7 @@ XMLElement* sdSaver::XMLMetaSection(XMLDocument &xml, sdScene *scene){
 
         // the name of entity always comes first
         XMLElement* name = xml.NewElement("name"); // entity name
-        auto entityName = scene->getEntityName(entity);
+        auto entityName = scene.getEntityName(entity);
         XMLText* nameText = xml.NewText(entityName.c_str());
         name->InsertEndChild(nameText);
         kind->InsertEndChild(name);
@@ -128,7 +128,7 @@ XMLElement* sdSaver::XMLMetaSection(XMLDocument &xml, sdScene *scene){
     return metaSection;
 }
 
-std::string sdSaver::XMLFromScene(sdScene *scene){
+std::string sdSaver::XMLFromScene(const sdScene &scene){
     
     XMLDocument xml;
  	XMLDeclaration* decl = xml.NewDeclaration();
@@ -143,12 +143,12 @@ std::string sdSaver::XMLFromScene(sdScene *scene){
     // META Section
     spatdif->InsertEndChild(sdSaver::XMLMetaSection(xml, scene));
 
-    std::unordered_map<std::string, sdEntity> entities = scene->getEntities();
+    std::unordered_map<std::string, sdEntity> entities = scene.getEntities();
     
     // TIME Section
     /* ordered by time */
-    if(scene->getOrdering() == EOrdering::SD_TIME){
-        auto eventTime = scene->getNextEventTime(-1.0);
+    if(scene.getOrdering() == EOrdering::SD_TIME){
+        auto eventTime = scene.getNextEventTime(-1.0);
         while(eventTime.second){
             
             // add <time>
@@ -189,10 +189,10 @@ std::string sdSaver::XMLFromScene(sdScene *scene){
                 }
                 spatdif->InsertEndChild(kindElement);
             }
-            eventTime = scene->getNextEventTime(eventTime.first);
+            eventTime = scene.getNextEventTime(eventTime.first);
         }
  
-    }else if(scene->getOrdering() == EOrdering::SD_TRACK){
+    }else if(scene.getOrdering() == EOrdering::SD_TRACK){
         // 1. Sort vector by name alphabetically
         
         for(auto it = entities.begin(); it != entities.end(); it++ ){
@@ -231,12 +231,12 @@ std::string sdSaver::XMLFromScene(sdScene *scene){
     
 }
 
-std::string sdSaver::JSONFromScene( sdScene *sdScene){
+std::string sdSaver::JSONFromScene( sdScene &sdScene){
     return NULL;
     
     
 }
 
-std::string sdSaver::YAMLFromScene( sdScene *sdScene){
+std::string sdSaver::YAMLFromScene( sdScene &sdScene){
     return NULL;
 }

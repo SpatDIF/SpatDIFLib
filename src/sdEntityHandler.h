@@ -24,7 +24,7 @@ public:
      @param name the name of a designated entity
      */
     sdEntity *  const getEntity(const std::string &name);
-    std::string getEntityName(const sdProtoEntity * entity);
+    std::string getEntityName(const sdProtoEntity * entity) const;
 
     /*! return the entity set */
     const std::unordered_map<std::string, sdEntity> &getEntities() const;
@@ -63,7 +63,7 @@ inline void sdEntityHandler::removeAllEntities(){
     entities.clear();
 }
 
-inline std::string sdEntityHandler::getEntityName(const sdProtoEntity* entity){
+inline std::string sdEntityHandler::getEntityName(const sdProtoEntity* entity) const{
     for(auto it = entities.begin(); it != entities.end(); it++) {
         if(&((*it).second) == entity){
             return (*it).first;

@@ -185,8 +185,6 @@ inline const typename sdDescriptor<D>::type * const sdProtoEntity::getPreviousVa
     return &previousEvent ->getValue();
 }
 
-
-
 class sdEntity : public sdProtoEntity{
     friend sdEntityHandler;
 

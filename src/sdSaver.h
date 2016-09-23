@@ -31,26 +31,26 @@ public:
     /*! converts a scene to XML string
      @param sdScene a sdScene
      */
-    static std::string XMLFromScene(sdScene *scene);
+    static std::string XMLFromScene(const sdScene &scene);
     
     /*! converts a scene to JSON string
      @param sdScene a sdScene
      */
-    static std::string JSONFromScene(sdScene *scene);
+    static std::string JSONFromScene(sdScene &scene);
     
     /*! converts a scene to JSON string
      @param sdScene a sdScene
      */
-    static std::string YAMLFromScene(sdScene *scene);
+    static std::string YAMLFromScene(sdScene &scene);
 
 
 protected:
     
-    static tinyxml2::XMLElement* XMLInfoSection(tinyxml2::XMLDocument &xml, sdScene *scene);
-    static tinyxml2::XMLElement* XMLOrderingSection(tinyxml2::XMLDocument &xml, sdScene *scene);
+    static tinyxml2::XMLElement* XMLInfoSection(tinyxml2::XMLDocument &xml, const sdScene &scene);
+    static tinyxml2::XMLElement* XMLOrderingSection(tinyxml2::XMLDocument &xml, const sdScene &scene);
 
-    static tinyxml2::XMLElement* XMLMetaSection(tinyxml2::XMLDocument &xml, sdScene *scene);
-    static tinyxml2::XMLElement* XMLTrajectorySection(tinyxml2::XMLDocument &xml, sdScene *scene);
+    static tinyxml2::XMLElement* XMLMetaSection(tinyxml2::XMLDocument &xml, const sdScene &scene);
+    static tinyxml2::XMLElement* XMLTrajectorySection(tinyxml2::XMLDocument &xml, const sdScene &scene);
 
 };
 

@@ -13,6 +13,12 @@ public:
     using sdDataSetCollection = std::unordered_map<std::string, std::shared_ptr<sdProtoDataSet>>;
     
     template<EExtension E>
+    sdDataSet<E> getDataSet(std::string identifier){
+        std::shared_ptr<sdProtoDataSet>  protoDataSet = getProtoDataSet(E, identifier);
+        return *(static_cast<sdDataSet<E> *>(protoDataSet.get()));
+    }
+    
+    template<EExtension E>
     void addDataSet(EExtension extension, sdDataSet<E> set){
         auto targetCollection = descriptorSetCollections.find(extension);
         if(targetCollection == descriptorSetCollections.end()) throw InvalidExtensionException("extension not activated");
@@ -20,21 +26,14 @@ public:
         addDataSet(extension, setPtr);
     }
     
-    template<EExtension E>
-    sdDataSet<E> getDataSet(std::string identifier){
-        std::shared_ptr<sdProtoDataSet>  protoDataSet = getProtoDataSet(E, identifier);
-        return *(static_cast<sdDataSet<E> *>(protoDataSet.get()));
-    }
-
-
-    
     void addDataSet(EExtension extension, std::shared_ptr<sdProtoDataSet> set){
-        auto targetCollection = descriptorSetCollections.find(extension);
-        if(targetCollection == descriptorSetCollections.end()) throw InvalidExtensionException("extension not activated");
+        auto it = descriptorSetCollections.find(extension);
+        if(it == descriptorSetCollections.end()) throw InvalidExtensionException("extension not activated");
         EDescriptor idDescriptor = sdSpec::getIDDescriptorOfExtension(extension);
         std::string identifier = (extension == EExtension::SD_INFO) ? "info": set->getValueAsString(idDescriptor);
         if(identifier.empty())throw InvalidDatasetIDException();
-        (*targetCollection).second.emplace(identifier, set);
+        it->second.erase(identifier);
+        it->second.emplace(identifier, set);
     }
     
     void removeDataSet(EExtension extension, std::string identifier){
@@ -43,9 +42,7 @@ public:
         (*targetCollection).second.erase(identifier);
     }
     
-
-    
-    std::shared_ptr<sdProtoDataSet> getProtoDataSet(EExtension extension, std::string identifier) {
+    std::shared_ptr<sdProtoDataSet> getProtoDataSet(EExtension extension, std::string identifier) const{
         auto targetCollection = descriptorSetCollections.find(extension);
         if(targetCollection == descriptorSetCollections.end()) throw InvalidExtensionException("extension not activated");
         auto dataset = (*targetCollection).second;
@@ -57,12 +54,11 @@ public:
     }
     
     
-    
     void setInfo(sdInfo &info){
         addDataSet(EExtension::SD_INFO, info);
     }
     
-    const sdInfo &getInfo(void){
+    const sdInfo &getInfo(void) const{
         return *(static_cast<sdDataSet<EExtension::SD_INFO>*>(getProtoDataSet(EExtension::SD_INFO, "info").get()));
     }
     

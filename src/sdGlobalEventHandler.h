@@ -18,13 +18,13 @@ public:
     std::vector<std::pair<const sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> getEventsFromAllEntities(const double &start, const double &end) const;
     
     std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>> getNextEventsFromAllEntities(const double &time) const;
-    std::pair<double, bool> getPreviousEventTime(const double &time);
-    std::pair<double, bool> getDeltaTimeFromPreviousEvent(const double &time);
-    std::pair<double, bool> getNextEventTime(const double &time);
-    std::pair<double, bool> getDeltaTimeToNextEvent(const double &time);
-    std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> &getAllEvents();
+    std::pair<double, bool> getPreviousEventTime(const double &time) const;
+    std::pair<double, bool> getDeltaTimeFromPreviousEvent(const double &time) const;
+    std::pair<double, bool> getNextEventTime(const double &time) const;
+    std::pair<double, bool> getDeltaTimeToNextEvent(const double &time) const;
+    const std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> &getAllEvents() const;
     std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>> getPreviousEventsFromAllEntities(const double &time) const;
-    std::vector<std::pair<const sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> getEventsFromAllEntities();;
+    std::vector<std::pair<const sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> getEventsFromAllEntities() const;
     std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>>  getFirstEventsFromAllEntities() const;
     std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>> getLastEventsFromAllEntities() const;
 
@@ -79,31 +79,31 @@ inline std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent
     return getEventsFromAllEntities((*result).second->getTime());
 }
 
-inline std::pair<double, bool> sdGlobalEventHandler::getPreviousEventTime(const double &time){
+inline std::pair<double, bool> sdGlobalEventHandler::getPreviousEventTime(const double &time) const{
     auto set = getPreviousEventsFromAllEntities(time);
     if(set.empty()) return std::make_pair(0.0, false);
     return std::make_pair((*set.begin()).second->getTime(), true);
 }
 
-inline std::pair<double, bool> sdGlobalEventHandler::getDeltaTimeFromPreviousEvent(const double &time){
+inline std::pair<double, bool> sdGlobalEventHandler::getDeltaTimeFromPreviousEvent(const double &time) const{
     auto previousEventTime = getPreviousEventTime(time);
     if(!previousEventTime.second)return std::make_pair(0.0, false);
     return std::make_pair(time-previousEventTime.first, true);
 }
 
-inline std::pair<double, bool> sdGlobalEventHandler::getNextEventTime(const double &time){
+inline std::pair<double, bool> sdGlobalEventHandler::getNextEventTime(const double &time) const{
     auto set = getNextEventsFromAllEntities(time);
     if(set.empty()) return std::make_pair(0.0, false);
     return std::make_pair((*set.begin()).second->getTime(), true);
 }
 
-inline std::pair<double, bool> sdGlobalEventHandler::getDeltaTimeToNextEvent(const double &time){
+inline std::pair<double, bool> sdGlobalEventHandler::getDeltaTimeToNextEvent(const double &time) const{
     auto nextEventTime = getNextEventTime(time);
     if(!nextEventTime.second)return std::make_pair(0.0, false);
     return std::make_pair(nextEventTime.first - time, true);
 }
 
-inline std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> &sdGlobalEventHandler::getAllEvents(){
+inline const std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> &sdGlobalEventHandler::getAllEvents() const{
     return allEvents;
 }
 
@@ -115,7 +115,6 @@ inline std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent
     
     if(result == allEvents.rend()){return std::vector<std::pair<const sdProtoEntity*, std::shared_ptr<sdProtoEvent>>>();}
     return getEventsFromAllEntities((*result).second->getTime());
-    
 }
 
 inline std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>>  sdGlobalEventHandler::getFirstEventsFromAllEntities() const{
