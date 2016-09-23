@@ -255,7 +255,6 @@
 			isa = PBXGroup;
 			children = (
 				62BE102B1C2F3C020033244E /* sdScene.h */,
-				629B8D4F1D956AA800036706 /* sdGlobalMetaHandler.h */,
 				62BE10221C2F3C020033244E /* sdEntity.h */,
 				62AF37B31C236EDC009E9347 /* sdEntity.cpp */,
 				62D646701D8C5AAF00FCF13D /* sdData.h */,
@@ -269,6 +268,7 @@
 		627FA4CD1D756BEB007C0C8A /* StorageHandlers */ = {
 			isa = PBXGroup;
 			children = (
+				629B8D4F1D956AA800036706 /* sdGlobalMetaHandler.h */,
 				629B8D4C1D95583A00036706 /* sdOrderingHandler.h */,
 				62401D5D1CA2E8E3001179C5 /* sdMetaHandler.h */,
 				62401D5E1CA2E947001179C5 /* sdEventHandler.h */,

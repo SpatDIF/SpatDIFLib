@@ -84,38 +84,14 @@ public:
 #pragma mark entity handler override
     sdEntity * const addEntity(std::string name, EKind kind = EKind::SD_SOURCE) override;
     
-    template<EDescriptor D>
-    const sdEvent<D> * const addEvent(std::string name, const double &time, const typename sdDescriptor<D>::type &values);
-    
-    template<EDescriptor D>
-    const typename sdDescriptor<D>::type * const getValue(std::string name, double time);
-
-    
     std::string dump(bool consoleOut = true);
 };
-
 
 inline sdEntity * const sdScene::addEntity(std::string name, EKind kind){
     auto ret = entities.insert(std::pair<std::string, sdEntity>(name ,sdEntity(this, kind)));
     if(!ret.second) return nullptr;
     return &ret.first->second;
 }
-
-
-template<EDescriptor D>
-inline const sdEvent<D> * const sdScene::addEvent(std::string name, const double &time, const typename sdDescriptor<D>::type &values){
-    auto entity = getEntity(name);
-    if(!entity) return nullptr;
-    return entity->addEvent<D>(time, values);
-}
-
-template<EDescriptor D>
-inline const typename sdDescriptor<D>::type * const sdScene::getValue(std::string name, double time) {
-    auto entity = getEntity(name);
-    if(!entity) return nullptr;
-    return entity->getValue<D>(time);
-}
-
 
 inline std::string sdScene::dump(bool consoleOut){
     return std::string();
