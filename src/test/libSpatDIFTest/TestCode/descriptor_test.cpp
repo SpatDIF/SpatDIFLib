@@ -96,13 +96,7 @@ TEST_CASE("media"){
         REQUIRE(false);
     }catch(InvalidValueDomainException){}
     
-    // descriptor set
-    auto mySong = sdDataSet<EExtension::SD_MEDIA>(sdDescriptor<SD_MEDIA_TYPE>::SD_FILE,"/tmp/file.wav", 2, 0, 1.0);
-    scene.addDataSet(EExtension::SD_MEDIA, "mySong", mySong);
-
-    entity->addEvent<SD_MEDIA_ID>(3.0, "mySong"); // adding id means adding descriptor set
-    REQUIRE(*entity->getValue<SD_MEDIA_LOCATION>(3.0) == "/tmp/file.wav");
-
+ 
 }
 
 TEST_CASE("loop"){
@@ -221,14 +215,7 @@ TEST_CASE("shape"){
         REQUIRE(false);
     }catch(CanNotConvertStringException){}
     
-    
-    // descriptor set
-    auto myShape = sdDataSet<EExtension::SD_SHAPE>(true,true, sdDescriptor<SD_SHAPE_TYPE>::SD_TRIANGLE);
-    scene.addDataSet(EExtension::SD_SHAPE, "myShape", myShape);
-    
-    entity->addEvent<SD_SHAPE_ID>(5.0, "myShape"); // adding id means adding descriptor set
-    REQUIRE(*entity->getValue<SD_SHAPE_CLOSED>(5.0) == true);
-
+   
 }
 
 TEST_CASE("group"){
@@ -247,7 +234,6 @@ TEST_CASE("group"){
     REQUIRE( entity->getValueAsString<SD_GROUP_MEMBERSHIP>(3.0) == "alpha_group");
     REQUIRE( *entity->getValue<SD_GROUP_MEMBERSHIP>(3.0) == "alpha_group");
     
-
 }
 
 TEST_CASE("source spread"){
@@ -367,5 +353,14 @@ TEST_CASE("hardware out extension"){
     REQUIRE(rightSpeaker->getValueAsString<SD_HARDWARE_OUT_GAIN>(1.0) == "0.6");
     REQUIRE(*rightSpeaker->getValue<SD_HARDWARE_OUT_GAIN>(1.0) == 0.6);
 
-
 }
+
+
+TEST_CASE("Dataset"){
+
+    sdScene scene;
+    sdInfo info("Max Musterman", "testapp", "2016-9-12",  "testses", "chengdu", "this is test", "dataset test", 22);
+    scene.setInfo(info);
+    
+}
+

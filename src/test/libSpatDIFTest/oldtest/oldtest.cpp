@@ -259,7 +259,6 @@ TEST_CASE("sdSaverTest"){
     scene.addExtension(EExtension::SD_HARDWARE_OUT);
     scene.addExtension(EExtension::SD_SINK_ENTITY);
 
-    
     //the scene has one entities
     auto myEntity = scene.addEntity("myEntity", EKind::SD_SOURCE);
     auto yourEntity = scene.addEntity("yourEntity", EKind::SD_SOURCE);

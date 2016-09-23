@@ -13,16 +13,19 @@ public:
     using sdDataSetCollection = std::unordered_map<std::string, std::shared_ptr<sdProtoDataSet>>;
     
     template<EExtension Extension>
-    void addDataSet(EExtension extension, std::string identifier, sdDataSet<Extension> set){
+    void addDataSet(EExtension extension, sdDataSet<Extension> set){
         auto targetCollection = descriptorSetCollections.find(extension);
         if(targetCollection == descriptorSetCollections.end()) throw InvalidExtensionException("extension not activated");
         std::shared_ptr<sdProtoDataSet> setPtr(new sdProtoDataSet(set));
-        addDataSet(extension, identifier, setPtr);
+        addDataSet(extension, setPtr);
     }
     
-    void addDataSet(EExtension extension, std::string identifier, std::shared_ptr<sdProtoDataSet> set){
+    void addDataSet(EExtension extension, std::shared_ptr<sdProtoDataSet> set){
         auto targetCollection = descriptorSetCollections.find(extension);
         if(targetCollection == descriptorSetCollections.end()) throw InvalidExtensionException("extension not activated");
+        EDescriptor idDescriptor = sdSpec::getIDDescriptorOfExtension(extension);
+        std::string identifier = (extension == EExtension::SD_INFO) ? "info": set->getValueAsString(idDescriptor);
+        if(identifier.empty())throw InvalidDatasetIDException();
         (*targetCollection).second.emplace(identifier, set);
     }
     
@@ -41,6 +44,13 @@ public:
     
     void setData(std::string identifier, EDescriptor descriptor, std::string valueString){
         sdSpec::getAddDataFunc(descriptor)(this, identifier, valueString);
+    }
+    void setInfo(sdInfo &info){
+        addDataSet(EExtension::SD_INFO, info);
+    }
+    
+    const sdInfo &getInfo(void){
+        return *(static_cast<sdDataSet<EExtension::SD_INFO>*>(getProtoDataSet(EExtension::SD_INFO, "info").get()));
     }
     
 protected:

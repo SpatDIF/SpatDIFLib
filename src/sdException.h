@@ -30,6 +30,13 @@ public:
     : std::invalid_argument(std::string("Invalid Descriptor ") + descriptorName){}
 };
 
+
+class InvalidDatasetIDException : public std::logic_error{
+public:
+    InvalidDatasetIDException()
+    : std::logic_error(std::string("Invalid Dataset ID: the ID for dataset should be at lease one character.")){}
+};
+
 class MetaOnlyDescriptorException : public std::logic_error{
 public:
     MetaOnlyDescriptorException(std::string descriptorName)

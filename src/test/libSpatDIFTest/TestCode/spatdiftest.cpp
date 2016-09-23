@@ -493,11 +493,9 @@ TEST_CASE("same as above but with strings"){
 
 TEST_CASE("valid descriptor test"){
     sdScene scene;
-    REQUIRE(scene.getValidDescriptorSet().size() == 22);
+    REQUIRE(scene.getNumberOfValidDescriptors() == 22);
     scene.addExtension(EExtension::SD_SOURCE_SPREAD);
-    REQUIRE(scene.getValidDescriptorSet().size() == 23);
-    
-    
+    REQUIRE(scene.getNumberOfValidDescriptors() == 23);
 }
 
 #pragma mark sdOSCConverter

@@ -15,7 +15,7 @@
 
 
 #pragma once
-
+#include <unordered_set>
 /*!
  This class is responsible for answering questions about specifications defined in sdDescriptor.h and .cpp from other classes.
 
@@ -68,10 +68,23 @@ public:
         EDescriptor idDescriptor;
     };
     
-    const static std::vector<sdExtensionSpec> spatDIFSpec;
     
+    const static std::vector<sdExtensionSpec> spatDIFSpec;
+    const static std::unordered_set<EExtension> coreSpec;
     
 #pragma mark extension
+    static bool isCoreSpec(EExtension &item){
+        return coreSpec.find(item) != coreSpec.end();
+    }
+    
+    static std::unordered_set<EExtension> getCoreSpec(){
+        return coreSpec;
+    }
+    
+    static size_t getNumberOfCoreSpecs(){
+        return coreSpec.size();
+    }
+    
     static EExtension getExtensionOfDescriptor(EDescriptor descriptor){
         EExtension extension = EExtension::SD_EXTENSION_ERROR;
         auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&descriptor](const sdExtensionSpec &eSpec){

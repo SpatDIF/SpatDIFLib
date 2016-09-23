@@ -20,33 +20,34 @@
 
 #pragma mark functor against runtime query and manipulation using string
 
-/// returns std::function that takes scene and identifier as inputs and returns value
+
+// the following table defines the relationship between extensions and descriptors, descriptor enum and string
 
 template<EDescriptor D>
-inline std::function<void(sdDataSetHandler*, std::string, std::string)> addData(){
+inline std::function<void(sdDataSetHandler*, std::string, std::string)> getAddDataFunc(){
     return [](sdDataSetHandler * handler, std::string identifier, std::string valueString){
         EExtension ext = sdSpec::getExtensionOfDescriptor(D);
         std::shared_ptr<sdProtoDataSet> dataset = handler->getProtoDataSet(ext, identifier);
         dataset->setValue<D>(sdDescriptor<D>::stringTo(valueString));
     };
 }
-
+    
 template<EDescriptor D>
-inline std::function<std::shared_ptr<sdProtoMeta>(sdProtoEntity* , std::string)> addMeta(){
+inline std::function<std::shared_ptr<sdProtoMeta>(sdProtoEntity* , std::string)> getAddMetaFunc(){
     return [](sdProtoEntity * entity, std::string value)->std::shared_ptr<sdProtoMeta>{
         return entity->addProtoMeta<D>(sdDescriptor<D>::stringTo(value), entity);
     };
 }
 
 template<EDescriptor D>
-inline std::function<std::shared_ptr<sdProtoEvent> (sdProtoEntity * , double , std::string )> addEvent(){
+inline std::function<std::shared_ptr<sdProtoEvent> (sdProtoEntity * , double , std::string )> getAddEventFunc(){
     return [](sdProtoEntity * entity, double time, std::string value)->std::shared_ptr<sdProtoEvent>{
         return entity->addProtoEvent<D>(time, sdDescriptor<D>::stringTo(value), entity);
     };
 }
 
 template<EDescriptor D>
-inline std::function<std::string(std::shared_ptr<sdProtoHolder>)> getDataAsString(){
+inline std::function<std::string(std::shared_ptr<sdProtoHolder>)> getGetDataAsStringFunc(){
     return [](std::shared_ptr<sdProtoHolder> protoHolder)->std::string{
         auto holder = static_cast<sdHolder<typename sdDescriptor<D>::type> *>(protoHolder.get());
         typename sdDescriptor<D>::type value = (*holder).item;
@@ -56,11 +57,11 @@ inline std::function<std::string(std::shared_ptr<sdProtoHolder>)> getDataAsStrin
 
 template<EDescriptor D>
 inline sdSpec::sdDescriptorSpec defineDescriptor(const std::string &string){
-    return sdSpec:: sdDescriptorSpec(D, string, addData<D>(), addMeta<D>(), addEvent<D>(), getDataAsString<D>());
+    return sdSpec:: sdDescriptorSpec(D, string, getAddDataFunc<D>(), getAddMetaFunc<D>(), getAddEventFunc<D>(), getGetDataAsStringFunc<D>());
 }
 
 template<EDescriptor D>
-inline std::function<std::shared_ptr<sdProtoEvent> (sdProtoEntity * , double , std::string )> addNoEvent(){
+inline std::function<std::shared_ptr<sdProtoEvent> (sdProtoEntity * , double , std::string )> getAddNoEventFunc(){
     return [](sdProtoEntity * entity, double time, std::string value)->std::shared_ptr<sdProtoEvent>{
         throw MetaOnlyDescriptorException(" ");
         return entity->addProtoEvent<D>(time, sdDescriptor<D>::stringTo(value), entity);
@@ -69,10 +70,16 @@ inline std::function<std::shared_ptr<sdProtoEvent> (sdProtoEntity * , double , s
 
 template<EDescriptor D>
 inline sdSpec::sdDescriptorSpec defineDescriptorNoEvent(const std::string &string){
-    return sdSpec::sdDescriptorSpec(D, string, addData<D>(), addMeta<D>(), addNoEvent<D>(), getDataAsString<D>());
+    return sdSpec::sdDescriptorSpec(D, string, getAddDataFunc<D>(), getAddMetaFunc<D>(), getAddNoEventFunc<D>(), getGetDataAsStringFunc<D>());
 }
 
-// the following table defines the relationship between extensions and descriptors, descriptor enum and string
+const std::unordered_set<EExtension> sdSpec::coreSpec= {
+    EExtension::SD_INFO,
+    EExtension::SD_CORE,
+    EExtension::SD_LOOP,
+    EExtension::SD_INTERPOLATION,
+    EExtension::SD_MEDIA
+};
 
 const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
     sdExtensionSpec(EExtension::SD_INFO, "info", {
@@ -84,7 +91,7 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
         defineDescriptorNoEvent<SD_INFO_LOCATION>("location"),
         defineDescriptorNoEvent<SD_INFO_TITLE>("title"),
         defineDescriptorNoEvent<SD_INFO_SESSION>("session")
-    }, SD_INFO_TITLE),
+    }, SD_INFO_TITLE), // dummy
     sdExtensionSpec(EExtension::SD_CORE, "core", {
         defineDescriptor<SD_TYPE>("type"),
         defineDescriptor<SD_PRESENT>("present"),
@@ -109,10 +116,10 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
     }),
     // 5.2.1 Pointset
     sdExtensionSpec((EExtension::SD_POINTSET), "pointset",{
-        defineDescriptor<SD_POINTSET_ID> ("id"),
-        defineDescriptor<SD_POINTSET_UNIT> ("unit"),
+        defineDescriptor<SD_POINTSET_ID>("id"),
+        defineDescriptor<SD_POINTSET_UNIT>("unit"),
         defineDescriptor<SD_POINTSET_CLOSED>("closed"),
-        defineDescriptor<SD_POINTSET_SIZE> ("size"),
+        defineDescriptor<SD_POINTSET_SIZE>("size"),
         defineDescriptor<SD_POINTSET_POINT>("point"),
         defineDescriptor<SD_POINTSET_HANDLE>("handle")
     }, SD_POINTSET_ID),

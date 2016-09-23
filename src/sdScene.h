@@ -22,13 +22,15 @@
 #include <set>
 #include "sdDescriptor.h"
 #include "sdEntity.h"
-#include "sdDataSetHandler.h"
+#include "sdExtensionHandler.h"
+#include "sdOrderingHandler.h"
+
 
 /*! is responsible for 
  - adding, removing, and maintaining sdEntityCores.
  - attaching and detaching extensions to the exisiting and newly instantiated cores
  */
-class sdScene : public sdDataSetHandler{
+class sdScene : public sdExtensionHandler, public sdOrderingHandler{
     friend sdEntity;
     friend sdProtoEntity;
     
@@ -36,10 +38,6 @@ protected:
     std::unordered_map <std::string, sdEntity> entities; //!< a map of sdEntities
     std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoMeta>>> allMetas; //!< an alias pointer to all metas
     std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> allEvents; //!< an alias pointer to all events
-    std::set <EExtension> activatedExtensionSet; //!< a set of activated extension
-    std::set <EDescriptor> validDescriptorSet; //!< a set of valid descriptor
-    
-    EOrdering ordering; //!< ordering flag
     
     void addMetaAlias(sdProtoEntity * const entity, const std::shared_ptr<sdProtoMeta>);
     void addEventAlias(sdProtoEntity * const entity, const std::shared_ptr<sdProtoEvent>);
@@ -54,7 +52,7 @@ private:
         allEvents = origin.allEvents;
         activatedExtensionSet = origin.activatedExtensionSet;
         validDescriptorSet = origin.validDescriptorSet;
-        ordering = origin.ordering;
+        setOrdering(origin.ordering);
         sdDataSetHandler::copy(origin);
         
         for(auto &entity:entities){ // parent is now me
@@ -72,19 +70,13 @@ private:
     
     }
     
-    void addInitialDescriptors(){
-        addExtension(EExtension::SD_INFO);
-        addExtension(EExtension::SD_CORE); // validate core descriptors
-        addExtension(EExtension::SD_MEDIA); // core functionalities
-        addExtension(EExtension::SD_LOOP);
-        addExtension(EExtension::SD_INTERPOLATION);
-    }
+
 public:
     
     /*! constructor with sdInfo and ordering*/
-    sdScene(sdDataSet<EExtension::SD_INFO> info = sdDataSet<EExtension::SD_INFO>(), EOrdering ordering = EOrdering::SD_TIME ):ordering(ordering){
+    sdScene(sdDataSet<EExtension::SD_INFO> info = sdDataSet<EExtension::SD_INFO>(), EOrdering ordering = EOrdering::SD_TIME ):sdOrderingHandler(ordering){
         addInitialDescriptors();
-        addDataSet(EExtension::SD_INFO, "info", info);
+        addDataSet(EExtension::SD_INFO, info);
     }
     
     sdScene (const sdScene& origin){
@@ -103,54 +95,10 @@ public:
     }
 
 
-    /*!
-     @}
-     */
+   
 
-#pragma mark info
-    /*! @name Meta data handing
-     @{
-     */
-    
-    /*! sets an instance of sdInfo, which contains the "info" part of the meta section 
-     @param info a sdInfo
-     */
-    void setInfo(sdInfo info);
-    
-    /*! gets an instance of sdInfo, which contains the "info" part of the meta section
-     @param info a sdInfo
-     */
-    const sdInfo &getInfo(void) ;
 
-#pragma mark ordering
 
-    /*! sets an enum of ordering
-     @param ordering the ordering enum declared in sdDescriptors.h
-     */
-    void setOrdering(const EOrdering &ordering);
-    
-    /*! sets an enum of ordering
-     @param ordering the ordering enum declared in sdDescriptors.h
-     @returns returns true if the ordering successfully renewed
-     */
-    bool setOrdering(const std::string &string);
-    
-    /*!
-     gets an enum ordering
-     @returns returns enum parameter for ordering
-     */
-    const EOrdering &getOrdering(void) const;
-
-    /*!
-     gets ordering as String
-     @returns returns ordering as std::string
-     */
-    std::string getOrderingAsString(void) const;
-    
-
-    /*!
-     @}
-     */
 #pragma mark entity
     
     /*! @name Entity handling
@@ -245,60 +193,7 @@ public:
      @}
      */
 
-#pragma mark extension
-    /*! @name Extension handling
-     @{
-     */
-    /*! activate an extension specified by enum EExtension. This function instantiates instances of the
-     designated extension (i.e. a subclass of sdEntityExtension ) and attached them to all existing sdEntityCores
-     in the scene. The added extensions will be also attached to all newly instantiated sdEntityCores.
-     @param extension enum EExtension of extension to be added
-     */
-    bool addExtension(EExtension extension);
-    bool addExtension(std::string extension);
 
-    /*!
-     check if the descriptor is vaild
-     */
-
-
-    /*! returns const reference of enum set */
-    const std::set<EExtension> &getActivatedExtensions() const;
-
-    /*! returns names of  activated extensions as a set*/
-    std::unordered_set<std::string> getActivatedExtensionsAsStrings() const;
-
-    /*! returns number of activated Extensions*/
-    size_t getNumberOfActivatedExtensions(void) const;
-
-    /*! check if the specified extension is activated
-     @param extension enum EExtension of extension to be checked
-     */
-    bool isExtensionActivated(EExtension extension) const;
-    bool isExtensionActivated(std::string extension) const;
-    bool isDescriptorValid(const EDescriptor &descriptor) const;
-
-    
-    const std::set<EDescriptor> &getValidDescriptorSet() const;
-
-    /*! deactivate an extension specified by enum EExtension. This function removes instances of the designated extension (i.e. a subclass of sdEntityExtension )  attached  to all existing sdEntityCores in the scene.
-        Thus, all events data stored in the extension will be lost.
-     @param extension enum EExtension of extension to be removed
-     */
-    bool removeExtension(EExtension extension);
-    bool removeExtension(std::string extension);
-
-    /*!
-     remove all exntesions from the extensionVector and sdEntityCores in the scene.
-     The data stored in the instances of sdEntityExtension will be lost.
-     */
-    
-    void removeAllExtensions(void);
-
-
-    /*!
-     @}
-     */
 #pragma debug
     
     /*! @name debug
@@ -327,48 +222,6 @@ inline void sdScene::sortAllEvents(){
               });
 }
 
-
-
-#pragma mark Info
-
-inline void sdScene::setInfo(sdInfo info){
-    info = info;
-}
-
-inline const sdInfo &sdScene::getInfo(void) {
-
-    return *(static_cast<sdDataSet<EExtension::SD_INFO>*>(getProtoDataSet(EExtension::SD_INFO, "info").get()));
-}
-
-#pragma mark Ordering handling
-
-inline const EOrdering &sdScene::getOrdering(void) const{
-    return ordering;
-}
-
-inline std::string sdScene::getOrderingAsString(void) const{
-    return ordering == EOrdering::SD_TIME ? std::string("time") : std::string("track"); // invoke move semantics bacause of rvalue
-}
-
-inline void sdScene::setOrdering(const EOrdering &ordering ){
-    sdScene::ordering = ordering;
-}
-
-inline const std::set<EDescriptor> &sdScene::getValidDescriptorSet() const{
-    return validDescriptorSet;
-}
-
-inline bool sdScene::setOrdering(const std::string &ordering){
-    if(ordering == "time"){
-        sdScene::ordering = EOrdering::SD_TIME;
-        return true;
-    }else if(ordering == "track"){
-        sdScene::ordering = EOrdering::SD_TRACK;
-        return true;
-    }
-    return false;
-}
-
 #pragma mark Entity Handling
 
 inline sdEntity * const sdScene::addEntity(std::string name, EKind kind){
@@ -386,9 +239,6 @@ inline void sdScene::removeAllEntities(){
     entities.clear();
 }
 
-inline bool sdScene::isDescriptorValid(const EDescriptor &descriptor) const{
-    return !(validDescriptorSet.find(descriptor) == validDescriptorSet.end());
-}
 
 inline void sdScene::addMetaAlias(sdProtoEntity * const entity, std::shared_ptr<sdProtoMeta> event){
     removeMetaAlias(entity, event->getDescriptor());
@@ -552,74 +402,6 @@ inline const typename sdDescriptor<D>::type * const sdScene::getValue(std::strin
 }
 
 #pragma mark extension
-
-inline bool sdScene::addExtension(EExtension extension){
-    auto ret =  activatedExtensionSet.insert(extension).second;
-    if(ret){
-        auto descriptors = sdSpec::getDescriptorsOfExtension(extension);
-        for(auto it = descriptors.begin(); descriptors.end() != it; it++) {
-            validDescriptorSet.insert((*it).descriptor);
-        }
-        addDataSetCollection(extension);
-    }
-    return ret;
-}
-
-inline bool sdScene::addExtension(std::string extension){
-    auto ext = sdSpec::stringToExtension(extension);
-    if(ext == EExtension::SD_EXTENSION_ERROR){
-        std::cerr << extension << " no such extension" << std::endl;
-        return false;
-    }
-    return addExtension(ext);
-}
-
-inline std::unordered_set<std::string> sdScene::getActivatedExtensionsAsStrings() const{
-    std::unordered_set<std::string> set;
-    for(auto it = activatedExtensionSet.begin(); it != activatedExtensionSet.end(); it++){
-        set.insert(sdSpec::extensionToString(*it));
-    }
-    return std::move(set);
-}
-
-inline size_t sdScene::getNumberOfActivatedExtensions() const{
-    size_t size = activatedExtensionSet.size();
-    size -= 5;
-    return size ; // because core is not a extension;
-}
-
-inline bool sdScene::isExtensionActivated(EExtension extension) const{
-    return activatedExtensionSet.find(extension) != activatedExtensionSet.end();
-}
-
-inline bool sdScene::isExtensionActivated(std::string extension) const{
-    auto ext = sdSpec::stringToExtension(extension);
-    if(ext == EExtension::SD_EXTENSION_ERROR) return false;
-    return isExtensionActivated(ext);
-}
-
-inline bool sdScene::removeExtension(EExtension extension){
-    if (extension == EExtension::SD_CORE) return false;
-    auto descriptors = sdSpec::getDescriptorsOfExtension(extension);
-    for(auto it = descriptors.begin(); it != descriptors.end(); it++) {
-        validDescriptorSet.erase((*it).descriptor);
-    }
-    
-    return activatedExtensionSet.erase(extension);
-}
-
-inline bool sdScene::removeExtension(std::string extension){
-    auto ext = sdSpec::stringToExtension(extension);
-    if(ext == EExtension::SD_EXTENSION_ERROR) return false;
-    return removeExtension(ext);
-}
-
-inline void sdScene::removeAllExtensions(){
-    activatedExtensionSet.clear();
-    validDescriptorSet.clear();
-    addInitialDescriptors();
-}
-
 
 inline std::string sdScene::dump(bool consoleOut){
     
