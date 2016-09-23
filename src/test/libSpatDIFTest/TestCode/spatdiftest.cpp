@@ -405,7 +405,10 @@ TEST_CASE("Test sdScene", "[sdScene]"){
         scene.setOrdering(EOrdering::SD_TRACK);
         REQUIRE(scene.getOrdering() == EOrdering::SD_TRACK);
         REQUIRE(scene.getOrderingAsString() == "track");
-        REQUIRE(!scene.setOrdering("dummy")); // unknown
+        try{
+            (scene.setOrdering("dummy")); // unknown
+            REQUIRE(false); // this line should be not reached because of the invalid value
+        }catch(InvalidDescriptorException){}
     }
 }
 

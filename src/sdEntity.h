@@ -28,10 +28,11 @@
 /*! sdEntity
  sdEntity is a pure abstract class. This class maintains and handles all events associated to relevant descriptors. This class is also responsible for answering queries about it's relevant descriptors.
 */
+class sdEntityHandler;
 class sdScene;
 class sdProtoEntity : public sdMetaHandler, public sdEventHandler{
+    friend sdEntityHandler;
     friend sdScene;
-
 public:
     
     virtual std::string getName() const = 0;
@@ -187,7 +188,7 @@ inline const typename sdDescriptor<D>::type * const sdProtoEntity::getPreviousVa
 
 
 class sdEntity : public sdProtoEntity{
-    friend sdScene;
+    friend sdEntityHandler;
 
 public:
     sdEntity(sdScene * const parent, EKind kind = EKind::SD_SOURCE):

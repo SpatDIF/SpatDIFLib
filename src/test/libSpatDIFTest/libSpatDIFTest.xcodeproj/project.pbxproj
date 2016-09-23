@@ -129,6 +129,9 @@
 		629720DA1C2E1F0600135148 /* sdSaver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdSaver.cpp; path = ../../sdSaver.cpp; sourceTree = "<group>"; };
 		629B8D471D95341B00036706 /* sdExtensionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdExtensionHandler.h; path = ../../sdExtensionHandler.h; sourceTree = "<group>"; };
 		629B8D4C1D95583A00036706 /* sdOrderingHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdOrderingHandler.h; path = ../../sdOrderingHandler.h; sourceTree = "<group>"; };
+		629B8D4D1D955A6300036706 /* sdEntityHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdEntityHandler.h; path = ../../sdEntityHandler.h; sourceTree = "<group>"; };
+		629B8D4E1D9561E200036706 /* sdGlobalEventHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdGlobalEventHandler.h; path = ../../sdGlobalEventHandler.h; sourceTree = "<group>"; };
+		629B8D4F1D956AA800036706 /* sdGlobalMetaHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdGlobalMetaHandler.h; path = ../../sdGlobalMetaHandler.h; sourceTree = "<group>"; };
 		62A24D0F1D6322300019F04F /* sdSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sdSpec.h; path = ../../sdSpec.h; sourceTree = "<group>"; };
 		62AF37B31C236EDC009E9347 /* sdEntity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdEntity.cpp; path = ../../sdEntity.cpp; sourceTree = "<group>"; };
 		62BE10211C2F3C020033244E /* sdDate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdDate.h; path = ../../sdDate.h; sourceTree = "<group>"; };
@@ -251,12 +254,12 @@
 		627FA4CC1D756BCF007C0C8A /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
-				629B8D4C1D95583A00036706 /* sdOrderingHandler.h */,
 				62BE102B1C2F3C020033244E /* sdScene.h */,
+				629B8D4F1D956AA800036706 /* sdGlobalMetaHandler.h */,
 				62BE10221C2F3C020033244E /* sdEntity.h */,
 				62AF37B31C236EDC009E9347 /* sdEntity.cpp */,
-				62BE10211C2F3C020033244E /* sdDate.h */,
 				62D646701D8C5AAF00FCF13D /* sdData.h */,
+				62BE10211C2F3C020033244E /* sdDate.h */,
 				627FA4C81D74916D007C0C8A /* sdMeta.h */,
 				62BE10231C2F3C020033244E /* sdEvent.h */,
 			);
@@ -266,10 +269,13 @@
 		627FA4CD1D756BEB007C0C8A /* StorageHandlers */ = {
 			isa = PBXGroup;
 			children = (
+				629B8D4C1D95583A00036706 /* sdOrderingHandler.h */,
 				62401D5D1CA2E8E3001179C5 /* sdMetaHandler.h */,
 				62401D5E1CA2E947001179C5 /* sdEventHandler.h */,
+				629B8D4D1D955A6300036706 /* sdEntityHandler.h */,
 				627FA4CA1D756B68007C0C8A /* sdDataSetHandler.h */,
 				629B8D471D95341B00036706 /* sdExtensionHandler.h */,
+				629B8D4E1D9561E200036706 /* sdGlobalEventHandler.h */,
 			);
 			name = StorageHandlers;
 			sourceTree = "<group>";

@@ -21,29 +21,19 @@
 #include <unordered_set>
 #include <set>
 #include "sdDescriptor.h"
-#include "sdEntity.h"
+#include "sdEntityHandler.h"
 #include "sdExtensionHandler.h"
 #include "sdOrderingHandler.h"
-
+#include "sdGlobalMetaHandler.h"
+#include "sdGlobalEventHandler.h"
 
 /*! is responsible for 
  - adding, removing, and maintaining sdEntityCores.
  - attaching and detaching extensions to the exisiting and newly instantiated cores
  */
-class sdScene : public sdExtensionHandler, public sdOrderingHandler{
+class sdScene : public sdGlobalEventHandler, public sdGlobalMetaHandler, public sdEntityHandler, public sdExtensionHandler, public sdOrderingHandler{
     friend sdEntity;
     friend sdProtoEntity;
-    
-protected:
-    std::unordered_map <std::string, sdEntity> entities; //!< a map of sdEntities
-    std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoMeta>>> allMetas; //!< an alias pointer to all metas
-    std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> allEvents; //!< an alias pointer to all events
-    
-    void addMetaAlias(sdProtoEntity * const entity, const std::shared_ptr<sdProtoMeta>);
-    void addEventAlias(sdProtoEntity * const entity, const std::shared_ptr<sdProtoEvent>);
-    bool removeMetaAlias(const sdProtoEntity* const entity, const EDescriptor & descriptor);
-    bool removeEventAlias(const sdProtoEntity* const entity, const double &time, const EDescriptor & descriptor);
-    void sortAllEvents();
     
 private:
     void copy(const sdScene& origin){
@@ -67,10 +57,7 @@ private:
             std::string name = event.first->getName();
             event.first = getEntity(name);
         }
-    
     }
-    
-
 public:
     
     /*! constructor with sdInfo and ordering*/
@@ -94,298 +81,26 @@ public:
         return (*this);
     }
 
-
-   
-
-
-
-#pragma mark entity
-    
-    /*! @name Entity handling
-     @{
-     */
-    
-    /*! add a sdEntityCore to this scene. this function is the only way to generate an instance of sdEntityCore because the
-     constructor of sdEntityCore is intentionally declared as a private function. Thus, the constcutor can be called only by
-     its friend i.e. this class. This prevent users to create entities not attached to any sdScene.
-     Thus, all sdSceneCore are always aware of the list of activated extensions.
-     this function returns a pointer to the new instance of sdEntityCore.
-     @param name the name of new sdEntityCore
-     */
-    sdEntity * const addEntity(std::string name, EKind kind = EKind::SD_SOURCE);
-    
-    /*! return the name of all entities in the scene as vector of string
-    */
-    std::unordered_set<std::string> getEntityNames() const noexcept;
-
-    /*! search an entity in the entity vector by its name and return the pointer. returns null if the entity can not be found.
-     @param name the name of a designated entity
-     */
-    sdEntity *  const getEntity(const std::string &name);
-    std::string getEntityName(const sdProtoEntity * entity);
-    
-    /*! return the entity set */
-    const std::unordered_map<std::string, sdEntity> &getEntities() const;
-    
-    /*! returns the number of entity in the entityVector*/
-    size_t getNumberOfEntities(void) const;
-    
-    
-    /*! remove the sdEntityCore specified by name from the entityVector]
-     @param name the name of a sdEntityCore to be removed from the entityVector
-     */
-    bool removeEntity(const std::string &name);
-    
-    /*! remove all entities from the entityVector*/
-    void removeAllEntities(void);
-    
-    /*!
-     @}
-     */
-    
-#pragma mark event
-    /*! @name global event handling
-     @{
-     */
-
-    /*! add event by specifying name of the target entity, time, and values.
-     @param name name of target eneity
-     @param time time of the newly added event
-     @param values values for the event
-     */
+#pragma mark entity handler override
+    sdEntity * const addEntity(std::string name, EKind kind = EKind::SD_SOURCE) override;
     
     template<EDescriptor D>
-    inline const sdEvent<D> * const addEvent(std::string name, const double &time, const typename sdDescriptor<D>::type &values);
-
-    /*! query timed data by specifying name of the target entity and time.
-     @param name  name of target eneity
-     @param time time of the event
-     */
+    const sdEvent<D> * const addEvent(std::string name, const double &time, const typename sdDescriptor<D>::type &values);
+    
     template<EDescriptor D>
-    const typename sdDescriptor<D>::type *  const getValue(std::string name, double time);
-    
-    /*!   collect next event(s) from all entities and report them  */
-    std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>> getNextEventsFromAllEntities(const double &time) const;
-    std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>> getPreviousEventsFromAllEntities(const double &time) const;
-    
-    /*!   collect first event(s) from all entities and report them  */
-    std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>>  getFirstEventsFromAllEntities() const;
-    std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>>  getLastEventsFromAllEntities() const;
-    
-    /*!   collect  event(s) of all entities at a specific time */
-    std::vector<std::pair<const sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> getEventsFromAllEntities(const double &time) const;
-    std::vector<std::pair<const sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> getEventsFromAllEntities(const double &start, const double &end) const;
-    
-    /*!
-     asks all existing entities in the scene the time of next event and returns the soonest event from @ptime
-     @param time time of index. The soonest event from this time point will be searched
-     @return time of next event
-     */
-    std::pair<double, bool> getPreviousEventTime(const double &time);
-    std::pair<double, bool> getDeltaTimeFromPreviousEvent(const double &time);
-    std::pair<double, bool> getNextEventTime(const double &time);
-    std::pair<double, bool> getDeltaTimeToNextEvent(const double &time);
+    const typename sdDescriptor<D>::type * const getValue(std::string name, double time);
 
-    const std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> &getAllEvents();
-    const std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoMeta>>> &getAllMetas();
-
-    /*!
-     @}
-     */
-
-
-#pragma debug
     
-    /*! @name debug
-     @{
-     */
-    
-    /**
-     * @brief varifies the content of scene by sending all containing data (meta and timed) on the standard output. 
-     *  It is useful for debugging the scene
-     * @param consoleOut if false, does not send dump to standard output only returns a string
-     * @return dump string
-     */
-      std::string dump(bool consoleOut = true);
-    
-    /*!
-     @}
-     */
+    std::string dump(bool consoleOut = true);
 };
 
-#pragma mark protected functions
-inline void sdScene::sortAllEvents(){
-    std::sort(allEvents.begin(), allEvents.end(),
-              [](std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>> eventA,
-                 std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>> eventB)->bool{
-                  return eventA.second->getTime() < eventB.second->getTime();
-              });
-}
-
-#pragma mark Entity Handling
 
 inline sdEntity * const sdScene::addEntity(std::string name, EKind kind){
-    
     auto ret = entities.insert(std::pair<std::string, sdEntity>(name ,sdEntity(this, kind)));
     if(!ret.second) return nullptr;
     return &ret.first->second;
 }
 
-inline bool sdScene::removeEntity(const std::string &name){
-    return entities.erase(name) != 0;
-}
-
-inline void sdScene::removeAllEntities(){
-    entities.clear();
-}
-
-
-inline void sdScene::addMetaAlias(sdProtoEntity * const entity, std::shared_ptr<sdProtoMeta> event){
-    removeMetaAlias(entity, event->getDescriptor());
-    allMetas.push_back(std::make_pair(entity, event));
-}
-
-inline void sdScene::addEventAlias(sdProtoEntity * const entity, std::shared_ptr<sdProtoEvent> event){
-    removeEventAlias(entity, event->getTime(), event->getDescriptor());
-    allEvents.push_back(std::make_pair(entity, event));
-    sortAllEvents();
-}
-
-inline bool sdScene::removeMetaAlias(const sdProtoEntity* const entity, const EDescriptor & descriptor ){
-    auto it = std::find_if(allMetas.begin(), allMetas.end(), [&entity, &descriptor]( std::pair<const sdProtoEntity * ,std::shared_ptr<sdProtoMeta>> meta){
-        return (meta.second->getDescriptor() == descriptor) && (meta.first == entity);
-    });
-    if(it == allMetas.end()) return false;
-    allMetas.erase(it);
-    return true;
-}
-
-inline bool sdScene::removeEventAlias(const sdProtoEntity* const entity, const double &time, const EDescriptor & descriptor ){
-    auto it = std::find_if(allEvents.begin(), allEvents.end(), [&entity, &descriptor, &time]( std::pair<const sdProtoEntity * ,std::shared_ptr<sdProtoEvent>> event){
-        return sdUtils::almostEqual(event.second->getTime(), time) && (event.second->getDescriptor() == descriptor) && (event.first == entity);
-    });
-    if(it == allEvents.end()) return false;
-    allEvents.erase(it);
-    return true;
-}
-
-/*!   collect next event(s) from all entities and report them  */
-inline std::vector<std::pair<const sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> sdScene::getEventsFromAllEntities(const double &time) const{
-    std::vector<std::pair<const sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> matchedEvents;
-    for (auto it = allEvents.begin(); it != allEvents.end(); it++) {
-        if(sdUtils::almostEqual((*it).second->getTime(), time)){matchedEvents.push_back(*it);}
-    }
-    
-    return std::move(matchedEvents);
-}
-
-
-inline std::vector<std::pair<const sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> sdScene::getEventsFromAllEntities(const double &start, const double &end) const{
-    std::vector<std::pair<const sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> vector;
-    for_each(allEvents.begin(), allEvents.end(), [&vector, &start, &end]( std::pair<const sdProtoEntity*, std::shared_ptr<sdProtoEvent>> event ){
-        if( start <= event.second->getTime() && event.second->getTime() <= end){ vector.push_back(event);}
-    });
-    return std::move(vector);
-}
-
-
-inline std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>> sdScene::getNextEventsFromAllEntities(const double &time) const{
-    auto result = std::find_if(allEvents.begin(), allEvents.end(), [&time](std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>> event){
-        if(event.second->getTime() > time){return true;}
-        else return false;
-    });
-    
-    if(result == allEvents.end()){return std::vector<std::pair<const sdProtoEntity*, std::shared_ptr<sdProtoEvent>>>();}
-    return getEventsFromAllEntities((*result).second->getTime());
-}
-
-
-inline std::pair<double, bool> sdScene::getPreviousEventTime(const double &time){
-    auto set = getPreviousEventsFromAllEntities(time);
-    if(set.empty()) return std::make_pair(0.0, false);
-    return std::make_pair((*set.begin()).second->getTime(), true);
-}
-
-inline std::pair<double, bool> sdScene::getDeltaTimeFromPreviousEvent(const double &time){
-    auto previousEventTime = getPreviousEventTime(time);
-    if(!previousEventTime.second)return std::make_pair(0.0, false);
-    return std::make_pair(time-previousEventTime.first, true);
-}
-
-inline std::pair<double, bool> sdScene::getNextEventTime(const double &time){
-    auto set = getNextEventsFromAllEntities(time);
-    if(set.empty()) return std::make_pair(0.0, false);
-    return std::make_pair((*set.begin()).second->getTime(), true);
-}
-
-inline std::pair<double, bool> sdScene::getDeltaTimeToNextEvent(const double &time){
-    auto nextEventTime = getNextEventTime(time);
-    if(!nextEventTime.second)return std::make_pair(0.0, false);
-    return std::make_pair(nextEventTime.first - time, true);
-}
-
-inline const std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoEvent>>> &sdScene::getAllEvents(){
-    return allEvents;
-}
-
-inline const std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoMeta>>> &sdScene::getAllMetas(){
-    return allMetas;
-}
-
-inline std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>> sdScene::getPreviousEventsFromAllEntities(const double &time) const{
-    auto result = std::find_if(allEvents.rbegin(), allEvents.rend(), [&time](std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>> event){
-        if(event.second->getTime() < time){return true;}
-        else return false;
-    });
-    
-    if(result == allEvents.rend()){return std::vector<std::pair<const sdProtoEntity*, std::shared_ptr<sdProtoEvent>>>();}
-    return getEventsFromAllEntities((*result).second->getTime());
- 
-}
-
-/*!   collect first event(s) from all entities and report them  */
-inline std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>>  sdScene::getFirstEventsFromAllEntities() const{
-    if(allEvents.empty()) return std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>> ();
-    return getEventsFromAllEntities(allEvents.front().second->getTime());
-}
-
-inline std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>> sdScene::getLastEventsFromAllEntities() const{
-    if(allEvents.empty()) return std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>> ();
-    return getEventsFromAllEntities(allEvents.back().second->getTime());
-}
-
-inline std::string sdScene::getEntityName(const sdProtoEntity* entity){
-    for(auto it = entities.begin(); it != entities.end(); it++) {
-        if(&((*it).second) == entity){
-            return (*it).first;
-        }
-    }
-    return std::string();
-}
-
-inline const std::unordered_map<std::string, sdEntity> &sdScene::getEntities() const{
-    return entities;
-}
-
-inline std::unordered_set<std::string> sdScene::getEntityNames() const noexcept{
-    std::unordered_set<std::string> returnSet;
-    for(auto &entity:entities){ returnSet.emplace(entity.first);}
-    return std::move(returnSet);
-}
-
-inline sdEntity * const sdScene::getEntity(const std::string &name){
-    std::unordered_map<std::string, sdEntity>::iterator it = entities.find(name);
-    if(it == entities.end()){ return nullptr; }
-    return &((*it).second);
-}
-
-
-
-inline size_t sdScene::getNumberOfEntities() const{
-    return entities.size();
-}
-
-#pragma global event handling
 
 template<EDescriptor D>
 inline const sdEvent<D> * const sdScene::addEvent(std::string name, const double &time, const typename sdDescriptor<D>::type &values){
@@ -395,16 +110,15 @@ inline const sdEvent<D> * const sdScene::addEvent(std::string name, const double
 }
 
 template<EDescriptor D>
-inline const typename sdDescriptor<D>::type * const sdScene::getValue(std::string name, double time){
+inline const typename sdDescriptor<D>::type * const sdScene::getValue(std::string name, double time) {
     auto entity = getEntity(name);
     if(!entity) return nullptr;
     return entity->getValue<D>(time);
 }
 
-#pragma mark extension
 
 inline std::string sdScene::dump(bool consoleOut){
-    
     return std::string();
 }
+
 
