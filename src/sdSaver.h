@@ -20,37 +20,36 @@
 
 #include "tinyxml2.h"
 
-/*!
- convert a sdScene to XML, JSON, or YAML strings
- */
-class sdSaver
-{
 
+template <EFormat F>
+class sdSaver{};
+
+template<>
+class sdSaver<EFormat::SD_XML>{
+    
 public:
-    
-    /*! converts a scene to XML string
-     @param sdScene a sdScene
-     */
-    static std::string XMLFromScene(const sdScene &scene);
-    
-    /*! converts a scene to JSON string
-     @param sdScene a sdScene
-     */
-    static std::string JSONFromScene(sdScene &scene);
-    
-    /*! converts a scene to JSON string
-     @param sdScene a sdScene
-     */
-    static std::string YAMLFromScene(sdScene &scene);
-
+    static std::string toString(const sdScene &scene);
 
 protected:
-    
+    static tinyxml2::XMLDeclaration* XMLDeclarationSection(tinyxml2::XMLDocument &xmle);
+    static tinyxml2::XMLElement* XMLHeaderSection(tinyxml2::XMLDocument &xml);
     static tinyxml2::XMLElement* XMLInfoSection(tinyxml2::XMLDocument &xml, const sdScene &scene);
+    static void XMLDataSets(tinyxml2::XMLDocument &xml, const sdScene &scene, tinyxml2::XMLElement *metaSection);
     static tinyxml2::XMLElement* XMLOrderingSection(tinyxml2::XMLDocument &xml, const sdScene &scene);
 
     static tinyxml2::XMLElement* XMLMetaSection(tinyxml2::XMLDocument &xml, const sdScene &scene);
     static tinyxml2::XMLElement* XMLTrajectorySection(tinyxml2::XMLDocument &xml, const sdScene &scene);
-
 };
 
+template<>
+class sdSaver<EFormat::SD_JSON>{
+public:
+    static std::string toString(const sdScene &scene);
+    
+};
+
+template<>
+class sdSaver<EFormat::SD_YAML>{
+public:
+    static std::string toString(const sdScene &scene);
+};

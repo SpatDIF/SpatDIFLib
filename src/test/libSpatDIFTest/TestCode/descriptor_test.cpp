@@ -360,22 +360,31 @@ TEST_CASE("Dataset"){
     sdScene scene;
     sdInfo info("Max Musterman", "testapp", "2016-9-12",  "testses", "chengdu", "this is test", "dataset test", 22);
     scene.setInfo(info);
+    scene.addExtension(EExtension::SD_POINTSET);
     
-    
-    sdDataSet<EExtension::SD_MEDIA> mediadata = sdDataSet<EExtension::SD_MEDIA>(
+    sdDataSet<EExtension::SD_MEDIA> mediadata1 = sdDataSet<EExtension::SD_MEDIA>(
                                                                                 "mymedia",sdDescriptor<SD_MEDIA_TYPE>::SD_FILE,"/tmp/test.wav", 1, 0, 1.0 );
-    scene.addDataSet(EExtension::SD_MEDIA, mediadata);
-    auto dataset = scene.getDataSet<EExtension::SD_MEDIA>("mymedia");
-    REQUIRE(dataset.getValue<SD_MEDIA_TYPE>() == sdDescriptor<SD_MEDIA_TYPE>::SD_FILE);
-    REQUIRE(dataset.getValue<SD_MEDIA_ID>() == "mymedia");
-    REQUIRE(dataset.getValue<SD_MEDIA_LOCATION>() == "/tmp/test.wav");
-    REQUIRE(dataset.getValue<SD_MEDIA_CHANNEL>() == 1);
-    REQUIRE(dataset.getValue<SD_MEDIA_GAIN>() == 1.0);
-    REQUIRE(dataset.getValue<SD_MEDIA_TIME_OFFSET>() == 0);
+    sdDataSet<EExtension::SD_MEDIA> mediadata2 = sdDataSet<EExtension::SD_MEDIA>(
+                                                                                 "yourmedia", sdDescriptor<SD_MEDIA_TYPE>::SD_FILE,
+                                                                                 "example.wav", 4, 0, 0.5);
+
+    sdDataSet<EExtension::SD_POINTSET> pointset = sdDataSet<EExtension::SD_POINTSET>("face", false, 3, std::array<double,3>{2,3,4});
+    scene.addDataSet(EExtension::SD_MEDIA, mediadata1);
+    scene.addDataSet(EExtension::SD_MEDIA, mediadata2);
+    scene.addDataSet(EExtension::SD_POINTSET, pointset);
+    
+    auto dataset1 = scene.getDataSet<EExtension::SD_MEDIA>("mymedia");
+    REQUIRE(dataset1.getValue<SD_MEDIA_TYPE>() == sdDescriptor<SD_MEDIA_TYPE>::SD_FILE);
+    REQUIRE(dataset1.getValue<SD_MEDIA_ID>() == "mymedia");
+    REQUIRE(dataset1.getValue<SD_MEDIA_LOCATION>() == "/tmp/test.wav");
+    REQUIRE(dataset1.getValue<SD_MEDIA_CHANNEL>() == 1);
+    REQUIRE(dataset1.getValue<SD_MEDIA_GAIN>() == 1.0);
+    REQUIRE(dataset1.getValue<SD_MEDIA_TIME_OFFSET>() == 0);
+    
     
     scene.setData("mymedia", SD_MEDIA_CHANNEL, "3");
     
     REQUIRE(scene.getDataSet<EExtension::SD_MEDIA>("mymedia").getValue<SD_MEDIA_CHANNEL>() == 3);
-    std::cout << sdSaver::XMLFromScene(scene);
+    std::cout << sdSaver<EFormat::SD_XML>::toString(scene);
 }
 

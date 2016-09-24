@@ -53,6 +53,16 @@ public:
         sdSpec::getAddDataFunc(descriptor)(this, identifier, valueString);
     }
     
+    std::unordered_set<std::string> getIdentifiers(const EExtension &extension) const{
+        auto collection = descriptorSetCollections.find(extension);
+        std::unordered_set<std::string> identifierSet;
+
+        if(collection == descriptorSetCollections.end()){return identifierSet;}
+        for(auto &item : collection->second){
+            identifierSet.emplace(item.first);
+        }
+        return identifierSet;
+    }
     
     void setInfo(sdInfo &info){
         addDataSet(EExtension::SD_INFO, info);

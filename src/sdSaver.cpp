@@ -25,37 +25,48 @@
 
 using namespace tinyxml2;
 
-XMLElement* sdSaver::XMLInfoSection(XMLDocument &xml, const sdScene &scene){
-
-    XMLElement* info = xml.NewElement("info");
-    sdDataSet<EExtension::SD_INFO> dataset = scene.getInfo();
-    std::unordered_set<EDescriptor> keys = dataset.getKeys();
-    
-    for(auto &key : keys){
-        std::string descriptorString = sdSpec::descriptorToString(key);
-        std::string value = dataset.getValueAsString(key);
-        XMLElement * element = xml.NewElement(descriptorString.c_str());
-        XMLText * text = xml.NewText(value.c_str());
-        element->InsertEndChild(text);
-        info->InsertEndChild(element);
-    }
-    return info;
+XMLDeclaration* sdSaver<EFormat::SD_XML>::XMLDeclarationSection(XMLDocument &xml){
+    XMLDeclaration* decl = xml.NewDeclaration();
+    decl->SetValue("xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"");
+    return decl;
 }
 
-XMLElement* sdSaver::XMLOrderingSection(XMLDocument &xml, const sdScene &scene){
+XMLElement* sdSaver<EFormat::SD_XML>::XMLOrderingSection(XMLDocument &xml, const sdScene &scene){
     XMLElement* ordering = xml.NewElement("ordering");
     XMLText* orderingText = xml.NewText(scene.getOrderingAsString().c_str());
     ordering->InsertEndChild(orderingText);
     return  ordering;
 }
 
-XMLElement* sdSaver::XMLMetaSection(XMLDocument &xml, const sdScene &scene){
+XMLElement* sdSaver<EFormat::SD_XML>::XMLMetaSection(XMLDocument &xml, const sdScene &scene){
 
     XMLElement* metaSection = xml.NewElement("meta");
 
     // add info section to meta
-    metaSection->InsertEndChild(sdSaver::XMLInfoSection(xml, scene));
+    std::vector<EExtension> extensions = sdSpec::getDataSetEnabledExtensions();
+    for(auto &extension : extensions){
+        std::unordered_set<std::string> identifiers = scene.getIdentifiers(extension);
+        if(identifiers.empty()) continue;
+        for(auto &identifier : identifiers){
+            std::shared_ptr<sdProtoDataSet> protoDataSet = scene.getProtoDataSet(extension, identifier);
+            std::unordered_set<EDescriptor> keys = protoDataSet->getKeys();
+            XMLElement * extensionElement = xml.NewElement(sdSpec::extensionToString(extension).c_str());
+            
+            for(auto &key : keys){
+                std::string descriptorString = sdSpec::descriptorToString(key);
+                std::string value = protoDataSet->getValueAsString(key);
+                XMLElement * datasetElement = xml.NewElement(descriptorString.c_str());
+                if(!datasetElement) continue;
+                XMLText * text = xml.NewText(value.c_str());
+                if(!text) continue;
 
+                datasetElement->InsertEndChild(text);
+                extensionElement->InsertEndChild(datasetElement);
+            }
+            metaSection->InsertEndChild(extensionElement);
+        }
+    }
+    
     // add extensions to meta
     size_t num = scene.getNumberOfActivatedExtensions();
     if(num > 0){
@@ -63,8 +74,9 @@ XMLElement* sdSaver::XMLMetaSection(XMLDocument &xml, const sdScene &scene){
         std::string extString;
         auto extensionNames = scene.getActivatedExtensionsAsStrings();
         std::for_each(extensionNames.begin(), extensionNames.end(),[&extString](std::string ext){
-            if(!(ext == "media" || ext == "core")){
-                extString += ext;
+            EExtension extension = sdSpec::stringToExtension(ext);
+            if(!sdSpec::isCoreSpec(extension)){
+                extString = ext;
                 extString += " ";
             }
         });
@@ -128,19 +140,15 @@ XMLElement* sdSaver::XMLMetaSection(XMLDocument &xml, const sdScene &scene){
     return metaSection;
 }
 
-std::string sdSaver::XMLFromScene(const sdScene &scene){
+std::string sdSaver<EFormat::SD_XML>::toString(const sdScene &scene){
     
     XMLDocument xml;
- 	XMLDeclaration* decl = xml.NewDeclaration();
-	decl->SetValue("xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"");
-	xml.InsertEndChild(decl);
+    xml.InsertEndChild(XMLDeclarationSection(xml));
     
     XMLElement* spatdif = xml.NewElement("spatdif");
-	xml.InsertEndChild(spatdif);
     spatdif->SetAttribute("version", "0.4");
-
+    xml.InsertEndChild(spatdif);
     
-    // META Section
     spatdif->InsertEndChild(sdSaver::XMLMetaSection(xml, scene));
 
     std::unordered_map<std::string, sdEntity> entities = scene.getEntities();
@@ -231,12 +239,10 @@ std::string sdSaver::XMLFromScene(const sdScene &scene){
     
 }
 
-std::string sdSaver::JSONFromScene( sdScene &sdScene){
-    return NULL;
-    
-    
+std::string sdSaver<EFormat::SD_JSON>::toString(const sdScene &sdScene){
+    return "";
 }
 
-std::string sdSaver::YAMLFromScene( sdScene &sdScene){
-    return NULL;
+std::string sdSaver<EFormat::SD_YAML>::toString(const sdScene &sdScene){
+    return "";
 }

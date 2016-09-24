@@ -43,6 +43,12 @@ enum class EKind {
     SD_SINK
 };
 
+enum class EFormat{
+    SD_XML,
+    SD_JSON,
+    SD_YAML
+};
+
 /*!
  enum for extension. all sdEntityExtension must have one of these enum as a static variable in order to identify themselves
  */
@@ -194,6 +200,7 @@ typedef enum {
     SD_ERROR,
     SD_ALL
 } EDescriptor;
+
 
 
 namespace std{
