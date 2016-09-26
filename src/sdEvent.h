@@ -13,35 +13,32 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef ____sdEvent__
-#define ____sdEvent__
+#pragma once
 
 #include <string>
-#include "sdConst.h"
+#include "sdDescriptor.h"
+#include "sdMeta.h"
+#include "sdUtils.h"
 
 #pragma mark definitions
-
+class sdEntity;
 /**
- * @brief  An abstract class of event. This class maintains time, descriptor
+ * @brief  An abstract class of event inherited from sdProtoMeta. This class maintains additionaly time value.
  * @detail This class can only be used by sdEntity. All member variables are declared as const. Thus, all parameter must be set by initializer list. Modification of events are not possible in SpatDIF Library. Discard the instance, create new one, and move the unchanged data to new one, if modification of member data is required.
  */
 
-class sdEntity;
-class sdProtoEvent{
+class sdProtoEvent : public sdProtoMeta{
 protected:
     /*! protected constructor. only friend of this class can invoke */
-    sdProtoEvent(const double time, const EDescriptor descriptor, const sdEntity * const parent);
-
-    const sdEntity * const parent;/*!< a pointer to the belonging entity. unmutable */
+    sdProtoEvent(const double time, const EDescriptor descriptor, const sdProtoEntity * const parent);
     const double time; /*< the absolute time of event. unmutable */
-    const EDescriptor descriptor /*< the descriptor type of event. unmutable */;
 
 public:
     /*!
      return event time 
      @returns the time of event in second
     */
-    double getTime() const;
+    const double &getTime() const;
     
     /*!
      returns event time as std::string
@@ -49,58 +46,26 @@ public:
      */
     std::string getTimeAsString() const;
     
-    /*! 
-     returns event descriptor 
-     @returns event descriptor ENUM
-     */
-    EDescriptor getDescriptor() const;
-    
-    /*!
-     @returns descriptor as string
-     */
-    std::string getDescriptorAsString() const;
-    
-    /*! 
-     returns an immutable pointer to its parent entity
-     @returns a pointer to its parent entity
-    */
-    const sdEntity * const getParent() const;
-    
-    /*!
-     returns value of the event as a std::string
-     @returns a std::string that contains string
-     */
-    virtual const std::string getValueAsString() const = 0;
-};
+ };
 
-inline sdProtoEvent::sdProtoEvent(const double time, const EDescriptor descriptor, const sdEntity * const parent):
-time(time), descriptor(descriptor), parent(parent){}
+inline sdProtoEvent::sdProtoEvent(const double time, const EDescriptor descriptor, const sdProtoEntity * const parent):
+time(time),
+sdProtoMeta(descriptor, parent)
+{}
 
-inline double sdProtoEvent::getTime() const{
+inline const double &sdProtoEvent::getTime() const{
     return time;
-}
-
-inline EDescriptor sdProtoEvent::getDescriptor() const{
-    return descriptor;
-}
-
-inline std::string sdProtoEvent::getDescriptorAsString() const{
-    return sdExtension::descriptorToString(descriptor);
 }
 
 inline std::string sdProtoEvent::getTimeAsString() const {
     return std::to_string(time);
 }
 
-inline const sdEntity * const sdProtoEvent::getParent() const{
-    return parent;
-}
 
 /**
  * @brief class template for event
  * @detail the value type, that the event handles, is based on given descriptor D.
  */
-
 template<EDescriptor D>
 class sdEvent: public sdProtoEvent{
     friend sdEntity;
@@ -111,20 +76,12 @@ protected:
 public:
     
     /*! constructor with initialization. should be invoked by the subclass*/
-    sdEvent(const double time, const sdEntity * const parent, const typename sdDescriptor<D>::type &value):
+    sdEvent(const double time, const sdProtoEntity * const parent, const typename sdDescriptor<D>::type &value):
     sdProtoEvent(time, D, parent), value(value){}
     
-    /*! @name Value handling
-     @{ */
+    const typename sdDescriptor<D>::type &getValue(void) const{return value;};
     
-    /*! returns value. */
-    const typename sdDescriptor<D>::type &getValue(void) const{ return value; };
-    
-    /*! returns value as string */
-    const std::string getValueAsString() const override{ return toString(value);};
-    /*! @} */
+    const std::string getValueAsString() const override{ return sdDescriptor<D>::toString(value);};
 
 };
 
-
-#endif

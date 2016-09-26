@@ -1,9 +1,9 @@
 
-#define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 #include "sdMain.h"
 #include <array>
 using namespace std;
+#define CATCH_CONFIG_MAIN
 
 #pragma mark sdDate
 
@@ -47,8 +47,62 @@ TEST_CASE("sdDate member function test", "[sdDate]"){
         REQUIRE(dateString == "1979-12-4");
     }
 }
+#pragma mark sdMeta
 
+TEST_CASE("Test sdMeta add get remove", "[sdMeta]"){
+    sdScene scene;
+    sdEntity * entity = scene.addEntity("MyEntity");
+    entity->addMeta<SD_PRESENT>(false);
+    REQUIRE(entity->getNumberOfMetas() == 1);
+    
+    auto addedMeta = entity->addMeta<SD_ORIENTATION>({0.3,0.4,0.5});
+    REQUIRE(entity->getNumberOfMetas() == 2);
+    
+    auto gotValue =  entity->getMeta<SD_ORIENTATION>()->getValue();
+    REQUIRE(gotValue[0] == 0.3);
+    REQUIRE(gotValue[1] == 0.4);
+    REQUIRE(gotValue[2] == 0.5);
 
+    auto modifiedMeta = entity->addMeta<SD_ORIENTATION>({0.1,0.2,0.3});
+    REQUIRE(entity->getNumberOfMetas() == 2);
+
+    auto modifiedVal = modifiedMeta->getValue();
+    REQUIRE(modifiedVal[0] == 0.1);
+    REQUIRE(modifiedVal[1] == 0.2);
+    REQUIRE(modifiedVal[2] == 0.3);
+    
+    entity->removeMeta(modifiedMeta); 
+    REQUIRE(entity->getNumberOfMetas() == 1);
+    entity->addMeta<SD_POSITION>({2,3,4});
+    REQUIRE(entity->getNumberOfMetas() == 2);
+    entity->removeAllMetas();
+    REQUIRE(entity->getNumberOfMetas() == 0);
+    
+    
+    auto shouldBeNull = entity->addMeta<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(10);
+    REQUIRE(shouldBeNull == nullptr);
+    
+}
+
+TEST_CASE("Test sink entity", "[sdMeta]"){
+    sdScene scene;
+    scene.addExtension(EExtension::SD_HARDWARE_OUT);
+    sdEntity * speaker = scene.addEntity("mySpeaker");
+    speaker->addMeta<SD_POSITION>({0.3, 0.5, 0.1});
+    speaker->addMeta<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(1);
+    speaker->addMeta<SD_HARDWARE_OUT_GAIN>(0.65);
+    
+    auto position = speaker->getMeta<SD_POSITION>()->getValue();
+    REQUIRE(position[0] == 0.3);
+    REQUIRE(position[1] == 0.5);
+    REQUIRE(position[2] == 0.1);
+    
+    auto physicalout = speaker->getMeta<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>()->getValue();
+    auto gain = speaker->getMeta<SD_HARDWARE_OUT_GAIN>()->getValue();
+    
+    REQUIRE(physicalout == 1);
+    REQUIRE(gain == 0.65);
+}
 
 #pragma mark sdEvent
 
@@ -96,72 +150,6 @@ TEST_CASE("Test exceptions", "[sdEvent]"){
     
 }
 
-TEST_CASE("Test all descriptors types"){
-    sdScene scene;
-    scene.addExtension(EExtension::SD_MEDIA);
-    scene.addExtension(EExtension::SD_SOURCE_WIDTH);
-    sdEntity * entity = scene.addEntity("MyEntity");
-    
-    // SD_PRESENT
-    entity->addEvent<SD_PRESENT>(0.0, false);
-    REQUIRE(entity->getValueAsString<SD_PRESENT>(0.0) == "false");
-    REQUIRE(*(entity->getValue<SD_PRESENT>(0.0)) == false);
-    
-    entity->addEvent<SD_PRESENT>(0.0, true);
-    REQUIRE(entity->getValueAsString<SD_PRESENT>(0.0) == "true");
-    REQUIRE(*(entity->getValue<SD_PRESENT>(0.0)) == true);
-    
-    // SD_POSITION
-    entity->addEvent<SD_POSITION>(0.0, {0.2,0.3,0.4});
-    REQUIRE( entity->getValueAsString<SD_POSITION>(0.0) == "0.2 0.3 0.4");
-    REQUIRE( entity->getValue<SD_POSITION>(0.0)->at(0) == 0.2);
-    REQUIRE( entity->getValue<SD_POSITION>(0.0)->at(1) == 0.3);
-    REQUIRE( entity->getValue<SD_POSITION>(0.0)->at(2) == 0.4);
-    
-    // SD_ORIENTATION
-    entity->addEvent<SD_ORIENTATION>(0.0, {0.5,0.6,0.7});
-    REQUIRE( entity->getValueAsString<SD_ORIENTATION>(0.0) == "0.5 0.6 0.7");
-    REQUIRE( entity->getValue<SD_ORIENTATION>(0.0)->at(0) == 0.5);
-    REQUIRE( entity->getValue<SD_ORIENTATION>(0.0)->at(1) == 0.6);
-    REQUIRE( entity->getValue<SD_ORIENTATION>(0.0)->at(2) == 0.7);
-    
-    // SD_MEDIA_ID
-    entity->addEvent<SD_MEDIA_ID>(0.0, "mymedia");
-    REQUIRE( entity->getValueAsString<SD_MEDIA_ID>(0.0) == "mymedia");
-    REQUIRE( *entity->getValue<SD_MEDIA_ID>(0.0) == "mymedia");
-    
-    // SD_MEDIA_TYPE
-    entity->addEvent<SD_MEDIA_TYPE>(0.0, "live" );
-    REQUIRE( entity->getValueAsString<SD_MEDIA_TYPE>(0.0) == "live");
-    REQUIRE( *entity->getValue<SD_MEDIA_TYPE>(0.0) == "live");
-    
-    // SD_MEDIA_LOCATION
-    entity->addEvent<SD_MEDIA_LOCATION>(0.0, "/path/to/my/file");
-    REQUIRE( entity->getValueAsString<SD_MEDIA_LOCATION>(0.0) == "/path/to/my/file");
-    REQUIRE( *entity->getValue<SD_MEDIA_LOCATION>(0.0) == "/path/to/my/file");
-    
-    // SD_MEDIA_CHANNEL
-    entity->addEvent<SD_MEDIA_CHANNEL>(0.0, 2);
-    REQUIRE( entity->getValueAsString<SD_MEDIA_CHANNEL>(0.0) == "2");
-    REQUIRE( *entity->getValue<SD_MEDIA_CHANNEL>(0.0) == 2);
-    
-    // SD_MEDIA_TIME_OFFSET
-    entity->addEvent<SD_MEDIA_TIME_OFFSET>(0.0, 20.2);
-    REQUIRE( entity->getValueAsString<SD_MEDIA_TIME_OFFSET>(0.0) == "20.2");
-    REQUIRE( *entity->getValue<SD_MEDIA_TIME_OFFSET>(0.0) == 20.2);
-    
-    // SD_MEDIA_GAIN
-    entity->addEvent<SD_MEDIA_GAIN>(0.0, 0.4);
-    REQUIRE( entity->getValueAsString<SD_MEDIA_GAIN>(0.0) == "0.4");
-    REQUIRE( *entity->getValue<SD_MEDIA_GAIN>(0.0) == 0.4);
-    
-    // SD_SOURCE_WIDTH_WIDTH
-    entity->addEvent<SD_SOURCE_WIDTH_WIDTH>(0.0, 0.5);
-    REQUIRE( entity->getValueAsString<SD_SOURCE_WIDTH_WIDTH>(0.0) == "0.5");
-    REQUIRE( *entity->getValue<SD_SOURCE_WIDTH_WIDTH>(0.0) == 0.5);
-    
-    
-}
 
 TEST_CASE("getEvent() and getEvents()"){
     
@@ -186,7 +174,6 @@ TEST_CASE("getEvent() and getEvents()"){
     eventSet = entity->getEvents(0.2);
     REQUIRE(eventSet.size() == 0);
 }
-
 
 
 TEST_CASE("getFirstEvent() and getLastEvent()"){
@@ -225,7 +212,6 @@ TEST_CASE("getFirstEvents() and getLastEvents()"){
     auto a = entity->addEvent<SD_POSITION>(0.4, {0.5, 0.2, 0.3}); // chronologically third
     auto b = entity->addEvent<SD_POSITION>(0.2, {0.3, 0.1, 0.2}); // chronologically first
     auto c = entity->addEvent<SD_POSITION>(0.3, {0.1, 0.4, 0.6}); // chronologically second
-    ;
     REQUIRE(entity->getFirstEvents().size() == 1);
     REQUIRE(entity->getLastEvents().size() == 1);
     
@@ -316,7 +302,9 @@ TEST_CASE("getValue()"){
     
     sdScene scene;
     sdEntity * entity = scene.addEntity("MyEntity");
+    std::array<double, 3> meta = {0.2,0.4,0.5};
     std::array<double, 3> array = {0.5, 0.2, 0.3};
+    auto m = entity->addMeta<SD_POSITION>(meta);
     auto a = entity->addEvent<SD_POSITION>(0.4, array); // chronologically third
     auto value = entity->getValue<SD_POSITION>(0.5); // cannot get value
     REQUIRE(!value);
@@ -399,9 +387,10 @@ TEST_CASE("Test sdScene", "[sdScene]"){
         // get keys
         scene.addEntity("first");
         scene.addEntity("second");
-        auto nameVector = scene.getEntityNames();
-        REQUIRE(nameVector[0] == "first");
-        REQUIRE(nameVector[1] == "second");
+        auto set = scene.getEntityNames();
+        REQUIRE(set.find("first") != set.end());
+        REQUIRE(set.find("second") != set.end());
+        REQUIRE(set.find("third") == set.end());
         
         // get entity by key
         REQUIRE(scene.getEntity("first"));
@@ -416,7 +405,10 @@ TEST_CASE("Test sdScene", "[sdScene]"){
         scene.setOrdering(EOrdering::SD_TRACK);
         REQUIRE(scene.getOrdering() == EOrdering::SD_TRACK);
         REQUIRE(scene.getOrderingAsString() == "track");
-        REQUIRE(!scene.setOrdering("dummy")); // unknown
+        try{
+            (scene.setOrdering("dummy")); // unknown
+            REQUIRE(false); // this line should be not reached because of the invalid value
+        }catch(InvalidDescriptorException){}
     }
 }
 
@@ -454,8 +446,8 @@ TEST_CASE("get exact first last next previous eventset" "[sdScene]"){
     REQUIRE(scene.getNextEventsFromAllEntities(1.5).size() == 4);
     REQUIRE(scene.getPreviousEventsFromAllEntities(1.5).size()==1);
     REQUIRE(scene.getNextEventTime(1.4).first == 2.0);
-    REQUIRE(almostEqual(scene.getDeltaTimeToNextEvent(1.4).first ,0.6));
-    REQUIRE(almostEqual(scene.getDeltaTimeFromPreviousEvent(1.4).first ,1.4-1.3 ));
+    REQUIRE(sdUtils::almostEqual(scene.getDeltaTimeToNextEvent(1.4).first ,0.6));
+    REQUIRE(sdUtils::almostEqual(scene.getDeltaTimeFromPreviousEvent(1.4).first ,1.4-1.3 ));
 
     REQUIRE(scene.getPreviousEventTime(1.4).first == 1.3);
 
@@ -464,51 +456,49 @@ TEST_CASE("get exact first last next previous eventset" "[sdScene]"){
 TEST_CASE("addExtension() removeExtension() isExtensionActivated() getNumberOfActivatedExtensions()", "[sdScene]"){
     
     sdScene scene;
-    scene.addExtension(EExtension::SD_SOURCE_WIDTH);
+    scene.addExtension(EExtension::SD_SOURCE_SPREAD);
     REQUIRE(scene.getNumberOfActivatedExtensions() == 1);
-    REQUIRE(scene.removeExtension(EExtension::SD_SOURCE_WIDTH) == 1);
-    scene.addExtension(EExtension::SD_SOURCE_WIDTH);
-    REQUIRE(!scene.addExtension(EExtension::SD_SOURCE_WIDTH)); // already exists
+    REQUIRE(scene.removeExtension(EExtension::SD_SOURCE_SPREAD) == 1);
+    scene.addExtension(EExtension::SD_SOURCE_SPREAD);
+    REQUIRE(!scene.addExtension(EExtension::SD_SOURCE_SPREAD)); // already exists
     scene.removeAllExtensions();
     REQUIRE(scene.getNumberOfActivatedExtensions() == 0);
-    scene.addExtension(EExtension::SD_SOURCE_WIDTH);
-    REQUIRE(scene.isExtensionActivated(EExtension::SD_SOURCE_WIDTH));
-    REQUIRE(scene.removeExtension(EExtension::SD_SOURCE_WIDTH) == 1);
-    REQUIRE(scene.removeExtension(EExtension::SD_SOURCE_WIDTH) == 0);
-    REQUIRE(!scene.isExtensionActivated(EExtension::SD_SOURCE_WIDTH));
+    scene.addExtension(EExtension::SD_SOURCE_SPREAD);
+    REQUIRE(scene.isExtensionActivated(EExtension::SD_SOURCE_SPREAD));
+    REQUIRE(scene.removeExtension(EExtension::SD_SOURCE_SPREAD) == 1);
+    REQUIRE(scene.removeExtension(EExtension::SD_SOURCE_SPREAD) == 0);
+    REQUIRE(!scene.isExtensionActivated(EExtension::SD_SOURCE_SPREAD));
     
 }
 
 TEST_CASE("same as above but with strings"){
     
     sdScene scene;
-    scene.addExtension("source-width");
+    scene.addExtension("source-spread");
     REQUIRE(scene.getNumberOfActivatedExtensions() == 1);
-    REQUIRE(scene.removeExtension("source-width") == 1);
+    REQUIRE(scene.removeExtension("source-spread") == 1);
     REQUIRE(scene.getNumberOfActivatedExtensions() == 0);
     
-    REQUIRE(scene.addExtension("source-width"));
-    REQUIRE(!scene.addExtension("source-width")); // already exists
+    REQUIRE(scene.addExtension("source-spread"));
+    REQUIRE(!scene.addExtension("source-spread")); // already exists
     scene.removeAllExtensions();
     REQUIRE(scene.getNumberOfActivatedExtensions() == 0);
-    scene.addExtension("source-width");
-    REQUIRE(scene.isExtensionActivated("source-width"));
+    scene.addExtension("source-spread");
+    REQUIRE(scene.isExtensionActivated("source-spread"));
     REQUIRE(!scene.isExtensionActivated("source-height"));
     
-    REQUIRE(scene.removeExtension("source-width") == 1);
-    REQUIRE(scene.removeExtension("source-width") == 0);
+    REQUIRE(scene.removeExtension("source-spread") == 1);
+    REQUIRE(scene.removeExtension("source-spread") == 0);
     REQUIRE(scene.removeExtension("source-height") == 0);
     
-    REQUIRE(!scene.isExtensionActivated("source-width"));
+    REQUIRE(!scene.isExtensionActivated("source-spread"));
 }
 
 TEST_CASE("valid descriptor test"){
     sdScene scene;
-    REQUIRE(scene.getValidDescriptorSet().size() == 4);
-    scene.addExtension(EExtension::SD_SOURCE_WIDTH);
-    REQUIRE(scene.getValidDescriptorSet().size() == 5);
-    
-    
+    REQUIRE(scene.getNumberOfValidDescriptors() == 22);
+    scene.addExtension(EExtension::SD_SOURCE_SPREAD);
+    REQUIRE(scene.getNumberOfValidDescriptors() == 23);
 }
 
 #pragma mark sdOSCConverter
@@ -570,73 +560,142 @@ TEST_CASE("sdOSCMessage", "[sdOSCMessage]"){
 
 #pragma mark sdUtility
 
+TEST_CASE("Test Extension enum to string conversion", "[sdConst]"){
+    
+    //// extension
+    // enum to string
+    REQUIRE(sdSpec::extensionToString(EExtension::SD_CORE) == "core");
+    REQUIRE(sdSpec::extensionToString(EExtension::SD_MEDIA) == "media");
+    REQUIRE(sdSpec::extensionToString(EExtension::SD_INTERPOLATION) == "interpolation");
+    REQUIRE(sdSpec::extensionToString(EExtension::SD_POINTSET) == "pointset");
+    REQUIRE(sdSpec::extensionToString(EExtension::SD_SOURCE_SPREAD) == "source-spread");
+    REQUIRE(sdSpec::extensionToString(EExtension::SD_HARDWARE_OUT) == "hardware-out");
+    REQUIRE(sdSpec::extensionToString(EExtension::SD_SINK_ENTITY) == "sink-entity");
+    
+    // string to enum
+    REQUIRE(sdSpec::stringToExtension("core") == EExtension::SD_CORE);
+    REQUIRE(sdSpec::stringToExtension("media") == EExtension::SD_MEDIA);
+    REQUIRE(sdSpec::stringToExtension("interpolation") == EExtension::SD_INTERPOLATION);
+    REQUIRE(sdSpec::stringToExtension("pointset") == EExtension::SD_POINTSET);
+    REQUIRE(sdSpec::stringToExtension("source-spread") == EExtension::SD_SOURCE_SPREAD);
+    REQUIRE(sdSpec::stringToExtension("hardware-out") == EExtension::SD_HARDWARE_OUT);
+    REQUIRE(sdSpec::stringToExtension("sink-entity") == EExtension::SD_SINK_ENTITY);
+    
+    //// descriptor
+    // enum to string
+    REQUIRE(sdSpec::descriptorToString(EDescriptor::SD_TYPE) == "type");
+    REQUIRE(sdSpec::descriptorToString(EDescriptor::SD_PRESENT) == "present");
+    REQUIRE(sdSpec::descriptorToString(EDescriptor::SD_POSITION) == "position");
+    REQUIRE(sdSpec::descriptorToString(EDescriptor::SD_ORIENTATION) == "orientation");
+    
+    REQUIRE(sdSpec::descriptorToString(EDescriptor::SD_MEDIA_ID) == "id");
+    REQUIRE(sdSpec::descriptorToString(EDescriptor::SD_MEDIA_TYPE) == "type");
+    REQUIRE(sdSpec::descriptorToString(EDescriptor::SD_MEDIA_LOCATION) == "location");
+    REQUIRE(sdSpec::descriptorToString(EDescriptor::SD_MEDIA_CHANNEL) == "channel");
+    REQUIRE(sdSpec::descriptorToString(EDescriptor::SD_MEDIA_TIME_OFFSET) == "time-offset");
+    
+    REQUIRE(sdSpec::descriptorToString(EDescriptor::SD_SOURCE_SPREAD_SPREAD) == "spread");
+    
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_CORE,"type") == EDescriptor::SD_TYPE);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_CORE,"present") == EDescriptor::SD_PRESENT);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_CORE,"position") == EDescriptor::SD_POSITION);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_CORE,"orientation") == EDescriptor::SD_ORIENTATION);
+    
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_MEDIA, "id") == SD_MEDIA_ID);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_MEDIA, "type") == SD_MEDIA_TYPE);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_MEDIA, "location") == SD_MEDIA_LOCATION);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_MEDIA, "channel") == SD_MEDIA_CHANNEL);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_MEDIA, "time-offset") == SD_MEDIA_TIME_OFFSET);
+    
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_POINTSET, "id") == SD_POINTSET_ID);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_POINTSET, "unit") == SD_POINTSET_UNIT);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_POINTSET, "closed") == SD_POINTSET_CLOSED);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_POINTSET, "size") == SD_POINTSET_SIZE);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_POINTSET, "point") == SD_POINTSET_POINT);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_POINTSET, "handle") == SD_POINTSET_HANDLE);
+
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_INTERPOLATION, "type") == SD_INTERPOLATION_TYPE);
+    
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_SOURCE_SPREAD, "spread") == SD_SOURCE_SPREAD_SPREAD);
+    
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_HARDWARE_OUT, "physical-channel") == SD_HARDWARE_OUT_PHYSICAL_CHANNEL);
+    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_HARDWARE_OUT, "gain") == SD_HARDWARE_OUT_GAIN);
+    
+
+    
+}
+
 TEST_CASE("Test Utilities", "[sdConst]"){
-    REQUIRE(sdExtension::extensionToString(EExtension::SD_CORE) == "core");
-    REQUIRE(sdExtension::extensionToString(EExtension::SD_MEDIA) == "media");
-    REQUIRE(sdExtension::extensionToString(EExtension::SD_SOURCE_WIDTH) == "source-width");
-    
-    REQUIRE(sdExtension::stringToExtension("core") == EExtension::SD_CORE);
-    REQUIRE(sdExtension::stringToExtension("media") == EExtension::SD_MEDIA);
-    REQUIRE(sdExtension::stringToExtension("source-width") == EExtension::SD_SOURCE_WIDTH);
-    
-    REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_TYPE) == "type");
-    REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_PRESENT) == "present");
-    REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_POSITION) == "position");
-    REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_ORIENTATION) == "orientation");
-    
-    REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_MEDIA_ID) == "id");
-    REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_MEDIA_TYPE) == "type");
-    REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_MEDIA_LOCATION) == "location");
-    REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_MEDIA_CHANNEL) == "channel");
-    REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_MEDIA_TIME_OFFSET) == "time-offset");
-    
-    REQUIRE(sdExtension::descriptorToString(EDescriptor::SD_SOURCE_WIDTH_WIDTH) == "width");
-    
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_CORE,"type") == EDescriptor::SD_TYPE);
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_CORE,"present") == EDescriptor::SD_PRESENT);
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_CORE,"position") == EDescriptor::SD_POSITION);
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_CORE,"orientation") == EDescriptor::SD_ORIENTATION);
-    
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_MEDIA, "id") == SD_MEDIA_ID);
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_MEDIA, "type") == SD_MEDIA_TYPE);
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_MEDIA, "location") == SD_MEDIA_LOCATION);
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_MEDIA, "channel") == SD_MEDIA_CHANNEL);
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_MEDIA, "time-offset") == SD_MEDIA_TIME_OFFSET);
-    
-    REQUIRE(sdExtension::stringToDescriptor(EExtension::SD_SOURCE_WIDTH, "width") == SD_SOURCE_WIDTH_WIDTH);
-    
+    std::array<double, 3> xyz{1,1,1};
+    auto aed = sdUtils::xyzToAed(xyz);
+    auto rXyz = sdUtils::aedToXyz(aed);
+    REQUIRE(sdUtils::almostEqual(rXyz[0], xyz[0]));
+    REQUIRE(sdUtils::almostEqual(rXyz[1], xyz[1]));
+    REQUIRE(sdUtils::almostEqual(rXyz[2], xyz[2]));
     // std::array to string
-    REQUIRE( toString(std::array<int, 3>({{3,4,5}})) == "3 4 5");
-    REQUIRE( toString(std::array<double, 2>({{3.3,4.4}})) == "3.3 4.4");
+    REQUIRE( sdUtils::toString(std::array<int, 3>({{3,4,5}})) == "3 4 5");
+    REQUIRE( sdUtils::toString(std::array<double, 2>({{3.3,4.4}})) == "3.3 4.4");
     
     // single arithmatic to string
-    REQUIRE( toString(32) == "32");
-    REQUIRE( toString(42.31) == "42.31");
-    REQUIRE( toString(42.31f) == "42.31");
+    REQUIRE( sdUtils::toString(32) == "32");
+    REQUIRE( sdUtils::toString(42.31) == "42.31");
+    REQUIRE( sdUtils::toString(42.31f) == "42.31");
     
     // bool to string
-    REQUIRE( toString(true) == "true");
-    REQUIRE( toString(false) == "false");
+    REQUIRE( sdUtils::toString(true) == "true");
+    REQUIRE( sdUtils::toString(false) == "false");
     
-    REQUIRE( stringTo<bool>("true") == true);
-    REQUIRE( stringTo<bool>("false") == false);
+    REQUIRE( sdUtils::stringTo<bool>("true") == true);
+    REQUIRE( sdUtils::stringTo<bool>("false") == false);
     
-    REQUIRE( stringTo<int>("43") == 43);
-    REQUIRE( stringTo<double>("423.1") == 423.1);
+    REQUIRE( sdUtils::stringTo<int>("43") == 43);
+    REQUIRE( sdUtils::stringTo<double>("423.1") == 423.1);
     SECTION("int array"){
-        auto array = stringToArray<int,3>("4 3 2");
+        auto array = sdUtils::stringToArray<int,3>("4 3 2");
         REQUIRE(array.at(0) == 4);
         REQUIRE(array.at(1) == 3);
         REQUIRE(array.at(2) == 2);
     }
     
     SECTION("double array"){
-        auto array = stringToArray<double,2>("4.2 3.2");
+        auto array = sdUtils::stringToArray<double,2>("4.2 3.2");
         REQUIRE(array.at(0) == 4.2);
         REQUIRE(array.at(1) == 3.2);
     }
 }
 
 
+TEST_CASE("Copy sdScene", "[sdScene]"){
+    sdScene sceneB;
+    {
+        sdScene sceneA;
+        sceneA.addEntity("myEntity");
+        sceneA.addEntity("yourEntity");
+        sceneA.addEvent<SD_POSITION>("myEntity", 3.00, {10,20,30});
+        sceneA.addEvent<SD_POSITION>("yourEntity", 3.00, {30,20,10});
+        sceneB = std::move(sceneA);
+        //scene A deleted here
+    }
+
+    auto myEntity =  sceneB.getEntity("myEntity");
+    auto name = myEntity->getName();
+    REQUIRE(name == "myEntity");
+    
+    auto youEntity = sceneB.getEntity("yourEntity");
+    auto entityName = youEntity->getName();
+    REQUIRE(entityName == "yourEntity");
+    
+    auto pos1 = sceneB.getEntity("myEntity")->getEvent<SD_POSITION>(3.00)->getValue();
+    auto pos2 = sceneB.getEntity("yourEntity")->getEvent<SD_POSITION>(3.00)->getValue();
+    
+    REQUIRE(pos1[0] == 10);
+    REQUIRE(pos1[1] == 20);
+    REQUIRE(pos1[2] == 30);
+    
+    REQUIRE(pos2[0] == 30);
+    REQUIRE(pos2[1] == 20);
+    REQUIRE(pos2[2] == 10);
+    
+}
 
 

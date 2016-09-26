@@ -8,9 +8,9 @@ using namespace std;
 
 
 // old tests from old API
-TEST_CASE("source width test"){
+TEST_CASE("source spread test"){
     sdScene scene;
-    scene.addExtension(EExtension::SD_SOURCE_WIDTH);
+    scene.addExtension(EExtension::SD_SOURCE_SPREAD);
     
     REQUIRE(scene.getNumberOfActivatedExtensions() == 1);
     
@@ -20,58 +20,92 @@ TEST_CASE("source width test"){
     sdEntity* entityOne = scene.addEntity("voice1");
     
     
-    auto eventOne = entityOne->addEvent<SD_SOURCE_WIDTH_WIDTH>(5.0, 105.2);
-    auto eventTwo = entityOne->addEvent("10.0", "width", "99");
+    auto eventOne = entityOne->addEvent<SD_SOURCE_SPREAD_SPREAD>(5.0, 20.6);
+    auto eventTwo = entityOne->addEvent("10.0", "source-spread", "spread", "99");
     
-    REQUIRE(eventOne == entityOne->getNextEvent<SD_SOURCE_WIDTH_WIDTH>(2.0));
-    REQUIRE(eventTwo.get() == entityOne->getPreviousEvent<SD_SOURCE_WIDTH_WIDTH>(12.0));
+    REQUIRE(eventOne == entityOne->getNextEvent<SD_SOURCE_SPREAD_SPREAD>(2.0));
+    REQUIRE(eventTwo.get() == entityOne->getPreviousEvent<SD_SOURCE_SPREAD_SPREAD>(12.0));
     
-    scene.removeExtension(EExtension::SD_SOURCE_WIDTH);
+    scene.removeExtension(EExtension::SD_SOURCE_SPREAD);
 }
 
 
 
 TEST_CASE("info test"){
     {
-        sdInfo info; // empty
-        info.setAuthor(string("John"));
-        info.setHost(string("sdInfoTest"));
-        info.setDate(sdDate("2000-01-01"));
-        info.setSession(string("1.1"));
-        info.setLocation(string("ZHDK"));
-        info.setAnnotation(string("this is a test"));
+        sdInfo info("John", "sdInfoTest", "2000-1-1", "1.1", "ZHDK", "this is a test", "My Wonderful Piece", 12.0);
+//        info.setValue<SD_INFO_HOST>(string("sdInfoTest"));
+//        info.setValue<SD_INFO_AUTHOR>(string("John"));
+//        info.setValue<SD_INFO_DATE>(sdDate("2000-01-01"));
+//        info.setValue<SD_INFO_SESSION>(string("1.1"));
+//        info.setValue<SD_INFO_LOCATION>(string("ZHDK"));
+//        info.setValue<SD_INFO_ANNOTATION>(string("this is a test"));
+//        info.setValue<SD_INFO_TITLE>(string("My Wonderful Piece"));
+//        info.setValue<SD_INFO_DURATION>(12.0);
         
-        REQUIRE( info.getAuthor() == "John");
-        REQUIRE( info.getHost() == "sdInfoTest");
-        REQUIRE( info.getDateAsString() == "2000-1-1");
-        REQUIRE( info.getSession() == "1.1");
-        REQUIRE( info.getLocation() == "ZHDK");
-        REQUIRE( info.getAnnotation() == "this is a test");
+        
+        
+        REQUIRE( info.getValue<SD_INFO_HOST>() == "sdInfoTest");
+        REQUIRE( info.getValue<SD_INFO_AUTHOR>() == "John");
+        REQUIRE( info.getValue<SD_INFO_DATE>() == "2000-1-1");
+        REQUIRE( info.getValue<SD_INFO_SESSION>() == "1.1");
+        REQUIRE( info.getValue<SD_INFO_LOCATION>() == "ZHDK");
+        REQUIRE( info.getValue<SD_INFO_ANNOTATION>() == "this is a test");
+        REQUIRE( info.getValue<SD_INFO_TITLE>() == "My Wonderful Piece");
+        REQUIRE( info.getValue<SD_INFO_DURATION>() == 12.0);
     }
     {
         // set at once with strings and sdDate
-        sdInfo info(string("Tom"), string("sdInfoTest"), sdDate(string("2012-04-03")), string("1.2"), string("ESB"), string("this is second test"));
+        sdInfo info(string("Tom"), string("sdInfoTest"), sdDate(string("2012-04-03")), string("1.2"), string("ESB"), string("this is second test"),string(""));
         
-        REQUIRE( info.getAuthor() == "Tom");
-        REQUIRE( info.getHost() == "sdInfoTest");
-        REQUIRE( info.getDateAsString() == "2012-4-3");
-        REQUIRE( info.getSession() == "1.2");
-        REQUIRE( info.getLocation() == "ESB");
-        REQUIRE( info.getAnnotation() == "this is second test");
+        REQUIRE( info.getValue<SD_INFO_AUTHOR>() == "Tom");
+        REQUIRE( info.getValue<SD_INFO_HOST>() == "sdInfoTest");
+        REQUIRE( info.getValue<SD_INFO_DATE>() == "2012-4-3");
+        REQUIRE( info.getValue<SD_INFO_SESSION>() == "1.2");
+        REQUIRE( info.getValue<SD_INFO_LOCATION>() == "ESB");
+        REQUIRE( info.getValue<SD_INFO_ANNOTATION>() == "this is second test");
     }
     {
         // initialization also possible with c-strings
-        sdInfo info("Kevin", "sdInfoTest", "2012-05-01", "1.3", "SFEM", "this is third test");
+        sdInfo info("Kevin", "sdInfoTest", "2012-5-1", "1.3", "SFEM", "this is third test");
         
-        REQUIRE( info.getAuthor() == "Kevin");
-        REQUIRE( info.getHost() == "sdInfoTest");
-        REQUIRE( info.getDateAsString() == "2012-5-1");
-        REQUIRE( info.getSession() == "1.3");
-        REQUIRE( info.getLocation() == "SFEM");
-        REQUIRE( info.getAnnotation() == "this is third test");
+        REQUIRE( info.getValue<SD_INFO_AUTHOR>() == "Kevin");
+        REQUIRE( info.getValue<SD_INFO_HOST>() == "sdInfoTest");
+        REQUIRE( info.getValue<SD_INFO_DATE>() == "2012-5-1");
+        REQUIRE( info.getValue<SD_INFO_SESSION>() == "1.3");
+        REQUIRE( info.getValue<SD_INFO_LOCATION>() == "SFEM");
+        REQUIRE( info.getValue<SD_INFO_ANNOTATION>() == "this is third test");
     }
 }
 
+TEST_CASE("Speaker Setup"){
+    ifstream ifs("/Users/chikashi/Development/spatdiflib/src/test/libSpatDIFTest/TestCode/stereo-playback.xml");
+    string xmlString;
+    if (ifs.is_open()){
+        while ( ifs.good() ){
+            string str;
+            getline(ifs,str);
+            xmlString.append(str);
+        }
+        ifs.close();
+    }
+    REQUIRE(xmlString != "");
+    sdScene myScene = sdLoader::sceneFromXML(xmlString);
+    sdEntity *leftSpeaker = myScene.getEntity("left");
+    sdEntity *rightSpeaker = myScene.getEntity("right");
+
+    auto positionXYZ = leftSpeaker->getMeta<SD_POSITION>()->getValue();
+    auto aed = sdUtils::xyzToAed(positionXYZ);
+    REQUIRE(sdUtils::almostEqual(aed[0], -30.0));
+    REQUIRE(sdUtils::almostEqual(aed[1] , 0.0));
+    REQUIRE(sdUtils::almostEqual(aed[2] , 2.0));
+    auto type = leftSpeaker->getMeta<SD_TYPE>()->getValue();
+    REQUIRE(type == sdDescriptor<SD_TYPE>::SD_LOUDSPEAKER);
+
+    auto physicalChannel = rightSpeaker->getMeta<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>()->getValue();
+    REQUIRE(physicalChannel == 2);
+    
+}
 
 TEST_CASE("How to Query loaded file"){
     ifstream ifs("/Users/chikashi/Development/spatdiflib/src/test/libSpatDIFTest/TestCode/simple_scene.xml");
@@ -90,13 +124,16 @@ TEST_CASE("How to Query loaded file"){
     sdEntity *voice1 = myScene.getEntity("voice1");
     if(!voice1) {abort();}
     
+    sdInfo info = myScene.getInfo();
+    REQUIRE(info.getValue<SD_INFO_TITLE>() == "My Master Piece");
+    REQUIRE(info.getValue<SD_INFO_DURATION>() == 650.3);
+    
     REQUIRE(voice1->getName() == "voice1");
     auto event = voice1->getEvent<SD_POSITION>(2.0);
     auto position = event->getValue();
     REQUIRE(position[0] == 0.0);
     REQUIRE(position[1] == 1.0);
     REQUIRE(position[2] == 0.0);
-    
     
     double currentTime = -1.0;
     int count = 0;
@@ -216,22 +253,42 @@ TEST_CASE("FileExtension"){
 }
 
 TEST_CASE("sdSaverTest"){
-    sdInfo info(string("chikashi miyama"), string("sdSaverTest"), string("2013-08-04"), string("Cologne"), string("1.2"), string("this is a test"));
+    sdInfo info(string("chikashi miyama"), string("sdSaverTest"), string("2013-08-04"), string("Cologne"), string("1.2"), string("this is a test"), string("My Second Master Piece"), 645.32);
     sdScene scene(info);
     
-    scene.addExtension(EExtension::SD_MEDIA);
+    scene.addExtension(EExtension::SD_HARDWARE_OUT);
+    scene.addExtension(EExtension::SD_SINK_ENTITY);
+
     //the scene has one entities
     auto myEntity = scene.addEntity("myEntity", EKind::SD_SOURCE);
     auto yourEntity = scene.addEntity("yourEntity", EKind::SD_SOURCE);
+    
+    myEntity->addMeta<SD_POSITION>({0,0,1}); // initial position
+    yourEntity->addMeta<SD_POSITION>({-1,1,1});
+    
     myEntity->addEvent<SD_POSITION>(9.15 , {1.0,2.0,3.0});
     myEntity->addEvent<SD_ORIENTATION>(2.12 , {0.0,1.0,2.0});
     yourEntity->addEvent<SD_POSITION>(4.2, {5.0,4.0,3.0});
     yourEntity->addEvent<SD_MEDIA_LOCATION>(5.0, "/tmp/tmpaudio.wav");
-    string generatedString = sdSaver::XMLFromScene(&scene);
-    //cout << generatedString;
+    string generatedString = sdSaver::XMLFromScene(scene);
     scene.setOrdering(EOrdering::SD_TRACK);
-    generatedString = sdSaver::XMLFromScene(&scene);
-    //cout << generatedString;
+    generatedString = sdSaver::XMLFromScene(scene);
+    cout << generatedString;
+}
+
+TEST_CASE("sdSaverTest_EXTNESION"){
+    sdInfo info(string("chikashi miyama"), string("sdSaverTest"), string("2013-08-04"), string("Cologne"), string("1.2"), string("this is a test"), string("My Second Master Piece"), 645.32);
+    sdScene scene(info);
+    
+    scene.addExtension(EExtension::SD_SOURCE_SPREAD);
+    auto myEntity = scene.addEntity("myEntity", EKind::SD_SOURCE);
+    myEntity->addEvent<SD_POSITION>(1.0, {0.1,0.2,0.3});
+    myEntity->addEvent<SD_SOURCE_SPREAD_SPREAD>(1.0, 0.42);
+    myEntity->addEvent<SD_MEDIA_LOCATION>(1.0, "/some/where/in/your/system");
+    myEntity->addEvent<SD_MEDIA_GAIN>(1.0, 1.0);
+    myEntity->addEvent<SD_MEDIA_CHANNEL>(1.0, 2);
+    //cout << sdSaver::XMLFromScene(&scene);
+    
 }
 
 TEST_CASE("sdSceneTest"){
@@ -245,10 +302,9 @@ TEST_CASE("sdSceneTest"){
                 string("this a scene test"));
     
     sdScene scene(info);
-    scene.addExtension(EExtension::SD_MEDIA);
-    REQUIRE(scene.getNumberOfActivatedExtensions()==1);
+    REQUIRE(scene.getNumberOfActivatedExtensions()==0);
     auto myEntity = scene.addEntity("myEntity");
-    myEntity->addEvent(string("1.0"), string("position"), string("0.0 0.1 0.2"));
+    myEntity->addEvent(string("1.0"), string("core"), string("position"), string("0.0 0.1 0.2"));
     myEntity->addEvent<SD_POSITION>(2.0, {0.0, 0.1, 0.2});
     myEntity->addEvent<SD_MEDIA_GAIN>(2.0, 0.5523);
     
@@ -404,8 +460,6 @@ TEST_CASE("sdOSCResponder"){
         
         sdOSCMessage getEntityNames("/spatdifcmd/getEntityNames");
         returnedMessageVector = oscResponder.forwardOSCMessage(getEntityNames);
-        REQUIRE( returnedMessageVector[0].getArgument<std::string>(0) == "test1Entity");
-        REQUIRE( returnedMessageVector[0].getArgument<std::string>(1) == "test2Entity");
         
         
         sdOSCMessage removeTest1Entity("/spatdifcmd/removeEntity");
@@ -515,7 +569,7 @@ TEST_CASE("sdOSCResponder"){
     }
     {
         sdOSCMessage addExtension("/spatdifcmd/addExtension");
-        addExtension.appendArgument(std::string("media"));
+        addExtension.appendArgument(std::string("source-spread"));
         oscResponder.forwardOSCMessage(addExtension);
         
         sdOSCMessage getNumberOfActivatedExtensions("/spatdifcmd/getNumberOfActivatedExtensions");
@@ -592,7 +646,7 @@ TEST_CASE("sdOSCResponder"){
         sdOSCMessage setDate("/spatdifcmd/setDate");
         setDate.appendArgument(std::string("2014-3-7"));
         oscResponder.forwardOSCMessage(setDate);
-        
+                
         sdOSCMessage setLocation("/spatdifcmd/setLocation");
         setLocation.appendArgument(std::string("ICST, Zürich, Switzerland"));
         oscResponder.forwardOSCMessage(setLocation);

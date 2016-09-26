@@ -13,17 +13,13 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef ____sdMain__
-#define ____sdMain__
-
-#include "sdConst.h"
+#pragma once
+#include "sdDescriptor.h"
 #include "sdDate.h"
 
 #include "sdEntity.h"
-#include "sdInfo.h"
 #include "sdLoader.h"
 #include "sdOSCResponder.h"
 #include "sdSaver.h"
 #include "sdScene.h"
 
-#endif

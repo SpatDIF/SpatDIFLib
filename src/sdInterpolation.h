@@ -22,7 +22,7 @@
 	all subclass of sdInterpolation must override the virtual abstract function, interpolate()
 */
 
-#include "sdConst.h"
+#include "sdDescriptors.h"
 
 class sdInterpolation{
 

@@ -14,13 +14,11 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef ____sdOSCResponder__
-#define ____sdOSCResponder__
+#pragma once
 
 #include "sdScene.h"
 #include "sdOSCMessage.h"
 #include <string>
-
 
 /*!
     This class interprets incoming OSC messages and forward it to a specified instance of sdScene.
@@ -219,7 +217,7 @@ inline std::vector<sdOSCMessage> sdOSCResponder::forwardOSCMessage(sdOSCMessage 
         command = ads[1]; // get the element right after /spatdifcmd
     }else if(ads.size() == 3){  // extension
         std::string extensionName = ads[1];
-        extension = sdExtension::stringToExtension(extensionName);
+        extension = sdSpec::stringToExtension(extensionName);
         if(extension == EExtension::SD_EXTENSION_ERROR){
             sdOSCMessage errorMessage("/spatdif/error");
             errorMessage.appendArgument<std::string>("No such extension: " + extensionName);
@@ -257,14 +255,14 @@ inline std::vector<sdOSCMessage> sdOSCResponder::forwardOSCMessage(sdOSCMessage 
 
 inline std::vector<sdOSCMessage> sdOSCResponder::getEventSetsFromAllEntities(const double &queryTime) const{
     std::vector<sdOSCMessage> returnMessages;
-    std::vector<std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>>> matchedEvents;
+    std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>> matchedEvents;
     if(interval != 0.0){
         matchedEvents = scene->getEventsFromAllEntities(queryTime, queryTime+interval); // in the specified region
     }else{
         matchedEvents = scene->getEventsFromAllEntities(queryTime);
     }
     
-    std::for_each(matchedEvents.begin(), matchedEvents.end(), [this, &returnMessages](std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>> item){
+    std::for_each(matchedEvents.begin(), matchedEvents.end(), [this, &returnMessages](std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>> item){
         auto entity = item.first;
         auto event  = item.second;
         auto entityName = this->scene->getEntityName(entity);
@@ -366,22 +364,22 @@ inline std::pair<sdOSCMessage, bool> sdOSCResponder::getSingleAction(std::string
         returnMessage.appendArgument<std::string>(scene->getOrderingAsString());
     }else if(command == "getAuthor"){
         returnMessage.setAddress("/spatdif/author");
-        returnMessage.appendArgument<std::string>(scene->getInfo().getAuthor());
+        returnMessage.appendArgument<std::string>(scene->getInfo().getValue<SD_INFO_AUTHOR>());
     }else if(command == "getHost"){
         returnMessage.setAddress("/spatdif/host");
-        returnMessage.appendArgument<std::string>(scene->getInfo().getHost());
+        returnMessage.appendArgument<std::string>(scene->getInfo().getValue<SD_INFO_HOST>());
     }else if(command == "getDate"){
         returnMessage.setAddress("/spatdif/date");
-        returnMessage.appendArgument<std::string>(scene->getInfo().getDateAsString());
+        returnMessage.appendArgument<std::string>(scene->getInfo().getValue<SD_INFO_DATE>());
     }else if(command == "getLocation"){
         returnMessage.setAddress("/spatdif/location");
-        returnMessage.appendArgument<std::string>(scene->getInfo().getLocation());
+        returnMessage.appendArgument<std::string>(scene->getInfo().getValue<SD_INFO_LOCATION>());
     }else if(command == "getSession"){
         returnMessage.setAddress("/spatdif/session");
-        returnMessage.appendArgument<std::string>(scene->getInfo().getSession());
+        returnMessage.appendArgument<std::string>(scene->getInfo().getValue<SD_INFO_SESSION>());
     }else if(command == "getAnnotation"){
         returnMessage.setAddress("/spatdif/annotation");
-        returnMessage.appendArgument<std::string>(scene->getInfo().getAnnotation());
+        returnMessage.appendArgument<std::string>(scene->getInfo().getValue<SD_INFO_ANNOTATION>());
     }else if(command == "getNumberOfActivatedExtensions"){
         returnMessage.setAddress("/spatdif/numberOfActivatedExtensions");
         returnMessage.appendArgument<int>(static_cast<int>(scene->getNumberOfActivatedExtensions()));
@@ -475,7 +473,7 @@ inline void sdOSCResponder::setAction(std::string command, sdOSCMessage message,
                 scene->addEvent<SD_MEDIA_ID>(entityName, writeTime, mediaID);
             }else if(command == "setType"){
                 std::string type = message.getArgumentAsString(1);
-                scene->addEvent<SD_MEDIA_TYPE>(entityName, writeTime, type);
+                scene->addEvent<SD_MEDIA_TYPE>(entityName, writeTime, sdDescriptor<SD_MEDIA_TYPE>::stringTo(type));
             }else if(command == "setLocation"){
                 std::string location = message.getArgumentAsString(1);
                 scene->addEvent<SD_MEDIA_LOCATION>(entityName, writeTime, location);
@@ -516,28 +514,23 @@ inline void sdOSCResponder::setAction(std::string command, sdOSCMessage message,
                 scene->setOrdering(message.getArgumentAsString(0));
             }else if(command == "setAuthor"){
                 sdInfo info = scene->getInfo();
-                info.setAuthor(message.getArgumentAsString(0));
-                scene->setInfo(info);
+                info.setValue<SD_INFO_AUTHOR>(message.getArgumentAsString(0));
             }else if(command == "setHost"){
                 sdInfo info = scene->getInfo();
-                info.setHost(message.getArgumentAsString(0));
-                scene->setInfo(info);
+                info.setValue<SD_INFO_HOST>(message.getArgumentAsString(0));
             }else if(command == "setDate"){
                 sdInfo info = scene->getInfo();
-                info.setDate(message.getArgumentAsString(0));
+                info.setValue<SD_INFO_DATE>(message.getArgumentAsString(0));
                 scene->setInfo(info);
             }else if(command == "setLocation"){
                 sdInfo info = scene->getInfo();
-                info.setLocation(message.getArgumentAsString(0));
-                scene->setInfo(info);
+                info.setValue<SD_INFO_LOCATION>(message.getArgumentAsString(0));
             }else if(command == "setSession"){
                 sdInfo info = scene->getInfo();
-                info.setSession(message.getArgumentAsString(0));
-                scene->setInfo(info);
+                info.setValue<SD_INFO_SESSION>(message.getArgumentAsString(0));
             }else if(command == "setAnnotation"){
                 sdInfo info = scene->getInfo();
-                info.setAnnotation(message.getArgumentAsString(0));
-                scene->setInfo(info);
+                info.setValue<SD_INFO_ANNOTATION>(message.getArgumentAsString(0));
             }
             break;
         }
@@ -720,4 +713,3 @@ Add and Remove
     activate @extension
 */
 
-#endif /* defined(____sdOSCResponder__) */

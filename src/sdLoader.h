@@ -13,9 +13,7 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef ____sdLoader__
-#define ____sdLoader__
-
+#pragma once
 #include <string>
 #include "sdScene.h"
 
@@ -45,4 +43,3 @@ public:
 };
 
 
-#endif /* defined(____sdLoader__) */

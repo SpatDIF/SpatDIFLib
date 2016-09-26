@@ -1,5 +1,5 @@
-#ifndef ____sdOSCMessage__
-#define ____sdOSCMessage__
+
+#pragma once
 
 #include "sdOSCConverter.h"
 #include <sstream>
@@ -53,7 +53,6 @@ public:
     std::vector<unsigned char> getAddress(void);
     /*! returns OSC address pattern as a string */
     std::string getAddressAsString(void);
-
     
     /*! returns OSC typetags in OSC-string format */
     std::vector<unsigned char> getTypetags(void);
@@ -61,7 +60,6 @@ public:
     /*! returns OSC address pattern as a string */
     std::string getTypetagsAsString(void);
 
-    
     /*! @param index argument index
      returns specified argument at index as T.*/
     template <typename T>
@@ -76,7 +74,6 @@ public:
     /*! returns the number of OSC arguments */
     size_t getNumberOfArguments();
 
-    
     /*! returns delimiters as vector of int */
     std::vector<size_t> getDelimiters(void);
     /*! returns delimiters as a string */
@@ -262,13 +259,13 @@ inline std::string sdOSCMessage::getArgument(int index){
 inline std::string sdOSCMessage::getArgumentAsString(int index){
     switch(typetags[index+1]){ // we need to skip ','
         case 'i':
-            return (toString(getArgument<int>(index)));
+            return (sdUtils::toString(getArgument<int>(index)));
             break;
         case 'f':
-            return (toString(getArgument<float>(index)));
+            return (sdUtils::toString(getArgument<float>(index)));
             break;
         case 's':
-            return (toString(getArgument<std::string>(index)));
+            return (sdUtils::toString(getArgument<std::string>(index)));
             break;
     }
     return "";
@@ -339,4 +336,3 @@ inline void sdOSCMessage::clear(void){
     typetags.push_back(',');
 }
 
-#endif

@@ -14,9 +14,7 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#ifndef ____sdOSCConverter__
-#define ____sdOSCConverter__
-
+#pragma once
 #include <string>
 #include <iostream>
 #include <vector>
@@ -124,4 +122,3 @@ inline std::string sdOSCConverter::blockTo(const std::vector<unsigned char> &blo
     return std::move(str);
 }
 
-#endif
