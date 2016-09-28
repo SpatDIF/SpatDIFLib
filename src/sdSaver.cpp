@@ -25,20 +25,20 @@
 
 using namespace tinyxml2;
 
-XMLDeclaration* sdSaver<EFormat::SD_XML>::XMLDeclarationSection(XMLDocument &xml){
+XMLDeclaration* sdXMLSaver::XMLDeclarationSection(XMLDocument &xml){
     XMLDeclaration* decl = xml.NewDeclaration();
     decl->SetValue("xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"");
     return decl;
 }
 
-XMLElement* sdSaver<EFormat::SD_XML>::XMLOrderingSection(XMLDocument &xml, const sdScene &scene){
+XMLElement* sdXMLSaver::XMLOrderingSection(XMLDocument &xml, const sdScene &scene){
     XMLElement* ordering = xml.NewElement("ordering");
     XMLText* orderingText = xml.NewText(scene.getOrderingAsString().c_str());
     ordering->InsertEndChild(orderingText);
     return  ordering;
 }
 
-XMLElement* sdSaver<EFormat::SD_XML>::XMLMetaSection(XMLDocument &xml, const sdScene &scene){
+XMLElement* sdXMLSaver::XMLMetaSection(XMLDocument &xml, const sdScene &scene){
 
     XMLElement* metaSection = xml.NewElement("meta");
 
@@ -140,7 +140,7 @@ XMLElement* sdSaver<EFormat::SD_XML>::XMLMetaSection(XMLDocument &xml, const sdS
     return metaSection;
 }
 
-std::string sdSaver<EFormat::SD_XML>::toString(const sdScene &scene){
+std::string sdXMLSaver::toString(const sdScene &scene){
     
     XMLDocument xml;
     xml.InsertEndChild(XMLDeclarationSection(xml));
@@ -149,7 +149,7 @@ std::string sdSaver<EFormat::SD_XML>::toString(const sdScene &scene){
     spatdif->SetAttribute("version", "0.4");
     xml.InsertEndChild(spatdif);
     
-    spatdif->InsertEndChild(sdSaver::XMLMetaSection(xml, scene));
+    spatdif->InsertEndChild(sdXMLSaver::XMLMetaSection(xml, scene));
 
     std::unordered_map<std::string, sdEntity> entities = scene.getEntities();
     
@@ -239,10 +239,10 @@ std::string sdSaver<EFormat::SD_XML>::toString(const sdScene &scene){
     
 }
 
-std::string sdSaver<EFormat::SD_JSON>::toString(const sdScene &sdScene){
+std::string sdJSONSaver::toString(const sdScene &sdScene){
     return "";
 }
 
-std::string sdSaver<EFormat::SD_YAML>::toString(const sdScene &sdScene){
+std::string sdYAMLSaver::toString(const sdScene &sdScene){
     return "";
 }

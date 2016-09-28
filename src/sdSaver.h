@@ -21,11 +21,8 @@
 #include "tinyxml2.h"
 
 
-template <EFormat F>
-class sdSaver{};
 
-template<>
-class sdSaver<EFormat::SD_XML>{
+class sdXMLSaver{
     
 public:
     static std::string toString(const sdScene &scene);
@@ -41,15 +38,14 @@ protected:
     static tinyxml2::XMLElement* XMLTrajectorySection(tinyxml2::XMLDocument &xml, const sdScene &scene);
 };
 
-template<>
-class sdSaver<EFormat::SD_JSON>{
+class sdJSONSaver{
 public:
     static std::string toString(const sdScene &scene);
     
 };
 
-template<>
-class sdSaver<EFormat::SD_YAML>{
+class sdYAMLSaver{
 public:
     static std::string toString(const sdScene &scene);
 };
+

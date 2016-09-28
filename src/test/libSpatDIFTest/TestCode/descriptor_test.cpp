@@ -385,6 +385,6 @@ TEST_CASE("Dataset"){
     scene.setData("mymedia", SD_MEDIA_CHANNEL, "3");
     
     REQUIRE(scene.getDataSet<EExtension::SD_MEDIA>("mymedia").getValue<SD_MEDIA_CHANNEL>() == 3);
-    std::cout << sdSaver<EFormat::SD_XML>::toString(scene);
+    std::cout << sdXMLSaver::toString(scene);
 }
 
