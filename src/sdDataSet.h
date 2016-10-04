@@ -121,6 +121,21 @@ public:
 };
 
 template <>
+class sdDataSet<EExtension::SD_GROUP>: public sdProtoDataSet{
+public:
+    sdDataSet<EExtension::SD_MEDIA>(sdDescriptor<SD_GROUP_ID>::type identifier,
+                                    sdDescriptor<SD_GROUP_PRESENT>::type present = true,
+                                    sdDescriptor<SD_GROUP_POSITION>::type position = {0,0,0},
+                                    sdDescriptor<SD_GROUP_ORIENTATION>::type orientation = {0,0,0}){
+        
+        dataSetHolders.emplace(SD_GROUP_ID, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_GROUP_ID>::type>(identifier)));
+        dataSetHolders.emplace(SD_GROUP_PRESENT, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_GROUP_PRESENT>::type>(present)));
+        dataSetHolders.emplace(SD_GROUP_POSITION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_GROUP_POSITION>::type>(position)));
+        dataSetHolders.emplace(SD_GROUP_ORIENTATION, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_GROUP_ORIENTATION>::type>(orientation)));
+    }
+};
+
+template <>
 class sdDataSet<EExtension::SD_POINTSET>: public sdProtoDataSet{
 public:
     sdDataSet<EExtension::SD_POINTSET>(sdDescriptor<SD_POINTSET_ID>::type identifier,
