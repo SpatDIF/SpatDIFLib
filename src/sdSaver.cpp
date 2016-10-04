@@ -42,6 +42,25 @@ XMLElement* sdXMLSaver::XMLMetaSection(XMLDocument &xml, const sdScene &scene){
 
     XMLElement* metaSection = xml.NewElement("meta");
 
+    // add extensions to meta
+    size_t num = scene.getNumberOfActivatedExtensions();
+    if(num > 0){
+        XMLElement* extensions = xml.NewElement("extensions");
+        std::string extString;
+        auto extensionNames = scene.getActivatedExtensionsAsStrings();
+        std::for_each(extensionNames.begin(), extensionNames.end(),[&extString](std::string ext){
+            EExtension extension = sdSpec::stringToExtension(ext);
+            if(!sdSpec::isCoreSpec(extension)){
+                extString = ext;
+                extString += " ";
+            }
+        });
+        extString.erase(extString.size()-1, extString.size()-1);
+        XMLText* extensionsText = xml.NewText(extString.c_str());
+        extensions->InsertEndChild(extensionsText);
+        metaSection->InsertEndChild(extensions);
+    }
+    
     // add info section to meta
     std::vector<EExtension> extensions = sdSpec::getDataSetEnabledExtensions();
     for(auto &extension : extensions){
@@ -67,24 +86,7 @@ XMLElement* sdXMLSaver::XMLMetaSection(XMLDocument &xml, const sdScene &scene){
         }
     }
     
-    // add extensions to meta
-    size_t num = scene.getNumberOfActivatedExtensions();
-    if(num > 0){
-        XMLElement* extensions = xml.NewElement("extensions");
-        std::string extString;
-        auto extensionNames = scene.getActivatedExtensionsAsStrings();
-        std::for_each(extensionNames.begin(), extensionNames.end(),[&extString](std::string ext){
-            EExtension extension = sdSpec::stringToExtension(ext);
-            if(!sdSpec::isCoreSpec(extension)){
-                extString = ext;
-                extString += " ";
-            }
-        });
-        extString.erase(extString.size()-1, extString.size()-1);
-        XMLText* extensionsText = xml.NewText(extString.c_str());
-        extensions->InsertEndChild(extensionsText);
-        metaSection->InsertEndChild(extensions);
-    }
+
     
     // add other meta infomation such as constant position or sound file definition
     auto allMetas = scene.getAllMetas();
