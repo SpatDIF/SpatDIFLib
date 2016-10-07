@@ -579,28 +579,8 @@ struct sdDescriptor<EDescriptor::SD_POINTSET_ID>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_POINTSET_UNIT>{
-    typedef std::string type;
-    const static bool interpolable = false;
-    
-    static type stringTo(const std::string &str){return str;}
-    static std::string toString(const type &value){return value;}
-    static void validateValue(type &value){}
-};
-
-template <>
 struct sdDescriptor<EDescriptor::SD_POINTSET_CLOSED>{
     typedef bool type;
-    const static bool interpolable = false;
-    
-    static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
-    static std::string toString(const type &value){return sdUtils::toString(value);}
-    static void validateValue(type &value){}
-};
-
-template <>
-struct sdDescriptor<EDescriptor::SD_POINTSET_SIZE>{
-    typedef int type;
     const static bool interpolable = false;
     
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
@@ -622,11 +602,14 @@ struct sdDescriptor<EDescriptor::SD_POINTSET_POINT>{
 
 template <>
 struct sdDescriptor<EDescriptor::SD_POINTSET_HANDLE>{
-    static constexpr int NElements = 3;
-    typedef std::array<double, NElements> type;
+    typedef std::vector<std::vector<double>> type;
     const static bool interpolable = false;
     
-    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, NElements>(str);}
+    static type stringTo(const std::string &str){
+        std::vector<double> sdUtils::stringToVector<double>(str);
+        
+        
+    }
     static std::string toString(const type &value){return sdUtils::toString(value);}
     static void validateValue(type &value){}
 };

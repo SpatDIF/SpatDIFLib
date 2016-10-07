@@ -117,9 +117,7 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
     // 5.2.1 Pointset
     sdExtensionSpec((EExtension::SD_POINTSET), "pointset",{
         defineDescriptor<SD_POINTSET_ID>("id"),
-        defineDescriptor<SD_POINTSET_UNIT>("unit"),
         defineDescriptor<SD_POINTSET_CLOSED>("closed"),
-        defineDescriptor<SD_POINTSET_SIZE>("size"),
         defineDescriptor<SD_POINTSET_POINT>("point"),
         defineDescriptor<SD_POINTSET_HANDLE>("handle")
     }, SD_POINTSET_ID),

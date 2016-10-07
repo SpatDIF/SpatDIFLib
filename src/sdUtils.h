@@ -133,6 +133,18 @@ public:
         std::copy_n(std::make_move_iterator(strVect.begin()), S, array.begin());
         return std::move(array);
     }
+    
+    template <typename T>
+    static std::vector<T> stringToVector(const std::string &str){
+        std::istringstream iss(str);
+        std::vector<T> strVect;
+        do{
+            std::string string;
+            iss >> string;
+            strVect.push_back(std::stod(string));
+        }while(iss);
+        return strVect;
+    }
 };
 
 template <typename T>

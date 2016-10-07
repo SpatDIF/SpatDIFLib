@@ -146,8 +146,6 @@ TEST_CASE("Test exceptions", "[sdEvent]"){
     } catch (const InvalidTimeException &exception) {
         std::cerr << exception.what() << std::endl;
     }
-    
-    
 }
 
 
