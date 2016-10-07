@@ -60,6 +60,16 @@ inline sdSpec::sdDescriptorSpec defineDescriptor(const std::string &string){
     return sdSpec:: sdDescriptorSpec(D, string, getAddDataFunc<D>(), getAddMetaFunc<D>(), getAddEventFunc<D>(), getGetDataAsStringFunc<D>());
 }
 
+template<>
+inline sdSpec::sdDescriptorSpec defineDescriptor<SD_POINTSET_POINT>(const std::string &string){
+    return sdSpec:: sdDescriptorSpec(SD_POINTSET_POINT, string, getAddDataFunc<SD_POINTSET_POINT>(), getAddMetaFunc<SD_POINTSET_POINT>(), getAddEventFunc<SD_POINTSET_POINT>(), getGetDataAsStringFunc<SD_POINTSET_POINT>());
+}
+
+template<>
+inline sdSpec::sdDescriptorSpec defineDescriptor<SD_POINTSET_HANDLE>(const std::string &string){
+    return sdSpec:: sdDescriptorSpec(SD_POINTSET_POINT, string, getAddDataFunc<SD_POINTSET_POINT>(), getAddMetaFunc<SD_POINTSET_POINT>(), getAddEventFunc<SD_POINTSET_POINT>(), getGetDataAsStringFunc<SD_POINTSET_POINT>());
+}
+
 template<EDescriptor D>
 inline std::function<std::shared_ptr<sdProtoEvent> (sdProtoEntity * , double , std::string )> getAddNoEventFunc(){
     return [](sdProtoEntity * entity, double time, std::string value)->std::shared_ptr<sdProtoEvent>{
@@ -126,7 +136,6 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
         defineDescriptor<SD_GEOMETRY_TRANSLATE>("translate"),
         defineDescriptor<SD_GEOMETRY_ROTATE>("rotate"),
         defineDescriptor<SD_GEOMETRY_SCALE>("scale"),
-        defineDescriptor<SD_POINTSET_SIZE>("size"),
         defineDescriptor<SD_GEOMETRY_SHEAR>("shear"),
         defineDescriptor<SD_GEOMETRY_REFLECT>("reflect")
     }),

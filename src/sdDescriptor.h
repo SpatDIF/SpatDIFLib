@@ -128,9 +128,7 @@ typedef enum {
     
     /// 5.2.1 pointset
     SD_POINTSET_ID,
-    SD_POINTSET_UNIT,
     SD_POINTSET_CLOSED,
-    SD_POINTSET_SIZE,
     SD_POINTSET_POINT,
     SD_POINTSET_HANDLE,
     
@@ -602,14 +600,11 @@ struct sdDescriptor<EDescriptor::SD_POINTSET_POINT>{
 
 template <>
 struct sdDescriptor<EDescriptor::SD_POINTSET_HANDLE>{
-    typedef std::vector<std::vector<double>> type;
+    static constexpr int NElements = 3;
+    typedef std::array<double, NElements> type;
     const static bool interpolable = false;
     
-    static type stringTo(const std::string &str){
-        std::vector<double> sdUtils::stringToVector<double>(str);
-        
-        
-    }
+    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, NElements>(str);}
     static std::string toString(const type &value){return sdUtils::toString(value);}
     static void validateValue(type &value){}
 };

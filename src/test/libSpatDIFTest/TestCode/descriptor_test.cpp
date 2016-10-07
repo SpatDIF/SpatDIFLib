@@ -368,7 +368,7 @@ TEST_CASE("Dataset"){
                                                                                  "yourmedia", sdDescriptor<SD_MEDIA_TYPE>::SD_FILE,
                                                                                  "example.wav", 4, 0, 0.5);
 
-    sdDataSet<EExtension::SD_POINTSET> pointset = sdDataSet<EExtension::SD_POINTSET>("face", false, 3, std::array<double,3>{2,3,4});
+    sdDataSet<EExtension::SD_POINTSET> pointset = sdDataSet<EExtension::SD_POINTSET>("face", false, std::array<double,3>{2,3,4});
     scene.addDataSet(EExtension::SD_MEDIA, mediadata1);
     scene.addDataSet(EExtension::SD_MEDIA, mediadata2);
     scene.addDataSet(EExtension::SD_POINTSET, pointset);

@@ -140,11 +140,9 @@ class sdDataSet<EExtension::SD_POINTSET>: public sdProtoDataSet{
 public:
     sdDataSet<EExtension::SD_POINTSET>(sdDescriptor<SD_POINTSET_ID>::type identifier,
                                        sdDescriptor<SD_POINTSET_CLOSED>::type present = true,
-                                       sdDescriptor<SD_POINTSET_SIZE>::type size =  1,
                                        sdDescriptor<SD_POINTSET_POINT>::type position = std::array<double, 3>{0,0,0}){
         dataSetHolders.emplace(SD_POINTSET_ID, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_POINTSET_ID>::type>(identifier)));
         dataSetHolders.emplace(SD_POINTSET_CLOSED, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_POINTSET_CLOSED>::type>(present)));
-        dataSetHolders.emplace(SD_POINTSET_SIZE, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_POINTSET_SIZE>::type>(size)));
         dataSetHolders.emplace(SD_POINTSET_POINT, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_POINTSET_POINT>::type>(position)));
     }
 };

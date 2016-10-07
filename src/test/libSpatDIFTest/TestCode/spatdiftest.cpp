@@ -606,9 +606,7 @@ TEST_CASE("Test Extension enum to string conversion", "[sdConst]"){
     REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_MEDIA, "time-offset") == SD_MEDIA_TIME_OFFSET);
     
     REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_POINTSET, "id") == SD_POINTSET_ID);
-    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_POINTSET, "unit") == SD_POINTSET_UNIT);
     REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_POINTSET, "closed") == SD_POINTSET_CLOSED);
-    REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_POINTSET, "size") == SD_POINTSET_SIZE);
     REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_POINTSET, "point") == SD_POINTSET_POINT);
     REQUIRE(sdSpec::stringToDescriptor(EExtension::SD_POINTSET, "handle") == SD_POINTSET_HANDLE);
 
