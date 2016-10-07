@@ -139,11 +139,18 @@ template <>
 class sdDataSet<EExtension::SD_POINTSET>: public sdProtoDataSet{
 public:
     sdDataSet<EExtension::SD_POINTSET>(sdDescriptor<SD_POINTSET_ID>::type identifier,
-                                       sdDescriptor<SD_POINTSET_CLOSED>::type present = true,
-                                       sdDescriptor<SD_POINTSET_POINT>::type position = std::array<double, 3>{0,0,0}){
+                                       sdDescriptor<SD_POINTSET_CLOSED>::type closed = true,
+                                       sdDescriptor<SD_POINTSET_POINT_OR_HANDLE>::type pointOrHandle = {{SD_POINTSET_POINT, std::array<double,3>{0,0,0}}}){
         dataSetHolders.emplace(SD_POINTSET_ID, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_POINTSET_ID>::type>(identifier)));
-        dataSetHolders.emplace(SD_POINTSET_CLOSED, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_POINTSET_CLOSED>::type>(present)));
-        dataSetHolders.emplace(SD_POINTSET_POINT, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_POINTSET_POINT>::type>(position)));
+        dataSetHolders.emplace(SD_POINTSET_CLOSED, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_POINTSET_CLOSED>::type>(closed)));
+        dataSetHolders.emplace(SD_POINTSET_POINT_OR_HANDLE, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_POINTSET_POINT_OR_HANDLE>::type>(pointOrHandle)));
+    }
+    
+    void addPoint(const std::array<double, 3> &point){
+        getValue<SD_POINTSET_POINT_OR_HANDLE>().push_back(std::make_pair(SD_POINTSET_POINT, point));
+    }
+    void addHandle(const std::array<double, 3> &handle){
+        getValue<SD_POINTSET_POINT_OR_HANDLE>().push_back(std::make_pair(SD_POINTSET_HANDLE, handle));
     }
 };
 

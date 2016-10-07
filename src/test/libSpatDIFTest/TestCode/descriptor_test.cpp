@@ -134,7 +134,20 @@ TEST_CASE("interpolation"){
 
 TEST_CASE("pointset"){
     sdScene scene;
-    sdEntity * entity = scene.addEntity("pointset");
+    scene.addExtension(EExtension::SD_POINTSET);
+    sdDataSet<EExtension::SD_POINTSET> pointset("mypointset");
+    pointset.addPoint({0,0,0});
+    pointset.addHandle({1,1,1});
+    pointset.addHandle({2,2,2});
+    pointset.addPoint({3,3,3});
+    pointset.addHandle({4,4,4});
+    pointset.addHandle({5,5,5});
+    pointset.addPoint({6,6,6});
+
+    scene.addDataSet(EExtension::SD_POINTSET, pointset);
+    auto ps = scene.getDataSet<EExtension::SD_POINTSET>("mypointset");
+    auto vector = ps.getValue<SD_POINTSET_POINT_OR_HANDLE>();
+    
 }
 
 TEST_CASE("geometry"){
@@ -363,12 +376,12 @@ TEST_CASE("Dataset"){
     scene.addExtension(EExtension::SD_POINTSET);
     
     sdDataSet<EExtension::SD_MEDIA> mediadata1 = sdDataSet<EExtension::SD_MEDIA>(
-                                                                                "mymedia",sdDescriptor<SD_MEDIA_TYPE>::SD_FILE,"/tmp/test.wav", 1, 0, 1.0 );
+                                                                            "mymedia",sdDescriptor<SD_MEDIA_TYPE>::SD_FILE,"/tmp/test.wav", 1, 0, 1.0 );
     sdDataSet<EExtension::SD_MEDIA> mediadata2 = sdDataSet<EExtension::SD_MEDIA>(
                                                                                  "yourmedia", sdDescriptor<SD_MEDIA_TYPE>::SD_FILE,
                                                                                  "example.wav", 4, 0, 0.5);
 
-    sdDataSet<EExtension::SD_POINTSET> pointset = sdDataSet<EExtension::SD_POINTSET>("face", false, std::array<double,3>{2,3,4});
+    sdDataSet<EExtension::SD_POINTSET> pointset("face", false, {{SD_POINTSET_POINT, {0,1,2}}});
     scene.addDataSet(EExtension::SD_MEDIA, mediadata1);
     scene.addDataSet(EExtension::SD_MEDIA, mediadata2);
     scene.addDataSet(EExtension::SD_POINTSET, pointset);
@@ -381,10 +394,8 @@ TEST_CASE("Dataset"){
     REQUIRE(dataset1.getValue<SD_MEDIA_GAIN>() == 1.0);
     REQUIRE(dataset1.getValue<SD_MEDIA_TIME_OFFSET>() == 0);
     
-    
     scene.setData("mymedia", SD_MEDIA_CHANNEL, "3");
-    
     REQUIRE(scene.getDataSet<EExtension::SD_MEDIA>("mymedia").getValue<SD_MEDIA_CHANNEL>() == 3);
-    std::cout << sdXMLSaver::toString(scene);
+    
 }
 

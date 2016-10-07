@@ -60,15 +60,20 @@ inline sdSpec::sdDescriptorSpec defineDescriptor(const std::string &string){
     return sdSpec:: sdDescriptorSpec(D, string, getAddDataFunc<D>(), getAddMetaFunc<D>(), getAddEventFunc<D>(), getGetDataAsStringFunc<D>());
 }
 
+#pragma mark special case
+
+// these two descriptors will be stored in one vector 
 template<>
 inline sdSpec::sdDescriptorSpec defineDescriptor<SD_POINTSET_POINT>(const std::string &string){
-    return sdSpec:: sdDescriptorSpec(SD_POINTSET_POINT, string, getAddDataFunc<SD_POINTSET_POINT>(), getAddMetaFunc<SD_POINTSET_POINT>(), getAddEventFunc<SD_POINTSET_POINT>(), getGetDataAsStringFunc<SD_POINTSET_POINT>());
+    return sdSpec:: sdDescriptorSpec(SD_POINTSET_POINT, string, getAddDataFunc<SD_POINTSET_POINT_OR_HANDLE>(), getAddMetaFunc<SD_POINTSET_POINT_OR_HANDLE>(), getAddEventFunc<SD_POINTSET_POINT_OR_HANDLE>(), getGetDataAsStringFunc<SD_POINTSET_POINT_OR_HANDLE>());
 }
 
 template<>
 inline sdSpec::sdDescriptorSpec defineDescriptor<SD_POINTSET_HANDLE>(const std::string &string){
-    return sdSpec:: sdDescriptorSpec(SD_POINTSET_POINT, string, getAddDataFunc<SD_POINTSET_POINT>(), getAddMetaFunc<SD_POINTSET_POINT>(), getAddEventFunc<SD_POINTSET_POINT>(), getGetDataAsStringFunc<SD_POINTSET_POINT>());
+    return sdSpec:: sdDescriptorSpec(SD_POINTSET_HANDLE, string, getAddDataFunc<SD_POINTSET_POINT_OR_HANDLE>(), getAddMetaFunc<SD_POINTSET_POINT_OR_HANDLE>(), getAddEventFunc<SD_POINTSET_POINT_OR_HANDLE>(), getGetDataAsStringFunc<SD_POINTSET_POINT_OR_HANDLE>());
 }
+
+
 
 template<EDescriptor D>
 inline std::function<std::shared_ptr<sdProtoEvent> (sdProtoEntity * , double , std::string )> getAddNoEventFunc(){
@@ -83,6 +88,7 @@ inline sdSpec::sdDescriptorSpec defineDescriptorNoEvent(const std::string &strin
     return sdSpec::sdDescriptorSpec(D, string, getAddDataFunc<D>(), getAddMetaFunc<D>(), getAddNoEventFunc<D>(), getGetDataAsStringFunc<D>());
 }
 
+//! the descriptors which can be used without activation of extensions
 const std::unordered_set<EExtension> sdSpec::coreSpec= {
     EExtension::SD_INFO,
     EExtension::SD_CORE,
@@ -90,6 +96,7 @@ const std::unordered_set<EExtension> sdSpec::coreSpec= {
     EExtension::SD_INTERPOLATION,
     EExtension::SD_MEDIA
 };
+
 
 const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
     sdExtensionSpec(EExtension::SD_INFO, "info", {

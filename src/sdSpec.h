@@ -47,7 +47,6 @@ public:
         EDescriptor descriptor;
         std::string descriptorString;
         
-        
         std::function< void(sdDataSetHandler*, std::string, std::string)> addDataFromStringFunc;
         std::function< std::shared_ptr<sdProtoMeta>(sdProtoEntity * entity, std::string)> addMetaFromStringFunc;
         std::function< std::shared_ptr<sdProtoEvent>(sdProtoEntity * entity, double, std::string)> addEventFromStringFunc;

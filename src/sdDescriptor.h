@@ -131,6 +131,7 @@ typedef enum {
     SD_POINTSET_CLOSED,
     SD_POINTSET_POINT,
     SD_POINTSET_HANDLE,
+    SD_POINTSET_POINT_OR_HANDLE, // because of OR
     
     /// 5.2.2 geometry
     SD_GEOMETRY_TRANSLATE,
@@ -586,29 +587,32 @@ struct sdDescriptor<EDescriptor::SD_POINTSET_CLOSED>{
     static void validateValue(type &value){}
 };
 
-template <>
-struct sdDescriptor<EDescriptor::SD_POINTSET_POINT>{
-    static constexpr int NElements = 3;
-    typedef std::array<double, NElements> type;
-    const static bool interpolable = false;
-    
-    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, NElements>(str);}
-    static std::string toString(const type &value){return sdUtils::toString(value);}
-    static void validateValue(type &value){}
-};
+/*
+    this struct contains variable length, vertice-data of point or handle.
+*/
 
 
 template <>
-struct sdDescriptor<EDescriptor::SD_POINTSET_HANDLE>{
+struct sdDescriptor<EDescriptor::SD_POINTSET_POINT_OR_HANDLE>{
     static constexpr int NElements = 3;
-    typedef std::array<double, NElements> type;
+    typedef std::vector<std::pair<EDescriptor,std::array<double, NElements>>> type;
     const static bool interpolable = false;
     
-    static type stringTo(const std::string &str){return sdUtils::stringToArray<double, NElements>(str);}
-    static std::string toString(const type &value){return sdUtils::toString(value);}
-    static void validateValue(type &value){}
+    static type stringTo(const std::string &str){
+        std::vector<std::pair<EDescriptor,std::array<double, NElements>>> returnVal;
+        return returnVal;
+    }
+    static std::string toString(const type &value){
+        return "";
+    }
+    static void validateValue(type &value){
+        for(auto item : value){
+            if (item.first != SD_POINTSET_POINT && item.first != SD_POINTSET_HANDLE ){
+                throw InvalidValueDomainException("descriptor should be point or handle");
+            }
+        }
+    }
 };
-
 
 /// 5.2.2 Geometry
 template <>
