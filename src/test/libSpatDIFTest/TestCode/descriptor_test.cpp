@@ -147,6 +147,7 @@ TEST_CASE("pointset"){
     scene.addDataSet(EExtension::SD_POINTSET, pointset);
     auto ps = scene.getDataSet<EExtension::SD_POINTSET>("mypointset");
     auto vector = ps.getValue<SD_POINTSET_POINT_OR_HANDLE>();
+    std::cout << sdXMLSaver::toString(scene);
     
 }
 

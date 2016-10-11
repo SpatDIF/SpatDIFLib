@@ -136,7 +136,8 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
         defineDescriptor<SD_POINTSET_ID>("id"),
         defineDescriptor<SD_POINTSET_CLOSED>("closed"),
         defineDescriptor<SD_POINTSET_POINT>("point"),
-        defineDescriptor<SD_POINTSET_HANDLE>("handle")
+        defineDescriptor<SD_POINTSET_HANDLE>("handle"),
+        defineDescriptor<SD_POINTSET_POINT_OR_HANDLE>("point-or-handle") // internally used descriptor for storing mixed variable data
     }, SD_POINTSET_ID),
     // 5.2.2 Geometry
     sdExtensionSpec((EExtension::SD_GEOMETRY), "geometry",{

@@ -72,15 +72,29 @@ XMLElement* sdXMLSaver::XMLMetaSection(XMLDocument &xml, const sdScene &scene){
             XMLElement * extensionElement = xml.NewElement(sdSpec::extensionToString(extension).c_str());
             
             for(auto &key : keys){
-                std::string descriptorString = sdSpec::descriptorToString(key);
-                std::string value = protoDataSet->getValueAsString(key);
-                XMLElement * datasetElement = xml.NewElement(descriptorString.c_str());
-                if(!datasetElement) continue;
-                XMLText * text = xml.NewText(value.c_str());
-                if(!text) continue;
+                if(key == SD_POINTSET_POINT_OR_HANDLE){
+                    sdDataSet<EExtension::SD_POINTSET> *pointset = static_cast<sdDataSet<EExtension::SD_POINTSET> *>(protoDataSet.get());
+                    auto pointHandles = pointset->getValue<SD_POINTSET_POINT_OR_HANDLE>();
+                    for(auto pointHandle : pointHandles){
+                        EDescriptor descriptor = pointHandle.first;
+                        std::string descriptorString = sdSpec::descriptorToString(descriptor);
+                        std::array<double, 3> value = pointHandle.second;
+                        XMLElement * datasetElement = xml.NewElement(descriptorString.c_str());
+                        XMLText * text = xml.NewText(sdUtils::toString(value).c_str());
+                        datasetElement->InsertEndChild(text);
+                        extensionElement->InsertEndChild(datasetElement);
+                    }
+                }else{
+                    std::string descriptorString = sdSpec::descriptorToString(key);
+                    std::string value = protoDataSet->getValueAsString(key);
+                    XMLElement * datasetElement = xml.NewElement(descriptorString.c_str());
+                    if(!datasetElement) continue;
+                    XMLText * text = xml.NewText(value.c_str());
+                    if(!text) continue;
 
-                datasetElement->InsertEndChild(text);
-                extensionElement->InsertEndChild(datasetElement);
+                    datasetElement->InsertEndChild(text);
+                    extensionElement->InsertEndChild(datasetElement);
+                }
             }
             metaSection->InsertEndChild(extensionElement);
         }

@@ -140,7 +140,7 @@ class sdDataSet<EExtension::SD_POINTSET>: public sdProtoDataSet{
 public:
     sdDataSet<EExtension::SD_POINTSET>(sdDescriptor<SD_POINTSET_ID>::type identifier,
                                        sdDescriptor<SD_POINTSET_CLOSED>::type closed = true,
-                                       sdDescriptor<SD_POINTSET_POINT_OR_HANDLE>::type pointOrHandle = {{SD_POINTSET_POINT, std::array<double,3>{0,0,0}}}){
+                                       sdDescriptor<SD_POINTSET_POINT_OR_HANDLE>::type pointOrHandle = std::vector<std::pair<EDescriptor, std::array<double, 3>>>()){
         dataSetHolders.emplace(SD_POINTSET_ID, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_POINTSET_ID>::type>(identifier)));
         dataSetHolders.emplace(SD_POINTSET_CLOSED, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_POINTSET_CLOSED>::type>(closed)));
         dataSetHolders.emplace(SD_POINTSET_POINT_OR_HANDLE, std::shared_ptr<sdProtoHolder>(new sdHolder<sdDescriptor<SD_POINTSET_POINT_OR_HANDLE>::type>(pointOrHandle)));
