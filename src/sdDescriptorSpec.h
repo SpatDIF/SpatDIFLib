@@ -227,12 +227,12 @@ namespace std{
  */
 
 template <EDescriptor D>
-struct sdDescriptor {};
+struct sdDescriptorSpec {};
 
 /*** info ***/
 /// 3.3.1 info
 template <>
-struct sdDescriptor<EDescriptor::SD_INFO_AUTHOR>{
+struct sdDescriptorSpec<EDescriptor::SD_INFO_AUTHOR>{
     typedef std::string type;
     const static bool interpolable = false;
     static type stringTo(const std::string &str){return str;}
@@ -241,7 +241,7 @@ struct sdDescriptor<EDescriptor::SD_INFO_AUTHOR>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_INFO_ANNOTATION>{
+struct sdDescriptorSpec<EDescriptor::SD_INFO_ANNOTATION>{
     typedef std::string type;
     const static bool interpolable = false;
     static type stringTo(const std::string &str){return str;}
@@ -250,7 +250,7 @@ struct sdDescriptor<EDescriptor::SD_INFO_ANNOTATION>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_INFO_DATE>{
+struct sdDescriptorSpec<EDescriptor::SD_INFO_DATE>{
     typedef std::string type;
     const static bool interpolable = false;
     static type stringTo(const std::string &str){return str;}
@@ -259,7 +259,7 @@ struct sdDescriptor<EDescriptor::SD_INFO_DATE>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_INFO_DURATION>{
+struct sdDescriptorSpec<EDescriptor::SD_INFO_DURATION>{
     typedef double type;
     const static bool interpolable = false;
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
@@ -270,7 +270,7 @@ struct sdDescriptor<EDescriptor::SD_INFO_DURATION>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_INFO_HOST>{
+struct sdDescriptorSpec<EDescriptor::SD_INFO_HOST>{
     typedef std::string type;
     const static bool interpolable = false;
     static type stringTo(const std::string &str){return str;}
@@ -279,7 +279,7 @@ struct sdDescriptor<EDescriptor::SD_INFO_HOST>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_INFO_LOCATION>{
+struct sdDescriptorSpec<EDescriptor::SD_INFO_LOCATION>{
     typedef std::string type;
     const static bool interpolable = false;
     static type stringTo(const std::string &str){return str;}
@@ -288,7 +288,7 @@ struct sdDescriptor<EDescriptor::SD_INFO_LOCATION>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_INFO_TITLE>{
+struct sdDescriptorSpec<EDescriptor::SD_INFO_TITLE>{
     typedef std::string type;
     const static bool interpolable = false;
     static type stringTo(const std::string &str){return str;}
@@ -297,7 +297,7 @@ struct sdDescriptor<EDescriptor::SD_INFO_TITLE>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_INFO_SESSION>{
+struct sdDescriptorSpec<EDescriptor::SD_INFO_SESSION>{
     typedef std::string type;
     const static bool interpolable = false;
     static type stringTo(const std::string &str){return str;}
@@ -308,7 +308,7 @@ struct sdDescriptor<EDescriptor::SD_INFO_SESSION>{
 /*** core ***/
 /// 4.3 core
 template <>
-struct sdDescriptor<EDescriptor::SD_TYPE>{
+struct sdDescriptorSpec<EDescriptor::SD_TYPE>{
     enum EType{
         SD_POINT,
         SD_LOUDSPEAKER,
@@ -335,7 +335,7 @@ struct sdDescriptor<EDescriptor::SD_TYPE>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_PRESENT>{
+struct sdDescriptorSpec<EDescriptor::SD_PRESENT>{
     typedef bool type;
     const static bool interpolable = false;
     
@@ -345,7 +345,7 @@ struct sdDescriptor<EDescriptor::SD_PRESENT>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_POSITION>{
+struct sdDescriptorSpec<EDescriptor::SD_POSITION>{
     static constexpr int NElements = 3;
     typedef std::array<double, NElements> type;
     const static bool interpolable = true;
@@ -356,7 +356,7 @@ struct sdDescriptor<EDescriptor::SD_POSITION>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_ORIENTATION>{
+struct sdDescriptorSpec<EDescriptor::SD_ORIENTATION>{
     static constexpr int NElements = 3;
     typedef std::array<double, NElements> type;
     const static bool interpolable = true;
@@ -367,7 +367,7 @@ struct sdDescriptor<EDescriptor::SD_ORIENTATION>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_GROUP_MEMBERSHIP>{
+struct sdDescriptorSpec<EDescriptor::SD_GROUP_MEMBERSHIP>{
     typedef std::string type;
     const static bool interpolable = false;
     
@@ -380,7 +380,7 @@ struct sdDescriptor<EDescriptor::SD_GROUP_MEMBERSHIP>{
 /// 4.4.1 media
 
 template <>
-struct sdDescriptor<EDescriptor::SD_MEDIA_ID>{
+struct sdDescriptorSpec<EDescriptor::SD_MEDIA_ID>{
     typedef std::string type;
     const static bool interpolable = false;
 
@@ -390,7 +390,7 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_ID>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_MEDIA_TYPE>{
+struct sdDescriptorSpec<EDescriptor::SD_MEDIA_TYPE>{
     
     typedef enum {
         SD_STREAM,
@@ -418,7 +418,7 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_TYPE>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_MEDIA_LOCATION>{
+struct sdDescriptorSpec<EDescriptor::SD_MEDIA_LOCATION>{
     typedef std::string type;
     const static bool interpolable = false;
     
@@ -428,7 +428,7 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_LOCATION>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_MEDIA_CHANNEL>{
+struct sdDescriptorSpec<EDescriptor::SD_MEDIA_CHANNEL>{
     typedef int type;
     const static bool interpolable = false;
     
@@ -440,7 +440,7 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_CHANNEL>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_MEDIA_TIME_OFFSET>{
+struct sdDescriptorSpec<EDescriptor::SD_MEDIA_TIME_OFFSET>{
     typedef double type;
     const static bool interpolable = false;
     
@@ -452,7 +452,7 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_TIME_OFFSET>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_MEDIA_GAIN>{
+struct sdDescriptorSpec<EDescriptor::SD_MEDIA_GAIN>{
     typedef double type;
     const static bool interpolable = true;
     
@@ -466,7 +466,7 @@ struct sdDescriptor<EDescriptor::SD_MEDIA_GAIN>{
 
 /// 4.4.2 loop
 template <>
-struct sdDescriptor<EDescriptor::SD_LOOP_TYPE>{
+struct sdDescriptorSpec<EDescriptor::SD_LOOP_TYPE>{
 
     typedef enum{
         SD_NONE,
@@ -505,7 +505,7 @@ struct sdDescriptor<EDescriptor::SD_LOOP_TYPE>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_LOOP_POINTS>{
+struct sdDescriptorSpec<EDescriptor::SD_LOOP_POINTS>{
     static constexpr int NElements = 2;
     typedef std::array<double, NElements> type;
     const static bool interpolable = false;
@@ -518,7 +518,7 @@ struct sdDescriptor<EDescriptor::SD_LOOP_POINTS>{
     }};
 
 template <>
-struct sdDescriptor<EDescriptor::SD_LOOP_WAIT_TIME>{
+struct sdDescriptorSpec<EDescriptor::SD_LOOP_WAIT_TIME>{
     typedef double type;
     const static bool interpolable = true;
     
@@ -531,7 +531,7 @@ struct sdDescriptor<EDescriptor::SD_LOOP_WAIT_TIME>{
 
 /// 4.4.3 interpolation
 template <>
-struct sdDescriptor<EDescriptor::SD_INTERPOLATION_TYPE>{
+struct sdDescriptorSpec<EDescriptor::SD_INTERPOLATION_TYPE>{
     
     typedef enum {
         SD_NONE,
@@ -568,7 +568,7 @@ struct sdDescriptor<EDescriptor::SD_INTERPOLATION_TYPE>{
 /// 5.2.1 Pointset
 
 template <>
-struct sdDescriptor<EDescriptor::SD_POINTSET_ID>{
+struct sdDescriptorSpec<EDescriptor::SD_POINTSET_ID>{
     typedef std::string type;
     const static bool interpolable = false;
     
@@ -578,7 +578,7 @@ struct sdDescriptor<EDescriptor::SD_POINTSET_ID>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_POINTSET_CLOSED>{
+struct sdDescriptorSpec<EDescriptor::SD_POINTSET_CLOSED>{
     typedef bool type;
     const static bool interpolable = false;
     
@@ -593,7 +593,7 @@ struct sdDescriptor<EDescriptor::SD_POINTSET_CLOSED>{
 
 
 template <>
-struct sdDescriptor<EDescriptor::SD_POINTSET_POINT_OR_HANDLE>{
+struct sdDescriptorSpec<EDescriptor::SD_POINTSET_POINT_OR_HANDLE>{
     static constexpr int NElements = 3;
     typedef std::vector<std::pair<EDescriptor,std::array<double, NElements>>> type;
     const static bool interpolable = false;
@@ -616,7 +616,7 @@ struct sdDescriptor<EDescriptor::SD_POINTSET_POINT_OR_HANDLE>{
 
 /// 5.2.2 Geometry
 template <>
-struct sdDescriptor<EDescriptor::SD_GEOMETRY_TRANSLATE>{
+struct sdDescriptorSpec<EDescriptor::SD_GEOMETRY_TRANSLATE>{
     static constexpr int NElements = 3;
     typedef std::array<double, NElements> type;
     const static bool interpolable = true;
@@ -627,7 +627,7 @@ struct sdDescriptor<EDescriptor::SD_GEOMETRY_TRANSLATE>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_GEOMETRY_SCALE>{
+struct sdDescriptorSpec<EDescriptor::SD_GEOMETRY_SCALE>{
     static constexpr int NElements = 3;
     typedef std::array<double, NElements> type;
     const static bool interpolanle = true;
@@ -638,7 +638,7 @@ struct sdDescriptor<EDescriptor::SD_GEOMETRY_SCALE>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_GEOMETRY_ROTATE>{
+struct sdDescriptorSpec<EDescriptor::SD_GEOMETRY_ROTATE>{
     static constexpr int NElements = 3;
     typedef std::array<double, NElements> type;
     const static bool interpolanle = true;
@@ -649,7 +649,7 @@ struct sdDescriptor<EDescriptor::SD_GEOMETRY_ROTATE>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_GEOMETRY_SHEAR>{
+struct sdDescriptorSpec<EDescriptor::SD_GEOMETRY_SHEAR>{
     static constexpr int NElements = 3;
     typedef std::array<double, NElements> type;
     const static bool interpolable = true;
@@ -660,7 +660,7 @@ struct sdDescriptor<EDescriptor::SD_GEOMETRY_SHEAR>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_GEOMETRY_REFLECT>{
+struct sdDescriptorSpec<EDescriptor::SD_GEOMETRY_REFLECT>{
     static constexpr int NElements = 3;
     typedef std::array<int, NElements> type;
     const static bool interpolable = true;
@@ -674,7 +674,7 @@ struct sdDescriptor<EDescriptor::SD_GEOMETRY_REFLECT>{
 /// 5.2.3 Automation
 
 template <>
-struct sdDescriptor<EDescriptor::SD_AUTOMATION_DURATION>{
+struct sdDescriptorSpec<EDescriptor::SD_AUTOMATION_DURATION>{
     typedef double type;
     const static bool interpolable = false;
     static type stringTo(const std::string &str){return sdUtils::stringTo<type>(str);}
@@ -685,7 +685,7 @@ struct sdDescriptor<EDescriptor::SD_AUTOMATION_DURATION>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_AUTOMATION_DELAY>{
+struct sdDescriptorSpec<EDescriptor::SD_AUTOMATION_DELAY>{
     typedef double type;
     const static bool interpolable = false;
     
@@ -697,7 +697,7 @@ struct sdDescriptor<EDescriptor::SD_AUTOMATION_DELAY>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_AUTOMATION_FUNCTION>{
+struct sdDescriptorSpec<EDescriptor::SD_AUTOMATION_FUNCTION>{
     
     typedef enum {
         SD_NONE,
@@ -739,17 +739,17 @@ struct sdDescriptor<EDescriptor::SD_AUTOMATION_FUNCTION>{
 
 
 //template <>
-//struct sdDescriptor<EDescriptor::SD_AUTOMATION_POINTSET>{
+//struct sdDescriptorSpec<EDescriptor::SD_AUTOMATION_POINTSET>{
 //};
 //
 //template <>
-//struct sdDescriptor<EDescriptor::SD_AUTOMATION_LOOP>{
+//struct sdDescriptorSpec<EDescriptor::SD_AUTOMATION_LOOP>{
 //};
 
 /// 5.2.4 Shape
 
 template <>
-struct sdDescriptor<EDescriptor::SD_SHAPE_ID>{
+struct sdDescriptorSpec<EDescriptor::SD_SHAPE_ID>{
     typedef std::string type;
     const static bool interpolable = false;
     
@@ -759,7 +759,7 @@ struct sdDescriptor<EDescriptor::SD_SHAPE_ID>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_SHAPE_DIRECTION>{
+struct sdDescriptorSpec<EDescriptor::SD_SHAPE_DIRECTION>{
     typedef bool type; // CCW, CW
     const static bool interpolable = false;
     
@@ -769,7 +769,7 @@ struct sdDescriptor<EDescriptor::SD_SHAPE_DIRECTION>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_SHAPE_CLOSED>{
+struct sdDescriptorSpec<EDescriptor::SD_SHAPE_CLOSED>{
     typedef bool type;
     const static bool interpolable = false;
     
@@ -779,7 +779,7 @@ struct sdDescriptor<EDescriptor::SD_SHAPE_CLOSED>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_SHAPE_TYPE>{
+struct sdDescriptorSpec<EDescriptor::SD_SHAPE_TYPE>{
     typedef enum{
         SD_POINT,
         SD_LINE,
@@ -816,7 +816,7 @@ struct sdDescriptor<EDescriptor::SD_SHAPE_TYPE>{
 
 // 5.3.1.1 Trajectory Generator
 template <>
-struct sdDescriptor<EDescriptor::SD_TRAJECTORY_POINTSET>{
+struct sdDescriptorSpec<EDescriptor::SD_TRAJECTORY_POINTSET>{
     typedef std::string type;
     const static bool interpolable = false;
     
@@ -826,7 +826,7 @@ struct sdDescriptor<EDescriptor::SD_TRAJECTORY_POINTSET>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_TRAJECTORY_INTERPOLATION>{
+struct sdDescriptorSpec<EDescriptor::SD_TRAJECTORY_INTERPOLATION>{
     typedef std::string type;
     const static bool interpolable = false;
     static type stringTo(const std::string &str){return str;}
@@ -835,17 +835,7 @@ struct sdDescriptor<EDescriptor::SD_TRAJECTORY_INTERPOLATION>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_TRAJECTORY_GEOMETRY>{
-    typedef std::string type;
-    const static bool interpolable = false;
-    
-    static type stringTo(const std::string &str){return str;}
-    static std::string toString(const type &value){return value;}
-    static void validateValue(type &value){}
-};
-
-template <>
-struct sdDescriptor<EDescriptor::SD_TRAJECTORY_SHAPE>{
+struct sdDescriptorSpec<EDescriptor::SD_TRAJECTORY_GEOMETRY>{
     typedef std::string type;
     const static bool interpolable = false;
     
@@ -855,7 +845,17 @@ struct sdDescriptor<EDescriptor::SD_TRAJECTORY_SHAPE>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_TRAJECTORY_AUTOMATION>{
+struct sdDescriptorSpec<EDescriptor::SD_TRAJECTORY_SHAPE>{
+    typedef std::string type;
+    const static bool interpolable = false;
+    
+    static type stringTo(const std::string &str){return str;}
+    static std::string toString(const type &value){return value;}
+    static void validateValue(type &value){}
+};
+
+template <>
+struct sdDescriptorSpec<EDescriptor::SD_TRAJECTORY_AUTOMATION>{
     typedef std::string type;
     const static bool interpolable = false;
     
@@ -866,7 +866,7 @@ struct sdDescriptor<EDescriptor::SD_TRAJECTORY_AUTOMATION>{
 
 // 5.3.1.2 Group
 template <>
-struct sdDescriptor<EDescriptor::SD_GROUP_ID>{
+struct sdDescriptorSpec<EDescriptor::SD_GROUP_ID>{
     typedef std::string type;
     const static bool interpolable = false;
     
@@ -876,7 +876,7 @@ struct sdDescriptor<EDescriptor::SD_GROUP_ID>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_GROUP_PRESENT>{
+struct sdDescriptorSpec<EDescriptor::SD_GROUP_PRESENT>{
     typedef bool type;
     const static bool interpolable = false;
     
@@ -886,7 +886,7 @@ struct sdDescriptor<EDescriptor::SD_GROUP_PRESENT>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_GROUP_POSITION>{
+struct sdDescriptorSpec<EDescriptor::SD_GROUP_POSITION>{
     static constexpr int NElements = 3;
     typedef std::array<double , NElements> type;
     const static bool interpolable = true;
@@ -897,7 +897,7 @@ struct sdDescriptor<EDescriptor::SD_GROUP_POSITION>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_GROUP_ORIENTATION>{
+struct sdDescriptorSpec<EDescriptor::SD_GROUP_ORIENTATION>{
     static constexpr int NElements = 3;
     typedef std::array<double, NElements > type;
     const static bool interpolable = true;
@@ -911,7 +911,7 @@ struct sdDescriptor<EDescriptor::SD_GROUP_ORIENTATION>{
 // 5.3.2.1 Source Spread
 
 template <>
-struct sdDescriptor<EDescriptor::SD_SOURCE_SPREAD_SPREAD>{
+struct sdDescriptorSpec<EDescriptor::SD_SOURCE_SPREAD_SPREAD>{
     typedef double type;
     const static bool interpolable = true;
 
@@ -927,7 +927,7 @@ struct sdDescriptor<EDescriptor::SD_SOURCE_SPREAD_SPREAD>{
 //5.3.3.1 Distance-cues
 
 template <>
-struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_REFERENCE_DISTANCE>{
+struct sdDescriptorSpec<EDescriptor::SD_DISTANCE_CUES_REFERENCE_DISTANCE>{
     typedef double type;
     const static bool interpolable = true;
     
@@ -940,7 +940,7 @@ struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_REFERENCE_DISTANCE>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_MAXIMUM_DISTANCE>{
+struct sdDescriptorSpec<EDescriptor::SD_DISTANCE_CUES_MAXIMUM_DISTANCE>{
     typedef double type;
     const static bool interpolable = true;
     
@@ -953,7 +953,7 @@ struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_MAXIMUM_DISTANCE>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_MAXIMUM_ATTENUATION>{
+struct sdDescriptorSpec<EDescriptor::SD_DISTANCE_CUES_MAXIMUM_ATTENUATION>{
     typedef double type;
     const static bool interpolable = true;
 
@@ -963,7 +963,7 @@ struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_MAXIMUM_ATTENUATION>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_ATTENUATION_MODEL>{
+struct sdDescriptorSpec<EDescriptor::SD_DISTANCE_CUES_ATTENUATION_MODEL>{
     typedef int type;
     const static bool interpolable = false;
     
@@ -976,7 +976,7 @@ struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_ATTENUATION_MODEL>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_ABSORPTION_MODEL>{
+struct sdDescriptorSpec<EDescriptor::SD_DISTANCE_CUES_ABSORPTION_MODEL>{
     typedef int type;
     const static bool interpolable = false;
     
@@ -994,7 +994,7 @@ struct sdDescriptor<EDescriptor::SD_DISTANCE_CUES_ABSORPTION_MODEL>{
 
 /// 5.3.4.2 Direct-to-One Sink
 template <>
-struct sdDescriptor<EDescriptor::SD_DIRECT_TO_ONE_DIRECT_TO_ONE>{
+struct sdDescriptorSpec<EDescriptor::SD_DIRECT_TO_ONE_DIRECT_TO_ONE>{
     typedef bool type;
     const static bool interpolable = false;
     
@@ -1005,7 +1005,7 @@ struct sdDescriptor<EDescriptor::SD_DIRECT_TO_ONE_DIRECT_TO_ONE>{
 
 /// 5.3.5.1 Hardware-out
 template <>
-struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_PHYSICAL_CHANNEL>{
+struct sdDescriptorSpec<EDescriptor::SD_HARDWARE_OUT_PHYSICAL_CHANNEL>{
     typedef int type;
     const static bool interpolable = false;
     
@@ -1019,7 +1019,7 @@ struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_PHYSICAL_CHANNEL>{
 };
 
 template <>
-struct sdDescriptor<EDescriptor::SD_HARDWARE_OUT_GAIN>{
+struct sdDescriptorSpec<EDescriptor::SD_HARDWARE_OUT_GAIN>{
     typedef double type;
     const static bool interpolable = true;
     

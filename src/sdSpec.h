@@ -17,7 +17,7 @@
 #pragma once
 #include <unordered_set>
 /*!
- This class is responsible for answering questions about specifications defined in sdDescriptor.h and .cpp from other classes.
+ This class is responsible for answering questions about specifications defined in sdDescriptorSpec.h and .cpp from other classes.
 
  */
 
@@ -30,8 +30,8 @@ class sdSpec {
 public:
     
     // a holder of descriptor in enum, string, utility func to make pair, meta, event
-    struct sdDescriptorSpec{
-        sdDescriptorSpec(EDescriptor descriptor,
+    struct sdDescriptorRelationships{
+        sdDescriptorRelationships(EDescriptor descriptor,
                 std::string descriptorString,
                 std::function< void(sdDataSetHandler*, std::string, std::string)> addDataFromStringFunc,
                 std::function< std::shared_ptr<sdProtoMeta>(sdEntity*, std::string)> addMetaFromStringFunc,
@@ -54,8 +54,8 @@ public:
 
     };
     
-    struct sdExtensionSpec{
-        sdExtensionSpec(EExtension extension, std::string extensionString, std::vector<sdDescriptorSpec> descriptorSpecs, EDescriptor idDescriptor = SD_ERROR):
+    struct sdExtensionRelationships{
+        sdExtensionRelationships(EExtension extension, std::string extensionString, std::vector<sdDescriptorRelationships> descriptorSpecs, EDescriptor idDescriptor = SD_ERROR):
         extension(extension),
         extensionString(extensionString),
         descriptorSpecs(descriptorSpecs),
@@ -63,12 +63,12 @@ public:
         
         EExtension extension;
         std::string extensionString;
-        std::vector<sdDescriptorSpec> descriptorSpecs;
+        std::vector<sdDescriptorRelationships> descriptorSpecs;
         EDescriptor idDescriptor;
     };
     
     
-    const static std::vector<sdExtensionSpec> spatDIFSpec;
+    const static std::vector<sdExtensionRelationships> spatDIFSpec;
     const static std::unordered_set<EExtension> coreSpec;
     
 #pragma mark extension
@@ -88,8 +88,8 @@ public:
     
     static EExtension getExtensionOfDescriptor(EDescriptor descriptor){
         EExtension extension = EExtension::SD_EXTENSION_ERROR;
-        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&descriptor](const sdExtensionSpec &eSpec){
-            auto itr = std::find_if(eSpec.descriptorSpecs.begin(), eSpec.descriptorSpecs.end(), [&descriptor](sdDescriptorSpec dSpec){
+        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&descriptor](const sdExtensionRelationships &eSpec){
+            auto itr = std::find_if(eSpec.descriptorSpecs.begin(), eSpec.descriptorSpecs.end(), [&descriptor](sdDescriptorRelationships dSpec){
                 return dSpec.descriptor == descriptor;
             });
             return itr != eSpec.descriptorSpecs.end();
@@ -103,7 +103,7 @@ public:
     }
     
     static EDescriptor getIDDescriptorOfExtension(EExtension extension){
-        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extension](const sdExtensionSpec &eSpec){
+        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extension](const sdExtensionRelationships &eSpec){
             return eSpec.extension == extension;
         });
         
@@ -118,29 +118,29 @@ public:
         return getIDDescriptorOfExtension(extension);
     }
     
-    static const std::vector<sdDescriptorSpec> &getDescriptorsOfExtension(EExtension extension){
-        auto itr = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extension](sdExtensionSpec eSpec){return eSpec.extension == extension;});
+    static const std::vector<sdDescriptorRelationships> &getDescriptorsOfExtension(EExtension extension){
+        auto itr = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extension](sdExtensionRelationships eSpec){return eSpec.extension == extension;});
         if(itr == spatDIFSpec.end()){throw InvalidDescriptorException("no matching string for EExtension"); }
         return (*itr).descriptorSpecs;
     }
     
 #pragma mark string conversion
     static std::string extensionToString(const EExtension &extension){
-        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extension](sdExtensionSpec eSpec){return eSpec.extension == extension;});
+        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extension](sdExtensionRelationships eSpec){return eSpec.extension == extension;});
         if (it == spatDIFSpec.end()) return std::string();
         return (*it).extensionString;
     }
     
     static EExtension stringToExtension(std::string string){
-        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(),[&string](sdExtensionSpec eSpec){return eSpec.extensionString == string;});
+        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(),[&string](sdExtensionRelationships eSpec){return eSpec.extensionString == string;});
         if(it != spatDIFSpec.end()) return (*it).extension;
         return EExtension::SD_EXTENSION_ERROR;
     }
 
     static std::string descriptorToString(const EDescriptor &descriptor) {
         std::string str;
-        std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&descriptor, &str](sdExtensionSpec eSpec){
-            auto itr = std::find_if(eSpec.descriptorSpecs.begin(), eSpec.descriptorSpecs.end(), [&descriptor, &str](sdDescriptorSpec dSpec){
+        std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&descriptor, &str](sdExtensionRelationships eSpec){
+            auto itr = std::find_if(eSpec.descriptorSpecs.begin(), eSpec.descriptorSpecs.end(), [&descriptor, &str](sdDescriptorRelationships dSpec){
                 if(dSpec.descriptor == descriptor){
                     str = dSpec.descriptorString;
                     return true;
@@ -152,16 +152,16 @@ public:
     }
     
     static EDescriptor stringToDescriptor(EExtension extensionString, std::string descriptorString){
-        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(),[&extensionString](sdExtensionSpec eSpec){return eSpec.extension == extensionString;});
+        auto it = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(),[&extensionString](sdExtensionRelationships eSpec){return eSpec.extension == extensionString;});
         auto dSpecs = (*it).descriptorSpecs;
-        auto iit = std::find_if(dSpecs.begin(), dSpecs.end(), [&descriptorString](sdDescriptorSpec dSpec){return dSpec.descriptorString == descriptorString;});
+        auto iit = std::find_if(dSpecs.begin(), dSpecs.end(), [&descriptorString](sdDescriptorRelationships dSpec){return dSpec.descriptorString == descriptorString;});
         if( iit == dSpecs.end()){throw InvalidDescriptorException(std::string("no matching descriptor for string:") + descriptorString );}
         return (*iit).descriptor;
     }
     
     static EDescriptor stringToDescriptor(std::string extensionString, std::string descriptorString){
         if(extensionString.empty()) extensionString = "core"; // assuming core
-        auto itr = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extensionString](sdExtensionSpec eSpec)->bool{return eSpec.extensionString == extensionString;});
+        auto itr = std::find_if(spatDIFSpec.begin(), spatDIFSpec.end(), [&extensionString](sdExtensionRelationships eSpec)->bool{return eSpec.extensionString == extensionString;});
         if(itr == spatDIFSpec.end()) {
             throw InvalidExtensionException(std::string("no matching EEXtension for string: ") + extensionString);
         }
@@ -197,10 +197,10 @@ public:
         return getDescriptorSpec(desctriptor).getDataAsStringFunc;
     }
     
-    static sdDescriptorSpec &getDescriptorSpec(EDescriptor descriptor){
+    static sdDescriptorRelationships &getDescriptorSpec(EDescriptor descriptor){
         auto ext = getExtensionOfDescriptor(descriptor);
         auto descriptors = getDescriptorsOfExtension(ext);
-        auto it = std::find_if(descriptors.begin(), descriptors.end(), [&descriptor](sdDescriptorSpec dSpec){ return dSpec.descriptor == descriptor;});
+        auto it = std::find_if(descriptors.begin(), descriptors.end(), [&descriptor](sdDescriptorRelationships dSpec){ return dSpec.descriptor == descriptor;});
         if(it == descriptors.end()){
             std::string msg = "invalid descriptor: ";
             msg += descriptorToString(descriptor);

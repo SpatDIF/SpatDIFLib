@@ -14,9 +14,9 @@ TEST_CASE("core"){
     /// 4.3 core
     
     // SD_TYPE
-    entity->addEvent<SD_TYPE>(0.0, sdDescriptor<SD_TYPE>::EType::SD_LISTENER);
+    entity->addEvent<SD_TYPE>(0.0, sdDescriptorSpec<SD_TYPE>::EType::SD_LISTENER);
     REQUIRE(entity->getValueAsString<SD_TYPE>(0.0) == "listener");
-    REQUIRE(*(entity->getValue<SD_TYPE>(0.0)) == sdDescriptor<SD_TYPE>::SD_LISTENER);
+    REQUIRE(*(entity->getValue<SD_TYPE>(0.0)) == sdDescriptorSpec<SD_TYPE>::SD_LISTENER);
 
     // SD_PRESENT
     entity->addEvent<SD_PRESENT>(0.0, false);
@@ -51,9 +51,9 @@ TEST_CASE("media"){
     REQUIRE( *entity->getValue<SD_MEDIA_ID>(0.0) == "mymedia");
     
     // SD_MEDIA_TYPE
-    entity->addEvent<SD_MEDIA_TYPE>(0.0, sdDescriptor<SD_MEDIA_TYPE>::SD_LIVE );
+    entity->addEvent<SD_MEDIA_TYPE>(0.0, sdDescriptorSpec<SD_MEDIA_TYPE>::SD_LIVE );
     REQUIRE( entity->getValueAsString<SD_MEDIA_TYPE>(0.0) == "live");
-    REQUIRE( *entity->getValue<SD_MEDIA_TYPE>(0.0) == sdDescriptor<SD_MEDIA_TYPE>::SD_LIVE);
+    REQUIRE( *entity->getValue<SD_MEDIA_TYPE>(0.0) == sdDescriptorSpec<SD_MEDIA_TYPE>::SD_LIVE);
     
     // SD_MEDIA_LOCATION
     entity->addEvent<SD_MEDIA_LOCATION>(0.0, "/path/to/my/file");
@@ -106,9 +106,9 @@ TEST_CASE("loop"){
     sdEntity * entity = scene.addEntity("looped");
     
     // SD_LOOP_TYPE
-    entity->addEvent<SD_LOOP_TYPE>(0.0, std::make_pair(sdDescriptor<SD_LOOP_TYPE>::SD_REPEAT, 3));
+    entity->addEvent<SD_LOOP_TYPE>(0.0, std::make_pair(sdDescriptorSpec<SD_LOOP_TYPE>::SD_REPEAT, 3));
     REQUIRE( entity->getValueAsString<SD_LOOP_TYPE>(0.0) == "repeat 3");
-    REQUIRE( entity->getValue<SD_LOOP_TYPE>(0.0)->first == sdDescriptor<SD_LOOP_TYPE>::SD_REPEAT);
+    REQUIRE( entity->getValue<SD_LOOP_TYPE>(0.0)->first == sdDescriptorSpec<SD_LOOP_TYPE>::SD_REPEAT);
     REQUIRE( entity->getValue<SD_LOOP_TYPE>(0.0)->second == 3);
     
     // SD_LOOP_POINTS
@@ -127,9 +127,9 @@ TEST_CASE("interpolation"){
     /// 4.4.3 interpolation
     sdScene scene;
     sdEntity * entity = scene.addEntity("interpolatedEntity");
-    entity->addEvent<SD_INTERPOLATION_TYPE>(0.0, sdDescriptor<SD_INTERPOLATION_TYPE>::SD_NONE);
+    entity->addEvent<SD_INTERPOLATION_TYPE>(0.0, sdDescriptorSpec<SD_INTERPOLATION_TYPE>::SD_NONE);
     REQUIRE( entity->getValueAsString<SD_INTERPOLATION_TYPE>(0.0) == "none");
-    REQUIRE( *entity->getValue<SD_INTERPOLATION_TYPE>(0.0) == sdDescriptor<SD_INTERPOLATION_TYPE>::SD_NONE);
+    REQUIRE( *entity->getValue<SD_INTERPOLATION_TYPE>(0.0) == sdDescriptorSpec<SD_INTERPOLATION_TYPE>::SD_NONE);
 }
 
 TEST_CASE("pointset"){
@@ -173,9 +173,9 @@ TEST_CASE("automation"){
     REQUIRE( entity->getValueAsString<SD_AUTOMATION_DELAY>(0.0) == "2");
     REQUIRE( *entity->getValue<SD_AUTOMATION_DELAY>(0.0) == 2);
     
-    entity->addEvent<SD_AUTOMATION_FUNCTION>(3.0, sdDescriptor<SD_AUTOMATION_FUNCTION>::SD_EASE_OUT);
+    entity->addEvent<SD_AUTOMATION_FUNCTION>(3.0, sdDescriptorSpec<SD_AUTOMATION_FUNCTION>::SD_EASE_OUT);
     REQUIRE( entity->getValueAsString<SD_AUTOMATION_FUNCTION>(3.0) == "ease-out");
-    REQUIRE( *entity->getValue<SD_AUTOMATION_FUNCTION>(3.0) == sdDescriptor<SD_AUTOMATION_FUNCTION>::SD_EASE_OUT);
+    REQUIRE( *entity->getValue<SD_AUTOMATION_FUNCTION>(3.0) == sdDescriptorSpec<SD_AUTOMATION_FUNCTION>::SD_EASE_OUT);
 
     //exception
     try{
@@ -209,9 +209,9 @@ TEST_CASE("shape"){
     REQUIRE(entity->getValueAsString<SD_SHAPE_CLOSED>(3.0) == "true" );
     REQUIRE(*entity->getValue<SD_SHAPE_CLOSED>(3.0) == true);
     
-    entity->addEvent<SD_SHAPE_TYPE>(3.0, sdDescriptor<SD_SHAPE_TYPE>::SD_CIRCLE);
+    entity->addEvent<SD_SHAPE_TYPE>(3.0, sdDescriptorSpec<SD_SHAPE_TYPE>::SD_CIRCLE);
     REQUIRE(entity->getValueAsString<SD_SHAPE_TYPE>(3.0) == "circle" );
-    REQUIRE(*entity->getValue<SD_SHAPE_TYPE>(3.0) == sdDescriptor<SD_SHAPE_TYPE>::SD_CIRCLE);
+    REQUIRE(*entity->getValue<SD_SHAPE_TYPE>(3.0) == sdDescriptorSpec<SD_SHAPE_TYPE>::SD_CIRCLE);
     
     // exception
     try{
@@ -377,9 +377,9 @@ TEST_CASE("Dataset"){
     scene.addExtension(EExtension::SD_POINTSET);
     
     sdDataSet<EExtension::SD_MEDIA> mediadata1 = sdDataSet<EExtension::SD_MEDIA>(
-                                                                            "mymedia",sdDescriptor<SD_MEDIA_TYPE>::SD_FILE,"/tmp/test.wav", 1, 0, 1.0 );
+                                                                            "mymedia",sdDescriptorSpec<SD_MEDIA_TYPE>::SD_FILE,"/tmp/test.wav", 1, 0, 1.0 );
     sdDataSet<EExtension::SD_MEDIA> mediadata2 = sdDataSet<EExtension::SD_MEDIA>(
-                                                                                 "yourmedia", sdDescriptor<SD_MEDIA_TYPE>::SD_FILE,
+                                                                                 "yourmedia", sdDescriptorSpec<SD_MEDIA_TYPE>::SD_FILE,
                                                                                  "example.wav", 4, 0, 0.5);
 
     sdDataSet<EExtension::SD_POINTSET> pointset("face", false, {{SD_POINTSET_POINT, {0,1,2}}});
@@ -388,7 +388,7 @@ TEST_CASE("Dataset"){
     scene.addDataSet(EExtension::SD_POINTSET, pointset);
     
     auto dataset1 = scene.getDataSet<EExtension::SD_MEDIA>("mymedia");
-    REQUIRE(dataset1.getValue<SD_MEDIA_TYPE>() == sdDescriptor<SD_MEDIA_TYPE>::SD_FILE);
+    REQUIRE(dataset1.getValue<SD_MEDIA_TYPE>() == sdDescriptorSpec<SD_MEDIA_TYPE>::SD_FILE);
     REQUIRE(dataset1.getValue<SD_MEDIA_ID>() == "mymedia");
     REQUIRE(dataset1.getValue<SD_MEDIA_LOCATION>() == "/tmp/test.wav");
     REQUIRE(dataset1.getValue<SD_MEDIA_CHANNEL>() == 1);

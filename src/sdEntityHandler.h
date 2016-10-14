@@ -42,10 +42,10 @@ public:
     void removeAllEntities(void);
 
     template<EDescriptor D>
-    const sdEvent<D> * const addEvent(std::string name, const double &time, const typename sdDescriptor<D>::type &values);
+    const sdEvent<D> * const addEvent(std::string name, const double &time, const typename sdDescriptorSpec<D>::type &values);
     
     template<EDescriptor D>
-    const typename sdDescriptor<D>::type * const getValue(std::string name, double time);
+    const typename sdDescriptorSpec<D>::type * const getValue(std::string name, double time);
     /*!
      @}
      */
@@ -94,14 +94,14 @@ inline size_t sdEntityHandler::getNumberOfEntities() const{
 
 
 template<EDescriptor D>
-inline const sdEvent<D> * const sdEntityHandler::addEvent(std::string name, const double &time, const typename sdDescriptor<D>::type &values){
+inline const sdEvent<D> * const sdEntityHandler::addEvent(std::string name, const double &time, const typename sdDescriptorSpec<D>::type &values){
     auto entity = getEntity(name);
     if(!entity) return nullptr;
     return entity->addEvent<D>(time, values);
 }
 
 template<EDescriptor D>
-inline const typename sdDescriptor<D>::type * const sdEntityHandler::getValue(std::string name, double time) {
+inline const typename sdDescriptorSpec<D>::type * const sdEntityHandler::getValue(std::string name, double time) {
     auto entity = getEntity(name);
     if(!entity) return nullptr;
     return entity->getValue<D>(time);

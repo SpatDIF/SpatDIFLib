@@ -20,7 +20,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <set>
-#include "sdDescriptor.h"
+#include "sdDescriptorSpec.h"
 #include "sdEntityHandler.h"
 #include "sdExtensionHandler.h"
 #include "sdOrderingHandler.h"

@@ -16,7 +16,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include "sdDescriptor.h"
+#include "sdDescriptorSpec.h"
 #include "sdSpec.h"
 #include "sdLoader.h"
 #include "tinyxml2.h"
@@ -87,7 +87,7 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
             sdEntity* targetEntity = scene.getEntity(entityName);
             if(!targetEntity){
                 targetEntity = scene.addEntity(entityName, EKind::SD_SINK);
-                if(type)targetEntity->addMeta<SD_TYPE>(sdDescriptor<SD_TYPE>::stringTo(type->GetText()));
+                if(type)targetEntity->addMeta<SD_TYPE>(sdDescriptorSpec<SD_TYPE>::stringTo(type->GetText()));
                 if(position){
                     std::string unit = position->Attribute("unit");
                     if(unit == "aed"){

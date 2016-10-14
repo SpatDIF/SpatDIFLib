@@ -37,12 +37,12 @@ public:
      @returns a pointer to meta data
      */
     template <EDescriptor D>
-    sdMeta<D> * const addMeta(typename sdDescriptor<D>::type value, sdEntity *entity);
+    sdMeta<D> * const addMeta(typename sdDescriptorSpec<D>::type value, sdEntity *entity);
     
     
     /*! this function is the only way to instantiate sdMeta.*/
     template <EDescriptor D>
-    std::shared_ptr<sdProtoMeta> addProtoMeta(typename sdDescriptor<D>::type value, sdEntity *entity);
+    std::shared_ptr<sdProtoMeta> addProtoMeta(typename sdDescriptorSpec<D>::type value, sdEntity *entity);
 
     /*! return number of registerd events in the events
      @returns number of meta data defined for this entities
@@ -75,13 +75,13 @@ public:
 };
 
 template <EDescriptor D>
-inline sdMeta<D> * const sdMetaHandler::addMeta(typename sdDescriptor<D>::type value, sdEntity *entity){
+inline sdMeta<D> * const sdMetaHandler::addMeta(typename sdDescriptorSpec<D>::type value, sdEntity *entity){
     return dynamic_cast<sdMeta<D>*>(addProtoMeta<D>(value, entity).get());
 }
 
 template <EDescriptor D>
-inline std::shared_ptr<sdProtoMeta> sdMetaHandler::addProtoMeta(typename sdDescriptor<D>::type value, sdEntity *entity){
-    sdDescriptor<D>::validateValue(value);
+inline std::shared_ptr<sdProtoMeta> sdMetaHandler::addProtoMeta(typename sdDescriptorSpec<D>::type value, sdEntity *entity){
+    sdDescriptorSpec<D>::validateValue(value);
 
     // remove if already exist
     removeMeta(D);

@@ -13,7 +13,7 @@
  * http://creativecommons.org/licenses/BSD/
  */
 
-#include "sdDescriptor.h"
+#include "sdDescriptorSpec.h"
 #include "sdEntity.h"
 #include "sdDataSetHandler.h"
 
@@ -28,49 +28,49 @@ inline std::function<void(sdDataSetHandler*, std::string, std::string)> getAddDa
     return [](sdDataSetHandler * handler, std::string identifier, std::string valueString){
         EExtension ext = sdSpec::getExtensionOfDescriptor(D);
         std::shared_ptr<sdProtoDataSet> dataset = handler->getProtoDataSet(ext, identifier);
-        dataset->setValue<D>(sdDescriptor<D>::stringTo(valueString));
+        dataset->setValue<D>(sdDescriptorSpec<D>::stringTo(valueString));
     };
 }
     
 template<EDescriptor D>
 inline std::function<std::shared_ptr<sdProtoMeta>(sdEntity* , std::string)> getAddMetaFunc(){
     return [](sdEntity * entity, std::string value)->std::shared_ptr<sdProtoMeta>{
-        return entity->addProtoMeta<D>(sdDescriptor<D>::stringTo(value), entity);
+        return entity->addProtoMeta<D>(sdDescriptorSpec<D>::stringTo(value), entity);
     };
 }
 
 template<EDescriptor D>
 inline std::function<std::shared_ptr<sdProtoEvent> (sdEntity * , double , std::string )> getAddEventFunc(){
     return [](sdEntity * entity, double time, std::string value)->std::shared_ptr<sdProtoEvent>{
-        return entity->addProtoEvent<D>(time, sdDescriptor<D>::stringTo(value), entity);
+        return entity->addProtoEvent<D>(time, sdDescriptorSpec<D>::stringTo(value), entity);
     };
 }
 
 template<EDescriptor D>
 inline std::function<std::string(std::shared_ptr<sdProtoHolder>)> getGetDataAsStringFunc(){
     return [](std::shared_ptr<sdProtoHolder> protoHolder)->std::string{
-        auto holder = static_cast<sdHolder<typename sdDescriptor<D>::type> *>(protoHolder.get());
-        typename sdDescriptor<D>::type value = (*holder).item;
-        return sdDescriptor<D>::toString(value);
+        auto holder = static_cast<sdHolder<typename sdDescriptorSpec<D>::type> *>(protoHolder.get());
+        typename sdDescriptorSpec<D>::type value = (*holder).item;
+        return sdDescriptorSpec<D>::toString(value);
     };
 }
 
 template<EDescriptor D>
-inline sdSpec::sdDescriptorSpec defineDescriptor(const std::string &string){
-    return sdSpec:: sdDescriptorSpec(D, string, getAddDataFunc<D>(), getAddMetaFunc<D>(), getAddEventFunc<D>(), getGetDataAsStringFunc<D>());
+inline sdSpec::sdDescriptorRelationships defineDescriptor(const std::string &string){
+    return sdSpec:: sdDescriptorRelationships(D, string, getAddDataFunc<D>(), getAddMetaFunc<D>(), getAddEventFunc<D>(), getGetDataAsStringFunc<D>());
 }
 
 #pragma mark special case
 
 // these two descriptors will be stored in one vector 
 template<>
-inline sdSpec::sdDescriptorSpec defineDescriptor<SD_POINTSET_POINT>(const std::string &string){
-    return sdSpec:: sdDescriptorSpec(SD_POINTSET_POINT, string, getAddDataFunc<SD_POINTSET_POINT_OR_HANDLE>(), getAddMetaFunc<SD_POINTSET_POINT_OR_HANDLE>(), getAddEventFunc<SD_POINTSET_POINT_OR_HANDLE>(), getGetDataAsStringFunc<SD_POINTSET_POINT_OR_HANDLE>());
+inline sdSpec::sdDescriptorRelationships defineDescriptor<SD_POINTSET_POINT>(const std::string &string){
+    return sdSpec:: sdDescriptorRelationships(SD_POINTSET_POINT, string, getAddDataFunc<SD_POINTSET_POINT_OR_HANDLE>(), getAddMetaFunc<SD_POINTSET_POINT_OR_HANDLE>(), getAddEventFunc<SD_POINTSET_POINT_OR_HANDLE>(), getGetDataAsStringFunc<SD_POINTSET_POINT_OR_HANDLE>());
 }
 
 template<>
-inline sdSpec::sdDescriptorSpec defineDescriptor<SD_POINTSET_HANDLE>(const std::string &string){
-    return sdSpec:: sdDescriptorSpec(SD_POINTSET_HANDLE, string, getAddDataFunc<SD_POINTSET_POINT_OR_HANDLE>(), getAddMetaFunc<SD_POINTSET_POINT_OR_HANDLE>(), getAddEventFunc<SD_POINTSET_POINT_OR_HANDLE>(), getGetDataAsStringFunc<SD_POINTSET_POINT_OR_HANDLE>());
+inline sdSpec::sdDescriptorRelationships defineDescriptor<SD_POINTSET_HANDLE>(const std::string &string){
+    return sdSpec:: sdDescriptorRelationships(SD_POINTSET_HANDLE, string, getAddDataFunc<SD_POINTSET_POINT_OR_HANDLE>(), getAddMetaFunc<SD_POINTSET_POINT_OR_HANDLE>(), getAddEventFunc<SD_POINTSET_POINT_OR_HANDLE>(), getGetDataAsStringFunc<SD_POINTSET_POINT_OR_HANDLE>());
 }
 
 
@@ -79,13 +79,13 @@ template<EDescriptor D>
 inline std::function<std::shared_ptr<sdProtoEvent> (sdEntity * , double , std::string )> getAddNoEventFunc(){
     return [](sdEntity * entity, double time, std::string value)->std::shared_ptr<sdProtoEvent>{
         throw MetaOnlyDescriptorException(" ");
-        return entity->addProtoEvent<D>(time, sdDescriptor<D>::stringTo(value), entity);
+        return entity->addProtoEvent<D>(time, sdDescriptorSpec<D>::stringTo(value), entity);
     };
 }
 
 template<EDescriptor D>
-inline sdSpec::sdDescriptorSpec defineDescriptorNoEvent(const std::string &string){
-    return sdSpec::sdDescriptorSpec(D, string, getAddDataFunc<D>(), getAddMetaFunc<D>(), getAddNoEventFunc<D>(), getGetDataAsStringFunc<D>());
+inline sdSpec::sdDescriptorRelationships defineDescriptorNoEvent(const std::string &string){
+    return sdSpec::sdDescriptorRelationships(D, string, getAddDataFunc<D>(), getAddMetaFunc<D>(), getAddNoEventFunc<D>(), getGetDataAsStringFunc<D>());
 }
 
 //! the descriptors which can be used without activation of extensions
@@ -98,8 +98,8 @@ const std::unordered_set<EExtension> sdSpec::coreSpec= {
 };
 
 
-const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
-    sdExtensionSpec(EExtension::SD_INFO, "info", {
+const std::vector<sdSpec::sdExtensionRelationships> sdSpec::spatDIFSpec= {
+    sdExtensionRelationships(EExtension::SD_INFO, "info", {
         defineDescriptorNoEvent<SD_INFO_AUTHOR>("author"),
         defineDescriptorNoEvent<SD_INFO_ANNOTATION>("annotation"),
         defineDescriptorNoEvent<SD_INFO_DATE>("date"),
@@ -109,13 +109,13 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
         defineDescriptorNoEvent<SD_INFO_TITLE>("title"),
         defineDescriptorNoEvent<SD_INFO_SESSION>("session")
     }, SD_INFO_TITLE), // dummy
-    sdExtensionSpec(EExtension::SD_CORE, "core", {
+    sdExtensionRelationships(EExtension::SD_CORE, "core", {
         defineDescriptor<SD_TYPE>("type"),
         defineDescriptor<SD_PRESENT>("present"),
         defineDescriptor<SD_POSITION>("position"),
         defineDescriptor<SD_ORIENTATION>("orientation")
     }),
-    sdExtensionSpec(EExtension::SD_MEDIA, "media", {
+    sdExtensionRelationships(EExtension::SD_MEDIA, "media", {
         defineDescriptor<SD_MEDIA_ID>("id"),
         defineDescriptor<SD_MEDIA_TYPE>("type"),
         defineDescriptor<SD_MEDIA_LOCATION>( "location"),
@@ -123,16 +123,16 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
         defineDescriptor<SD_MEDIA_GAIN>( "gain"),
         defineDescriptor<SD_MEDIA_TIME_OFFSET>( "time-offset")
     }, SD_MEDIA_ID),
-    sdExtensionSpec(EExtension::SD_LOOP, "loop",{
+    sdExtensionRelationships(EExtension::SD_LOOP, "loop",{
         defineDescriptor<SD_LOOP_TYPE>("type"),
         defineDescriptor<SD_LOOP_POINTS>("points"),
         defineDescriptor<SD_LOOP_WAIT_TIME>("wait-time")
     }),
-    sdExtensionSpec((EExtension::SD_INTERPOLATION), "interpolation",{
+    sdExtensionRelationships((EExtension::SD_INTERPOLATION), "interpolation",{
         defineDescriptor<SD_INTERPOLATION_TYPE>("type")
     }),
     // 5.2.1 Pointset
-    sdExtensionSpec((EExtension::SD_POINTSET), "pointset",{
+    sdExtensionRelationships((EExtension::SD_POINTSET), "pointset",{
         defineDescriptor<SD_POINTSET_ID>("id"),
         defineDescriptor<SD_POINTSET_CLOSED>("closed"),
         defineDescriptor<SD_POINTSET_POINT>("point"),
@@ -140,7 +140,7 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
         defineDescriptor<SD_POINTSET_POINT_OR_HANDLE>("point-or-handle") // internally used descriptor for storing mixed variable data
     }, SD_POINTSET_ID),
     // 5.2.2 Geometry
-    sdExtensionSpec((EExtension::SD_GEOMETRY), "geometry",{
+    sdExtensionRelationships((EExtension::SD_GEOMETRY), "geometry",{
         defineDescriptor<SD_GEOMETRY_TRANSLATE>("translate"),
         defineDescriptor<SD_GEOMETRY_ROTATE>("rotate"),
         defineDescriptor<SD_GEOMETRY_SCALE>("scale"),
@@ -148,7 +148,7 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
         defineDescriptor<SD_GEOMETRY_REFLECT>("reflect")
     }),
     // 5.2.3 Automation
-    sdExtensionSpec((EExtension::SD_AUTOMATION), "automation", {
+    sdExtensionRelationships((EExtension::SD_AUTOMATION), "automation", {
         defineDescriptor<SD_AUTOMATION_DURATION>( "duration"),
         defineDescriptor<SD_AUTOMATION_DELAY>( "delay"),
         defineDescriptor<SD_AUTOMATION_FUNCTION>( "function")
@@ -156,14 +156,14 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
         //defineDescriptor<SD_AUTOMATION_LOOP, "loop")
     }),
     // 5.2.4 Shape
-    sdExtensionSpec((EExtension::SD_SHAPE), "shape", {
+    sdExtensionRelationships((EExtension::SD_SHAPE), "shape", {
         defineDescriptor<SD_SHAPE_ID>("id"),
         defineDescriptor<SD_SHAPE_DIRECTION>("direction"),
         defineDescriptor<SD_SHAPE_CLOSED>("closed"),
         defineDescriptor<SD_SHAPE_TYPE>("type")
     }, SD_SHAPE_ID),
     // 5.3.1.1 Trajectory Generator
-    sdExtensionSpec((EExtension::SD_TRAJECTORY), "trajectory" , {
+    sdExtensionRelationships((EExtension::SD_TRAJECTORY), "trajectory" , {
         defineDescriptor<SD_TRAJECTORY_POINTSET>("pointset"),
         defineDescriptor<SD_TRAJECTORY_INTERPOLATION>("interpolation"),
         defineDescriptor<SD_TRAJECTORY_GEOMETRY>("geometry" ),
@@ -171,7 +171,7 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
         defineDescriptor<SD_TRAJECTORY_AUTOMATION>("automation")
     }),
     // 5.3.1.2 Group
-    sdExtensionSpec((EExtension::SD_GROUP), "group",{
+    sdExtensionRelationships((EExtension::SD_GROUP), "group",{
         defineDescriptor<SD_GROUP_ID>("id"),
         defineDescriptor<SD_GROUP_PRESENT>("present"),
         defineDescriptor<SD_GROUP_POSITION>("position"),
@@ -179,11 +179,11 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
         defineDescriptor<SD_GROUP_MEMBERSHIP>("group-membership")
     }, SD_GROUP_ID),
     // 5.3.2.1 Source spread
-    sdExtensionSpec((EExtension::SD_SOURCE_SPREAD), "source-spread",{
+    sdExtensionRelationships((EExtension::SD_SOURCE_SPREAD), "source-spread",{
         defineDescriptor<SD_SOURCE_SPREAD_SPREAD>( "spread"),
     }),
     // 5.3.3.1 Diestance cue
-    sdExtensionSpec((EExtension::SD_DISTANCE_CUES), "distance-cues",{
+    sdExtensionRelationships((EExtension::SD_DISTANCE_CUES), "distance-cues",{
         defineDescriptor<SD_DISTANCE_CUES_REFERENCE_DISTANCE>("reference-distance"),
         defineDescriptor<SD_DISTANCE_CUES_MAXIMUM_DISTANCE>("maximum-distance"),
         defineDescriptor<SD_DISTANCE_CUES_MAXIMUM_ATTENUATION>("maximum-attenuation"),
@@ -191,19 +191,19 @@ const std::vector<sdSpec::sdExtensionSpec> sdSpec::spatDIFSpec= {
         defineDescriptor<SD_DISTANCE_CUES_ABSORPTION_MODEL>("absorption-model")
     }),
     // 5.3.4.1 Sink Entity
-    sdExtensionSpec((EExtension::SD_SINK_ENTITY),"sink-entity",{
+    sdExtensionRelationships((EExtension::SD_SINK_ENTITY),"sink-entity",{
        //descriptor is identical to source
     }),
     // 5.3.4.2 Direct-to-One sink
-    sdExtensionSpec((EExtension::SD_DIRECT_TO_ONE), "direct-to-one",{
+    sdExtensionRelationships((EExtension::SD_DIRECT_TO_ONE), "direct-to-one",{
         defineDescriptor<SD_DIRECT_TO_ONE_DIRECT_TO_ONE>("direct-to-one")
     }),
     // 5.3.5.1 Hardware-out
-    sdExtensionSpec((EExtension::SD_HARDWARE_OUT), "hardware-out",{
+    sdExtensionRelationships((EExtension::SD_HARDWARE_OUT), "hardware-out",{
         defineDescriptor<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>( "physical-channel"),
         defineDescriptor<SD_HARDWARE_OUT_GAIN>("gain")
     }),
     // 5.4 Private Extension
-    sdExtensionSpec((EExtension::SD_PRIVATE), "private", {}) // no descriptor defined
+    sdExtensionRelationships((EExtension::SD_PRIVATE), "private", {}) // no descriptor defined
 };
 

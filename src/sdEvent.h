@@ -16,7 +16,7 @@
 #pragma once
 
 #include <string>
-#include "sdDescriptor.h"
+#include "sdDescriptorSpec.h"
 #include "sdMeta.h"
 #include "sdUtils.h"
 
@@ -71,17 +71,17 @@ class sdEvent: public sdProtoEvent{
     friend sdEntity;
     
 protected:
-    const typename sdDescriptor<D>::type  value; /*< the value of the event. the type of value is determined by EDescriptor D */
+    const typename sdDescriptorSpec<D>::type  value; /*< the value of the event. the type of value is determined by EDescriptor D */
     
 public:
     
     /*! constructor with initialization. should be invoked by the subclass*/
-    sdEvent(const double time, const sdEntity * const parent, const typename sdDescriptor<D>::type &value):
+    sdEvent(const double time, const sdEntity * const parent, const typename sdDescriptorSpec<D>::type &value):
     sdProtoEvent(time, D, parent), value(value){}
     
-    const typename sdDescriptor<D>::type &getValue(void) const{return value;};
+    const typename sdDescriptorSpec<D>::type &getValue(void) const{return value;};
     
-    const std::string getValueAsString() const override{ return sdDescriptor<D>::toString(value);};
+    const std::string getValueAsString() const override{ return sdDescriptorSpec<D>::toString(value);};
 
 };
 

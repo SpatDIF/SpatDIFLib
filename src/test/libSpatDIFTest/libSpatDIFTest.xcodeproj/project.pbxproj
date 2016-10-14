@@ -102,7 +102,7 @@
 
 /* Begin PBXFileReference section */
 		6217DDE51D5B20510048C466 /* sdSpec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdSpec.cpp; path = ../../sdSpec.cpp; sourceTree = "<group>"; };
-		6217DDE61D5B20510048C466 /* sdDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sdDescriptor.h; path = ../../sdDescriptor.h; sourceTree = "<group>"; };
+		6217DDE61D5B20510048C466 /* sdDescriptorSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sdDescriptorSpec.h; path = ../../sdDescriptorSpec.h; sourceTree = "<group>"; };
 		6217DDF71D5B21080048C466 /* descriptortest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = descriptortest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6217DE171D5B2B1D0048C466 /* sdUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdUtils.h; path = ../../sdUtils.h; sourceTree = "<group>"; };
 		62401D3F1CA2AFBD001179C5 /* internalJSONNode.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = internalJSONNode.o; path = ../../libs/libjson/Objects_static/internalJSONNode.o; sourceTree = "<group>"; };
@@ -244,7 +244,7 @@
 		627FA4CB1D756BC6007C0C8A /* Specifications */ = {
 			isa = PBXGroup;
 			children = (
-				6217DDE61D5B20510048C466 /* sdDescriptor.h */,
+				6217DDE61D5B20510048C466 /* sdDescriptorSpec.h */,
 				627FA4C91D75698D007C0C8A /* sdDataSet.h */,
 				62A24D0F1D6322300019F04F /* sdSpec.h */,
 				6217DDE51D5B20510048C466 /* sdSpec.cpp */,
@@ -259,8 +259,8 @@
 				62BE10221C2F3C020033244E /* sdEntity.h */,
 				624D3D411DB0D6E2004E140C /* sdHolder.h */,
 				62AF37B31C236EDC009E9347 /* sdEntity.cpp */,
-				62D646701D8C5AAF00FCF13D /* sdData.h */,
 				62BE10211C2F3C020033244E /* sdDate.h */,
+				62D646701D8C5AAF00FCF13D /* sdData.h */,
 				627FA4C81D74916D007C0C8A /* sdMeta.h */,
 				62BE10231C2F3C020033244E /* sdEvent.h */,
 			);

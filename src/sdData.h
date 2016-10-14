@@ -56,11 +56,11 @@ template <EDescriptor D>
 class sdData :public sdProtoData{
     
 protected:
-    const typename sdDescriptor<D>::type value; /*< the value of the event. the type of value is determined by EDescriptor D */
+    const typename sdDescriptorSpec<D>::type value; /*< the value of the event. the type of value is determined by EDescriptor D */
     
 public:
-    sdData(const typename sdDescriptor<D>::type &value):sdProtoData(D), value(value){}
-    const typename sdDescriptor<D>::type &getValue(void) const{ return value; };
-    const std::string getValueAsString() const override{ return sdDescriptor<D>::toString(value);};
+    sdData(const typename sdDescriptorSpec<D>::type &value):sdProtoData(D), value(value){}
+    const typename sdDescriptorSpec<D>::type &getValue(void) const{ return value; };
+    const std::string getValueAsString() const override{ return sdDescriptorSpec<D>::toString(value);};
 };
 

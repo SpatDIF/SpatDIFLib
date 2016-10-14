@@ -100,7 +100,7 @@ TEST_CASE("Speaker Setup"){
     REQUIRE(sdUtils::almostEqual(aed[1] , 0.0));
     REQUIRE(sdUtils::almostEqual(aed[2] , 2.0));
     auto type = leftSpeaker->getMeta<SD_TYPE>()->getValue();
-    REQUIRE(type == sdDescriptor<SD_TYPE>::SD_LOUDSPEAKER);
+    REQUIRE(type == sdDescriptorSpec<SD_TYPE>::SD_LOUDSPEAKER);
 
     auto physicalChannel = rightSpeaker->getMeta<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>()->getValue();
     REQUIRE(physicalChannel == 2);

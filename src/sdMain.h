@@ -14,7 +14,7 @@
  */
 
 #pragma once
-#include "sdDescriptor.h"
+#include "sdDescriptorSpec.h"
 #include "sdDate.h"
 
 #include "sdEntity.h"

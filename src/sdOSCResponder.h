@@ -473,7 +473,7 @@ inline void sdOSCResponder::setAction(std::string command, sdOSCMessage message,
                 scene->addEvent<SD_MEDIA_ID>(entityName, writeTime, mediaID);
             }else if(command == "setType"){
                 std::string type = message.getArgumentAsString(1);
-                scene->addEvent<SD_MEDIA_TYPE>(entityName, writeTime, sdDescriptor<SD_MEDIA_TYPE>::stringTo(type));
+                scene->addEvent<SD_MEDIA_TYPE>(entityName, writeTime, sdDescriptorSpec<SD_MEDIA_TYPE>::stringTo(type));
             }else if(command == "setLocation"){
                 std::string location = message.getArgumentAsString(1);
                 scene->addEvent<SD_MEDIA_LOCATION>(entityName, writeTime, location);

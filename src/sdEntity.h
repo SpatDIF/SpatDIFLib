@@ -18,7 +18,7 @@
 #include <string>
 #include <memory>
 #include "sdException.h"
-#include "sdDescriptor.h"
+#include "sdDescriptorSpec.h"
 #include "sdDataSet.h"
 #include "sdMeta.h"
 #include "sdEvent.h"
@@ -57,17 +57,17 @@ public:
     
     /*!
      this function looks for a meta of the specified descriptor and returns a pointer to the data.
-     @param descriptor specify descriptor defined in sdDescriptors.h
+     @param descriptor specify descriptor defined in sdDescriptorSpecs.h
      */
     template <EDescriptor D>
-    const typename sdDescriptor<D>::type * const getValue() const;
+    const typename sdDescriptorSpec<D>::type * const getValue() const;
     
     template <EDescriptor D>
-    const typename sdDescriptor<D>::type * const getValue(const double &time) const;
+    const typename sdDescriptorSpec<D>::type * const getValue(const double &time) const;
     
     /*!
      this function search for a meta of the specified  descriptor and return the data as a string.
-     @param descriptor specify descriptor defined in sdDescriptors.h
+     @param descriptor specify descriptor defined in sdDescriptorSpecs.h
      */
     template <EDescriptor D>
     const std::string getValueAsString() const;
@@ -75,7 +75,7 @@ public:
     /*!
      this function search for an event at specified time and descriptor and return the data as a string.
      @param time time of the event
-     @param descriptor specify descriptor defined in sdDescriptors.h
+     @param descriptor specify descriptor defined in sdDescriptorSpecs.h
      */
     template <EDescriptor D>
     const std::string getValueAsString(const double &time) const;
@@ -83,32 +83,32 @@ public:
     /*!
      this function looks for a next event from the specified time with the designated descriptor and returns a pointer to the data.
      @param time
-     @param descriptor specify descriptor defined in sdDescriptors.h
+     @param descriptor specify descriptor defined in sdDescriptorSpecs.h
      */
     template <EDescriptor D>
-    const typename sdDescriptor<D>::type * const getNextValue(const double &time) const;
+    const typename sdDescriptorSpec<D>::type * const getNextValue(const double &time) const;
     
     /*!
      this function looks for a next event from the specified time with the designated descriptor and returns a pointer to the data.
      @param time
-     @param descriptor specify descriptor defined in sdDescriptors.h
+     @param descriptor specify descriptor defined in sdDescriptorSpecs.h
      */
     template <EDescriptor D>
-    const typename sdDescriptor<D>::type * const getPreviousValue(const double &time) const;
+    const typename sdDescriptorSpec<D>::type * const getPreviousValue(const double &time) const;
     /*!
      @}
      */
 
     /*! this function is the only way to instantiate sdMeta.*/
     template <EDescriptor D>
-    sdMeta<D> * const addMeta(typename sdDescriptor<D>::type value);
+    sdMeta<D> * const addMeta(typename sdDescriptorSpec<D>::type value);
     
     /*! add meta by string*/
     const std::shared_ptr<sdProtoMeta> addMeta(const std::string &descriptor, const std::string &extension, const std::string &value);
     
     /*! return value cast to a specific subclass event.*/
     template <EDescriptor D>
-    sdEvent<D> * const addEvent(const double &time, typename sdDescriptor<D>::type value);
+    sdEvent<D> * const addEvent(const double &time, typename sdDescriptorSpec<D>::type value);
     
     /*! add event by string*/
     const std::shared_ptr<sdProtoEvent> addEvent(const std::string &time, const std::string &extension, const std::string &descriptor, const std::string &value);
@@ -122,7 +122,7 @@ private:
 
 
 template <EDescriptor D>
-inline sdMeta<D> * const sdEntity::addMeta(typename sdDescriptor<D>::type value){
+inline sdMeta<D> * const sdEntity::addMeta(typename sdDescriptorSpec<D>::type value){
     if(!isDescriptorValid(D)) return nullptr; // invalid descriptor
     return sdMetaHandler::addMeta<D>(value, this);
 }
@@ -138,7 +138,7 @@ inline const std::shared_ptr<sdProtoMeta> sdEntity::addMeta(const std::string &e
 
 
 template <EDescriptor D>
-inline sdEvent<D> * const sdEntity::addEvent(const double &time,  typename sdDescriptor<D>::type value){
+inline sdEvent<D> * const sdEntity::addEvent(const double &time,  typename sdDescriptorSpec<D>::type value){
     if(!isDescriptorValid(D)) throw InvalidDescriptorException(sdSpec::descriptorToString(D) + " is not valid. Activate corresponding extension before using it."); // invalid descriptor
     return sdEventHandler::addEvent<D>(time, value, this);
 }
@@ -170,14 +170,14 @@ inline const std::string sdEntity::getValueAsString(const double &time) const{
 }
 
 template <EDescriptor D>
-inline const typename sdDescriptor<D>::type * const sdEntity::getNextValue(const double &time) const{
+inline const typename sdDescriptorSpec<D>::type * const sdEntity::getNextValue(const double &time) const{
     auto nextEvent = getNextEvent<D>(time);
     if(!nextEvent) return nullptr;
     return &nextEvent->getValue();
 }
 
 template <EDescriptor D>
-inline const typename sdDescriptor<D>::type * const sdEntity::getPreviousValue(const double &time) const{
+inline const typename sdDescriptorSpec<D>::type * const sdEntity::getPreviousValue(const double &time) const{
     auto previousEvent = getPreviousEvent<D>(time);
     if(!previousEvent) return nullptr;
     return &previousEvent ->getValue();
@@ -185,14 +185,14 @@ inline const typename sdDescriptor<D>::type * const sdEntity::getPreviousValue(c
 
 
 template <EDescriptor D>
-inline const typename sdDescriptor<D>::type * const sdEntity::getValue() const{
+inline const typename sdDescriptorSpec<D>::type * const sdEntity::getValue() const{
     auto meta = getMeta<D>();
     if(!meta)return nullptr;
     return &(meta->getValue());
 }
 
 template <EDescriptor D>
-inline const typename sdDescriptor<D>::type * const sdEntity::getValue(const double &time) const{
+inline const typename sdDescriptorSpec<D>::type * const sdEntity::getValue(const double &time) const{
     auto event = getEvent<D>(time);
     if(!event){
         try{
