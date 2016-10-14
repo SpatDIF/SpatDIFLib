@@ -22,7 +22,7 @@
  */
 
 class sdDataSetHandler;
-class sdProtoEntity;
+class sdEntity;
 class sdProtoEvent;
 class sdProtoMeta;
 class sdProtoHolder;
@@ -34,8 +34,8 @@ public:
         sdDescriptorSpec(EDescriptor descriptor,
                 std::string descriptorString,
                 std::function< void(sdDataSetHandler*, std::string, std::string)> addDataFromStringFunc,
-                std::function< std::shared_ptr<sdProtoMeta>(sdProtoEntity*, std::string)> addMetaFromStringFunc,
-                std::function< std::shared_ptr<sdProtoEvent>(sdProtoEntity*, double, std::string)> addEventFromStringFunc,
+                std::function< std::shared_ptr<sdProtoMeta>(sdEntity*, std::string)> addMetaFromStringFunc,
+                std::function< std::shared_ptr<sdProtoEvent>(sdEntity*, double, std::string)> addEventFromStringFunc,
                 std::function< std::string(std::shared_ptr<sdProtoHolder>)> getDataAsStringFunc ):
         descriptor(descriptor),
         descriptorString(descriptorString),
@@ -48,8 +48,8 @@ public:
         std::string descriptorString;
         
         std::function< void(sdDataSetHandler*, std::string, std::string)> addDataFromStringFunc;
-        std::function< std::shared_ptr<sdProtoMeta>(sdProtoEntity * entity, std::string)> addMetaFromStringFunc;
-        std::function< std::shared_ptr<sdProtoEvent>(sdProtoEntity * entity, double, std::string)> addEventFromStringFunc;
+        std::function< std::shared_ptr<sdProtoMeta>(sdEntity * entity, std::string)> addMetaFromStringFunc;
+        std::function< std::shared_ptr<sdProtoEvent>(sdEntity * entity, double, std::string)> addEventFromStringFunc;
         std::function< std::string(std::shared_ptr<sdProtoHolder>)> getDataAsStringFunc;
 
     };
@@ -185,11 +185,11 @@ public:
         return getDescriptorSpec(descriptor).addDataFromStringFunc;
     }
     
-    static std::function<std::shared_ptr<sdProtoMeta>(sdProtoEntity* entity, std::string)> getAddMetaFunc(EDescriptor descriptor){
+    static std::function<std::shared_ptr<sdProtoMeta>(sdEntity* entity, std::string)> getAddMetaFunc(EDescriptor descriptor){
         return getDescriptorSpec(descriptor).addMetaFromStringFunc;
     }
     
-    static std::function<std::shared_ptr<sdProtoEvent>(sdProtoEntity* entity, double,std::string)> getAddEventFunc(EDescriptor descriptor){
+    static std::function<std::shared_ptr<sdProtoEvent>(sdEntity* entity, double,std::string)> getAddEventFunc(EDescriptor descriptor){
         return getDescriptorSpec(descriptor).addEventFromStringFunc;
     }
     

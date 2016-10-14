@@ -8,19 +8,19 @@
 
 #pragma once
 
-class sdProtoEntity;
+class sdEntity;
 class sdGlobalMetaHandler{
 public:
-    bool removeMetaAlias(const sdProtoEntity* const entity, const EDescriptor & descriptor );
-    const std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoMeta>>> &getAllMetas() const;
-    void addMetaAlias(sdProtoEntity * const entity, std::shared_ptr<sdProtoMeta> event);
+    bool removeMetaAlias(const sdEntity* const entity, const EDescriptor & descriptor );
+    const std::vector<std::pair<sdEntity*, std::shared_ptr<sdProtoMeta>>> &getAllMetas() const;
+    void addMetaAlias(sdEntity * const entity, std::shared_ptr<sdProtoMeta> event);
     
 protected:
-    std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoMeta>>> allMetas; //!< an alias pointer to all metas
+    std::vector<std::pair<sdEntity*, std::shared_ptr<sdProtoMeta>>> allMetas; //!< an alias pointer to all metas
 };
 
-inline bool sdGlobalMetaHandler::removeMetaAlias(const sdProtoEntity* const entity, const EDescriptor & descriptor ){
-    auto it = std::find_if(allMetas.begin(), allMetas.end(), [&entity, &descriptor]( std::pair<const sdProtoEntity * ,std::shared_ptr<sdProtoMeta>> meta){
+inline bool sdGlobalMetaHandler::removeMetaAlias(const sdEntity* const entity, const EDescriptor & descriptor ){
+    auto it = std::find_if(allMetas.begin(), allMetas.end(), [&entity, &descriptor]( std::pair<const sdEntity * ,std::shared_ptr<sdProtoMeta>> meta){
         return (meta.second->getDescriptor() == descriptor) && (meta.first == entity);
     });
     if(it == allMetas.end()) return false;
@@ -28,11 +28,11 @@ inline bool sdGlobalMetaHandler::removeMetaAlias(const sdProtoEntity* const enti
     return true;
 }
 
-inline const std::vector<std::pair<sdProtoEntity*, std::shared_ptr<sdProtoMeta>>> &sdGlobalMetaHandler::getAllMetas() const{
+inline const std::vector<std::pair<sdEntity*, std::shared_ptr<sdProtoMeta>>> &sdGlobalMetaHandler::getAllMetas() const{
     return allMetas;
 }
 
-inline void sdGlobalMetaHandler::addMetaAlias(sdProtoEntity * const entity, std::shared_ptr<sdProtoMeta> event){
+inline void sdGlobalMetaHandler::addMetaAlias(sdEntity * const entity, std::shared_ptr<sdProtoMeta> event){
     removeMetaAlias(entity, event->getDescriptor());
     allMetas.push_back(std::make_pair(entity, event));
 }

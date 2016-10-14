@@ -37,21 +37,21 @@ public:
      returns an immutable pointer to its parent entity
      @returns a pointer to its parent entity
      */
-    const sdProtoEntity * const getParent() const;
+    const sdEntity * const getParent() const;
 
 protected:
-    const sdProtoEntity * const parent;/*!< a pointer to the belonging entity. unmutable */
-    sdProtoMeta(const EDescriptor descriptor, const sdProtoEntity * const parent);
+    const sdEntity * const parent;/*!< a pointer to the belonging entity. unmutable */
+    sdProtoMeta(const EDescriptor descriptor, const sdEntity * const parent);
 
 };
 
-inline sdProtoMeta::sdProtoMeta(const EDescriptor descriptor, const sdProtoEntity * const parent):
+inline sdProtoMeta::sdProtoMeta(const EDescriptor descriptor, const sdEntity * const parent):
 sdProtoData(descriptor),
 parent(parent)
 {}
 
 
-inline const sdProtoEntity * const sdProtoMeta::getParent() const{
+inline const sdEntity * const sdProtoMeta::getParent() const{
     return parent;
 }
 
@@ -69,7 +69,7 @@ protected:
 public:
     
     /*! constructor with initialization. should be invoked by the subclass*/
-    sdMeta(const sdProtoEntity * const parent, const typename sdDescriptor<D>::type &value):
+    sdMeta(const sdEntity * const parent, const typename sdDescriptor<D>::type &value):
     sdProtoMeta(D, parent), value(value){}
     
     /*! @name Value handling

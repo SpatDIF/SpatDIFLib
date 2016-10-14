@@ -33,15 +33,15 @@ inline std::function<void(sdDataSetHandler*, std::string, std::string)> getAddDa
 }
     
 template<EDescriptor D>
-inline std::function<std::shared_ptr<sdProtoMeta>(sdProtoEntity* , std::string)> getAddMetaFunc(){
-    return [](sdProtoEntity * entity, std::string value)->std::shared_ptr<sdProtoMeta>{
+inline std::function<std::shared_ptr<sdProtoMeta>(sdEntity* , std::string)> getAddMetaFunc(){
+    return [](sdEntity * entity, std::string value)->std::shared_ptr<sdProtoMeta>{
         return entity->addProtoMeta<D>(sdDescriptor<D>::stringTo(value), entity);
     };
 }
 
 template<EDescriptor D>
-inline std::function<std::shared_ptr<sdProtoEvent> (sdProtoEntity * , double , std::string )> getAddEventFunc(){
-    return [](sdProtoEntity * entity, double time, std::string value)->std::shared_ptr<sdProtoEvent>{
+inline std::function<std::shared_ptr<sdProtoEvent> (sdEntity * , double , std::string )> getAddEventFunc(){
+    return [](sdEntity * entity, double time, std::string value)->std::shared_ptr<sdProtoEvent>{
         return entity->addProtoEvent<D>(time, sdDescriptor<D>::stringTo(value), entity);
     };
 }
@@ -76,8 +76,8 @@ inline sdSpec::sdDescriptorSpec defineDescriptor<SD_POINTSET_HANDLE>(const std::
 
 
 template<EDescriptor D>
-inline std::function<std::shared_ptr<sdProtoEvent> (sdProtoEntity * , double , std::string )> getAddNoEventFunc(){
-    return [](sdProtoEntity * entity, double time, std::string value)->std::shared_ptr<sdProtoEvent>{
+inline std::function<std::shared_ptr<sdProtoEvent> (sdEntity * , double , std::string )> getAddNoEventFunc(){
+    return [](sdEntity * entity, double time, std::string value)->std::shared_ptr<sdProtoEvent>{
         throw MetaOnlyDescriptorException(" ");
         return entity->addProtoEvent<D>(time, sdDescriptor<D>::stringTo(value), entity);
     };

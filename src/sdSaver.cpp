@@ -105,12 +105,12 @@ XMLElement* sdXMLSaver::XMLMetaSection(XMLDocument &xml, const sdScene &scene){
     // add other meta infomation such as constant position or sound file definition
     auto allMetas = scene.getAllMetas();
     
-    std::for_each(allMetas.begin(), allMetas.end(), [&](std::pair<sdProtoEntity*, std::shared_ptr<sdProtoMeta>> metaPair ) {
+    std::for_each(allMetas.begin(), allMetas.end(), [&](std::pair<sdEntity*, std::shared_ptr<sdProtoMeta>> metaPair ) {
         auto entity = metaPair.first;
         auto meta = metaPair.second;
         std::string previousName;
         std::string previousExtension;
-        sdProtoEntity * previousEntity = nullptr;
+        sdEntity * previousEntity = nullptr;
         XMLElement* kind;
         XMLElement* extension;
 

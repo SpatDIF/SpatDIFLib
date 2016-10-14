@@ -33,7 +33,7 @@
  */
 class sdScene : public sdGlobalEventHandler, public sdGlobalMetaHandler, public sdEntityHandler, public sdExtensionHandler, public sdOrderingHandler{
     friend sdEntity;
-    friend sdProtoEntity;
+    friend sdEntity;
     
 private:
     void copy(const sdScene& origin){

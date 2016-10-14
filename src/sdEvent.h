@@ -30,7 +30,7 @@ class sdEntity;
 class sdProtoEvent : public sdProtoMeta{
 protected:
     /*! protected constructor. only friend of this class can invoke */
-    sdProtoEvent(const double time, const EDescriptor descriptor, const sdProtoEntity * const parent);
+    sdProtoEvent(const double time, const EDescriptor descriptor, const sdEntity * const parent);
     const double time; /*< the absolute time of event. unmutable */
 
 public:
@@ -48,7 +48,7 @@ public:
     
  };
 
-inline sdProtoEvent::sdProtoEvent(const double time, const EDescriptor descriptor, const sdProtoEntity * const parent):
+inline sdProtoEvent::sdProtoEvent(const double time, const EDescriptor descriptor, const sdEntity * const parent):
 time(time),
 sdProtoMeta(descriptor, parent)
 {}
@@ -76,7 +76,7 @@ protected:
 public:
     
     /*! constructor with initialization. should be invoked by the subclass*/
-    sdEvent(const double time, const sdProtoEntity * const parent, const typename sdDescriptor<D>::type &value):
+    sdEvent(const double time, const sdEntity * const parent, const typename sdDescriptor<D>::type &value):
     sdProtoEvent(time, D, parent), value(value){}
     
     const typename sdDescriptor<D>::type &getValue(void) const{return value;};

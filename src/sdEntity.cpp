@@ -23,17 +23,17 @@ std::string sdEntity::getName() const{
     return parent->getEntityName(this);
 }
 
-bool sdProtoEntity::isDescriptorValid(const EDescriptor &descriptor) const{
+bool sdEntity::isDescriptorValid(const EDescriptor &descriptor) const{
     if(!parent)return false;
     return parent->isDescriptorValid(descriptor);
 }
 
-void sdProtoEntity::addGlobalMetaAlias(std::shared_ptr<sdProtoMeta> meta) {
+void sdEntity::addGlobalMetaAlias(std::shared_ptr<sdProtoMeta> meta) {
     if(!parent)return;
     parent->addMetaAlias(this, meta);
 }
 
-void sdProtoEntity::addGlobalEventAlias(std::shared_ptr<sdProtoEvent> event) {
+void sdEntity::addGlobalEventAlias(std::shared_ptr<sdProtoEvent> event) {
     if(!parent)return;
     parent->addEventAlias(this, event);
 }

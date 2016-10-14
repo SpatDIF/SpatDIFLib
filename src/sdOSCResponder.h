@@ -255,14 +255,14 @@ inline std::vector<sdOSCMessage> sdOSCResponder::forwardOSCMessage(sdOSCMessage 
 
 inline std::vector<sdOSCMessage> sdOSCResponder::getEventSetsFromAllEntities(const double &queryTime) const{
     std::vector<sdOSCMessage> returnMessages;
-    std::vector<std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>>> matchedEvents;
+    std::vector<std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>>> matchedEvents;
     if(interval != 0.0){
         matchedEvents = scene->getEventsFromAllEntities(queryTime, queryTime+interval); // in the specified region
     }else{
         matchedEvents = scene->getEventsFromAllEntities(queryTime);
     }
     
-    std::for_each(matchedEvents.begin(), matchedEvents.end(), [this, &returnMessages](std::pair<const sdProtoEntity* , std::shared_ptr<sdProtoEvent>> item){
+    std::for_each(matchedEvents.begin(), matchedEvents.end(), [this, &returnMessages](std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>> item){
         auto entity = item.first;
         auto event  = item.second;
         auto entityName = this->scene->getEntityName(entity);
