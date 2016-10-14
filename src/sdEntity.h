@@ -24,16 +24,7 @@
 #include "sdEvent.h"
 #include "sdMetaHandler.h"
 #include "sdEventHandler.h"
-
-class sdKindHandler{
-public:
-    sdKindHandler(EKind kind):kind(kind){}
-    const EKind &getKind() const{return kind;};
-    std::string getKindAsString() const{ return kind == EKind::SD_SOURCE ? "source": "sink";};
-
-protected:
-    EKind kind;
-};
+#include "sdKindHandler.h"
 
 class sdScene;
 class sdEntity: public  sdMetaHandler, public sdEventHandler, public sdKindHandler {

@@ -76,7 +76,7 @@ public:
 
 template <EDescriptor D>
 inline sdMeta<D> * const sdMetaHandler::addMeta(typename sdDescriptorSpec<D>::type value, sdEntity *entity){
-    return dynamic_cast<sdMeta<D>*>(addProtoMeta<D>(value, entity).get());
+    return static_cast<sdMeta<D>*>(addProtoMeta<D>(value, entity).get());
 }
 
 template <EDescriptor D>

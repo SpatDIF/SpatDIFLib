@@ -122,6 +122,11 @@
 		62401D5D1CA2E8E3001179C5 /* sdMetaHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdMetaHandler.h; path = ../../sdMetaHandler.h; sourceTree = "<group>"; };
 		62401D5E1CA2E947001179C5 /* sdEventHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdEventHandler.h; path = ../../sdEventHandler.h; sourceTree = "<group>"; };
 		624D3D411DB0D6E2004E140C /* sdHolder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdHolder.h; path = ../../sdHolder.h; sourceTree = "<group>"; };
+		624D3D421DB1043E004E140C /* sdValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdValue.h; path = ../../sdValue.h; sourceTree = "<group>"; };
+		624D3D431DB10478004E140C /* sdDescriptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdDescriptor.h; path = ../../sdDescriptor.h; sourceTree = "<group>"; };
+		624D3D441DB10509004E140C /* sdProtoMeta.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdProtoMeta.h; path = ../../sdProtoMeta.h; sourceTree = "<group>"; };
+		624D3D451DB1056F004E140C /* sdProtoEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdProtoEvent.h; path = ../../sdProtoEvent.h; sourceTree = "<group>"; };
+		624D3D461DB10683004E140C /* sdKindHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdKindHandler.h; path = ../../sdKindHandler.h; sourceTree = "<group>"; };
 		627FA4C81D74916D007C0C8A /* sdMeta.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdMeta.h; path = ../../sdMeta.h; sourceTree = "<group>"; };
 		627FA4C91D75698D007C0C8A /* sdDataSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = sdDataSet.h; path = ../../sdDataSet.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		627FA4CA1D756B68007C0C8A /* sdDataSetHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = sdDataSetHandler.h; path = ../../sdDataSetHandler.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -260,9 +265,13 @@
 				624D3D411DB0D6E2004E140C /* sdHolder.h */,
 				62AF37B31C236EDC009E9347 /* sdEntity.cpp */,
 				62BE10211C2F3C020033244E /* sdDate.h */,
+				624D3D421DB1043E004E140C /* sdValue.h */,
+				624D3D431DB10478004E140C /* sdDescriptor.h */,
 				62D646701D8C5AAF00FCF13D /* sdData.h */,
 				627FA4C81D74916D007C0C8A /* sdMeta.h */,
+				624D3D441DB10509004E140C /* sdProtoMeta.h */,
 				62BE10231C2F3C020033244E /* sdEvent.h */,
+				624D3D451DB1056F004E140C /* sdProtoEvent.h */,
 			);
 			name = DataModel;
 			sourceTree = "<group>";
@@ -270,13 +279,14 @@
 		627FA4CD1D756BEB007C0C8A /* StorageHandlers */ = {
 			isa = PBXGroup;
 			children = (
-				629B8D4F1D956AA800036706 /* sdGlobalMetaHandler.h */,
+				624D3D461DB10683004E140C /* sdKindHandler.h */,
 				629B8D4C1D95583A00036706 /* sdOrderingHandler.h */,
 				62401D5D1CA2E8E3001179C5 /* sdMetaHandler.h */,
 				62401D5E1CA2E947001179C5 /* sdEventHandler.h */,
 				629B8D4D1D955A6300036706 /* sdEntityHandler.h */,
 				627FA4CA1D756B68007C0C8A /* sdDataSetHandler.h */,
 				629B8D471D95341B00036706 /* sdExtensionHandler.h */,
+				629B8D4F1D956AA800036706 /* sdGlobalMetaHandler.h */,
 				629B8D4E1D9561E200036706 /* sdGlobalEventHandler.h */,
 			);
 			name = StorageHandlers;
