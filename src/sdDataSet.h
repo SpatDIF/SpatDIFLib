@@ -9,20 +9,12 @@
 #pragma once
 #include <unordered_set>
 #include <unordered_map>
+#include "sdHolder.h"
 #include "sdSpec.h"
 #include "sdDescriptor.h"
 /*!
  reusable set of multiple data in an extension, which can be stored in std::unordered_map and referred by name.
  */
-
-struct sdProtoHolder{};
-
-template<typename T>
-struct sdHolder : public sdProtoHolder {
-    sdHolder(const T& item) : item(item) {}
-    T item;
-};
-
 
 class sdProtoDataSet{
 public:
@@ -61,8 +53,7 @@ public:
     
 protected:
     
-    /// this holder is used for type
-    
+    // type-erased dataset map
     std::unordered_map<EDescriptor, std::shared_ptr<sdProtoHolder>> dataSetHolders;
 };
 
