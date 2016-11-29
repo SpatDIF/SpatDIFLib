@@ -83,13 +83,13 @@ public:
 
 
 #pragma mark entity handler override
-    sdEntity * const addEntity(std::string name, EKind kind = EKind::SD_SOURCE) override;
+    sdEntity * const addEntity(std::string name, ECATEGORY category = ECATEGORY::SD_SOURCE) override;
     
     std::string dump(bool consoleOut = true);
 };
 
-inline sdEntity * const sdScene::addEntity(std::string name, EKind kind){
-    auto ret = entities.insert(std::pair<std::string, sdEntity>(name ,sdEntity(this, kind)));
+inline sdEntity * const sdScene::addEntity(std::string name, ECATEGORY category){
+    auto ret = entities.insert(std::pair<std::string, sdEntity>(name ,sdEntity(this, category)));
     if(!ret.second) return nullptr;
     return &ret.first->second;
 }

@@ -340,8 +340,8 @@ TEST_CASE("hardware out extension"){
     scene.addExtension(EExtension::SD_SINK_ENTITY);
     scene.addExtension(EExtension::SD_HARDWARE_OUT);
     
-    auto leftSpeaker = scene.addEntity("JBL-Left", EKind::SD_SINK);
-    auto rightSpeaker = scene.addEntity("JBL-Right", EKind::SD_SINK);
+    auto leftSpeaker = scene.addEntity("JBL-Left", ECATEGORY::SD_SINK);
+    auto rightSpeaker = scene.addEntity("JBL-Right", ECATEGORY::SD_SINK);
 
     // physical channel
     leftSpeaker->addMeta<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(10);

@@ -36,9 +36,9 @@ enum class EOrdering{
 };
 
 /*!
- enum for kind. All sdEntityCore must define their kind when instantiated.
+ enum for category. All sdEntityCore must define their categories when instantiated.
  */
-enum class EKind {
+enum class ECATEGORY {
     SD_SOURCE,
     SD_SINK
 };

@@ -24,15 +24,15 @@
 #include "sdEvent.h"
 #include "sdMetaHandler.h"
 #include "sdEventHandler.h"
-#include "sdKindHandler.h"
+#include "sdCategoryHandler.h"
 
 class sdScene;
-class sdEntity: public  sdMetaHandler, public sdEventHandler, public sdKindHandler {
+class sdEntity: public  sdMetaHandler, public sdEventHandler, public sdCategoryHandler {
 public:
     friend sdScene;
     
     /*!sdEntity can be invoked only by sdScene*/
-    sdEntity(sdScene * const parent, EKind kind = EKind::SD_SOURCE):parent(parent),sdKindHandler(kind){};
+    sdEntity(sdScene * const parent, ECATEGORY category = ECATEGORY::SD_SOURCE):parent(parent),sdCategoryHandler(category){};
     
     /*! ask the scene my identifer */
     std::string getName() const;

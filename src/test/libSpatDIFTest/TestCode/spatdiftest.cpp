@@ -346,13 +346,13 @@ TEST_CASE("getNextValue() getPreviousValue()"){
 TEST_CASE("Test sdEntity", "[sdEntity]"){
     sdScene scene;
     sdEntity * firstEntity = scene.addEntity("FirstEntity");
-    sdEntity * secondEntity = scene.addEntity("SecondEntity", EKind::SD_SINK);
+    sdEntity * secondEntity = scene.addEntity("SecondEntity", ECATEGORY::SD_SINK);
     REQUIRE(!scene.removeEntity("Nothing"));
     
-    REQUIRE(firstEntity->getKind() == EKind::SD_SOURCE);
-    REQUIRE(secondEntity->getKind() == EKind::SD_SINK);
-    REQUIRE(firstEntity->getKindAsString() == "source");
-    REQUIRE(secondEntity->getKindAsString() ==  "sink");
+    REQUIRE(firstEntity->getCategory() == ECATEGORY::SD_SOURCE);
+    REQUIRE(secondEntity->getCategory() == ECATEGORY::SD_SINK);
+    REQUIRE(firstEntity->getCategoryAsString() == "source");
+    REQUIRE(secondEntity->getCategoryAsString() ==  "sink");
 
     REQUIRE(scene.removeEntity("FirstEntity"));
     REQUIRE(scene.getNumberOfEntities() == 1);

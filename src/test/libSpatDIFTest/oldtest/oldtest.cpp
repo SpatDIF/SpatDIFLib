@@ -260,8 +260,8 @@ TEST_CASE("sdSaverTest"){
     scene.addExtension(EExtension::SD_SINK_ENTITY);
 
     //the scene has one entities
-    auto myEntity = scene.addEntity("myEntity", EKind::SD_SOURCE);
-    auto yourEntity = scene.addEntity("yourEntity", EKind::SD_SOURCE);
+    auto myEntity = scene.addEntity("myEntity", ECATEGORY::SD_SOURCE);
+    auto yourEntity = scene.addEntity("yourEntity", ECATEGORY::SD_SOURCE);
     
     myEntity->addMeta<SD_POSITION>({0,0,1}); // initial position
     yourEntity->addMeta<SD_POSITION>({-1,1,1});
@@ -281,7 +281,7 @@ TEST_CASE("sdSaverTest_EXTNESION"){
     sdScene scene(info);
     
     scene.addExtension(EExtension::SD_SOURCE_SPREAD);
-    auto myEntity = scene.addEntity("myEntity", EKind::SD_SOURCE);
+    auto myEntity = scene.addEntity("myEntity", ECATEGORY::SD_SOURCE);
     myEntity->addEvent<SD_POSITION>(1.0, {0.1,0.2,0.3});
     myEntity->addEvent<SD_SOURCE_SPREAD_SPREAD>(1.0, 0.42);
     myEntity->addEvent<SD_MEDIA_LOCATION>(1.0, "/some/where/in/your/system");

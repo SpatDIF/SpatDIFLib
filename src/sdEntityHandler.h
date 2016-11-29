@@ -14,7 +14,7 @@
 class sdEntityHandler {
     
 public:
-    virtual sdEntity * const addEntity(std::string name, EKind kind) = 0;
+    virtual sdEntity * const addEntity(std::string name, ECATEGORY category) = 0;
 
     /*! return the name of all entities in the scene as vector of string
      */

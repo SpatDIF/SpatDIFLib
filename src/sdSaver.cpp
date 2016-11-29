@@ -111,19 +111,19 @@ XMLElement* sdXMLSaver::XMLMetaSection(XMLDocument &xml, const sdScene &scene){
         std::string previousName;
         std::string previousExtension;
         sdEntity * previousEntity = nullptr;
-        XMLElement* kind;
+        XMLElement* category;
         XMLElement* extension;
 
         //event
-        //kind = xml.NewElement(entity->getKindAsString().c_str());
-        kind = xml.NewElement(std::string("source").c_str());
+        //category = xml.NewElement(entity->getCategoryAsString().c_str());
+        category = xml.NewElement(std::string("source").c_str());
 
         // the name of entity always comes first
         XMLElement* name = xml.NewElement("name"); // entity name
         auto entityName = scene.getEntityName(entity);
         XMLText* nameText = xml.NewText(entityName.c_str());
         name->InsertEndChild(nameText);
-        kind->InsertEndChild(name);
+        category->InsertEndChild(name);
     
         // packaging - combining element and text (value)
         XMLElement* element = xml.NewElement(meta->getDescriptorAsString().c_str());
@@ -133,8 +133,8 @@ XMLElement* sdXMLSaver::XMLMetaSection(XMLDocument &xml, const sdScene &scene){
         std::string relevantExtension = sdSpec::extensionToString(sdSpec::getExtensionOfDescriptor(meta->getDescriptor()));
         
         if(relevantExtension == "core"){
-            kind->InsertEndChild(element);
-            metaSection->InsertEndChild(kind);
+            category->InsertEndChild(element);
+            metaSection->InsertEndChild(category);
         }else{
             
             if( (entity != previousEntity ) || (previousExtension != relevantExtension)){
@@ -142,8 +142,8 @@ XMLElement* sdXMLSaver::XMLMetaSection(XMLDocument &xml, const sdScene &scene){
                 extension = xml.NewElement((relevantExtension).c_str());
             }
             extension->InsertEndChild(element);
-            kind->InsertEndChild(extension);
-            metaSection->InsertEndChild(kind);
+            category->InsertEndChild(extension);
+            metaSection->InsertEndChild(category);
         }
         
         previousEntity = entity; // store current name in order to avoid the dupplication.
@@ -184,12 +184,12 @@ std::string sdXMLSaver::toString(const sdScene &scene){
                 auto entityEventsAtTime = entity.second.getEvents(eventTime.first);
                 if(entityEventsAtTime.empty()) continue;
                 
-                XMLElement * kindElement = xml.NewElement(entity.second.getKindAsString().c_str());
+                XMLElement * categoryElement = xml.NewElement(entity.second.getCategoryAsString().c_str());
                 XMLElement * nameElement = xml.NewElement("name"); // entity name
 
                 XMLText* nameText = xml.NewText(entity.first.c_str());
                 nameElement->InsertEndChild(nameText);
-                kindElement->InsertEndChild(nameElement);
+                categoryElement->InsertEndChild(nameElement);
 
                 XMLElement* extensionElement = nullptr;
                 std::string previousExtension = "";
@@ -199,19 +199,19 @@ std::string sdXMLSaver::toString(const sdScene &scene){
                     std::string relevantExtension = sdSpec::extensionToString(sdSpec::getExtensionOfDescriptor(entityEvent->getDescriptor()));
         
                     if(relevantExtension == "core"){
-                        kindElement->InsertEndChild(eventElement);
+                        categoryElement->InsertEndChild(eventElement);
                     }else{// extension
                         if(previousExtension == relevantExtension){
                             extensionElement->InsertEndChild(eventElement);
                         }else{
                             extensionElement = xml.NewElement((relevantExtension).c_str());
                             extensionElement->InsertEndChild(eventElement);
-                            kindElement->InsertEndChild(extensionElement);
+                            categoryElement->InsertEndChild(extensionElement);
                         }
                     }
                     previousExtension = relevantExtension;
                 }
-                spatdif->InsertEndChild(kindElement);
+                spatdif->InsertEndChild(categoryElement);
             }
             eventTime = scene.getNextEventTime(eventTime.first);
         }
@@ -232,19 +232,19 @@ std::string sdXMLSaver::toString(const sdScene &scene){
                 time->InsertEndChild(timeText);
                 spatdif->InsertEndChild(time);
                 
-                XMLElement* kind;
-                kind = xml.NewElement(entity.getKindAsString().c_str());
+                XMLElement* category;
+                category = xml.NewElement(entity.getCategoryAsString().c_str());
                 XMLElement* name = xml.NewElement("name");
                 XMLText* nameText = xml.NewText(entityName.c_str());
                 name->InsertEndChild(nameText);
-                kind->InsertEndChild(name);
+                category->InsertEndChild(name);
                 
                 XMLElement* element = xml.NewElement(event->getDescriptorAsString().c_str());
                 XMLText* text = xml.NewText(event->getValueAsString().c_str());
                 element->InsertEndChild(text);
-                kind->InsertEndChild(element);
+                category->InsertEndChild(element);
                 
-                spatdif->InsertEndChild(kind);
+                spatdif->InsertEndChild(category);
             }
         }
     }

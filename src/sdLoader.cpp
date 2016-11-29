@@ -86,7 +86,7 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
             auto entityName = std::string(name->GetText());
             sdEntity* targetEntity = scene.getEntity(entityName);
             if(!targetEntity){
-                targetEntity = scene.addEntity(entityName, EKind::SD_SINK);
+                targetEntity = scene.addEntity(entityName, ECATEGORY::SD_SINK);
                 if(type)targetEntity->addMeta<SD_TYPE>(sdDescriptorSpec<SD_TYPE>::stringTo(type->GetText()));
                 if(position){
                     std::string unit = position->Attribute("unit");
@@ -129,9 +129,9 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
             targetEntity = scene.getEntity(entityName);
             if(!targetEntity){
                 if (tagType == "source") {
-                    targetEntity = scene.addEntity(entityName, EKind::SD_SOURCE);
+                    targetEntity = scene.addEntity(entityName, ECATEGORY::SD_SOURCE);
                 }else{
-                    targetEntity = scene.addEntity(entityName, EKind::SD_SINK);
+                    targetEntity = scene.addEntity(entityName, ECATEGORY::SD_SINK);
                 }
             }
             
