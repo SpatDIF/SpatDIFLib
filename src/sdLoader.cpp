@@ -38,7 +38,6 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
         
         // dataset items
         std::vector<EExtension> enabledExtension = sdSpec::getDataSetEnabledExtensions();
-        sdInfo infoDataSet;
 
         for(EExtension extension : enabledExtension){
             std::string extensionString = sdSpec::extensionToString(extension);
@@ -50,16 +49,15 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
             for(auto descriptorSpec : descriptorSpecs){
                 XMLElement * metaElement = datasetElement->FirstChildElement(descriptorSpec.descriptorString.c_str());
                 if(!metaElement){
-                    //std::cout << "destcriptor : " << descriptorSpec.descriptorString << " not found." << std::endl;
                     continue;
                 }
-                
-                std::string valueString = metaElement->GetText();
-                scene.setData("info", descriptorSpec.descriptor, valueString);
+                if(metaElement->GetText()){
+                    std::string valueString = metaElement->GetText();
+                    scene.setData("info", descriptorSpec.descriptor, valueString);
+                }
                 metaElement = metaElement->NextSiblingElement();
             }
         }
-        scene.setInfo(infoDataSet);
     }
     
     // activate extension

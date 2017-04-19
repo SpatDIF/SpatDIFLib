@@ -349,7 +349,7 @@
 				627FA4D11D756C77007C0C8A /* OSC */,
 				627FA4CE1D756C11007C0C8A /* Utility */,
 				627FA4D21D756C91007C0C8A /* Library */,
-				62D904B91C0E4DBF0065D8A5 /* libSpatDIFTest */,
+				62D904B91C0E4DBF0065D8A5 /* SpatDIFTest */,
 				62D904B81C0E4DBF0065D8A5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -364,13 +364,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		62D904B91C0E4DBF0065D8A5 /* libSpatDIFTest */ = {
+		62D904B91C0E4DBF0065D8A5 /* SpatDIFTest */ = {
 			isa = PBXGroup;
 			children = (
 				62CBD7A01D757EBC008F00CC /* descriptor_test.cpp */,
 				62D904D11C0E50320065D8A5 /* spatdiftest.cpp */,
 				629B8D501D956E4000036706 /* oldtest.cpp */,
 			);
+			name = SpatDIFTest;
 			path = libSpatDIFTest;
 			sourceTree = "<group>";
 		};
