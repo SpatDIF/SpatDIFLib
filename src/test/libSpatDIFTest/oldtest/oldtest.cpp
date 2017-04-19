@@ -180,6 +180,23 @@ TEST_CASE("How to Query loaded file"){
     REQUIRE( (*pos)[2] == 2);
 }
 
+TEST_CASE("Loading actual file for a piece"){
+    ifstream ifs("/Users/chikashi/Development/spatdiflib/src/test/libSpatDIFTest/TestCode/Radioscape_spatdif.xml");
+    string xmlString;
+    if (ifs.is_open()){
+        while ( ifs.good() ){
+            string str;
+            getline(ifs,str);
+            xmlString.append(str);
+        }
+        ifs.close();
+    }
+    REQUIRE(xmlString != "");
+    
+    sdScene myScene = sdLoader::sceneFromXML(xmlString);
+    
+}
+
 
 TEST_CASE("sdOSCConverter Test"){
     auto dumpBytes = [](vector<unsigned char> bytes){

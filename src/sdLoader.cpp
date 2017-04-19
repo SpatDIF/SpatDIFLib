@@ -53,7 +53,7 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
                 }
                 if(metaElement->GetText()){
                     std::string valueString = metaElement->GetText();
-                    scene.setData("info", descriptorSpec.descriptor, valueString);
+                    scene.setData(extensionString, descriptorSpec.descriptor, valueString);
                 }
                 metaElement = metaElement->NextSiblingElement();
             }
