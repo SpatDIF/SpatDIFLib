@@ -50,7 +50,8 @@ public:
     }
     
     void setData(std::string identifier, EDescriptor descriptor, std::string valueString){
-        sdSpec::getAddDataFunc(descriptor)(this, identifier, valueString);
+        auto addDataFunc = sdSpec::getAddDataFunc(descriptor);
+        addDataFunc(this, identifier, valueString);
     }
     
     std::unordered_set<std::string> getIdentifiers(const EExtension &extension) const{

@@ -30,15 +30,8 @@ public:
      */
     static sdScene sceneFromXML(std::string xmlString);
 
-    /*! converts a JSON string to a sdScene
-     @param jsonString a json String to be converted
-     */
-    static sdScene sceneFromJSON(std::string jsonString);
-    
-    /*! converts a YAML string to a sdScene
-     @param yamlString a yaml String to be converted
-     */
-    static sdScene sceneFromYAML(std::string yamlString);
+private:
+    static void activateExtensions(sdScene &scene, const std::string &extensionString);
     
 };
 

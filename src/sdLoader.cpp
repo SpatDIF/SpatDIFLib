@@ -24,6 +24,16 @@
 #include "JSONOptions.h"
 #include "rapidxml.hpp"
 
+void sdXMLLoader::activateExtensions(sdScene &scene, const std::string &extensionsString){
+    // activate extension
+    std::istringstream iss(extensionsString);
+    while (iss.good()) { // add extensions one by one
+        std::string extensionString;
+        iss >> extensionString;
+        scene.addExtension(extensionString);
+    }
+}
+
 sdScene sdXMLLoader::sceneFromXML(std::string xmlString){
     using namespace rapidxml;
     xml_document<> doc;
@@ -34,52 +44,31 @@ sdScene sdXMLLoader::sceneFromXML(std::string xmlString){
     auto spatdif = doc.first_node("spatdif");
     auto meta = spatdif->first_node("meta");
     {
+        
         std::vector<EExtension> enabledExtension = sdSpec::getDataSetEnabledExtensions();
 
-        for(EExtension extension : enabledExtension){
-            std::string extensionString = sdSpec::extensionToString(extension);
-            auto datasetElement = meta->first_node(extensionString.c_str());
-            if(!datasetElement) continue;
-            
-            auto descriptorSpecs = sdSpec::getDescriptorsOfExtension(extension);
-            for(auto descriptorSpec : descriptorSpecs){
-                auto metaElement = datasetElement->first_node(descriptorSpec.descriptorString.c_str());
-                if(!metaElement) continue;
-                if(metaElement->value_size() != 0){
-                    std::string valueString = metaElement->value();
-                    scene.setData(extensionString, descriptorSpec.descriptor, valueString);
+        /* check the dataset definition in the meta section and add to scene */
+        
+        for(auto metaNode = meta->first_node(); metaNode; metaNode = metaNode->next_sibling()){
+            std::string nodeName = metaNode->name();
+            if(nodeName == "extensions"){
+                activateExtensions(scene, metaNode->value());
+            }else if(nodeName == ""){
+                
+            }else if(nodeName == "sink"){
+                // create named sink entity
+                auto *name = metaNode->first_node("name");
+                auto entityName = std::string(name->value());
+                sdEntity* targetEntity = scene.getEntity(entityName);
+                if(!targetEntity){
+                    targetEntity = scene.addEntity(entityName, ECATEGORY::SD_SINK);
                 }
-                metaElement = metaElement->next_sibling();
-            }
-        }
-    }
-    
-    // activate extension
-    auto extensions = meta->first_node("extensions");
-    if(extensions){
-        std::string extensionsString = std::string(extensions->value());
-        std::istringstream iss(extensionsString);
-        while (iss.good()) { // add extensions one by one
-            std::string extensionString;
-            iss >> extensionString;
-            scene.addExtension(extensionString);
-        }
-    }
-    
-    // create sink entities
-    {
-        auto sink = meta->first_node("sink");
-        while (sink) {
-            auto *name = sink->first_node("name");
-            auto *type = sink->first_node("type");
-            auto *position = sink->first_node("position");
-            auto *hoPhysicalChannel = sink->first_node("physical-channel");
-            auto *hoGain = sink->first_node("gain");
-            auto entityName = std::string(name->value());
-            sdEntity* targetEntity = scene.getEntity(entityName);
-            if(!targetEntity){
-                targetEntity = scene.addEntity(entityName, ECATEGORY::SD_SINK);
+
+                //setup property
+                auto *type = metaNode->first_node("type");
                 if(type)targetEntity->addMeta<SD_TYPE>(sdDescriptorSpec<SD_TYPE>::stringTo(type->value()));
+
+                auto *position = metaNode->first_node("position");
                 if(position){
                     std::string unit = position->first_attribute("unit")->value();
                     if(unit == "aed"){
@@ -89,15 +78,17 @@ sdScene sdXMLLoader::sceneFromXML(std::string xmlString){
                         targetEntity->addMeta<SD_POSITION>(sdUtils::stringToArray<double, 3>(position->value()));
                     }
                 }
-                if(hoPhysicalChannel){
-                    int channel = sdUtils::stringTo<int>(hoPhysicalChannel->value());
+                
+                auto *physicalChannel = metaNode->first_node("physical-channel");
+                if(physicalChannel){
+                    int channel = sdUtils::stringTo<int>(physicalChannel->value());
                     targetEntity->addMeta<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(channel);
                 }
-                if(hoGain) {
-                    targetEntity->addMeta<SD_HARDWARE_OUT_GAIN>(sdUtils::stringTo<double>(hoGain->value()));
-                }
                 
-                sink = sink->next_sibling("sink");
+                auto *gain = metaNode->first_node("gain");
+                if(gain) {
+                    targetEntity->addMeta<SD_HARDWARE_OUT_GAIN>(sdUtils::stringTo<double>(gain->value()));
+                }
             }
         }
     }
@@ -154,8 +145,8 @@ sdScene sdXMLLoader::sceneFromXML(std::string xmlString){
     return std::move(scene);
 }
 
-sdScene sdXMLLoader::sceneFromJSON(std::string jsonString){
-    sdScene scene;
+//sdScene sdXMLLoader::sceneFromJSON(std::string jsonString){
+//    sdScene scene;
 
 //    JSONNode json;
 //    sdInfo info;
@@ -257,13 +248,13 @@ sdScene sdXMLLoader::sceneFromJSON(std::string jsonString){
 //            iit++;
 //        }
 //    }
-    return scene;
-}
-
-sdScene sdXMLLoader::sceneFromYAML(std::string yamlString){
-    sdScene scene;
-    return scene;
-}
+//    return scene;
+//}
+//
+//sdScene sdXMLLoader::sceneFromYAML(std::string yamlString){
+//    sdScene scene;
+//    return scene;
+//}
 
 
 
