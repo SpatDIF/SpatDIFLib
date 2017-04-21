@@ -85,6 +85,7 @@ public:
 #pragma mark entity handler override
     sdEntity * const addEntity(std::string name, ECATEGORY category = ECATEGORY::SD_SOURCE) override;
     
+    void sort();
     std::string dump(bool consoleOut = true);
 };
 
@@ -92,6 +93,14 @@ inline sdEntity * const sdScene::addEntity(std::string name, ECATEGORY category)
     auto ret = entities.insert(std::pair<std::string, sdEntity>(name ,sdEntity(this, category)));
     if(!ret.second) return nullptr;
     return &ret.first->second;
+}
+
+inline void sdScene::sort(){
+    for(auto &entity : entities){
+        entity.second.sort();
+    }
+    
+    sortAllEvents();
 }
 
 inline std::string sdScene::dump(bool consoleOut){

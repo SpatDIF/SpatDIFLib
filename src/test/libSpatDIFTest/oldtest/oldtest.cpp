@@ -106,22 +106,22 @@ TEST_CASE("Speaker Setup"){
     
 }
 
-TEST_CASE("Loading actual file for a piece"){
-    ifstream ifs("/Users/chikashi/Development/spatdiflib/src/test/libSpatDIFTest/TestCode/Radioscape_spatdif.xml");
-    string xmlString;
-    if (ifs.is_open()){
-        while ( ifs.good() ){
-            string str;
-            getline(ifs,str);
-            xmlString.append(str);
-        }
-        ifs.close();
-    }
-    REQUIRE(xmlString != "");
-    
-    sdScene myScene = sdXMLLoader::sceneFromXML(xmlString);
-    
-}
+//TEST_CASE("Loading actual file for a piece"){
+//    ifstream ifs("/Users/chikashi/Development/spatdiflib/src/test/libSpatDIFTest/TestCode/Radioscape_spatdif.xml");
+//    string xmlString;
+//    if (ifs.is_open()){
+//        while ( ifs.good() ){
+//            string str;
+//            getline(ifs,str);
+//            xmlString.append(str);
+//        }
+//        ifs.close();
+//    }
+//    REQUIRE(xmlString != "");
+//    
+//    sdScene myScene = sdXMLLoader::sceneFromXML(xmlString);
+//    
+//}
 
 TEST_CASE("How to Query loaded file"){
     ifstream ifs("/Users/chikashi/Development/spatdiflib/src/test/libSpatDIFTest/TestCode/simple_scene.xml");

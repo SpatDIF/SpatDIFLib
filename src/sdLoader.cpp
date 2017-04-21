@@ -148,9 +148,9 @@ sdScene sdXMLLoader::sceneFromXML(std::string xmlString){
             }
         }
         element = element->next_sibling();
-
+        
     }
-
+    scene.sort();
     return std::move(scene);
 }
 
