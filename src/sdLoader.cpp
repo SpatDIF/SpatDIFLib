@@ -19,51 +19,45 @@
 #include "sdDescriptorSpec.h"
 #include "sdSpec.h"
 #include "sdLoader.h"
-#include "tinyxml2.h"
 #include "libjson.h"
 #include "JSONNode.h"
 #include "JSONOptions.h"
+#include "rapidxml.hpp"
 
-sdScene sdLoader::sceneFromXML(std::string xmlString){
-    using namespace tinyxml2;
-    XMLDocument xml;
-    XMLError err = xml.Parse(xmlString.c_str());
-    if(err != XML_SUCCESS){throw FileErrorException();}
+sdScene sdXMLLoader::sceneFromXML(std::string xmlString){
+    using namespace rapidxml;
+    xml_document<> doc;
+    doc.parse<0>(const_cast<char *>(xmlString.c_str())); // rapidXML is in-situ so const cannot be passed but xmlString is local string
     
     sdScene scene;
 
-    XMLElement* spatdif = xml.FirstChildElement("spatdif");
-    XMLElement* meta = spatdif->FirstChildElement("meta");
+    auto spatdif = doc.first_node("spatdif");
+    auto meta = spatdif->first_node("meta");
     {
-        
-        // dataset items
         std::vector<EExtension> enabledExtension = sdSpec::getDataSetEnabledExtensions();
 
         for(EExtension extension : enabledExtension){
             std::string extensionString = sdSpec::extensionToString(extension);
-            XMLElement* datasetElement = meta->FirstChildElement(extensionString.c_str());
- 
+            auto datasetElement = meta->first_node(extensionString.c_str());
             if(!datasetElement) continue;
             
             auto descriptorSpecs = sdSpec::getDescriptorsOfExtension(extension);
             for(auto descriptorSpec : descriptorSpecs){
-                XMLElement * metaElement = datasetElement->FirstChildElement(descriptorSpec.descriptorString.c_str());
-                if(!metaElement){
-                    continue;
-                }
-                if(metaElement->GetText()){
-                    std::string valueString = metaElement->GetText();
+                auto metaElement = datasetElement->first_node(descriptorSpec.descriptorString.c_str());
+                if(!metaElement) continue;
+                if(metaElement->value_size() != 0){
+                    std::string valueString = metaElement->value();
                     scene.setData(extensionString, descriptorSpec.descriptor, valueString);
                 }
-                metaElement = metaElement->NextSiblingElement();
+                metaElement = metaElement->next_sibling();
             }
         }
     }
     
     // activate extension
-    XMLElement* extensions = meta->FirstChildElement("extensions");
+    auto extensions = meta->first_node("extensions");
     if(extensions){
-        std::string extensionsString = std::string(extensions->GetText());
+        std::string extensionsString = std::string(extensions->value());
         std::istringstream iss(extensionsString);
         while (iss.good()) { // add extensions one by one
             std::string extensionString;
@@ -74,53 +68,52 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
     
     // create sink entities
     {
-        XMLElement* sink = meta->FirstChildElement("sink");
+        auto sink = meta->first_node("sink");
         while (sink) {
-            XMLElement *name = sink->FirstChildElement("name");
-            XMLElement *type = sink->FirstChildElement("type");
-            XMLElement *position = sink->FirstChildElement("position");
-            XMLElement *hoPhysicalChannel = sink->FirstChildElement("physical-channel");
-            XMLElement *hoGain = sink->FirstChildElement("gain");
-            auto entityName = std::string(name->GetText());
+            auto *name = sink->first_node("name");
+            auto *type = sink->first_node("type");
+            auto *position = sink->first_node("position");
+            auto *hoPhysicalChannel = sink->first_node("physical-channel");
+            auto *hoGain = sink->first_node("gain");
+            auto entityName = std::string(name->value());
             sdEntity* targetEntity = scene.getEntity(entityName);
             if(!targetEntity){
                 targetEntity = scene.addEntity(entityName, ECATEGORY::SD_SINK);
-                if(type)targetEntity->addMeta<SD_TYPE>(sdDescriptorSpec<SD_TYPE>::stringTo(type->GetText()));
+                if(type)targetEntity->addMeta<SD_TYPE>(sdDescriptorSpec<SD_TYPE>::stringTo(type->value()));
                 if(position){
-                    std::string unit = position->Attribute("unit");
+                    std::string unit = position->first_attribute("unit")->value();
                     if(unit == "aed"){
-                        auto aed = sdUtils::stringToArray<double, 3>(position->GetText());
+                        auto aed = sdUtils::stringToArray<double, 3>(position->value());
                         targetEntity->addMeta<SD_POSITION>(sdUtils::aedToXyz(aed));
                     }else{
-                        targetEntity->addMeta<SD_POSITION>(sdUtils::stringToArray<double, 3>(position->GetText()));
+                        targetEntity->addMeta<SD_POSITION>(sdUtils::stringToArray<double, 3>(position->value()));
                     }
                 }
                 if(hoPhysicalChannel){
-                    int channel = sdUtils::stringTo<int>(hoPhysicalChannel->GetText());
+                    int channel = sdUtils::stringTo<int>(hoPhysicalChannel->value());
                     targetEntity->addMeta<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(channel);
                 }
                 if(hoGain) {
-                    targetEntity->addMeta<SD_HARDWARE_OUT_GAIN>(sdUtils::stringTo<double>(hoGain->GetText()));
+                    targetEntity->addMeta<SD_HARDWARE_OUT_GAIN>(sdUtils::stringTo<double>(hoGain->value()));
                 }
                 
-                sink = sink->NextSiblingElement("sink");
+                sink = sink->next_sibling("sink");
             }
         }
     }
 
     //first time tag
     std::string timeString;
-    XMLElement* element = meta->NextSiblingElement();
+    auto element = meta->next_sibling();
 
     while(element){
-        
-        std::string tagType = element->Name();
+        std::string tagType = element->name();
         if(tagType == "time"){
-            timeString = std::string(element->GetText());
-        }
-        else if(tagType == "source" || tagType == "sink"){
-            XMLElement *name = element->FirstChildElement("name");
-            std::string entityName = std::string(name->GetText());
+            timeString = std::string(element->value());
+            
+        }else if(tagType == "source" || tagType == "sink"){
+            auto name = element->first_node("name");
+            std::string entityName = std::string(name->value());
             sdEntity* targetEntity;
             
             // if target entity does not exist, create one
@@ -133,31 +126,35 @@ sdScene sdLoader::sceneFromXML(std::string xmlString){
                 }
             }
             
-            // get descriptor or extension type
-            XMLElement *tempTag = name->NextSiblingElement();
-            while(tempTag) {
-                XMLElement *childTag = tempTag->FirstChildElement();
-                if(!childTag){ // tempTag is a descriptor
-                    XMLElement *descriptor = tempTag;
-                    targetEntity->addEvent(timeString, "core",std::string(descriptor->Name()), std::string(descriptor->GetText()));
+            auto node = element->first_node();
+            while(node){
+                if(std::string(node->name()) == "name") {
+                    node = node->next_sibling();
+                    continue;
+                }
 
-                }else{ // tempTag is a exType
-                    XMLElement *descriptor = childTag;
+                xml_node<> * childTag = node->first_node();
+                if(childTag->type() == node_data){ // node is a descriptor
+                    xml_node<> * descriptor = node;
+                    targetEntity->addEvent(timeString, "core", std::string(descriptor->name()), std::string(descriptor->value()), false);
+                }else if(childTag->type() == node_element){ // tempTag is a extension type
+                    xml_node<> * descriptor = childTag;
                     while (descriptor) {
-                        targetEntity->addEvent(timeString, tempTag->Name(), descriptor->Name(), descriptor->GetText());
-                        descriptor = descriptor->NextSiblingElement();
+                        targetEntity->addEvent(timeString, node->name(), descriptor->name(), descriptor->value(), false); // no sort for performance gain
+                        descriptor = descriptor->next_sibling();
                     }
                 }
-                tempTag = tempTag->NextSiblingElement();
+                node = node->next_sibling();
             }
         }
+        element = element->next_sibling();
 
-        element = element->NextSiblingElement();
     }
+
     return std::move(scene);
 }
 
-sdScene sdLoader::sceneFromJSON(std::string jsonString){
+sdScene sdXMLLoader::sceneFromJSON(std::string jsonString){
     sdScene scene;
 
 //    JSONNode json;
@@ -263,7 +260,7 @@ sdScene sdLoader::sceneFromJSON(std::string jsonString){
     return scene;
 }
 
-sdScene sdLoader::sceneFromYAML(std::string yamlString){
+sdScene sdXMLLoader::sceneFromYAML(std::string yamlString){
     sdScene scene;
     return scene;
 }

@@ -21,7 +21,7 @@
 /*!
     convert XML, JSON, or YAML strings to a sdScene
  */
-class sdLoader
+class sdXMLLoader
 {
 public:
     

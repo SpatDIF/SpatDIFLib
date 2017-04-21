@@ -18,24 +18,25 @@
 #include <string>
 #include "sdScene.h"
 
-#include "tinyxml2.h"
+#include "rapidxml.hpp"
 
-
+using namespace rapidxml;
 
 class sdXMLSaver{
     
 public:
     static std::string toString(const sdScene &scene);
 
-protected:
-    static tinyxml2::XMLDeclaration* XMLDeclarationSection(tinyxml2::XMLDocument &xmle);
-    static tinyxml2::XMLElement* XMLHeaderSection(tinyxml2::XMLDocument &xml);
-    static tinyxml2::XMLElement* XMLInfoSection(tinyxml2::XMLDocument &xml, const sdScene &scene);
-    static void XMLDataSets(tinyxml2::XMLDocument &xml, const sdScene &scene, tinyxml2::XMLElement *metaSection);
-    static tinyxml2::XMLElement* XMLOrderingSection(tinyxml2::XMLDocument &xml, const sdScene &scene);
+private:
+    static xml_node<> * createOrderingSection(xml_document<> &xml, const sdScene &scene);
+    static xml_node<> * createMetaSection(xml_document<> &xml, const sdScene &scene);
+    static xml_node<> * createExtentionSection(xml_document<> &xml, const sdScene &scene);
 
-    static tinyxml2::XMLElement* XMLMetaSection(tinyxml2::XMLDocument &xml, const sdScene &scene);
-    static tinyxml2::XMLElement* XMLTrajectorySection(tinyxml2::XMLDocument &xml, const sdScene &scene);
+    static xml_node<> * XMLHeaderSection(xml_document<> &xml);
+    static xml_node<> * XMLInfoSection(xml_document<> &xml, const sdScene &scene);
+    static xml_node<> * XMLDataSets(xml_document<> &xmle, const sdScene &scene, xml_node<> *metaSection);
+
+    static xml_node<> XMLTrajectorySection(xml_document<> &xml, const sdScene &scene);
 };
 
 class sdJSONSaver{

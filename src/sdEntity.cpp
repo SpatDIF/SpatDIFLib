@@ -33,9 +33,9 @@ void sdEntity::addGlobalMetaAlias(std::shared_ptr<sdProtoMeta> meta) {
     parent->addMetaAlias(this, meta);
 }
 
-void sdEntity::addGlobalEventAlias(std::shared_ptr<sdProtoEvent> event) {
+void sdEntity::addGlobalEventAlias(std::shared_ptr<sdProtoEvent> event, bool autosort) {
     if(!parent)return;
-    parent->addEventAlias(this, event);
+    parent->addEventAlias(this, event, autosort);
 }
 
 std::shared_ptr<sdProtoDataSet> sdEntity::getProtoDataSetPtr(EExtension extension, std::string identifier) const{

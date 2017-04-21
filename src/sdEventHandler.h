@@ -27,7 +27,7 @@ protected:
     void sort();
     
     /*! add a pointer an event to the global event vector */
-    virtual void addGlobalEventAlias(std::shared_ptr<sdProtoEvent> event) = 0;
+    virtual void addGlobalEventAlias(std::shared_ptr<sdProtoEvent> event, bool autosort = true) = 0;
 
 public:
     
@@ -35,7 +35,7 @@ public:
 
     /*! this function is the only way to instantiate sdEvent.*/
     template <EDescriptor D>
-    std::shared_ptr<sdProtoEvent> addProtoEvent(const double &time, typename sdDescriptorSpec<D>::type value, sdEntity * entity);
+    std::shared_ptr<sdProtoEvent> addProtoEvent(const double &time, typename sdDescriptorSpec<D>::type value, sdEntity * entity, bool autosort = true);
     
     /*! return value cast to a specific subclass event.*/
     template <EDescriptor D>
@@ -205,7 +205,7 @@ public:
 };
 
 template <EDescriptor D>
-inline std::shared_ptr<sdProtoEvent> sdEventHandler::addProtoEvent(const double &time,  typename sdDescriptorSpec<D>::type value, sdEntity * entity){
+inline std::shared_ptr<sdProtoEvent> sdEventHandler::addProtoEvent(const double &time,  typename sdDescriptorSpec<D>::type value, sdEntity * entity, bool autosort){
     
     if(time < 0.0){ throw  InvalidTimeException(time);}
     sdDescriptorSpec<D>::validateValue(value);
@@ -216,12 +216,14 @@ inline std::shared_ptr<sdProtoEvent> sdEventHandler::addProtoEvent(const double 
     // add
     auto event = std::shared_ptr<sdProtoEvent>(new sdEvent<D>(time, entity, value));
     events.push_back(event);
-    addGlobalEventAlias(event);
+    addGlobalEventAlias(event, autosort);
     
     // sort
-    std::sort(events.begin(), events.end(),
+    if(autosort){
+        std::sort(events.begin(), events.end(),
               [](std::shared_ptr<sdProtoEvent> eventA, std::shared_ptr<sdProtoEvent> eventB)->bool{
                   return eventA->getTime() < eventB->getTime(); });
+    }
     return event;
 }
 

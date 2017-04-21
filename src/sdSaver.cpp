@@ -19,48 +19,23 @@
 #include <algorithm>
 #include <unordered_set>
 #include "sdMain.h"
-#include "tinyxml2.h"
+#include "rapidxml.hpp"
+#include "rapidxml_print.hpp"
 #include "JSONNode.h"
 #include "sdSaver.h"
 
-using namespace tinyxml2;
+using namespace rapidxml;
 
-XMLDeclaration* sdXMLSaver::XMLDeclarationSection(XMLDocument &xml){
-    XMLDeclaration* decl = xml.NewDeclaration();
-    decl->SetValue("xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"");
-    return decl;
+xml_node<> * sdXMLSaver::createOrderingSection(xml_document<> &xml, const sdScene &scene){
+    return xml.allocate_node(node_element, "ordering", scene.getOrderingAsString().c_str());
 }
 
-XMLElement* sdXMLSaver::XMLOrderingSection(XMLDocument &xml, const sdScene &scene){
-    XMLElement* ordering = xml.NewElement("ordering");
-    XMLText* orderingText = xml.NewText(scene.getOrderingAsString().c_str());
-    ordering->InsertEndChild(orderingText);
-    return  ordering;
-}
 
-XMLElement* sdXMLSaver::XMLMetaSection(XMLDocument &xml, const sdScene &scene){
 
-    XMLElement* metaSection = xml.NewElement("meta");
+xml_node<> * sdXMLSaver::createMetaSection(xml_document<> &xml, const sdScene &scene){
 
-    // add extensions to meta
-    size_t num = scene.getNumberOfActivatedExtensions();
-    if(num > 0){
-        XMLElement* extensions = xml.NewElement("extensions");
-        std::string extString;
-        auto extensionNames = scene.getActivatedExtensionsAsStrings();
-        std::for_each(extensionNames.begin(), extensionNames.end(),[&extString](std::string ext){
-            EExtension extension = sdSpec::stringToExtension(ext);
-            if(!sdSpec::isCoreSpec(extension)){
-                extString = ext;
-                extString += " ";
-            }
-        });
-        extString.erase(extString.size()-1, extString.size()-1);
-        XMLText* extensionsText = xml.NewText(extString.c_str());
-        extensions->InsertEndChild(extensionsText);
-        metaSection->InsertEndChild(extensions);
-    }
-    
+    xml_node<> * metaSection = xml.allocate_node(node_element, "meta");
+
     // add info section to meta
     std::vector<EExtension> extensions = sdSpec::getDataSetEnabledExtensions();
     for(auto &extension : extensions){
@@ -69,7 +44,7 @@ XMLElement* sdXMLSaver::XMLMetaSection(XMLDocument &xml, const sdScene &scene){
         for(auto &identifier : identifiers){
             std::shared_ptr<sdProtoDataSet> protoDataSet = scene.getProtoDataSet(extension, identifier);
             std::unordered_set<EDescriptor> keys = protoDataSet->getKeys();
-            XMLElement * extensionElement = xml.NewElement(sdSpec::extensionToString(extension).c_str());
+            xml_node<> * extensionElement = xml.allocate_node(node_element, sdSpec::extensionToString(extension).c_str());
             
             for(auto &key : keys){
                 if(key == SD_POINTSET_POINT_OR_HANDLE){
@@ -79,24 +54,21 @@ XMLElement* sdXMLSaver::XMLMetaSection(XMLDocument &xml, const sdScene &scene){
                         EDescriptor descriptor = pointHandle.first;
                         std::string descriptorString = sdSpec::descriptorToString(descriptor);
                         std::array<double, 3> value = pointHandle.second;
-                        XMLElement * datasetElement = xml.NewElement(descriptorString.c_str());
-                        XMLText * text = xml.NewText(sdUtils::toString(value).c_str());
-                        datasetElement->InsertEndChild(text);
-                        extensionElement->InsertEndChild(datasetElement);
+                        xml_node<> * datasetElement = xml.allocate_node(node_element, descriptorString.c_str(),sdUtils::toString(value).c_str());
+                        extensionElement->append_node(datasetElement);
                     }
                 }else{
                     std::string descriptorString = sdSpec::descriptorToString(key);
                     std::string value = protoDataSet->getValueAsString(key);
-                    XMLElement * datasetElement = xml.NewElement(descriptorString.c_str());
+                    xml_node<> * datasetElement = xml.allocate_node(node_element, descriptorString.c_str());
                     if(!datasetElement) continue;
-                    XMLText * text = xml.NewText(value.c_str());
-                    if(!text) continue;
+                    if(value.size() == 0) continue;
 
-                    datasetElement->InsertEndChild(text);
-                    extensionElement->InsertEndChild(datasetElement);
+                    datasetElement->value(value.c_str());
+                    extensionElement->append_node(datasetElement);
                 }
             }
-            metaSection->InsertEndChild(extensionElement);
+            metaSection->append_node(extensionElement);
         }
     }
     
@@ -111,39 +83,36 @@ XMLElement* sdXMLSaver::XMLMetaSection(XMLDocument &xml, const sdScene &scene){
         std::string previousName;
         std::string previousExtension;
         sdEntity * previousEntity = nullptr;
-        XMLElement* category;
-        XMLElement* extension;
+        xml_node<> * category;
+        xml_node<> * extension;
 
         //event
-        //category = xml.NewElement(entity->getCategoryAsString().c_str());
-        category = xml.NewElement(std::string("source").c_str());
+        //category = xml.allocate_node(entity->getCategoryAsString().c_str());
+        category = xml.allocate_node(node_element,std::string("source").c_str());
 
         // the name of entity always comes first
-        XMLElement* name = xml.NewElement("name"); // entity name
         auto entityName = scene.getEntityName(entity);
-        XMLText* nameText = xml.NewText(entityName.c_str());
-        name->InsertEndChild(nameText);
-        category->InsertEndChild(name);
+        xml_node<> * name = xml.allocate_node(node_element, "name", entityName.c_str()); // entity name
+
+        category->append_node(name);
     
         // packaging - combining element and text (value)
-        XMLElement* element = xml.NewElement(meta->getDescriptorAsString().c_str());
-        XMLText* text = xml.NewText(meta->getValueAsString().c_str());
-        element->InsertEndChild(text);
+        xml_node<> * element = xml.allocate_node(node_element, meta->getDescriptorAsString().c_str(), meta->getValueAsString().c_str());
         
         std::string relevantExtension = sdSpec::extensionToString(sdSpec::getExtensionOfDescriptor(meta->getDescriptor()));
         
         if(relevantExtension == "core"){
-            category->InsertEndChild(element);
-            metaSection->InsertEndChild(category);
+            category->append_node(element);
+            metaSection->append_node(category);
         }else{
             
             if( (entity != previousEntity ) || (previousExtension != relevantExtension)){
                 // if different entity, time, or extension from the previous put extension tag
-                extension = xml.NewElement((relevantExtension).c_str());
+                extension = xml.allocate_node(node_element,(relevantExtension).c_str());
             }
-            extension->InsertEndChild(element);
-            category->InsertEndChild(extension);
-            metaSection->InsertEndChild(category);
+            extension->append_node(element);
+            category->append_node(extension);
+            metaSection->append_node(category);
         }
         
         previousEntity = entity; // store current name in order to avoid the dupplication.
@@ -151,21 +120,37 @@ XMLElement* sdXMLSaver::XMLMetaSection(XMLDocument &xml, const sdScene &scene){
     });
 
     // add ordering
-    metaSection->InsertEndChild(XMLOrderingSection(xml, scene));
+    metaSection->append_node(createOrderingSection(xml, scene));
 
     return metaSection;
 }
 
+xml_node<> * sdXMLSaver::createExtentionSection(xml_document<> &xml, const sdScene &scene ){
+    size_t num = scene.getNumberOfActivatedExtensions();
+    if(num == 0) return nullptr;
+        
+    xml_node<> * extensions = xml.allocate_node(node_element, "extensions");
+    std::string extString;
+    auto extensionNames = scene.getActivatedExtensionsAsStrings();
+    std::for_each(extensionNames.begin(), extensionNames.end(),[&extString](std::string ext){
+        EExtension extension = sdSpec::stringToExtension(ext);
+        if(!sdSpec::isCoreSpec(extension)){
+            extString = ext;
+            extString += " ";
+        }
+    });
+    extString.erase(extString.size()-1, extString.size()-1);
+    extensions->value(extString.c_str());
+    return extensions;
+}
+
 std::string sdXMLSaver::toString(const sdScene &scene){
     
-    XMLDocument xml;
-    xml.InsertEndChild(XMLDeclarationSection(xml));
-    
-    XMLElement* spatdif = xml.NewElement("spatdif");
-    spatdif->SetAttribute("version", "0.4");
-    xml.InsertEndChild(spatdif);
-    
-    spatdif->InsertEndChild(sdXMLSaver::XMLMetaSection(xml, scene));
+    xml_document<> xml;
+    xml_node<> * spatdif = xml.allocate_node(node_element, "spatdif");
+    spatdif->append_attribute(xml.allocate_attribute("version", "0.4"));
+    xml.append_node(spatdif);
+    spatdif->append_node(sdXMLSaver::createMetaSection(xml, scene));
 
     std::unordered_map<std::string, sdEntity> entities = scene.getEntities();
     
@@ -176,42 +161,36 @@ std::string sdXMLSaver::toString(const sdScene &scene){
         while(eventTime.second){
             
             // add <time>
-            XMLElement* timeElement = xml.NewElement("time");
-            timeElement->InsertEndChild(xml.NewText(std::to_string(eventTime.first).c_str()));
-            spatdif->InsertEndChild(timeElement);
+            spatdif->append_node(xml.allocate_node(node_element, "time", std::to_string(eventTime.first).c_str()));
             
             for(auto entity : entities){
                 auto entityEventsAtTime = entity.second.getEvents(eventTime.first);
                 if(entityEventsAtTime.empty()) continue;
                 
-                XMLElement * categoryElement = xml.NewElement(entity.second.getCategoryAsString().c_str());
-                XMLElement * nameElement = xml.NewElement("name"); // entity name
+                xml_node<> * categoryElement = xml.allocate_node(node_element, entity.second.getCategoryAsString().c_str());
+                xml_node<> * nameElement = xml.allocate_node(node_element, "name", entity.first.c_str()); // entity name
+                categoryElement->append_node(nameElement);
 
-                XMLText* nameText = xml.NewText(entity.first.c_str());
-                nameElement->InsertEndChild(nameText);
-                categoryElement->InsertEndChild(nameElement);
-
-                XMLElement* extensionElement = nullptr;
+                xml_node<> * extensionElement = nullptr;
                 std::string previousExtension = "";
                 for(auto entityEvent : entityEventsAtTime){
-                    XMLElement* eventElement = xml.NewElement(entityEvent->getDescriptorAsString().c_str());
-                    eventElement->InsertEndChild(xml.NewText(entityEvent->getValueAsString().c_str()));
+                    xml_node<> * eventElement = xml.allocate_node(node_element, entityEvent->getDescriptorAsString().c_str(), entityEvent->getValueAsString().c_str());
                     std::string relevantExtension = sdSpec::extensionToString(sdSpec::getExtensionOfDescriptor(entityEvent->getDescriptor()));
         
                     if(relevantExtension == "core"){
-                        categoryElement->InsertEndChild(eventElement);
+                        categoryElement->append_node(eventElement);
                     }else{// extension
                         if(previousExtension == relevantExtension){
-                            extensionElement->InsertEndChild(eventElement);
+                            extensionElement->append_node(eventElement);
                         }else{
-                            extensionElement = xml.NewElement((relevantExtension).c_str());
-                            extensionElement->InsertEndChild(eventElement);
-                            categoryElement->InsertEndChild(extensionElement);
+                            extensionElement = xml.allocate_node(node_element, (relevantExtension).c_str());
+                            extensionElement->append_node(eventElement);
+                            categoryElement->append_node(extensionElement);
                         }
                     }
                     previousExtension = relevantExtension;
                 }
-                spatdif->InsertEndChild(categoryElement);
+                spatdif->append_node(categoryElement);
             }
             eventTime = scene.getNextEventTime(eventTime.first);
         }
@@ -227,31 +206,20 @@ std::string sdXMLSaver::toString(const sdScene &scene){
 
             for(auto iit = events.begin(); iit != events.end(); iit++){
                 std::shared_ptr<sdProtoEvent> event = *iit;
-                XMLElement* time = xml.NewElement("time");
-                XMLText* timeText = xml.NewText(event->getTimeAsString().c_str());
-                time->InsertEndChild(timeText);
-                spatdif->InsertEndChild(time);
+                spatdif->append_node(xml.allocate_node(node_element, "time", event->getTimeAsString().c_str()));
                 
-                XMLElement* category;
-                category = xml.NewElement(entity.getCategoryAsString().c_str());
-                XMLElement* name = xml.NewElement("name");
-                XMLText* nameText = xml.NewText(entityName.c_str());
-                name->InsertEndChild(nameText);
-                category->InsertEndChild(name);
+                xml_node<> * category = xml.allocate_node(node_element, entity.getCategoryAsString().c_str());
+                category->append_node(xml.allocate_node(node_element, "name", entityName.c_str()));
                 
-                XMLElement* element = xml.NewElement(event->getDescriptorAsString().c_str());
-                XMLText* text = xml.NewText(event->getValueAsString().c_str());
-                element->InsertEndChild(text);
-                category->InsertEndChild(element);
-                
-                spatdif->InsertEndChild(category);
+                xml_node<> * element = xml.allocate_node(node_element, event->getDescriptorAsString().c_str(), event->getValueAsString().c_str());
+                category->append_node(element);
+                spatdif->append_node(category);
             }
         }
     }
-
-    XMLPrinter printer;
-    xml.Print(&printer);
-    return std::string(printer.CStr());
+    std::string xmlString;
+    print(std::back_inserter(xmlString), xml, 0);
+    return xmlString;
     
 }
 

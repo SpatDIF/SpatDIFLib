@@ -6,7 +6,6 @@
 using namespace std;
 
 
-
 // old tests from old API
 TEST_CASE("source spread test"){
     sdScene scene;
@@ -90,7 +89,7 @@ TEST_CASE("Speaker Setup"){
         ifs.close();
     }
     REQUIRE(xmlString != "");
-    sdScene myScene = sdLoader::sceneFromXML(xmlString);
+    sdScene myScene = sdXMLLoader::sceneFromXML(xmlString);
     sdEntity *leftSpeaker = myScene.getEntity("left");
     sdEntity *rightSpeaker = myScene.getEntity("right");
 
@@ -107,6 +106,23 @@ TEST_CASE("Speaker Setup"){
     
 }
 
+TEST_CASE("Loading actual file for a piece"){
+    ifstream ifs("/Users/chikashi/Development/spatdiflib/src/test/libSpatDIFTest/TestCode/Radioscape_spatdif.xml");
+    string xmlString;
+    if (ifs.is_open()){
+        while ( ifs.good() ){
+            string str;
+            getline(ifs,str);
+            xmlString.append(str);
+        }
+        ifs.close();
+    }
+    REQUIRE(xmlString != "");
+    
+    sdScene myScene = sdXMLLoader::sceneFromXML(xmlString);
+    
+}
+
 TEST_CASE("How to Query loaded file"){
     ifstream ifs("/Users/chikashi/Development/spatdiflib/src/test/libSpatDIFTest/TestCode/simple_scene.xml");
     string xmlString;
@@ -120,7 +136,7 @@ TEST_CASE("How to Query loaded file"){
     }
     REQUIRE(xmlString != "");
     
-    sdScene myScene = sdLoader::sceneFromXML(xmlString);
+    sdScene myScene = sdXMLLoader::sceneFromXML(xmlString);
     sdEntity *voice1 = myScene.getEntity("voice1");
     if(!voice1) {abort();}
     
@@ -180,22 +196,6 @@ TEST_CASE("How to Query loaded file"){
     REQUIRE( (*pos)[2] == 2);
 }
 
-TEST_CASE("Loading actual file for a piece"){
-    ifstream ifs("/Users/chikashi/Development/spatdiflib/src/test/libSpatDIFTest/TestCode/Radioscape_spatdif.xml");
-    string xmlString;
-    if (ifs.is_open()){
-        while ( ifs.good() ){
-            string str;
-            getline(ifs,str);
-            xmlString.append(str);
-        }
-        ifs.close();
-    }
-    REQUIRE(xmlString != "");
-    
-    sdScene myScene = sdLoader::sceneFromXML(xmlString);
-    
-}
 
 
 TEST_CASE("sdOSCConverter Test"){
@@ -250,7 +250,7 @@ TEST_CASE("FileExtension"){
         ifsXML.close();
     }
     
-    sdScene scene = sdLoader::sceneFromXML(xmlString);
+    sdScene scene = sdXMLLoader::sceneFromXML(xmlString);
     // here how you get a pointer to two source entities
     auto insect = scene.getEntity("insect");
     auto elephant = scene.getEntity("elephant");

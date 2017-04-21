@@ -22,7 +22,6 @@
 		6217DE091D5B218A0048C466 /* JSONWorker.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D4A1CA2AFBD001179C5 /* JSONWorker.o */; };
 		6217DE0A1D5B218A0048C466 /* JSONWriter.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D4B1CA2AFBD001179C5 /* JSONWriter.o */; };
 		6217DE0B1D5B218A0048C466 /* libjson.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D4C1CA2AFBD001179C5 /* libjson.o */; };
-		6217DE0D1D5B219E0048C466 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720C41C29966100135148 /* tinyxml2.cpp */; };
 		6217DE0E1D5B219E0048C466 /* sdEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B31C236EDC009E9347 /* sdEntity.cpp */; };
 		6217DE0F1D5B219E0048C466 /* sdLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720D51C2D8C2600135148 /* sdLoader.cpp */; };
 		6217DE101D5B219E0048C466 /* sdSaver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720DA1C2E1F0600135148 /* sdSaver.cpp */; };
@@ -55,7 +54,6 @@
 		62401D6A1CA3E7C0001179C5 /* JSONWorker.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D4A1CA2AFBD001179C5 /* JSONWorker.o */; };
 		62401D6B1CA3E7C0001179C5 /* JSONWriter.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D4B1CA2AFBD001179C5 /* JSONWriter.o */; };
 		62401D6C1CA3E7C0001179C5 /* libjson.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 62401D4C1CA2AFBD001179C5 /* libjson.o */; };
-		629720C51C29966100135148 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720C41C29966100135148 /* tinyxml2.cpp */; };
 		629720D61C2D8C2600135148 /* sdLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720D51C2D8C2600135148 /* sdLoader.cpp */; };
 		629720DB1C2E1F0600135148 /* sdSaver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720DA1C2E1F0600135148 /* sdSaver.cpp */; };
 		629B8D511D956E4000036706 /* oldtest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629B8D501D956E4000036706 /* oldtest.cpp */; };
@@ -63,7 +61,6 @@
 		62AF37BB1C2373A1009E9347 /* sdEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B31C236EDC009E9347 /* sdEntity.cpp */; };
 		62CBD7A11D757EBC008F00CC /* descriptor_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62CBD7A01D757EBC008F00CC /* descriptor_test.cpp */; };
 		62CBD7A21D757F00008F00CC /* descriptor_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62CBD7A01D757EBC008F00CC /* descriptor_test.cpp */; };
-		62D8B0351C3746A500AC1D31 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720C41C29966100135148 /* tinyxml2.cpp */; };
 		62D8B0371C3746A500AC1D31 /* sdEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62AF37B31C236EDC009E9347 /* sdEntity.cpp */; };
 		62D8B0381C3746A500AC1D31 /* sdLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720D51C2D8C2600135148 /* sdLoader.cpp */; };
 		62D8B0391C3746A500AC1D31 /* sdSaver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629720DA1C2E1F0600135148 /* sdSaver.cpp */; };
@@ -130,7 +127,6 @@
 		627FA4C81D74916D007C0C8A /* sdMeta.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdMeta.h; path = ../../sdMeta.h; sourceTree = "<group>"; };
 		627FA4C91D75698D007C0C8A /* sdDataSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = sdDataSet.h; path = ../../sdDataSet.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		627FA4CA1D756B68007C0C8A /* sdDataSetHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = sdDataSetHandler.h; path = ../../sdDataSetHandler.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		629720C41C29966100135148 /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxml2.cpp; path = ../../libs/tinyxml2/tinyxml2.cpp; sourceTree = "<group>"; };
 		629720D51C2D8C2600135148 /* sdLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdLoader.cpp; path = ../../sdLoader.cpp; sourceTree = "<group>"; };
 		629720DA1C2E1F0600135148 /* sdSaver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdSaver.cpp; path = ../../sdSaver.cpp; sourceTree = "<group>"; };
 		629B8D471D95341B00036706 /* sdExtensionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdExtensionHandler.h; path = ../../sdExtensionHandler.h; sourceTree = "<group>"; };
@@ -139,6 +135,10 @@
 		629B8D4E1D9561E200036706 /* sdGlobalEventHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdGlobalEventHandler.h; path = ../../sdGlobalEventHandler.h; sourceTree = "<group>"; };
 		629B8D4F1D956AA800036706 /* sdGlobalMetaHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdGlobalMetaHandler.h; path = ../../sdGlobalMetaHandler.h; sourceTree = "<group>"; };
 		629B8D501D956E4000036706 /* oldtest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = oldtest.cpp; path = oldtest/oldtest.cpp; sourceTree = SOURCE_ROOT; };
+		62A131F21EA80823005CF976 /* rapidxml_iterators.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = rapidxml_iterators.hpp; path = ../../libs/rapidXML/rapidxml_iterators.hpp; sourceTree = "<group>"; };
+		62A131F31EA80823005CF976 /* rapidxml_print.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = rapidxml_print.hpp; path = ../../libs/rapidXML/rapidxml_print.hpp; sourceTree = "<group>"; };
+		62A131F41EA80823005CF976 /* rapidxml_utils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = rapidxml_utils.hpp; path = ../../libs/rapidXML/rapidxml_utils.hpp; sourceTree = "<group>"; };
+		62A131F51EA80823005CF976 /* rapidxml.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = rapidxml.hpp; path = ../../libs/rapidXML/rapidxml.hpp; sourceTree = "<group>"; };
 		62A24D0F1D6322300019F04F /* sdSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sdSpec.h; path = ../../sdSpec.h; sourceTree = "<group>"; };
 		62AF37B31C236EDC009E9347 /* sdEntity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdEntity.cpp; path = ../../sdEntity.cpp; sourceTree = "<group>"; };
 		62BE10211C2F3C020033244E /* sdDate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sdDate.h; path = ../../sdDate.h; sourceTree = "<group>"; };
@@ -332,8 +332,11 @@
 		627FA4D21D756C91007C0C8A /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				62A131F21EA80823005CF976 /* rapidxml_iterators.hpp */,
+				62A131F31EA80823005CF976 /* rapidxml_print.hpp */,
+				62A131F41EA80823005CF976 /* rapidxml_utils.hpp */,
+				62A131F51EA80823005CF976 /* rapidxml.hpp */,
 				62401D5B1CA2AFC5001179C5 /* JSON */,
-				629720C41C29966100135148 /* tinyxml2.cpp */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -475,7 +478,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				62CBD7A21D757F00008F00CC /* descriptor_test.cpp in Sources */,
-				6217DE0D1D5B219E0048C466 /* tinyxml2.cpp in Sources */,
 				6217DE0E1D5B219E0048C466 /* sdEntity.cpp in Sources */,
 				6217DE0F1D5B219E0048C466 /* sdLoader.cpp in Sources */,
 				6217DE101D5B219E0048C466 /* sdSaver.cpp in Sources */,
@@ -487,7 +489,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62D8B0351C3746A500AC1D31 /* tinyxml2.cpp in Sources */,
 				62D8B0371C3746A500AC1D31 /* sdEntity.cpp in Sources */,
 				62D8B0381C3746A500AC1D31 /* sdLoader.cpp in Sources */,
 				62A24D101D6343B20019F04F /* sdSpec.cpp in Sources */,
@@ -500,7 +501,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				629720C51C29966100135148 /* tinyxml2.cpp in Sources */,
 				629720D61C2D8C2600135148 /* sdLoader.cpp in Sources */,
 				62D904D21C0E50320065D8A5 /* spatdiftest.cpp in Sources */,
 				629720DB1C2E1F0600135148 /* sdSaver.cpp in Sources */,
@@ -537,7 +537,7 @@
 			buildSettings = {
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../ ${PROJECT_DIR}/../Catch/single_include/ $(SRCROOT)/../../libs/tinyxml2 $(SRCROOT)/../../libs/libjson/**";
+				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../ ${PROJECT_DIR}/../Catch/single_include/ $(SRCROOT)/../../libs/libjson/** $(SRCROOT)/../../libs/rapidXML/";
 			};
 			name = Debug;
 		};
@@ -545,7 +545,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../ ${PROJECT_DIR}/../Catch/single_include/ $(SRCROOT)/../../libs/tinyxml2 $(SRCROOT)/../../libs/libjson/**";
+				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../ ${PROJECT_DIR}/../Catch/single_include/ $(SRCROOT)/../../libs/libjson/** $(SRCROOT)/../../libs/rapidXML/";
 			};
 			name = Release;
 		};
@@ -574,7 +574,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -589,8 +589,12 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-fdelayed-template-parsing",
+				);
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../ ${PROJECT_DIR}/../Catch/single_include/ \"$(SRCROOT)/../../libs/tinyxml2\" \"$(SRCROOT)/../../libs/libjson/libjson.h\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../libs/libjson\" \"$(SRCROOT)/../../libs/rapidXML\"";
 				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
@@ -629,8 +633,12 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-fdelayed-template-parsing",
+				);
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../ ${PROJECT_DIR}/../Catch/single_include/ \"$(SRCROOT)/../../libs/tinyxml2\" \"$(SRCROOT)/../../libs/libjson";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../libs/libjson\" \"$(SRCROOT)/../../libs/rapidXML\"";
 				VALID_ARCHS = x86_64;
 			};
 			name = Release;

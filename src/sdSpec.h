@@ -35,7 +35,7 @@ public:
                 std::string descriptorString,
                 std::function< void(sdDataSetHandler*, std::string, std::string)> addDataFromStringFunc,
                 std::function< std::shared_ptr<sdProtoMeta>(sdEntity*, std::string)> addMetaFromStringFunc,
-                std::function< std::shared_ptr<sdProtoEvent>(sdEntity*, double, std::string)> addEventFromStringFunc,
+                std::function< std::shared_ptr<sdProtoEvent>(sdEntity*, double, std::string,bool)> addEventFromStringFunc,
                 std::function< std::string(std::shared_ptr<sdProtoHolder>)> getDataAsStringFunc ):
         descriptor(descriptor),
         descriptorString(descriptorString),
@@ -49,7 +49,7 @@ public:
         
         std::function< void(sdDataSetHandler*, std::string, std::string)> addDataFromStringFunc;
         std::function< std::shared_ptr<sdProtoMeta>(sdEntity * entity, std::string)> addMetaFromStringFunc;
-        std::function< std::shared_ptr<sdProtoEvent>(sdEntity * entity, double, std::string)> addEventFromStringFunc;
+        std::function< std::shared_ptr<sdProtoEvent>(sdEntity * entity, double, std::string, bool)> addEventFromStringFunc;
         std::function< std::string(std::shared_ptr<sdProtoHolder>)> getDataAsStringFunc;
 
     };
@@ -189,7 +189,7 @@ public:
         return getDescriptorSpec(descriptor).addMetaFromStringFunc;
     }
     
-    static std::function<std::shared_ptr<sdProtoEvent>(sdEntity* entity, double,std::string)> getAddEventFunc(EDescriptor descriptor){
+    static std::function<std::shared_ptr<sdProtoEvent>(sdEntity* entity, double, std::string, bool)> getAddEventFunc(EDescriptor descriptor){
         return getDescriptorSpec(descriptor).addEventFromStringFunc;
     }
     

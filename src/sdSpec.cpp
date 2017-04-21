@@ -40,9 +40,9 @@ inline std::function<std::shared_ptr<sdProtoMeta>(sdEntity* , std::string)> getA
 }
 
 template<EDescriptor D>
-inline std::function<std::shared_ptr<sdProtoEvent> (sdEntity * , double , std::string )> getAddEventFunc(){
-    return [](sdEntity * entity, double time, std::string value)->std::shared_ptr<sdProtoEvent>{
-        return entity->addProtoEvent<D>(time, sdDescriptorSpec<D>::stringTo(value), entity);
+inline std::function<std::shared_ptr<sdProtoEvent> (sdEntity * , double , std::string ,bool)> getAddEventFunc(){
+    return [](sdEntity * entity, double time, std::string value, bool autosort)->std::shared_ptr<sdProtoEvent>{
+        return entity->addProtoEvent<D>(time, sdDescriptorSpec<D>::stringTo(value), entity, autosort);
     };
 }
 
@@ -65,19 +65,19 @@ inline sdSpec::sdDescriptorRelationships defineDescriptor(const std::string &str
 // these two descriptors will be stored in one vector 
 template<>
 inline sdSpec::sdDescriptorRelationships defineDescriptor<SD_POINTSET_POINT>(const std::string &string){
-    return sdSpec:: sdDescriptorRelationships(SD_POINTSET_POINT, string, getAddDataFunc<SD_POINTSET_POINT_OR_HANDLE>(), getAddMetaFunc<SD_POINTSET_POINT_OR_HANDLE>(), getAddEventFunc<SD_POINTSET_POINT_OR_HANDLE>(), getGetDataAsStringFunc<SD_POINTSET_POINT_OR_HANDLE>());
+    return sdSpec::sdDescriptorRelationships(SD_POINTSET_POINT, string, getAddDataFunc<SD_POINTSET_POINT_OR_HANDLE>(), getAddMetaFunc<SD_POINTSET_POINT_OR_HANDLE>(), getAddEventFunc<SD_POINTSET_POINT_OR_HANDLE>(), getGetDataAsStringFunc<SD_POINTSET_POINT_OR_HANDLE>());
 }
 
 template<>
 inline sdSpec::sdDescriptorRelationships defineDescriptor<SD_POINTSET_HANDLE>(const std::string &string){
-    return sdSpec:: sdDescriptorRelationships(SD_POINTSET_HANDLE, string, getAddDataFunc<SD_POINTSET_POINT_OR_HANDLE>(), getAddMetaFunc<SD_POINTSET_POINT_OR_HANDLE>(), getAddEventFunc<SD_POINTSET_POINT_OR_HANDLE>(), getGetDataAsStringFunc<SD_POINTSET_POINT_OR_HANDLE>());
+    return sdSpec::sdDescriptorRelationships(SD_POINTSET_HANDLE, string, getAddDataFunc<SD_POINTSET_POINT_OR_HANDLE>(), getAddMetaFunc<SD_POINTSET_POINT_OR_HANDLE>(), getAddEventFunc<SD_POINTSET_POINT_OR_HANDLE>(), getGetDataAsStringFunc<SD_POINTSET_POINT_OR_HANDLE>());
 }
 
 
 
 template<EDescriptor D>
-inline std::function<std::shared_ptr<sdProtoEvent> (sdEntity * , double , std::string )> getAddNoEventFunc(){
-    return [](sdEntity * entity, double time, std::string value)->std::shared_ptr<sdProtoEvent>{
+inline std::function<std::shared_ptr<sdProtoEvent> (sdEntity * , double , std::string , bool)> getAddNoEventFunc(){
+    return [](sdEntity * entity, double time, std::string value,bool)->std::shared_ptr<sdProtoEvent>{
         throw MetaOnlyDescriptorException(" ");
         return entity->addProtoEvent<D>(time, sdDescriptorSpec<D>::stringTo(value), entity);
     };

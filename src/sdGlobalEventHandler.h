@@ -28,7 +28,7 @@ public:
     std::vector<std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>>>  getFirstEventsFromAllEntities() const;
     std::vector<std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>>> getLastEventsFromAllEntities() const;
 
-    void addEventAlias(sdEntity * const entity, std::shared_ptr<sdProtoEvent> event);
+    void addEventAlias(sdEntity * const entity, std::shared_ptr<sdProtoEvent> event, bool autosort = true);
 
 protected:
     std::vector<std::pair<sdEntity*, std::shared_ptr<sdProtoEvent>>> allEvents; //!< an alias pointer to all events
@@ -127,10 +127,10 @@ inline std::vector<std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>>> s
     return getEventsFromAllEntities(allEvents.back().second->getTime());
 }
 
-inline void sdGlobalEventHandler::addEventAlias(sdEntity * const entity, std::shared_ptr<sdProtoEvent> event){
+inline void sdGlobalEventHandler::addEventAlias(sdEntity * const entity, std::shared_ptr<sdProtoEvent> event, bool autosort){
     removeEventAlias(entity, event->getTime(), event->getDescriptor());
     allEvents.push_back(std::make_pair(entity, event));
-    sortAllEvents();
+    if(autosort) sortAllEvents();
 }
 
 

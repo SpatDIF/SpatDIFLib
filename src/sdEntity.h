@@ -44,7 +44,7 @@ public:
     void addGlobalMetaAlias(std::shared_ptr<sdProtoMeta> meta);
     
     /*! add a pointer an event to the global event vector */
-    void addGlobalEventAlias(std::shared_ptr<sdProtoEvent> event);
+    void addGlobalEventAlias(std::shared_ptr<sdProtoEvent> event, bool autosort = true);
     
     /*!
      this function looks for a meta of the specified descriptor and returns a pointer to the data.
@@ -99,10 +99,10 @@ public:
     
     /*! return value cast to a specific subclass event.*/
     template <EDescriptor D>
-    sdEvent<D> * const addEvent(const double &time, typename sdDescriptorSpec<D>::type value);
+    sdEvent<D> * const addEvent(const double &time, typename sdDescriptorSpec<D>::type value, bool autosort = true);
     
     /*! add event by string*/
-    const std::shared_ptr<sdProtoEvent> addEvent(const std::string &time, const std::string &extension, const std::string &descriptor, const std::string &value);
+    const std::shared_ptr<sdProtoEvent> addEvent(const std::string &time, const std::string &extension, const std::string &descriptor, const std::string &value, bool autosort = true);
     
 private:
     sdScene * parent;
@@ -129,19 +129,19 @@ inline const std::shared_ptr<sdProtoMeta> sdEntity::addMeta(const std::string &e
 
 
 template <EDescriptor D>
-inline sdEvent<D> * const sdEntity::addEvent(const double &time,  typename sdDescriptorSpec<D>::type value){
+inline sdEvent<D> * const sdEntity::addEvent(const double &time,  typename sdDescriptorSpec<D>::type value, bool autosort){
     if(!isDescriptorValid(D)) throw InvalidDescriptorException(sdSpec::descriptorToString(D) + " is not valid. Activate corresponding extension before using it."); // invalid descriptor
     return sdEventHandler::addEvent<D>(time, value, this);
 }
 
-inline const std::shared_ptr<sdProtoEvent> sdEntity::addEvent(const std::string &time, const std::string &extension, const std::string &descriptor, const std::string &value){
+inline const std::shared_ptr<sdProtoEvent> sdEntity::addEvent(const std::string &time, const std::string &extension, const std::string &descriptor, const std::string &value, bool autosort){
     EDescriptor dtr = sdSpec::stringToDescriptor(extension, descriptor);
     if(dtr == EDescriptor::SD_ERROR) return nullptr; // undefined descriptor
     if(!isDescriptorValid(dtr)) return nullptr; // invalid descriptor
     
     auto dtime = std::stod(time);
     auto addEventFunc = sdSpec::getAddEventFunc(std::move(dtr));
-    return addEventFunc(this, dtime, value);
+    return addEventFunc(this, dtime, value, autosort);
 }
 
 
