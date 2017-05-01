@@ -49,8 +49,8 @@ public:
         xyz[2] = sin(e*kDegreeToRadian) * d;
         return std::move(xyz);
     }
-
-     static std::array<double, 3> xyzToAed(const std::array<double,3> &xyz){
+    
+    static std::array<double, 3> xyzToAed(const std::array<double,3> &xyz){
         std::array<double, 3> aed;
         const double x = xyz[0];
         const double y = xyz[1];

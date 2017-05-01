@@ -53,24 +53,26 @@ sdScene sdXMLLoader::sceneFromXML(std::string xmlString){
             std::string nodeName = metaNode->name();
             if(nodeName == "extensions"){
                 activateExtensions(scene, metaNode->value());
-            }else if(nodeName == ""){
-                
-            }else if(nodeName == "sink"){
-                // create named sink entity
+            }else if(nodeName == "source" || nodeName == "sink"){
                 auto *name = metaNode->first_node("name");
                 auto entityName = std::string(name->value());
                 sdEntity* targetEntity = scene.getEntity(entityName);
                 if(!targetEntity){
-                    targetEntity = scene.addEntity(entityName, ECATEGORY::SD_SINK);
+                    ECATEGORY cat = nodeName == "source" ? ECATEGORY::SD_SOURCE : ECATEGORY::SD_SINK;
+                    targetEntity = scene.addEntity(entityName, cat);
                 }
-
                 //setup property
                 auto *type = metaNode->first_node("type");
                 if(type)targetEntity->addMeta<SD_TYPE>(sdDescriptorSpec<SD_TYPE>::stringTo(type->value()));
 
                 auto *position = metaNode->first_node("position");
                 if(position){
-                    std::string unit = position->first_attribute("unit")->value();
+                    xml_attribute<> * attribute = position->first_attribute("unit");
+                    std::string unit;
+                    if(attribute){
+                        unit = attribute->value();
+                    }
+                    
                     if(unit == "aed"){
                         auto aed = sdUtils::stringToArray<double, 3>(position->value());
                         targetEntity->addMeta<SD_POSITION>(sdUtils::aedToXyz(aed));
@@ -78,17 +80,57 @@ sdScene sdXMLLoader::sceneFromXML(std::string xmlString){
                         targetEntity->addMeta<SD_POSITION>(sdUtils::stringToArray<double, 3>(position->value()));
                     }
                 }
+                auto *mediaNode = metaNode->first_node("media");
+                if(mediaNode){
+                    auto *idNode = mediaNode->first_node("id");
+                    if(idNode){
+                        targetEntity->addMeta<SD_MEDIA_ID>(idNode->value());
+                    }
+                }
                 
-                auto *physicalChannel = metaNode->first_node("physical-channel");
-                if(physicalChannel){
-                    int channel = sdUtils::stringTo<int>(physicalChannel->value());
-                    targetEntity->addMeta<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(channel);
+                if(nodeName == "sink"){
+                    auto *physicalChannel = metaNode->first_node("physical-channel");
+                    if(physicalChannel){
+                        int channel = sdUtils::stringTo<int>(physicalChannel->value());
+                        targetEntity->addMeta<SD_HARDWARE_OUT_PHYSICAL_CHANNEL>(channel);
+                    }
                 }
                 
                 auto *gain = metaNode->first_node("gain");
                 if(gain) {
                     targetEntity->addMeta<SD_HARDWARE_OUT_GAIN>(sdUtils::stringTo<double>(gain->value()));
                 }
+            }else if(nodeName == "media"){
+                // need to rework!!
+
+                // dataset ... minimal implementation now
+                auto *id = metaNode->first_node("id");
+                auto *type = metaNode->first_node("type");
+                auto *location = metaNode->first_node("location");
+                auto *channel = metaNode->first_node("channel");
+                auto *time_offset = metaNode->first_node("time-offset");
+                auto *gain = metaNode->first_node("gain");
+                if(!id)continue;
+                if(!type)continue;
+                
+                std::string idVal = id->value();
+                std::string typeVal = type->value();
+                std::string locationVal = "unkonwn";
+                int channelVal = 1;
+                double time_offsetVal = 0.0;
+                double gainVal = 1.0;
+                
+                if(location) locationVal = location->value();
+                if(channel) channelVal = sdUtils::stringTo<int>(channel->value());
+                if(time_offset) time_offsetVal = sdUtils::stringTo<double>(time_offset->value());
+                if(gain) gainVal = sdUtils::stringTo<double>(gain->value());
+
+                sdDataSet<EExtension::SD_MEDIA> dataset = sdDataSet<EExtension::SD_MEDIA>(
+                                                                                             idVal,sdDescriptorSpec<SD_MEDIA_TYPE>::SD_FILE,
+                                                                                          locationVal, channelVal, time_offsetVal, gainVal );
+
+                scene.addDataSet(EExtension::SD_MEDIA, dataset );
+                
             }
         }
     }
