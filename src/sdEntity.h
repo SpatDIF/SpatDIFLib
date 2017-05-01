@@ -131,7 +131,7 @@ inline const std::shared_ptr<sdProtoMeta> sdEntity::addMeta(const std::string &e
 template <EDescriptor D>
 inline sdEvent<D> * const sdEntity::addEvent(const double &time,  typename sdDescriptorSpec<D>::type value, bool autosort){
     if(!isDescriptorValid(D)) throw InvalidDescriptorException(sdSpec::descriptorToString(D) + " is not valid. Activate corresponding extension before using it."); // invalid descriptor
-    return sdEventHandler::addEvent<D>(time, value, this);
+    return sdEventHandler::addEvent<D>(time, value, this, autosort);
 }
 
 inline const std::shared_ptr<sdProtoEvent> sdEntity::addEvent(const std::string &time, const std::string &extension, const std::string &descriptor, const std::string &value, bool autosort){

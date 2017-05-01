@@ -99,7 +99,6 @@ inline void sdScene::sort(){
     for(auto &entity : entities){
         entity.second.sort();
     }
-    
     sortAllEvents();
 }
 

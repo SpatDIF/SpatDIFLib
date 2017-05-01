@@ -128,7 +128,7 @@ inline std::vector<std::pair<const sdEntity* , std::shared_ptr<sdProtoEvent>>> s
 }
 
 inline void sdGlobalEventHandler::addEventAlias(sdEntity * const entity, std::shared_ptr<sdProtoEvent> event, bool autosort){
-    removeEventAlias(entity, event->getTime(), event->getDescriptor());
+    if(autosort) removeEventAlias(entity, event->getTime(), event->getDescriptor());
     allEvents.push_back(std::make_pair(entity, event));
     if(autosort) sortAllEvents();
 }

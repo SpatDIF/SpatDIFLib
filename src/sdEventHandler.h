@@ -39,7 +39,7 @@ public:
     
     /*! return value cast to a specific subclass event.*/
     template <EDescriptor D>
-    sdEvent<D> * const addEvent(const double &time, typename sdDescriptorSpec<D>::type value, sdEntity * entity);
+    sdEvent<D> * const addEvent(const double &time, typename sdDescriptorSpec<D>::type value, sdEntity * entity, bool autosort = true);
 
     /*! @} */
     
@@ -211,7 +211,7 @@ inline std::shared_ptr<sdProtoEvent> sdEventHandler::addProtoEvent(const double 
     sdDescriptorSpec<D>::validateValue(value);
 
     // remove if already exist
-    removeEvent(time, D);
+    if(autosort){removeEvent(time, D);}
     
     // add
     auto event = std::shared_ptr<sdProtoEvent>(new sdEvent<D>(time, entity, value));
@@ -228,8 +228,8 @@ inline std::shared_ptr<sdProtoEvent> sdEventHandler::addProtoEvent(const double 
 }
 
 template <EDescriptor D>
-inline sdEvent<D> * const sdEventHandler::addEvent(const double &time, typename sdDescriptorSpec<D>::type value, sdEntity * entity){
-    return dynamic_cast<sdEvent<D>*>(addProtoEvent<D>(time, value, entity).get());
+inline sdEvent<D> * const sdEventHandler::addEvent(const double &time, typename sdDescriptorSpec<D>::type value, sdEntity * entity, bool autosort){
+    return dynamic_cast<sdEvent<D>*>(addProtoEvent<D>(time, value, entity, autosort).get());
 }
 
 template <EDescriptor D>

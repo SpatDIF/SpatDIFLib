@@ -77,9 +77,9 @@ inline sdSpec::sdDescriptorRelationships defineDescriptor<SD_POINTSET_HANDLE>(co
 
 template<EDescriptor D>
 inline std::function<std::shared_ptr<sdProtoEvent> (sdEntity * , double , std::string , bool)> getAddNoEventFunc(){
-    return [](sdEntity * entity, double time, std::string value,bool)->std::shared_ptr<sdProtoEvent>{
+    return [](sdEntity * entity, double time, std::string value, bool autosort)->std::shared_ptr<sdProtoEvent>{
         throw MetaOnlyDescriptorException(" ");
-        return entity->addProtoEvent<D>(time, sdDescriptorSpec<D>::stringTo(value), entity);
+        return entity->addProtoEvent<D>(time, sdDescriptorSpec<D>::stringTo(value), entity, autosort);
     };
 }
 

@@ -169,7 +169,9 @@ sdScene sdXMLLoader::sceneFromXML(std::string xmlString){
                 xml_node<> * childTag = node->first_node();
                 if(childTag->type() == node_data){ // node is a descriptor
                     xml_node<> * descriptor = node;
-                    targetEntity->addEvent(timeString, "core", std::string(descriptor->name()), std::string(descriptor->value()), false);
+                    targetEntity->addEvent(timeString,
+                                           "core", std::string(descriptor->name()),
+                                           std::string(descriptor->value()), false); // no sort after adding
                 }else if(childTag->type() == node_element){ // tempTag is a extension type
                     xml_node<> * descriptor = childTag;
                     while (descriptor) {
