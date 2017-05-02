@@ -52,6 +52,9 @@ public:
     template <EDescriptor D>
     const sdEvent< D > * const getEvent(const double &time) const;
     
+    /*! return single event at index*/
+    const std::shared_ptr<sdProtoEvent> getProtoEventAtIndex(const unsigned long index) const;
+    
     /*! returns a vector of sdProtoEvents, depending on given filter arguments*/
     std::vector<std::shared_ptr<sdProtoEvent> > getEvents(const double &time) const;
     
@@ -100,7 +103,7 @@ public:
      */
     
     /*!
-     return previous event from the given time index that holds the specified descriptor.
+     return previous event from the given time that holds the specified descriptor.
      @param time index
      @param descriptor the descriptor of the event declared in sdConst.h
      */
@@ -108,6 +111,7 @@ public:
     template<EDescriptor D>
     sdEvent<D> * const getPreviousEvent(const double time) const;
     
+
     /*!
      return previous events from the given time index .
      @param time index
@@ -237,6 +241,10 @@ inline const sdEvent< D > * const sdEventHandler::getEvent(const double &time) c
     auto it = findEvent(time, D);
     if(it == events.end()){return nullptr;}
     return dynamic_cast<const sdEvent<D> *>((*it).get());
+}
+
+inline const std::shared_ptr<sdProtoEvent> sdEventHandler::getProtoEventAtIndex(const unsigned long index) const{
+    return events[index];
 }
 
 inline std::vector<std::shared_ptr<sdProtoEvent>> sdEventHandler::getEvents(const double &time) const{
