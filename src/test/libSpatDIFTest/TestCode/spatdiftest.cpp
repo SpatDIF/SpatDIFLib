@@ -198,6 +198,42 @@ TEST_CASE("getFirstEvent() and getLastEvent()"){
     REQUIRE(lastEvent == a);
 }
 
+TEST_CASE("getProtoEventAtindex()"){
+    
+    sdScene scene;
+    sdEntity * entity = scene.addEntity("MyEntity");
+    auto a = entity->addEvent<SD_POSITION>(0.2, {0.3, 0.1, 0.2});
+    auto b = entity->addEvent<SD_POSITION>(0.3, {0.2, 0.3, 0.4});
+    auto c = entity->addEvent<SD_POSITION>(0.4, {0.3, 0.1, 0.2});
+
+    auto event = entity->getProtoEventAtIndex(1);
+    REQUIRE(event->getTime() == 0.3);
+    REQUIRE(event->getValueAsString() == "0.2 0.3 0.4");
+    
+    auto nullEvent = entity->getProtoEventAtIndex(4);
+    REQUIRE(nullEvent == nullptr);
+}
+
+TEST_CASE("getIndexFromProtoEvent()"){
+    sdScene scene;
+    sdEntity * entity = scene.addEntity("MyEntity");
+    auto a = entity->addEvent<SD_POSITION>(0.2, {0.3, 0.1, 0.2});
+    auto b = entity->addEvent<SD_POSITION>(0.3, {0.2, 0.3, 0.4});
+    auto c = entity->addEvent<SD_POSITION>(0.4, {0.3, 0.1, 0.2});
+    
+    auto nextEvents = entity->getNextEvents(0.25); // should be event "b";
+    unsigned long index = entity->getIndexFromProtoEvent(nextEvents[0]);
+    REQUIRE(index == 1);
+    
+    sdEntity * entity2 = scene.addEntity("YourEntity");
+    auto d = entity2->addEvent<SD_POSITION>(0.5, {0.0, 0.0, 0.3});
+    
+    auto fakeEvents = entity2->getEvents(0.5);
+    // ask a wrong entity the index
+    REQUIRE(entity->getIndexFromProtoEvent(fakeEvents[0]) == -1); // not found
+    
+}
+
 TEST_CASE("getFirstEvents() and getLastEvents()"){
     
     sdScene scene;

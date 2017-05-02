@@ -52,8 +52,6 @@ public:
     template <EDescriptor D>
     const sdEvent< D > * const getEvent(const double &time) const;
     
-    /*! return single event at index*/
-    const std::shared_ptr<sdProtoEvent> getProtoEventAtIndex(const unsigned long index) const;
     
     /*! returns a vector of sdProtoEvents, depending on given filter arguments*/
     std::vector<std::shared_ptr<sdProtoEvent> > getEvents(const double &time) const;
@@ -206,6 +204,12 @@ public:
     void removeAllEvents();
     
 
+    
+    /*! returns single event at index */
+    const std::shared_ptr<sdProtoEvent> getProtoEventAtIndex(const long index) const;
+    
+    /*! returns check the index of the proto event */
+    long getIndexFromProtoEvent(const std::shared_ptr<sdProtoEvent> &protoEvent) const;
 };
 
 template <EDescriptor D>
@@ -241,10 +245,6 @@ inline const sdEvent< D > * const sdEventHandler::getEvent(const double &time) c
     auto it = findEvent(time, D);
     if(it == events.end()){return nullptr;}
     return dynamic_cast<const sdEvent<D> *>((*it).get());
-}
-
-inline const std::shared_ptr<sdProtoEvent> sdEventHandler::getProtoEventAtIndex(const unsigned long index) const{
-    return events[index];
 }
 
 inline std::vector<std::shared_ptr<sdProtoEvent>> sdEventHandler::getEvents(const double &time) const{
@@ -432,5 +432,16 @@ inline void sdEventHandler::sort(){
               [](std::shared_ptr<sdProtoEvent> eventA, std::shared_ptr<sdProtoEvent> eventB)->bool{
                   return eventA->getTime() < eventB->getTime();
               });
+}
+
+inline const std::shared_ptr<sdProtoEvent> sdEventHandler::getProtoEventAtIndex(const long index) const{
+    if(events.size() <= index) return nullptr;
+    return events[index];
+}
+
+inline long sdEventHandler::getIndexFromProtoEvent(const std::shared_ptr<sdProtoEvent> &protoEvent) const{
+    auto result = std::find(events.begin(), events.end(), protoEvent);
+    if(result == events.end()) return -1;
+    return result-events.begin();
 }
 
