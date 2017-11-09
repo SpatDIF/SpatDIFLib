@@ -10,3 +10,6 @@ docs/html
 
 # Ignore user-specific files in Xcode-project
 xcuserdata
+
+# macOS
+.DS_Store
