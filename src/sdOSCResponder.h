@@ -287,17 +287,14 @@ inline std::vector<sdOSCMessage> sdOSCResponder::getEventSetsFromAllEntities(con
                 break;
             }
             case SD_MEDIA_TYPE:{
-                auto values = dynamic_cast< sdEvent<SD_MEDIA_TYPE> * >(event.get())->getValue();
                 returnMessage.appendArgument(event->getValueAsString());
                 break;
             }
             case SD_MEDIA_LOCATION:{
-                auto values = dynamic_cast< sdEvent<SD_MEDIA_LOCATION> * >(event.get())->getValue();
                 returnMessage.appendArgument(event->getValueAsString());
                 break;
             }
             case SD_MEDIA_ID:{
-                auto values = dynamic_cast< sdEvent<SD_MEDIA_ID> * >(event.get())->getValue();
                 returnMessage.appendArgument(event->getValueAsString());
                 break;
             }
@@ -395,7 +392,7 @@ inline std::pair<sdOSCMessage, bool> sdOSCResponder::getSingleAction(std::string
         std::string address = "/spatdif/source/" + entityName + "/position";
         returnMessage.setAddress(address);
         returnMessage.appendArgument<std::string>(entityName);
-        const std::array<double, 3>* pos;
+        const std::array<double, 3>* pos = nullptr;
         if(command == "getPosition"){
             pos = entity->getValue<SD_POSITION>(queryTime);
         }else if(command == "getNextPosition"){
@@ -403,10 +400,11 @@ inline std::pair<sdOSCMessage, bool> sdOSCResponder::getSingleAction(std::string
         }else if(command == "getPreviousPosition"){
             pos = entity->getPreviousValue<SD_POSITION>(queryTime);
         }
-        returnMessage.appendArgument(static_cast<float>(pos->at(0)));
-        returnMessage.appendArgument(static_cast<float>(pos->at(1)));
-        returnMessage.appendArgument(static_cast<float>(pos->at(2)));
-        
+        if(pos){
+            returnMessage.appendArgument(static_cast<float>(pos->at(0)));
+            returnMessage.appendArgument(static_cast<float>(pos->at(1)));
+            returnMessage.appendArgument(static_cast<float>(pos->at(2)));
+        }
     }else if(command.find("Orientation") != std::string::npos){ // contains keyword "Position"
         auto entityName = message.getArgumentAsString(0);
         sdEntity* entity = scene->getEntity(message.getArgumentAsString(0));
@@ -414,7 +412,7 @@ inline std::pair<sdOSCMessage, bool> sdOSCResponder::getSingleAction(std::string
         std::string address = "/spatdif/source/" + entityName + "/orientation";
         returnMessage.setAddress(address);
         returnMessage.appendArgument<std::string>(entityName);
-        const std::array<double,3> *ori;
+        const std::array<double,3> *ori = nullptr;
         if(command == "getOrientation"){
             ori = entity->getValue<SD_ORIENTATION>(queryTime);
         }else if(command == "getNextOrientation"){
@@ -422,14 +420,16 @@ inline std::pair<sdOSCMessage, bool> sdOSCResponder::getSingleAction(std::string
         }else if(command == "getPreviousOrientation"){
             ori = entity->getPreviousValue<SD_ORIENTATION>(queryTime);
         }
-        returnMessage.appendArgument(static_cast<float>(ori->at(0)));
-        returnMessage.appendArgument(static_cast<float>(ori->at(1)));
-        returnMessage.appendArgument(static_cast<float>(ori->at(2)));
+        if(ori){
+            returnMessage.appendArgument(static_cast<float>(ori->at(0)));
+            returnMessage.appendArgument(static_cast<float>(ori->at(1)));
+            returnMessage.appendArgument(static_cast<float>(ori->at(2)));
+        }
     }else if(command.find("Present")){
         auto entityName = message.getArgumentAsString(0);
         sdEntity* entity = scene->getEntity(message.getArgumentAsString(0));
         if(!entity) return std::make_pair( sdOSCMessage(), false);
-        bool flag;
+        bool flag = false;
         if(command == "getPresent"){
             flag = entity->getValue<SD_PRESENT>(queryTime);
         }else if(command == "getNextPresent"){

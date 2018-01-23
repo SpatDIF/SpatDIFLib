@@ -82,8 +82,8 @@ xml_node<> * sdXMLSaver::createMetaSection(xml_document<> &xml, const sdScene &s
         std::string previousName;
         std::string previousExtension;
         sdEntity * previousEntity = nullptr;
-        xml_node<> * category;
-        xml_node<> * extension;
+        xml_node<> * category = nullptr;
+        xml_node<> * extension = nullptr;
 
         //event
         //category = xml.allocate_node(entity->getCategoryAsString().c_str());
